@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="user/registerForm" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/registerForm.jsp" />
+	</definition>
+
+	<definition name="user/registerSentMail" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/registerSentMail.jsp" />
+	</definition>
+	
+	<definition name="user/registerConfirmed" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/registerConfirmed.jsp" />
+	</definition>
+
+	<definition name="user/registerNotConfirmed" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/registerNotConfirmed.jsp" />
+	</definition>
+
+	<definition name="user/loginForm" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/loginForm.jsp" />
+	</definition>
+
+	<definition name="user/users" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/users.jsp" />
+	</definition>
+
+</tiles-definitions>
