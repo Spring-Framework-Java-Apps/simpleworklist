@@ -16,7 +16,7 @@
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 		<maven.scm.version>1.8</maven.scm.version>
-		<hibernate-entitymanager.version>3.6.10.Final</hibernate-entitymanager.version>
+		<hibernate-entitymanager.version>4.0.1.Final</hibernate-entitymanager.version>
         <encoding>UTF-8</encoding>
 	</properties>
 	<dependencies>
