@@ -83,7 +83,7 @@
 		
 		<footer>
 			<p>
-				&copy; 2012 Thomas W&ouml;hlke
+				&copy; 2013 Thomas W&ouml;hlke
 			</p>
 		</footer>
 		

@@ -6,6 +6,7 @@
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:int="http://www.springframework.org/schema/integration"
 	xmlns:int-mongodb="http://www.springframework.org/schema/integration/mongodb"
+    xmlns:repository="http://www.springframework.org/schema/data/repository"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/tx 
@@ -17,16 +18,18 @@
 	http://www.springframework.org/schema/integration/mongodb
 	http://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd
 	http://www.springframework.org/schema/integration
-	http://www.springframework.org/schema/integration/spring-integration.xsd">
+	http://www.springframework.org/schema/integration/spring-integration.xsd
+    http://www.springframework.org/schema/data/repository
+    http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd">
 	
 	<context:property-placeholder location="classpath:/worklist.properties" />
 	
 	<bean id="mongoDbFactory"
 		class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
-		<constructor-arg>
+		<constructor-arg name="mongo">
 			<bean class="com.mongodb.Mongo" />
 		</constructor-arg>
-		<constructor-arg value="test" />
+		<constructor-arg name="databaseName" value="test" />
 	</bean>
 
 	<bean id="mongoDbMessageStore"
