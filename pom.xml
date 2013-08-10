@@ -4,7 +4,7 @@
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.13-SNAPSHOT</version>
+	<version>1.0.14-SNAPSHOT</version>
 	<name>SimpleWorklist</name>
 	<url>http://shadowfax.fritz.box/p/simpleworklist</url>
 	<properties>
@@ -321,7 +321,8 @@
 		<url>https://github.com/phasenraum2010/simpleworklist.git</url>
 		<connection>scm:git:https://github.com/phasenraum2010/simpleworklist.git</connection>
 		<developerConnection>scm:git:https://github.com/phasenraum2010/simpleworklist.git</developerConnection>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
 	<issueManagement>
 		<url>https://github.com/phasenraum2010/simpleworklist/issues</url>
 		<system>GitHub Issues</system>
