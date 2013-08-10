@@ -68,30 +68,20 @@ public class RegistrationProcessServiceImpl implements
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
 	public void startSecondOptIn(String email) {
 		RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
-		if(earlierOptIn==null){
-			String token = (new BigInteger(130, random).toString(32))+UUID.randomUUID().toString();
-			RegistrationProcess o = new RegistrationProcess();
-			o.setDoubleOptInStatus(RegistrationProcessStatus.SAVED_EMAIL);
-			o.setEmail(email);
-			o.setToken(token);
-			logger.info("To be saved: "+o.toString());
-			o=registrationProcessRepository.saveAndFlush(o);
-			logger.info("Saved: "+o.toString());
-			Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
-			emailChannel.send(message);
-		} else {
-			String token = (new BigInteger(130, random).toString(32))+UUID.randomUUID().toString();
-			RegistrationProcess o = earlierOptIn;
-			o.setDoubleOptInStatus(RegistrationProcessStatus.SAVED_EMAIL);
-			o.setEmail(email);
-			o.setToken(token);
-			o.setNumberOfRetries(o.getNumberOfRetries()+1);
-			logger.info("To be saved: "+o.toString());
-			o=registrationProcessRepository.saveAndFlush(o);
-			logger.info("Saved: "+o.toString());
-			Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
-			emailChannel.send(message);
-		}		
+        RegistrationProcess o = new RegistrationProcess();
+		if(earlierOptIn!=null){
+			o = earlierOptIn;
+            o.setNumberOfRetries(o.getNumberOfRetries()+1);
+        }
+        o.setDoubleOptInStatus(RegistrationProcessStatus.SAVED_EMAIL);
+        o.setEmail(email);
+        String token = (new BigInteger(130, random).toString(32))+UUID.randomUUID().toString();
+        o.setToken(token);
+        logger.info("To be saved: "+o.toString());
+        o=registrationProcessRepository.saveAndFlush(o);
+        logger.info("Saved: "+o.toString());
+        Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
+        emailChannel.send(message);
 	}
 	
 	@Override
@@ -104,4 +94,9 @@ public class RegistrationProcessServiceImpl implements
 	public void deleteAll() {
 		registrationProcessRepository.deleteAll();
 	}
+
+    @Override
+    public int getNumberOfAll() {
+        return registrationProcessRepository.findAll().size();
+    }
 }

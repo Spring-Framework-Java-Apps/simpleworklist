@@ -20,8 +20,7 @@ public class IsSameObjectOfData extends TypeSafeMatcher<Data>{
 
 	@Override
 	protected boolean matchesSafely(Data item) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.id==item.getId().longValue();
 	}
 
 }

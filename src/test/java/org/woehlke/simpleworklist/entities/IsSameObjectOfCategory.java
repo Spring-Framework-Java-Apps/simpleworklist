@@ -20,7 +20,7 @@ public class IsSameObjectOfCategory extends TypeSafeMatcher<Category> {
 	
 	@Override
 	protected boolean matchesSafely(Category item) {
-		return item.getId().longValue() == id;
+		return item.getId().longValue() == this.id;
 	}
 
 }

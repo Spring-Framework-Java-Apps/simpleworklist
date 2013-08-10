@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.woehlke.simpleworklist.repository.RegistrationProcessRepository;
-import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 import org.woehlke.simpleworklist.services.UserService;
 
@@ -36,16 +34,18 @@ public class UserServiceImplTest {
 	
 	@Before
 	public void setup(){
-		registrationService.deleteAll();
+		//registrationService.deleteAll();
 	}
 	
 	@After
 	public void cleanup(){
-		registrationService.deleteAll();
+		//registrationService.deleteAll();
 	}
 	
 	@Test
 	public void testStartSecondOptIn() throws Exception {
+        registrationService.deleteAll();
+        Assert.assertEquals(0,registrationService.getNumberOfAll());
 		Assert.assertNotNull(email);
 		Assert.assertTrue(userService.isEmailAvailable(email));
 		registrationService.startSecondOptIn(email);
@@ -62,5 +62,7 @@ public class UserServiceImplTest {
 		registrationService.startSecondOptIn(email);
 		Assert.assertTrue(registrationService.isRetryAndMaximumNumberOfRetries(email));
 		Thread.sleep(4000);
+        registrationService.deleteAll();
+        Assert.assertEquals(0,registrationService.getNumberOfAll());
 	}
 }

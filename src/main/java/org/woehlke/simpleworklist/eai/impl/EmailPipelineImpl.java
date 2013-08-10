@@ -41,6 +41,7 @@ public class EmailPipelineImpl implements EmailPipeline {
 	private String mailFrom;
 	
 	@Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
 	public void sendMail(RegistrationProcess o){
 		boolean success = true;
 		SimpleMailMessage msg = new SimpleMailMessage();

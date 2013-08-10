@@ -13,7 +13,7 @@ public class IsNullObjectOfData extends TypeSafeMatcher<Data> {
 
 	@Override
 	protected boolean matchesSafely(Data item) {
-		return item.getId()==0;
+		return item.getId().longValue()==0;
 	}
 
 }

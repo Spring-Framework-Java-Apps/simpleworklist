@@ -9,4 +9,6 @@ public interface RegistrationProcessService {
 	void startSecondOptIn(String email);
 	RegistrationProcess findByToken(String confirmId);
 	void deleteAll();
+
+    int getNumberOfAll();
 }

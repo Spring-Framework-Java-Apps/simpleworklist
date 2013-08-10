@@ -38,6 +38,7 @@ public class RegistrationProcess {
 	@Enumerated(EnumType.ORDINAL)
 	private RegistrationProcessStatus doubleOptInStatus;
 
+    @Column
 	private int numberOfRetries=0;
 	
 	public Long getId() {

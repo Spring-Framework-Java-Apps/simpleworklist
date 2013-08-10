@@ -15,7 +15,7 @@ public class IsNullObjectOfCategory extends TypeSafeMatcher<Category> {
 
 	@Override
 	protected boolean matchesSafely(Category item) {
-		return item.getId()==0;
+		return item.getId().longValue()==0;
 	}
 
 }
