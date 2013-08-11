@@ -61,9 +61,36 @@ public class EmailPipelineImpl implements EmailPipeline {
         	success = false;
         }
         if(success){
-        	o.setDoubleOptInStatus(RegistrationProcessStatus.SENT_MAIL);
+        	o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SENT_MAIL);
         	o=registrationProcessRepository.saveAndFlush(o);
         }
 		logger.info("Sent MAIL: "+o.toString());
 	}
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void sendPasswordResetEmail(RegistrationProcess o) {
+        boolean success = true;
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(o.getEmail());
+        msg.setText(
+                "Dear User, " +
+                        "for Password Reset at SimpleWorklist, " +
+                        "Please go to URL: http://"+urlHost+"/passwordResetConfirm/" + o.getToken()+" "+
+                        "Sincerely Yours, The Team");
+        msg.setSubject("Password Reset at Simple Worklist");
+        msg.setFrom(mailFrom);
+        try{
+            this.mailSender.send(msg);
+        }
+        catch(MailException ex) {
+            logger.warn(ex.getMessage()+" for "+o.toString());
+            success = false;
+        }
+        if(success){
+            o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL);
+            o=registrationProcessRepository.saveAndFlush(o);
+        }
+        logger.info("Sent MAIL: "+o.toString());
+    }
 }

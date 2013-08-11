@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.integration.core.PollableChannel;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Inject
 	private UserAccountRepository userAccountRepository;
-	
+
 	public boolean isEmailAvailable(String email){
 		return (userAccountRepository.findByUserEmail(email) == null);
 	}
@@ -100,5 +101,14 @@ public class UserServiceImpl implements UserService {
 	public List<UserAccount> findAll() {
 		return userAccountRepository.findAll();
 	}
-	
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void changeUsersPassword(UserAccountFormBean userAccount, RegistrationProcess o) {
+        UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
+        ua.setUserPassword(userAccount.getUserPassword());
+        userAccountRepository.saveAndFlush(ua);
+    }
+
+
 }

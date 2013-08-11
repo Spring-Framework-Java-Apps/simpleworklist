@@ -20,4 +20,6 @@ public interface UserService extends UserDetailsService {
 	UserAccount findByUserEmail(String userEmail);
 	void deleteAll();
 	List<UserAccount> findAll();
+
+    void changeUsersPassword(UserAccountFormBean userAccount, RegistrationProcess o);
 }

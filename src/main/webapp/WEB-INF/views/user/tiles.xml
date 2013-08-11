@@ -27,4 +27,20 @@
 		<put-attribute name="content" value="/WEB-INF/views/user/users.jsp" />
 	</definition>
 
+    <definition name="user/resetPasswordForm" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordForm.jsp" />
+    </definition>
+
+    <definition name="user/resetPasswordDone" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordDone.jsp" />
+    </definition>
+
+    <definition name="user/passwordResetConfirmed" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/user/passwordResetConfirmed.jsp" />
+    </definition>
+
+    <definition name="user/passwordResetNotConfirmed" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/user/passwordResetNotConfirmed.jsp" />
+    </definition>
+
 </tiles-definitions>

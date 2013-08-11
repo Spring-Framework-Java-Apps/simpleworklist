@@ -21,15 +21,14 @@
     
     <security:http pattern="/css/**" security="none"/>
     <security:http pattern="/img/**" security="none"/>
-    <security:http pattern="/js/**" security="none"/><!--
-  	<security:http pattern="/login*" security="none"/>
-  	<security:http pattern="/register*" security="none"/>
-  	<security:http pattern="/confirm*/**" security="none"/>-->
+    <security:http pattern="/js/**" security="none"/>
     
     <security:http auto-config='true' use-expressions='true'>
     	<security:intercept-url pattern="/login*" access="permitAll"/>
     	<security:intercept-url pattern="/register*" access="permitAll"/>
     	<security:intercept-url pattern="/confirm*/**" access="permitAll"/>
+        <security:intercept-url pattern="/resetPassword*" access="permitAll"/>
+        <security:intercept-url pattern="/passwordResetConfirm*/**" access="permitAll"/>
     	<security:intercept-url pattern="/**" access="fullyAuthenticated" />
     	<security:form-login 
     		login-page='/login' 

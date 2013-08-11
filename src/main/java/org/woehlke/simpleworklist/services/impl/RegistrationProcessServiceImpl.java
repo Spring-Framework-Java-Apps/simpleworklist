@@ -23,6 +23,8 @@ import org.woehlke.simpleworklist.repository.RegistrationProcessRepository;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 
 @Service
+
+@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
 public class RegistrationProcessServiceImpl implements
 		RegistrationProcessService {
 
@@ -41,6 +43,9 @@ public class RegistrationProcessServiceImpl implements
 	
 	@Inject
 	private PollableChannel emailChannel;
+
+    @Inject
+    private PollableChannel passwordResetEmailSenderChannel;
 	
 	private SecureRandom random = new SecureRandom();
 	
@@ -53,7 +58,9 @@ public class RegistrationProcessServiceImpl implements
 			return earlierOptIn.getNumberOfRetries()>=maxRetries;
 		}
 	}
-	
+
+
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
 	public void checkIfResponseIsInTime(String email){
 		RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
 		if(earlierOptIn!=null){
@@ -63,7 +70,11 @@ public class RegistrationProcessServiceImpl implements
 			}
 		}
 	}
-	
+
+    private String getToken(){
+        return (new BigInteger(130, random).toString(32))+UUID.randomUUID().toString();
+    }
+
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
 	public void startSecondOptIn(String email) {
@@ -71,11 +82,11 @@ public class RegistrationProcessServiceImpl implements
         RegistrationProcess o = new RegistrationProcess();
 		if(earlierOptIn!=null){
 			o = earlierOptIn;
-            o.setNumberOfRetries(o.getNumberOfRetries()+1);
+            o.increaseNumberOfRetries();
         }
-        o.setDoubleOptInStatus(RegistrationProcessStatus.SAVED_EMAIL);
+        o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SAVED_EMAIL);
         o.setEmail(email);
-        String token = (new BigInteger(130, random).toString(32))+UUID.randomUUID().toString();
+        String token = getToken();
         o.setToken(token);
         logger.info("To be saved: "+o.toString());
         o=registrationProcessRepository.saveAndFlush(o);
@@ -99,4 +110,55 @@ public class RegistrationProcessServiceImpl implements
     public int getNumberOfAll() {
         return registrationProcessRepository.findAll().size();
     }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void sendPasswordResetTo(String email) {
+        RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
+        RegistrationProcess o = new RegistrationProcess();
+        if(earlierOptIn!=null){
+            o = earlierOptIn;
+            o.increaseNumberOfRetries();
+        }
+        o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
+        o.setEmail(email);
+        String token = getToken();
+        o.setToken(token);
+        logger.info("To be saved: "+o.toString());
+        o=registrationProcessRepository.saveAndFlush(o);
+        logger.info("Saved: "+o.toString());
+        Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
+        passwordResetEmailSenderChannel.send(message);
+    }
+
+    @Override
+    public void usersPasswordChangeClickedInEmail(RegistrationProcess registrationProcess) {
+        registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL);
+        registrationProcess=registrationProcessRepository.saveAndFlush(registrationProcess);
+    }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void registratorClickedInEmail(RegistrationProcess registrationProcess) {
+        registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_CLICKED_IN_MAIL);
+        registrationProcess=registrationProcessRepository.saveAndFlush(registrationProcess);
+    }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void userCreated(RegistrationProcess registrationProcess) {
+        registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_ACCOUNT_CREATED);
+        registrationProcess=registrationProcessRepository.saveAndFlush(registrationProcess);
+        registrationProcessRepository.delete(registrationProcess);
+    }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void usersPasswordChanged(RegistrationProcess registrationProcess) {
+        registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_STORED_CHANGED);
+        registrationProcess=registrationProcessRepository.saveAndFlush(registrationProcess);
+        registrationProcessRepository.delete(registrationProcess);
+    }
+
+
 }
