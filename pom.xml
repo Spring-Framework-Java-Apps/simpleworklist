@@ -4,7 +4,7 @@
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.14-SNAPSHOT</version>
+	<version>1.0.15-SNAPSHOT</version>
 	<name>SimpleWorklist</name>
 	<url>http://shadowfax.fritz.box/p/simpleworklist</url>
 	<properties>

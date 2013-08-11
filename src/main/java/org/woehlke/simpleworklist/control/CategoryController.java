@@ -30,6 +30,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.repository.CategoryRepository;
 import org.woehlke.simpleworklist.services.CategoryService;
 import org.woehlke.simpleworklist.services.DataService;
+import org.woehlke.simpleworklist.services.TestService;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Controller
@@ -47,6 +48,9 @@ public class CategoryController {
 	
 	@Inject
 	private UserService userService;
+
+    @Inject
+    private TestService testService;
 
 	@ModelAttribute("allCategories")
 	public List<Category> allCategories(){
@@ -149,7 +153,7 @@ public class CategoryController {
 	public String createTestCategoryTree() {
 		UserAccount user=userService.retrieveCurrentUser();
 		Assert.notNull(user);
-		categoryNodeService.createTestCategoryTree(user);
+        testService.createTestCategoryTree(user);
 		return "redirect:/";
 	}
 	
@@ -171,8 +175,6 @@ public class CategoryController {
 			@PathVariable long categoryId, Model model){
 		if(categoryId > 0){
 			Category thisCategory = categoryNodeService.findOne(categoryId);
-			//ModelAndView mav = new ModelAndView("category/edit", "command", thisCategory);
-			//mav.addAllObjects(model.asMap());
 			List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
 			model.addAttribute("breadcrumb", breadcrumb);
 			model.addAttribute("thisCategory", thisCategory);
@@ -211,7 +213,7 @@ public class CategoryController {
 		long newCategoryId = nodeId;
 		if(nodeId>0){
 			Category category = categoryNodeService.findOne(nodeId);
-			boolean hasNoData = categoryNodeService.hasNoData(category);
+			boolean hasNoData = dataLeafService.hasNoData(category);
 			boolean hasNoChildren = category.hasNoChildren();
 			if(hasNoData && hasNoChildren){
 				if(!category.isRootCategory()){

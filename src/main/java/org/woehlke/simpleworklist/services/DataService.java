@@ -19,4 +19,6 @@ public interface DataService {
 	
 	void deleteAll();
 
+    boolean hasNoData(Category category);
+
 }

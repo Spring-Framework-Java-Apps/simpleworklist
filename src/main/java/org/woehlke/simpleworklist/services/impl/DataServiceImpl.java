@@ -18,9 +18,6 @@ import org.woehlke.simpleworklist.services.DataService;
 public class DataServiceImpl implements DataService {
 	
 	@Inject
-	private CategoryRepository categoryNodeRepository;
-	
-	@Inject
 	private DataRepository dataLeafRepository;
 
 	@Override
@@ -56,5 +53,10 @@ public class DataServiceImpl implements DataService {
 	public void deleteAll() {
 		dataLeafRepository.deleteAll();
 	}
+
+    @Override
+    public boolean hasNoData(Category category) {
+        return dataLeafRepository.findByCategory(category).isEmpty();
+    }
 	
 }
