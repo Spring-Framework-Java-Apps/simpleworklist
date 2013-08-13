@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.model;
 
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -61,6 +62,11 @@ public class UserAccountFormBean {
 	public void setUserFullname(String userFullname) {
 		this.userFullname = userFullname;
 	}
+
+    @Transient
+    public boolean passwordsAreTheSame(){
+        return this.userPassword.compareTo(userPasswordConfirmation)==0;
+    }
 
 	@Override
 	public int hashCode() {

@@ -143,9 +143,9 @@ public class UserController {
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if(o!=null){
             registrationProcessService.registratorClickedInEmail(o);
-            UserAccountFormBean ua = new UserAccountFormBean();
-            ua.setUserEmail(o.getEmail());
-            model.addAttribute("userAccount",ua);
+            UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
+            userAccountFormBean.setUserEmail(o.getEmail());
+            model.addAttribute("userAccountFormBean",userAccountFormBean);
             return "user/registerConfirmed";
         } else {
             return "user/registerNotConfirmed";
@@ -154,24 +154,34 @@ public class UserController {
 
     /**
      * Saving Account Data from Formular and forward to login page.
-     * @param userAccount
+     * @param userAccountFormBean
      * @param result
      * @param confirmId
      * @param model
      * @return login page at success or page with error messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
-    public String registerNewUserRegistrationStore(@Valid UserAccountFormBean userAccount, BindingResult result,
-                                     @PathVariable String confirmId, Model model){
-        logger.info("POST /confirm/"+confirmId+" : "+userAccount.toString());
+    public String registerNewUserRegistrationStore(@PathVariable String confirmId,
+                                     @Valid UserAccountFormBean userAccountFormBean,
+                                     BindingResult result, Model model){
+        logger.info("POST /confirm/"+confirmId+" : "+userAccountFormBean.toString());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if(o!=null){
-            if(!result.hasErrors()){
-                userService.createUser(userAccount,o);
+            boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
+            if(!result.hasErrors() && passwordsMatch){
+                userService.createUser(userAccountFormBean,o);
                 registrationProcessService.userCreated(o);
+                return "redirect:/login";
+            } else {
+               if(!passwordsMatch){
+                   String objectName="userAccountFormBean";
+                   String field="userPassword";
+                   String defaultMessage="Passwords aren't the same.";
+                   FieldError e = new FieldError(objectName, field, defaultMessage);
+                   result.addError(e);
+               }
+               return "user/registerConfirmed";
             }
-            model.addAttribute("userAccount",userAccount);
-            return "redirect:/login";
         } else {
             return "user/registerNotConfirmed";
         }
@@ -198,7 +208,8 @@ public class UserController {
      * @return info page if without errors or formular again displaying error messages.
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String passwordForgottenPost(@Valid RegisterFormBean registerFormBean, BindingResult result, Model model){
+    public String passwordForgottenPost(@Valid RegisterFormBean registerFormBean,
+                                        BindingResult result, Model model){
         if(result.hasErrors()) {
             logger.info("----------------------");
             logger.info(registerFormBean.toString());
