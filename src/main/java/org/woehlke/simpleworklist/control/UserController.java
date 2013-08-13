@@ -248,10 +248,10 @@ public class UserController {
         if(o!=null){
             registrationProcessService.usersPasswordChangeClickedInEmail(o);
             UserAccount ua = userService.findByUserEmail(o.getEmail());
-            UserAccountFormBean uab = new UserAccountFormBean();
-            uab.setUserEmail(o.getEmail());
-            uab.setUserFullname(ua.getUserFullname());
-            model.addAttribute("userAccount",uab);
+            UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
+            userAccountFormBean.setUserEmail(o.getEmail());
+            userAccountFormBean.setUserFullname(ua.getUserFullname());
+            model.addAttribute("userAccountFormBean",userAccountFormBean);
             return "user/passwordResetConfirmed";
         } else {
             return "user/passwordResetNotConfirmed";
@@ -260,25 +260,32 @@ public class UserController {
 
     /**
      * Save new Password.
-     * @param userAccount
+     * @param userAccountFormBean
      * @param result
      * @param confirmId
      * @param model
      * @return Info Page for success or back to formular with error messages.
      */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
-    public String enterNewPasswordPost(@Valid UserAccountFormBean userAccount, BindingResult result,
+    public String enterNewPasswordPost(@Valid UserAccountFormBean userAccountFormBean, BindingResult result,
                                        @PathVariable String confirmId, Model model){
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
+        boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
         if(o!=null){
-            if(!result.hasErrors()){
-                userService.changeUsersPassword(userAccount, o);
+            if(!result.hasErrors() && passwordsMatch){
+                userService.changeUsersPassword(userAccountFormBean, o);
                 registrationProcessService.usersPasswordChanged(o);
+                return "redirect:/login";
             } else {
-
+                if(!passwordsMatch){
+                    String objectName="userAccountFormBean";
+                    String field="userPassword";
+                    String defaultMessage="Passwords aren't the same.";
+                    FieldError e = new FieldError(objectName, field, defaultMessage);
+                    result.addError(e);
+                }
+                return "user/passwordResetConfirmed";
             }
-            model.addAttribute("userAccount",userAccount);
-            return "redirect:/login";
         } else {
             return "user/passwordResetNotConfirmed";
         }
