@@ -39,7 +39,9 @@
   	</security:http>
   	 
   	<security:authentication-manager alias="authenticationManager">
-    	<security:authentication-provider user-service-ref="userService"/>
+    	<security:authentication-provider user-service-ref="userService">
+              <security:password-encoder hash="md5"/>
+          </security:authentication-provider>
   	</security:authentication-manager>
   	
   	<bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">

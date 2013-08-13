@@ -3,6 +3,8 @@ package org.woehlke.simpleworklist.model;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 
 public class UserAccountFormBean {
 
@@ -30,6 +32,11 @@ public class UserAccountFormBean {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
+
+    public String getUserPasswordEncoded() {
+        PasswordEncoder encoder = new Md5PasswordEncoder();
+        return encoder.encodePassword(userPassword,null);
+    }
 
 	public String getUserPassword() {
 		return userPassword;

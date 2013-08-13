@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 		UserAccount u = new UserAccount();
 		u.setUserEmail(userAccount.getUserEmail());
 		u.setUserFullname(userAccount.getUserFullname());
-		u.setUserPassword(userAccount.getUserPassword());
+		u.setUserPassword(userAccount.getUserPasswordEncoded());
 		logger.info("About to save "+u.toString());
 		u=userAccountRepository.saveAndFlush(u);
 		logger.info("Saved "+u.toString());
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
     public void changeUsersPassword(UserAccountFormBean userAccount, RegistrationProcess o) {
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
-        ua.setUserPassword(userAccount.getUserPassword());
+        ua.setUserPassword(userAccount.getUserPasswordEncoded());
         userAccountRepository.saveAndFlush(ua);
     }
 

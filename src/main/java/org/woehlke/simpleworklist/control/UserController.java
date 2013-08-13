@@ -233,7 +233,6 @@ public class UserController {
      */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
     public String enterNewPasswordFormular(@PathVariable String confirmId,Model model){
-        logger.info("GET /confirmPasswordReset/"+confirmId);
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if(o!=null){
             registrationProcessService.usersPasswordChangeClickedInEmail(o);
@@ -259,7 +258,6 @@ public class UserController {
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
     public String enterNewPasswordPost(@Valid UserAccountFormBean userAccount, BindingResult result,
                                        @PathVariable String confirmId, Model model){
-        logger.info("POST /confirmPasswordReset/"+confirmId+" : "+userAccount.toString());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if(o!=null){
             if(!result.hasErrors()){
