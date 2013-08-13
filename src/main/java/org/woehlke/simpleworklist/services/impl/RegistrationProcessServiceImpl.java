@@ -28,11 +28,9 @@ import org.woehlke.simpleworklist.services.RegistrationProcessService;
 public class RegistrationProcessServiceImpl implements
 		RegistrationProcessService {
 
-	@Autowired
 	@Value("${worklist.registration.max.retries}")
 	private int maxRetries;
-	
-	@Autowired
+
 	@Value("${worklist.registration.ttl.email.verifcation.request}")
 	private long ttlEmailVerificationRequest;
 
@@ -42,7 +40,7 @@ public class RegistrationProcessServiceImpl implements
 	private RegistrationProcessRepository registrationProcessRepository;
 	
 	@Inject
-	private PollableChannel emailChannel;
+	private PollableChannel registrationProcessEmailSenderChannel;
 
     @Inject
     private PollableChannel passwordResetEmailSenderChannel;
@@ -77,7 +75,7 @@ public class RegistrationProcessServiceImpl implements
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void startSecondOptIn(String email) {
+	public void sendEmailForVerification(String email) {
 		RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
         RegistrationProcess o = new RegistrationProcess();
 		if(earlierOptIn!=null){
@@ -92,7 +90,7 @@ public class RegistrationProcessServiceImpl implements
         o=registrationProcessRepository.saveAndFlush(o);
         logger.info("Saved: "+o.toString());
         Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
-        emailChannel.send(message);
+        registrationProcessEmailSenderChannel.send(message);
 	}
 	
 	@Override
@@ -132,6 +130,7 @@ public class RegistrationProcessServiceImpl implements
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
     public void usersPasswordChangeClickedInEmail(RegistrationProcess registrationProcess) {
         registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL);
         registrationProcess=registrationProcessRepository.saveAndFlush(registrationProcess);

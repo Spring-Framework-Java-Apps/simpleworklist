@@ -78,21 +78,21 @@
 		http://www.eaipatterns.com/ControlBus.html -->
 	<int:control-bus id="controlBus" input-channel="controlBusChannel" />
 	
-	<int:channel id="emailChannel">
+	<int:channel id="registrationProcessEmailSenderChannel">
 		<int:queue message-store="mongoDbMessageStore" />
 	</int:channel>
 	
-	<int:service-activator input-channel="emailChannel"
-		output-channel="nullChannel" id="sendMail"
-		ref="emailPipeline" method="sendMail" />
+	<int:service-activator input-channel="registrationProcessEmailSenderChannel"
+		output-channel="nullChannel" id="sendEmailToRegisterNewUser"
+		ref="emailPipeline" method="sendEmailToRegisterNewUser" />
 
     <int:channel id="passwordResetEmailSenderChannel">
         <int:queue message-store="mongoDbMessageStore" />
     </int:channel>
 
     <int:service-activator input-channel="passwordResetEmailSenderChannel"
-                           output-channel="nullChannel" id="sendPasswordResetEmail"
-                           ref="emailPipeline" method="sendPasswordResetEmail" />
+                           output-channel="nullChannel" id="sendEmailForPasswordReset"
+                           ref="emailPipeline" method="sendEmailForPasswordReset" />
 		
 	<!-- Mail service -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

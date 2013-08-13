@@ -40,29 +40,29 @@ public class DataAndCategoryController {
     private TestService testService;
 
 	@Inject
-	private CategoryService categoryNodeService;
+	private CategoryService categoryService;
 	
 	@Inject
-	private DataService dataLeafService;
+	private DataService dataService;
 	
 	@Inject
 	private UserService userService;
 
     @ModelAttribute("allCategories")
-    public List<Category> allCategories(){
+    public List<Category> getAllCategories(){
         UserAccount user=userService.retrieveCurrentUser();
-        return categoryNodeService.findAll(user);
+        return categoryService.findAll(user);
     }
 
 	@ModelAttribute("rootCategories")
-	public List<Category> rootCategories(){
+	public List<Category> getRootCategories(){
 		UserAccount user=userService.retrieveCurrentUser();
-		return categoryNodeService.findByParentIsNull(user);
+		return categoryService.findByParentIsNull(user);
 	}
 
 	@RequestMapping(value = "/data/detail/{dataId}", method = RequestMethod.GET)
-	public String editDataLeafForm(@PathVariable long dataId, Model model){
-		Data data = dataLeafService.findOne(dataId);
+	public String editDataForm(@PathVariable long dataId, Model model){
+		Data data = dataService.findOne(dataId);
 		Category thisCategory = null;
 		if(data.getCategory()==null){
 			thisCategory = new Category();
@@ -71,18 +71,18 @@ public class DataAndCategoryController {
 			thisCategory = data.getCategory();
 		}
 		model.addAttribute("thisCategory", thisCategory);
-		List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+		List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
 		model.addAttribute("breadcrumb", breadcrumb);
 		model.addAttribute("data", data);
 		return "data/show";
 	}
 	
 	@RequestMapping(value = "/data/detail/{dataId}", method = RequestMethod.POST)
-	public String editDataLeafStore(
+	public String editDataStore(
 			@Valid Data data,
 			@PathVariable long dataId,
 			BindingResult result, Model model){
-		Data persistentData = dataLeafService.findOne(dataId);
+		Data persistentData = dataService.findOne(dataId);
 		long categoryId = 0;
 		Category thisCategory = null;
 		if(persistentData.getCategory()==null){
@@ -97,20 +97,20 @@ public class DataAndCategoryController {
 				logger.info(e.toString());
 			}
 			model.addAttribute("thisCategory", thisCategory);
-			List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+			List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
 			model.addAttribute("breadcrumb", breadcrumb);
 			return "/data/detail"+dataId;
 		} else {
 			persistentData.setTitle(data.getTitle());
 			persistentData.setText(data.getText());
-			dataLeafService.saveAndFlush(persistentData);
+			dataService.saveAndFlush(persistentData);
 			return "redirect:/category/"+categoryId+"/";
 		}
 		
 	}
 
 	@RequestMapping(value = "/data/addtocategory/{categoryId}", method = RequestMethod.GET)
-	public String addNewCategoryNodeForm(
+	public String addNewDataToCategoryForm(
 			@PathVariable long categoryId, 
 			Model model){
 		Category thisCategory = null;
@@ -118,18 +118,18 @@ public class DataAndCategoryController {
 			thisCategory = new Category();
 			thisCategory.setId(0L);
 		} else {
-			thisCategory = categoryNodeService.findOne(categoryId);
+			thisCategory = categoryService.findOne(categoryId);
 		} 
 		Data dataLeaf = new Data();
 		model.addAttribute("thisCategory", thisCategory);
-		List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+		List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
 		model.addAttribute("breadcrumb", breadcrumb);
 		model.addAttribute("data", dataLeaf);
 		return "data/add";
 	}
 	
 	@RequestMapping(value = "/data/addtocategory/{categoryId}", method = RequestMethod.POST)
-    public String addNewCategoryNodeStore( 
+    public String addNewDataToCategoryStore(
     		@Valid Data data, 
     		@PathVariable long categoryId, 
     		BindingResult result, Model model) {
@@ -144,31 +144,31 @@ public class DataAndCategoryController {
 			thisCategory.setId(0L);
 			data.setCategory(null);
 		} else {
-			thisCategory = categoryNodeService.findOne(categoryId);
+			thisCategory = categoryService.findOne(categoryId);
 			data.setCategory(thisCategory);
 		}
-		data = dataLeafService.saveAndFlush(data);
+		data = dataService.saveAndFlush(data);
 		logger.info(data.toString());
 		model.addAttribute("thisCategory", thisCategory);
-		List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+		List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
 		model.addAttribute("breadcrumb", breadcrumb);
 		return "redirect:/category/"+categoryId+"/";
 	}
 	
 	@RequestMapping(value = "/data/delete/{dataId}", method = RequestMethod.GET)
-	public String deleteDataLeaf(@PathVariable long dataId){
-		Data data = dataLeafService.findOne(dataId);
+	public String deleteData(@PathVariable long dataId){
+		Data data = dataService.findOne(dataId);
 		long categoryId = 0;
 		if(data.getCategory()!=null){
 			categoryId = data.getCategory().getId();
 		}
-		dataLeafService.delete(data);
+		dataService.delete(data);
 		return "redirect:/category/"+categoryId+"/";
 	}
 	
 	@RequestMapping(value = "/data/move/{dataId}", method = RequestMethod.GET)	
-	public String moveDataLeaf(@PathVariable long dataId){
-		Data data = dataLeafService.findOne(dataId);
+	public String moveData(@PathVariable long dataId){
+		Data data = dataService.findOne(dataId);
 		long categoryId = 0;
 		if(data.getCategory()!=null){
 			categoryId = data.getCategory().getId();
@@ -177,24 +177,22 @@ public class DataAndCategoryController {
 	}
 	
 	@RequestMapping(value = "/data/{dataId}/moveto/{categoryId}", method = RequestMethod.GET)
-	public String moveDataToCategory(@PathVariable long dataId,
+	public String moveDataToAnotherCategory(@PathVariable long dataId,
 			@PathVariable long categoryId){
-		Data data = dataLeafService.findOne(dataId);
-		Category category = categoryNodeService.findOne(categoryId);
+		Data data = dataService.findOne(dataId);
+		Category category = categoryService.findOne(categoryId);
 		data.setCategory(category);
-		dataLeafService.saveAndFlush(data);
+		dataService.saveAndFlush(data);
 		return "redirect:/category/"+categoryId+"/";
 	}
 
-
-
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
-    public String showCategoryNode(@PathVariable long categoryId){
+    public String showCategory(@PathVariable long categoryId){
         return "redirect:/category/"+categoryId+"/page/1";
     }
 
     @RequestMapping(value = "/category/{categoryId}/page/{pageNumber}", method = RequestMethod.GET)
-    public ModelAndView showCategoryNode(
+    public ModelAndView showCategory(
             @PathVariable long categoryId,
             @PathVariable int pageNumber){
         ModelAndView mav = new ModelAndView("category/show");
@@ -203,14 +201,14 @@ public class DataAndCategoryController {
         Pageable request =
                 new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title");
         if(categoryId != 0){
-            thisCategory = categoryNodeService.findOne(categoryId);
-            dataLeafPage = dataLeafService.findByCategory(thisCategory,request);
+            thisCategory = categoryService.findOne(categoryId);
+            dataLeafPage = dataService.findByCategory(thisCategory,request);
         } else {
             thisCategory = new Category();
             thisCategory.setId(0L);
-            dataLeafPage = dataLeafService.findByCategoryIsNull(request);
+            dataLeafPage = dataService.findByCategoryIsNull(request);
         }
-        List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+        List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         int current = dataLeafPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
@@ -230,7 +228,7 @@ public class DataAndCategoryController {
     }
 
     @RequestMapping(value = "/category/addchild/{categoryId}", method = RequestMethod.GET)
-    public ModelAndView formNewCategoryNode(@PathVariable long categoryId, Model model){
+    public ModelAndView addNewCategoryForm(@PathVariable long categoryId, Model model){
         Category thisCategory = null;
         Category category = null;
         if(categoryId==0){
@@ -240,12 +238,12 @@ public class DataAndCategoryController {
             thisCategory.setUserAccount(userAccount);
             category = Category.newRootCategoryNodeFactory(userAccount);
         } else {
-            thisCategory = categoryNodeService.findOne(categoryId);
+            thisCategory = categoryService.findOne(categoryId);
             category = Category.newCategoryNodeFactory(thisCategory);
         }
         ModelAndView mav = new ModelAndView("category/add");
         mav.addAllObjects(model.asMap());
-        List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+        List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         mav.addObject("breadcrumb", breadcrumb);
         mav.addObject("thisCategory", thisCategory);
         mav.addObject("category", category);
@@ -253,20 +251,20 @@ public class DataAndCategoryController {
     }
 
     @RequestMapping(value = "/category/addchild/{categoryId}", method = RequestMethod.POST)
-    public String addNewCategoryNode(@Valid Category category, @PathVariable long categoryId, BindingResult result, Model model) {
+    public String addNewCategoryStore(@Valid Category category, @PathVariable long categoryId, BindingResult result, Model model) {
         UserAccount userAccount=userService.retrieveCurrentUser();
         category.setUserAccount(userAccount);
         if(categoryId==0){
             Category thisCategory = new Category();
             thisCategory.setId(0L);
             model.addAttribute("thisCategory", thisCategory);
-            category = categoryNodeService.saveAndFlush(category);
+            category = categoryService.saveAndFlush(category);
         } else {
-            Category thisCategory = categoryNodeService.findOne(categoryId);
+            Category thisCategory = categoryService.findOne(categoryId);
             thisCategory.getChildren().add(category);
-            category = categoryNodeService.saveAndFlush(category);
+            category = categoryService.saveAndFlush(category);
             logger.info(category.toString());
-            List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+            List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisCategory", thisCategory);
         }
@@ -282,14 +280,14 @@ public class DataAndCategoryController {
     }
 
     @RequestMapping(value = "/category/{categoryId}/moveto/{targetCategoryId}", method = RequestMethod.GET)
-    public String moveCategoryNode(
+    public String moveCategory(
             @PathVariable long categoryId,
             @PathVariable long targetCategoryId){
         Category thisCategory = null;
         if(categoryId != 0){
-            thisCategory = categoryNodeService.findOne(categoryId);
-            Category targetCategory=categoryNodeService.findOne(targetCategoryId);
-            categoryNodeService.moveCategoryToAnotherCategory(thisCategory,targetCategory);
+            thisCategory = categoryService.findOne(categoryId);
+            Category targetCategory= categoryService.findOne(targetCategoryId);
+            categoryService.moveCategoryToAnotherCategory(thisCategory, targetCategory);
         }
         return "redirect:/category/"+categoryId+"/page/1";
     }
@@ -298,8 +296,8 @@ public class DataAndCategoryController {
     public String editCategoryForm(
             @PathVariable long categoryId, Model model){
         if(categoryId > 0){
-            Category thisCategory = categoryNodeService.findOne(categoryId);
-            List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+            Category thisCategory = categoryService.findOne(categoryId);
+            List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisCategory", thisCategory);
             model.addAttribute("category", thisCategory);
@@ -310,7 +308,7 @@ public class DataAndCategoryController {
     }
 
     @RequestMapping(value = "/category/{categoryId}/edit", method = RequestMethod.POST)
-    public String editCategorySave(
+    public String editCategoryStore(
             @Valid Category category,
             @PathVariable long categoryId,
             BindingResult result, Model model) {
@@ -318,15 +316,15 @@ public class DataAndCategoryController {
             for(ObjectError e :result.getAllErrors()){
                 logger.info(e.toString());
             }
-            Category thisCategory = categoryNodeService.findOne(categoryId);
-            List<Category> breadcrumb = categoryNodeService.getBreadcrumb(thisCategory);
+            Category thisCategory = categoryService.findOne(categoryId);
+            List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
             model.addAttribute("breadcrumb", breadcrumb);
             return "category/edit";
         } else {
-            Category thisCategory = categoryNodeService.findOne(category.getId());
+            Category thisCategory = categoryService.findOne(category.getId());
             thisCategory.setName(category.getName());
             thisCategory.setDescription(category.getDescription());
-            categoryNodeService.saveAndFlush(thisCategory);
+            categoryService.saveAndFlush(thisCategory);
             return "redirect:/category/"+categoryId+"/page/1";
         }
     }
@@ -336,8 +334,8 @@ public class DataAndCategoryController {
             @PathVariable long nodeId, Model model){
         long newCategoryId = nodeId;
         if(nodeId>0){
-            Category category = categoryNodeService.findOne(nodeId);
-            boolean hasNoData = dataLeafService.hasNoData(category);
+            Category category = categoryService.findOne(nodeId);
+            boolean hasNoData = dataService.hasNoData(category);
             boolean hasNoChildren = category.hasNoChildren();
             if(hasNoData && hasNoChildren){
                 if(!category.isRootCategory()){
@@ -345,7 +343,7 @@ public class DataAndCategoryController {
                 } else {
                     newCategoryId = 0;
                 }
-                categoryNodeService.delete(category);
+                categoryService.delete(category);
             } else {
                 logger.info("Deletion rejected for Category "+category.getId());
                 if (!hasNoData){

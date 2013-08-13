@@ -31,18 +31,16 @@ public class EmailPipelineImpl implements EmailPipeline {
 	
 	@Inject
 	private RegistrationProcessRepository registrationProcessRepository;
-	
-	@Autowired
+
 	@Value("${worklist.registration.url.host}")
 	private String urlHost;
-	
-	@Autowired
+
 	@Value("${worklist.registration.mail.from}")
 	private String mailFrom;
 	
 	@Override
     @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void sendMail(RegistrationProcess o){
+	public void sendEmailToRegisterNewUser(RegistrationProcess o){
 		boolean success = true;
 		SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
@@ -69,7 +67,7 @@ public class EmailPipelineImpl implements EmailPipeline {
 
     @Override
     @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-    public void sendPasswordResetEmail(RegistrationProcess o) {
+    public void sendEmailForPasswordReset(RegistrationProcess o) {
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());

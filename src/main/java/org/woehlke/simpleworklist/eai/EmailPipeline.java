@@ -4,7 +4,7 @@ import org.woehlke.simpleworklist.entities.RegistrationProcess;
 
 public interface EmailPipeline {
 
-	void sendMail(RegistrationProcess o);
+	void sendEmailToRegisterNewUser(RegistrationProcess o);
 
-    void sendPasswordResetEmail(RegistrationProcess o);
+    void sendEmailForPasswordReset(RegistrationProcess o);
 }

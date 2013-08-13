@@ -32,14 +32,27 @@ public class UserController {
 
     @Inject
     private RegistrationProcessService registrationProcessService;
-	
+
+    /**
+     * Login Formular. If User is not logged in, this page will be displayed for
+     * all page-URLs which need login.
+     * @param model
+     * @return Login Screen.
+     */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginFormular(Model model){
 		LoginFormBean loginFormBean = new LoginFormBean();
 		model.addAttribute("loginFormBean",loginFormBean);
 		return "user/loginForm";
 	}
-	
+
+    /**
+     * Perform login.
+     * @param loginFormBean
+     * @param result
+     * @param model
+     * @return Shows Root Category after successful login or login form with error messages.
+     */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPerform(@Valid LoginFormBean loginFormBean,
 			BindingResult result, Model model){
@@ -55,28 +68,45 @@ public class UserController {
 			return "user/loginForm";
 		}
 	}
-	
+
+    /**
+     * @param model
+     * @return List of all registered users.
+     */
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String users(Model model){
+	public String getRegisteredUsers(Model model){
 		List<UserAccount> users = userService.findAll();
 		model.addAttribute("users",users);
 		return "user/users";
 	}
 
-
+    /**
+     * Register as new user by entering the email-address which is
+     * unique and the login identifier.
+     * @param model
+     * @return Formular for entering Email-Address for Registration
+     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String signInFormular(Model model){
+    public String registerNewUserRequestForm(Model model){
         RegisterFormBean registerFormBean = new RegisterFormBean();
         model.addAttribute("registerFormBean",registerFormBean);
         return "user/registerForm";
     }
 
+    /**
+     * Register new User: Store the Request and send Email for Verification.
+     * @param registerFormBean
+     * @param result
+     * @param model
+     * @return info page at success or return to form with error messages.
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String signInRegister(@Valid RegisterFormBean registerFormBean,
+    public String registerNewUserRequestStoreAndSendEmailForVerification(@Valid RegisterFormBean registerFormBean,
                                  BindingResult result, Model model){
         if(result.hasErrors()){
             return "user/registerForm";
         } else {
+            //TODO: this here is wrong, or not?
             registrationProcessService.checkIfResponseIsInTime(registerFormBean.getEmail());
             if(userService.isEmailAvailable(registerFormBean.getEmail())){
                 if(registrationProcessService.isRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())){
@@ -87,7 +117,7 @@ public class UserController {
                     result.addError(e);
                     return "user/registerForm";
                 } else {
-                    registrationProcessService.startSecondOptIn(registerFormBean.getEmail());
+                    registrationProcessService.sendEmailForVerification(registerFormBean.getEmail());
                     return "user/registerSentMail";
                 }
             } else {
@@ -101,8 +131,14 @@ public class UserController {
         }
     }
 
+    /**
+     * Register as new user: The URL in the Verification Email clicked by User.
+     * @param confirmId
+     * @param model
+     * @return Formular for Entering Account Data or Error Messages.
+     */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
-    public String signInFormular(@PathVariable String confirmId,Model model){
+    public String registerNewUserCheckResponseAndRegistrationForm(@PathVariable String confirmId,Model model){
         logger.info("GET /confirm/"+confirmId);
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if(o!=null){
@@ -116,8 +152,16 @@ public class UserController {
         }
     }
 
+    /**
+     * Saving Account Data from Formular and forward to login page.
+     * @param userAccount
+     * @param result
+     * @param confirmId
+     * @param model
+     * @return login page at success or page with error messages.
+     */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
-    public String signInFormularPost(@Valid UserAccountFormBean userAccount, BindingResult result,
+    public String registerNewUserRegistrationStore(@Valid UserAccountFormBean userAccount, BindingResult result,
                                      @PathVariable String confirmId, Model model){
         logger.info("POST /confirm/"+confirmId+" : "+userAccount.toString());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
@@ -133,13 +177,26 @@ public class UserController {
         }
     }
 
+    /**
+     * Visitor who might be Registered, but not yet logged in, clicks
+     * on 'password forgotten' at login formular.
+     * @param model
+     * @return a Formular for entering the email-adress.
+     */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    public String passwordForgotten(Model model){
+    public String passwordForgottenForm(Model model){
         RegisterFormBean registerFormBean = new RegisterFormBean();
         model.addAttribute("registerFormBean",registerFormBean);
         return "user/resetPasswordForm";
     }
 
+    /**
+     * If email-address exists, send email with Link for password-Reset.
+     * @param registerFormBean
+     * @param result
+     * @param model
+     * @return info page if without errors or formular again displaying error messages.
+     */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String passwordForgottenPost(@Valid RegisterFormBean registerFormBean, BindingResult result, Model model){
         if(result.hasErrors()) {
@@ -168,6 +225,12 @@ public class UserController {
         }
     }
 
+    /**
+     * User clicked on Link in Email for Password-Recovery.
+     * @param confirmId
+     * @param model
+     * @return a Formular for entering the new Password.
+     */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
     public String enterNewPasswordFormular(@PathVariable String confirmId,Model model){
         logger.info("GET /confirmPasswordReset/"+confirmId);
@@ -185,6 +248,14 @@ public class UserController {
         }
     }
 
+    /**
+     * Save new Password.
+     * @param userAccount
+     * @param result
+     * @param confirmId
+     * @param model
+     * @return Info Page for success or back to formular with error messages.
+     */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
     public String enterNewPasswordPost(@Valid UserAccountFormBean userAccount, BindingResult result,
                                        @PathVariable String confirmId, Model model){
