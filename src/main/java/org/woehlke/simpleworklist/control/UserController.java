@@ -252,7 +252,7 @@ public class UserController {
             userAccountFormBean.setUserEmail(o.getEmail());
             userAccountFormBean.setUserFullname(ua.getUserFullname());
             model.addAttribute("userAccountFormBean",userAccountFormBean);
-            return "user/resetRasswordConfirmed";
+            return "user/resetPasswordConfirmed";
         } else {
             return "user/resetPasswordNotConfirmed";
         }
@@ -275,7 +275,7 @@ public class UserController {
             if(!result.hasErrors() && passwordsMatch){
                 userService.changeUsersPassword(userAccountFormBean, o);
                 registrationProcessService.usersPasswordChanged(o);
-                return "redirect:/login";
+                return "user/resetPasswordDone";
             } else {
                 if(!passwordsMatch){
                     String objectName="userAccountFormBean";
