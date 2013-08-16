@@ -4,8 +4,6 @@ import org.woehlke.simpleworklist.entities.RegistrationProcess;
 
 public interface RegistrationProcessService {
 
-
-
 	boolean isRetryAndMaximumNumberOfRetries(String email);
 	void checkIfResponseIsInTime(String email);
 	void sendEmailForVerification(String email);
@@ -17,4 +15,8 @@ public interface RegistrationProcessService {
     void usersPasswordChanged(RegistrationProcess o);
     void deleteAll();
     int getNumberOfAll();
+
+    void sentEmailToRegisterNewUser(RegistrationProcess o);
+
+    void sentEmailForPasswordReset(RegistrationProcess o);
 }

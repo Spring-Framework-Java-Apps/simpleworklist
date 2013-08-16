@@ -17,11 +17,10 @@ import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;
 import org.woehlke.simpleworklist.entities.RegistrationProcessStatus;
 import org.woehlke.simpleworklist.repository.RegistrationProcessRepository;
+import org.woehlke.simpleworklist.services.RegistrationProcessService;
 
 
 @MessageEndpoint(value="emailPipeline")
-@Service
-@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
 public class EmailPipelineImpl implements EmailPipeline {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmailPipelineImpl.class);
@@ -30,7 +29,7 @@ public class EmailPipelineImpl implements EmailPipeline {
 	private JavaMailSender mailSender;
 	
 	@Inject
-	private RegistrationProcessRepository registrationProcessRepository;
+	private RegistrationProcessService registrationProcessService;
 
 	@Value("${worklist.registration.url.host}")
 	private String urlHost;
@@ -39,7 +38,6 @@ public class EmailPipelineImpl implements EmailPipeline {
 	private String mailFrom;
 	
 	@Override
-    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
 	public void sendEmailToRegisterNewUser(RegistrationProcess o){
 		boolean success = true;
 		SimpleMailMessage msg = new SimpleMailMessage();
@@ -59,14 +57,12 @@ public class EmailPipelineImpl implements EmailPipeline {
         	success = false;
         }
         if(success){
-        	o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SENT_MAIL);
-        	o=registrationProcessRepository.saveAndFlush(o);
+        	registrationProcessService.sentEmailToRegisterNewUser(o);
         }
 		logger.info("Sent MAIL: "+o.toString());
 	}
 
     @Override
-    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
     public void sendEmailForPasswordReset(RegistrationProcess o) {
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -86,8 +82,7 @@ public class EmailPipelineImpl implements EmailPipeline {
             success = false;
         }
         if(success){
-            o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL);
-            o=registrationProcessRepository.saveAndFlush(o);
+            registrationProcessService.sentEmailForPasswordReset(o);
         }
         logger.info("Sent MAIL: "+o.toString());
     }

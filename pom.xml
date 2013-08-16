@@ -4,11 +4,11 @@
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.15-SNAPSHOT</version>
+	<version>1.0.16-SNAPSHOT</version>
 	<name>SimpleWorklist</name>
 	<url>http://shadowfax.fritz.box/p/simpleworklist</url>
 	<properties>
-		<java-version>1.7</java-version>
+		<java-version>1.6</java-version>
 		<org.springframework-version>3.2.4.RELEASE</org.springframework-version>
 		<spring.integration.version>2.2.4.RELEASE</spring.integration.version>
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>

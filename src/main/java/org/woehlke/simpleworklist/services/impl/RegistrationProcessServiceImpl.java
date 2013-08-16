@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.Message;
 import org.springframework.integration.core.PollableChannel;
@@ -23,7 +22,6 @@ import org.woehlke.simpleworklist.repository.RegistrationProcessRepository;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 
 @Service
-
 @Transactional(propagation=Propagation.REQUIRED,readOnly=true)
 public class RegistrationProcessServiceImpl implements
 		RegistrationProcessService {
@@ -57,7 +55,7 @@ public class RegistrationProcessServiceImpl implements
 		}
 	}
 
-
+    @Override
     @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
 	public void checkIfResponseIsInTime(String email){
 		RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
@@ -107,6 +105,30 @@ public class RegistrationProcessServiceImpl implements
     @Override
     public int getNumberOfAll() {
         return registrationProcessRepository.findAll().size();
+    }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void sentEmailToRegisterNewUser(RegistrationProcess o) {
+        o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SENT_MAIL);
+        logger.info("about to save: "+o.toString());
+        try {
+            o=registrationProcessRepository.saveAndFlush(o);
+        } catch (Exception e) {
+            logger.warn(e.toString());
+        }
+    }
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    public void sentEmailForPasswordReset(RegistrationProcess o) {
+        o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL);
+        logger.info("about to save: "+o.toString());
+        try {
+            o=registrationProcessRepository.saveAndFlush(o);
+        } catch (Exception e) {
+            logger.warn(e.toString());
+        }
     }
 
     @Override
