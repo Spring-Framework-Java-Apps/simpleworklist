@@ -19,6 +19,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/user/registerNotConfirmed.jsp" />
 	</definition>
 
+    <definition name="user/registerDone" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/user/registerDone.jsp" />
+    </definition>
+
 	<definition name="user/loginForm" extends="page">
 		<put-attribute name="content" value="/WEB-INF/views/user/loginForm.jsp" />
 	</definition>
@@ -32,15 +36,15 @@
     </definition>
 
     <definition name="user/resetPasswordDone" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordDone.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordSentMail.jsp" />
     </definition>
 
     <definition name="user/passwordResetConfirmed" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/user/passwordResetConfirmed.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/user/resetRasswordConfirmed.jsp" />
     </definition>
 
     <definition name="user/passwordResetNotConfirmed" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/user/passwordResetNotConfirmed.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordNotConfirmed.jsp" />
     </definition>
 
 </tiles-definitions>

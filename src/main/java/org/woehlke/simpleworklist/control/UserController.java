@@ -171,7 +171,7 @@ public class UserController {
             if(!result.hasErrors() && passwordsMatch){
                 userService.createUser(userAccountFormBean,o);
                 registrationProcessService.userCreated(o);
-                return "redirect:/login";
+                return "user/registerDone";
             } else {
                if(!passwordsMatch){
                    String objectName="userAccountFormBean";
@@ -230,7 +230,7 @@ public class UserController {
                 return "user/resetPasswordForm";
             } else {
                 registrationProcessService.sendPasswordResetTo(registerFormBean.getEmail());
-                return "user/resetPasswordDone";
+                return "user/resetPasswordSentMail";
             }
 
         }
@@ -252,9 +252,9 @@ public class UserController {
             userAccountFormBean.setUserEmail(o.getEmail());
             userAccountFormBean.setUserFullname(ua.getUserFullname());
             model.addAttribute("userAccountFormBean",userAccountFormBean);
-            return "user/passwordResetConfirmed";
+            return "user/resetRasswordConfirmed";
         } else {
-            return "user/passwordResetNotConfirmed";
+            return "user/resetPasswordNotConfirmed";
         }
     }
 
@@ -284,10 +284,10 @@ public class UserController {
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
                 }
-                return "user/passwordResetConfirmed";
+                return "user/resetRasswordConfirmed";
             }
         } else {
-            return "user/passwordResetNotConfirmed";
+            return "user/resetPasswordNotConfirmed";
         }
     }
 
