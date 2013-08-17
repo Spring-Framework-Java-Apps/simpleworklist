@@ -4,7 +4,7 @@
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.17-SNAPSHOT</version>
+	<version>1.0.18-SNAPSHOT</version>
 	<name>SimpleWorklist</name>
 	<url>http://www.thomas-woehlke.de/p/simpleworklist</url>
 	<properties>
@@ -314,7 +314,7 @@
 	</dependencies>
 	<organization>
 		<name>Thomas Woehlke</name>
-		<url>http://thomas-woehlke.blogspot.de</url>
+		<url>https://github.com/phasenraum2010/simpleworklist</url>
 	</organization>
 	<inceptionYear>2012</inceptionYear>
 	<scm>
@@ -341,7 +341,7 @@
         <developer>
             <name>Thomas Wöhlke</name>
             <email>thomas@woehlke.org</email>
-            <url>http://thomas-woehlke.blogspot.de</url>
+            <url>https://github.com/phasenraum2010/simpleworklist</url>
         </developer>
     </developers>
 	<build>
