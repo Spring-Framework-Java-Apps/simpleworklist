@@ -40,7 +40,7 @@ public class UserController {
      * @return Login Screen.
      */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginFormular(Model model){
+	public String loginForm(Model model){
 		LoginFormBean loginFormBean = new LoginFormBean();
 		model.addAttribute("loginFormBean",loginFormBean);
 		return "user/loginForm";
@@ -106,7 +106,6 @@ public class UserController {
         if(result.hasErrors()){
             return "user/registerForm";
         } else {
-            //TODO: this here is wrong, or not?
             registrationProcessService.checkIfResponseIsInTime(registerFormBean.getEmail());
             if(userService.isEmailAvailable(registerFormBean.getEmail())){
                 if(registrationProcessService.isRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())){
@@ -161,10 +160,11 @@ public class UserController {
      * @return login page at success or page with error messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
-    public String registerNewUserRegistrationStore(@PathVariable String confirmId,
+    public String registerNewUserCheckResponseAndRegistrationStore(@PathVariable String confirmId,
                                      @Valid UserAccountFormBean userAccountFormBean,
                                      BindingResult result, Model model){
         logger.info("POST /confirm/"+confirmId+" : "+userAccountFormBean.toString());
+        registrationProcessService.checkIfResponseIsInTime(userAccountFormBean.getUserEmail());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if(o!=null){
             boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
