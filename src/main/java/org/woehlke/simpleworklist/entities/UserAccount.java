@@ -13,7 +13,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail"}))
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "userEmail"
+        })
+)
 public class UserAccount {
 
     @Id

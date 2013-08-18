@@ -9,7 +9,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"year"}))
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "year"
+        })
+)
 public class TimelineYear {
 
     @Id

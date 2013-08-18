@@ -6,8 +6,6 @@ import java.util.Stack;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +17,6 @@ import org.woehlke.simpleworklist.services.CategoryService;
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     @Inject
     private CategoryRepository categoryRepository;

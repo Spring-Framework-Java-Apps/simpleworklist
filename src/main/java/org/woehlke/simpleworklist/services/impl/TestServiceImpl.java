@@ -20,7 +20,7 @@ import java.util.Date;
 @Service
 public class TestServiceImpl implements TestService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestServiceImpl.class);
 
     @Inject
     private CategoryRepository categoryNodeRepository;
@@ -31,9 +31,9 @@ public class TestServiceImpl implements TestService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
         Assert.notNull(userAccount);
-        logger.info("----------------------------------------------");
-        logger.info("createTestCategoryTreeForUserAccount");
-        logger.info("----------------------------------------------");
+        LOGGER.info("----------------------------------------------");
+        LOGGER.info("createTestCategoryTreeForUserAccount");
+        LOGGER.info("----------------------------------------------");
         Date nowDate = new Date();
         long now = nowDate.getTime();
         String name01 = "test01_" + now;

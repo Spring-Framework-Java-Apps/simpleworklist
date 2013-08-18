@@ -32,7 +32,7 @@ public class RegistrationProcessServiceImpl implements
     @Value("${worklist.registration.ttl.email.verifcation.request}")
     private long ttlEmailVerificationRequest;
 
-    private static final Logger logger = LoggerFactory.getLogger(RegistrationProcessServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationProcessServiceImpl.class);
 
     @Inject
     private RegistrationProcessRepository registrationProcessRepository;
@@ -68,7 +68,9 @@ public class RegistrationProcessServiceImpl implements
     }
 
     private String getToken() {
-        return (new BigInteger(130, random).toString(32)) + UUID.randomUUID().toString();
+        int base = 130;
+        int strLength = 30;
+        return new BigInteger(base, random).toString(strLength) + UUID.randomUUID().toString();
     }
 
     @Override
@@ -84,9 +86,9 @@ public class RegistrationProcessServiceImpl implements
         o.setEmail(email);
         String token = getToken();
         o.setToken(token);
-        logger.info("To be saved: " + o.toString());
+        LOGGER.info("To be saved: " + o.toString());
         o = registrationProcessRepository.saveAndFlush(o);
-        logger.info("Saved: " + o.toString());
+        LOGGER.info("Saved: " + o.toString());
         Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
         registrationProcessEmailSenderChannel.send(message);
     }
@@ -109,9 +111,9 @@ public class RegistrationProcessServiceImpl implements
         o.setEmail(email);
         String token = getToken();
         o.setToken(token);
-        logger.info("To be saved: " + o.toString());
+        LOGGER.info("To be saved: " + o.toString());
         o = registrationProcessRepository.saveAndFlush(o);
-        logger.info("Saved: " + o.toString());
+        LOGGER.info("Saved: " + o.toString());
         Message<RegistrationProcess> message = MessageBuilder.withPayload(o).build();
         passwordResetEmailSenderChannel.send(message);
         o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
@@ -122,11 +124,11 @@ public class RegistrationProcessServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void sentEmailToRegisterNewUser(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SENT_MAIL);
-        logger.info("about to save: " + o.toString());
+        LOGGER.info("about to save: " + o.toString());
         try {
-            o = registrationProcessRepository.saveAndFlush(o);
+            registrationProcessRepository.saveAndFlush(o);
         } catch (Exception e) {
-            logger.warn(e.toString());
+            LOGGER.warn(e.toString());
         }
     }
 
@@ -134,11 +136,11 @@ public class RegistrationProcessServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void usersPasswordChangeSentEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL);
-        logger.info("about to save: " + o.toString());
+        LOGGER.info("about to save: " + o.toString());
         try {
-            o = registrationProcessRepository.saveAndFlush(o);
+            registrationProcessRepository.saveAndFlush(o);
         } catch (Exception e) {
-            logger.warn(e.toString());
+            LOGGER.warn(e.toString());
         }
     }
 
@@ -146,14 +148,14 @@ public class RegistrationProcessServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void usersPasswordChangeClickedInEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL);
-        o = registrationProcessRepository.saveAndFlush(o);
+        registrationProcessRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registratorClickedInEmail(RegistrationProcess registrationProcess) {
-        registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_CLICKED_IN_MAIL);
-        registrationProcess = registrationProcessRepository.saveAndFlush(registrationProcess);
+    public void registratorClickedInEmail(RegistrationProcess o) {
+        o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_CLICKED_IN_MAIL);
+        registrationProcessRepository.saveAndFlush(o);
     }
 
     @Override

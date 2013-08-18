@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.integration.core.PollableChannel;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,13 +25,13 @@ import org.woehlke.simpleworklist.services.UserService;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Inject
     private UserAccountRepository userAccountRepository;
 
     public boolean isEmailAvailable(String email) {
-        return (userAccountRepository.findByUserEmail(email) == null);
+        return userAccountRepository.findByUserEmail(email) == null;
     }
 
     @Override
@@ -43,9 +42,9 @@ public class UserServiceImpl implements UserService {
         u.setUserEmail(userAccount.getUserEmail());
         u.setUserFullname(userAccount.getUserFullname());
         u.setUserPassword(userAccount.getUserPasswordEncoded());
-        logger.info("About to save " + u.toString());
+        LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
-        logger.info("Saved " + u.toString());
+        LOGGER.info("Saved " + u.toString());
     }
 
     @Override

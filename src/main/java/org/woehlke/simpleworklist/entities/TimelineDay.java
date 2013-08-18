@@ -12,7 +12,12 @@ import javax.persistence.UniqueConstraint;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"monthId", "dayOfMonth"}))
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "monthId",
+                "dayOfMonth"
+        })
+)
 public class TimelineDay {
 
     @Id

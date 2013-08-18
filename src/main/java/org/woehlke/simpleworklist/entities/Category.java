@@ -22,7 +22,13 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"uuid", "parentId", "userAccountId"}))
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "uuid",
+                "parentId",
+                "userAccountId" }
+        )
+)
 public class Category {
 
     @Id

@@ -17,7 +17,7 @@ import org.woehlke.simpleworklist.services.RegistrationProcessService;
 @MessageEndpoint(value = "emailPipeline")
 public class EmailPipelineImpl implements EmailPipeline {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailPipelineImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailPipelineImpl.class);
 
     @Inject
     private JavaMailSender mailSender;
@@ -37,22 +37,22 @@ public class EmailPipelineImpl implements EmailPipeline {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
         msg.setText(
-                "Dear new User, " +
-                        "thank you for registring at Simple Worklist. \n" +
-                        "Please validate your email and go to URL: \nhttp://" + urlHost + "/confirm/" + o.getToken() +
-                        "\n\nSincerely Yours, The Team");
+                "Dear new User, "
+                        + "thank you for registring at Simple Worklist. \n"
+                        + "Please validate your email and go to URL: \nhttp://" + urlHost + "/confirm/" + o.getToken()
+                        + "\n\nSincerely Yours, The Team");
         msg.setSubject("Your Registration at Simple Worklist");
         msg.setFrom(mailFrom);
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            logger.warn(ex.getMessage() + " for " + o.toString());
+            LOGGER.warn(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
             registrationProcessService.sentEmailToRegisterNewUser(o);
         }
-        logger.info("Sent MAIL: " + o.toString());
+        LOGGER.info("Sent MAIL: " + o.toString());
     }
 
     @Override
@@ -61,21 +61,21 @@ public class EmailPipelineImpl implements EmailPipeline {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
         msg.setText(
-                "Dear User, " +
-                        "for Password Reset at SimpleWorklist, " +
-                        "Please go to URL: \nhttp://" + urlHost + "/passwordResetConfirm/" + o.getToken() +
-                        "\n\nSincerely Yours, The Team");
+                "Dear User, "
+                       + "for Password Reset at SimpleWorklist, "
+                       + "Please go to URL: \nhttp://" + urlHost + "/passwordResetConfirm/" + o.getToken()
+                       + "\n\nSincerely Yours, The Team");
         msg.setSubject("Password Reset at Simple Worklist");
         msg.setFrom(mailFrom);
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            logger.warn(ex.getMessage() + " for " + o.toString());
+            LOGGER.warn(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
             registrationProcessService.usersPasswordChangeSentEmail(o);
         }
-        logger.info("Sent MAIL: " + o.toString());
+        LOGGER.info("Sent MAIL: " + o.toString());
     }
 }

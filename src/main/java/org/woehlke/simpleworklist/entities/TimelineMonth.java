@@ -12,7 +12,12 @@ import javax.persistence.UniqueConstraint;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"yearId", "monthOfYear"}))
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "yearId",
+                "monthOfYear"
+        })
+)
 public class TimelineMonth {
 
     @Id

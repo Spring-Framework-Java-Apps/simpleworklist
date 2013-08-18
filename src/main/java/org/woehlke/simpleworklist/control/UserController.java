@@ -25,7 +25,7 @@ import org.woehlke.simpleworklist.services.UserService;
 @Controller
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Inject
     private UserService userService;
@@ -41,7 +41,7 @@ public class UserController {
      * @return Login Screen.
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginForm(Model model) {
+    public final String loginForm(Model model) {
         LoginFormBean loginFormBean = new LoginFormBean();
         model.addAttribute("loginFormBean", loginFormBean);
         return "user/loginForm";
@@ -56,7 +56,7 @@ public class UserController {
      * @return Shows Root Category after successful login or login form with error messages.
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPerform(@Valid LoginFormBean loginFormBean,
+    public final String loginPerform(@Valid LoginFormBean loginFormBean,
                                BindingResult result, Model model) {
         boolean authorized = userService.authorize(loginFormBean);
         if (!result.hasErrors() && authorized) {
@@ -76,7 +76,7 @@ public class UserController {
      * @return List of all registered users.
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String getRegisteredUsers(Model model) {
+    public final String getRegisteredUsers(Model model) {
         List<UserAccount> users = userService.findAll();
         model.addAttribute("users", users);
         return "user/users";
@@ -90,7 +90,7 @@ public class UserController {
      * @return Formular for entering Email-Address for Registration
      */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registerNewUserRequestForm(Model model) {
+    public final String registerNewUserRequestForm(Model model) {
         RegisterFormBean registerFormBean = new RegisterFormBean();
         model.addAttribute("registerFormBean", registerFormBean);
         return "user/registerForm";
@@ -105,7 +105,7 @@ public class UserController {
      * @return info page at success or return to form with error messages.
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerNewUserRequestStoreAndSendEmailForVerification(@Valid RegisterFormBean registerFormBean,
+    public final String registerNewUserRequestStoreAndSendEmailForVerification(@Valid RegisterFormBean registerFormBean,
                                                                          BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/registerForm";
@@ -142,8 +142,8 @@ public class UserController {
      * @return Formular for Entering Account Data or Error Messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
-    public String registerNewUserCheckResponseAndRegistrationForm(@PathVariable String confirmId, Model model) {
-        logger.info("GET /confirm/" + confirmId);
+    public final String registerNewUserCheckResponseAndRegistrationForm(@PathVariable String confirmId, Model model) {
+        LOGGER.info("GET /confirm/" + confirmId);
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
             registrationProcessService.registratorClickedInEmail(o);
@@ -166,10 +166,10 @@ public class UserController {
      * @return login page at success or page with error messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
-    public String registerNewUserCheckResponseAndRegistrationStore(@PathVariable String confirmId,
+    public final String registerNewUserCheckResponseAndRegistrationStore(@PathVariable String confirmId,
                                                                    @Valid UserAccountFormBean userAccountFormBean,
                                                                    BindingResult result, Model model) {
-        logger.info("POST /confirm/" + confirmId + " : " + userAccountFormBean.toString());
+        LOGGER.info("POST /confirm/" + confirmId + " : " + userAccountFormBean.toString());
         registrationProcessService.checkIfResponseIsInTime(userAccountFormBean.getUserEmail());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
@@ -201,7 +201,7 @@ public class UserController {
      * @return a Formular for entering the email-adress.
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    public String passwordForgottenForm(Model model) {
+    public final String passwordForgottenForm(Model model) {
         RegisterFormBean registerFormBean = new RegisterFormBean();
         model.addAttribute("registerFormBean", registerFormBean);
         return "user/resetPasswordForm";
@@ -216,19 +216,19 @@ public class UserController {
      * @return info page if without errors or formular again displaying error messages.
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String passwordForgottenPost(@Valid RegisterFormBean registerFormBean,
+    public final String passwordForgottenPost(@Valid RegisterFormBean registerFormBean,
                                         BindingResult result, Model model) {
         if (result.hasErrors()) {
-            logger.info("----------------------");
-            logger.info(registerFormBean.toString());
-            logger.info(result.toString());
-            logger.info(model.toString());
-            logger.info("----------------------");
+            LOGGER.info("----------------------");
+            LOGGER.info(registerFormBean.toString());
+            LOGGER.info(result.toString());
+            LOGGER.info(model.toString());
+            LOGGER.info("----------------------");
             return "user/resetPasswordForm";
         } else {
-            logger.info(registerFormBean.toString());
-            logger.info(result.toString());
-            logger.info(model.toString());
+            LOGGER.info(registerFormBean.toString());
+            LOGGER.info(result.toString());
+            LOGGER.info(model.toString());
             if (userService.findByUserEmail(registerFormBean.getEmail()) == null) {
                 String objectName = "registerFormBean";
                 String field = "email";
@@ -252,7 +252,7 @@ public class UserController {
      * @return a Formular for entering the new Password.
      */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
-    public String enterNewPasswordFormular(@PathVariable String confirmId, Model model) {
+    public final String enterNewPasswordFormular(@PathVariable String confirmId, Model model) {
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
             registrationProcessService.usersPasswordChangeClickedInEmail(o);
@@ -277,8 +277,10 @@ public class UserController {
      * @return Info Page for success or back to formular with error messages.
      */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
-    public String enterNewPasswordPost(@Valid UserAccountFormBean userAccountFormBean, BindingResult result,
-                                       @PathVariable String confirmId, Model model) {
+    public final String enterNewPasswordPost(@Valid UserAccountFormBean userAccountFormBean,
+                                       BindingResult result,
+                                       @PathVariable String confirmId,
+                                       Model model) {
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
         if (o != null) {

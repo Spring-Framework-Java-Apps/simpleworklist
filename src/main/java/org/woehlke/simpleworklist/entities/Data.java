@@ -17,7 +17,12 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"uuid", "categoryId"}))
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "uuid",
+                "categoryId"
+        })
+)
 public class Data {
 
     @Id
