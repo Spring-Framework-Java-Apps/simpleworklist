@@ -14,18 +14,6 @@
         <class>org.woehlke.simpleworklist.entities.RegistrationProcess</class>
         <class>org.woehlke.simpleworklist.entities.UserAccount</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-
-            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
-            <property name="hibernate.show_sql" value="false"/>
-            <property name="hibernate.generate_statistics" value="true"/>
-            <property name="jpa.showSql" value="false"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-            <property name="jpa.database" value="MYSQL"/>
-
-        </properties>
     </persistence-unit>
 
 </persistence>
