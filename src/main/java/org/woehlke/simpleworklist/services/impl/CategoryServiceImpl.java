@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.services.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
@@ -12,88 +11,76 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.Category;
-import org.woehlke.simpleworklist.entities.Data;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.repository.CategoryRepository;
-import org.woehlke.simpleworklist.repository.DataRepository;
 import org.woehlke.simpleworklist.services.CategoryService;
 
 @Service
-@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
-	
-	@Inject
-	private CategoryRepository categoryNodeRepository;
-	
-	public List<Category> getBreadcrumb(Category thisCategory){
-		List<Category> breadcrumb = new ArrayList<Category>();
-		Stack<Category> stack = new Stack<Category>();
-		Category breadcrumbCategory = thisCategory;
-		while(breadcrumbCategory != null){
-			stack.push(breadcrumbCategory);
-			breadcrumbCategory=breadcrumbCategory.getParent();
-		}
-		while (!stack.empty()){
-			breadcrumb.add(stack.pop());
-		}
-		return breadcrumb;
-	}
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
-	@Override
-	public List<Category> findByParentIsNull(UserAccount userAccount) {
-		return categoryNodeRepository.findByParentIsNullAndUserAccount(userAccount);
-	}
+    @Inject
+    private CategoryRepository categoryRepository;
 
-	@Override
-	public Category findOne(long nodeId) {
-		return categoryNodeRepository.findOne(nodeId);
-	}
+    public List<Category> getBreadcrumb(Category thisCategory) {
+        List<Category> breadcrumb = new ArrayList<Category>();
+        Stack<Category> stack = new Stack<Category>();
+        Category breadcrumbCategory = thisCategory;
+        while (breadcrumbCategory != null) {
+            stack.push(breadcrumbCategory);
+            breadcrumbCategory = breadcrumbCategory.getParent();
+        }
+        while (!stack.empty()) {
+            breadcrumb.add(stack.pop());
+        }
+        return breadcrumb;
+    }
 
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public Category saveAndFlush(Category entity) {
-		return categoryNodeRepository.saveAndFlush(entity);
-	}
+    @Override
+    public List<Category> findRootCategoriesByUserAccount(UserAccount userAccount) {
+        return categoryRepository.findByParentIsNullAndUserAccount(userAccount);
+    }
 
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void deleteAll() {
-		List<Category> root = categoryNodeRepository.findByParentIsNull();
-		for(Category rootCategory :root){
-			categoryNodeRepository.delete(rootCategory.getId());
-		}
-	}
+    @Override
+    public Category findByCategoryId(long categoryId) {
+        return categoryRepository.findOne(categoryId);
+    }
 
-	@Override
-	public List<Category> findAll(UserAccount userAccount) {
-		return categoryNodeRepository.findByUserAccount(userAccount);
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Category saveAndFlush(Category entity) {
+        return categoryRepository.saveAndFlush(entity);
+    }
 
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void delete(Category thisCategory) {
-		Category oldParent = thisCategory.getParent();
-		if(oldParent!=null){
-			oldParent.getChildren().remove(thisCategory);
-			categoryNodeRepository.saveAndFlush(oldParent);
-		}
-		categoryNodeRepository.delete(thisCategory);
-	}
+    @Override
+    public List<Category> findAllByUserAccount(UserAccount userAccount) {
+        return categoryRepository.findByUserAccount(userAccount);
+    }
 
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void moveCategoryToAnotherCategory(Category thisCategory,
-			Category targetCategory) {
-		Category oldParent = thisCategory.getParent();
-		if(oldParent!=null){
-			oldParent.getChildren().remove(thisCategory);
-			categoryNodeRepository.saveAndFlush(oldParent);
-		}
-		thisCategory.setParent(targetCategory);
-		categoryNodeRepository.saveAndFlush(thisCategory);
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void delete(Category thisCategory) {
+        Category oldParent = thisCategory.getParent();
+        if (oldParent != null) {
+            oldParent.getChildren().remove(thisCategory);
+            categoryRepository.saveAndFlush(oldParent);
+        }
+        categoryRepository.delete(thisCategory);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveCategoryToAnotherCategory(Category thisCategory,
+                                              Category targetCategory) {
+        Category oldParent = thisCategory.getParent();
+        if (oldParent != null) {
+            oldParent.getChildren().remove(thisCategory);
+            categoryRepository.saveAndFlush(oldParent);
+        }
+        thisCategory.setParent(targetCategory);
+        categoryRepository.saveAndFlush(thisCategory);
+    }
 }

@@ -8,13 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.woehlke.simpleworklist.entities.Category;
 import org.woehlke.simpleworklist.entities.Data;
 
-public interface DataRepository extends JpaRepository<Data,Long> {
-	
-	List<Data> findByCategoryIsNull();
-	
-	List<Data> findByCategory(Category thisCategory);
-	
-	Page<Data> findByCategoryIsNull(Pageable pageable);
-	
-	Page<Data> findByCategory(Category thisCategory,Pageable pageable);
+public interface DataRepository extends JpaRepository<Data, Long> {
+
+    List<Data> findByCategory(Category thisCategory);
+
+    Page<Data> findByCategoryIsNull(Pageable pageable);
+
+    Page<Data> findByCategory(Category thisCategory, Pageable pageable);
 }

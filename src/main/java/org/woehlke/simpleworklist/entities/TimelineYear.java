@@ -9,57 +9,57 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"year"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"year"}))
 public class TimelineYear {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
-	
-	@Column(nullable=false)
-	private int year;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(nullable = false)
+    private int year;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public int getYear() {
-		return year;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setYear(int year) {
-		this.year = year;
-	}
+    public int getYear() {
+        return year;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + year;
-		return result;
-	}
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TimelineYear other = (TimelineYear) obj;
-		if (year != other.year)
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + year;
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		return "TimelineYear [id=" + id + ", year=" + year + "]";
-	}
-	
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TimelineYear other = (TimelineYear) obj;
+        if (year != other.year)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "TimelineYear [id=" + id + ", year=" + year + "]";
+    }
+
 }

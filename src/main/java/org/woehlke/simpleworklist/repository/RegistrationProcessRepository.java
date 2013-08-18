@@ -5,6 +5,7 @@ import org.woehlke.simpleworklist.entities.RegistrationProcess;
 
 public interface RegistrationProcessRepository extends JpaRepository<RegistrationProcess, Long> {
 
-	RegistrationProcess findByToken(String confirmId);
-	RegistrationProcess findByEmail(String email);
+    RegistrationProcess findByToken(String confirmId);
+
+    RegistrationProcess findByEmail(String email);
 }

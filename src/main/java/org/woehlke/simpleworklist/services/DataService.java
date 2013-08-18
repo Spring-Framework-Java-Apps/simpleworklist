@@ -7,18 +7,16 @@ import org.woehlke.simpleworklist.entities.Data;
 
 public interface DataService {
 
-	Page<Data> findByCategory(Category thisCategory, Pageable request);
+    Page<Data> findByCategory(Category thisCategory, Pageable request);
 
-	Page<Data> findByCategoryIsNull(Pageable request);
+    Page<Data> findByRootCategory(Pageable request);
 
-	Data findOne(long dataId);
+    Data findOne(long dataId);
 
-	Data saveAndFlush(Data persistentData);
+    Data saveAndFlush(Data persistentData);
 
-	void delete(Data data);
-	
-	void deleteAll();
+    void delete(Data data);
 
-    boolean hasNoData(Category category);
+    boolean categoryHasNoData(Category category);
 
 }

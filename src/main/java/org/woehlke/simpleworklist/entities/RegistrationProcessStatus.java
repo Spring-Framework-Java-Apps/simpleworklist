@@ -4,16 +4,16 @@ import javax.persistence.Enumerated;
 
 public enum RegistrationProcessStatus {
 
-	@Enumerated
+    @Enumerated
     REGISTRATION_SAVED_EMAIL,
-	
-	@Enumerated
+
+    @Enumerated
     REGISTRATION_SENT_MAIL,
 
     @Enumerated
     REGISTRATION_CLICKED_IN_MAIL,
 
-	@Enumerated
+    @Enumerated
     REGISTRATION_ACCOUNT_CREATED,
 
     @Enumerated

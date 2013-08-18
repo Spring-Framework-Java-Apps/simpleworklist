@@ -22,20 +22,34 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration("classpath:/test-context.xml")
 public class UserControllerTest {
 
-	@Inject
-	protected WebApplicationContext wac;
-	
-	private MockMvc mockMvc;
-	
-	@Before
-	public void setup() throws Exception {
-		this.mockMvc = webAppContextSetup(wac).build();
-	}
-	
-	@Test
-	public void testLoginFormular() throws Exception {
-		this.mockMvc.perform(
-				get("/login")).andDo(print())
-				.andExpect(view().name(containsString("user/loginForm")));
-	} 
+    @Inject
+    protected WebApplicationContext wac;
+
+    private MockMvc mockMvc;
+
+    @Before
+    public void setup() throws Exception {
+        this.mockMvc = webAppContextSetup(wac).build();
+    }
+
+    @Test
+    public void testLoginFormular() throws Exception {
+        this.mockMvc.perform(
+                get("/login")).andDo(print())
+                .andExpect(view().name(containsString("user/loginForm")));
+    }
+
+    @Test
+    public void testSignInFormularEmail() throws Exception {
+        this.mockMvc.perform(
+                get("/register")).andDo(print())
+                .andExpect(view().name(containsString("user/registerForm")));
+    }
+
+    @Test
+    public void testSignInFormularAccount() throws Exception {
+        this.mockMvc.perform(
+                get("/confirm/ASDF")).andDo(print())
+                .andExpect(view().name(containsString("user/registerNotConfirmed")));
+    }
 }

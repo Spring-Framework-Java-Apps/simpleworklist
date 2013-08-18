@@ -9,54 +9,47 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Category;
 import org.woehlke.simpleworklist.entities.Data;
-import org.woehlke.simpleworklist.repository.CategoryRepository;
 import org.woehlke.simpleworklist.repository.DataRepository;
 import org.woehlke.simpleworklist.services.DataService;
 
 @Service
-@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class DataServiceImpl implements DataService {
-	
-	@Inject
-	private DataRepository dataLeafRepository;
 
-	@Override
-	public Page<Data> findByCategory(Category thisCategory,
-			Pageable request) {
-		return dataLeafRepository.findByCategory(thisCategory, request);
-	}
-
-	@Override
-	public Page<Data> findByCategoryIsNull(Pageable request) {
-		return dataLeafRepository.findByCategoryIsNull(request);
-	}
-
-	@Override
-	public Data findOne(long dataId) {
-		return dataLeafRepository.findOne(dataId);
-	}
-
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public Data saveAndFlush(Data entity) {
-		return dataLeafRepository.saveAndFlush(entity);
-	}
-
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void delete(Data data) {
-		dataLeafRepository.delete(data);
-	}
-
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void deleteAll() {
-		dataLeafRepository.deleteAll();
-	}
+    @Inject
+    private DataRepository dataRepository;
 
     @Override
-    public boolean hasNoData(Category category) {
-        return dataLeafRepository.findByCategory(category).isEmpty();
+    public Page<Data> findByCategory(Category thisCategory,
+                                     Pageable request) {
+        return dataRepository.findByCategory(thisCategory, request);
     }
-	
+
+    @Override
+    public Page<Data> findByRootCategory(Pageable request) {
+        return dataRepository.findByCategoryIsNull(request);
+    }
+
+    @Override
+    public Data findOne(long dataId) {
+        return dataRepository.findOne(dataId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Data saveAndFlush(Data entity) {
+        return dataRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void delete(Data data) {
+        dataRepository.delete(data);
+    }
+
+    @Override
+    public boolean categoryHasNoData(Category category) {
+        return dataRepository.findByCategory(category).isEmpty();
+    }
+
 }

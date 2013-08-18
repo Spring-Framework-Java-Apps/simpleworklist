@@ -17,123 +17,123 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"uuid","categoryId"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"uuid", "categoryId"}))
 public class Data {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
-	
-	@Column(nullable=false)
-	private String uuid = UUID.randomUUID().toString();
-	
-	@ManyToOne
-	@JoinColumn(name="categoryId")
-	private Category category;
-	
-	@ManyToOne
-	private TimelineDay created;
-	
-	@ManyToOne
-	private TimelineDay changed;
-	
-	@SafeHtml
-	@NotBlank
-	@Column(nullable=false)
-	private String title;
-	
-	@SafeHtml
-	@NotBlank
-	@Column(nullable=false)
-	private String text;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(nullable = false)
+    private String uuid = UUID.randomUUID().toString();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
 
-	public String getUuid() {
-		return uuid;
-	}
+    @ManyToOne
+    private TimelineDay created;
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
+    @ManyToOne
+    private TimelineDay changed;
 
-	public Category getCategory() {
-		return category;
-	}
+    @SafeHtml
+    @NotBlank
+    @Column(nullable = false)
+    private String title;
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+    @SafeHtml
+    @NotBlank
+    @Column(nullable = false)
+    private String text;
 
-	public TimelineDay getCreated() {
-		return created;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setCreated(TimelineDay created) {
-		this.created = created;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public TimelineDay getChanged() {
-		return changed;
-	}
+    public String getUuid() {
+        return uuid;
+    }
 
-	public void setChanged(TimelineDay changed) {
-		this.changed = changed;
-	}
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public Category getCategory() {
+        return category;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public TimelineDay getCreated() {
+        return created;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setCreated(TimelineDay created) {
+        this.created = created;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
-		return result;
-	}
+    public TimelineDay getChanged() {
+        return changed;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Data other = (Data) obj;
-		if (uuid == null) {
-			if (other.uuid != null)
-				return false;
-		} else if (!uuid.equals(other.uuid))
-			return false;
-		return true;
-	}
+    public void setChanged(TimelineDay changed) {
+        this.changed = changed;
+    }
 
-	@Override
-	public String toString() {
-		return "DataLeaf [id=" + id + ", uuid=" + uuid + ", category="
-				+ category + ", created=" + created + ", changed=" + changed
-				+ ", title=" + title + ", text=" + text + ", hashCode()="
-				+ hashCode() + "]";
-	}
-	
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Data other = (Data) obj;
+        if (uuid == null) {
+            if (other.uuid != null)
+                return false;
+        } else if (!uuid.equals(other.uuid))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "DataLeaf [id=" + id + ", uuid=" + uuid + ", category="
+                + category + ", created=" + created + ", changed=" + changed
+                + ", title=" + title + ", text=" + text + ", hashCode()="
+                + hashCode() + "]";
+    }
+
 }

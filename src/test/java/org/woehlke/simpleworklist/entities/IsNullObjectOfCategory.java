@@ -8,14 +8,14 @@ import org.woehlke.simpleworklist.entities.Category;
 
 public class IsNullObjectOfCategory extends TypeSafeMatcher<Category> {
 
-	@Override
-	public void describeTo(Description description) {
-		description.appendText("Null Category Object");	
-	}
+    @Override
+    public void describeTo(Description description) {
+        description.appendText("Null Category Object");
+    }
 
-	@Override
-	protected boolean matchesSafely(Category item) {
-		return item.getId().longValue()==0;
-	}
+    @Override
+    protected boolean matchesSafely(Category item) {
+        return item.getId().longValue() == 0;
+    }
 
 }

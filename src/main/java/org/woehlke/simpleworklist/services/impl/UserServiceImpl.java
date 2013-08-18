@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.services.impl;
 
 
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,86 +23,80 @@ import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Service("userService")
-@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserServiceImpl implements UserService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
-	@Inject
-	private UserAccountRepository userAccountRepository;
 
-	public boolean isEmailAvailable(String email){
-		return (userAccountRepository.findByUserEmail(email) == null);
-	}
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void createUser(UserAccountFormBean userAccount,
-			RegistrationProcess o) {
-		UserAccount u = new UserAccount();
-		u.setUserEmail(userAccount.getUserEmail());
-		u.setUserFullname(userAccount.getUserFullname());
-		u.setUserPassword(userAccount.getUserPasswordEncoded());
-		logger.info("About to save "+u.toString());
-		u=userAccountRepository.saveAndFlush(u);
-		logger.info("Saved "+u.toString());
-	}
+    @Inject
+    private UserAccountRepository userAccountRepository;
 
-	@Override
-	public boolean authorize(LoginFormBean loginFormBean) {
-		return userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(),loginFormBean.getUserPassword())!=null;
-	}
-
-
-	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {	
-		UserAccount account =userAccountRepository.findByUserEmail(username);
-		if(account == null) throw new UsernameNotFoundException(username);
-		return new UserDetailsBean(account);
-	}
-	
-	public String retrieveUsername(){
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails) {
-		  return ((UserDetails)principal).getUsername();
-		} else {
-		  return principal.toString();
-		}
-	}
-
-	@Override
-	public UserAccount retrieveCurrentUser() throws UsernameNotFoundException {
-		String username = this.retrieveUsername();
-		UserAccount account =userAccountRepository.findByUserEmail(username);
-		if(account == null) throw new UsernameNotFoundException(username);
-		return account;
-	}
-
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public UserAccount saveAndFlush(UserAccount u) {
-		return userAccountRepository.saveAndFlush(u);
-	}
-
-	@Override
-	public UserAccount findByUserEmail(String userEmail) {
-		return userAccountRepository.findByUserEmail(userEmail);
-	}
-
-	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
-	public void deleteAll() {
-		userAccountRepository.deleteAll();
-	}
-
-	@Override
-	public List<UserAccount> findAll() {
-		return userAccountRepository.findAll();
-	}
+    public boolean isEmailAvailable(String email) {
+        return (userAccountRepository.findByUserEmail(email) == null);
+    }
 
     @Override
-    @Transactional(propagation=Propagation.REQUIRES_NEW,readOnly=false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void createUser(UserAccountFormBean userAccount,
+                           RegistrationProcess o) {
+        UserAccount u = new UserAccount();
+        u.setUserEmail(userAccount.getUserEmail());
+        u.setUserFullname(userAccount.getUserFullname());
+        u.setUserPassword(userAccount.getUserPasswordEncoded());
+        logger.info("About to save " + u.toString());
+        u = userAccountRepository.saveAndFlush(u);
+        logger.info("Saved " + u.toString());
+    }
+
+    @Override
+    public boolean authorize(LoginFormBean loginFormBean) {
+        return userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(), loginFormBean.getUserPassword()) != null;
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+        UserAccount account = userAccountRepository.findByUserEmail(username);
+        if (account == null) throw new UsernameNotFoundException(username);
+        return new UserDetailsBean(account);
+    }
+
+    public String retrieveUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else {
+            return principal.toString();
+        }
+    }
+
+    @Override
+    public UserAccount retrieveCurrentUser() throws UsernameNotFoundException {
+        String username = this.retrieveUsername();
+        UserAccount account = userAccountRepository.findByUserEmail(username);
+        if (account == null) throw new UsernameNotFoundException(username);
+        return account;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public UserAccount saveAndFlush(UserAccount u) {
+        return userAccountRepository.saveAndFlush(u);
+    }
+
+    @Override
+    public UserAccount findByUserEmail(String userEmail) {
+        return userAccountRepository.findByUserEmail(userEmail);
+    }
+
+    @Override
+    public List<UserAccount> findAll() {
+        return userAccountRepository.findAll();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void changeUsersPassword(UserAccountFormBean userAccount, RegistrationProcess o) {
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
         ua.setUserPassword(userAccount.getUserPasswordEncoded());
