@@ -56,7 +56,7 @@ public class Category {
     @Column(nullable = true)
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = { CascadeType.ALL })
     private List<Category> children = new ArrayList<Category>();
 
     @Transient

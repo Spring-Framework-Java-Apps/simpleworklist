@@ -1,8 +1,7 @@
 package org.woehlke.simpleworklist.entities;
 
-import java.util.Date;
-
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
