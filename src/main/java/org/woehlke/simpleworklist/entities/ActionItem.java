@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.SafeHtml;
                 "categoryId"
         })
 )
-public class Data {
+public class ActionItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -124,7 +124,7 @@ public class Data {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Data other = (Data) obj;
+        ActionItem other = (ActionItem) obj;
         if (uuid == null) {
             if (other.uuid != null)
                 return false;

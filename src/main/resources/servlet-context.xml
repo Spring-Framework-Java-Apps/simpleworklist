@@ -30,7 +30,7 @@
 	    <list>
 	      <value>/WEB-INF/layout/tiles.xml</value>
 	      <value>/WEB-INF/views/category/tiles.xml</value>
-	      <value>/WEB-INF/views/data/tiles.xml</value>
+	      <value>/WEB-INF/views/actionItem/tiles.xml</value>
 	      <value>/WEB-INF/views/user/tiles.xml</value>
 	    </list>
 	  </property>

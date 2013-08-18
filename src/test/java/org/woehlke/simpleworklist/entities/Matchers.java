@@ -2,8 +2,6 @@ package org.woehlke.simpleworklist.entities;
 
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
-import org.woehlke.simpleworklist.entities.Category;
-import org.woehlke.simpleworklist.entities.Data;
 
 public class Matchers {
 
@@ -23,14 +21,17 @@ public class Matchers {
     }
 
     @Factory
-    public static <T> Matcher<Data> dataNullObject() {
-        return new IsNullObjectOfData();
+    public static <T> Matcher<ActionItem> actionItemNullObject() {
+        return new IsNullObjectOfActionItem();
     }
 
     @Factory
-    public static <T> Matcher<Data> dataNotNullObject() {
-        return new IsNotNullObjectOfData();
+    public static <T> Matcher<ActionItem> actionItemNotNullObject() {
+        return new IsNotNullObjectOfActionItem();
     }
 
-
+    @Factory
+    public static <T> Matcher<ActionItem> actionItemSameIdObject(long id) {
+        return new IsSameObjectOfActionItem(id);
+    }
 }

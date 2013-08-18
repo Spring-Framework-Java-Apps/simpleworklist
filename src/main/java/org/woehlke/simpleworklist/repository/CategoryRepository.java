@@ -8,6 +8,8 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+    List<Category> findByParentIsNull();
+
     List<Category> findByParentIsNullAndUserAccount(UserAccount userAccount);
 
     List<Category> findByUserAccount(UserAccount userAccount);

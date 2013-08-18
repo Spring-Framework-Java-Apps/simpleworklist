@@ -11,17 +11,17 @@
 				<c:if test="${! empty dataList}">
 				<div>
 					<table class="table table-striped">
-					<c:forEach items="${dataList}" var="data">
+					<c:forEach items="${dataList}" var="actionItem">
 					<tr><td>
-						<a href='<c:url value="/data/detail/${data.id}"/>' class="dataDetailListTitle"
-						id="dataDetail_${data.id}" ><c:out
-								value="${data.title}" /></a>
+						<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
+						id="dataDetail_${actionItem.id}" ><c:out
+								value="${actionItem.title}" /></a>
 					</td>
 					<td>
-						<a href='<c:url value="/data/move/${data.id}"/>'>Move</a>	
+						<a href='<c:url value="/actionItem/move/${actionItem.id}"/>'>Move</a>
 					</td>
 					<td>
-						<a href='<c:url value="/data/delete/${data.id}"/>'>Delete</a>	
+						<a href='<c:url value="/actionItem/delete/${actionItem.id}"/>'>Delete</a>
 					</td>
 					</tr>
 					</c:forEach>

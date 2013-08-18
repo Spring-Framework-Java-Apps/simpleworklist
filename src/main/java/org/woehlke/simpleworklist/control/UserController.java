@@ -139,7 +139,7 @@ public class UserController {
      *
      * @param confirmId
      * @param model
-     * @return Formular for Entering Account Data or Error Messages.
+     * @return Formular for Entering Account ActionItem or Error Messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerNewUserCheckResponseAndRegistrationForm(@PathVariable String confirmId, Model model) {
@@ -157,7 +157,7 @@ public class UserController {
     }
 
     /**
-     * Saving Account Data from Formular and forward to login page.
+     * Saving Account ActionItem from Formular and forward to login page.
      *
      * @param userAccountFormBean
      * @param result
@@ -175,7 +175,7 @@ public class UserController {
         if (o != null) {
             boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
             if (!result.hasErrors() && passwordsMatch) {
-                userService.createUser(userAccountFormBean, o);
+                userService.createUser(userAccountFormBean);
                 registrationProcessService.userCreated(o);
                 return "user/registerDone";
             } else {
@@ -285,7 +285,7 @@ public class UserController {
         boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
-                userService.changeUsersPassword(userAccountFormBean, o);
+                userService.changeUsersPassword(userAccountFormBean);
                 registrationProcessService.usersPasswordChanged(o);
                 return "user/resetPasswordDone";
             } else {

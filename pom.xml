@@ -344,6 +344,7 @@
             <url>https://github.com/phasenraum2010/simpleworklist</url>
         </developer>
     </developers>
+
 	<build>
 		<plugins>
 			<plugin>

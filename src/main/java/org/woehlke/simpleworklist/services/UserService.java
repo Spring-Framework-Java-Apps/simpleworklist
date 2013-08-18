@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
@@ -13,7 +12,7 @@ public interface UserService extends UserDetailsService {
 
     boolean isEmailAvailable(String email);
 
-    void createUser(UserAccountFormBean userAccount, RegistrationProcess o);
+    void createUser(UserAccountFormBean userAccount);
 
     boolean authorize(LoginFormBean loginFormBean);
 
@@ -27,5 +26,5 @@ public interface UserService extends UserDetailsService {
 
     List<UserAccount> findAll();
 
-    void changeUsersPassword(UserAccountFormBean userAccount, RegistrationProcess o);
+    void changeUsersPassword(UserAccountFormBean userAccount);
 }

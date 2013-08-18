@@ -3,12 +3,12 @@
 
 <tiles-definitions>
 
-	<definition name="data/add" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/data/add.jsp" />
+	<definition name="actionItem/add" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/actionItem/add.jsp" />
 	</definition>
 
-	<definition name="data/show" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/data/show.jsp" />
+	<definition name="actionItem/show" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/actionItem/show.jsp" />
 	</definition>
 
 </tiles-definitions>

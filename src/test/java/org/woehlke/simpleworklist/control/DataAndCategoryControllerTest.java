@@ -33,10 +33,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.entities.Category;
-import org.woehlke.simpleworklist.entities.Data;
+import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.CategoryService;
-import org.woehlke.simpleworklist.services.DataService;
+import org.woehlke.simpleworklist.services.ActionItemService;
 import org.woehlke.simpleworklist.services.TestHelperService;
 import org.woehlke.simpleworklist.services.UserService;
 
@@ -57,7 +57,7 @@ public class DataAndCategoryControllerTest {
     private UserService userService;
 
     @Inject
-    private DataService dataService;
+    private ActionItemService actionItemService;
 
     @Inject
     private CategoryService categoryService;
@@ -80,6 +80,16 @@ public class DataAndCategoryControllerTest {
         }
     }
 
+    private void deleteAll(){
+        testHelperService.deleteAllRegistrationProcess();
+        testHelperService.deleteAllActionItem();
+        testHelperService.deleteAllCategory();
+        testHelperService.deleteUserAccount();
+        testHelperService.deleteTimelineDay();
+        testHelperService.deleteTimelineMonth();
+        testHelperService.deleteTimelineYear();
+    }
+
     @Before
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(wac).build();
@@ -94,7 +104,6 @@ public class DataAndCategoryControllerTest {
     @After
     public void clearContext() {
         SecurityContextHolder.clearContext();
-        testHelperService.deleteAll();
     }
 
     private void makeActiveUser(String username) {
@@ -155,6 +164,13 @@ public class DataAndCategoryControllerTest {
         UserAccount user = userService.retrieveCurrentUser();
         List<Category> rootCategories = categoryService.findRootCategoriesByUserAccount(user);
         Assert.assertTrue(rootCategories.size() > 0);
+        for(Category rootCategory:rootCategories){
+            Assert.assertTrue(rootCategory.isRootCategory());
+            for(Category child:rootCategory.getChildren()){
+                Assert.assertFalse(child.isRootCategory());
+                Assert.assertEquals(child.getParent().getId().longValue(),rootCategory.getId().longValue());
+            }
+        }
     }
 
     @Test
@@ -266,17 +282,17 @@ public class DataAndCategoryControllerTest {
         int pageNr = 0;
         int pageSize = 10;
         Pageable request = new PageRequest(pageNr, pageSize);
-        Page<Data> all = dataService.findByRootCategory(request);
-        for (Data data : all.getContent()) {
+        Page<ActionItem> all = actionItemService.findByRootCategory(request);
+        for (ActionItem actionItem : all.getContent()) {
             this.mockMvc.perform(
-                    get("/data/detail/" + data.getId())).andDo(print())
+                    get("/actionItem/detail/" + actionItem.getId())).andDo(print())
                     .andExpect(model().attributeExists("thisCategory"))
                     .andExpect(model().attributeExists("breadcrumb"))
                     .andExpect(model().attributeExists("command"))
                     .andExpect(model().attribute("command", notNullValue()))
-                    .andExpect(model().attribute("command", instanceOf(Data.class)))
+                    .andExpect(model().attribute("command", instanceOf(ActionItem.class)))
                     .andExpect(model().attribute("command", hasProperty("id")))
-                    .andExpect(model().attribute("command", is(dataNotNullObject())));
+                    .andExpect(model().attribute("command", is(actionItemNotNullObject())));
         }
     }
 
@@ -284,13 +300,22 @@ public class DataAndCategoryControllerTest {
     public void testNewDataLeafForRootCategoryNode() throws Exception {
         makeActiveUser(emails[0]);
         this.mockMvc.perform(
-                get("/data/addtocategory/0")).andDo(print())
+                get("/actionItem/addtocategory/0")).andDo(print())
                 .andExpect(model().attributeExists("thisCategory"))
                 .andExpect(model().attributeExists("breadcrumb"))
                 .andExpect(model().attribute("thisCategory", notNullValue()))
                 .andExpect(model().attribute("thisCategory", instanceOf(Category.class)))
                 .andExpect(model().attribute("thisCategory", hasProperty("id")))
                 .andExpect(model().attribute("thisCategory", is(categoryNullObject())));
+    }
+
+    @Test
+    public void testEditDataFormCategory0() throws Exception {
+    }
+
+    @Test
+    public void testEditDataFormCategory() throws Exception {
+        deleteAll();
     }
 
 }

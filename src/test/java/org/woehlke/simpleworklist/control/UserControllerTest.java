@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import org.woehlke.simpleworklist.entities.UserAccount;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +27,21 @@ public class UserControllerTest {
     protected WebApplicationContext wac;
 
     private MockMvc mockMvc;
+
+    private static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};
+    private static String passwords[] = {"test01pwd", "test02pwd", "test03pwd"};
+    private static String fullnames[] = {"test01 Name", "test02 Name", "test03 Name"};
+
+    private static UserAccount testUser[] = new UserAccount[emails.length];
+
+    static {
+        for (int i = 0; i < testUser.length; i++) {
+            testUser[i] = new UserAccount();
+            testUser[i].setUserEmail(emails[i]);
+            testUser[i].setUserPassword(passwords[i]);
+            testUser[i].setUserFullname(fullnames[i]);
+        }
+    }
 
     @Before
     public void setup() throws Exception {
@@ -52,4 +68,28 @@ public class UserControllerTest {
                 get("/confirm/ASDF")).andDo(print())
                 .andExpect(view().name(containsString("user/registerNotConfirmed")));
     }
+
+    @Test
+    public void testResetPasswordEmailForm() throws Exception {
+        this.mockMvc.perform(
+                get("/confirm/ASDF")).andDo(print())
+                .andExpect(view().name(containsString("user/registerNotConfirmed")));
+    }
+
+
+    @Test
+    public void testResetPassword() throws Exception {
+        this.mockMvc.perform(
+                get("/resetPassword")).andDo(print())
+                .andExpect(view().name(containsString("user/resetPasswordForm")));
+    }
+
+    @Test
+    public void testEnterNewPasswordFormular() throws Exception {
+        this.mockMvc.perform(
+                get("/passwordResetConfirm/ASDF")).andDo(print())
+                .andExpect(view().name(containsString("user/resetPasswordNotConfirmed")));
+    }
+
+
 }

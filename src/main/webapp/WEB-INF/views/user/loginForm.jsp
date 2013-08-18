@@ -20,7 +20,7 @@
                 			</div>
                 		</div>
                 		<div class="controls">
-                		<input id="loginButton" type="submit" name="data" value="Login" class="btn btn-primary"/>
+                		<input id="loginButton" type="submit" name="actionItem" value="Login" class="btn btn-primary"/>
                 		</div>
             		</form>
                     <a href='<c:url value="/resetPassword"/>'>Password forgotten?</a>

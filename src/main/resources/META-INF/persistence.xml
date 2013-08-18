@@ -6,7 +6,7 @@
 
 	<persistence-unit name="simpleListWorkerPU">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>org.woehlke.simpleworklist.entities.Data</class>
+		<class>org.woehlke.simpleworklist.entities.ActionItem</class>
         <class>org.woehlke.simpleworklist.entities.Category</class>
         <class>org.woehlke.simpleworklist.entities.TimelineDay</class>
         <class>org.woehlke.simpleworklist.entities.TimelineMonth</class>

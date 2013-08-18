@@ -18,7 +18,7 @@
         <form:hidden path="userFullname"/>
         <form:hidden path="userEmail"/>
         <div class="controls">
-            <input id="createNewDataLeaf" type="submit" name="data" value="Confirm Registration"/>
+            <input id="createNewDataLeaf" type="submit" name="actionItem" value="Confirm Registration"/>
         </div>
     </form:form>
 </div>

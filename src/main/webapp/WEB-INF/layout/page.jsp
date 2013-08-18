@@ -24,7 +24,7 @@
 							href='<c:url value="/category/addchild/${thisCategory.id}"/>'>New
 								Category</a></li>
 						<li><a
-							href='<c:url value="/data/addtocategory/${thisCategory.id}"/>'>New
+							href='<c:url value="/actionItem/addtocategory/${thisCategory.id}"/>'>New
 								Data</a></li>
 						<li class="active"><strong>Show Category</strong></li>
 				</ul>
@@ -100,7 +100,7 @@
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
 					if(draggableType == "dataDetail"){
-						rootUrl += '<c:url value="/data"/>';	
+						rootUrl += '<c:url value="/actionItem"/>';
 					} else {
 						rootUrl += '<c:url value="/category"/>';
 					}

@@ -1,18 +1,49 @@
+SimpleWorklist
+
+    Worklists can be ordered by Action Items and hierarchical Categories in a Multiuser Webapp.
+
+    Software-Stack: {{{http://docs.oracle.com/javaee/6/tutorial/doc/}Java EE}}, {{{http://www.springsource.org/spring-data/jpa}JPA}}, {{{http://www.springsource.org/spring-framework}Spring Frameworks}}, {{{http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html}Spring MVC}}, {{{http://getbootstrap.com/2.3.2/}Twitter Bootstrap}}, {{{http://jquery.com/}jQuery}}, HTML5
+
+    Repository: {{https://github.com/phasenraum2010/simpleworklist}}
+
+* Use Cases
+
+** User
 
 [img/Use_Cases_User.jpg] Figure Use Cases User
 
-[img/Use_Cases_Data.jpg] Figure Use Cases Data
+** Action Items and Categories
 
-[img/Register_New_User_Request.jpg] Figure Register_New_User_Request
+[img/Use_Cases_Data.jpg] Figure Use Cases Action Items and Categories
 
-[img/Register_New_User_Perform.jpg] Figure Register_New_User_Request
+** Use Case: New User
 
-[img/Passwort_Recovery_Request.jpg] Figure Passwort_Recovery_Request
+[img/Register_New_User_Request.jpg] Figure Register New User Request
 
-[img/Passwort_Recovery_Perform.jpg] Figure Passwort_Recovery_Perform
+[img/Register_New_User_Perform.jpg] Figure Register New User Request
+
+** Use Case: Passwort Recovery
+
+[img/Passwort_Recovery_Request.jpg] Figure Passwort Recovery Request
+
+[img/Passwort_Recovery_Perform.jpg] Figure Passwort Recovery Perform
+
+* Domain Model
+
+** Entities
 
 [img/Domain_Model.jpg] Figure Domain Model
 
-[img/Domain_Model_Details.jpg] Figure Domain Model Details
+** Services
 
 [img/Service_Model.jpg] Figure Service Model
+
+* Domain Model Details
+
+**  Entities Details
+
+[img/Domain_Model_Details.jpg] Figure Domain Model Details
+
+**  Services Details
+
+[img/Service_Model_Details.jpg] Figure Domain Model Details

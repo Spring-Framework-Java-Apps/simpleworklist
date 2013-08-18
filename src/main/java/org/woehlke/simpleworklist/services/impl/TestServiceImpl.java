@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.Category;
-import org.woehlke.simpleworklist.entities.Data;
+import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.repository.ActionItemRepository;
 import org.woehlke.simpleworklist.repository.CategoryRepository;
-import org.woehlke.simpleworklist.repository.DataRepository;
 import org.woehlke.simpleworklist.services.TestService;
 
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ public class TestServiceImpl implements TestService {
     private CategoryRepository categoryNodeRepository;
 
     @Inject
-    private DataRepository dataLeafRepository;
+    private ActionItemRepository dataLeafRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
@@ -109,7 +109,7 @@ public class TestServiceImpl implements TestService {
         for (int i = 10; i < 111; i++) {
             String title = "t_" + i;
             String text = "d_" + i;
-            Data d = new Data();
+            ActionItem d = new ActionItem();
             d.setText(text);
             d.setTitle(title);
             d.setCategory(c02020303);

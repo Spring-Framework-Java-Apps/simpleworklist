@@ -8,6 +8,6 @@
         </div>
     </div>
 	<div class="controls">
-   		<input id="createNewDataLeaf" type="submit" name="data" value="Register" class="btn btn-primary"/>
+   		<input id="createNewDataLeaf" type="submit" name="actionItem" value="Register" class="btn btn-primary"/>
 	</div>
 </form:form>

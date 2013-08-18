@@ -28,14 +28,25 @@ public class TimelineImplTest {
     @Inject
     private TestHelperService testHelperService;
 
+
+    private void deleteAll(){
+        testHelperService.deleteAllRegistrationProcess();
+        testHelperService.deleteAllActionItem();
+        testHelperService.deleteAllCategory();
+        testHelperService.deleteUserAccount();
+        testHelperService.deleteTimelineDay();
+        testHelperService.deleteTimelineMonth();
+        testHelperService.deleteTimelineYear();
+    }
+
     @Test
     public void getTodayFactoryTest() {
-        testHelperService.deleteAll();
-        Date now = new Date();
+        deleteAll();
         TimelineDay timelineDay = todayFactory.getTodayFactory();
         Assert.assertNotNull(timelineDay);
         Assert.assertNotNull(timelineDay.getMonth());
         Assert.assertNotNull(timelineDay.getMonth().getYear());
+        Date now = new Date();
         Assert.assertEquals(timelineDay.getDayOfMonth(), now.getDay());
         Assert.assertEquals(timelineDay.getMonth().getMonthOfYear(), now.getMonth());
         Assert.assertEquals(timelineDay.getMonth().getYear().getYear(), now.getYear());
@@ -46,6 +57,6 @@ public class TimelineImplTest {
         Assert.assertEquals(timelineDay.getDayOfMonth(), now.getDay());
         Assert.assertEquals(timelineDay.getMonth().getMonthOfYear(), now.getMonth());
         Assert.assertEquals(timelineDay.getMonth().getYear().getYear(), now.getYear());
-        testHelperService.deleteAll();
+        deleteAll();
     }
 }

@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.woehlke.simpleworklist.entities.Category;
-import org.woehlke.simpleworklist.entities.Data;
+import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.CategoryService;
-import org.woehlke.simpleworklist.services.DataService;
+import org.woehlke.simpleworklist.services.ActionItemService;
 import org.woehlke.simpleworklist.services.TestService;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Controller
-public class DataAndCategoryController {
+public class ActionItemAndCategoryController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataAndCategoryController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActionItemAndCategoryController.class);
 
     @Value("${mvc.controller.pageSize}")
     private int pageSize;
@@ -45,7 +45,7 @@ public class DataAndCategoryController {
     private CategoryService categoryService;
 
     @Inject
-    private DataService dataService;
+    private ActionItemService actionItemService;
 
     @Inject
     private UserService userService;
@@ -62,36 +62,36 @@ public class DataAndCategoryController {
         return categoryService.findRootCategoriesByUserAccount(user);
     }
 
-    @RequestMapping(value = "/data/detail/{dataId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/actionItem/detail/{dataId}", method = RequestMethod.GET)
     public final String editDataForm(@PathVariable long dataId, Model model) {
-        Data data = dataService.findOne(dataId);
+        ActionItem actionItem = actionItemService.findOne(dataId);
         Category thisCategory = null;
-        if (data.getCategory() == null) {
+        if (actionItem.getCategory() == null) {
             thisCategory = new Category();
             thisCategory.setId(0L);
         } else {
-            thisCategory = data.getCategory();
+            thisCategory = actionItem.getCategory();
         }
         model.addAttribute("thisCategory", thisCategory);
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("data", data);
-        return "data/show";
+        model.addAttribute("actionItem", actionItem);
+        return "actionItem/show";
     }
 
-    @RequestMapping(value = "/data/detail/{dataId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/actionItem/detail/{dataId}", method = RequestMethod.POST)
     public final String editDataStore(
-            @Valid Data data,
+            @Valid ActionItem actionItem,
             @PathVariable long dataId,
             BindingResult result, Model model) {
-        Data persistentData = dataService.findOne(dataId);
+        ActionItem persistentActionItem = actionItemService.findOne(dataId);
         long categoryId = 0;
         Category thisCategory = null;
-        if (persistentData.getCategory() == null) {
+        if (persistentActionItem.getCategory() == null) {
             thisCategory = new Category();
             thisCategory.setId(0L);
         } else {
-            thisCategory = persistentData.getCategory();
+            thisCategory = persistentActionItem.getCategory();
             categoryId = thisCategory.getId();
         }
         if (result.hasErrors()) {
@@ -101,17 +101,17 @@ public class DataAndCategoryController {
             model.addAttribute("thisCategory", thisCategory);
             List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
             model.addAttribute("breadcrumb", breadcrumb);
-            return "/data/detail" + dataId;
+            return "/actionItem/detail" + dataId;
         } else {
-            persistentData.setTitle(data.getTitle());
-            persistentData.setText(data.getText());
-            dataService.saveAndFlush(persistentData);
+            persistentActionItem.setTitle(actionItem.getTitle());
+            persistentActionItem.setText(actionItem.getText());
+            actionItemService.saveAndFlush(persistentActionItem);
             return "redirect:/category/" + categoryId + "/";
         }
 
     }
 
-    @RequestMapping(value = "/data/addtocategory/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/actionItem/addtocategory/{categoryId}", method = RequestMethod.GET)
     public final String addNewDataToCategoryForm(
             @PathVariable long categoryId,
             Model model) {
@@ -122,17 +122,17 @@ public class DataAndCategoryController {
         } else {
             thisCategory = categoryService.findByCategoryId(categoryId);
         }
-        Data dataLeaf = new Data();
+        ActionItem actionItemLeaf = new ActionItem();
         model.addAttribute("thisCategory", thisCategory);
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("data", dataLeaf);
+        model.addAttribute("data", actionItemLeaf);
         return "data/add";
     }
 
-    @RequestMapping(value = "/data/addtocategory/{categoryId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/actionItem/addtocategory/{categoryId}", method = RequestMethod.POST)
     public final String addNewDataToCategoryStore(
-            @Valid Data data,
+            @Valid ActionItem actionItem,
             @PathVariable long categoryId,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -144,47 +144,47 @@ public class DataAndCategoryController {
         if (categoryId == 0) {
             thisCategory = new Category();
             thisCategory.setId(0L);
-            data.setCategory(null);
+            actionItem.setCategory(null);
         } else {
             thisCategory = categoryService.findByCategoryId(categoryId);
-            data.setCategory(thisCategory);
+            actionItem.setCategory(thisCategory);
         }
-        data = dataService.saveAndFlush(data);
-        LOGGER.info(data.toString());
+        actionItem = actionItemService.saveAndFlush(actionItem);
+        LOGGER.info(actionItem.toString());
         model.addAttribute("thisCategory", thisCategory);
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         model.addAttribute("breadcrumb", breadcrumb);
         return "redirect:/category/" + categoryId + "/";
     }
 
-    @RequestMapping(value = "/data/delete/{dataId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/actionItem/delete/{dataId}", method = RequestMethod.GET)
     public final String deleteData(@PathVariable long dataId) {
-        Data data = dataService.findOne(dataId);
+        ActionItem actionItem = actionItemService.findOne(dataId);
         long categoryId = 0;
-        if (data.getCategory() != null) {
-            categoryId = data.getCategory().getId();
+        if (actionItem.getCategory() != null) {
+            categoryId = actionItem.getCategory().getId();
         }
-        dataService.delete(data);
+        actionItemService.delete(actionItem);
         return "redirect:/category/" + categoryId + "/";
     }
 
-    @RequestMapping(value = "/data/move/{dataId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/actionItem/move/{dataId}", method = RequestMethod.GET)
     public final String moveData(@PathVariable long dataId) {
-        Data data = dataService.findOne(dataId);
+        ActionItem actionItem = actionItemService.findOne(dataId);
         long categoryId = 0;
-        if (data.getCategory() != null) {
-            categoryId = data.getCategory().getId();
+        if (actionItem.getCategory() != null) {
+            categoryId = actionItem.getCategory().getId();
         }
         return "redirect:/category/" + categoryId + "/";
     }
 
-    @RequestMapping(value = "/data/{dataId}/moveto/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/actionItem/{dataId}/moveto/{categoryId}", method = RequestMethod.GET)
     public final String moveDataToAnotherCategory(@PathVariable long dataId,
                                             @PathVariable long categoryId) {
-        Data data = dataService.findOne(dataId);
+        ActionItem actionItem = actionItemService.findOne(dataId);
         Category category = categoryService.findByCategoryId(categoryId);
-        data.setCategory(category);
-        dataService.saveAndFlush(data);
+        actionItem.setCategory(category);
+        actionItemService.saveAndFlush(actionItem);
         return "redirect:/category/" + categoryId + "/";
     }
 
@@ -199,16 +199,16 @@ public class DataAndCategoryController {
             @PathVariable int pageNumber) {
         ModelAndView mav = new ModelAndView("category/show");
         Category thisCategory = null;
-        Page<Data> dataLeafPage = null;
+        Page<ActionItem> dataLeafPage = null;
         Pageable request =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
         if (categoryId != 0) {
             thisCategory = categoryService.findByCategoryId(categoryId);
-            dataLeafPage = dataService.findByCategory(thisCategory, request);
+            dataLeafPage = actionItemService.findByCategory(thisCategory, request);
         } else {
             thisCategory = new Category();
             thisCategory.setId(0L);
-            dataLeafPage = dataService.findByRootCategory(request);
+            dataLeafPage = actionItemService.findByRootCategory(request);
         }
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         int current = dataLeafPage.getNumber() + 1;
@@ -340,7 +340,7 @@ public class DataAndCategoryController {
         long newCategoryId = nodeId;
         if (nodeId > 0) {
             Category category = categoryService.findByCategoryId(nodeId);
-            boolean hasNoData = dataService.categoryHasNoData(category);
+            boolean hasNoData = actionItemService.categoryHasNoData(category);
             boolean hasNoChildren = category.hasNoChildren();
             if (hasNoData && hasNoChildren) {
                 if (!category.isRootCategory()) {
@@ -352,7 +352,7 @@ public class DataAndCategoryController {
             } else {
                 LOGGER.info("Deletion rejected for Category " + category.getId());
                 if (!hasNoData) {
-                    LOGGER.warn("Category " + category.getId() + " has data");
+                    LOGGER.warn("Category " + category.getId() + " has actionItem");
                 }
                 if (!hasNoChildren) {
                     LOGGER.info("Category " + category.getId() + " has children");
