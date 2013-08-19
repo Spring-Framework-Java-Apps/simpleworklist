@@ -127,7 +127,7 @@ public class ActionItemAndCategoryController {
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("data", actionItemLeaf);
-        return "data/add";
+        return "actionItem/add";
     }
 
     @RequestMapping(value = "/actionItem/addtocategory/{categoryId}", method = RequestMethod.POST)

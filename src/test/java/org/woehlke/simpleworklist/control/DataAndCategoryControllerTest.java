@@ -306,7 +306,16 @@ public class DataAndCategoryControllerTest {
                 .andExpect(model().attribute("thisCategory", notNullValue()))
                 .andExpect(model().attribute("thisCategory", instanceOf(Category.class)))
                 .andExpect(model().attribute("thisCategory", hasProperty("id")))
-                .andExpect(model().attribute("thisCategory", is(categoryNullObject())));
+                .andExpect(model().attribute("thisCategory", is(categoryNullObject())))
+                .andExpect(view().name(containsString("actionItem/add")));
+    }
+
+    @Test
+    public void testUserList() throws Exception {
+        makeActiveUser(emails[0]);
+        this.mockMvc.perform(get("/users")).andDo(print())
+                .andExpect(model().attributeExists("users"))
+                .andExpect(view().name(containsString("user/users")));
     }
 
     @Test

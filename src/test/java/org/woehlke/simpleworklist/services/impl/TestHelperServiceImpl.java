@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Category;
+import org.woehlke.simpleworklist.entities.RegistrationProcess;
 import org.woehlke.simpleworklist.repository.*;
 import org.woehlke.simpleworklist.services.TestHelperService;
 
@@ -91,5 +92,10 @@ public class TestHelperServiceImpl implements TestHelperService {
     @Override
     public int getNumberOfAllRegistrations() {
         return registrationProcessRepository.findAll().size();
+    }
+
+    @Override
+    public RegistrationProcess findByEmail(String email) {
+        return registrationProcessRepository.findByEmail(email);
     }
 }

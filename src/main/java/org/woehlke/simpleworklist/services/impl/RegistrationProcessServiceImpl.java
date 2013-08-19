@@ -48,11 +48,7 @@ public class RegistrationProcessServiceImpl implements
     @Override
     public boolean isRetryAndMaximumNumberOfRetries(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
-        if (earlierOptIn == null) {
-            return false;
-        } else {
-            return earlierOptIn.getNumberOfRetries() >= maxRetries;
-        }
+        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= maxRetries;
     }
 
     @Override

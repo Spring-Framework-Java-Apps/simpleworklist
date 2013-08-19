@@ -1,5 +1,7 @@
 package org.woehlke.simpleworklist.services;
 
+import org.woehlke.simpleworklist.entities.RegistrationProcess;
+
 public interface TestHelperService {
 
     void deleteAllRegistrationProcess();
@@ -17,4 +19,6 @@ public interface TestHelperService {
     void deleteTimelineYear();
 
     int getNumberOfAllRegistrations();
+
+    RegistrationProcess findByEmail(String email);
 }
