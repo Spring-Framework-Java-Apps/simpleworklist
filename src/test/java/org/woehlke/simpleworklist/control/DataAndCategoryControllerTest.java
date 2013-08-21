@@ -96,7 +96,7 @@ public class DataAndCategoryControllerTest {
         for (UserAccount u : testUser) {
             UserAccount a = userService.findByUserEmail(u.getUserEmail());
             if (a == null) {
-                u = userService.saveAndFlush(u);
+                userService.saveAndFlush(u);
             }
         }
     }
@@ -277,26 +277,6 @@ public class DataAndCategoryControllerTest {
     }
 
     @Test
-    public void testEditDataLeafForm() throws Exception {
-        makeActiveUser(emails[0]);
-        int pageNr = 0;
-        int pageSize = 10;
-        Pageable request = new PageRequest(pageNr, pageSize);
-        Page<ActionItem> all = actionItemService.findByRootCategory(request);
-        for (ActionItem actionItem : all.getContent()) {
-            this.mockMvc.perform(
-                    get("/actionItem/detail/" + actionItem.getId())).andDo(print())
-                    .andExpect(model().attributeExists("thisCategory"))
-                    .andExpect(model().attributeExists("breadcrumb"))
-                    .andExpect(model().attributeExists("command"))
-                    .andExpect(model().attribute("command", notNullValue()))
-                    .andExpect(model().attribute("command", instanceOf(ActionItem.class)))
-                    .andExpect(model().attribute("command", hasProperty("id")))
-                    .andExpect(model().attribute("command", is(actionItemNotNullObject())));
-        }
-    }
-
-    @Test
     public void testNewDataLeafForRootCategoryNode() throws Exception {
         makeActiveUser(emails[0]);
         this.mockMvc.perform(
@@ -319,11 +299,64 @@ public class DataAndCategoryControllerTest {
     }
 
     @Test
-    public void testEditDataFormCategory0() throws Exception {
+    public void testEditDataFormCategory() throws Exception {
+        makeActiveUser(emails[0]);
+        UserAccount user = userService.retrieveCurrentUser();
+        List<Category> rootCategories = categoryService.findRootCategoriesByUserAccount(user);
+        int i = 0;
+        for (Category cat:rootCategories){
+            i++;
+            ActionItem ai = new ActionItem();
+            ai.setCategory(cat);
+            ai.setTitle("Title_"+i);
+            ai.setText("Text_"+i);
+            actionItemService.saveAndFlush(ai);
+        }
+        for (Category cat:rootCategories){
+            int pageNr = 0;
+            int pageSize = 10;
+            Pageable request = new PageRequest(pageNr, pageSize);
+            Page<ActionItem> all = actionItemService.findByCategory(cat,request);
+            for (ActionItem actionItem : all.getContent()) {
+                this.mockMvc.perform(
+                    get("/actionItem/detail/" + actionItem.getId())).andDo(print())
+                    .andExpect(model().attributeExists("thisCategory"))
+                    .andExpect(model().attributeExists("breadcrumb"))
+                    .andExpect(model().attributeExists("actionItem"))
+                    .andExpect(model().attribute("actionItem", notNullValue()))
+                    .andExpect(model().attribute("actionItem", instanceOf(ActionItem.class)))
+                    .andExpect(model().attribute("actionItem", hasProperty("id")))
+                    .andExpect(model().attribute("actionItem", is(actionItemNotNullObject())));
+            }
+        }
     }
 
+
     @Test
-    public void testEditDataFormCategory() throws Exception {
+    public void testEditDataFormCategory0() throws Exception {
+        makeActiveUser(emails[0]);
+        for(int i = 100; i<110; i++){
+            ActionItem ai = new ActionItem();
+            ai.setCategory(null);
+            ai.setTitle("Title_"+i);
+            ai.setText("Text_"+i);
+            actionItemService.saveAndFlush(ai);
+        }
+        int pageNr = 0;
+        int pageSize = 10;
+        Pageable request = new PageRequest(pageNr, pageSize);
+        Page<ActionItem> all = actionItemService.findByRootCategory(request);
+        for (ActionItem actionItem : all.getContent()) {
+            this.mockMvc.perform(
+                    get("/actionItem/detail/" + actionItem.getId())).andDo(print())
+                    .andExpect(model().attributeExists("thisCategory"))
+                    .andExpect(model().attributeExists("breadcrumb"))
+                    .andExpect(model().attributeExists("actionItem"))
+                    .andExpect(model().attribute("actionItem", notNullValue()))
+                    .andExpect(model().attribute("actionItem", instanceOf(ActionItem.class)))
+                    .andExpect(model().attribute("actionItem", hasProperty("id")))
+                    .andExpect(model().attribute("actionItem", is(actionItemNotNullObject())));
+        }
         deleteAll();
     }
 
