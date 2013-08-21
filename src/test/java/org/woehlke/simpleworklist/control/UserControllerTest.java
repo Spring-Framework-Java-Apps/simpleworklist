@@ -3,11 +3,13 @@ package org.woehlke.simpleworklist.control;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import javax.inject.Inject;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +18,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import org.woehlke.simpleworklist.entities.RegistrationProcess;
+import org.woehlke.simpleworklist.entities.RegistrationProcessStatus;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.services.RegistrationProcessService;
+import org.woehlke.simpleworklist.services.TestHelperService;
+import org.woehlke.simpleworklist.services.UserService;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,6 +32,15 @@ public class UserControllerTest {
 
     @Inject
     protected WebApplicationContext wac;
+
+    @Inject
+    private UserService userService;
+
+    @Inject
+    private RegistrationProcessService registrationProcessService;
+
+    @Inject
+    private TestHelperService testHelperService;
 
     private MockMvc mockMvc;
 
@@ -43,9 +59,25 @@ public class UserControllerTest {
         }
     }
 
+    private void deleteAll(){
+        testHelperService.deleteAllRegistrationProcess();
+        testHelperService.deleteAllCategory();
+        testHelperService.deleteAllCategory();
+        testHelperService.deleteUserAccount();
+        testHelperService.deleteTimelineDay();
+        testHelperService.deleteTimelineMonth();
+        testHelperService.deleteTimelineYear();
+    }
+
     @Before
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(wac).build();
+        for (UserAccount u : testUser) {
+            UserAccount a = userService.findByUserEmail(u.getUserEmail());
+            if (a == null) {
+                userService.saveAndFlush(u);
+            }
+        }
     }
 
     @Test
@@ -91,5 +123,50 @@ public class UserControllerTest {
                 .andExpect(view().name(containsString("user/resetPasswordNotConfirmed")));
     }
 
+    @Test
+    public void testRegisterNewUserCheckResponseAndRegistrationForm() throws Exception{
+        registrationProcessService.registerNewUserSendEmailTo(emails[0]);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
+        Assert.assertNotNull(o);
+        boolean result = o.getDoubleOptInStatus()==RegistrationProcessStatus.REGISTRATION_SAVED_EMAIL
+                || o.getDoubleOptInStatus()==RegistrationProcessStatus.REGISTRATION_SENT_MAIL;
+        Assert.assertTrue(result);
+        String url = "/confirm/"+o.getToken();
+        this.mockMvc.perform(
+                get(url)).andDo(print())
+                .andExpect(view().name(containsString("user/registerConfirmed")))
+                .andExpect(model().attributeExists("userAccountFormBean"));
+        registrationProcessService.registerNewUserCreated(o);
+    }
 
+    @Test
+    public void testEnterNewPasswordFormularWithToken() throws Exception {
+        registrationProcessService.usersPasswordChangeSendEmailTo(emails[0]);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
+        Assert.assertNotNull(o);
+        boolean result = o.getDoubleOptInStatus()==RegistrationProcessStatus.PASSWORD_RECOVERY_SAVED_EMAIL
+                || o.getDoubleOptInStatus()==RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL;
+        Assert.assertTrue(result);
+        String url = "/passwordResetConfirm/"+o.getToken();
+        this.mockMvc.perform(
+                get(url)).andDo(print())
+                .andExpect(view().name(containsString("user/resetPasswordConfirmed")))
+                .andExpect(model().attributeExists("userAccountFormBean"));
+        registrationProcessService.usersPasswordChanged(o);
+    }
+
+    @Test
+    public void testFinish() {
+        deleteAll();
+    }
 }

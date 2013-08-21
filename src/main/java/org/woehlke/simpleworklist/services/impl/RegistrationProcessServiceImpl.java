@@ -71,7 +71,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void sendEmailForVerification(String email) {
+    public void registerNewUserSendEmailTo(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmail(email);
         RegistrationProcess o = new RegistrationProcess();
         if (earlierOptIn != null) {
@@ -118,7 +118,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void sentEmailToRegisterNewUser(RegistrationProcess o) {
+    public void registerNewUserSentEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SENT_MAIL);
         LOGGER.info("about to save: " + o.toString());
         try {
@@ -149,14 +149,14 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registratorClickedInEmail(RegistrationProcess o) {
+    public void registerNewUserClickedInEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_CLICKED_IN_MAIL);
         registrationProcessRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void userCreated(RegistrationProcess o) {
+    public void registerNewUserCreated(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_ACCOUNT_CREATED);
         o = registrationProcessRepository.saveAndFlush(o);
         registrationProcessRepository.delete(o);

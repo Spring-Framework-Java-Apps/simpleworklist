@@ -50,7 +50,7 @@ public class EmailPipelineImpl implements EmailPipeline {
             success = false;
         }
         if (success) {
-            registrationProcessService.sentEmailToRegisterNewUser(o);
+            registrationProcessService.registerNewUserSentEmail(o);
         }
         LOGGER.info("Sent MAIL: " + o.toString());
     }

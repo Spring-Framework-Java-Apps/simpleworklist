@@ -39,9 +39,6 @@ public class ActionItemAndCategoryController {
     private int pageSize;
 
     @Inject
-    private TestService testService;
-
-    @Inject
     private CategoryService categoryService;
 
     @Inject
@@ -274,14 +271,6 @@ public class ActionItemAndCategoryController {
             model.addAttribute("thisCategory", thisCategory);
         }
         return "redirect:/category/" + categoryId + "/page/1";
-    }
-
-    @RequestMapping(value = "/test/helper/category/createTree", method = RequestMethod.GET)
-    public final String createTestCategoryTree() {
-        UserAccount user = userService.retrieveCurrentUser();
-        Assert.notNull(user);
-        testService.createTestCategoryTreeForUserAccount(user);
-        return "redirect:/";
     }
 
     @RequestMapping(value = "/category/{categoryId}/moveto/{targetCategoryId}", method = RequestMethod.GET)

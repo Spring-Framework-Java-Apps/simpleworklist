@@ -11,13 +11,13 @@ public interface RegistrationProcessService {
     RegistrationProcess findByToken(String confirmId);
 
 
-    void sendEmailForVerification(String email);
+    void registerNewUserSendEmailTo(String email);
 
-    void sentEmailToRegisterNewUser(RegistrationProcess o);
+    void registerNewUserSentEmail(RegistrationProcess o);
 
-    void registratorClickedInEmail(RegistrationProcess o);
+    void registerNewUserClickedInEmail(RegistrationProcess o);
 
-    void userCreated(RegistrationProcess o);
+    void registerNewUserCreated(RegistrationProcess o);
 
 
     void usersPasswordChangeSendEmailTo(String email);
