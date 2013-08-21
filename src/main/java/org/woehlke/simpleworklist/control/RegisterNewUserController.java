@@ -57,9 +57,9 @@ public class RegisterNewUserController {
         if (result.hasErrors()) {
             return "user/registerForm";
         } else {
-            registrationProcessService.checkIfResponseIsInTime(registerFormBean.getEmail());
+            registrationProcessService.registerNewUserCheckIfResponseIsInTime(registerFormBean.getEmail());
             if (userService.isEmailAvailable(registerFormBean.getEmail())) {
-                if (registrationProcessService.isRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
+                if (registrationProcessService.registerNewUserIsRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
                     String objectName = "registerFormBean";
                     String field = "email";
                     String defaultMessage = "Maximum Number of Retries reached.";
@@ -117,7 +117,7 @@ public class RegisterNewUserController {
                                                                          @Valid UserAccountFormBean userAccountFormBean,
                                                                          BindingResult result, Model model) {
         LOGGER.info("POST /confirm/" + confirmId + " : " + userAccountFormBean.toString());
-        registrationProcessService.checkIfResponseIsInTime(userAccountFormBean.getUserEmail());
+        registrationProcessService.registerNewUserCheckIfResponseIsInTime(userAccountFormBean.getUserEmail());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
             boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();

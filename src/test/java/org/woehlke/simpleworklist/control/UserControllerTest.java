@@ -131,7 +131,7 @@ public class UserControllerTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
+        RegistrationProcess o = testHelperService.findByEmailRegistration(emails[0]);
         Assert.assertNotNull(o);
         boolean result = o.getDoubleOptInStatus()==RegistrationProcessStatus.REGISTRATION_SAVED_EMAIL
                 || o.getDoubleOptInStatus()==RegistrationProcessStatus.REGISTRATION_SENT_MAIL;
@@ -152,7 +152,7 @@ public class UserControllerTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
+        RegistrationProcess o = testHelperService.findByEmailPasswordRecovery(emails[0]);
         Assert.assertNotNull(o);
         boolean result = o.getDoubleOptInStatus()==RegistrationProcessStatus.PASSWORD_RECOVERY_SAVED_EMAIL
                 || o.getDoubleOptInStatus()==RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL;

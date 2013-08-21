@@ -4,12 +4,11 @@ import org.woehlke.simpleworklist.entities.RegistrationProcess;
 
 public interface RegistrationProcessService {
 
-    boolean isRetryAndMaximumNumberOfRetries(String email);
-
-    void checkIfResponseIsInTime(String email);
-
     RegistrationProcess findByToken(String confirmId);
 
+    boolean registerNewUserIsRetryAndMaximumNumberOfRetries(String email);
+
+    void registerNewUserCheckIfResponseIsInTime(String email);
 
     void registerNewUserSendEmailTo(String email);
 
@@ -19,6 +18,10 @@ public interface RegistrationProcessService {
 
     void registerNewUserCreated(RegistrationProcess o);
 
+
+    boolean usersPasswordChangeIsRetryAndMaximumNumberOfRetries(String email);
+
+    void usersPasswordChangeCheckIfResponseIsInTime(String email);
 
     void usersPasswordChangeSendEmailTo(String email);
 

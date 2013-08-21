@@ -83,18 +83,18 @@ public class UserServiceImplTest {
         Assert.assertNotNull(email);
         Assert.assertTrue(userService.isEmailAvailable(email));
         registrationService.registerNewUserSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertFalse(registrationService.registerNewUserIsRetryAndMaximumNumberOfRetries(email));
         Assert.assertTrue(userService.isEmailAvailable(email));
         registrationService.registerNewUserSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertFalse(registrationService.registerNewUserIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registerNewUserSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertFalse(registrationService.registerNewUserIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registerNewUserSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertFalse(registrationService.registerNewUserIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registerNewUserSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertFalse(registrationService.registerNewUserIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registerNewUserSendEmailTo(email);
-        Assert.assertTrue(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertTrue(registrationService.registerNewUserIsRetryAndMaximumNumberOfRetries(email));
         int sixSeconds = 6000;
         Thread.sleep(sixSeconds);
         deleteAll();
@@ -106,23 +106,26 @@ public class UserServiceImplTest {
     @Test
     public void testPasswordResetSendEmail() throws Exception {
         deleteAll();
+        for(UserAccount userAccount:testUser){
+            userService.saveAndFlush(userAccount);
+        }
         int zeroNumberOfAllRegistrations = 0;
         Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
-        Assert.assertNotNull(email);
-        Assert.assertTrue(userService.isEmailAvailable(email));
-        registrationService.usersPasswordChangeSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
-        Assert.assertTrue(userService.isEmailAvailable(email));
-        registrationService.usersPasswordChangeSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
-        registrationService.usersPasswordChangeSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
-        registrationService.usersPasswordChangeSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
-        registrationService.usersPasswordChangeSendEmailTo(email);
-        Assert.assertFalse(registrationService.isRetryAndMaximumNumberOfRetries(email));
-        registrationService.usersPasswordChangeSendEmailTo(email);
-        Assert.assertTrue(registrationService.isRetryAndMaximumNumberOfRetries(email));
+        Assert.assertNotNull(emails[0]);
+        Assert.assertFalse(userService.isEmailAvailable(emails[0]));
+        registrationService.usersPasswordChangeSendEmailTo(emails[0]);
+        Assert.assertFalse(registrationService.usersPasswordChangeIsRetryAndMaximumNumberOfRetries(emails[0]));
+        Assert.assertFalse(userService.isEmailAvailable(emails[0]));
+        registrationService.usersPasswordChangeSendEmailTo(emails[0]);
+        Assert.assertFalse(registrationService.usersPasswordChangeIsRetryAndMaximumNumberOfRetries(emails[0]));
+        registrationService.usersPasswordChangeSendEmailTo(emails[0]);
+        Assert.assertFalse(registrationService.usersPasswordChangeIsRetryAndMaximumNumberOfRetries(emails[0]));
+        registrationService.usersPasswordChangeSendEmailTo(emails[0]);
+        Assert.assertFalse(registrationService.usersPasswordChangeIsRetryAndMaximumNumberOfRetries(emails[0]));
+        registrationService.usersPasswordChangeSendEmailTo(emails[0]);
+        Assert.assertFalse(registrationService.usersPasswordChangeIsRetryAndMaximumNumberOfRetries(emails[0]));
+        registrationService.usersPasswordChangeSendEmailTo(emails[0]);
+        Assert.assertTrue(registrationService.usersPasswordChangeIsRetryAndMaximumNumberOfRetries(emails[0]));
         int sixSeconds = 6000;
         Thread.sleep(sixSeconds);
         deleteAll();

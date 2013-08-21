@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;
-import org.woehlke.simpleworklist.entities.RegistrationProcessStatus;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 import org.woehlke.simpleworklist.services.TestHelperService;
@@ -79,7 +78,7 @@ public class RegistrationProcessServiceImplTest {
     @Test
     public void testIsRetryAndMaximumNumberOfRetries(){
         deleteAll();
-        boolean result = registrationProcessService.isRetryAndMaximumNumberOfRetries(username);
+        boolean result = registrationProcessService.registerNewUserIsRetryAndMaximumNumberOfRetries(username);
         Assert.assertFalse(result);
         registrationProcessService.registerNewUserSendEmailTo(emails[0]);
         try {
@@ -87,52 +86,50 @@ public class RegistrationProcessServiceImplTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
+        RegistrationProcess o = testHelperService.findByEmailRegistration(emails[0]);
         Assert.assertTrue(o.getEmail().compareTo(emails[0])==0);
         o.setNumberOfRetries(maxRetries);
         registrationProcessService.registerNewUserClickedInEmail(o);
-        result = registrationProcessService.isRetryAndMaximumNumberOfRetries(emails[0]);
+        result = registrationProcessService.registerNewUserIsRetryAndMaximumNumberOfRetries(emails[0]);
         Assert.assertTrue(result);
     }
 
-    /*
+
     @Test
-    public void testStatusChange(){
-        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
-        registrationProcessService.usersPasswordChangeClickedInEmail(o);
-        o = testHelperService.findByEmail(emails[0]);
-        Assert.assertEquals(
-                o.getDoubleOptInStatus().ordinal(),
-                RegistrationProcessStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL.ordinal());
-        registrationProcessService.registerNewUserCreated(o);
-        o = testHelperService.findByEmail(emails[0]);
-        Assert.assertNull(o);
+    public void testCheckIfResponseIsInTimeNewUser(){ /*
         registrationProcessService.registerNewUserSendEmailTo(emails[0]);
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        o = testHelperService.findByEmail(emails[0]);
-        registrationProcessService.usersPasswordChanged(o);
-        o = testHelperService.findByEmail(emails[0]);
+        } */
+        registrationProcessService.registerNewUserCheckIfResponseIsInTime(emails[0]);
+        RegistrationProcess o = testHelperService.findByEmailRegistration(emails[0]);
+        Assert.assertNotNull(o);
+        o.setCreatedTimestamp(new Date(o.getCreatedTimestamp().getTime() - ttlEmailVerificationRequest));
+        o.setNumberOfRetries(0);
+        registrationProcessService.registerNewUserClickedInEmail(o);
+        registrationProcessService.registerNewUserCheckIfResponseIsInTime(emails[0]);
+        o = testHelperService.findByEmailRegistration(emails[0]);
         Assert.assertNull(o);
-    }  */
+    }
 
     @Test
     public void testCheckIfResponseIsInTime(){
-        registrationProcessService.registerNewUserSendEmailTo(emails[0]);
+        registrationProcessService.usersPasswordChangeSendEmailTo(emails[0]);
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        registrationProcessService.checkIfResponseIsInTime(emails[0]);
-        RegistrationProcess o = testHelperService.findByEmail(emails[0]);
+        registrationProcessService.usersPasswordChangeCheckIfResponseIsInTime(emails[0]);
+        RegistrationProcess o = testHelperService.findByEmailPasswordRecovery(emails[0]);
         Assert.assertNotNull(o);
         o.setCreatedTimestamp(new Date(o.getCreatedTimestamp().getTime() - ttlEmailVerificationRequest));
-        registrationProcessService.checkIfResponseIsInTime(emails[0]);
-        o = testHelperService.findByEmail(emails[0]);
-        Assert.assertNotNull(o);
+        o.setNumberOfRetries(0);
+        registrationProcessService.usersPasswordChangeClickedInEmail(o);
+        registrationProcessService.usersPasswordChangeCheckIfResponseIsInTime(emails[0]);
+        o = testHelperService.findByEmailPasswordRecovery(emails[0]);
+        Assert.assertNull(o);
     }
 }

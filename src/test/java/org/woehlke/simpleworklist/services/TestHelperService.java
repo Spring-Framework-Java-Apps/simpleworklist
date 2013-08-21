@@ -20,5 +20,7 @@ public interface TestHelperService {
 
     int getNumberOfAllRegistrations();
 
-    RegistrationProcess findByEmail(String email);
+    RegistrationProcess findByEmailRegistration(String email);
+
+    RegistrationProcess findByEmailPasswordRecovery(String email);
 }

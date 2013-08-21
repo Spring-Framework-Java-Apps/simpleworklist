@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Category;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;
+import org.woehlke.simpleworklist.entities.RegistrationProcessType;
 import org.woehlke.simpleworklist.repository.*;
 import org.woehlke.simpleworklist.services.TestHelperService;
 
@@ -95,7 +96,12 @@ public class TestHelperServiceImpl implements TestHelperService {
     }
 
     @Override
-    public RegistrationProcess findByEmail(String email) {
-        return registrationProcessRepository.findByEmail(email);
+    public RegistrationProcess findByEmailRegistration(String email) {
+        return registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.REGISTRATION);
+    }
+
+    @Override
+    public RegistrationProcess findByEmailPasswordRecovery(String email) {
+        return registrationProcessRepository.findByEmailAndRegistrationProcessType(email, RegistrationProcessType.PASSWORD_RECOVERY);
     }
 }

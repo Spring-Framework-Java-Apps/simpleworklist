@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
         columnNames = {
-                "email"
+                "email","registrationProcessType"
         })
 )
 public class RegistrationProcess {
@@ -16,7 +16,7 @@ public class RegistrationProcess {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false, unique = true)
@@ -29,6 +29,10 @@ public class RegistrationProcess {
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private RegistrationProcessStatus doubleOptInStatus;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RegistrationProcessType registrationProcessType;
 
     @Column
     private int numberOfRetries = 0;
@@ -81,42 +85,49 @@ public class RegistrationProcess {
         this.numberOfRetries = numberOfRetries;
     }
 
+    public RegistrationProcessType getRegistrationProcessType() {
+        return registrationProcessType;
+    }
+
+    public void setRegistrationProcessType(RegistrationProcessType registrationProcessType) {
+        this.registrationProcessType = registrationProcessType;
+    }
+
     @Transient
     public void increaseNumberOfRetries() {
         this.numberOfRetries++;
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        return result;
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RegistrationProcess)) return false;
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RegistrationProcess other = (RegistrationProcess) obj;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
+        RegistrationProcess that = (RegistrationProcess) o;
+
+        if (!email.equals(that.email)) return false;
+        if (registrationProcessType != that.registrationProcessType) return false;
+
         return true;
     }
 
     @Override
-    public String toString() {
-        return "RegistrationProcess [id=" + id + ", email=" + email
-                + ", token=" + token + ", createdTimestamp=" + createdTimestamp
-                + ", doubleOptInStatus=" + doubleOptInStatus
-                + ", numberOfRetries=" + numberOfRetries + "]";
+    public int hashCode() {
+        int result = email.hashCode();
+        result = 31 * result + registrationProcessType.hashCode();
+        return result;
     }
 
+    @Override
+    public String toString() {
+        return "RegistrationProcess{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", token='" + token + '\'' +
+                ", createdTimestamp=" + createdTimestamp +
+                ", doubleOptInStatus=" + doubleOptInStatus +
+                ", registrationProcessType=" + registrationProcessType +
+                ", numberOfRetries=" + numberOfRetries +
+                '}';
+    }
 }
