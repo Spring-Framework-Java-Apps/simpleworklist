@@ -5,28 +5,19 @@ import javax.inject.Inject;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
-import org.woehlke.simpleworklist.services.TestHelperService;
 import org.woehlke.simpleworklist.services.UserService;
 
 
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/test-context.xml")
-public class UserServiceImplTest {
+public class UserServiceImplTest extends AbstractTest {
 
     @Inject
     private RegistrationProcessService registrationService;
@@ -36,44 +27,6 @@ public class UserServiceImplTest {
 
     @Value("${worklist.registration.mail.from}")
     private String email;
-
-    @Inject
-    private TestHelperService testHelperService;
-
-    private static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};
-    private static String passwords[] = {"test01pwd", "test02pwd", "test03pwd"};
-    private static String fullnames[] = {"test01 Name", "test02 Name", "test03 Name"};
-
-    private static String username_email = "undefined@test.de";
-    private static String password       = "ASDFG";
-    private static String full_name      = "UNDEFINED_NAME";
-
-    private static UserAccount testUser[] = new UserAccount[emails.length];
-
-    static {
-        for (int i = 0; i < testUser.length; i++) {
-            testUser[i] = new UserAccount();
-            testUser[i].setUserEmail(emails[i]);
-            testUser[i].setUserPassword(passwords[i]);
-            testUser[i].setUserFullname(fullnames[i]);
-        }
-    }
-
-    private void makeActiveUser(String username) {
-        UserDetails ud = userService.loadUserByUsername(username);
-        Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authRequest);
-    }
-
-    private void deleteAll(){
-        testHelperService.deleteAllRegistrationProcess();
-        testHelperService.deleteAllCategory();
-        testHelperService.deleteAllCategory();
-        testHelperService.deleteUserAccount();
-        testHelperService.deleteTimelineDay();
-        testHelperService.deleteTimelineMonth();
-        testHelperService.deleteTimelineYear();
-    }
 
     @Test
     public void testStartSecondOptIn() throws Exception {
@@ -100,8 +53,6 @@ public class UserServiceImplTest {
         deleteAll();
         Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
-
-
 
     @Test
     public void testPasswordResetSendEmail() throws Exception {

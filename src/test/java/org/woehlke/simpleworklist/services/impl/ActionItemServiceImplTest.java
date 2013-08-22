@@ -6,79 +6,28 @@ import javax.inject.Inject;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.Category;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.ActionItemService;
 import org.woehlke.simpleworklist.services.CategoryService;
-import org.woehlke.simpleworklist.services.TestHelperService;
 import org.woehlke.simpleworklist.services.UserService;
 
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/test-context.xml")
-public class ActionItemServiceImplTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActionItemServiceImplTest.class);
+public class ActionItemServiceImplTest extends AbstractTest {
 
     @Inject
     private ActionItemService actionItemService;
-
-    @Inject
-    private TestHelperService testHelperService;
 
     @Inject
     private CategoryService categoryService;
 
     @Inject
     private UserService userService;
-
-    private static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};
-    private static String passwords[] = {"test01pwd", "test02pwd", "test03pwd"};
-    private static String fullnames[] = {"test01 Name", "test02 Name", "test03 Name"};
-
-    private static String username = "undefined@test.de";
-    private static String password = "ASDFG";
-    private static String name     = "UNDEFINED_NAME";
-
-    private static UserAccount testUser[] = new UserAccount[emails.length];
-
-    static {
-        for (int i = 0; i < testUser.length; i++) {
-            testUser[i] = new UserAccount();
-            testUser[i].setUserEmail(emails[i]);
-            testUser[i].setUserPassword(passwords[i]);
-            testUser[i].setUserFullname(fullnames[i]);
-        }
-    }
-
-    private void makeActiveUser(String username) {
-        UserDetails ud = userService.loadUserByUsername(username);
-        Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authRequest);
-    }
-
-    private void deleteAll(){
-        testHelperService.deleteAllRegistrationProcess();
-        testHelperService.deleteAllActionItem();
-        testHelperService.deleteAllCategory();
-        testHelperService.deleteUserAccount();
-        testHelperService.deleteTimelineDay();
-        testHelperService.deleteTimelineMonth();
-        testHelperService.deleteTimelineYear();
-    }
 
     @Test
     public void storeRootData() {
