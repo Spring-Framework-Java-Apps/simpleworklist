@@ -16,17 +16,17 @@ SimpleWorklist
 
 [img/Use_Cases_Data.jpg] Figure Use Cases Action Items and Categories
 
-** Use Case: New User
+** Use Case: Registration
 
-[img/Register_New_User_Request.jpg] Figure Register New User Request
+[img/Registration_Request.jpg] Figure Registration Request
 
-[img/Register_New_User_Perform.jpg] Figure Register New User Request
+[img/Registration_Perform.jpg] Figure Registration Request
 
 ** Use Case: Passwort Recovery
 
-[img/Passwort_Recovery_Request.jpg] Figure Passwort Recovery Request
+[img/Password_Recovery_Request.jpg] Figure Password Recovery Request
 
-[img/Passwort_Recovery_Perform.jpg] Figure Passwort Recovery Perform
+[img/Password_Recovery_Perform.jpg] Figure Password Recovery Perform
 
 * Domain Model
 
@@ -46,6 +46,10 @@ SimpleWorklist
 
 **  Services Details
 
-[img/Service_Model_Details_User.jpg] Figure Domain Model Details User
+[img/Service_Model_Details_UserController.jpg] Figure Domain Model Details UserController
+
+[img/Service_Model_Details_RegistrationController.jpg] Figure Domain Model Details UserController
+
+[img/Service_Model_Details_PasswordRecoveryController.jpg] Figure Domain Model Details UserController
 
 [img/Service_Model_Details_ActionItems.jpg] Figure Domain Model Details ActionItems

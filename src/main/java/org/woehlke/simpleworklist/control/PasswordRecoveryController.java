@@ -20,9 +20,9 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 @Controller
-public class ResetPasswordController {
+public class PasswordRecoveryController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResetPasswordController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordRecoveryController.class);
 
     @Inject
     private UserService userService;
@@ -74,7 +74,7 @@ public class ResetPasswordController {
                 result.addError(e);
                 return "user/resetPasswordForm";
             } else {
-                registrationProcessService.usersPasswordChangeSendEmailTo(registerFormBean.getEmail());
+                registrationProcessService.passwordRecoverySendEmailTo(registerFormBean.getEmail());
                 return "user/resetPasswordSentMail";
             }
 
@@ -92,7 +92,7 @@ public class ResetPasswordController {
     public final String enterNewPasswordFormular(@PathVariable String confirmId, Model model) {
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
-            registrationProcessService.usersPasswordChangeClickedInEmail(o);
+            registrationProcessService.passwordRecoveryClickedInEmail(o);
             UserAccount ua = userService.findByUserEmail(o.getEmail());
             UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
             userAccountFormBean.setUserEmail(o.getEmail());
@@ -123,7 +123,7 @@ public class ResetPasswordController {
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
                 userService.changeUsersPassword(userAccountFormBean);
-                registrationProcessService.usersPasswordChanged(o);
+                registrationProcessService.passwordRecoveryDone(o);
                 return "user/resetPasswordDone";
             } else {
                 if (!passwordsMatch) {

@@ -30,9 +30,6 @@ public class UserController {
     @Inject
     private UserService userService;
 
-    @Inject
-    private RegistrationProcessService registrationProcessService;
-
     /**
      * Login Formular. If User is not logged in, this page will be displayed for
      * all page-URLs which need login.

@@ -47,14 +47,14 @@ public class RegistrationProcessServiceImpl implements
     private SecureRandom random = new SecureRandom();
 
     @Override
-    public boolean registerNewUserIsRetryAndMaximumNumberOfRetries(String email) {
+    public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.REGISTRATION);
         return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= maxRetries;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registerNewUserCheckIfResponseIsInTime(String email) {
+    public void registrationCheckIfResponseIsInTime(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.REGISTRATION);
         if (earlierOptIn != null) {
             Date now = new Date();
@@ -72,7 +72,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registerNewUserSendEmailTo(String email) {
+    public void registrationSendEmailTo(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.REGISTRATION);
         RegistrationProcess o = new RegistrationProcess();
         if (earlierOptIn != null) {
@@ -98,7 +98,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void usersPasswordChangeSendEmailTo(String email) {
+    public void passwordRecoverySendEmailTo(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.PASSWORD_RECOVERY);
         RegistrationProcess o = new RegistrationProcess();
         if (earlierOptIn != null) {
@@ -120,7 +120,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registerNewUserSentEmail(RegistrationProcess o) {
+    public void registrationSentEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_SENT_MAIL);
         LOGGER.info("about to save: " + o.toString());
         registrationProcessRepository.saveAndFlush(o);
@@ -128,7 +128,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void usersPasswordChangeSentEmail(RegistrationProcess o) {
+    public void passwordRecoverySentEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_SENT_EMAIL);
         LOGGER.info("about to save: " + o.toString());
         registrationProcessRepository.saveAndFlush(o);
@@ -136,35 +136,35 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void usersPasswordChangeClickedInEmail(RegistrationProcess o) {
+    public void passwordRecoveryClickedInEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL);
         registrationProcessRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registerNewUserClickedInEmail(RegistrationProcess o) {
+    public void registrationClickedInEmail(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_CLICKED_IN_MAIL);
         registrationProcessRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registerNewUserCreated(RegistrationProcess o) {
+    public void registrationUserCreated(RegistrationProcess o) {
         o.setDoubleOptInStatus(RegistrationProcessStatus.REGISTRATION_ACCOUNT_CREATED);
         o = registrationProcessRepository.saveAndFlush(o);
         registrationProcessRepository.delete(o);
     }
 
     @Override
-    public boolean usersPasswordChangeIsRetryAndMaximumNumberOfRetries(String email) {
+    public boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.PASSWORD_RECOVERY);
         return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= maxRetries;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void usersPasswordChangeCheckIfResponseIsInTime(String email) {
+    public void passwordRecoveryCheckIfResponseIsInTime(String email) {
         RegistrationProcess earlierOptIn = registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.PASSWORD_RECOVERY);
         if (earlierOptIn != null) {
             Date now = new Date();
@@ -176,7 +176,7 @@ public class RegistrationProcessServiceImpl implements
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void usersPasswordChanged(RegistrationProcess registrationProcess) {
+    public void passwordRecoveryDone(RegistrationProcess registrationProcess) {
         registrationProcess.setDoubleOptInStatus(RegistrationProcessStatus.PASSWORD_RECOVERY_STORED_CHANGED);
         registrationProcess = registrationProcessRepository.saveAndFlush(registrationProcess);
         registrationProcessRepository.delete(registrationProcess);

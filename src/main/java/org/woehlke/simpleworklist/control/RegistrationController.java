@@ -19,9 +19,9 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 @Controller
-public class RegisterNewUserController {
+public class RegistrationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterNewUserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
 
     @Inject
     private UserService userService;
@@ -57,9 +57,9 @@ public class RegisterNewUserController {
         if (result.hasErrors()) {
             return "user/registerForm";
         } else {
-            registrationProcessService.registerNewUserCheckIfResponseIsInTime(registerFormBean.getEmail());
+            registrationProcessService.registrationCheckIfResponseIsInTime(registerFormBean.getEmail());
             if (userService.isEmailAvailable(registerFormBean.getEmail())) {
-                if (registrationProcessService.registerNewUserIsRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
+                if (registrationProcessService.registrationIsRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
                     String objectName = "registerFormBean";
                     String field = "email";
                     String defaultMessage = "Maximum Number of Retries reached.";
@@ -67,7 +67,7 @@ public class RegisterNewUserController {
                     result.addError(e);
                     return "user/registerForm";
                 } else {
-                    registrationProcessService.registerNewUserSendEmailTo(registerFormBean.getEmail());
+                    registrationProcessService.registrationSendEmailTo(registerFormBean.getEmail());
                     return "user/registerSentMail";
                 }
             } else {
@@ -93,7 +93,7 @@ public class RegisterNewUserController {
         LOGGER.info("GET /confirm/" + confirmId);
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
-            registrationProcessService.registerNewUserClickedInEmail(o);
+            registrationProcessService.registrationClickedInEmail(o);
             UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
             userAccountFormBean.setUserEmail(o.getEmail());
             model.addAttribute("userAccountFormBean", userAccountFormBean);
@@ -117,13 +117,13 @@ public class RegisterNewUserController {
                                                                          @Valid UserAccountFormBean userAccountFormBean,
                                                                          BindingResult result, Model model) {
         LOGGER.info("POST /confirm/" + confirmId + " : " + userAccountFormBean.toString());
-        registrationProcessService.registerNewUserCheckIfResponseIsInTime(userAccountFormBean.getUserEmail());
+        registrationProcessService.registrationCheckIfResponseIsInTime(userAccountFormBean.getUserEmail());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
             boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
             if (!result.hasErrors() && passwordsMatch) {
                 userService.createUser(userAccountFormBean);
-                registrationProcessService.registerNewUserCreated(o);
+                registrationProcessService.registrationUserCreated(o);
                 return "user/registerDone";
             } else {
                 if (!passwordsMatch) {

@@ -50,7 +50,7 @@ public class EmailPipelineImpl implements EmailPipeline {
             success = false;
         }
         if (success) {
-            registrationProcessService.registerNewUserSentEmail(o);
+            registrationProcessService.registrationSentEmail(o);
         }
         LOGGER.info("Sent MAIL: " + o.toString());
     }
@@ -74,7 +74,7 @@ public class EmailPipelineImpl implements EmailPipeline {
             success = false;
         }
         if (success) {
-            registrationProcessService.usersPasswordChangeSentEmail(o);
+            registrationProcessService.passwordRecoverySentEmail(o);
         }
         LOGGER.info("Sent MAIL: " + o.toString());
     }

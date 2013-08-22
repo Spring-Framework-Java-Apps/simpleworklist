@@ -6,29 +6,29 @@ public interface RegistrationProcessService {
 
     RegistrationProcess findByToken(String confirmId);
 
-    boolean registerNewUserIsRetryAndMaximumNumberOfRetries(String email);
+    boolean registrationIsRetryAndMaximumNumberOfRetries(String email);
 
-    void registerNewUserCheckIfResponseIsInTime(String email);
+    void registrationCheckIfResponseIsInTime(String email);
 
-    void registerNewUserSendEmailTo(String email);
+    void registrationSendEmailTo(String email);
 
-    void registerNewUserSentEmail(RegistrationProcess o);
+    void registrationSentEmail(RegistrationProcess o);
 
-    void registerNewUserClickedInEmail(RegistrationProcess o);
+    void registrationClickedInEmail(RegistrationProcess o);
 
-    void registerNewUserCreated(RegistrationProcess o);
+    void registrationUserCreated(RegistrationProcess o);
 
 
-    boolean usersPasswordChangeIsRetryAndMaximumNumberOfRetries(String email);
+    boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email);
 
-    void usersPasswordChangeCheckIfResponseIsInTime(String email);
+    void passwordRecoveryCheckIfResponseIsInTime(String email);
 
-    void usersPasswordChangeSendEmailTo(String email);
+    void passwordRecoverySendEmailTo(String email);
 
-    void usersPasswordChangeSentEmail(RegistrationProcess o);
+    void passwordRecoverySentEmail(RegistrationProcess o);
 
-    void usersPasswordChangeClickedInEmail(RegistrationProcess o);
+    void passwordRecoveryClickedInEmail(RegistrationProcess o);
 
-    void usersPasswordChanged(RegistrationProcess o);
+    void passwordRecoveryDone(RegistrationProcess o);
 
 }

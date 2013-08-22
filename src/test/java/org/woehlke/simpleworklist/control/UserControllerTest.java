@@ -125,7 +125,7 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterNewUserCheckResponseAndRegistrationForm() throws Exception{
-        registrationProcessService.registerNewUserSendEmailTo(emails[0]);
+        registrationProcessService.registrationSendEmailTo(emails[0]);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -141,12 +141,12 @@ public class UserControllerTest {
                 get(url)).andDo(print())
                 .andExpect(view().name(containsString("user/registerConfirmed")))
                 .andExpect(model().attributeExists("userAccountFormBean"));
-        registrationProcessService.registerNewUserCreated(o);
+        registrationProcessService.registrationUserCreated(o);
     }
 
     @Test
     public void testEnterNewPasswordFormularWithToken() throws Exception {
-        registrationProcessService.usersPasswordChangeSendEmailTo(emails[0]);
+        registrationProcessService.passwordRecoverySendEmailTo(emails[0]);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -162,7 +162,7 @@ public class UserControllerTest {
                 get(url)).andDo(print())
                 .andExpect(view().name(containsString("user/resetPasswordConfirmed")))
                 .andExpect(model().attributeExists("userAccountFormBean"));
-        registrationProcessService.usersPasswordChanged(o);
+        registrationProcessService.passwordRecoveryDone(o);
     }
 
     @Test
