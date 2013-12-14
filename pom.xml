@@ -9,11 +9,10 @@
 	<url>http://www.thomas-woehlke.de/p/simpleworklist</url>
 	<properties>
 		<java-version>1.6</java-version>
-		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
+		<org.springframework-version>3.2.5.RELEASE</org.springframework-version>
 		<spring.integration.version>2.2.6.RELEASE</spring.integration.version>
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>
-		<spring-data-jpa.version>1.3.5.RELEASE</spring-data-jpa.version>
-        <spring-data-mongodb.version>1.2.1.RELEASE</spring-data-mongodb.version>
+		<spring-data-jpa.version>1.3.4.RELEASE</spring-data-jpa.version>
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 		<maven.scm.version>1.8.1</maven.scm.version>
@@ -249,7 +248,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-            <version>${spring-data-mongodb.version}</version>
+            <version>1.2.1.RELEASE</version>
         </dependency>
 
 		<dependency>
@@ -279,43 +278,6 @@
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp.jstl</groupId>
-			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>javax.servlet.jsp.jstl</artifactId>
-			<version>1.2.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.servlet.jsp</groupId>
-					<artifactId>jsp-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.servlet.jsp.jstl</groupId>
-					<artifactId>jstl-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!--
-		<dependency>
-			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
@@ -342,7 +304,6 @@
 			<artifactId>jstl-impl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		-->
 		<dependency>
   			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
   			<groupId>org.jsoup</groupId>
@@ -688,6 +649,12 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.5.2</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
             </plugin>
 
         </plugins>
