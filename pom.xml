@@ -10,14 +10,15 @@
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
-		<spring.integration.version>3.0.1.RELEASE</spring.integration.version>
+		<spring.integration.version>4.0.0.M3</spring.integration.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
-		<spring-data-jpa.version>1.4.3.RELEASE</spring-data-jpa.version>
+		<spring-data-jpa.version>1.5.0.RELEASE</spring-data-jpa.version>
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 		<maven.scm.version>1.8.1</maven.scm.version>
-		<hibernate-entitymanager.version>4.0.1.Final</hibernate-entitymanager.version>
+		<hibernate-entitymanager.version>4.3.2.Final</hibernate-entitymanager.version>
         <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -60,6 +61,11 @@
 			<artifactId>spring-expression</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
 
 		<!-- AspectJ -->
 		<dependency>
@@ -140,12 +146,12 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
+			<version>1.1.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
+			<version>5.0.3.Final</version>
 		</dependency>
 
 		<!-- Spring JPA -->
@@ -248,7 +254,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-            <version>1.2.1.RELEASE</version>
+            <version>1.4.0.RELEASE</version>
         </dependency>
 
 		<dependency>
@@ -347,7 +353,7 @@
   			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
   			<groupId>org.jsoup</groupId>
   			<artifactId>jsoup</artifactId>
-  			<version>1.7.1</version>
+  			<version>1.7.3</version>
 		</dependency>
 
 	</dependencies>

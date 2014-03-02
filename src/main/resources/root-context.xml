@@ -20,7 +20,7 @@
 	http://www.springframework.org/schema/integration
 	http://www.springframework.org/schema/integration/spring-integration.xsd
     http://www.springframework.org/schema/data/repository
-    http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd">
+    http://www.springframework.org/schema/data/repository/spring-repository.xsd">
 	
 	<context:property-placeholder location="classpath:/worklist.properties" />
 	
@@ -90,7 +90,7 @@
 	<!-- Integration -->
 	
 	<int:poller default="true" fixed-rate="500" />
-	
+
 	<int:channel id="controlBusChannel" />
 	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#control-bus 
 		http://www.eaipatterns.com/ControlBus.html -->

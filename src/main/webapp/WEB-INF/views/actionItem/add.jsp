@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>	
 <!-- New ActionItem Form -->
-<form:form id="formId" commandName="actionItem" method="post" class="form-horizontal">
+<form:form id="formId" commandName="data" method="post" class="form-horizontal">
 	<div class="control-group">
     	<form:label path="title" class="control-label">Titel <sup class="ym-required">*</sup></form:label>
     	<div class="controls">
