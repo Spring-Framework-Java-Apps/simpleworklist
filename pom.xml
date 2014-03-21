@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
@@ -8,7 +10,7 @@
 	<name>SimpleWorklist</name>
 	<url>http://www.thomas-woehlke.de/p/simpleworklist</url>
 	<properties>
-		<java-version>1.6</java-version>
+		<java-version>1.8</java-version>
 		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
 		<spring.integration.version>4.0.0.M3</spring.integration.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
@@ -20,6 +22,13 @@
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+    <repositories>
+        <repository>
+            <id>repo.spring.io.milestone</id>
+            <name>SpringSource Maven Milestone Repository</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+        </repository>
+    </repositories>
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
