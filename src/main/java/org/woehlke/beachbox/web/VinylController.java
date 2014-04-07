@@ -39,12 +39,15 @@ public class VinylController {
         SessionBean searchItem;
         if(model.containsAttribute("searchItem")) {
             searchItem = (SessionBean) model.asMap().get("searchItem");
-            searchItem.setPageSize(pageable.getPageSize());
+        } else {
+            searchItem = new SessionBean();
+        }
+        if(!searchItem.isEmpty()) {
             page = vinylService.search(searchItem.getSearchString(),pageable);
         } else {
             page = vinylService.findAll(pageable);
-            searchItem = new SessionBean();
         }
+        searchItem.setPageSize(pageable.getPageSize());
         int current = page.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, page.getTotalPages());
@@ -98,6 +101,8 @@ public class VinylController {
     public String editGet(@PathVariable long id, Model model){
         Vinyl vinyl = vinylService.findById(id);
         model.addAttribute("vinyl",vinyl);
+        model.addAttribute("rubrik", Rubrik.values());
+        model.addAttribute("tontraeger", Tontraeger.values());
         return "edit";
     }
 
