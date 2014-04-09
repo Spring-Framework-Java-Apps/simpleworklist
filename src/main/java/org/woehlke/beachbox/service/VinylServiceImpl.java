@@ -40,4 +40,10 @@ public class VinylServiceImpl implements VinylService {
     public Vinyl save(Vinyl vinyl) {
         return vinylRepository.saveAndFlush(vinyl);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void deleteById(long id) {
+        vinylRepository.delete(id);
+    }
 }

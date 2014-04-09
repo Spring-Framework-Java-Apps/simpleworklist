@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!DOCTYPE html>
 <html lang="de">
@@ -70,24 +71,32 @@
         </ul>
     </div>
 
+    <c:url var="neuUrl" value="/new" />
+
+    <div>
     <table class="table table-striped table-hover">
         <tr>
             <c:url var="startUrl" value="/?page.page=1&page.size=${page.size}"/>
-            <th><a href="${startUrl}&page.sort=id&page.sort.dir=asc">id</a></th>
-            <th><a href="${startUrl}&page.sort=rubrik&page.sort.dir=asc">rubrik</th>
-            <th><a href="${startUrl}&page.sort=tontraeger&page.sort.dir=asc">tontraeger</th>
-            <th><a href="${startUrl}&page.sort=interpret&page.sort.dir=asc">interpret</th>
-            <th><a href="${startUrl}&page.sort=song&page.sort.dir=asc">song</th>
-            <th><a href="${startUrl}&page.sort=name&page.sort.dir=asc">name</th>
-            <th><a href="${startUrl}&page.sort=seite&page.sort.dir=asc">seite</th>
-            <th><a href="${startUrl}&page.sort=jahr&page.sort.dir=asc">jahr</th>
-            <th><a href="${startUrl}&page.sort=genre&page.sort.dir=asc">genre</th>
-            <th><a href="${startUrl}&page.sort=label&page.sort.dir=asc">label</th>
-            <th><a href="${startUrl}&page.sort=bemerkung&page.sort.dir=asc">bemerkung</th>
+            <th><a href="${startUrl}&page.sort=id&page.sort.dir=asc">Id</a></th>
+            <th><a href="${startUrl}&page.sort=rubrik&page.sort.dir=asc">Rubrik</th>
+            <th><a href="${startUrl}&page.sort=tontraeger&page.sort.dir=asc">Tontraeger</th>
+            <th><a href="${startUrl}&page.sort=interpret&page.sort.dir=asc">Interpret</th>
+            <th><a href="${startUrl}&page.sort=song&page.sort.dir=asc">Song</th>
+            <th><a href="${startUrl}&page.sort=name&page.sort.dir=asc">Name</th>
+            <th><a href="${startUrl}&page.sort=seite&page.sort.dir=asc">Seite</th>
+            <th><a href="${startUrl}&page.sort=jahr&page.sort.dir=asc">Jahr</th>
+            <th><a href="${startUrl}&page.sort=genre&page.sort.dir=asc">Genre</th>
+            <th><a href="${startUrl}&page.sort=label&page.sort.dir=asc">Label</th>
+            <th><a href="${startUrl}&page.sort=bemerkung&page.sort.dir=asc">Bemerkung</th>
+            <c:if test="${searchItem.bearbeiten}">
+            <th>&auml;ndern</th>
+            <th>l&ouml;schen</th>
+            </c:if>
         </tr>
     <c:forEach items="${page.content}" var="v">
         <tr>
             <c:url var="editUrl" value="/edit"/>
+            <c:url var="deleteUrl" value="/delete"/>
             <td><a href="${editUrl}/${v.id}" title="id">${v.id}</a></td>
             <td>${v.rubrik}</td>
             <td>${v.tontraeger}</td>
@@ -99,9 +108,20 @@
             <td>${v.genre}</td>
             <td>${v.label}</td>
             <td>${v.bemerkung}</td>
+            <c:if test="${searchItem.bearbeiten}">
+            <td><a href="${editUrl}/${v.id}" title="id"><span class="glyphicon glyphicon-edit" /></a></td>
+            <td><a href="${deleteUrl}/${v.id}" title="id"><span class="glyphicon glyphicon-trash" /></a></td>
+            </c:if>
         </tr>
     </c:forEach>
     </table>
+        <c:if test="${searchItem.bearbeiten}">
+            <span class="glyphicon glyphicon-plus-sign" ></span> <a href="${neuUrl}">Neuer Eintrag</a>
+        </c:if>
+        <c:if test="${not searchItem.bearbeiten}">
+            <c:url var="unlockEditUrl" value="/unlockEdit" />
+            <span class="glyphicon glyphicon-circle-arrow-right" ></span> <a href="${unlockEditUrl}">Bearbeiten</a>
+        </c:if>
     </div>
 </body>
 </html>

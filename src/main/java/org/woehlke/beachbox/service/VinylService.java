@@ -16,4 +16,6 @@ public interface VinylService {
     Vinyl findById(long id);
 
     Vinyl save(Vinyl vinyl);
+
+    void deleteById(long id);
 }

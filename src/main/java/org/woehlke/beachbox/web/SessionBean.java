@@ -18,6 +18,7 @@ public class SessionBean implements Serializable {
     private String sort;
     private String sortDir;
     private int pageSize;
+    private boolean bearbeiten = false;
 
     public String getSearchString() {
         return searchString;
@@ -73,6 +74,14 @@ public class SessionBean implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public boolean isBearbeiten() {
+        return bearbeiten;
+    }
+
+    public void setBearbeiten(boolean bearbeiten) {
+        this.bearbeiten = bearbeiten;
     }
 
     public boolean isEmpty() {

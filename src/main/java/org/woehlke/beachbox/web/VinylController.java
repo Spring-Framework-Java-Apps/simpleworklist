@@ -121,4 +121,60 @@ public class VinylController {
         }
         return "redirect:/"+pageInfo;
     }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newGet(Model model){
+        Vinyl vinyl = new Vinyl();
+        model.addAttribute("vinyl",vinyl);
+        model.addAttribute("rubrik", Rubrik.values());
+        model.addAttribute("tontraeger", Tontraeger.values());
+        return "new";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public String newPost(@Valid Vinyl vinyl,Model model){
+        vinyl = vinylService.save(vinyl);
+        model.addAttribute("vinyl",vinyl);
+        String pageInfo = "";
+        if(model.containsAttribute("searchItem")) {
+            SessionBean searchItem = (SessionBean) model.asMap().get("searchItem");
+            pageInfo +=
+                    "?page.page="+searchItem.getCurrentIndex()+
+                            "&page.size="+searchItem.getPageSize()+
+                            "&page.sort="+searchItem.getSort()+
+                            "&page.sort.dir="+searchItem.getSortDir();
+        }
+        return "redirect:/"+pageInfo;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String deleteGet(@PathVariable long id, Model model){
+        vinylService.deleteById(id);
+        String pageInfo = "";
+        if(model.containsAttribute("searchItem")) {
+            SessionBean searchItem = (SessionBean) model.asMap().get("searchItem");
+            pageInfo +=
+                    "?page.page="+searchItem.getCurrentIndex()+
+                            "&page.size="+searchItem.getPageSize()+
+                            "&page.sort="+searchItem.getSort()+
+                            "&page.sort.dir="+searchItem.getSortDir();
+        }
+        return "redirect:/"+pageInfo;
+    }
+
+    @RequestMapping(value = "/unlockEdit", method = RequestMethod.GET)
+    public String getAll(Model model){
+        SessionBean searchItem = (SessionBean) model.asMap().get("searchItem");
+        searchItem.setBearbeiten(true);
+        model.addAttribute("searchItem",searchItem);
+        String pageInfo = "";
+        if(model.containsAttribute("searchItem")) {
+            pageInfo +=
+                    "?page.page="+searchItem.getCurrentIndex()+
+                            "&page.size="+searchItem.getPageSize()+
+                            "&page.sort="+searchItem.getSort()+
+                            "&page.sort.dir="+searchItem.getSortDir();
+        }
+        return "redirect:/"+pageInfo;
+    }
 }
