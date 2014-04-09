@@ -27,6 +27,13 @@
             <form:errors path="searchString" class="alert alert-error"/>
         </div>
         <button type="submit" class="btn btn-default">Suche</button>
+        <form:hidden path="beginIndex" />
+        <form:hidden path="endIndex" />
+        <form:hidden path="currentIndex" />
+        <form:hidden path="sort" />
+        <form:hidden path="sortDir" />
+        <form:hidden path="pageSize" />
+        <form:hidden path="bearbeiten" />
     </form:form>
     </div>
 
