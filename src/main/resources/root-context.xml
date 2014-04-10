@@ -47,6 +47,8 @@ http://www.springframework.org/schema/data/repository/spring-repository.xsd">
                 <prop key="hibernate.generate_statistics">true</prop>
                 <prop key="jpa.showSql">false</prop>
                 <prop key="jpa.database">MYSQL</prop>
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
             </props>
         </property>
     </bean>

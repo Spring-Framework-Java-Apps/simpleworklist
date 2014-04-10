@@ -163,7 +163,7 @@ public class VinylController {
     }
 
     @RequestMapping(value = "/unlockEdit", method = RequestMethod.GET)
-    public String getAll(Model model){
+    public String unlockEdit(Model model){
         SessionBean searchItem = (SessionBean) model.asMap().get("searchItem");
         searchItem.setBearbeiten(true);
         model.addAttribute("searchItem",searchItem);
@@ -176,5 +176,11 @@ public class VinylController {
                             "&page.sort.dir="+searchItem.getSortDir();
         }
         return "redirect:/"+pageInfo;
+    }
+
+    @RequestMapping(value = "/install", method = RequestMethod.GET)
+    public String install(Model model){
+        vinylService.installInitialData();
+        return "redirect:/";
     }
 }

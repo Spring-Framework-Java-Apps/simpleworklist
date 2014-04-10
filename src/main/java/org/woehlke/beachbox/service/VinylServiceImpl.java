@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.beachbox.entities.Vinyl;
+import org.woehlke.beachbox.repository.InstallDao;
 import org.woehlke.beachbox.repository.VinylRepository;
 
 import javax.inject.Inject;
@@ -19,6 +20,9 @@ public class VinylServiceImpl implements VinylService {
 
     @Inject
     private VinylRepository vinylRepository;
+
+    @Inject
+    private InstallDao installDao;
 
     @Override
     public Page<Vinyl> findAll(Pageable pageable) {
@@ -45,5 +49,10 @@ public class VinylServiceImpl implements VinylService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteById(long id) {
         vinylRepository.delete(id);
+    }
+
+    @Override
+    public void installInitialData() {
+        installDao.installInitialData();
     }
 }

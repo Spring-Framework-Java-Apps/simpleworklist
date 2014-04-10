@@ -104,7 +104,7 @@
         <tr>
             <c:url var="editUrl" value="/edit"/>
             <c:url var="deleteUrl" value="/delete"/>
-            <td><a href="${editUrl}/${v.id}" title="id">${v.id}</a></td>
+            <td>${v.id}</td>
             <td>${v.rubrik}</td>
             <td>${v.tontraeger}</td>
             <td>${v.interpret}</td>

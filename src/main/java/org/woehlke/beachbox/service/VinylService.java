@@ -18,4 +18,6 @@ public interface VinylService {
     Vinyl save(Vinyl vinyl);
 
     void deleteById(long id);
+
+    void installInitialData();
 }
