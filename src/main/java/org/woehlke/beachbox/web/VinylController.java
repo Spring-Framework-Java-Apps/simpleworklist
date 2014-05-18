@@ -34,7 +34,7 @@ public class VinylController {
     private VinylService vinylService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getAll(@PageableDefaults(pageNumber = 0, value = 30) Pageable pageable, Model model){
+    public String getAll(@PageableDefaults(pageNumber = 0, value = 30,sort={"interpret"}) Pageable pageable, Model model){
         Page<Vinyl> page;
         SessionBean searchItem;
         if(model.containsAttribute("searchItem")) {
@@ -69,7 +69,7 @@ public class VinylController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String search(@Valid SessionBean searchItem, BindingResult result,
-                         @PageableDefaults(pageNumber = 0, value = 30) Pageable pageable, Model model){
+                         @PageableDefaults(pageNumber = 0, value = 30,sort={"interpret"}) Pageable pageable, Model model){
         Page<Vinyl> page;
         if (result.hasErrors() || searchItem.isEmpty()){
             page = vinylService.findAll(pageable);
