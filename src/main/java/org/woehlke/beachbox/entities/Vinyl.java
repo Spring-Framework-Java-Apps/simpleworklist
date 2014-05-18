@@ -7,6 +7,7 @@ import java.io.Serializable;
  * Created by Fert on 27.03.2014.
  */
 @Entity
+@Table(name="vinyl")
 public class Vinyl implements Serializable {
 
     @Id
