@@ -149,6 +149,15 @@ public class VinylController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteGet(@PathVariable long id, Model model){
+        Vinyl vinyl = vinylService.findById(id);
+        model.addAttribute("vinyl",vinyl);
+        model.addAttribute("rubrik", Rubrik.values());
+        model.addAttribute("tontraeger", Tontraeger.values());
+        return "delete";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String deletePost(@PathVariable long id, Vinyl vinyl, Model model){
         vinylService.deleteById(id);
         String pageInfo = "";
         if(model.containsAttribute("searchItem")) {

@@ -95,7 +95,7 @@
         </div>
         <div class="controls">
             <form:hidden path="id"/>
-            <input id="createNewVinyl" type="submit" value="Speichern" class="btn btn-primary" />
+            <input id="createNewVinyl" type="submit" value="Speichern" class="btn btn-success" />
         </div>
     </form:form>
 </div>

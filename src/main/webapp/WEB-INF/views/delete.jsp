@@ -16,6 +16,7 @@
 <body>
 <div class="container">
     <h1>BeachBox</h1>
+    <p>Diesen Eintrag wirklich l&ouml;schen?</p>
     <form:form id="formId" commandName="vinyl" method="post"
                class="form-horizontal">
         <div class="input-group">
@@ -95,7 +96,7 @@
         </div>
         <div class="controls">
             <form:hidden path="id"/>
-            <input id="createNewVinyl" type="submit" value="Speichern" class="btn btn-warning" />
+            <input id="deleteVinyl" type="submit" value="L&ouml;schen" class="btn btn-danger" />
         </div>
     </form:form>
 </div>
