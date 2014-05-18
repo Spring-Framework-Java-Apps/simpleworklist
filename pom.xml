@@ -11,7 +11,7 @@
 	<url>http://www.thomas-woehlke.de/p/beachbox</url>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.0.3.RELEASE</org.springframework-version>
+		<org.springframework-version>4.0.4.RELEASE</org.springframework-version>
 		<spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
