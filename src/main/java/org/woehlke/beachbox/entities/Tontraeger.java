@@ -8,5 +8,8 @@ public enum Tontraeger {
     CD,
     LP,
     STERN_LP,
-    S
+    S,
+    MC,
+    DVD,
+    VIDEO
 }
