@@ -11,6 +11,6 @@ import org.woehlke.beachbox.entities.Vinyl;
  */
 public interface VinylRepository extends JpaRepository<Vinyl, Long> {
 
-    @Query("select v from Vinyl v where v.interpret like %?1% or v.song like %?1% or v.name like %?1%")
+    @Query("select v from Vinyl v where v.interpret like ?1% or v.song like ?1% or v.name like ?1%")
     Page<Vinyl> findBySearchStrings( String searchInterpret, Pageable pageable);
 }
