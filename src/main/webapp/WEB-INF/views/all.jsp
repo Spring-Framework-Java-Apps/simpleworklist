@@ -13,27 +13,49 @@
     <script type="text/javascript" src="webjars/jquery/2.1.0-2/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+        h1 {
+            margin:auto;
+            width: 15%;
+        }
+        #search {
+            width: 25%;
+            display: block;
+            float: left;
+            vertical-align: middle;
+        }
+        #pager {
+            width: 70%;
+            display: block;
+            float: right;
+            vertical-align: middle;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-    <h1>BeachBox</h1>
+    <div class="row">
+        <h1>BeachBox</h1>
+        <hr />
+    </div>
 
     <c:url var="searchUrl" value="/" />
 
-    <div>
-    <form:form class="navbar-form navbar-left" role="search" action="${searchUrl}" commandName="searchItem">
+    <div class="row">
+    <div id="search"><br/>
+    <form:form class="form-inline" role="search" action="${searchUrl}" commandName="searchItem">
         <div class="form-group">
-            <form:input class="form-control" path="searchString"/>
-            <form:errors path="searchString" class="alert alert-error"/>
+            <form:input class="form-control" path="searchString"/><form:errors path="searchString" class="alert alert-error"/>
+            <button type="submit" class="btn btn-default">Suche</button>
+            <form:hidden path="beginIndex" />
+            <form:hidden path="endIndex" />
+            <form:hidden path="currentIndex" />
+            <form:hidden path="sort" />
+            <form:hidden path="sortDir" />
+            <form:hidden path="pageSize" />
+            <form:hidden path="bearbeiten" />
         </div>
-        <button type="submit" class="btn btn-default">Suche</button>
-        <form:hidden path="beginIndex" />
-        <form:hidden path="endIndex" />
-        <form:hidden path="currentIndex" />
-        <form:hidden path="sort" />
-        <form:hidden path="sortDir" />
-        <form:hidden path="pageSize" />
-        <form:hidden path="bearbeiten" />
     </form:form>
     </div>
 
@@ -42,7 +64,7 @@
     <c:url var="prevUrl" value="/?page.page=${searchItem.currentIndex - 1}&page.size=${page.size}&page.sort=${searchItem.sort}&page.sort.dir=asc" />
     <c:url var="nextUrl" value="/?page.page=${searchItem.currentIndex + 1}&page.size=${page.size}&page.sort=${searchItem.sort}&page.sort.dir=asc" />
 
-    <div>
+    <div id="pager">
         <ul class="pagination">
             <c:choose>
                 <c:when test="${searchItem.currentIndex == 1}">
@@ -77,10 +99,11 @@
             </c:choose>
         </ul>
     </div>
+    </div>
 
     <c:url var="neuUrl" value="/new" />
 
-    <div>
+    <div class="row">
     <table class="table table-striped table-hover">
         <tr>
             <c:url var="startUrl" value="/?page.page=1&page.size=${page.size}"/>
