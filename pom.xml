@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.19-SNAPSHOT</version>
+	<version>1.0.19</version>
 	<name>SimpleWorklist</name>
 	<url>http://www.thomas-woehlke.de/p/simpleworklist</url>
 	<properties>
@@ -381,7 +379,7 @@
 		<url>https://github.com/phasenraum2010/simpleworklist.git</url>
 		<connection>scm:git:https://github.com/phasenraum2010/simpleworklist.git</connection>
 		<developerConnection>scm:git:https://github.com/phasenraum2010/simpleworklist.git</developerConnection>
-	  <tag>simpleworklist-1.0.16</tag>
+	  <tag>simpleworklist-1.0.19</tag>
   </scm>
 	<issueManagement>
 		<url>https://github.com/phasenraum2010/simpleworklist/issues</url>
