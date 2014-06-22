@@ -148,10 +148,10 @@ public class UserServiceImplTest extends AbstractTest {
     @Test
     public void testChangeUsersPassword(){
         UserAccountFormBean userAccount = new UserAccountFormBean();
-        userAccount.setUserEmail(username_email);
+        userAccount.setUserEmail(emails[0]);
         userAccount.setUserPassword(password + "_NEU");
         userAccount.setUserPasswordConfirmation(password + "_NEU");
-        userAccount.setUserFullname(full_name);
+        userAccount.setUserFullname(fullnames[0]);
         userService.changeUsersPassword(userAccount);
     }
 
@@ -168,7 +168,6 @@ public class UserServiceImplTest extends AbstractTest {
         Assert.assertNotNull(userName);
         Assert.assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
-
     }
 
     @Test(expected = UsernameNotFoundException.class)

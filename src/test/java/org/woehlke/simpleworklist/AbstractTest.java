@@ -2,7 +2,9 @@ package org.woehlke.simpleworklist;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

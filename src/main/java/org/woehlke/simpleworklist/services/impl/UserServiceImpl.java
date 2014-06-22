@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
@@ -98,8 +99,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void changeUsersPassword(UserAccountFormBean userAccount) {
+    	Assert.notNull(userAccount);
+    	Assert.notNull(userAccount.getUserEmail());
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
-        ua.setUserPassword(userAccount.getUserPasswordEncoded());
+        Assert.notNull(ua);
+        String pwEncoded = userAccount.getUserPasswordEncoded();
+        ua.setUserPassword(pwEncoded);
+        Assert.notNull(ua);
         userAccountRepository.saveAndFlush(ua);
     }
 
