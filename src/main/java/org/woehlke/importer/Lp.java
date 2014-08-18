@@ -11,7 +11,7 @@ public class Lp {
 
     private final static String dateiName = "C:\\git\\beachbox\\src\\main\\resources\\LP.csv";
     private final static String dateiNameOut = "C:\\git\\beachbox\\src\\main\\resources\\LP.sql";
-    private final static String sqlStart = "INSERT INTO vinyl (rubrik,tontraeger, interpret, name, jahr, genre, label) VALUES (\'";
+    private final static String sqlStart = "INSERT INTO vinyl (rubrik,tontraeger, interpret, name, jahr, genre, label,bemerkung) VALUES (\'";
 
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(dateiNameOut));

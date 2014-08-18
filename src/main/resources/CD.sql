@@ -148,3 +148,6 @@ INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemer
 INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemerkung) VALUES ('CD','CD','Wilson Phillips','Wilson Phillips','Pop','1990','SBK','');
 INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemerkung) VALUES ('CD','CD','Wondermints','Wondermints','Pop','1996','sanctuary','Brian');
 INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemerkung) VALUES ('CD','CD','Xahdja Nin','','AfroPop','','selbst','');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemerkung) VALUES ('CD','CD','Chilton, Alex','Candlelight','Wave','1997','Bar/None','Live');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemerkung) VALUES ('CD','CD','Jones, Tom','Spirit in the Room','FolkBlues','2012','Island','');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, name, genre, jahr, label, bemerkung) VALUES ('CD','CD','GRATEFUL DEAD, The','meet the Beach Boys','West Coast','1971','','Live');

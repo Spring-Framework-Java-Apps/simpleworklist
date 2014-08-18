@@ -11,5 +11,7 @@ public enum Rubrik {
     LP_SAMPLER,
     SINGLES,
     SINGLES_COUNTRY_UND_JAZZ,
-    SINGLES_DEUTSCH
+    SINGLES_DEUTSCH,
+    DVD,
+    VIDEO
 }

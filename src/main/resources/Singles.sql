@@ -4406,3 +4406,11 @@ INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemer
 INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','ZZ TOP','Sharp Dressed Man','A','83','BluesRock','');
 INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','ZZ TOP','I Got The Six','B','83','BluesRock','');
 INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','ZZ TOP','If I Could Only Flag Her...','B','83','BluesRock','');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Cash, Johnny','She Used To Love Me A Lot','A','84','Country','');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Cash, Johnny','','B','','','Monogramm');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Dark Shadows','Distänt Mind','A','2012','Psycho Rock','Autogramm');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Dark Shadows','Silent Sreäms','B','2012','Psycho Rock','Autogramm');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Clifford, Buzz','Babysitter-Boogie','A','61','R&R','');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Clifford, Buzz','Driftwood','B','61','R&R','');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Rock-A-Teens','Woo Hoo','A','62','Beat','Instrumental');
+INSERT INTO vinyl (rubrik,tontraeger, interpret, song, seite, jahr, genre, bemerkung) VALUES ('SINGLES','S','Rock-A-Teens','Twangy','B','62','Beat','Instrumental');

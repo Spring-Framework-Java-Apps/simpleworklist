@@ -11,7 +11,7 @@ public class CdSampler {
 
     private final static String dateiName = "C:\\git\\beachbox\\src\\main\\resources\\CD_Sampler.csv";
     private final static String dateiNameOut = "C:\\git\\beachbox\\src\\main\\resources\\CD_Sampler.sql";
-    private final static String sqlStart = "INSERT INTO vinyl (rubrik,tontraeger, interpret, song, name, seite, jahr, genre) VALUES (\'";
+    private final static String sqlStart = "INSERT INTO vinyl (rubrik,tontraeger, interpret, song, name, seite, jahr, genre, bemerkung) VALUES (\'";
 
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(dateiNameOut));
