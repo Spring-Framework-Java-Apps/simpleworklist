@@ -59,8 +59,8 @@
     </form:form>
     </div>
 
-    <c:url var="firstUrl" value="/?page.page=1&size=${page.size}&sort=${sort}&page.sort.dir=asc" />
-    <c:url var="lastUrl" value="/?page.page=${page.totalPages}&page.size=${page.size}&page.sort=${sort}&page.sort.dir=asc" />
+    <c:url var="firstUrl" value="/?page.page=1&size=${page.size}&sort=${searchItem.sort}&page.sort.dir=asc" />
+    <c:url var="lastUrl" value="/?page.page=${page.totalPages}&page.size=${page.size}&page.sort=${searchItem.sort}&page.sort.dir=asc" />
     <c:url var="prevUrl" value="/?page.page=${searchItem.currentIndex - 1}&page.size=${page.size}&page.sort=${searchItem.sort}&page.sort.dir=asc" />
     <c:url var="nextUrl" value="/?page.page=${searchItem.currentIndex + 1}&page.size=${page.size}&page.sort=${searchItem.sort}&page.sort.dir=asc" />
 
