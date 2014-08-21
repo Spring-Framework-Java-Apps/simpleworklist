@@ -55,7 +55,7 @@ public class VinylController {
         String sort = "";
         if(mySort != null) {
             sort = page.getSort().toString().split(":")[0];
-            LOGGER.info("sort: " + sort);
+            //LOGGER.info("sort: " + sort);
         }
         model.addAttribute("page",page);
         searchItem.setBeginIndex(begin);
@@ -83,7 +83,7 @@ public class VinylController {
         String sort = "";
         if(mySort != null) {
             sort = page.getSort().toString().split(":")[0];
-            LOGGER.info("sort: " + sort);
+            //LOGGER.info("sort: " + sort);
         }
         model.addAttribute("page",page);
         searchItem.setBeginIndex(begin);
