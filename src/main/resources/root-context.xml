@@ -23,7 +23,8 @@
     http://www.springframework.org/schema/data/repository/spring-repository.xsd">
 	
 	<context:property-placeholder location="classpath:/worklist.properties" />
-	
+
+	<!--
 	<bean id="mongoDbFactory"
 		class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
 		<constructor-arg name="mongo">
@@ -36,6 +37,7 @@
 		class="org.springframework.integration.mongodb.store.MongoDbMessageStore">
 		<constructor-arg ref="mongoDbFactory" />
 	</bean>
+	-->
 	
 	<jpa:repositories base-package="org.woehlke.simpleworklist" />
 	
@@ -97,7 +99,7 @@
 	<int:control-bus id="controlBus" input-channel="controlBusChannel" />
 	
 	<int:channel id="registrationProcessEmailSenderChannel">
-		<int:queue message-store="mongoDbMessageStore" />
+		<int:queue capacity="100" />
 	</int:channel>
 	
 	<int:service-activator input-channel="registrationProcessEmailSenderChannel"
@@ -105,7 +107,7 @@
 		ref="emailPipeline" method="sendEmailToRegisterNewUser" />
 
     <int:channel id="passwordResetEmailSenderChannel">
-        <int:queue message-store="mongoDbMessageStore" />
+        <int:queue capacity="100" />
     </int:channel>
 
     <int:service-activator input-channel="passwordResetEmailSenderChannel"
