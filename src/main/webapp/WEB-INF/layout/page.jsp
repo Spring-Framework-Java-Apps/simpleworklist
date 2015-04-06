@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<c:url value='/css/main.css'/>"  type="text/css">
 	<script src="<c:url value='/js/bootstrap.min.js'/>"></script> 
 	<script src="<c:url value='/js/jquery-1.9.1.min.js'/>"></script>
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"  type="text/css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" type="text/css">
 	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 </head>
 <body>

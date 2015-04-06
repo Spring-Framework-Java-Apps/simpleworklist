@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.woehlke.simpleworklist.entities.ActionState;
 import org.woehlke.simpleworklist.entities.Category;
 import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -73,13 +75,18 @@ public class ActionItemAndCategoryController {
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("actionItem", actionItem);
+        List<ActionState> stateValues = new ArrayList<>();
+        for(ActionState state:ActionState.values()){
+            stateValues.add(state);
+        }
+        model.addAttribute("stateValues", ActionState.values());
         return "actionItem/show";
     }
 
     @RequestMapping(value = "/actionItem/detail/{dataId}", method = RequestMethod.POST)
     public final String editDataStore(
-            @Valid ActionItem actionItem,
             @PathVariable long dataId,
+            @Valid ActionItem actionItem,
             BindingResult result, Model model) {
         ActionItem persistentActionItem = actionItemService.findOne(dataId);
         long categoryId = 0;
@@ -102,6 +109,7 @@ public class ActionItemAndCategoryController {
         } else {
             persistentActionItem.setTitle(actionItem.getTitle());
             persistentActionItem.setText(actionItem.getText());
+            persistentActionItem.setStatus(actionItem.getStatus());
             actionItemService.saveAndFlush(persistentActionItem);
             return "redirect:/category/" + categoryId + "/";
         }

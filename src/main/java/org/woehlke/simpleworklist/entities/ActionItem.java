@@ -2,15 +2,7 @@ package org.woehlke.simpleworklist.entities;
 
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -51,6 +43,9 @@ public class ActionItem {
     @NotBlank
     @Column(nullable = false)
     private String text;
+
+    @Enumerated(EnumType.STRING)
+    private ActionState status;
 
     public Long getId() {
         return id;
@@ -108,6 +103,14 @@ public class ActionItem {
         this.text = text;
     }
 
+    public ActionState getStatus() {
+        return status;
+    }
+
+    public void setStatus(ActionState status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -135,10 +138,15 @@ public class ActionItem {
 
     @Override
     public String toString() {
-        return "DataLeaf [id=" + id + ", uuid=" + uuid + ", category="
-                + category + ", created=" + created + ", changed=" + changed
-                + ", title=" + title + ", text=" + text + ", hashCode()="
-                + hashCode() + "]";
+        return "ActionItem{" +
+                "id=" + id +
+                ", uuid='" + uuid + '\'' +
+                ", category=" + category +
+                ", created=" + created +
+                ", changed=" + changed +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", status=" + status +
+                '}';
     }
-
 }

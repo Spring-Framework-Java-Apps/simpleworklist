@@ -10,19 +10,30 @@
 				</c:if>
 				<c:if test="${! empty dataList}">
 				<div>
-					<table class="table table-striped">
+					<table class="table table-striped table-hover">
 					<c:forEach items="${dataList}" var="actionItem">
-					<tr><td>
-						<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
-						id="dataDetail_${actionItem.id}" ><c:out
-								value="${actionItem.title}" /></a>
-					</td>
-					<td>
-						<a href='<c:url value="/actionItem/move/${actionItem.id}"/>'>Move</a>
-					</td>
-					<td>
-						<a href='<c:url value="/actionItem/delete/${actionItem.id}"/>'>Delete</a>
-					</td>
+					<tr>
+						<td>
+							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
+							id="dataDetail_${actionItem.id}" ><c:out
+									value="${actionItem.title}" /></a>
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${actionItem.status eq 'NEW'}">
+									<button class="btn btn-small btn-danger" type="button">&nbsp;</button>
+								</c:when>
+								<c:when test="${actionItem.status.name() eq 'WORK'}">
+									<button class="btn btn-small btn-warning" type="button">&nbsp;</button>
+								</c:when>
+								<c:when test="${actionItem.status.name() eq 'DONE'}">
+									<button class="btn btn-small btn-success" type="button">&nbsp;</button>
+								</c:when>
+							</c:choose>
+						</td>
+						<td>
+							<a href='<c:url value="/actionItem/delete/${actionItem.id}"/>'>Delete</a>
+						</td>
 					</tr>
 					</c:forEach>
 					</table>
