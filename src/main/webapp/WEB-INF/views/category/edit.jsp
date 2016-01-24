@@ -12,6 +12,6 @@
 		<form:errors path="description" class="alert alert-error"/>
 	</div>
 	<form:hidden path="id"/>
-	<button id="saveEditedCategory" type="submit" class="btn btn-default">Save Data</button>
+	<button id="saveEditedCategory" type="submit" class="btn btn-default">Save Category</button>
 </form:form>
 <!-- Document Window End -->

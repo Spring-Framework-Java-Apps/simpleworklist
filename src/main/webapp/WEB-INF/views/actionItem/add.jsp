@@ -28,7 +28,7 @@
 		<form:textarea path="text" rows="20" cols="50"  class="form-control"/>
 		<form:errors path="text" class="alert alert-error"/>
     </div>
-	<button id="createNewDataLeaf" type="submit" class="btn btn-default">Add Data</button>
+	<button id="createNewDataLeaf" type="submit" class="btn btn-default">Add Action Item</button>
 </form:form>
 				
 
