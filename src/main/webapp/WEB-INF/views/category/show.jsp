@@ -8,6 +8,7 @@
 					<a href='<c:url value="/category/${thisCategory.id}/delete"/>'>Delete</a></span>
 					</fieldset>
 				</c:if>
+				<br />
 				<c:if test="${! empty dataList}">
 				<div>
 					<table class="table table-striped table-hover">
@@ -38,13 +39,13 @@
 					</c:forEach>
 					</table>
 				</div>
-				<div>
+				<nav>
 					<c:url var="firstUrl" value="/category/${thisCategory.id}/page/1" />
 					<c:url var="lastUrl" value="/category/${thisCategory.id}/page/${totalPages}" />
 					<c:url var="prevUrl" value="/category/${thisCategory.id}/page/${currentIndex - 1}" />
 					<c:url var="nextUrl" value="/category/${thisCategory.id}/page/${currentIndex + 1}" />
-					<div class="pagination pagination-centered">
-					    <ul>
+					<div>
+					    <ul class="pagination">
 					        <c:choose>
 					            <c:when test="${currentIndex == 1}">
 					                <li class="disabled"><a href="#">&lt;&lt;</a></li>
@@ -78,5 +79,5 @@
 					        </c:choose>
 					    </ul>
 					</div>			
-				</div>
+				</nav>
 				</c:if>

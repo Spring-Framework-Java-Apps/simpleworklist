@@ -132,6 +132,11 @@ public class ActionItemAndCategoryController {
         List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("data", actionItemLeaf);
+        List<ActionState> stateValues = new ArrayList<>();
+        for(ActionState state:ActionState.values()){
+            stateValues.add(state);
+        }
+        model.addAttribute("stateValues", ActionState.values());
         return "actionItem/add";
     }
 
