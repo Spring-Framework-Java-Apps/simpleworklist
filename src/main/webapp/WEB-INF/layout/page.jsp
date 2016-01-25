@@ -43,7 +43,7 @@
 							<a href="#" class="dropdown-toggle"
 							   data-toggle="dropdown"
 							   role="button" aria-haspopup="true"
-							   aria-expanded="false">New Content<span class="caret"></span></a>
+							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New Content<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li>
 									<a href='<c:url value="/category/addchild/${thisCategory.id}"/>'>Add a Category</a>
@@ -58,18 +58,21 @@
 							</ul>
 						</li>
 						<li>
-							<a href="<c:url value="/users" />">Show Users</a>
+							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Users</a>
 						</li>
 						<li>
-							<a href='<c:url value="/j_spring_security_logout"/>'>Logout</a>
+							<a href='<c:url value="/j_spring_security_logout"/>'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
 						</li>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
 						<li>
-							<a href='<c:url value="/register"/>'>Register as New User</a>
+							<a href='<c:url value="/register"/>'><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register as New User</a>
 						</li>
 						<li>
-							<a href='<c:url value="/login"/>'>Login</a>
+							<a href='<c:url value="/login"/>'><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a>
+						</li>
+						<li>
+							<a href='<c:url value="/resetPassword"/>'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Password forgotten?</a>
 						</li>
 					</sec:authorize>
 				</ul>
@@ -78,7 +81,7 @@
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search">
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 				</form>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">

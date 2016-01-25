@@ -26,8 +26,8 @@
 	</div>
      <div class="form-group">
 		 <form:label path="text">Text</form:label>
-		 <form:textarea path="text" rows="20" cols="50" class="form-control"/>
+		 <form:textarea path="text" rows="10" cols="50" class="form-control"/>
 		 <form:errors path="text" class="alert alert-error"/>
     </div>
-	<button id="editDataLeaf" type="submit" class="btn btn-default">Save Action Item</button>
+	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Action Item</button>
 </form:form>

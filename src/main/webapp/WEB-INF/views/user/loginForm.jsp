@@ -15,8 +15,7 @@
 			<label for="j_password">Password</label>
 			<input id="j_password" type="password" name="j_password" class="form-control"/>
 		</div>
-		<button id="loginButton" type="submit" class="btn btn-default">Login</button>
+		<button id="loginButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</button>
 	</form>
 	<br/>
-	<a href='<c:url value="/resetPassword"/>'>Password forgotten?</a>
 </div>

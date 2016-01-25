@@ -1,12 +1,11 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 				<!-- Document Window -->
 				<c:if test="${thisCategory.id > 0}">
-					<fieldset>
-					<legend><c:out value="${thisCategory.name}" /></legend>
-					<span class="span7"><c:out value="${thisCategory.description}" /></span>
-					<span class="span3"><a href='<c:url value="/category/${thisCategory.id}/edit"/>'>Edit Category</a> | 
-					<a href='<c:url value="/category/${thisCategory.id}/delete"/>'>Delete</a></span>
-					</fieldset>
+					<h1><c:out value="${thisCategory.name}" /></h1>
+					<c:out value="${thisCategory.description}" /><br /><br />
+					<a href='<c:url value="/category/${thisCategory.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Category</a> |
+					<a href='<c:url value="/category/${thisCategory.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Category</a> |
+					<a href='<c:url value="/actionItem/addtocategory/${thisCategory.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add an Action Item</a><br />
 				</c:if>
 				<br />
 				<c:if test="${! empty dataList}">
@@ -33,7 +32,10 @@
 							</c:choose>
 						</td>
 						<td>
-							<a href='<c:url value="/actionItem/delete/${actionItem.id}"/>'>Delete</a>
+							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
+						</td>
+						<td>
+							<a href='<c:url value="/actionItem/delete/${actionItem.id}"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
 						</td>
 					</tr>
 					</c:forEach>

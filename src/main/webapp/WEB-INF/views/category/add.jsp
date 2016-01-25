@@ -11,6 +11,6 @@
 		<form:input path="description" class="form-control" />
 		<form:errors path="description" class="alert alert-error"/>
 	</div>
-	<button id="createNewCategory" type="submit" class="btn btn-default">Add Category</button>
+	<button id="createNewCategory" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Category</button>
 </form:form>
 <!-- Document Window End -->
