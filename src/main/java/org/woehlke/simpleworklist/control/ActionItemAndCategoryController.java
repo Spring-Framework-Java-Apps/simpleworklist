@@ -279,12 +279,14 @@ public class ActionItemAndCategoryController {
             category = categoryService.saveAndFlush(category);
         } else {
             Category thisCategory = categoryService.findByCategoryId(categoryId);
-            thisCategory.getChildren().add(category);
+            List<Category> children = thisCategory.getChildren();
+            children.add(category);
+            thisCategory.setChildren(children);
+            category.setParent(thisCategory);
             category = categoryService.saveAndFlush(category);
-            LOGGER.info(category.toString());
-            List<Category> breadcrumb = categoryService.getBreadcrumb(thisCategory);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisCategory", thisCategory);
+            categoryId = category.getId();
+            LOGGER.info("category:     "+category.toString());
+            LOGGER.info("thisCategory: "+thisCategory.toString());
         }
         return "redirect:/category/" + categoryId + "/page/1";
     }
