@@ -18,10 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.woehlke.simpleworklist.entities.ActionState;
 import org.woehlke.simpleworklist.entities.Category;
@@ -206,7 +203,9 @@ public class ActionItemAndCategoryController {
     @RequestMapping(value = "/category/{categoryId}/page/{pageNumber}", method = RequestMethod.GET)
     public final ModelAndView showCategory(
             @PathVariable long categoryId,
-            @PathVariable int pageNumber) {
+            @PathVariable int pageNumber,
+            @RequestParam(required = false) String message,
+            @RequestParam(required = false) boolean isDeleted) {
         ModelAndView mav = new ModelAndView("category/show");
         Category thisCategory = null;
         Page<ActionItem> dataLeafPage = null;
@@ -231,6 +230,10 @@ public class ActionItemAndCategoryController {
         mav.addObject("thisCategory", thisCategory);
         mav.addObject("dataList", dataLeafPage.getContent());
         mav.addObject("totalPages", dataLeafPage.getTotalPages());
+        if(message != null){
+            mav.addObject("message",message);
+            mav.addObject("isDeleted",isDeleted);
+        }
         return mav;
     }
 
@@ -351,14 +354,37 @@ public class ActionItemAndCategoryController {
                     newCategoryId = 0;
                 }
                 categoryService.delete(category);
+                String message = "Category is deleted. You see its parent category now.";
+                model.addAttribute("message",message);
+                model.addAttribute("isDeleted",true);
             } else {
+                StringBuilder s = new StringBuilder("Deletion rejected for this Category, because ");
                 LOGGER.info("Deletion rejected for Category " + category.getId());
                 if (!hasNoData) {
                     LOGGER.warn("Category " + category.getId() + " has actionItem");
+                    s.append("Category has actionItems.");
                 }
                 if (!hasNoChildren) {
                     LOGGER.info("Category " + category.getId() + " has children");
+                    s.append("Category has child categories.");
                 }
+                model.addAttribute("message",s.toString());
+                model.addAttribute("isDeleted",false);
+                List<Category> breadcrumb = categoryService.getBreadcrumb(category);
+                int pageNumber = 1;
+                Pageable request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
+                Page<ActionItem> dataLeafPage = actionItemService.findByCategory(category, request);
+                int current = dataLeafPage.getNumber() + 1;
+                int begin = Math.max(1, current - 5);
+                int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
+                model.addAttribute("beginIndex", begin);
+                model.addAttribute("endIndex", end);
+                model.addAttribute("currentIndex", current);
+                model.addAttribute("breadcrumb", breadcrumb);
+                model.addAttribute("thisCategory", category);
+                model.addAttribute("dataList", dataLeafPage.getContent());
+                model.addAttribute("totalPages", dataLeafPage.getTotalPages());
+                return "category/show";
             }
         }
         return "redirect:/category/" + newCategoryId + "/page/1";
