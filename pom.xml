@@ -9,14 +9,14 @@
 	<url>http://www.thomas-woehlke.de/p/simpleworklist</url>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.0.6.RELEASE</org.springframework-version>
-		<spring.integration.version>4.0.3.RELEASE</spring.integration.version>
-		<spring.security.version>3.2.5.RELEASE</spring.security.version>
-		<spring-data-jpa.version>1.6.2.RELEASE</spring-data-jpa.version>
+		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
+		<spring.integration.version>4.2.4.RELEASE</spring.integration.version>
+		<spring.security.version>3.2.9.RELEASE</spring.security.version>
+		<!-- spring-data-jpa.version>1.6.2.RELEASE</spring-data-jpa.version -->
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.7.6</org.slf4j-version>
 		<maven.scm.version>1.9</maven.scm.version>
-		<hibernate-entitymanager.version>4.3.5.Final</hibernate-entitymanager.version>
+		<hibernate-entitymanager.version>4.3.11.Final</hibernate-entitymanager.version>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -27,6 +27,17 @@
             <url>https://repo.spring.io/libs-milestone</url>
         </repository>
     </repositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-releasetrain</artifactId>
+				<version>Gosling-SR2A</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -185,7 +196,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>${spring-data-jpa.version}</version>
+			<!-- version>${spring-data-jpa.version}</version -->
 		</dependency>
 
 		<!-- Security -->
