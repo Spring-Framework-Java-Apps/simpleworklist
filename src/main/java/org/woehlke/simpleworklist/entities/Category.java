@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -48,12 +49,14 @@ public class Category {
 
     @SafeHtml
     @NotBlank
+    @Length(min=1,max=255)
     @Column(nullable = false)
     private String name;
 
     @SafeHtml
     @NotBlank
-    @Column(nullable = true)
+    @Length(min=0,max=65535)
+    @Column(nullable = true, length = 65535, columnDefinition="text")
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = { CascadeType.ALL })

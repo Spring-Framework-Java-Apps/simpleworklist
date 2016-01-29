@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -36,12 +37,14 @@ public class ActionItem {
 
     @SafeHtml
     @NotBlank
+    @Length(min=1,max=255)
     @Column(nullable = false)
     private String title;
 
     @SafeHtml
     @NotBlank
-    @Column(nullable = false)
+    @Length(min=0,max=65535)
+    @Column(nullable = false, length = 65535, columnDefinition="text")
     private String text;
 
     @Enumerated(EnumType.STRING)

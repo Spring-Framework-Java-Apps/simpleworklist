@@ -52,8 +52,9 @@ public class RegistrationController {
      * @return info page at success or return to form with error messages.
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public final String registerNewUserRequestStoreAndSendEmailForVerification(@Valid RegisterFormBean registerFormBean,
-                                                                               BindingResult result, Model model) {
+    public final String registerNewUserRequestStoreAndSendEmailForVerification(
+            @Valid RegisterFormBean registerFormBean,
+            BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/registerForm";
         } else {
@@ -89,7 +90,8 @@ public class RegistrationController {
      * @return Formular for Entering Account ActionItem or Error Messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
-    public final String registerNewUserCheckResponseAndRegistrationForm(@PathVariable String confirmId, Model model) {
+    public final String registerNewUserCheckResponseAndRegistrationForm(
+            @PathVariable String confirmId, Model model) {
         LOGGER.info("GET /confirm/" + confirmId);
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
         if (o != null) {
@@ -113,9 +115,10 @@ public class RegistrationController {
      * @return login page at success or page with error messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
-    public final String registerNewUserCheckResponseAndRegistrationStore(@PathVariable String confirmId,
-                                                                         @Valid UserAccountFormBean userAccountFormBean,
-                                                                         BindingResult result, Model model) {
+    public final String registerNewUserCheckResponseAndRegistrationStore(
+            @PathVariable String confirmId,
+            @Valid UserAccountFormBean userAccountFormBean,
+            BindingResult result, Model model) {
         LOGGER.info("POST /confirm/" + confirmId + " : " + userAccountFormBean.toString());
         registrationProcessService.registrationCheckIfResponseIsInTime(userAccountFormBean.getUserEmail());
         RegistrationProcess o = registrationProcessService.findByToken(confirmId);
