@@ -195,6 +195,28 @@ public class ActionItemAndCategoryController {
         return "redirect:/category/" + categoryId + "/";
     }
 
+    @RequestMapping(value = "/actionItem/transform/{dataId}", method = RequestMethod.GET)
+    public final String transformActionItemIntoCategory(@PathVariable long dataId) {
+        ActionItem actionItem = actionItemService.findOne(dataId);
+        long categoryId = 0;
+        if (actionItem.getCategory() != null) {
+            categoryId = actionItem.getCategory().getId();
+        }
+        Category parentCategory = categoryService.findByCategoryId(categoryId);
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Category thisCategory = new Category();
+        thisCategory.setParent(parentCategory);
+        thisCategory.setUserAccount(userAccount);
+        thisCategory.setName(actionItem.getTitle());
+        thisCategory.setDescription(actionItem.getText());
+        thisCategory.setUuid(actionItem.getUuid());
+        thisCategory = categoryService.saveAndFlush(thisCategory);
+        actionItemService.delete(actionItem);
+        categoryId = thisCategory.getId();
+        LOGGER.info("tried to transform ActionItem "+dataId+" to new Category "+categoryId);
+        return "redirect:/category/" + categoryId + "/";
+    }
+
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
     public final String showCategory(@PathVariable long categoryId) {
         return "redirect:/category/" + categoryId + "/page/1";

@@ -30,4 +30,6 @@
 		 <form:errors path="text" class="alert alert-error"/>
     </div>
 	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Action Item</button>
+	&nbsp;&nbsp;&nbsp;<a href="<c:url value="/actionItem/transform/${actionItem.id}"/>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Transform to Category</a>
 </form:form>
+
