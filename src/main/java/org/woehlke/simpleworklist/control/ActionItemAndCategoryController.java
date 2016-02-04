@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,6 @@ import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.CategoryService;
 import org.woehlke.simpleworklist.services.ActionItemService;
-import org.woehlke.simpleworklist.services.TestService;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Controller

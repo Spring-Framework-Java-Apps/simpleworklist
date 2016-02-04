@@ -11,15 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
-import org.woehlke.simpleworklist.model.RegisterFormBean;
-import org.woehlke.simpleworklist.model.UserAccountFormBean;
-import org.woehlke.simpleworklist.services.RegistrationProcessService;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Controller
