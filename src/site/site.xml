@@ -12,7 +12,7 @@
     <bannerLeft>
         <name>SimpleWorklist</name>
         <src>/img/phasenraum_logo.gif</src>
-        <href>http://woehlke.org/p/simpleworklist/</href>
+        <href>http://woehlke.org/</href>
     </bannerLeft>
     <body>
         <menu ref="parent"/>
