@@ -5,8 +5,7 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:int="http://www.springframework.org/schema/integration"
-	xmlns:int-mongodb="http://www.springframework.org/schema/integration/mongodb"
-    xmlns:repository="http://www.springframework.org/schema/data/repository"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/tx 
@@ -15,74 +14,35 @@
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/data/jpa
     http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-	http://www.springframework.org/schema/integration/mongodb
-	http://www.springframework.org/schema/integration/mongodb/spring-integration-mongodb.xsd
 	http://www.springframework.org/schema/integration
 	http://www.springframework.org/schema/integration/spring-integration.xsd
-    http://www.springframework.org/schema/data/repository
-    http://www.springframework.org/schema/data/repository/spring-repository.xsd">
+    http://www.springframework.org/schema/jee
+    http://www.springframework.org/schema/jee/spring-jee.xsd">
 	
 	<context:property-placeholder location="classpath:/worklist.properties" />
-
-	<!--
-	<bean id="mongoDbFactory"
-		class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
-		<constructor-arg name="mongo">
-			<bean class="com.mongodb.Mongo" />
-		</constructor-arg>
-		<constructor-arg name="databaseName" value="test" />
-	</bean>
-
-	<bean id="mongoDbMessageStore"
-		class="org.springframework.integration.mongodb.store.MongoDbMessageStore">
-		<constructor-arg ref="mongoDbFactory" />
-	</bean>
-	-->
 	
 	<jpa:repositories base-package="org.woehlke.simpleworklist" />
-	
-	<!-- Explicit Data Source is for use with CloudFoundry.com -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${javax.persistence.jdbc.driver}"/> 
-		<property name="url" value="${javax.persistence.jdbc.url}"/> 
-		<property name="username" value="${javax.persistence.jdbc.username}"/>
-		<property name="password" value="${javax.persistence.jdbc.password}"/>
-	</bean>
-	
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-  		<property name="dataSource" ref="dataSource"/>
-  		<property name="persistenceUnitName" value="simpleListWorkerPU"/>
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect"/>
-                <property name="showSql" value="true" />
-                <property name="generateDdl" value="true"/>
-            </bean>
-        </property>
-        <property name="jpaProperties">
-            <!-- set extra properties here, e.g. for Hibernate: -->
-            <props>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.generate_statistics">false</prop>
-                <prop key="jpa.showSql">false</prop>
-                <prop key="jpa.database">MYSQL</prop>
-            </props>
-        </property>
- 	</bean>
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- Look up the database in JNDI -->
+	<jee:jndi-lookup jndi-name="java:jboss/datasources/ExampleDS" id="dataSource"
+					 expected-type="javax.sql.DataSource" />
+
+	<!-- Look up the container deployed EntityManager -->
+	<jee:jndi-lookup jndi-name="java:/mySimpleWorkListEntityManager"
+					 id="entityManager" expected-type="javax.persistence.EntityManager" />
+
+	<!-- Look up the container deployed EntityManager -->
+	<jee:jndi-lookup jndi-name="java:jboss/mySimpleWorkListEntityManagerFactory"
+					 id="entityManagerFactory" expected-type="javax.persistence.EntityManagerFactory" />
+
+
 	<!-- JPA Configuration -->
-	<bean
-		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-	<bean
-		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="jpaDialect" ref="jpaDialect" />
-	</bean>
+
+	<!-- Use JTA transactions with the container-deployed EntityManager -->
+	<tx:jta-transaction-manager />
 
 	<!-- Transactions -->
 	<tx:annotation-driven transaction-manager="transactionManager" />	
