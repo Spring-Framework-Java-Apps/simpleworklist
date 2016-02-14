@@ -20,9 +20,9 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.ActionItemService;
 
 @Controller
-public class ActionItemAndCategoryController extends AbstractController {
+public class ActionItemController extends AbstractController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActionItemAndCategoryController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActionItemController.class);
 
     @Inject
     private ActionItemService actionItemService;
