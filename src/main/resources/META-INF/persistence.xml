@@ -6,7 +6,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
 	<persistence-unit name="mySimpleWorkListPU" transaction-type="JTA">
-        <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+        <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
 		<class>org.woehlke.simpleworklist.entities.ActionItem</class>
         <class>org.woehlke.simpleworklist.entities.Category</class>
         <class>org.woehlke.simpleworklist.entities.TimelineDay</class>
