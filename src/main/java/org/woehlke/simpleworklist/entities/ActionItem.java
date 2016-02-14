@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -16,6 +18,7 @@ import org.hibernate.validator.constraints.SafeHtml;
                 "categoryId"
         })
 )
+@Indexed
 public class ActionItem {
 
     @Id
@@ -39,12 +42,14 @@ public class ActionItem {
     @NotBlank
     @Length(min=1,max=255)
     @Column(nullable = false)
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String title;
 
     @SafeHtml
     @NotBlank
     @Length(min=0,max=65535)
     @Column(nullable = false, length = 65535, columnDefinition="text")
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String text;
 
     @Enumerated(EnumType.STRING)

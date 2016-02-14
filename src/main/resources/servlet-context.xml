@@ -30,6 +30,7 @@
 	      <value>/WEB-INF/views/category/tiles.xml</value>
 	      <value>/WEB-INF/views/actionItem/tiles.xml</value>
 	      <value>/WEB-INF/views/user/tiles.xml</value>
+		  <value>/WEB-INF/views/search/tiles.xml</value>
 	    </list>
 	  </property>
 	   <!-- resolving preparer names as Spring bean definition names -->

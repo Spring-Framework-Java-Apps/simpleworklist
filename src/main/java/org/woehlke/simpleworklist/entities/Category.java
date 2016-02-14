@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -30,6 +31,7 @@ import org.hibernate.validator.constraints.SafeHtml;
                 "userAccountId" }
         )
 )
+@Indexed
 public class Category {
 
     @Id
@@ -51,12 +53,14 @@ public class Category {
     @NotBlank
     @Length(min=1,max=255)
     @Column(nullable = false)
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String name;
 
     @SafeHtml
     @NotBlank
     @Length(min=0,max=65535)
     @Column(nullable = true, length = 65535, columnDefinition="text")
+    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = { CascadeType.ALL })

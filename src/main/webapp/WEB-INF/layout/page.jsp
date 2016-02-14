@@ -77,9 +77,9 @@
 					</sec:authorize>
 				</ul>
 				<sec:authorize access="isAuthenticated()">
-				<form class="navbar-form navbar-right" role="search">
+				<form action='<c:url value="/search"/>' class="navbar-form navbar-right" role="search" method="get">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
+						<input name="searchterm" type="text" class="form-control" placeholder="Search">
 					</div>
 					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 				</form>
