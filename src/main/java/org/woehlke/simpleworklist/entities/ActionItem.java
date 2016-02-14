@@ -55,6 +55,17 @@ public class ActionItem {
     @Enumerated(EnumType.STRING)
     private ActionState status;
 
+    @Transient
+    public String getTextShortened(){
+        StringBuilder sb = new StringBuilder(this.getText());
+        if(sb.length() > 50){
+            sb.setLength(50);
+            sb.trimToSize();
+            sb.append("...");
+        }
+        return sb.toString();
+    }
+
     public Long getId() {
         return id;
     }

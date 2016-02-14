@@ -23,6 +23,9 @@
                 </c:when>
             </c:choose>
         </td>
+        <td>
+            <c:out value="${actionItem.textShortened}"></c:out>
+        </td>
     </tr>
 </c:forEach>
 </table>

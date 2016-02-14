@@ -26,10 +26,6 @@
 		<put-attribute name="content" value="/WEB-INF/views/user/loginForm.jsp" />
 	</definition>
 
-	<definition name="user/users" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/user/users.jsp" />
-	</definition>
-
     <definition name="user/resetPasswordForm" extends="page">
         <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordForm.jsp" />
     </definition>

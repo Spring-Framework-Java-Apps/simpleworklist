@@ -1,7 +1,5 @@
 package org.woehlke.simpleworklist.control;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -13,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.services.UserService;
 
@@ -23,7 +20,7 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Inject
-    private UserService userService;
+    protected UserService userService;
 
     /**
      * Login Formular. If User is not logged in, this page will be displayed for
@@ -61,17 +58,6 @@ public class UserController {
             result.addError(e);
             return "user/loginForm";
         }
-    }
-
-    /**
-     * @param model
-     * @return List of all registered users.
-     */
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public final String getRegisteredUsers(Model model) {
-        List<UserAccount> users = userService.findAll();
-        model.addAttribute("users", users);
-        return "user/users";
     }
 
 }
