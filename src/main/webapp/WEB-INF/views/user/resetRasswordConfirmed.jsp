@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<div>
+<h1>Password Reset</h1>
+<div class="well">
     <form:form id="formId" commandName="userAccountFormBean" method="post">
         <div class="form-group">
             <form:label path="userPassword">Password</form:label>

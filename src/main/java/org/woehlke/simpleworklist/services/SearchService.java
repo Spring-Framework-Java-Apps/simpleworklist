@@ -7,4 +7,7 @@ import org.woehlke.simpleworklist.model.SearchResult;
  */
 public interface SearchService {
     SearchResult search(String searchterm);
+
+    void resetSearchIndex();
+
 }

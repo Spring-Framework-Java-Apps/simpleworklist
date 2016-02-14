@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css" type="text/css">
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<link rel="stylesheet" href="<c:url value="/css/main.css"/>"/>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -149,9 +151,8 @@
 			<p class="text-muted">&copy; 2016 Thomas W&ouml;hlke</p>
 		</div>
 	</footer>
-
 	 <script>
-		$(function() {
+		$(window).load( function() {
 			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: true  });
 			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: true  });
 			$( ".categoryNode" ).droppable({

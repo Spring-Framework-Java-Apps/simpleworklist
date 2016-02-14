@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<h1>Register as new User</h1>
+<div class="well">
 					<div>
 					<form:form id="formId" commandName="userAccountFormBean" method="post">
                         <div class="form-group">
@@ -20,3 +22,4 @@
 						<button id="confirmRegistration" type="submit" class="btn btn-default">Confirm Registration</button>
             		</form:form>
 					</div>
+	</div>

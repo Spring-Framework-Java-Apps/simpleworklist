@@ -1,5 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- New Category Form -->
+<h1>Add Category</h1>
+<div>
 <form:form id="formId" commandName="category" method="post">
 	<div class="form-group">
 		<form:label path="name" class="control-label">Name</form:label>
@@ -13,4 +15,5 @@
 	</div>
 	<button id="createNewCategory" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Category</button>
 </form:form>
+</div>
 <!-- Document Window End -->

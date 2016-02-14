@@ -16,14 +16,16 @@
 				</c:if>
 				<c:if test="${! empty dataList}">
 				<div>
+					<h2>Action Items</h2>
 					<table class="table table-striped table-hover">
+					<tr>
+						<th>Status</th>
+						<th>Title</th>
+						<th>Text</th>
+						<th colspan="2"></th>
+					</tr>
 					<c:forEach items="${dataList}" var="actionItem">
 					<tr>
-						<td>
-							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
-							id="dataDetail_${actionItem.id}" ><c:out
-									value="${actionItem.title}" /></a>
-						</td>
 						<td>
 							<c:choose>
 								<c:when test="${actionItem.status eq 'NEW'}">
@@ -36,6 +38,14 @@
 									<button class="btn btn-small btn-success" type="button">&nbsp;</button>
 								</c:when>
 							</c:choose>
+						</td>
+						<td>
+							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
+							id="dataDetail_${actionItem.id}" ><c:out
+									value="${actionItem.title}" /></a>
+						</td>
+						<td>
+							<c:out value="${actionItem.textShortened}" />
 						</td>
 						<td>
 							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>

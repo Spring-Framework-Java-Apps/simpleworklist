@@ -3,13 +3,13 @@
 <c:if test="${! empty searchResult.actionItemList}">
 <h2>ActionItems</h2>
 <table class="table table-striped table-hover">
+<tr>
+    <th>Status</th>
+    <th>Title</th>
+    <th>Text</th>
+</tr>
 <c:forEach var="actionItem" items="${searchResult.actionItemList}">
     <tr>
-        <td>
-            <a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
-               id="dataDetail_${actionItem.id}" ><c:out
-                    value="${actionItem.title}" /></a>
-        </td>
         <td>
             <c:choose>
                 <c:when test="${actionItem.status eq 'NEW'}">
@@ -24,6 +24,11 @@
             </c:choose>
         </td>
         <td>
+            <a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
+               id="dataDetail_${actionItem.id}" ><c:out
+                    value="${actionItem.title}" /></a>
+        </td>
+        <td>
             <c:out value="${actionItem.textShortened}"></c:out>
         </td>
     </tr>
@@ -33,6 +38,10 @@
 <c:if test="${! empty searchResult.categoryList}">
 <h2>Categories</h2>
     <table class="table table-striped table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
     <c:forEach var="cat" items="${searchResult.categoryList}">
         <tr>
             <td>

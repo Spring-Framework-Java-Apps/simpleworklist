@@ -28,4 +28,10 @@ public class SearchServiceImpl implements SearchService {
         SearchResult searchResult = searchDao.search(searchterm);
         return searchResult;
     }
+
+    @Override
+    public void resetSearchIndex() {
+        LOGGER.info("resetSearchIndex");
+        searchDao.resetSearchIndex();
+    }
 }

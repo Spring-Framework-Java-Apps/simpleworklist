@@ -9,8 +9,8 @@ import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.Category;
 import org.woehlke.simpleworklist.model.SearchResult;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,6 @@ public class SearchDaoImpl implements SearchDao {
 
     @PersistenceContext
     private EntityManager em;
-
 
     @Override
     public SearchResult search(String searchterm) {
@@ -82,5 +81,21 @@ public class SearchDaoImpl implements SearchDao {
         }
         searchResult.setCategoryList(categoryList);
         return searchResult;
+    }
+
+    @Override
+    public void resetSearchIndex() {
+        FullTextEntityManager fullTextEntityManager =
+                org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+        TypedQuery<ActionItem> findAllActionItems = fullTextEntityManager.createQuery ("select a from ActionItem a",ActionItem.class);
+        TypedQuery<Category> findAllCategories = fullTextEntityManager.createQuery("select c from Category c",Category.class);
+        for(Category category:findAllCategories.getResultList()){
+            fullTextEntityManager.index( category );
+        }
+        for(ActionItem actionItem:findAllActionItems.getResultList()){
+            fullTextEntityManager.index( actionItem );
+        }
+        fullTextEntityManager.flushToIndexes();
+        fullTextEntityManager.clear();
     }
 }

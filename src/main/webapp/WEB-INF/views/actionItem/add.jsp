@@ -1,5 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>	
 <!-- New ActionItem Form -->
+<h1>Add ActionItem</h1>
+<div>
 <form:form id="formId" commandName="data" method="post">
 	<div class="form-group">
     	<form:label path="title">Titel</form:label>
@@ -30,5 +32,6 @@
     </div>
 	<button id="createNewDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Action Item</button>
 </form:form>
+</div>
 				
 
