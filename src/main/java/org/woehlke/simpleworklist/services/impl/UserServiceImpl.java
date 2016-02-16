@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.services.impl;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -109,5 +110,12 @@ public class UserServiceImpl implements UserService {
         userAccountRepository.saveAndFlush(ua);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void updateLastLoginTimestamp() {
+        UserAccount user = retrieveCurrentUser();
+        user.setLastLoginTimestamp(new Date());
+        userAccountRepository.saveAndFlush(user);
+    }
 
 }

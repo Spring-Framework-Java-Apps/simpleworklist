@@ -49,6 +49,7 @@ public class UserController {
                                BindingResult result, Model model) {
         boolean authorized = userService.authorize(loginFormBean);
         if (!result.hasErrors() && authorized) {
+            userService.updateLastLoginTimestamp();
             return "redirect:/";
         } else {
             String objectName = "loginFormBean";

@@ -6,12 +6,14 @@
 	<tr>
 		<th>Email</th>
 		<th>Name</th>
+		<th>Last Login</th>
 		<th>Date of registration</th>
 	</tr>
 <c:forEach items="${users}" var="user">
 	<tr>
 		<td><c:out value="${user.userEmail}"/></td>
 		<td><c:out value="${user.userFullname}"/></td>
+		<td><c:out value="${user.lastLoginTimestamp}"/></td>
 		<td><c:out value="${user.createdTimestamp}"/></td>
 	</tr>
 </c:forEach>

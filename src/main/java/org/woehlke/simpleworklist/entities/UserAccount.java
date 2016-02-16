@@ -37,6 +37,10 @@ public class UserAccount {
     @Column(nullable = false)
     private Date createdTimestamp = new Date();
 
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date lastLoginTimestamp = new Date();
+
     public Long getId() {
         return id;
     }
@@ -77,37 +81,50 @@ public class UserAccount {
         this.createdTimestamp = createdTimestamp;
     }
 
+    public Date getLastLoginTimestamp() {
+        return lastLoginTimestamp;
+    }
+
+    public void setLastLoginTimestamp(Date lastLoginTimestamp) {
+        this.lastLoginTimestamp = lastLoginTimestamp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserAccount)) return false;
+
+        UserAccount that = (UserAccount) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
+        if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
+        if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
+        if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
+            return false;
+        return lastLoginTimestamp != null ? lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp == null;
+
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((userEmail == null) ? 0 : userEmail.hashCode());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
+        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
+        result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
+        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
+        result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        UserAccount other = (UserAccount) obj;
-        if (userEmail == null) {
-            if (other.userEmail != null)
-                return false;
-        } else if (!userEmail.equals(other.userEmail))
-            return false;
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "UserAccount [id=" + id + ", userEmail=" + userEmail
-                + ", userFullname=" + userFullname + "]";
+        return "UserAccount{" +
+                "id=" + id +
+                ", userEmail='" + userEmail + '\'' +
+                ", userFullname='" + userFullname + '\'' +
+                ", createdTimestamp=" + createdTimestamp +
+                ", lastLoginTimestamp=" + lastLoginTimestamp +
+                '}';
     }
-
-
 }

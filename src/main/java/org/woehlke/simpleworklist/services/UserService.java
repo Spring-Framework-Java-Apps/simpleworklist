@@ -27,4 +27,7 @@ public interface UserService extends UserDetailsService {
     List<UserAccount> findAll();
 
     void changeUsersPassword(UserAccountFormBean userAccount);
+
+    void updateLastLoginTimestamp();
+
 }
