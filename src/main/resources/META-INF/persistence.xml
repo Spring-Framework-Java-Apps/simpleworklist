@@ -14,6 +14,7 @@
         <class>org.woehlke.simpleworklist.entities.TimelineYear</class>
         <class>org.woehlke.simpleworklist.entities.RegistrationProcess</class>
         <class>org.woehlke.simpleworklist.entities.UserAccount</class>
+        <class>org.woehlke.simpleworklist.entities.UserMessage</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

@@ -30,4 +30,6 @@ public interface UserService extends UserDetailsService {
 
     void updateLastLoginTimestamp();
 
+    UserAccount findUserById(long userId);
+
 }

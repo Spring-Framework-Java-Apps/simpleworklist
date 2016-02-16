@@ -10,4 +10,8 @@
         <put-attribute name="content" value="/WEB-INF/views/pages/users.jsp" />
     </definition>
 
+    <definition name="pages/userMessages" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/pages/userMessages.jsp" />
+    </definition>
+
 </tiles-definitions>

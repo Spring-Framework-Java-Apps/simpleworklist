@@ -15,9 +15,9 @@ import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Controller
-public class UserController {
+public class UserLoginController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
 
     @Inject
     protected UserService userService;

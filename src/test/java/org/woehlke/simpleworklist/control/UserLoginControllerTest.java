@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 
-public class UserControllerTest extends AbstractTest {
+public class UserLoginControllerTest extends AbstractTest {
 
     @Test
     public void testLoginFormular() throws Exception {

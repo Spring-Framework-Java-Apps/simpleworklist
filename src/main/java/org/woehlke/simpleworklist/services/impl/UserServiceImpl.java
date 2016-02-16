@@ -118,4 +118,9 @@ public class UserServiceImpl implements UserService {
         userAccountRepository.saveAndFlush(user);
     }
 
+    @Override
+    public UserAccount findUserById(long userId) {
+        return userAccountRepository.findOne(userId);
+    }
+
 }

@@ -4,6 +4,7 @@
 <h1>List of registered Users</h1>
 <table class="table table-striped">
 	<tr>
+		<th>Messages</th>
 		<th>Email</th>
 		<th>Name</th>
 		<th>Last Login</th>
@@ -11,6 +12,7 @@
 	</tr>
 <c:forEach items="${users}" var="user">
 	<tr>
+		<td><a href="<c:url value="/user/${user.id}/messages/"/>"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Messages</a></a></td>
 		<td><c:out value="${user.userEmail}"/></td>
 		<td><c:out value="${user.userFullname}"/></td>
 		<td><c:out value="${user.lastLoginTimestamp}"/></td>
