@@ -5,16 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserMessageService;
+import org.woehlke.simpleworklist.services.UserService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Fert on 16.02.2016.
+ * Created by tw on 16.02.2016.
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -30,5 +33,15 @@ public class UserMessageServiceImpl implements UserMessageService {
         LOGGER.info("getAllMessagesBetweenCurrentAndOtherUser: "+userId);
         List<UserMessage> userMessageList = new ArrayList<>();
         return userMessageList;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void sendNewUserMessage(UserAccount thisUser,UserAccount otherUser, UserMessage newUserMessage) {
+        LOGGER.info("sendNewUserMessage");
+        newUserMessage.setCreatedTimestamp(new Date());
+        newUserMessage.setSender(thisUser);
+        newUserMessage.setReceiver(otherUser);
+        userMessageRepository.saveAndFlush(newUserMessage);
     }
 }

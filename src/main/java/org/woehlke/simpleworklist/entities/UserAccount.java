@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import javax.persistence.UniqueConstraint;
                 "userEmail"
         })
 )
-public class UserAccount {
+public class UserAccount implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
  * Created by Fert on 16.02.2016.
  */
 @Entity
-public class UserMessage {
+public class UserMessage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +24,7 @@ public class UserMessage {
 
     @SafeHtml
     @NotBlank
-    @Length(min=0,max=65535)
+    @Length(min=1,max=65535)
     @Column(nullable = false, length = 65535, columnDefinition="text")
     private String messageText;
 

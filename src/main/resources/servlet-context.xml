@@ -16,7 +16,12 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<import resource="classpath:/root-context.xml"/>
 	<import resource="classpath:/security-context.xml"/>
-	
+
+	<context:component-scan base-package="org.woehlke.simpleworklist" />
+
+	<bean id="validator"
+		  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
@@ -41,8 +46,7 @@
   		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
   		<property name="order" value="0"/>
 	</bean>
-	
-	
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -50,11 +54,5 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1"/>
 	</bean>
-	
-	<context:component-scan base-package="org.woehlke.simpleworklist" />
-	
-	<bean id="validator"
-      class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
-      
-	
+
 </beans>

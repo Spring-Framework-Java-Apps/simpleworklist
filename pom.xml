@@ -202,8 +202,15 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.1.Final</version>
+			<version>5.2.3.Final</version>
+			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<version>5.2.3.Final</version>
+		</dependency>
+
 
 		<!-- Spring JPA -->
 		<dependency>
@@ -344,12 +351,12 @@
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>
-			<version>3.0.4</version>
+			<version>3.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-el</artifactId>
-			<version>3.0.4</version>
+			<version>3.0.5</version>
 		</dependency>
 
 		<!-- Servlet -->
@@ -403,7 +410,8 @@
   			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
   			<groupId>org.jsoup</groupId>
   			<artifactId>jsoup</artifactId>
-  			<version>1.7.3</version>
+  			<version>1.8.3</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

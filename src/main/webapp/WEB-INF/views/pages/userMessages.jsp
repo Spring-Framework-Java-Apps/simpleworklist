@@ -7,8 +7,8 @@
     <div class="form-group">
         <form:label path="messageText">Text</form:label>
         <form:textarea path="messageText" rows="10" cols="50" class="form-control"/>
-        <form:errors path="messageText" class="alert alert-error"/>
+        <form:errors path="messageText" delimiter=", " element="div" class="alert alert-danger"/>
     </div>
-    <button id="newUserMessageButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send Message</button>
+    <form:button id="newUserMessageButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send Message</form:button>
 </form:form>
 </div>

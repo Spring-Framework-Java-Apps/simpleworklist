@@ -27,8 +27,10 @@ public class PagesController extends AbstractController {
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public final String getRegisteredUsers(Model model) {
+        UserAccount user = userService.retrieveCurrentUser();
         List<UserAccount> users = userService.findAll();
         model.addAttribute("users", users);
+        model.addAttribute("thisUser", user);
         return "pages/users";
     }
 }

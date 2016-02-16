@@ -12,7 +12,13 @@
 	</tr>
 <c:forEach items="${users}" var="user">
 	<tr>
-		<td><a href="<c:url value="/user/${user.id}/messages/"/>"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Messages</a></a></td>
+		<td>
+			<c:if test="${user.id != thisUser.id}">
+			<a href='<c:url value="/user/${user.id}/messages/"/>'>
+				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Messages
+			</a>
+			</c:if>
+		</td>
 		<td><c:out value="${user.userEmail}"/></td>
 		<td><c:out value="${user.userFullname}"/></td>
 		<td><c:out value="${user.lastLoginTimestamp}"/></td>
