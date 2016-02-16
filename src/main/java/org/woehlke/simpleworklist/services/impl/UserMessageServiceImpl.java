@@ -29,13 +29,6 @@ public class UserMessageServiceImpl implements UserMessageService {
     private UserMessageRepository userMessageRepository;
 
     @Override
-    public List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(long userId) {
-        LOGGER.info("getAllMessagesBetweenCurrentAndOtherUser: "+userId);
-        List<UserMessage> userMessageList = new ArrayList<>();
-        return userMessageList;
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void sendNewUserMessage(UserAccount thisUser,UserAccount otherUser, UserMessage newUserMessage) {
         LOGGER.info("sendNewUserMessage");
@@ -43,5 +36,13 @@ public class UserMessageServiceImpl implements UserMessageService {
         newUserMessage.setSender(thisUser);
         newUserMessage.setReceiver(otherUser);
         userMessageRepository.saveAndFlush(newUserMessage);
+    }
+
+    @Override
+    public List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser) {
+        LOGGER.info("getAllMessagesBetweenCurrentAndOtherUser");
+        List<UserMessage> userMessageList =
+        userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
+        return userMessageList;
     }
 }

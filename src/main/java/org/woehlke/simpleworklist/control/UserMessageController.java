@@ -33,8 +33,9 @@ public class UserMessageController extends AbstractController {
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
     public final String getMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         UserMessage newUserMessage = new UserMessage();
+        UserAccount thisUser = userService.retrieveCurrentUser();
         UserAccount otherUser = super.userService.findUserById(userId);
-        List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(userId);
+        List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
         model.addAttribute("newUserMessage",newUserMessage);
         model.addAttribute("otherUser",otherUser);
         model.addAttribute("userMessageList",userMessageList);
@@ -48,6 +49,7 @@ public class UserMessageController extends AbstractController {
             BindingResult result,
             @PathVariable long userId) {
         LOGGER.info("sendNewMessageToOtherUser");
+        UserAccount thisUser = userService.retrieveCurrentUser();
         UserAccount otherUser = super.userService.findUserById(userId);
         if(result.hasErrors()){
             /*
@@ -56,12 +58,11 @@ public class UserMessageController extends AbstractController {
             }
             */
             LOGGER.info("result.hasErrors");
-            List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(userId);
+            List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
             model.addAttribute("otherUser",otherUser);
             model.addAttribute("userMessageList",userMessageList);
             return "pages/userMessages";
         } else {
-            UserAccount thisUser = userService.retrieveCurrentUser();
             userMessageService.sendNewUserMessage(thisUser,otherUser,newUserMessage);
             return "redirect:/user/"+userId+"/messages/";
         }

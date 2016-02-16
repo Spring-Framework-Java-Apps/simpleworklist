@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface UserMessageService {
 
-    List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(long userId);
-
     void sendNewUserMessage(UserAccount thisUser, UserAccount otherUser, UserMessage newUserMessage);
+
+    List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser);
 }
