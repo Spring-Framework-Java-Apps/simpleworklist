@@ -2,6 +2,8 @@ package org.woehlke.simpleworklist.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,10 +11,8 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserMessageService;
-import org.woehlke.simpleworklist.services.UserService;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +39,30 @@ public class UserMessageServiceImpl implements UserMessageService {
     }
 
     @Override
-    public List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser) {
-        LOGGER.info("getAllMessagesBetweenCurrentAndOtherUser");
+    public List<UserMessage> getLast20MessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser) {
+        LOGGER.info("getLast20MessagesBetweenCurrentAndOtherUser");
+        Pageable pageRequest = new PageRequest(0, 20);
         List<UserMessage> userMessageList =
-        userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
+        userMessageRepository.findFirst20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser,pageRequest);
         return userMessageList;
+    }
+
+    @Override
+    public int getNumberOfNewIncomingMessagesForUser(UserAccount user) {
+        List<UserMessage> userMessageList =
+                userMessageRepository.findByReceiverAndReadByReceiver(user, false);
+        return userMessageList.size();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void update(UserMessage userMessage) {
+        userMessageRepository.save(userMessage);
+    }
+
+    @Override
+    public List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver, UserAccount sender) {
+        LOGGER.info("getAllMessagesBetweenCurrentAndOtherUser");
+        return userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver);
     }
 }

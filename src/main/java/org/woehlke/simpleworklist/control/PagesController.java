@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.UserAccount;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tw on 14.02.16.
@@ -29,6 +30,8 @@ public class PagesController extends AbstractController {
     public final String getRegisteredUsers(Model model) {
         UserAccount user = userService.retrieveCurrentUser();
         List<UserAccount> users = userService.findAll();
+        Map<Long,Integer> usersToNewMessages = userService.getNewIncomingMessagesForEachOtherUser();
+        model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
         model.addAttribute("thisUser", user);
         return "pages/users";

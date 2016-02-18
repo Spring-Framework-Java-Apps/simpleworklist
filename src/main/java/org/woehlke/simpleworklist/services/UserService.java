@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,5 +32,7 @@ public interface UserService extends UserDetailsService {
     void updateLastLoginTimestamp();
 
     UserAccount findUserById(long userId);
+
+    Map<Long,Integer> getNewIncomingMessagesForEachOtherUser();
 
 }

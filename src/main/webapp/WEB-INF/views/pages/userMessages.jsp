@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
 <h1>Your Dialog with ${otherUser.userFullname}</h1>
+<div class="row">
 <div class="well">
 <form:form id="formId" commandName="newUserMessage" method="post">
     <div class="form-group">
@@ -21,4 +22,9 @@
     <c:out value="${m.messageText}" />
 </div>
 </c:forEach>
-
+</div>
+<div class="row">
+    <c:if test="${userMessageList.size() < 21}">
+    <a href='<c:url value="/user/${otherUser.id}/messages/all"/>'>Zeige alle Nachrichten</a> (hier werden nur die letzten 20 Angezeigt)
+    </c:if>
+</div>

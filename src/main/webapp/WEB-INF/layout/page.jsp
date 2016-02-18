@@ -60,7 +60,11 @@
 							</ul>
 						</li>
 						<li>
-							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Users</a>
+							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Users
+							<c:if test="${numberOfNewIncomingMessages > 0}">
+								<span class="badge">${numberOfNewIncomingMessages}</span>
+							</c:if>
+							</a>
 						</li>
 						<li>
 							<a href='<c:url value="/j_spring_security_logout"/>'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>

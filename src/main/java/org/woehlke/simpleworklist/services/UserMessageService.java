@@ -12,5 +12,11 @@ public interface UserMessageService {
 
     void sendNewUserMessage(UserAccount thisUser, UserAccount otherUser, UserMessage newUserMessage);
 
-    List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser);
+    List<UserMessage> getLast20MessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser);
+
+    int getNumberOfNewIncomingMessagesForUser(UserAccount user);
+
+    void update(UserMessage userMessage);
+
+    List<UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver, UserAccount sender);
 }

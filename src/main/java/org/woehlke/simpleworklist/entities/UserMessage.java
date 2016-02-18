@@ -13,6 +13,11 @@ import java.util.UUID;
  * Created by Fert on 16.02.2016.
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "createdTimestamp", "sender_id", "receiver_id"
+        })
+)
 public class UserMessage implements Serializable {
 
     @Id
@@ -28,8 +33,8 @@ public class UserMessage implements Serializable {
     @Column(nullable = false, length = 65535, columnDefinition="text")
     private String messageText;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean readByReceiver = false;
+    @Column(columnDefinition = "boolean default false")
+    private boolean readByReceiver;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)

@@ -2,7 +2,9 @@ package org.woehlke.simpleworklist.services.impl;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,10 +19,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.model.UserDetailsBean;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
+import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserService;
 
 @Service("userService")
@@ -31,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private UserAccountRepository userAccountRepository;
+
+    @Inject
+    private UserMessageRepository userMessageRepository;
 
     public boolean isEmailAvailable(String email) {
         return userAccountRepository.findByUserEmail(email) == null;
@@ -121,6 +128,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserAccount findUserById(long userId) {
         return userAccountRepository.findOne(userId);
+    }
+
+    @Override
+    public Map<Long, Integer> getNewIncomingMessagesForEachOtherUser() {
+        Map<Long, Integer> newIncomingMessagesForEachOtherUser = new HashMap<>();
+        UserAccount receiver = this.retrieveCurrentUser();
+        List<UserAccount> allUsers = userAccountRepository.findAll();
+        for(UserAccount sender :allUsers ){
+            if(receiver.getId() == sender.getId()){
+                newIncomingMessagesForEachOtherUser.put(sender.getId(),0);
+            } else {
+                List<UserMessage> userMessages = userMessageRepository.findBySenderAndReceiverAndReadByReceiver(sender,receiver,false);
+                newIncomingMessagesForEachOtherUser.put(sender.getId(),userMessages.size());
+            }
+        }
+        return newIncomingMessagesForEachOtherUser;
     }
 
 }

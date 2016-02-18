@@ -5,17 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.ActionItem;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.UserMessage;
-import org.woehlke.simpleworklist.services.UserMessageService;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,15 +23,18 @@ public class UserMessageController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActionItemController.class);
 
-    @Inject
-    private UserMessageService userMessageService;
-
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
-    public final String getMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
+    public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         UserMessage newUserMessage = new UserMessage();
         UserAccount thisUser = userService.retrieveCurrentUser();
         UserAccount otherUser = super.userService.findUserById(userId);
-        List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
+        List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
+        for(UserMessage userMessage:userMessageList){
+            if((!userMessage.isReadByReceiver()) && (userMessage.getReceiver().getId() == thisUser.getId())){
+                userMessage.setReadByReceiver(true);
+                userMessageService.update(userMessage);
+            }
+        }
         model.addAttribute("newUserMessage",newUserMessage);
         model.addAttribute("otherUser",otherUser);
         model.addAttribute("userMessageList",userMessageList);
@@ -58,7 +57,7 @@ public class UserMessageController extends AbstractController {
             }
             */
             LOGGER.info("result.hasErrors");
-            List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
+            List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
             model.addAttribute("otherUser",otherUser);
             model.addAttribute("userMessageList",userMessageList);
             return "pages/userMessages";
@@ -66,5 +65,32 @@ public class UserMessageController extends AbstractController {
             userMessageService.sendNewUserMessage(thisUser,otherUser,newUserMessage);
             return "redirect:/user/"+userId+"/messages/";
         }
+    }
+
+    @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.GET)
+    public final String getAllMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
+        UserMessage newUserMessage = new UserMessage();
+        UserAccount receiver = userService.retrieveCurrentUser();
+        UserAccount sender = super.userService.findUserById(userId);
+        List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(receiver,sender);
+        for(UserMessage userMessage:userMessageList){
+            if((!userMessage.isReadByReceiver()) && (userMessage.getReceiver().getId() == receiver.getId())){
+                userMessage.setReadByReceiver(true);
+                userMessageService.update(userMessage);
+            }
+        }
+        model.addAttribute("newUserMessage",newUserMessage);
+        model.addAttribute("otherUser",sender);
+        model.addAttribute("userMessageList",userMessageList);
+        return "pages/userMessages";
+    }
+
+    @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.POST)
+    public final String sendNewMessageToOtherUser2(
+            Model model,
+            @Valid @ModelAttribute("newUserMessage") UserMessage newUserMessage,
+            BindingResult result,
+            @PathVariable long userId) {
+        return this.sendNewMessageToOtherUser(model,newUserMessage,result,userId);
     }
 }

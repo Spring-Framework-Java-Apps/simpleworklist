@@ -16,6 +16,9 @@
 			<c:if test="${user.id != thisUser.id}">
 			<a href='<c:url value="/user/${user.id}/messages/"/>'>
 				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Messages
+				<c:if test="${usersToNewMessages.get(user.id) > 0}">
+				<span class="badge"><c:out value="${usersToNewMessages.get(user.id)}"/></span>
+				</c:if>
 			</a>
 			</c:if>
 		</td>
