@@ -119,8 +119,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void updateLastLoginTimestamp() {
-        UserAccount user = retrieveCurrentUser();
+    public void updateLastLoginTimestamp(UserAccount user) {
         user.setLastLoginTimestamp(new Date());
         userAccountRepository.saveAndFlush(user);
     }

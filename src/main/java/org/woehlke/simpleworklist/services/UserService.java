@@ -29,7 +29,7 @@ public interface UserService extends UserDetailsService {
 
     void changeUsersPassword(UserAccountFormBean userAccount);
 
-    void updateLastLoginTimestamp();
+    void updateLastLoginTimestamp(UserAccount user);
 
     UserAccount findUserById(long userId);
 

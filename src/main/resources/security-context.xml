@@ -32,12 +32,13 @@
     	<security:intercept-url pattern="/**" access="fullyAuthenticated" />
     	<security:form-login 
     		login-page='/login' 
-    		authentication-failure-url="/login?login_error=1" 
+    		authentication-failure-url="/login?login_error=1"
+			authentication-success-handler-ref="myLoginSuccessHandler"
     		default-target-url='/' 
             always-use-default-target='true'/>
     	<security:logout invalidate-session="true" delete-cookies="JSESSIONID" />
   	</security:http>
-  	 
+
   	<security:authentication-manager alias="authenticationManager">
     	<security:authentication-provider user-service-ref="userService">
               <security:password-encoder hash="md5"/>

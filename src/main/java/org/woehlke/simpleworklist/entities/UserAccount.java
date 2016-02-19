@@ -36,11 +36,11 @@ public class UserAccount implements Serializable {
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date createdTimestamp = new Date();
+    private Date createdTimestamp;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date lastLoginTimestamp = new Date();
+    private Date lastLoginTimestamp;
 
     public Long getId() {
         return id;

@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.services.UserService;
 
@@ -49,7 +50,9 @@ public class UserLoginController {
                                BindingResult result, Model model) {
         boolean authorized = userService.authorize(loginFormBean);
         if (!result.hasErrors() && authorized) {
-            userService.updateLastLoginTimestamp();
+            UserAccount user = userService.retrieveCurrentUser();
+            userService.updateLastLoginTimestamp(user);
+            LOGGER.info("logged in");
             return "redirect:/";
         } else {
             String objectName = "loginFormBean";
@@ -57,6 +60,7 @@ public class UserLoginController {
             String defaultMessage = "Email or Password wrong.";
             FieldError e = new FieldError(objectName, field, defaultMessage);
             result.addError(e);
+            LOGGER.info("not logged in");
             return "user/loginForm";
         }
     }
