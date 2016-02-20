@@ -22,6 +22,7 @@
     <security:http pattern="/css/**" security="none"/>
     <security:http pattern="/img/**" security="none"/>
     <security:http pattern="/js/**" security="none"/>
+	<security:http pattern="/favicon.ico" security="none"/>
     
     <security:http auto-config="false" use-expressions="true">
 		<security:headers disabled="true"/>

@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
         u.setUserEmail(userAccount.getUserEmail());
         u.setUserFullname(userAccount.getUserFullname());
         u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
+        Date now = new Date();
+        u.setCreatedTimestamp(now);
+        u.setLastLoginTimestamp(now);
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
         LOGGER.info("Saved " + u.toString());
