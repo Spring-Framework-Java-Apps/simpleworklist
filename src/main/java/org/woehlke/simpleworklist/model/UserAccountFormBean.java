@@ -35,11 +35,6 @@ public class UserAccountFormBean {
         this.userEmail = userEmail;
     }
 
-    public String getUserPasswordEncoded() {
-        PasswordEncoder encoder = new Md5PasswordEncoder();
-        return encoder.encodePassword(userPassword, null);
-    }
-
     public String getUserPassword() {
         return userPassword;
     }

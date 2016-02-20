@@ -10,7 +10,10 @@
 			<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
 		</div>
 	</c:if>
-	<form id="formId" action='<c:url value="j_spring_security_check"/>' method="post">
+	<form id="formId" action='<c:url value="/j_spring_security_check"/>' method="post">
+		<input type="hidden"
+			   name="${_csrf.parameterName}"
+			   value="${_csrf.token}"/>
 		<div class="form-group">
 			<label for="j_username">Email</label>
 			<input id="j_username" type='text' name="j_username" class="form-control"/>

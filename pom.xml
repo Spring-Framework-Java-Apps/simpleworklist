@@ -11,7 +11,7 @@
 		<java-version>1.8</java-version>
 		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
 		<spring.integration.version>4.2.4.RELEASE</spring.integration.version>
-		<spring.security.version>3.2.9.RELEASE</spring.security.version>
+		<spring.security.version>4.0.3.RELEASE</spring.security.version>
 		<!-- spring-data-jpa.version>1.6.2.RELEASE</spring-data-jpa.version -->
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.7.6</org.slf4j-version>

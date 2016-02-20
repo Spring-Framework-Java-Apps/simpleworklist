@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security
-        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+        http://www.springframework.org/schema/security/spring-security.xsd">
         
 	<!-- Spring security -->
 	
@@ -23,25 +23,37 @@
     <security:http pattern="/img/**" security="none"/>
     <security:http pattern="/js/**" security="none"/>
     
-    <security:http auto-config='true' use-expressions='true'>
+    <security:http auto-config="false" use-expressions="true">
+		<security:headers disabled="true"/>
+		<security:csrf disabled="false"/>
     	<security:intercept-url pattern="/login*" access="permitAll"/>
     	<security:intercept-url pattern="/register*" access="permitAll"/>
     	<security:intercept-url pattern="/confirm*/**" access="permitAll"/>
         <security:intercept-url pattern="/resetPassword*" access="permitAll"/>
         <security:intercept-url pattern="/passwordResetConfirm*/**" access="permitAll"/>
     	<security:intercept-url pattern="/**" access="fullyAuthenticated" />
-    	<security:form-login 
-    		login-page='/login' 
-    		authentication-failure-url="/login?login_error=1"
-			authentication-success-handler-ref="myLoginSuccessHandler"
-    		default-target-url='/' 
-            always-use-default-target='true'/>
-    	<security:logout invalidate-session="true" delete-cookies="JSESSIONID" />
+		<security:form-login login-page="/login"
+					username-parameter="j_username"
+					password-parameter="j_password"
+					login-processing-url="/j_spring_security_check"
+					authentication-failure-url="/login?login_error=1"
+					default-target-url="/"
+					authentication-success-handler-ref="myLoginSuccessHandler"
+				 	always-use-default-target="true"/>
+    	<security:logout
+				logout-url="/logout"
+				invalidate-session="true"
+				delete-cookies="JSESSIONID" />
   	</security:http>
+
+	<!-- https://www.dailycred.com/article/bcrypt-calculator -->
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg name="strength" value="10" />
+	</bean>
 
   	<security:authentication-manager alias="authenticationManager">
     	<security:authentication-provider user-service-ref="userService">
-              <security:password-encoder hash="md5"/>
+              <security:password-encoder ref="encoder"/>
           </security:authentication-provider>
   	</security:authentication-manager>
   	

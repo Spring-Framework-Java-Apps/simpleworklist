@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService {
     @Inject
     private UserMessageRepository userMessageRepository;
 
+    @Inject
+    private PasswordEncoder encoder;
+
     public boolean isEmailAvailable(String email) {
         return userAccountRepository.findByUserEmail(email) == null;
     }
@@ -49,7 +53,7 @@ public class UserServiceImpl implements UserService {
         UserAccount u = new UserAccount();
         u.setUserEmail(userAccount.getUserEmail());
         u.setUserFullname(userAccount.getUserFullname());
-        u.setUserPassword(userAccount.getUserPasswordEncoded());
+        u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
         LOGGER.info("Saved " + u.toString());
@@ -111,7 +115,7 @@ public class UserServiceImpl implements UserService {
     	Assert.notNull(userAccount.getUserEmail());
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
         Assert.notNull(ua);
-        String pwEncoded = userAccount.getUserPasswordEncoded();
+        String pwEncoded = encoder.encode(userAccount.getUserPassword());
         ua.setUserPassword(pwEncoded);
         Assert.notNull(ua);
         userAccountRepository.saveAndFlush(ua);

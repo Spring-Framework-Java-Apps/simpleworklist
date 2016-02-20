@@ -4,10 +4,20 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.woehlke.simpleworklist.AbstractTest;
+
+import javax.inject.Inject;
 
 
-public class UserAccountFormBeanTest {
+public class UserAccountFormBeanTest extends AbstractTest {
 
+
+    @Inject
+    private org.springframework.security.crypto.password.PasswordEncoder encoder;
+
+    /**
+     * This Test is obsolete now due to changed encoder from MD5 to BCrypt (20.02.2016).
+     */
     @Test
     public void testGetUserPasswordEncoded(){
         UserAccountFormBean u = new UserAccountFormBean();
@@ -15,9 +25,8 @@ public class UserAccountFormBeanTest {
         u.setUserFullname("some_name");
         u.setUserPassword("pwd01_ASDFGHJKLMOP_22");
         u.setUserPasswordConfirmation("pwd01_ASDFGHJKLMOP_22");
-        PasswordEncoder encoder = new Md5PasswordEncoder();
-        String encodedPassword =  encoder.encodePassword(u.getUserPassword(), null);
-        Assert.assertTrue(encodedPassword.compareTo(u.getUserPasswordEncoded())==0);
+        String encodedPassword =  encoder.encode(u.getUserPassword());
+        Assert.assertTrue(encodedPassword.compareTo(encoder.encode(u.getUserPassword()))==0);
     }
 
     @Test

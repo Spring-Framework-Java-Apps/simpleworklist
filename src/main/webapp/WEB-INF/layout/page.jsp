@@ -67,7 +67,7 @@
 							</a>
 						</li>
 						<li>
-							<a href='<c:url value="/j_spring_security_logout"/>'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
+							<a href='<c:url value="/logout"/>'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
 						</li>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
@@ -93,7 +93,7 @@
 				<sec:authorize access="isAuthenticated()">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href='<c:url value="/j_spring_security_logout"/>'>
+						<a href='<c:url value="/logout"/>'>
 							Signed in as <sec:authentication property="principal.username" />
 						</a>
 					</li>
@@ -155,6 +155,16 @@
 			<p class="text-muted">&copy; 2016 Thomas W&ouml;hlke</p>
 		</div>
 	</footer>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-17174370-6', 'auto');
+		ga('send', 'pageview');
+
+	</script>
 	 <script>
 		$(window).load( function() {
 			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: true  });
