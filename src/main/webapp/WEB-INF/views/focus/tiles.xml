@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="focus/inbox" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+    <definition name="focus/today" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+    <definition name="focus/next" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+    <definition name="focus/scheduled" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+    <definition name="focus/someday" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+    <definition name="focus/completed" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+    <definition name="focus/trash" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+    </definition>
+
+</tiles-definitions>

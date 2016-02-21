@@ -1,13 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 				<!-- Document Window -->
-				<c:if test="${thisProject.id > 0}">
-					<h1><c:out value="${thisProject.name}" /></h1>
-					<c:out value="${thisProject.description}" /><br /><br />
-					<a href='<c:url value="/project/${thisProject.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Project</a> |
-					<a href='<c:url value="/project/${thisProject.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Project</a> |
-					<a href='<c:url value="/task/addtoproject/${thisProject.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Task</a><br />
-				</c:if>
-				<br />
+				<h1><c:out value="${focustype}" /></h1>
 				<c:if test="${! empty message}">
 					<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -135,7 +135,16 @@
 			<sec:authorize access="fullyAuthenticated">
              	<div id="categoryNavigationWell" class="well sidebar-nav">
 					<ul id="rootProject" class="nav nav-list">
+						<li><a href='<c:url value="/focus/inbox"/>'>Inbox</a></li>
+						<li><a href='<c:url value="/focus/today"/>'>Today</a></li>
+						<li><a href='<c:url value="/focus/next"/>'>Next</a></li>
+						<li><a href='<c:url value="/focus/scheduled"/>'>Scheduled</a></li>
+						<li><a href='<c:url value="/focus/someday"/>'>Someday</a></li>
+						<li><hr/></li>
 						<jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" />
+						<li><hr/></li>
+						<li><a href='<c:url value="/focus/completed"/>'>Completed Tasks</a></li>
+						<li><a href='<c:url value="/focus/trash"/>'>Trash</a></li>
 					</ul>
 				</div>
 			</sec:authorize>
