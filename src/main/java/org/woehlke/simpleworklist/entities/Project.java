@@ -172,14 +172,14 @@ public class Project {
                 + "]";
     }
 
-    public static Project newCategoryNodeFactory(Project parent) {
+    public static Project newProjectFactory(Project parent) {
         Project n = new Project();
         n.setParent(parent);
         n.setUserAccount(parent.getUserAccount());
         return n;
     }
 
-    public static Project newRootCategoryNodeFactory(UserAccount userAccount) {
+    public static Project newRootProjectFactory(UserAccount userAccount) {
         Project n = new Project();
         n.setParent(null);
         n.setUserAccount(userAccount);

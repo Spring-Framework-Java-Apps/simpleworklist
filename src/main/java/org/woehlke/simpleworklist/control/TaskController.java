@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.control;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,7 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.enumerations.ActionState;
+import org.woehlke.simpleworklist.entities.enumerations.FocusType;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TaskService;
@@ -27,9 +29,9 @@ public class TaskController extends AbstractController {
     @Inject
     private TaskService taskService;
 
-    @RequestMapping(value = "/actionItem/detail/{dataId}", method = RequestMethod.GET)
-    public final String editDataForm(@PathVariable long dataId, Model model) {
-        Task task = taskService.findOne(dataId);
+    @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
+    public final String editDataForm(@PathVariable long taskId, Model model) {
+        Task task = taskService.findOne(taskId);
         Project thisProject = null;
         if (task.getProject() == null) {
             thisProject = new Project();
@@ -37,79 +39,84 @@ public class TaskController extends AbstractController {
         } else {
             thisProject = task.getProject();
         }
-        model.addAttribute("thisCategory", thisProject);
+        model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("actionItem", task);
-        List<ActionState> stateValues = new ArrayList<>();
-        for(ActionState state:ActionState.values()){
+        model.addAttribute("task", task);
+        List<TaskState> stateValues = new ArrayList<>();
+        for(TaskState state: TaskState.values()){
             stateValues.add(state);
         }
-        model.addAttribute("stateValues", ActionState.values());
-        return "actionItem/show";
+        model.addAttribute("stateValues", TaskState.values());
+        return "task/show";
     }
 
-    @RequestMapping(value = "/actionItem/detail/{dataId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.POST)
     public final String editDataStore(
-            @PathVariable long dataId,
+            @PathVariable long taskId,
             @Valid Task task,
             BindingResult result, Model model) {
-        Task persistentTask = taskService.findOne(dataId);
-        long categoryId = 0;
+        Task persistentTask = taskService.findOne(taskId);
+        long projectId = 0;
         Project thisProject = null;
         if (persistentTask.getProject() == null) {
             thisProject = new Project();
             thisProject.setId(0L);
         } else {
             thisProject = persistentTask.getProject();
-            categoryId = thisProject.getId();
+            projectId = thisProject.getId();
         }
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-            model.addAttribute("thisCategory", thisProject);
+            model.addAttribute("thisProject", thisProject);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
-            return "/task/detail" + dataId;
+            return "/task/detail/" + taskId;
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
             persistentTask.setStatus(task.getStatus());
             taskService.saveAndFlush(persistentTask);
-            return "redirect:/category/" + categoryId + "/";
+            return "redirect:/project/" + projectId + "/";
         }
 
     }
 
-    @RequestMapping(value = "/actionItem/addtocategory/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/task/addtocategory/{projectId}", method = RequestMethod.GET)
     public final String addNewDataToCategoryForm(
-            @PathVariable long categoryId,
+            @PathVariable long projectId,
             Model model) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task task = new Task();
+        task.setFocusType(FocusType.INBOX);
+        task.setUserAccount(userAccount);
+        task.setCreatedTimestamp(new Date());
         Project thisProject = null;
-        if (categoryId == 0) {
+        if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
         } else {
-            thisProject = projectService.findByCategoryId(categoryId);
+            thisProject = projectService.findByCategoryId(projectId);
+            task.setProject(thisProject);
         }
-        Task taskLeaf = new Task();
-        model.addAttribute("thisCategory", thisProject);
+        model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("data", taskLeaf);
-        List<ActionState> stateValues = new ArrayList<>();
-        for(ActionState state:ActionState.values()){
+        model.addAttribute("task", task);
+        List<TaskState> stateValues = new ArrayList<>();
+        for(TaskState state: TaskState.values()){
             stateValues.add(state);
         }
-        model.addAttribute("stateValues", ActionState.values());
-        return "actionItem/add";
+        model.addAttribute("stateValues", TaskState.values());
+        return "task/add";
     }
 
-    @RequestMapping(value = "/actionItem/addtocategory/{categoryId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/task/addtocategory/{projectId}", method = RequestMethod.POST)
     public final String addNewDataToCategoryStore(
             @Valid Task task,
-            @PathVariable long categoryId,
+            @PathVariable long projectId,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
@@ -117,61 +124,61 @@ public class TaskController extends AbstractController {
             }
         }
         Project thisProject = null;
-        if (categoryId == 0) {
+        if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
             task.setProject(null);
         } else {
-            thisProject = projectService.findByCategoryId(categoryId);
+            thisProject = projectService.findByCategoryId(projectId);
             task.setProject(thisProject);
         }
         task = taskService.saveAndFlush(task);
         LOGGER.info(task.toString());
-        model.addAttribute("thisCategory", thisProject);
+        model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
-        return "redirect:/category/" + categoryId + "/";
+        return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/actionItem/delete/{dataId}", method = RequestMethod.GET)
-    public final String deleteData(@PathVariable long dataId) {
-        Task task = taskService.findOne(dataId);
-        long categoryId = 0;
+    @RequestMapping(value = "/task/delete/{taskId}", method = RequestMethod.GET)
+    public final String deleteData(@PathVariable long taskId) {
+        Task task = taskService.findOne(taskId);
+        long projectId = 0;
         if (task.getProject() != null) {
-            categoryId = task.getProject().getId();
+            projectId = task.getProject().getId();
         }
         taskService.delete(task);
-        return "redirect:/category/" + categoryId + "/";
+        return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/actionItem/move/{dataId}", method = RequestMethod.GET)
-    public final String moveData(@PathVariable long dataId) {
-        Task task = taskService.findOne(dataId);
-        long categoryId = 0;
+    @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
+    public final String moveData(@PathVariable long taskId) {
+        Task task = taskService.findOne(taskId);
+        long projectId = 0;
         if (task.getProject() != null) {
-            categoryId = task.getProject().getId();
+            projectId = task.getProject().getId();
         }
-        return "redirect:/category/" + categoryId + "/";
+        return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/actionItem/{dataId}/moveto/{categoryId}", method = RequestMethod.GET)
-    public final String moveDataToAnotherCategory(@PathVariable long dataId,
-                                            @PathVariable long categoryId) {
-        Task task = taskService.findOne(dataId);
-        Project project = projectService.findByCategoryId(categoryId);
+    @RequestMapping(value = "/task/{taskId}/moveto/{projectId}", method = RequestMethod.GET)
+    public final String moveDataToAnotherCategory(@PathVariable long taskId,
+                                            @PathVariable long projectId) {
+        Task task = taskService.findOne(taskId);
+        Project project = projectService.findByCategoryId(projectId);
         task.setProject(project);
         taskService.saveAndFlush(task);
-        return "redirect:/project/" + categoryId + "/";
+        return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/actionItem/transform/{dataId}", method = RequestMethod.GET)
-    public final String transformActionItemIntoCategory(@PathVariable long dataId) {
-        Task task = taskService.findOne(dataId);
-        long categoryId = 0;
+    @RequestMapping(value = "/task/transform/{taskId}", method = RequestMethod.GET)
+    public final String transformActionItemIntoCategory(@PathVariable long taskId) {
+        Task task = taskService.findOne(taskId);
+        long projectId = 0;
         if (task.getProject() != null) {
-            categoryId = task.getProject().getId();
+            projectId = task.getProject().getId();
         }
-        Project parentProject = projectService.findByCategoryId(categoryId);
+        Project parentProject = projectService.findByCategoryId(projectId);
         UserAccount userAccount = userService.retrieveCurrentUser();
         Project thisProject = new Project();
         thisProject.setParent(parentProject);
@@ -181,8 +188,8 @@ public class TaskController extends AbstractController {
         thisProject.setUuid(task.getUuid());
         thisProject = projectService.saveAndFlush(thisProject);
         taskService.delete(task);
-        categoryId = thisProject.getId();
-        LOGGER.info("tried to transform Task "+dataId+" to new Project "+categoryId);
-        return "redirect:/category/" + categoryId + "/";
+        projectId = thisProject.getId();
+        LOGGER.info("tried to transform Task "+taskId+" to new Project "+projectId);
+        return "redirect:/project/" + projectId + "/";
     }
 }

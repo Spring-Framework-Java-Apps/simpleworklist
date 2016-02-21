@@ -32,8 +32,8 @@
 	  <property name="definitions">
 	    <list>
 	      <value>/WEB-INF/layout/tiles.xml</value>
-	      <value>/WEB-INF/views/category/tiles.xml</value>
-	      <value>/WEB-INF/views/actionItem/tiles.xml</value>
+	      <value>/WEB-INF/views/project/tiles.xml</value>
+	      <value>/WEB-INF/views/task/tiles.xml</value>
 	      <value>/WEB-INF/views/user/tiles.xml</value>
 		  <value>/WEB-INF/views/search/tiles.xml</value>
 		  <value>/WEB-INF/views/pages/tiles.xml</value>

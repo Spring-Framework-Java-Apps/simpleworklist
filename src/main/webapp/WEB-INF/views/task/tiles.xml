@@ -4,11 +4,11 @@
 <tiles-definitions>
 
 	<definition name="task/add" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/actionItem/add.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/task/add.jsp" />
 	</definition>
 
 	<definition name="task/show" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/actionItem/show.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/task/show.jsp" />
 	</definition>
 
 </tiles-definitions>

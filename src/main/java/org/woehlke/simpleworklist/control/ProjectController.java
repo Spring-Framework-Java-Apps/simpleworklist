@@ -35,24 +35,24 @@ public class ProjectController extends AbstractController {
     @Inject
     private TaskService taskService;
 
-    @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
-    public final String showCategory(@PathVariable long categoryId) {
-        return "redirect:/project/" + categoryId + "/page/1";
+    @RequestMapping(value = "/project/{projectId}", method = RequestMethod.GET)
+    public final String showProject(@PathVariable long projectId) {
+        return "redirect:/project/" + projectId + "/page/1";
     }
 
-    @RequestMapping(value = "/category/{categoryId}/page/{pageNumber}", method = RequestMethod.GET)
-    public final ModelAndView showCategory(
-            @PathVariable long categoryId,
+    @RequestMapping(value = "/project/{projectId}/page/{pageNumber}", method = RequestMethod.GET)
+    public final ModelAndView showProject(
+            @PathVariable long projectId,
             @PathVariable int pageNumber,
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted) {
-        ModelAndView mav = new ModelAndView("category/show");
+        ModelAndView mav = new ModelAndView("project/show");
         Project thisProject = null;
         Page<Task> dataLeafPage = null;
         Pageable request =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
-        if (categoryId != 0) {
-            thisProject = projectService.findByCategoryId(categoryId);
+        if (projectId != 0) {
+            thisProject = projectService.findByCategoryId(projectId);
             dataLeafPage = taskService.findByCategory(thisProject, request);
         } else {
             thisProject = new Project();
@@ -67,7 +67,7 @@ public class ProjectController extends AbstractController {
         mav.addObject("endIndex", end);
         mav.addObject("currentIndex", current);
         mav.addObject("breadcrumb", breadcrumb);
-        mav.addObject("thisCategory", thisProject);
+        mav.addObject("thisProject", thisProject);
         mav.addObject("dataList", dataLeafPage.getContent());
         mav.addObject("totalPages", dataLeafPage.getTotalPages());
         if(message != null){
@@ -77,40 +77,40 @@ public class ProjectController extends AbstractController {
         return mav;
     }
 
-    @RequestMapping(value = "/category/addchild/{categoryId}", method = RequestMethod.GET)
-    public final ModelAndView addNewCategoryForm(@PathVariable long categoryId, Model model) {
+    @RequestMapping(value = "/project/addchild/{projectId}", method = RequestMethod.GET)
+    public final ModelAndView addNewProjectForm(@PathVariable long projectId, Model model) {
         Project thisProject = null;
         Project project = null;
-        if (categoryId == 0) {
+        if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
             UserAccount userAccount = userService.retrieveCurrentUser();
             thisProject.setUserAccount(userAccount);
-            project = Project.newRootCategoryNodeFactory(userAccount);
+            project = Project.newRootProjectFactory(userAccount);
         } else {
-            thisProject = projectService.findByCategoryId(categoryId);
-            project = Project.newCategoryNodeFactory(thisProject);
+            thisProject = projectService.findByCategoryId(projectId);
+            project = Project.newProjectFactory(thisProject);
         }
-        ModelAndView mav = new ModelAndView("category/add");
+        ModelAndView mav = new ModelAndView("project/add");
         mav.addAllObjects(model.asMap());
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         mav.addObject("breadcrumb", breadcrumb);
-        mav.addObject("thisCategory", thisProject);
-        mav.addObject("category", project);
+        mav.addObject("thisProject", thisProject);
+        mav.addObject("project", project);
         return mav;
     }
 
-    @RequestMapping(value = "/category/addchild/{categoryId}", method = RequestMethod.POST)
-    public final String addNewCategoryStore(@Valid Project project,
-                                            @PathVariable long categoryId,
-                                            BindingResult result,
-                                            Model model) {
+    @RequestMapping(value = "/project/addchild/{categoryId}", method = RequestMethod.POST)
+    public final String addNewProjectStore(@Valid Project project,
+                                           @PathVariable long categoryId,
+                                           BindingResult result,
+                                           Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
         project.setUserAccount(userAccount);
         if (categoryId == 0) {
             Project thisProject = new Project();
             thisProject.setId(0L);
-            model.addAttribute("thisCategory", thisProject);
+            model.addAttribute("thisProject", thisProject);
             project = projectService.saveAndFlush(project);
         } else {
             Project thisProject = projectService.findByCategoryId(categoryId);
@@ -126,69 +126,69 @@ public class ProjectController extends AbstractController {
         return "redirect:/project/" + categoryId + "/page/1";
     }
 
-    @RequestMapping(value = "/category/{categoryId}/moveto/{targetCategoryId}", method = RequestMethod.GET)
-    public final String moveCategory(
-            @PathVariable long categoryId,
-            @PathVariable long targetCategoryId) {
+    @RequestMapping(value = "/project/{projectId}/moveto/{targetProjectId}", method = RequestMethod.GET)
+    public final String moveProject(
+            @PathVariable long projectId,
+            @PathVariable long targetProjectId) {
         Project thisProject = null;
-        if (categoryId != 0) {
-            thisProject = projectService.findByCategoryId(categoryId);
-            Project targetProject = projectService.findByCategoryId(targetCategoryId);
+        if (projectId != 0) {
+            thisProject = projectService.findByCategoryId(projectId);
+            Project targetProject = projectService.findByCategoryId(targetProjectId);
             projectService.moveCategoryToAnotherCategory(thisProject, targetProject);
         }
-        return "redirect:/project/" + categoryId + "/page/1";
+        return "redirect:/project/" + projectId + "/page/1";
     }
 
-    @RequestMapping(value = "/category/{categoryId}/edit", method = RequestMethod.GET)
-    public final String editCategoryForm(
-            @PathVariable long categoryId, Model model) {
-        if (categoryId > 0) {
-            Project thisProject = projectService.findByCategoryId(categoryId);
+    @RequestMapping(value = "/project/{projectId}/edit", method = RequestMethod.GET)
+    public final String editProjectForm(
+            @PathVariable long projectId, Model model) {
+        if (projectId > 0) {
+            Project thisProject = projectService.findByCategoryId(projectId);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisCategory", thisProject);
-            model.addAttribute("category", thisProject);
-            return "category/edit";
+            model.addAttribute("thisProject", thisProject);
+            model.addAttribute("project", thisProject);
+            return "project/edit";
         } else {
             return "redirect:/category/0/page/1";
         }
     }
 
-    @RequestMapping(value = "/category/{categoryId}/edit", method = RequestMethod.POST)
-    public final String editCategoryStore(
+    @RequestMapping(value = "/project/{projectId}/edit", method = RequestMethod.POST)
+    public final String editProjectStore(
             @Valid Project project,
-            @PathVariable long categoryId,
+            @PathVariable long projectId,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-            Project thisProject = projectService.findByCategoryId(categoryId);
+            Project thisProject = projectService.findByCategoryId(projectId);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
-            return "category/edit";
+            return "project/edit";
         } else {
             Project thisProject = projectService.findByCategoryId(project.getId());
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
             projectService.saveAndFlush(thisProject);
-            return "redirect:/project/" + categoryId + "/page/1";
+            return "redirect:/project/" + projectId + "/page/1";
         }
     }
 
-    @RequestMapping(value = "/category/{nodeId}/delete", method = RequestMethod.GET)
-    public final String deleteCategory(
-            @PathVariable long nodeId, Model model) {
-        long newCategoryId = nodeId;
-        if (nodeId > 0) {
-            Project project = projectService.findByCategoryId(nodeId);
+    @RequestMapping(value = "/project/{projectId}/delete", method = RequestMethod.GET)
+    public final String deleteProject(
+            @PathVariable long projectId, Model model) {
+        long newProjectId = projectId;
+        if (projectId > 0) {
+            Project project = projectService.findByCategoryId(projectId);
             boolean hasNoData = taskService.categoryHasNoData(project);
             boolean hasNoChildren = project.hasNoChildren();
             if (hasNoData && hasNoChildren) {
                 if (!project.isRootCategory()) {
-                    newCategoryId = project.getParent().getId();
+                    newProjectId = project.getParent().getId();
                 } else {
-                    newCategoryId = 0;
+                    newProjectId = 0;
                 }
                 projectService.delete(project);
                 String message = "Project is deleted. You see its parent project now.";
@@ -218,12 +218,12 @@ public class ProjectController extends AbstractController {
                 model.addAttribute("endIndex", end);
                 model.addAttribute("currentIndex", current);
                 model.addAttribute("breadcrumb", breadcrumb);
-                model.addAttribute("thisCategory", project);
+                model.addAttribute("thisProject", project);
                 model.addAttribute("dataList", dataLeafPage.getContent());
                 model.addAttribute("totalPages", dataLeafPage.getTotalPages());
-                return "category/show";
+                return "project/show";
             }
         }
-        return "redirect:/project/" + newCategoryId + "/page/1";
+        return "redirect:/project/" + newProjectId + "/page/1";
     }
 }

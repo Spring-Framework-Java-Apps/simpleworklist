@@ -13,15 +13,13 @@ import javax.inject.Inject;
 @Controller
 public class TestController {
 
-
     @Inject
     private TestService testService;
-
 
     @Inject
     private UserService userService;
 
-    @RequestMapping(value = "/test/helper/category/createTree", method = RequestMethod.GET)
+    @RequestMapping(value = "/test/helper/project/createTree", method = RequestMethod.GET)
     public final String createTestCategoryTree() {
         UserAccount user = userService.retrieveCurrentUser();
         Assert.notNull(user);

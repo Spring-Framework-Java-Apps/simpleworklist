@@ -1,9 +1,12 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<%@ page import="org.woehlke.simpleworklist.entities.enumerations.ActionState" %>
+<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskState" %>
 <!-- Document Window -->
 <h1>Edit ActionItem</h1>
 <div>
 <form:form id="formId" commandName="task" method="post">
+	<form:hidden path="focusType" />
+	<form:hidden path="userAccount.id" />
+	<form:hidden path="createdTimestamp.time" />
  	<div class="form-group">
     	<form:label path="title">Titel</form:label>
 		<form:input path="title" class="form-control"/>

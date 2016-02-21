@@ -10,7 +10,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.woehlke.simpleworklist.entities.enumerations.ActionState;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
 
 
@@ -31,7 +31,7 @@ public class Task {
     @Column(nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Project project;
 
     @ManyToOne
@@ -53,13 +53,13 @@ public class Task {
     private String text;
 
     @Enumerated(EnumType.STRING)
-    private ActionState status;
+    private TaskState status;
 
     @Enumerated(EnumType.STRING)
     private FocusType focusType;
 
     @Temporal(value = TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date dueDate;
 
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -67,7 +67,7 @@ public class Task {
     private Date createdTimestamp;
 
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date lastChangeTimestamp;
 
     @Transient
@@ -129,11 +129,11 @@ public class Task {
         this.text = text;
     }
 
-    public ActionState getStatus() {
+    public TaskState getStatus() {
         return status;
     }
 
-    public void setStatus(ActionState status) {
+    public void setStatus(TaskState status) {
         this.status = status;
     }
 
