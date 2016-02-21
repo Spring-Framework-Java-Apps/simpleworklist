@@ -3,9 +3,9 @@ package org.woehlke.simpleworklist.services.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.Category;
+import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;
-import org.woehlke.simpleworklist.entities.RegistrationProcessType;
+import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
 import org.woehlke.simpleworklist.repository.*;
 import org.woehlke.simpleworklist.services.TestHelperService;
 
@@ -17,22 +17,13 @@ import java.util.List;
 public class TestHelperServiceImpl implements TestHelperService {
 
     @Inject
-    private CategoryRepository categoryRepository;
+    private ProjectRepository projectRepository;
 
     @Inject
-    private ActionItemRepository actionItemRepository;
+    private TaskRepository taskRepository;
 
     @Inject
     private RegistrationProcessRepository registrationProcessRepository;
-
-    @Inject
-    private TimelineYearRepository timelineYearRepository;
-
-    @Inject
-    private TimelineMonthRepository timelineMonthRepository;
-
-    @Inject
-    private TimelineDayRepository timelineDayRepository;
 
     @Inject
     private UserAccountRepository userAccountRepository;
@@ -47,47 +38,29 @@ public class TestHelperServiceImpl implements TestHelperService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteAllActionItem() {
-        actionItemRepository.deleteAll();
+        taskRepository.deleteAll();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteAllCategory() {
-        List<Category> roots = categoryRepository.findByParentIsNull();
-        for(Category root:roots){
+        List<Project> roots = projectRepository.findByParentIsNull();
+        for(Project root:roots){
             remove(root);
         }
     }
 
-    private void remove(Category root){
-        for(Category child:root.getChildren()){
+    private void remove(Project root){
+        for(Project child:root.getChildren()){
             remove(child);
         }
-        categoryRepository.delete(root);
+        projectRepository.delete(root);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteUserAccount() {
         userAccountRepository.deleteAll();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteTimelineDay() {
-        timelineDayRepository.deleteAll();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteTimelineMonth() {
-        timelineMonthRepository.deleteAll();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteTimelineYear() {
-        timelineYearRepository.deleteAll();
     }
 
     @Override

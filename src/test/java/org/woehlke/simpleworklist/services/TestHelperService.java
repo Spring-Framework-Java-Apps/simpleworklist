@@ -12,12 +12,6 @@ public interface TestHelperService {
 
     void deleteUserAccount();
 
-    void deleteTimelineDay();
-
-    void deleteTimelineMonth();
-
-    void deleteTimelineYear();
-
     int getNumberOfAllRegistrations();
 
     RegistrationProcess findByEmailRegistration(String email);

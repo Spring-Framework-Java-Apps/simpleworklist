@@ -1,5 +1,8 @@
 package org.woehlke.simpleworklist.entities;
 
+import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessStatus;
+import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
+
 import javax.persistence.*;
 import java.util.Date;
 

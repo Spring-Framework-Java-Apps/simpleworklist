@@ -1,15 +1,15 @@
-package org.woehlke.simpleworklist.repository;
+package org.woehlke.simpleworklist.repository.impl;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.woehlke.simpleworklist.entities.ActionItem;
-import org.woehlke.simpleworklist.entities.Category;
+import org.woehlke.simpleworklist.entities.Project;
+import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.model.SearchResult;
+import org.woehlke.simpleworklist.repository.SearchDao;
 
-import javax.inject.Inject;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +29,15 @@ public class SearchDaoImpl implements SearchDao {
     public SearchResult search(String searchterm) {
         SearchResult searchResult = new SearchResult();
         searchResult.setSearchterm(searchterm);
-        List<ActionItem> actionItemList = new ArrayList<>();
-        List<Category> categoryList = new ArrayList<>();
+        List<Task> taskList = new ArrayList<>();
+        List<Project> projectList = new ArrayList<>();
         FullTextEntityManager fullTextEntityManager =
                 org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
         // create native Lucene query unsing the query DSL
         // alternatively you can write the Lucene query using the Lucene query parser
         // or the Lucene programmatic API. The Hibernate Search DSL is recommended though
         QueryBuilder qb = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(ActionItem.class).get();
+                .buildQueryBuilder().forEntity(Task.class).get();
         org.apache.lucene.search.Query luceneQuery = qb
                 .keyword()
                 .onFields("title", "text")
@@ -45,21 +45,21 @@ public class SearchDaoImpl implements SearchDao {
                 .createQuery();
         // wrap Lucene query in a javax.persistence.Query
         javax.persistence.Query jpaQuery =
-                fullTextEntityManager.createFullTextQuery(luceneQuery, ActionItem.class);
+                fullTextEntityManager.createFullTextQuery(luceneQuery, Task.class);
         // execute search
         List result = jpaQuery.getResultList();
         for (Object foundItem:result){
-            if(foundItem instanceof ActionItem){
-                ActionItem item = (ActionItem) foundItem;
+            if(foundItem instanceof Task){
+                Task item = (Task) foundItem;
                 LOGGER.info("found: "+item.toString());
-                actionItemList.add(item);
+                taskList.add(item);
             } else {
                 LOGGER.info("found: "+foundItem.toString());
             }
         }
-        searchResult.setActionItemList(actionItemList);
+        searchResult.setTaskList(taskList);
         qb = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(Category.class).get();
+                .buildQueryBuilder().forEntity(Project.class).get();
         luceneQuery = qb
                 .keyword()
                 .onFields("name", "description")
@@ -67,19 +67,19 @@ public class SearchDaoImpl implements SearchDao {
                 .createQuery();
         // wrap Lucene query in a javax.persistence.Query
         jpaQuery =
-                fullTextEntityManager.createFullTextQuery(luceneQuery, Category.class);
+                fullTextEntityManager.createFullTextQuery(luceneQuery, Project.class);
         // execute search
         result = jpaQuery.getResultList();
         for (Object foundItem:result){
-            if(foundItem instanceof Category){
-                Category item = (Category) foundItem;
+            if(foundItem instanceof Project){
+                Project item = (Project) foundItem;
                 LOGGER.info("found: "+item.toString());
-                categoryList.add(item);
+                projectList.add(item);
             } else {
                 LOGGER.info("found: "+foundItem.toString());
             }
         }
-        searchResult.setCategoryList(categoryList);
+        searchResult.setProjectList(projectList);
         return searchResult;
     }
 
@@ -87,13 +87,13 @@ public class SearchDaoImpl implements SearchDao {
     public void resetSearchIndex() {
         FullTextEntityManager fullTextEntityManager =
                 org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
-        TypedQuery<ActionItem> findAllActionItems = fullTextEntityManager.createQuery ("select a from ActionItem a",ActionItem.class);
-        TypedQuery<Category> findAllCategories = fullTextEntityManager.createQuery("select c from Category c",Category.class);
-        for(Category category:findAllCategories.getResultList()){
-            fullTextEntityManager.index( category );
+        TypedQuery<Task> findAllActionItems = fullTextEntityManager.createQuery ("select a from Task a",Task.class);
+        TypedQuery<Project> findAllCategories = fullTextEntityManager.createQuery("select c from Project c",Project.class);
+        for(Project project :findAllCategories.getResultList()){
+            fullTextEntityManager.index(project);
         }
-        for(ActionItem actionItem:findAllActionItems.getResultList()){
-            fullTextEntityManager.index( actionItem );
+        for(Task task :findAllActionItems.getResultList()){
+            fullTextEntityManager.index(task);
         }
         fullTextEntityManager.flushToIndexes();
         fullTextEntityManager.clear();

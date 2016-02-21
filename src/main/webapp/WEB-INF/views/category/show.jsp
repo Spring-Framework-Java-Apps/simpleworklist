@@ -1,11 +1,11 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 				<!-- Document Window -->
-				<c:if test="${thisCategory.id > 0}">
-					<h1><c:out value="${thisCategory.name}" /></h1>
-					<c:out value="${thisCategory.description}" /><br /><br />
-					<a href='<c:url value="/category/${thisCategory.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Category</a> |
-					<a href='<c:url value="/category/${thisCategory.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Category</a> |
-					<a href='<c:url value="/actionItem/addtocategory/${thisCategory.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add an Action Item</a><br />
+				<c:if test="${thisProject.id > 0}">
+					<h1><c:out value="${thisProject.name}" /></h1>
+					<c:out value="${thisProject.description}" /><br /><br />
+					<a href='<c:url value="/project/${thisProject.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Category</a> |
+					<a href='<c:url value="/project/${thisProject.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Category</a> |
+					<a href='<c:url value="/task/addtocategory/${thisProject.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add an Action Item</a><br />
 				</c:if>
 				<br />
 				<c:if test="${! empty message}">
@@ -24,44 +24,44 @@
 						<th>Text</th>
 						<th colspan="2"></th>
 					</tr>
-					<c:forEach items="${dataList}" var="actionItem">
+					<c:forEach items="${dataList}" var="task">
 					<tr>
 						<td>
 							<c:choose>
-								<c:when test="${actionItem.status eq 'NEW'}">
+								<c:when test="${task.status eq 'NEW'}">
 									<button class="btn btn-small btn-danger" type="button">&nbsp;</button>
 								</c:when>
-								<c:when test="${actionItem.status.name() eq 'WORK'}">
+								<c:when test="${task.status.name() eq 'WORK'}">
 									<button class="btn btn-small btn-warning" type="button">&nbsp;</button>
 								</c:when>
-								<c:when test="${actionItem.status.name() eq 'DONE'}">
+								<c:when test="${task.status.name() eq 'DONE'}">
 									<button class="btn btn-small btn-success" type="button">&nbsp;</button>
 								</c:when>
 							</c:choose>
 						</td>
 						<td>
-							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>' class="dataDetailListTitle"
-							id="dataDetail_${actionItem.id}" ><c:out
-									value="${actionItem.title}" /></a>
+							<a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
+							id="dataDetail_${task.id}" ><c:out
+									value="${task.title}" /></a>
 						</td>
 						<td>
-							<c:out value="${actionItem.textShortened}" />
+							<c:out value="${task.textShortened}" />
 						</td>
 						<td>
-							<a href='<c:url value="/actionItem/detail/${actionItem.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
+							<a href='<c:url value="/task/detail/${task.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
 						</td>
 						<td>
-							<a href='<c:url value="/actionItem/delete/${actionItem.id}"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
+							<a href='<c:url value="/task/delete/${task.id}"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
 						</td>
 					</tr>
 					</c:forEach>
 					</table>
 				</div>
 				<nav>
-					<c:url var="firstUrl" value="/category/${thisCategory.id}/page/1" />
-					<c:url var="lastUrl" value="/category/${thisCategory.id}/page/${totalPages}" />
-					<c:url var="prevUrl" value="/category/${thisCategory.id}/page/${currentIndex - 1}" />
-					<c:url var="nextUrl" value="/category/${thisCategory.id}/page/${currentIndex + 1}" />
+					<c:url var="firstUrl" value="/project/${thisProject.id}/page/1" />
+					<c:url var="lastUrl" value="/project/${thisProject.id}/page/${totalPages}" />
+					<c:url var="prevUrl" value="/project/${thisProject.id}/page/${currentIndex - 1}" />
+					<c:url var="nextUrl" value="/project/${thisProject.id}/page/${currentIndex + 1}" />
 					<div>
 					    <ul class="pagination">
 					        <c:choose>
@@ -75,7 +75,7 @@
 					            </c:otherwise>
 					        </c:choose>
 					        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-					            <c:url var="pageUrl" value="/category/${thisCategory.id}/page/${i}" />
+					            <c:url var="pageUrl" value="/project/${thisProject.id}/page/${i}" />
 					            <c:choose>
 					                <c:when test="${i == currentIndex}">
 					                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>

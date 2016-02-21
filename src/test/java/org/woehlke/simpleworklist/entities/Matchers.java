@@ -6,32 +6,32 @@ import org.hamcrest.Matcher;
 public class Matchers {
 
     @Factory
-    public static <T> Matcher<Category> categoryNotNullObject() {
+    public static <T> Matcher<Project> categoryNotNullObject() {
         return new IsNotNullObjectOfCategory();
     }
 
     @Factory
-    public static <T> Matcher<Category> categoryNullObject() {
+    public static <T> Matcher<Project> categoryNullObject() {
         return new IsNullObjectOfCategory();
     }
 
     @Factory
-    public static <T> Matcher<Category> categorySameIdObject(long id) {
+    public static <T> Matcher<Project> categorySameIdObject(long id) {
         return new IsSameObjectOfCategory(id);
     }
 
     @Factory
-    public static <T> Matcher<ActionItem> actionItemNullObject() {
+    public static <T> Matcher<Task> actionItemNullObject() {
         return new IsNullObjectOfActionItem();
     }
 
     @Factory
-    public static <T> Matcher<ActionItem> actionItemNotNullObject() {
+    public static <T> Matcher<Task> actionItemNotNullObject() {
         return new IsNotNullObjectOfActionItem();
     }
 
     @Factory
-    public static <T> Matcher<ActionItem> actionItemSameIdObject(long id) {
+    public static <T> Matcher<Task> actionItemSameIdObject(long id) {
         return new IsSameObjectOfActionItem(id);
     }
 }

@@ -69,9 +69,6 @@ public abstract class AbstractTest {
         testHelperService.deleteAllActionItem();
         testHelperService.deleteAllCategory();
         testHelperService.deleteUserAccount();
-        testHelperService.deleteTimelineDay();
-        testHelperService.deleteTimelineMonth();
-        testHelperService.deleteTimelineYear();
     }
 
     @Before

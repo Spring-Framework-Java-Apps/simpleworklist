@@ -48,7 +48,7 @@ public class UserLoginController {
      * @param loginFormBean
      * @param result
      * @param model
-     * @return Shows Root Category after successful login or login form with error messages.
+     * @return Shows Root Project after successful login or login form with error messages.
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public final String loginPerform(@Valid LoginFormBean loginFormBean,

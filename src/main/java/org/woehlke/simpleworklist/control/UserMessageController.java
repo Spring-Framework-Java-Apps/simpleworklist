@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 public class UserMessageController extends AbstractController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActionItemController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {

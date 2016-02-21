@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities;
+package org.woehlke.simpleworklist.entities.enumerations;
 
 import javax.persistence.Enumerated;
 

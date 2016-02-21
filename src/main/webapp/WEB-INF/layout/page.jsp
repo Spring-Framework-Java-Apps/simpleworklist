@@ -48,14 +48,14 @@
 							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New Content<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href='<c:url value="/category/addchild/${thisCategory.id}"/>'>Add a Category</a>
+									<a href='<c:url value="/project/addchild/${thisProject.id}"/>'>Add a Category</a>
 								</li>
 								<li>
-									<a href='<c:url value="/actionItem/addtocategory/${thisCategory.id}"/>'>Add an Action Item</a>
+									<a href='<c:url value="/task/addtocategory/${thisProject.id}"/>'>Add an Action Item</a>
 								</li>
 								<li role="separator" class="divider"></li>
 								<li>
-									<a href="<c:url value="/test/helper/category/createTree" />">Create Test Data</a>
+									<a href="<c:url value="/test/helper/project/createTree" />">Create Test Data</a>
 								</li>
 							</ul>
 						</li>
@@ -108,14 +108,14 @@
 	<ol class="breadcrumb">
 		<c:choose>
 			<c:when test="${breadcrumb.size() > 1}">
-				<li><a href='<c:url value="/category/0/page/1"/>'>Home</a></li>
+				<li><a href='<c:url value="/project/0/page/1"/>'>Home</a></li>
 				<c:forEach items="${breadcrumb}" var="bc" varStatus="i">
 					<c:choose>
 						<c:when test="${i.last}">
 							<li class="active"><c:out value="${bc.name}" /></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href='<c:url value="/category/${bc.id}"/>'><c:out value="${bc.name}" /></a></li>
+							<li><a href='<c:url value="/project/${bc.id}"/>'><c:out value="${bc.name}" /></a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -134,7 +134,7 @@
         <div class="col-md-3">
 			<sec:authorize access="fullyAuthenticated">
              	<div id="categoryNavigationWell" class="well sidebar-nav">
-					<ul id="rootCategory" class="nav nav-list">
+					<ul id="rootProject" class="nav nav-list">
 						<jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" />
 					</ul>
 				</div>
@@ -176,9 +176,9 @@
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
 					if(draggableType == "dataDetail"){
-						rootUrl += '<c:url value="/actionItem"/>';
+						rootUrl += '<c:url value="/task"/>';
 					} else {
-						rootUrl += '<c:url value="/category"/>';
+						rootUrl += '<c:url value="/project"/>';
 					}
 					//var html4move = '<a href="'+rootUrl+'/'+draggableId+'/moveto/'+selfId+'">move</a>';
 					//$( this ).html(html4move);

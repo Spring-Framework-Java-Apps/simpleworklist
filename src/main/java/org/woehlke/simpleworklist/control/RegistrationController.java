@@ -87,7 +87,7 @@ public class RegistrationController {
      *
      * @param confirmId
      * @param model
-     * @return Formular for Entering Account ActionItem or Error Messages.
+     * @return Formular for Entering Account Task or Error Messages.
      */
     @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerNewUserCheckResponseAndRegistrationForm(
@@ -106,7 +106,7 @@ public class RegistrationController {
     }
 
     /**
-     * Saving Account ActionItem from Formular and forward to login page.
+     * Saving Account Task from Formular and forward to login page.
      *
      * @param userAccountFormBean
      * @param result

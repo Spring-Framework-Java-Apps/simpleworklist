@@ -4,7 +4,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;
-import org.woehlke.simpleworklist.entities.RegistrationProcessStatus;
+import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessStatus;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 
 import javax.inject.Inject;

@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.entities;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-public class IsSameObjectOfActionItem extends TypeSafeMatcher<ActionItem> {
+public class IsSameObjectOfActionItem extends TypeSafeMatcher<Task> {
 
     private long id;
 
@@ -14,11 +14,11 @@ public class IsSameObjectOfActionItem extends TypeSafeMatcher<ActionItem> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("is ActionItem Object with demanded id");
+        description.appendText("is Task Object with demanded id");
     }
 
     @Override
-    protected boolean matchesSafely(ActionItem item) {
+    protected boolean matchesSafely(Task item) {
         return this.id == item.getId().longValue();
     }
 

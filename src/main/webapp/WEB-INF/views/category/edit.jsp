@@ -1,8 +1,8 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<!-- New Category Form -->
+<!-- New Project Form -->
 <h1>Edit Category</h1>
 <div>
-<form:form id="formId" commandName="category" method="post">
+<form:form id="formId" commandName="project" method="post">
 	<div class="form-group">
 		<form:label path="name">Name</form:label>
 		<form:input path="name" class="form-control" />

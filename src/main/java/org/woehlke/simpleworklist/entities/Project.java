@@ -32,7 +32,7 @@ import org.hibernate.validator.constraints.SafeHtml;
         )
 )
 @Indexed
-public class Category {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +43,7 @@ public class Category {
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "parentId")
-    private Category parent;
+    private Project parent;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "userAccountId")
@@ -64,7 +64,7 @@ public class Category {
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = { CascadeType.ALL })
-    private List<Category> children = new ArrayList<Category>();
+    private List<Project> children = new ArrayList<Project>();
 
     @Transient
     public boolean isRootNode() {
@@ -79,11 +79,11 @@ public class Category {
         this.id = id;
     }
 
-    public Category getParent() {
+    public Project getParent() {
         return parent;
     }
 
-    public void setParent(Category parent) {
+    public void setParent(Project parent) {
         this.parent = parent;
     }
 
@@ -103,11 +103,11 @@ public class Category {
         this.description = description;
     }
 
-    public List<Category> getChildren() {
+    public List<Project> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Category> children) {
+    public void setChildren(List<Project> children) {
         this.children = children;
     }
 
@@ -146,7 +146,7 @@ public class Category {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Category other = (Category) obj;
+        Project other = (Project) obj;
         if (parent == null) {
             if (other.parent != null)
                 return false;
@@ -172,15 +172,15 @@ public class Category {
                 + "]";
     }
 
-    public static Category newCategoryNodeFactory(Category parent) {
-        Category n = new Category();
+    public static Project newCategoryNodeFactory(Project parent) {
+        Project n = new Project();
         n.setParent(parent);
         n.setUserAccount(parent.getUserAccount());
         return n;
     }
 
-    public static Category newRootCategoryNodeFactory(UserAccount userAccount) {
-        Category n = new Category();
+    public static Project newRootCategoryNodeFactory(UserAccount userAccount) {
+        Project n = new Project();
         n.setParent(null);
         n.setUserAccount(userAccount);
         return n;

@@ -3,11 +3,11 @@
 
 <tiles-definitions>
 
-	<definition name="actionItem/add" extends="page">
+	<definition name="task/add" extends="page">
 		<put-attribute name="content" value="/WEB-INF/views/actionItem/add.jsp" />
 	</definition>
 
-	<definition name="actionItem/show" extends="page">
+	<definition name="task/show" extends="page">
 		<put-attribute name="content" value="/WEB-INF/views/actionItem/show.jsp" />
 	</definition>
 

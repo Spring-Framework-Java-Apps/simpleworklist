@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;
-import org.woehlke.simpleworklist.entities.RegistrationProcessStatus;
-import org.woehlke.simpleworklist.entities.RegistrationProcessType;
+import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessStatus;
+import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
 import org.woehlke.simpleworklist.repository.RegistrationProcessRepository;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 

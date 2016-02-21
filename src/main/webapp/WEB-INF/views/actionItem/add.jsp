@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>	
-<!-- New ActionItem Form -->
+<!-- New Task Form -->
 <h1>Add ActionItem</h1>
 <div>
 <form:form id="formId" commandName="data" method="post">

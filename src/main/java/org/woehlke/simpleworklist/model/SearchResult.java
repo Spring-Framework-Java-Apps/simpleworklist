@@ -1,10 +1,9 @@
 package org.woehlke.simpleworklist.model;
 
-import org.woehlke.simpleworklist.entities.ActionItem;
-import org.woehlke.simpleworklist.entities.Category;
+import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.Project;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,8 +12,8 @@ import java.util.List;
 public class SearchResult {
 
     private String searchterm = "";
-    private List<ActionItem> actionItemList = new ArrayList<>();
-    private List<Category> categoryList = new ArrayList<>();
+    private List<Task> taskList = new ArrayList<>();
+    private List<Project> projectList = new ArrayList<>();
 
     public String getSearchterm() {
         return searchterm;
@@ -24,20 +23,20 @@ public class SearchResult {
         this.searchterm = searchterm;
     }
 
-    public List<ActionItem> getActionItemList() {
-        return actionItemList;
+    public List<Task> getTaskList() {
+        return taskList;
     }
 
-    public void setActionItemList(List<ActionItem> actionItemList) {
-        this.actionItemList = actionItemList;
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
-    public List<Category> getCategoryList() {
-        return categoryList;
+    public List<Project> getProjectList() {
+        return projectList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 
     @Override
@@ -48,17 +47,17 @@ public class SearchResult {
         SearchResult that = (SearchResult) o;
 
         if (searchterm != null ? !searchterm.equals(that.searchterm) : that.searchterm != null) return false;
-        if (actionItemList != null ? !actionItemList.equals(that.actionItemList) : that.actionItemList != null)
+        if (taskList != null ? !taskList.equals(that.taskList) : that.taskList != null)
             return false;
-        return categoryList != null ? categoryList.equals(that.categoryList) : that.categoryList == null;
+        return projectList != null ? projectList.equals(that.projectList) : that.projectList == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = searchterm != null ? searchterm.hashCode() : 0;
-        result = 31 * result + (actionItemList != null ? actionItemList.hashCode() : 0);
-        result = 31 * result + (categoryList != null ? categoryList.hashCode() : 0);
+        result = 31 * result + (taskList != null ? taskList.hashCode() : 0);
+        result = 31 * result + (projectList != null ? projectList.hashCode() : 0);
         return result;
     }
 
@@ -66,8 +65,8 @@ public class SearchResult {
     public String toString() {
         return "SearchResult{" +
                 "searchterm='" + searchterm + '\'' +
-                ", actionItemList=" + actionItemList +
-                ", categoryList=" + categoryList +
+                ", taskList=" + taskList +
+                ", projectList=" + projectList +
                 '}';
     }
 }
