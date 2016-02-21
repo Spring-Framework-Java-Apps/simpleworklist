@@ -4,7 +4,7 @@
 	<groupId>org.woehlke</groupId>
 	<artifactId>simpleworklist</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.21-SNAPSHOT</version>
+	<version>1.0.21</version>
 	<name>SimpleWorklist</name>
 	<url>http://woehlke.org/p/simpleworklist</url>
 	<properties>
@@ -424,7 +424,7 @@
 		<url>https://github.com/phasenraum2010/simpleworklist.git</url>
 		<connection>scm:git:https://github.com/phasenraum2010/simpleworklist.git</connection>
 		<developerConnection>scm:git:https://github.com/phasenraum2010/simpleworklist.git</developerConnection>
-	  <tag>simpleworklist-1.0.16</tag>
+	  <tag>simpleworklist-1.0.21</tag>
   </scm>
 	<issueManagement>
 		<url>https://github.com/phasenraum2010/simpleworklist/issues</url>
