@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskState" %>
 <!-- Document Window -->
-<h1>Edit ActionItem</h1>
+<h1>Edit Task</h1>
 <div>
 <form:form id="formId" commandName="task" method="post">
 	<form:hidden path="focusType" />
@@ -34,7 +34,7 @@
 		 <form:textarea path="text" rows="10" cols="50" class="form-control"/>
 		 <form:errors path="text" class="alert alert-error"/>
     </div>
-	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Action Item</button>
-	&nbsp;&nbsp;&nbsp;<a href="<c:url value="/task/transform/${task.id}"/>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Transform to Category</a>
+	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Task</button>
+	&nbsp;&nbsp;&nbsp;<a href="<c:url value="/task/transform/${task.id}"/>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Transform into Category</a>
 </form:form>
 </div>

@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>	
 <!-- New Task Form -->
-<h1>Add ActionItem</h1>
+<h1>Add Task</h1>
 <div>
 <form:form id="formId" commandName="task" method="post">
 	<form:hidden path="focusType" />
@@ -33,7 +33,7 @@
 		<form:textarea path="text" rows="10" cols="50"  class="form-control"/>
 		<form:errors path="text" class="alert alert-error"/>
     </div>
-	<button id="createNewTask" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Action Item</button>
+	<button id="createNewTask" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Task</button>
 </form:form>
 </div>
 				

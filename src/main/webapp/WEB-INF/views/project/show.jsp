@@ -5,7 +5,7 @@
 					<c:out value="${thisProject.description}" /><br /><br />
 					<a href='<c:url value="/project/${thisProject.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Category</a> |
 					<a href='<c:url value="/project/${thisProject.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Category</a> |
-					<a href='<c:url value="/task/addtocategory/${thisProject.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add an Action Item</a><br />
+					<a href='<c:url value="/task/addtoproject/${thisProject.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add an Action Item</a><br />
 				</c:if>
 				<br />
 				<c:if test="${! empty message}">
@@ -16,7 +16,7 @@
 				</c:if>
 				<c:if test="${! empty dataList}">
 				<div>
-					<h2>Action Items</h2>
+					<h2>Tasks</h2>
 					<table class="table table-striped table-hover">
 					<tr>
 						<th>Status</th>

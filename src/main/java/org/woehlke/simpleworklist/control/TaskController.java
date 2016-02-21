@@ -30,7 +30,7 @@ public class TaskController extends AbstractController {
     private TaskService taskService;
 
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
-    public final String editDataForm(@PathVariable long taskId, Model model) {
+    public final String editTaskForm(@PathVariable long taskId, Model model) {
         Task task = taskService.findOne(taskId);
         Project thisProject = null;
         if (task.getProject() == null) {
@@ -52,7 +52,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.POST)
-    public final String editDataStore(
+    public final String editTaskStore(
             @PathVariable long taskId,
             @Valid Task task,
             BindingResult result, Model model) {
@@ -84,8 +84,8 @@ public class TaskController extends AbstractController {
 
     }
 
-    @RequestMapping(value = "/task/addtocategory/{projectId}", method = RequestMethod.GET)
-    public final String addNewDataToCategoryForm(
+    @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.GET)
+    public final String addNewTaskToProjectForm(
             @PathVariable long projectId,
             Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
@@ -113,8 +113,8 @@ public class TaskController extends AbstractController {
         return "task/add";
     }
 
-    @RequestMapping(value = "/task/addtocategory/{projectId}", method = RequestMethod.POST)
-    public final String addNewDataToCategoryStore(
+    @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
+    public final String addNewTaskToProjectStore(
             @Valid Task task,
             @PathVariable long projectId,
             BindingResult result, Model model) {
@@ -141,7 +141,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/delete/{taskId}", method = RequestMethod.GET)
-    public final String deleteData(@PathVariable long taskId) {
+    public final String deleteTask(@PathVariable long taskId) {
         Task task = taskService.findOne(taskId);
         long projectId = 0;
         if (task.getProject() != null) {
@@ -152,7 +152,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
-    public final String moveData(@PathVariable long taskId) {
+    public final String moveTask(@PathVariable long taskId) {
         Task task = taskService.findOne(taskId);
         long projectId = 0;
         if (task.getProject() != null) {
@@ -162,8 +162,8 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/{taskId}/moveto/{projectId}", method = RequestMethod.GET)
-    public final String moveDataToAnotherCategory(@PathVariable long taskId,
-                                            @PathVariable long projectId) {
+    public final String moveTaskToAnotherProject(@PathVariable long taskId,
+                                                 @PathVariable long projectId) {
         Task task = taskService.findOne(taskId);
         Project project = projectService.findByCategoryId(projectId);
         task.setProject(project);
@@ -172,7 +172,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/transform/{taskId}", method = RequestMethod.GET)
-    public final String transformActionItemIntoCategory(@PathVariable long taskId) {
+    public final String transformTaskIntoProject(@PathVariable long taskId) {
         Task task = taskService.findOne(taskId);
         long projectId = 0;
         if (task.getProject() != null) {

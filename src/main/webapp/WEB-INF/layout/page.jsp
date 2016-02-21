@@ -48,10 +48,10 @@
 							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New Content<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href='<c:url value="/project/addchild/${thisProject.id}"/>'>Add a Category</a>
+									<a href='<c:url value="/project/addchild/${thisProject.id}"/>'>Add a Project</a>
 								</li>
 								<li>
-									<a href='<c:url value="/task/addtocategory/${thisProject.id}"/>'>Add an Action Item</a>
+									<a href='<c:url value="/task/addtoproject/${thisProject.id}"/>'>Add a Task</a>
 								</li>
 								<li role="separator" class="divider"></li>
 								<li>
@@ -155,6 +155,7 @@
 			<p class="text-muted">&copy; 2016 Thomas W&ouml;hlke</p>
 		</div>
 	</footer>
+	<!--
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -165,6 +166,7 @@
 		ga('send', 'pageview');
 
 	</script>
+	-->
 	 <script>
 		$(window).load( function() {
 			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: true  });

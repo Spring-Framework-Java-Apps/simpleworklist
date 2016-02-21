@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- New Project Form -->
-<h1>Add Category</h1>
+<h1>Add Project</h1>
 <div>
 <form:form id="formId" commandName="project" method="post">
 	<div class="form-group">
@@ -13,7 +13,7 @@
 		<form:input path="description" class="form-control" />
 		<form:errors path="description" class="alert alert-error"/>
 	</div>
-	<button id="createNewCategory" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Category</button>
+	<button id="createNewProject" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Add Project</button>
 </form:form>
 </div>
 <!-- Document Window End -->

@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <h1>Search Result for searchterm <i>${searchResult.searchterm}</i></h1>
 <c:if test="${! empty searchResult.taskList}">
-<h2>ActionItems</h2>
+<h2>Tasks</h2>
 <table class="table table-striped table-hover">
 <tr>
     <th>Status</th>
@@ -36,7 +36,7 @@
 </table>
 </c:if>
 <c:if test="${! empty searchResult.projectList}">
-<h2>Categories</h2>
+<h2>Projects</h2>
     <table class="table table-striped table-hover">
         <tr>
             <th>Name</th>
