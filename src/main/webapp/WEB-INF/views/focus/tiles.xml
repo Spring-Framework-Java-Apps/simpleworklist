@@ -7,27 +7,27 @@
     </definition>
 
     <definition name="focus/today" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/today.jsp" />
     </definition>
 
     <definition name="focus/next" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/next.jsp" />
     </definition>
 
     <definition name="focus/scheduled" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/scheduled.jsp" />
     </definition>
 
     <definition name="focus/someday" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/someday.jsp" />
     </definition>
 
     <definition name="focus/completed" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/completed.jsp" />
     </definition>
 
     <definition name="focus/trash" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/trash.jsp" />
     </definition>
 
 </tiles-definitions>
