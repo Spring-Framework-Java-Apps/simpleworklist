@@ -135,16 +135,16 @@
 			<sec:authorize access="fullyAuthenticated">
              	<div id="categoryNavigationWell" class="well sidebar-nav">
 					<ul id="rootProject" class="nav nav-list">
-						<li><a href='<c:url value="/focus/inbox"/>'>Inbox</a></li>
-						<li><a href='<c:url value="/focus/today"/>'>Today</a></li>
-						<li><a href='<c:url value="/focus/next"/>'>Next</a></li>
-						<li><a href='<c:url value="/focus/scheduled"/>'>Scheduled</a></li>
-						<li><a href='<c:url value="/focus/someday"/>'>Someday</a></li>
+						<li><a id="focus_inbox" href='<c:url value="/focus/inbox"/>'>Inbox</a></li>
+						<li><a id="focus_today" href='<c:url value="/focus/today"/>'>Today</a></li>
+						<li><a id="focus_next" href='<c:url value="/focus/next"/>'>Next</a></li>
+						<li><a id="focus_scheduled" href='<c:url value="/focus/scheduled"/>'>Scheduled</a></li>
+						<li><a id="focus_someday" href='<c:url value="/focus/someday"/>'>Someday</a></li>
 						<li><hr/></li>
 						<jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" />
 						<li><hr/></li>
-						<li><a href='<c:url value="/focus/completed"/>'>Completed Tasks</a></li>
-						<li><a href='<c:url value="/focus/trash"/>'>Trash</a></li>
+						<li><a id="focus_completed" href='<c:url value="/focus/completed"/>'>Completed Tasks</a></li>
+						<li><a id="focus_trash" href='<c:url value="/focus/trash"/>'>Trash</a></li>
 					</ul>
 				</div>
 			</sec:authorize>
@@ -195,6 +195,78 @@
 					//$( this ).html(html4move);
 					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
 					window.location.replace(html4move);
+				}
+			});
+			$("#focus_inbox").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/inbox';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_today").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/today';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_next").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/next';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_someday").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/someday';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_completed").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/completed';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_trash").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/trash';
+						window.location.replace(html4move);
+					}
 				}
 			});
 		});
