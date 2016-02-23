@@ -25,10 +25,10 @@ public class FocusController extends AbstractController {
     private FocusService focusService;
 
     @RequestMapping(value = "/focus/inbox", method = RequestMethod.GET)
-    public final String inbox(@RequestParam(defaultValue="1", required = false) int pageNumber, Model model) {
+    public final String inbox(@RequestParam(defaultValue="1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getInbox(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -43,10 +43,10 @@ public class FocusController extends AbstractController {
     }
 
     @RequestMapping(value = "/focus/today", method = RequestMethod.GET)
-    public final String today(@RequestParam(defaultValue="1", required = false) int pageNumber,Model model) {
+    public final String today(@RequestParam(defaultValue="1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getToday(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -61,10 +61,10 @@ public class FocusController extends AbstractController {
     }
 
     @RequestMapping(value = "/focus/next", method = RequestMethod.GET)
-    public final String next(@RequestParam(defaultValue="1", required = false) int pageNumber,Model model) {
+    public final String next(@RequestParam(defaultValue="1", required = false) int page,Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getNext(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -79,10 +79,10 @@ public class FocusController extends AbstractController {
     }
 
     @RequestMapping(value = "/focus/scheduled", method = RequestMethod.GET)
-    public final String scheduled(@RequestParam(defaultValue="1", required = false) int pageNumber,Model model) {
+    public final String scheduled(@RequestParam(defaultValue="1", required = false) int page,Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getScheduled(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -97,10 +97,10 @@ public class FocusController extends AbstractController {
     }
 
     @RequestMapping(value = "/focus/someday", method = RequestMethod.GET)
-    public final String someday(@RequestParam(defaultValue="1", required = false) int pageNumber,Model model) {
+    public final String someday(@RequestParam(defaultValue="1", required = false) int page,Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getSomeday(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -115,10 +115,10 @@ public class FocusController extends AbstractController {
     }
 
     @RequestMapping(value = "/focus/completed", method = RequestMethod.GET)
-    public final String completed(@RequestParam(defaultValue="1", required = false) int pageNumber,Model model) {
+    public final String completed(@RequestParam(defaultValue="1", required = false) int page,Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getCompleted(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -133,10 +133,10 @@ public class FocusController extends AbstractController {
     }
 
     @RequestMapping(value = "/focus/trash", method = RequestMethod.GET)
-    public final String trash(@RequestParam(defaultValue="1", required = false) int pageNumber,Model model) {
+    public final String trash(@RequestParam(defaultValue="1", required = false) int page,Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
         Page<Task> taskPage = focusService.getTrash(thisUser,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);

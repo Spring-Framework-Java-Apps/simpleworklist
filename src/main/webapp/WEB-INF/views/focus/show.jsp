@@ -51,10 +51,10 @@
 					</table>
 				</div>
 				<nav>
-					<c:url var="firstUrl" value="/project/${thisProject.id}/page/1" />
-					<c:url var="lastUrl" value="/project/${thisProject.id}/page/${totalPages}" />
-					<c:url var="prevUrl" value="/project/${thisProject.id}/page/${currentIndex - 1}" />
-					<c:url var="nextUrl" value="/project/${thisProject.id}/page/${currentIndex + 1}" />
+					<c:url var="firstUrl" value="/focus/inbox?page=1" />
+					<c:url var="lastUrl" value="/focus/inbox?page=${totalPages}" />
+					<c:url var="prevUrl" value="/focus/inbox?page=${currentIndex - 1}" />
+					<c:url var="nextUrl" value="/focus/inbox?page=${currentIndex + 1}" />
 					<div>
 					    <ul class="pagination">
 					        <c:choose>
@@ -68,7 +68,7 @@
 					            </c:otherwise>
 					        </c:choose>
 					        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-					            <c:url var="pageUrl" value="/project/${thisProject.id}/page/${i}" />
+					            <c:url var="pageUrl" value="/focus/inbox?page=${i}" />
 					            <c:choose>
 					                <c:when test="${i == currentIndex}">
 					                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>

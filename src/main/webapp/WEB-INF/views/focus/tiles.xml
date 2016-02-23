@@ -3,7 +3,7 @@
 <tiles-definitions>
 
     <definition name="focus/inbox" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/focus/show.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/focus/inbox.jsp" />
     </definition>
 
     <definition name="focus/today" extends="page">
