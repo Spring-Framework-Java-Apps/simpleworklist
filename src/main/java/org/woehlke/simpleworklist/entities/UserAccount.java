@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
                 "userEmail"
         })
 )
-public class UserAccount implements Serializable {
+public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

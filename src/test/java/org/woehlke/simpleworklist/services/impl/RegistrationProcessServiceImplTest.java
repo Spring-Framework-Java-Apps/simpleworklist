@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.services.impl;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.AbstractTest;

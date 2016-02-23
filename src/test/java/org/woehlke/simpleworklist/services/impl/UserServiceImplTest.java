@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.services.impl;
 
 import javax.inject.Inject;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;

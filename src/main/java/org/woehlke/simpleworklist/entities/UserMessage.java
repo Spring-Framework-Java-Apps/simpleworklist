@@ -18,7 +18,7 @@ import java.util.UUID;
                 "createdTimestamp", "sender_id", "receiver_id"
         })
 )
-public class UserMessage implements Serializable {
+public class UserMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

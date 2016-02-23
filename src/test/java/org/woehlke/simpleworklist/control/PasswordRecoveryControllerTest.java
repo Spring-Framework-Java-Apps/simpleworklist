@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.control;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.RegistrationProcess;

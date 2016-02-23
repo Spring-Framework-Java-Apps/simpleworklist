@@ -1,9 +1,7 @@
 package org.woehlke.simpleworklist.model;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.woehlke.simpleworklist.AbstractTest;
 
 import javax.inject.Inject;
