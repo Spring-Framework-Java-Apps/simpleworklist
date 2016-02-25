@@ -78,6 +78,8 @@ public class TaskController extends AbstractController {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
             persistentTask.setStatus(task.getStatus());
+            persistentTask.setDueDate(task.getDueDate());
+            persistentTask.setLastChangeTimestamp(new Date());
             taskService.saveAndFlush(persistentTask);
             return "redirect:/project/" + projectId + "/";
         }

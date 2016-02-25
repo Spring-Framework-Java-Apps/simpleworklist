@@ -10,6 +10,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
 
@@ -64,6 +65,7 @@ public class Task {
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
+    @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date createdTimestamp;
 
     @Temporal(value = TemporalType.TIMESTAMP)

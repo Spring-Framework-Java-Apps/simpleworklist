@@ -12,6 +12,11 @@
 		<form:errors path="title" class="alert alert-error"/>
     </div>
 	<div class="form-group">
+		<form:label path="dueDate">Due Date</form:label>
+		<form:input path="dueDate" type="date" class=" datepicker taskDueDate form-control"/>
+		<form:errors path="dueDate" class="alert alert-error"/>
+	</div>
+	<div class="form-group">
 		<form:label path="status">Status</form:label>
 		<c:forEach var="state" items="${stateValues}">
 			<form:radiobutton path="status" value="${state}"/>
