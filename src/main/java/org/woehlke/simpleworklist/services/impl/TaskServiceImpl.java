@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.enumerations.FocusType;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.TaskService;
 
@@ -51,7 +52,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Task task) {
-        taskRepository.delete(task);
+        task.setFocusType(FocusType.TRASHED);
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
