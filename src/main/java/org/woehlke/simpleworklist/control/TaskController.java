@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.control;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TaskService;
@@ -43,11 +41,6 @@ public class TaskController extends AbstractController {
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        List<TaskState> stateValues = new ArrayList<>();
-        for(TaskState state: TaskState.values()){
-            stateValues.add(state);
-        }
-        model.addAttribute("stateValues", TaskState.values());
         return "task/show";
     }
 
@@ -77,7 +70,6 @@ public class TaskController extends AbstractController {
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
-            persistentTask.setStatus(task.getStatus());
             if(task.getDueDate()!=null){
                 persistentTask.setDueDate(task.getDueDate());
                 persistentTask.setFocusType(FocusType.SCHEDULED);
@@ -110,11 +102,6 @@ public class TaskController extends AbstractController {
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        List<TaskState> stateValues = new ArrayList<>();
-        for(TaskState state: TaskState.values()){
-            stateValues.add(state);
-        }
-        model.addAttribute("stateValues", TaskState.values());
         return "task/add";
     }
 

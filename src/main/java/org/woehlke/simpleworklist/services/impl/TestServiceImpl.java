@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.repository.ProjectRepository;
@@ -115,7 +114,6 @@ public class TestServiceImpl implements TestService {
             d.setText(text);
             d.setTitle(title);
             d.setProject(c02020303);
-            d.setStatus(TaskState.NEW);
             d.setCreatedTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setFocusType(FocusType.INBOX);
@@ -128,7 +126,6 @@ public class TestServiceImpl implements TestService {
             Task d = new Task();
             d.setText(text);
             d.setTitle(title);
-            d.setStatus(TaskState.NEW);
             d.setCreatedTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setFocusType(FocusType.INBOX);

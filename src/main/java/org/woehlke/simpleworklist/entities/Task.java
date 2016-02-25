@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
 
 
@@ -52,9 +51,6 @@ public class Task {
     @Column(nullable = false, length = 65535, columnDefinition="text")
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String text;
-
-    @Enumerated(EnumType.STRING)
-    private TaskState status;
 
     @Enumerated(EnumType.STRING)
     private FocusType focusType;
@@ -131,14 +127,6 @@ public class Task {
         this.text = text;
     }
 
-    public TaskState getStatus() {
-        return status;
-    }
-
-    public void setStatus(TaskState status) {
-        this.status = status;
-    }
-
     public FocusType getFocusType() {
         return focusType;
     }
@@ -184,7 +172,6 @@ public class Task {
         if (!userAccount.equals(that.userAccount)) return false;
         if (!title.equals(that.title)) return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
-        if (status != that.status) return false;
         if (focusType != that.focusType) return false;
         if (dueDate != null ? !dueDate.equals(that.dueDate) : that.dueDate != null) return false;
         if (!createdTimestamp.equals(that.createdTimestamp)) return false;
@@ -200,7 +187,6 @@ public class Task {
         result = 31 * result + userAccount.hashCode();
         result = 31 * result + title.hashCode();
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + focusType.hashCode();
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
         result = 31 * result + createdTimestamp.hashCode();
@@ -217,7 +203,6 @@ public class Task {
                 ", userAccount=" + userAccount +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", status=" + status +
                 ", focusType=" + focusType +
                 ", dueDate=" + dueDate +
                 ", createdTimestamp=" + createdTimestamp +

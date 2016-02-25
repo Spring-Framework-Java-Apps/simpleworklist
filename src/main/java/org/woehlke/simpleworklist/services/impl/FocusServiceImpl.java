@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.FocusService;
 
@@ -52,7 +51,7 @@ public class FocusServiceImpl implements FocusService {
 
     @Override
     public Page<Task> getCompleted(UserAccount thisUser, Pageable request) {
-        return taskRepository.findByStatusAndUserAccount(TaskState.DONE, thisUser, request);
+        return taskRepository.findByFocusTypeAndUserAccount(FocusType.COMPLETED, thisUser, request);
     }
 
     @Override

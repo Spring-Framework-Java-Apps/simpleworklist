@@ -9,7 +9,6 @@ import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
@@ -21,7 +20,4 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByFocusTypeAndUserAccount(FocusType focusType, UserAccount thisUser, Pageable request);
 
-    Page<Task> findByStatusAndUserAccount(TaskState status, UserAccount thisUser, Pageable request);
-
-    Page<Task> findByDueDateIsNotNullAndUserAccount(UserAccount thisUser, Pageable request);
 }

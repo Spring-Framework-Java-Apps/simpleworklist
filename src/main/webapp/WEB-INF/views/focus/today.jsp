@@ -11,26 +11,12 @@
     <div>
         <table class="table table-striped table-hover">
             <tr>
-                <th>Status</th>
                 <th>Title</th>
                 <th>Text</th>
                 <th colspan="2"></th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
-                    <td>
-                        <c:choose>
-                            <c:when test="${task.status eq 'NEW'}">
-                                <button class="btn btn-small btn-danger" type="button">&nbsp;</button>
-                            </c:when>
-                            <c:when test="${task.status.name() eq 'WORK'}">
-                                <button class="btn btn-small btn-warning" type="button">&nbsp;</button>
-                            </c:when>
-                            <c:when test="${task.status.name() eq 'DONE'}">
-                                <button class="btn btn-small btn-success" type="button">&nbsp;</button>
-                            </c:when>
-                        </c:choose>
-                    </td>
                     <td>
                         <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
                            id="dataDetail_${task.id}" ><c:out

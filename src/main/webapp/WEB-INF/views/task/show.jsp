@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskState" %>
 <!-- Document Window -->
 <h1>Edit Task</h1>
 <div>
@@ -16,23 +15,6 @@
 		<form:label path="dueDate">Due Date</form:label>
 		<form:input id="taskDueDate" path="dueDate" class="form-control"/>
 		<form:errors path="dueDate" class="alert alert-error"/>
-	</div>
-	<div class="form-group">
-		<form:label path="status">Status</form:label>
-		<c:forEach var="state" items="${stateValues}">
-			<form:radiobutton path="status" value="${state}"/>
-				<c:choose>
-				<c:when test="${state.name() == 'NEW'}">
-					<button class="btn btn-small btn-small btn-danger" type="button">&nbsp;</button>
-				</c:when>
-				<c:when test="${state.name() == 'WORK'}">
-					<button class="btn btn-small btn-warning" type="button">&nbsp;</button>
-				</c:when>
-				<c:when test="${state.name() == 'DONE'}">
-					<button class="btn btn-small btn-success" type="button">&nbsp;</button>
-				</c:when>
-			</c:choose>
-		</c:forEach>
 	</div>
      <div class="form-group">
 		 <form:label path="text">Text</form:label>

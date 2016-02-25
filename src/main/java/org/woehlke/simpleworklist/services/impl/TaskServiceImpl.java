@@ -2,6 +2,8 @@ package org.woehlke.simpleworklist.services.impl;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import org.woehlke.simpleworklist.services.TaskService;
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskServiceImpl implements TaskService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
+
 
     @Inject
     private TaskRepository taskRepository;
@@ -38,7 +43,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task saveAndFlush(Task entity) {
-        return taskRepository.saveAndFlush(entity);
+        entity = taskRepository.saveAndFlush(entity);
+        LOGGER.info("saved: "+entity.toString());
+        return entity;
     }
 
     @Override
