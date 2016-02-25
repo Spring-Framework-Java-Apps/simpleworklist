@@ -270,7 +270,8 @@
 				}
 			});
 			$("#taskDueDate ").datepicker({
-				dateFormat: 'mm/dd/yy'
+				dateFormat: 'mm/dd/yy',
+				constrainInput: false
 			});
 		});
 	</script>

@@ -78,7 +78,10 @@ public class TaskController extends AbstractController {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
             persistentTask.setStatus(task.getStatus());
-            persistentTask.setDueDate(task.getDueDate());
+            if(task.getDueDate()!=null){
+                persistentTask.setDueDate(task.getDueDate());
+                persistentTask.setFocusType(FocusType.SCHEDULED);
+            }
             persistentTask.setLastChangeTimestamp(new Date());
             taskService.saveAndFlush(persistentTask);
             return "redirect:/project/" + projectId + "/";
@@ -124,22 +127,23 @@ public class TaskController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-        }
-        Project thisProject = null;
-        if (projectId == 0) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            task.setProject(null);
+            return "task/add";
         } else {
-            thisProject = projectService.findByCategoryId(projectId);
-            task.setProject(thisProject);
+            if (projectId == 0) {
+                task.setProject(null);
+            } else {
+                Project thisProject = projectService.findByCategoryId(projectId);
+                task.setProject(thisProject);
+            }
+            if(task.getDueDate()==null){
+                task.setFocusType(FocusType.INBOX);
+            } else {
+                task.setFocusType(FocusType.SCHEDULED);
+            }
+            task = taskService.saveAndFlush(task);
+            LOGGER.info(task.toString());
+            return "redirect:/project/" + projectId + "/";
         }
-        task = taskService.saveAndFlush(task);
-        LOGGER.info(task.toString());
-        model.addAttribute("thisProject", thisProject);
-        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
-        model.addAttribute("breadcrumb", breadcrumb);
-        return "redirect:/project/" + projectId + "/";
     }
 
     @RequestMapping(value = "/task/delete/{taskId}", method = RequestMethod.GET)

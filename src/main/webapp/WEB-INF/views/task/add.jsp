@@ -13,7 +13,7 @@
     </div>
 	<div class="form-group">
 		<form:label path="dueDate">Due Date</form:label>
-		<form:input path="dueDate" type="date" class=" datepicker taskDueDate form-control"/>
+		<form:input id="taskDueDate"  path="dueDate" type="date" class="form-control"/>
 		<form:errors path="dueDate" class="alert alert-error"/>
 	</div>
 	<div class="form-group">

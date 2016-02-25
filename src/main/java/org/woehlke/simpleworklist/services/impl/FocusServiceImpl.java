@@ -42,7 +42,7 @@ public class FocusServiceImpl implements FocusService {
 
     @Override
     public Page<Task> getScheduled(UserAccount thisUser, Pageable request) {
-        return taskRepository.findByDueDateIsNotNullAndUserAccount(thisUser, request);
+        return taskRepository.findByFocusTypeAndUserAccount(FocusType.SCHEDULED, thisUser, request);
     }
 
     @Override

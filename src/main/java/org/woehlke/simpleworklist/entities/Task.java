@@ -61,11 +61,11 @@ public class Task {
 
     @Temporal(value = TemporalType.DATE)
     @Column(nullable = true)
+    @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date dueDate;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date createdTimestamp;
 
     @Temporal(value = TemporalType.TIMESTAMP)
