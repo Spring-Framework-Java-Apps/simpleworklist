@@ -20,4 +20,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByFocusTypeAndUserAccount(FocusType focusType, UserAccount thisUser, Pageable request);
 
+    List<Task> findByFocusTypeAndUserAccount(FocusType focusType, UserAccount userAccount);
+
 }

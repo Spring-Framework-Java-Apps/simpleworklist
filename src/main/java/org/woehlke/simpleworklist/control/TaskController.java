@@ -136,12 +136,29 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/delete/{taskId}", method = RequestMethod.GET)
     public final String deleteTask(@PathVariable long taskId) {
         Task task = taskService.findOne(taskId);
-        long projectId = 0;
-        if (task.getProject() != null) {
-            projectId = task.getProject().getId();
-        }
         taskService.delete(task);
-        return "redirect:/project/" + projectId + "/";
+        return "redirect:/focus/trash";
+    }
+
+    @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
+    public final String undeleteTask(@PathVariable long taskId) {
+        Task task = taskService.findOne(taskId);
+        taskService.undelete(task);
+        if (task.getProject() != null) {
+            long projectId = task.getProject().getId();
+            return "redirect:/project/" + projectId + "/";
+        }
+        switch (task.getFocusType()){
+            case SCHEDULED: return "redirect:/focus/scheduled";
+            default: return "redirect:/focus/inbox";
+        }
+    }
+
+    @RequestMapping(value = "/task/trash/empty", method = RequestMethod.GET)
+    public final String emptyTrash() {
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        taskService.emptyTrash(userAccount);
+        return "redirect:/focus/trash";
     }
 
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)

@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
 <h1><c:out value="${focustype}" /></h1>
+<a href='<c:url value="/task/trash/empty"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Empty Trash</a>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -18,18 +19,18 @@
             <c:forEach items="${dataList}" var="task">
                 <tr>
                     <td>
-                        <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
+                        <del><a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
                            id="dataDetail_${task.id}" ><c:out
-                                value="${task.title}" /></a>
+                                value="${task.title}" /></a></del>
                     </td>
                     <td>
-                        <c:out value="${task.textShortened}" />
+                        <del><c:out value="${task.textShortened}" /></del>
                     </td>
                     <td>
                         <a href='<c:url value="/task/detail/${task.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
                     </td>
                     <td>
-                        <a href='<c:url value="/task/delete/${task.id}"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
+                        <a href='<c:url value="/task/undelete/${task.id}"/>'><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Undelete</a>
                     </td>
                 </tr>
             </c:forEach>

@@ -11,9 +11,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.FocusType;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.TaskService;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -53,12 +57,34 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Task task) {
         task.setFocusType(FocusType.TRASHED);
+        task.setLastChangeTimestamp(new Date());
         taskRepository.saveAndFlush(task);
     }
 
     @Override
     public boolean categoryHasNoData(Project project) {
         return taskRepository.findByProject(project).isEmpty();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void undelete(Task task) {
+        if(task.getDueDate()!=null){
+            task.setFocusType(FocusType.SCHEDULED);
+        } else {
+            task.setFocusType(FocusType.INBOX);
+        }
+        task.setLastChangeTimestamp(new Date());
+        taskRepository.saveAndFlush(task);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void emptyTrash(UserAccount userAccount) {
+        List<Task> taskList = taskRepository.findByFocusTypeAndUserAccount(FocusType.TRASHED,userAccount);
+        for(Task task:taskList){
+            taskRepository.delete(task);
+        }
     }
 
 }
