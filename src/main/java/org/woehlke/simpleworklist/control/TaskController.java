@@ -202,4 +202,25 @@ public class TaskController extends AbstractController {
         LOGGER.info("tried to transform Task "+taskId+" to new Project "+projectId);
         return "redirect:/project/" + projectId + "/";
     }
+
+    @RequestMapping(value = "/task/complete/{taskId}", method = RequestMethod.GET)
+    public final String completeTask(@PathVariable long taskId, Model model) {
+        Task task = taskService.findOne(taskId);
+        taskService.complete(task);
+        return "redirect:/focus/completed";
+    }
+
+    @RequestMapping(value = "/task/incomplete/{taskId}", method = RequestMethod.GET)
+    public final String undoneTask(@PathVariable long taskId, Model model) {
+        Task task = taskService.findOne(taskId);
+        taskService.incomplete(task);
+        if (task.getProject() != null) {
+            long projectId = task.getProject().getId();
+            return "redirect:/project/" + projectId + "/";
+        }
+        switch (task.getFocusType()){
+            case SCHEDULED: return "redirect:/focus/scheduled";
+            default: return "redirect:/focus/inbox";
+        }
+    }
 }

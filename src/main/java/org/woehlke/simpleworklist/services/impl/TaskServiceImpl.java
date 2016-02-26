@@ -87,4 +87,24 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void complete(Task task) {
+        task.setFocusType(FocusType.COMPLETED);
+        task.setLastChangeTimestamp(new Date());
+        taskRepository.saveAndFlush(task);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void incomplete(Task task) {
+        if(task.getDueDate()!=null){
+            task.setFocusType(FocusType.SCHEDULED);
+        } else {
+            task.setFocusType(FocusType.INBOX);
+        }
+        task.setLastChangeTimestamp(new Date());
+        taskRepository.saveAndFlush(task);
+    }
+
 }

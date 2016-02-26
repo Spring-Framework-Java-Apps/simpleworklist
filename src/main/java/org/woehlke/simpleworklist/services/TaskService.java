@@ -24,4 +24,7 @@ public interface TaskService {
 
     void emptyTrash(UserAccount userAccount);
 
+    void complete(Task task);
+
+    void incomplete(Task task);
 }

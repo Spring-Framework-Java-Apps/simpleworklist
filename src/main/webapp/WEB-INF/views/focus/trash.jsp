@@ -12,12 +12,14 @@
     <div>
         <table class="table table-striped table-hover">
             <tr>
+                <th>&nbsp;</th>
                 <th>Title</th>
                 <th>Text</th>
                 <th colspan="2"></th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
+                    <td>&nbsp;</td>
                     <td>
                         <del><a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
                            id="dataDetail_${task.id}" ><c:out

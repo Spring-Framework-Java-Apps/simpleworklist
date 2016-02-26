@@ -11,6 +11,7 @@
     <div>
         <table class="table table-striped table-hover">
             <tr>
+                <th>&nbsp;</th>
                 <th>Title</th>
                 <th>Text</th>
                 <th colspan="2"></th>
@@ -18,12 +19,15 @@
             <c:forEach items="${dataList}" var="task">
                 <tr>
                     <td>
-                        <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
-                           id="dataDetail_${task.id}" ><c:out
-                                value="${task.title}" /></a>
+                        <del><a alt="incomplete" href='<c:url value="/task/incomplete/${task.id}"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a></del>
                     </td>
                     <td>
-                        <c:out value="${task.textShortened}" />
+                        <del><a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
+                           id="dataDetail_${task.id}" ><c:out
+                                value="${task.title}" /></a></del>
+                    </td>
+                    <td>
+                        <del><c:out value="${task.textShortened}" /></del>
                     </td>
                     <td>
                         <a href='<c:url value="/task/detail/${task.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
