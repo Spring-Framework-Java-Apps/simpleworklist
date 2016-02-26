@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 				<!-- Document Window -->
 				<c:if test="${thisProject.id > 0}">
-					<h1><c:out value="${thisProject.name}" /></h1>
+					<h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; <c:out value="${thisProject.name}" /></h1>
 					<c:out value="${thisProject.description}" /><br /><br />
 					<a href='<c:url value="/project/${thisProject.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Project</a> |
 					<a href='<c:url value="/project/${thisProject.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Project</a> |
@@ -16,7 +16,7 @@
 				</c:if>
 				<c:if test="${! empty dataList}">
 				<div>
-					<h2>Tasks</h2>
+					<!-- <h2>Tasks</h2> -->
 					<table class="table table-striped table-hover">
 					<tr>
 						<th>&nbsp;</th>

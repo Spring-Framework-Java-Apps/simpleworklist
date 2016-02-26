@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1><c:out value="${focustype}" /></h1>
+<h1><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</h1>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

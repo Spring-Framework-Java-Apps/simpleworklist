@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1><c:out value="${focustype}" /></h1>
+<h1><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</h1>
 <a href='<c:url value="/task/trash/empty"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Empty Trash</a>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
