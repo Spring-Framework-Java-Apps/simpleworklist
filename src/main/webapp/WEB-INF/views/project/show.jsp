@@ -22,6 +22,7 @@
 						<th>&nbsp;</th>
 						<th>Title</th>
 						<th>Text</th>
+						<th>Due Date</th>
 						<th colspan="2"></th>
 					</tr>
 					<c:forEach items="${dataList}" var="task">
@@ -36,6 +37,9 @@
 						</td>
 						<td>
 							<c:out value="${task.textShortened}" />
+						</td>
+						<td>
+							<c:out value="${task.dueDate}" />
 						</td>
 						<td>
 							<a href='<c:url value="/task/detail/${task.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>

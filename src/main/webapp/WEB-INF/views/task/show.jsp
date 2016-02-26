@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1>Edit Task</h1>
+<h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp; Edit Task</h1>
 <div>
 <form:form id="formId" commandName="task" method="post">
 	<form:hidden path="focusType" />

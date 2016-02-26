@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>	
 <!-- New Task Form -->
-<h1>Add Task</h1>
+<h1><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp; Add Task</h1>
 <div>
 <form:form id="formId" commandName="task" method="post">
 	<form:hidden path="focusType" />

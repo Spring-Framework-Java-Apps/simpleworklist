@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- New Project Form -->
-<h1>Add Project</h1>
+<h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Add Project</h1>
 <div>
 <form:form id="formId" commandName="project" method="post">
 	<div class="form-group">
