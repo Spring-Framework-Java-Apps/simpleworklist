@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
 <h1><c:out value="${focustype}" /></h1>
+<a href='<c:url value="/task/addtoproject/0"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Task</a><br />
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

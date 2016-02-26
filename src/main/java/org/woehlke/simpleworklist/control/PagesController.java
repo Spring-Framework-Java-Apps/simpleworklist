@@ -16,10 +16,8 @@ import java.util.Map;
 public class PagesController extends AbstractController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public final String home(Model model) {
-        UserAccount user = userService.retrieveCurrentUser();
-        model.addAttribute("username",user.getUserFullname());
-        return "pages/home";
+    public final String home() {
+        return "redirect:/focus/inbox";
     }
 
     /**
