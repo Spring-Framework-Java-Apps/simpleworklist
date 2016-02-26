@@ -130,16 +130,14 @@
 			<sec:authorize access="fullyAuthenticated">
              	<div id="categoryNavigationWell" class="well sidebar-nav">
 					<ul id="rootProject" class="nav nav-list">
-						<li><a id="focus_inbox" href='<c:url value="/focus/inbox"/>'>Inbox</a></li>
-						<li><a id="focus_today" href='<c:url value="/focus/today"/>'>Today</a></li>
-						<li><a id="focus_next" href='<c:url value="/focus/next"/>'>Next</a></li>
-						<li><a id="focus_scheduled" href='<c:url value="/focus/scheduled"/>'>Scheduled</a></li>
-						<li><a id="focus_someday" href='<c:url value="/focus/someday"/>'>Someday</a></li>
-						<li><hr/></li>
-						<jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" />
-						<li><hr/></li>
-						<li><a id="focus_completed" href='<c:url value="/focus/completed"/>'>Completed Tasks</a></li>
-						<li><a id="focus_trash" href='<c:url value="/focus/trash"/>'>Trash</a></li>
+						<li><a id="focus_inbox" href='<c:url value="/focus/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</a></li>
+						<li><a id="focus_today" href='<c:url value="/focus/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> Today</a></li>
+						<li><a id="focus_next" href='<c:url value="/focus/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</a></li>
+						<li><a id="focus_scheduled" href='<c:url value="/focus/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a></li>
+						<li><a id="focus_someday" href='<c:url value="/focus/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a></li>
+						<li><jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" /></li>
+						<li><a id="focus_completed" href='<c:url value="/focus/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a></li>
+						<li><a id="focus_trash" href='<c:url value="/focus/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></li>
 					</ul>
 				</div>
 			</sec:authorize>
