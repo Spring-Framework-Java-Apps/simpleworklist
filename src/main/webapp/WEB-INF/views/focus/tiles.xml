@@ -14,6 +14,10 @@
         <put-attribute name="content" value="/WEB-INF/views/focus/next.jsp" />
     </definition>
 
+    <definition name="focus/waiting" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/focus/waiting.jsp" />
+    </definition>
+
     <definition name="focus/scheduled" extends="page">
         <put-attribute name="content" value="/WEB-INF/views/focus/scheduled.jsp" />
     </definition>

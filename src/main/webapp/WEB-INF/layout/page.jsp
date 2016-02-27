@@ -133,6 +133,7 @@
 						<li><a id="focus_inbox" href='<c:url value="/focus/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</a></li>
 						<li><a id="focus_today" href='<c:url value="/focus/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> Today</a></li>
 						<li><a id="focus_next" href='<c:url value="/focus/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</a></li>
+						<li><a id="focus_waiting" href='<c:url value="/focus/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting</a></li>
 						<li><a id="focus_scheduled" href='<c:url value="/focus/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a></li>
 						<li><a id="focus_someday" href='<c:url value="/focus/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a></li>
 						<li><jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" /></li>
@@ -227,6 +228,18 @@
 					var rootUrl = "";
 					if(draggableType == "dataDetail"){
 						var html4move = '/focus/move/'+draggableId+'/to/next';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_waiting").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail"){
+						var html4move = '/focus/move/'+draggableId+'/to/waiting';
 						window.location.replace(html4move);
 					}
 				}

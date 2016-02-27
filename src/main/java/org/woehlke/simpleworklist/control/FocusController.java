@@ -88,6 +88,24 @@ public class FocusController extends AbstractController {
         return "focus/next";
     }
 
+    @RequestMapping(value = "/focus/waiting", method = RequestMethod.GET)
+    public final String waiting(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Pageable request =
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "createdTimestamp");
+        Page<Task> taskPage = focusService.getWaiting(thisUser, request);
+        int current = taskPage.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, taskPage.getTotalPages());
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        model.addAttribute("dataList", taskPage.getContent());
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute("focustype", "Waiting");
+        return "focus/waiting";
+    }
+
     @RequestMapping(value = "/focus/scheduled", method = RequestMethod.GET)
     public final String scheduled(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
@@ -188,6 +206,16 @@ public class FocusController extends AbstractController {
         task=taskService.saveAndFlush(task);
         LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
         return "redirect:/focus/next";
+    }
+
+    @RequestMapping(value = "/focus/move/{taskId}/to/waiting", method = RequestMethod.GET)
+    public final String moveTaskToWaiting(@PathVariable long taskId, Model model) {
+        LOGGER.info("dragged and dropped "+taskId+" to waiting");
+        Task task = taskService.findOne(taskId);
+        task.setFocusType(FocusType.WAITING);
+        task=taskService.saveAndFlush(task);
+        LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
+        return "redirect:/focus/waiting";
     }
 
     @RequestMapping(value = "/focus/move/{taskId}/to/someday", method = RequestMethod.GET)

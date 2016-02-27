@@ -16,6 +16,8 @@ public interface FocusService {
 
     Page<Task> getNext(UserAccount thisUser, Pageable request);
 
+    Page<Task> getWaiting(UserAccount thisUser, Pageable request);
+
     Page<Task> getScheduled(UserAccount thisUser, Pageable request);
 
     Page<Task> getSomeday(UserAccount thisUser, Pageable request);

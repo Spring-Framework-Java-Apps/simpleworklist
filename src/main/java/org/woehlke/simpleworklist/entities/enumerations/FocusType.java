@@ -17,6 +17,9 @@ public enum FocusType {
     NEXT,
 
     @Enumerated
+    WAITING,
+
+    @Enumerated
     SCHEDULED,
 
     @Enumerated

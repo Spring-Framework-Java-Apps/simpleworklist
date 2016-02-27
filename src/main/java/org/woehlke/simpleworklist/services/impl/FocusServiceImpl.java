@@ -40,6 +40,11 @@ public class FocusServiceImpl implements FocusService {
     }
 
     @Override
+    public Page<Task> getWaiting(UserAccount thisUser, Pageable request) {
+        return taskRepository.findByFocusTypeAndUserAccount(FocusType.WAITING, thisUser, request);
+    }
+
+    @Override
     public Page<Task> getScheduled(UserAccount thisUser, Pageable request) {
         return taskRepository.findByFocusTypeAndUserAccount(FocusType.SCHEDULED, thisUser, request);
     }
