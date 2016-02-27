@@ -9,7 +9,7 @@
 	<url>http://woehlke.org/p/simpleworklist</url>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
+		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
 		<spring.integration.version>4.2.4.RELEASE</spring.integration.version>
 		<spring.security.version>4.0.3.RELEASE</spring.security.version>
 		<!-- spring-data-jpa.version>1.6.2.RELEASE</spring-data-jpa.version -->
