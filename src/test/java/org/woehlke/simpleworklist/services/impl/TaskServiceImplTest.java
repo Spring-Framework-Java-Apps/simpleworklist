@@ -40,7 +40,7 @@ public class TaskServiceImplTest extends AbstractTest {
         Assert.assertNotNull(taskService.saveAndFlush(rootTask01).getId());
         Assert.assertNotNull(taskService.saveAndFlush(rootTask02).getId());
         Pageable pageRequest = new PageRequest(0, 10);
-        List<Task> list = taskService.findByRootCategory(pageRequest).getContent();
+        List<Task> list = taskService.findByRootProject(pageRequest).getContent();
         boolean rootData01found = false;
         boolean rootData02found = false;
         for (Task leaf : list) {
@@ -69,13 +69,13 @@ public class TaskServiceImplTest extends AbstractTest {
         Assert.assertNotNull(taskService.saveAndFlush(rootTask01).getId());
         Assert.assertNotNull(taskService.saveAndFlush(rootTask02).getId());
         Pageable pageRequest = new PageRequest(0, 10);
-        List<Task> list = taskService.findByRootCategory(pageRequest).getContent();
+        List<Task> list = taskService.findByRootProject(pageRequest).getContent();
         for (Task leaf : list) {
             Task found =  taskService.findOne(leaf.getId());
             Assert.assertEquals(found.getId().longValue(),leaf.getId().longValue());
             taskService.delete(leaf);
         }
-        List<Task> list2 = taskService.findByRootCategory(pageRequest).getContent();
+        List<Task> list2 = taskService.findByRootProject(pageRequest).getContent();
         Assert.assertTrue(list2.size()==0);
     }
 
@@ -92,7 +92,7 @@ public class TaskServiceImplTest extends AbstractTest {
         parent.setDescription("DESCRIPTION1");
         parent.setUserAccount(userAccount);
         parent = projectService.saveAndFlush(parent);
-        Assert.assertTrue(taskService.categoryHasNoData(parent));
+        Assert.assertTrue(taskService.projectHasNoTasks(parent));
     }
 
 }

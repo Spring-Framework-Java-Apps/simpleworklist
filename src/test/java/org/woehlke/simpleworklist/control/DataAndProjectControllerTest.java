@@ -91,7 +91,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
                 get("/test/helper/project/createTree")).andDo(print())
                 .andExpect(view().name(containsString("redirect:/")));
         UserAccount user = userService.retrieveCurrentUser();
-        List<Project> rootCategories = projectService.findRootCategoriesByUserAccount(user);
+        List<Project> rootCategories = projectService.findRootProjectsByUserAccount(user);
         Assert.assertTrue(rootCategories.size() > 0);
         for(Project rootProject :rootCategories){
             Assert.assertTrue(rootProject.isRootCategory());
@@ -192,7 +192,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
     public void rootCategoriesNonNullPrecondition() throws Exception {
         makeActiveUser(emails[0]);
         UserAccount user = userService.retrieveCurrentUser();
-        List<Project> rootCategories = projectService.findRootCategoriesByUserAccount(user);
+        List<Project> rootCategories = projectService.findRootProjectsByUserAccount(user);
         for (Project project : rootCategories) {
             this.mockMvc.perform(
                     get("/project/" + project.getId() + "/page/1")).andDo(print())
@@ -231,7 +231,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
     public void testEditDataFormCategory() throws Exception {
         makeActiveUser(emails[0]);
         UserAccount user = userService.retrieveCurrentUser();
-        List<Project> rootCategories = projectService.findRootCategoriesByUserAccount(user);
+        List<Project> rootCategories = projectService.findRootProjectsByUserAccount(user);
         int i = 0;
         for (Project cat:rootCategories){
             i++;
@@ -245,7 +245,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
             int pageNr = 0;
             int pageSize = 10;
             Pageable request = new PageRequest(pageNr, pageSize);
-            Page<Task> all = taskService.findByCategory(cat,request);
+            Page<Task> all = taskService.findByProject(cat,request);
             for (Task task : all.getContent()) {
                 this.mockMvc.perform(
                     get("/task/detail/" + task.getId())).andDo(print())
@@ -274,7 +274,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
         int pageNr = 0;
         int pageSize = 10;
         Pageable request = new PageRequest(pageNr, pageSize);
-        Page<Task> all = taskService.findByRootCategory(request);
+        Page<Task> all = taskService.findByRootProject(request);
         for (Task task : all.getContent()) {
             this.mockMvc.perform(
                     get("/task/detail/" + task.getId())).andDo(print())

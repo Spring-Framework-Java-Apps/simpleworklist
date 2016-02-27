@@ -30,13 +30,13 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
 
     @Override
-    public Page<Task> findByCategory(Project thisProject,
-                                     Pageable request) {
+    public Page<Task> findByProject(Project thisProject,
+                                    Pageable request) {
         return taskRepository.findByProject(thisProject, request);
     }
 
     @Override
-    public Page<Task> findByRootCategory(Pageable request) {
+    public Page<Task> findByRootProject(Pageable request) {
         return taskRepository.findByProjectIsNull(request);
     }
 
@@ -62,18 +62,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public boolean categoryHasNoData(Project project) {
+    public boolean projectHasNoTasks(Project project) {
         return taskRepository.findByProject(project).isEmpty();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void undelete(Task task) {
-        if(task.getDueDate()!=null){
-            task.setFocusType(FocusType.SCHEDULED);
-        } else {
-            task.setFocusType(FocusType.INBOX);
-        }
+        task.switchToLastFocusType();
         task.setLastChangeTimestamp(new Date());
         taskRepository.saveAndFlush(task);
     }
@@ -98,11 +94,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void incomplete(Task task) {
-        if(task.getDueDate()!=null){
-            task.setFocusType(FocusType.SCHEDULED);
-        } else {
-            task.setFocusType(FocusType.INBOX);
-        }
+        task.switchToLastFocusType();
         task.setLastChangeTimestamp(new Date());
         taskRepository.saveAndFlush(task);
     }

@@ -8,9 +8,9 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 
 public interface TaskService {
 
-    Page<Task> findByCategory(Project thisProject, Pageable request);
+    Page<Task> findByProject(Project thisProject, Pageable request);
 
-    Page<Task> findByRootCategory(Pageable request);
+    Page<Task> findByRootProject(Pageable request);
 
     Task findOne(long dataId);
 
@@ -18,7 +18,7 @@ public interface TaskService {
 
     void delete(Task task);
 
-    boolean categoryHasNoData(Project project);
+    boolean projectHasNoTasks(Project project);
 
     void undelete(Task task);
 

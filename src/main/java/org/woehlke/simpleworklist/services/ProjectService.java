@@ -9,13 +9,13 @@ public interface ProjectService {
 
     List<Project> getBreadcrumb(Project thisProject);
 
-    List<Project> findRootCategoriesByUserAccount(UserAccount userAccount);
+    List<Project> findRootProjectsByUserAccount(UserAccount userAccount);
 
-    List<Project> findAllByUserAccount(UserAccount user);
+    List<Project> findAllProjectsByUserAccount(UserAccount user);
 
-    void moveCategoryToAnotherCategory(Project thisProject, Project targetProject);
+    void moveProjectToAnotherProject(Project thisProject, Project targetProject);
 
-    Project findByCategoryId(long categoryId);
+    Project findByProjectId(long categoryId);
 
     Project saveAndFlush(Project project);
 

@@ -95,7 +95,7 @@ public class TaskController extends AbstractController {
             thisProject = new Project();
             thisProject.setId(0L);
         } else {
-            thisProject = projectService.findByCategoryId(projectId);
+            thisProject = projectService.findByProjectId(projectId);
             task.setProject(thisProject);
         }
         model.addAttribute("thisProject", thisProject);
@@ -119,7 +119,7 @@ public class TaskController extends AbstractController {
             if (projectId == 0) {
                 task.setProject(null);
             } else {
-                Project thisProject = projectService.findByCategoryId(projectId);
+                Project thisProject = projectService.findByProjectId(projectId);
                 task.setProject(thisProject);
             }
             if(task.getDueDate()==null){
@@ -175,7 +175,7 @@ public class TaskController extends AbstractController {
     public final String moveTaskToAnotherProject(@PathVariable long taskId,
                                                  @PathVariable long projectId) {
         Task task = taskService.findOne(taskId);
-        Project project = projectService.findByCategoryId(projectId);
+        Project project = projectService.findByProjectId(projectId);
         task.setProject(project);
         taskService.saveAndFlush(task);
         return "redirect:/project/" + projectId + "/";
@@ -188,7 +188,7 @@ public class TaskController extends AbstractController {
         if (task.getProject() != null) {
             projectId = task.getProject().getId();
         }
-        Project parentProject = projectService.findByCategoryId(projectId);
+        Project parentProject = projectService.findByProjectId(projectId);
         UserAccount userAccount = userService.retrieveCurrentUser();
         Project thisProject = new Project();
         thisProject.setParent(parentProject);
@@ -214,12 +214,12 @@ public class TaskController extends AbstractController {
     public final String undoneTask(@PathVariable long taskId, Model model) {
         Task task = taskService.findOne(taskId);
         taskService.incomplete(task);
-        if (task.getProject() != null) {
-            long projectId = task.getProject().getId();
-            return "redirect:/project/" + projectId + "/";
-        }
         switch (task.getFocusType()){
+            case TODAY: return "redirect:/focus/today";
+            case NEXT: return "redirect:/focus/next";
+            case WAITING: return "redirect:/focus/waiting";
             case SCHEDULED: return "redirect:/focus/scheduled";
+            case SOMEDAY: return "redirect:/focus/someday";
             default: return "redirect:/focus/inbox";
         }
     }

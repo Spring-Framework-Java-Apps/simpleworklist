@@ -36,12 +36,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> findRootCategoriesByUserAccount(UserAccount userAccount) {
+    public List<Project> findRootProjectsByUserAccount(UserAccount userAccount) {
         return projectRepository.findByParentIsNullAndUserAccount(userAccount);
     }
 
     @Override
-    public Project findByCategoryId(long categoryId) {
+    public Project findByProjectId(long categoryId) {
         return projectRepository.findOne(categoryId);
     }
 
@@ -52,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> findAllByUserAccount(UserAccount userAccount) {
+    public List<Project> findAllProjectsByUserAccount(UserAccount userAccount) {
         return projectRepository.findByUserAccount(userAccount);
     }
 
@@ -69,8 +69,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveCategoryToAnotherCategory(Project thisProject,
-                                              Project targetProject) {
+    public void moveProjectToAnotherProject(Project thisProject,
+                                            Project targetProject) {
         Project oldParent = thisProject.getParent();
         if (oldParent != null) {
             oldParent.getChildren().remove(thisProject);

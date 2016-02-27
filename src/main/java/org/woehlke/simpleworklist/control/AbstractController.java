@@ -31,13 +31,13 @@ public abstract class AbstractController {
     @ModelAttribute("allCategories")
     public final List<Project> getAllCategories() {
         UserAccount user = userService.retrieveCurrentUser();
-        return projectService.findAllByUserAccount(user);
+        return projectService.findAllProjectsByUserAccount(user);
     }
 
     @ModelAttribute("rootCategories")
     public final List<Project> getRootCategories() {
         UserAccount user = userService.retrieveCurrentUser();
-        return projectService.findRootCategoriesByUserAccount(user);
+        return projectService.findRootProjectsByUserAccount(user);
     }
 
     @ModelAttribute("numberOfNewIncomingMessages")

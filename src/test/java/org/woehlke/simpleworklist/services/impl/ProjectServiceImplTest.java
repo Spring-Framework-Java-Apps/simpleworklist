@@ -34,7 +34,7 @@ public class ProjectServiceImplTest extends AbstractTest {
         project.setUserAccount(userAccount);
         project = projectService.saveAndFlush(project);
         projectService.delete(project);
-        Assert.assertTrue(projectService.findAllByUserAccount(userAccount).size() == 0);
+        Assert.assertTrue(projectService.findAllProjectsByUserAccount(userAccount).size() == 0);
         SecurityContextHolder.clearContext();
     }
 
@@ -63,7 +63,7 @@ public class ProjectServiceImplTest extends AbstractTest {
         projectService.saveAndFlush(parent);
         projectService.delete(child);
         SecurityContextHolder.clearContext();
-        Assert.assertTrue(projectService.findAllByUserAccount(userAccount).size() == 1);
+        Assert.assertTrue(projectService.findAllProjectsByUserAccount(userAccount).size() == 1);
         deleteAll();
     }
 
@@ -99,7 +99,7 @@ public class ProjectServiceImplTest extends AbstractTest {
         projectService.saveAndFlush(child);
         projectService.saveAndFlush(parent);
         projectService.saveAndFlush(grandchild);
-        projectService.moveCategoryToAnotherCategory(grandchild,parent);
+        projectService.moveProjectToAnotherProject(grandchild,parent);
         SecurityContextHolder.clearContext();
     }
 

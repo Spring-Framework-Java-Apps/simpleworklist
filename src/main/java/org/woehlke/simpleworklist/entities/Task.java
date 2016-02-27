@@ -52,8 +52,17 @@ public class Task {
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String text;
 
+    /**
+     * The current FocusType;
+     */
     @Enumerated(EnumType.STRING)
     private FocusType focusType;
+
+    /**
+     * The FocusType before the current FocusType;
+     */
+    @Enumerated(EnumType.STRING)
+    private FocusType lastFocusType;
 
     @Temporal(value = TemporalType.DATE)
     @Column(nullable = true)
@@ -131,7 +140,11 @@ public class Task {
         return focusType;
     }
 
+    /**
+     * Sets also 'history back' for focusType
+     */
     public void setFocusType(FocusType focusType) {
+        this.lastFocusType = this.focusType;
         this.focusType = focusType;
     }
 
@@ -159,37 +172,48 @@ public class Task {
         this.lastChangeTimestamp = lastChangeTimestamp;
     }
 
+    public FocusType getLastFocusType() {
+        return lastFocusType;
+    }
+
+    public void setLastFocusType(FocusType lastFocusType) {
+        this.lastFocusType = lastFocusType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Task that = (Task) o;
+        Task task = (Task) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (!uuid.equals(that.uuid)) return false;
-        if (project != null ? !project.equals(that.project) : that.project != null) return false;
-        if (!userAccount.equals(that.userAccount)) return false;
-        if (!title.equals(that.title)) return false;
-        if (text != null ? !text.equals(that.text) : that.text != null) return false;
-        if (focusType != that.focusType) return false;
-        if (dueDate != null ? !dueDate.equals(that.dueDate) : that.dueDate != null) return false;
-        if (!createdTimestamp.equals(that.createdTimestamp)) return false;
-        return lastChangeTimestamp != null ? lastChangeTimestamp.equals(that.lastChangeTimestamp) : that.lastChangeTimestamp == null;
+        if (id != null ? !id.equals(task.id) : task.id != null) return false;
+        if (uuid != null ? !uuid.equals(task.uuid) : task.uuid != null) return false;
+        if (project != null ? !project.equals(task.project) : task.project != null) return false;
+        if (userAccount != null ? !userAccount.equals(task.userAccount) : task.userAccount != null) return false;
+        if (title != null ? !title.equals(task.title) : task.title != null) return false;
+        if (text != null ? !text.equals(task.text) : task.text != null) return false;
+        if (focusType != task.focusType) return false;
+        if (lastFocusType != task.lastFocusType) return false;
+        if (dueDate != null ? !dueDate.equals(task.dueDate) : task.dueDate != null) return false;
+        if (createdTimestamp != null ? !createdTimestamp.equals(task.createdTimestamp) : task.createdTimestamp != null)
+            return false;
+        return lastChangeTimestamp != null ? lastChangeTimestamp.equals(task.lastChangeTimestamp) : task.lastChangeTimestamp == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + uuid.hashCode();
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
-        result = 31 * result + userAccount.hashCode();
-        result = 31 * result + title.hashCode();
+        result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + focusType.hashCode();
+        result = 31 * result + (focusType != null ? focusType.hashCode() : 0);
+        result = 31 * result + (lastFocusType != null ? lastFocusType.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
-        result = 31 * result + createdTimestamp.hashCode();
+        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastChangeTimestamp != null ? lastChangeTimestamp.hashCode() : 0);
         return result;
     }
@@ -204,9 +228,21 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", focusType=" + focusType +
+                ", lastFocusType=" + lastFocusType +
                 ", dueDate=" + dueDate +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastChangeTimestamp=" + lastChangeTimestamp +
                 '}';
     }
+
+    /**
+     * performs 'history back' for focusType
+     */
+    @Transient
+    public void switchToLastFocusType() {
+        FocusType old = this.focusType;
+        this.focusType = this.lastFocusType;
+        this.lastFocusType = old;
+    }
+
 }

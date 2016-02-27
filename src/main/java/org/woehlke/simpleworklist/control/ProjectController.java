@@ -52,12 +52,12 @@ public class ProjectController extends AbstractController {
         Pageable request =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
         if (projectId != 0) {
-            thisProject = projectService.findByCategoryId(projectId);
-            dataLeafPage = taskService.findByCategory(thisProject, request);
+            thisProject = projectService.findByProjectId(projectId);
+            dataLeafPage = taskService.findByProject(thisProject, request);
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
-            dataLeafPage = taskService.findByRootCategory(request);
+            dataLeafPage = taskService.findByRootProject(request);
         }
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         int current = dataLeafPage.getNumber() + 1;
@@ -88,7 +88,7 @@ public class ProjectController extends AbstractController {
             thisProject.setUserAccount(userAccount);
             project = Project.newRootProjectFactory(userAccount);
         } else {
-            thisProject = projectService.findByCategoryId(projectId);
+            thisProject = projectService.findByProjectId(projectId);
             project = Project.newProjectFactory(thisProject);
         }
         ModelAndView mav = new ModelAndView("project/add");
@@ -113,7 +113,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             project = projectService.saveAndFlush(project);
         } else {
-            Project thisProject = projectService.findByCategoryId(categoryId);
+            Project thisProject = projectService.findByProjectId(categoryId);
             List<Project> children = thisProject.getChildren();
             children.add(project);
             thisProject.setChildren(children);
@@ -132,9 +132,9 @@ public class ProjectController extends AbstractController {
             @PathVariable long targetProjectId) {
         Project thisProject = null;
         if (projectId != 0) {
-            thisProject = projectService.findByCategoryId(projectId);
-            Project targetProject = projectService.findByCategoryId(targetProjectId);
-            projectService.moveCategoryToAnotherCategory(thisProject, targetProject);
+            thisProject = projectService.findByProjectId(projectId);
+            Project targetProject = projectService.findByProjectId(targetProjectId);
+            projectService.moveProjectToAnotherProject(thisProject, targetProject);
         }
         return "redirect:/project/" + projectId + "/page/1";
     }
@@ -143,7 +143,7 @@ public class ProjectController extends AbstractController {
     public final String editProjectForm(
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
-            Project thisProject = projectService.findByCategoryId(projectId);
+            Project thisProject = projectService.findByProjectId(projectId);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
@@ -163,12 +163,12 @@ public class ProjectController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-            Project thisProject = projectService.findByCategoryId(projectId);
+            Project thisProject = projectService.findByProjectId(projectId);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             return "project/edit";
         } else {
-            Project thisProject = projectService.findByCategoryId(project.getId());
+            Project thisProject = projectService.findByProjectId(project.getId());
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
             projectService.saveAndFlush(thisProject);
@@ -181,8 +181,8 @@ public class ProjectController extends AbstractController {
             @PathVariable long projectId, Model model) {
         long newProjectId = projectId;
         if (projectId > 0) {
-            Project project = projectService.findByCategoryId(projectId);
-            boolean hasNoData = taskService.categoryHasNoData(project);
+            Project project = projectService.findByProjectId(projectId);
+            boolean hasNoData = taskService.projectHasNoTasks(project);
             boolean hasNoChildren = project.hasNoChildren();
             if (hasNoData && hasNoChildren) {
                 if (!project.isRootCategory()) {
@@ -210,7 +210,7 @@ public class ProjectController extends AbstractController {
                 List<Project> breadcrumb = projectService.getBreadcrumb(project);
                 int pageNumber = 1;
                 Pageable request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
-                Page<Task> dataLeafPage = taskService.findByCategory(project, request);
+                Page<Task> dataLeafPage = taskService.findByProject(project, request);
                 int current = dataLeafPage.getNumber() + 1;
                 int begin = Math.max(1, current - 5);
                 int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
