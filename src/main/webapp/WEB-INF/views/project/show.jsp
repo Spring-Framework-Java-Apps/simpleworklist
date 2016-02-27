@@ -42,7 +42,32 @@
 							<c:out value="${task.dueDate}" />
 						</td>
 						<td>
-							<c:out value="${task.focusType.name()}" />
+							<c:choose>
+								<c:when test="${task.focusType.name() eq 'INBOX'}">
+									<a href='<c:url value="/focus/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'TODAY'}">
+									<a href='<c:url value="/focus/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> Today</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'NEXT'}">
+									<a href='<c:url value="/focus/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'WAITING'}">
+									<a href='<c:url value="/focus/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'SCHEDULED'}">
+									<a href='<c:url value="/focus/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'SOMEDAY'}">
+									<a href='<c:url value="/focus/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'COMPLETED'}">
+									<a href='<c:url value="/focus/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a>
+								</c:when>
+								<c:when test="${task.focusType.name() eq 'TRASHED'}">
+									<a id="focus_trash" href='<c:url value="/focus/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a>
+								</c:when>
+							</c:choose>
 						</td>
 					</tr>
 					</c:forEach>
