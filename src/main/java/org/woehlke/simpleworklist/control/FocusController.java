@@ -19,6 +19,7 @@ import org.woehlke.simpleworklist.services.FocusService;
 import org.woehlke.simpleworklist.services.TaskService;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by tw on 21.02.16.
@@ -245,6 +246,13 @@ public class FocusController extends AbstractController {
         task.setFocusType(FocusType.TRASHED);
         task=taskService.saveAndFlush(task);
         LOGGER.info("dragged and dropped "+taskId+" to trash: "+task.toString());
+        return "redirect:/focus/trash";
+    }
+
+    @RequestMapping(value = "/focus/completed/deleteall", method = RequestMethod.GET)
+    public final String deleteallCompleted(Model model) {
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        focusService.deleteAllCompleted(thisUser);
         return "redirect:/focus/trash";
     }
 }

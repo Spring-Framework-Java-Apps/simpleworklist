@@ -12,6 +12,7 @@ import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.FocusService;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by tw on 21.02.16.
@@ -62,5 +63,15 @@ public class FocusServiceImpl implements FocusService {
     @Override
     public Page<Task> getTrash(UserAccount thisUser, Pageable request) {
         return taskRepository.findByFocusTypeAndUserAccount(FocusType.TRASHED, thisUser, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void deleteAllCompleted(UserAccount thisUser) {
+        List<Task> taskList =  taskRepository.findByFocusTypeAndUserAccount(FocusType.COMPLETED, thisUser);
+        for(Task task: taskList){
+            task.setFocusType(FocusType.TRASHED);
+            taskRepository.save(task);
+        }
     }
 }

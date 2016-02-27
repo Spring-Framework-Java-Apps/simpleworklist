@@ -25,4 +25,6 @@ public interface FocusService {
     Page<Task> getCompleted(UserAccount thisUser, Pageable request);
 
     Page<Task> getTrash(UserAccount thisUser, Pageable request);
+
+    void deleteAllCompleted(UserAccount thisUser);
 }
