@@ -16,6 +16,7 @@
                 <th>Title</th>
                 <th>Text</th>
                 <th>&nbsp;</th>
+                <th>Project</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
@@ -30,6 +31,11 @@
                     </td>
                     <td>
                         <a href='<c:url value="/task/undelete/${task.id}"/>'><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Undelete</a>
+                    </td>
+                    <td>
+                        <c:if test="${task.project != null}">
+                            <a href='<c:url value="/project/${task.project.id}"/>'><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <c:out value="${task.project.name}" /></a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

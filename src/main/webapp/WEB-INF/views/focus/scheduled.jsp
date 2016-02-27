@@ -15,6 +15,7 @@
                 <th>Title</th>
                 <th>Text</th>
                 <th>Due Date</th>
+                <th>Project</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
@@ -31,6 +32,11 @@
                     </td>
                     <td>
                         <c:out value="${task.dueDate}" />
+                    </td>
+                    <td>
+                        <c:if test="${task.project != null}">
+                            <a href='<c:url value="/project/${task.project.id}"/>'><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <c:out value="${task.project.name}" /></a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

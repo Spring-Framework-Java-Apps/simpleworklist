@@ -23,6 +23,7 @@
 						<th>Title</th>
 						<th>Text</th>
 						<th>Due Date</th>
+						<th>Focus</th>
 					</tr>
 					<c:forEach items="${dataList}" var="task">
 					<tr>
@@ -39,6 +40,9 @@
 						</td>
 						<td>
 							<c:out value="${task.dueDate}" />
+						</td>
+						<td>
+							<c:out value="${task.focusType.name()}" />
 						</td>
 					</tr>
 					</c:forEach>
