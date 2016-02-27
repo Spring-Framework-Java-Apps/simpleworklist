@@ -29,12 +29,6 @@
                     <td>
                         <c:out value="${task.textShortened}" />
                     </td>
-                    <td>
-                        <a href='<c:url value="/task/detail/${task.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                    </td>
-                    <td>
-                        <a href='<c:url value="/task/delete/${task.id}"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
-                    </td>
                 </tr>
             </c:forEach>
         </table>

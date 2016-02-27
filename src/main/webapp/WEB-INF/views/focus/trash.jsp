@@ -15,7 +15,7 @@
                 <th>&nbsp;</th>
                 <th>Title</th>
                 <th>Text</th>
-                <th colspan="2"></th>
+                <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
@@ -27,9 +27,6 @@
                     </td>
                     <td>
                         <del><c:out value="${task.textShortened}" /></del>
-                    </td>
-                    <td>
-                        <a href='<c:url value="/task/detail/${task.id}"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
                     </td>
                     <td>
                         <a href='<c:url value="/task/undelete/${task.id}"/>'><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Undelete</a>
