@@ -4,25 +4,14 @@
 <h2>Tasks</h2>
 <table class="table table-striped table-hover">
 <tr>
-    <th>Status</th>
     <th>Title</th>
     <th>Text</th>
+    <th>Due Date</th>
+    <th>Focus</th>
+    <th>Project</th>
 </tr>
 <c:forEach var="task" items="${searchResult.taskList}">
     <tr>
-        <td>
-            <c:choose>
-                <c:when test="${task.status eq 'NEW'}">
-                    <button class="btn btn-small btn-danger" type="button">&nbsp;</button>
-                </c:when>
-                <c:when test="${task.status.name() eq 'WORK'}">
-                    <button class="btn btn-small btn-warning" type="button">&nbsp;</button>
-                </c:when>
-                <c:when test="${task.status.name() eq 'DONE'}">
-                    <button class="btn btn-small btn-success" type="button">&nbsp;</button>
-                </c:when>
-            </c:choose>
-        </td>
         <td>
             <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
                id="dataDetail_${task.id}" ><c:out
@@ -30,6 +19,42 @@
         </td>
         <td>
             <c:out value="${task.textShortened}"></c:out>
+        </td>
+        <td>
+            <c:out value="${task.dueDate}" />
+        </td>
+        <td>
+            <c:choose>
+                <c:when test="${task.focusType.name() eq 'INBOX'}">
+                    <a href='<c:url value="/focus/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'TODAY'}">
+                    <a href='<c:url value="/focus/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> Today</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'NEXT'}">
+                    <a href='<c:url value="/focus/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'WAITING'}">
+                    <a href='<c:url value="/focus/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'SCHEDULED'}">
+                    <a href='<c:url value="/focus/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'SOMEDAY'}">
+                    <a href='<c:url value="/focus/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'COMPLETED'}">
+                    <a href='<c:url value="/focus/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a>
+                </c:when>
+                <c:when test="${task.focusType.name() eq 'TRASHED'}">
+                    <a href='<c:url value="/focus/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a>
+                </c:when>
+            </c:choose>
+        </td>
+        <td>
+            <c:if test="${task.project != null}">
+                <a href='<c:url value="/project/${task.project.id}"/>'><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <c:out value="${task.project.name}" /></a>
+            </c:if>
         </td>
     </tr>
 </c:forEach>

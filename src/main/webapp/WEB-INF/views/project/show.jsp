@@ -65,7 +65,7 @@
 									<a href='<c:url value="/focus/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a>
 								</c:when>
 								<c:when test="${task.focusType.name() eq 'TRASHED'}">
-									<a id="focus_trash" href='<c:url value="/focus/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a>
+									<a href='<c:url value="/focus/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a>
 								</c:when>
 							</c:choose>
 						</td>
