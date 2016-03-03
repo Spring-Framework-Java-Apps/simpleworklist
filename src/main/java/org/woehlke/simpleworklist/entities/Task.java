@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;

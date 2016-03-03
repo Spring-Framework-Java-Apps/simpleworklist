@@ -77,8 +77,13 @@ public class ProjectController extends AbstractController {
         return mav;
     }
 
+    @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)
+    public final String addNewProjectForm(Model model){
+        return addNewProjectForm(0,model);
+    }
+
     @RequestMapping(value = "/project/addchild/{projectId}", method = RequestMethod.GET)
-    public final ModelAndView addNewProjectForm(@PathVariable long projectId, Model model) {
+    public final String addNewProjectForm(@PathVariable long projectId, Model model) {
         Project thisProject = null;
         Project project = null;
         if (projectId == 0) {
@@ -91,39 +96,53 @@ public class ProjectController extends AbstractController {
             thisProject = projectService.findByProjectId(projectId);
             project = Project.newProjectFactory(thisProject);
         }
-        ModelAndView mav = new ModelAndView("project/add");
-        mav.addAllObjects(model.asMap());
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
-        mav.addObject("breadcrumb", breadcrumb);
-        mav.addObject("thisProject", thisProject);
-        mav.addObject("project", project);
-        return mav;
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("project", project);
+        return "project/add";
     }
 
-    @RequestMapping(value = "/project/addchild/{categoryId}", method = RequestMethod.POST)
-    public final String addNewProjectStore(@Valid Project project,
-                                           @PathVariable long categoryId,
-                                           BindingResult result,
-                                           Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
-        project.setUserAccount(userAccount);
-        if (categoryId == 0) {
-            Project thisProject = new Project();
-            thisProject.setId(0L);
+    @RequestMapping(value = "/project/addchild/{projectId}",
+            method = RequestMethod.POST)
+    public final String addNewProjectStore(
+            @PathVariable long projectId,
+            @Valid Project project,
+            BindingResult result,
+            Model model) {
+        if(result.hasErrors()){
+            Project thisProject = null;
+            if (projectId == 0) {
+                thisProject = new Project();
+                thisProject.setId(0L);
+                UserAccount userAccount = userService.retrieveCurrentUser();
+                thisProject.setUserAccount(userAccount);
+            } else {
+                thisProject = projectService.findByProjectId(projectId);
+            }
+            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
+            model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
-            project = projectService.saveAndFlush(project);
+            model.addAttribute("project", project);
+            return "project/add";
         } else {
-            Project thisProject = projectService.findByProjectId(categoryId);
-            List<Project> children = thisProject.getChildren();
-            children.add(project);
-            thisProject.setChildren(children);
-            project.setParent(thisProject);
-            project = projectService.saveAndFlush(project);
-            categoryId = project.getId();
-            LOGGER.info("project:     "+ project.toString());
-            LOGGER.info("thisProject: "+ thisProject.toString());
+            UserAccount userAccount = userService.retrieveCurrentUser();
+            project.setUserAccount(userAccount);
+            if (projectId == 0) {
+                project = projectService.saveAndFlush(project);
+            } else {
+                Project thisProject = projectService.findByProjectId(projectId);
+                List<Project> children = thisProject.getChildren();
+                children.add(project);
+                thisProject.setChildren(children);
+                project.setParent(thisProject);
+                project = projectService.saveAndFlush(project);
+                projectId = project.getId();
+                LOGGER.info("project:     "+ project.toString());
+                LOGGER.info("thisProject: "+ thisProject.toString());
+            }
+            return "redirect:/project/" + projectId + "/page/1";
         }
-        return "redirect:/project/" + categoryId + "/page/1";
     }
 
     @RequestMapping(value = "/project/{projectId}/moveto/{targetProjectId}", method = RequestMethod.GET)
@@ -156,8 +175,8 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/project/{projectId}/edit", method = RequestMethod.POST)
     public final String editProjectStore(
-            @Valid Project project,
             @PathVariable long projectId,
+            @Valid Project project,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {

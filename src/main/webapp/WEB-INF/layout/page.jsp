@@ -42,11 +42,15 @@
 							   role="button" aria-haspopup="true"
 							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New Content<span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<c:set var="pid" value="0"/>
+								<c:if test="${! empty thisProject}">
+									<c:set var="pid" value="${thisProject.id}"/>
+								</c:if>
 								<li>
-									<a href='<c:url value="/project/addchild/${thisProject.id}"/>'>Add a Project</a>
+									<a href='<c:url value="/project/addchild/${pid}"/>'>Add a Project</a>
 								</li>
 								<li>
-									<a href='<c:url value="/task/addtoproject/${thisProject.id}"/>'>Add a Task</a>
+									<a href='<c:url value="/task/addtoproject/${pid}"/>'>Add a Task</a>
 								</li>
 								<li role="separator" class="divider"></li>
 								<li>

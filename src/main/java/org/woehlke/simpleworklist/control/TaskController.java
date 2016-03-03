@@ -66,7 +66,8 @@ public class TaskController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
-            return "/task/detail/" + taskId;
+            model.addAttribute("task", task);
+            return "task/show";
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
@@ -107,8 +108,8 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
     public final String addNewTaskToProjectStore(
-            @Valid Task task,
             @PathVariable long projectId,
+            @Valid Task task,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {

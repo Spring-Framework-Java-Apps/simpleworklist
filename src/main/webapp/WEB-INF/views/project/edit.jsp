@@ -6,12 +6,12 @@
 	<div class="form-group">
 		<form:label path="name">Name</form:label>
 		<form:input path="name" class="form-control" />
-		<form:errors path="name" class="alert alert-error"/>
+		<form:errors path="name" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
 	<div class="form-group">
 		<form:label path="description">Description</form:label>
 		<form:input path="description" class="form-control" />
-		<form:errors path="description" class="alert alert-error"/>
+		<form:errors path="description" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
 	<form:hidden path="id"/>
 	<button id="saveEditedProject" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Project</button>
