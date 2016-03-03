@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <div>
 	<h1>Welcome to SimpleWorklist</h1>
+	<h2>Your Todo-List for Getting Things Done&reg;</h2>
 	<p>Please login or <a href="/register">register as new user</a>.</p>
 </div>
 <div class="well">
@@ -25,6 +26,7 @@
 		<button id="loginButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</button>
 	</form>
 	<br/>
+	<a href='<c:url value="/resetPassword"/>'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Password forgotten?</a>
 </div>
 <div>
 	<p>
@@ -34,5 +36,9 @@
 		<li>My Blog: <a href="http://thomas-woehlke.blogspot.de/">http://thomas-woehlke.blogspot.de/</a></li>
 		<li>The Project Page: <a href="http://woehlke.org/p/simpleworklist/">http://woehlke.org/p/simpleworklist/</a></li>
 	</ul>
+	</p>
+	<p>
+		<small>GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
+			not affiliated with or endorsed by the David Allen Company.</small>
 	</p>
 </div>
