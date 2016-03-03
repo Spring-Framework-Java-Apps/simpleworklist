@@ -5,7 +5,7 @@
 	<div class="form-group">
     	<form:label path="email">Email</form:label>
 		<form:input path="email" class="form-control" placeholder="Email"/>
-		<form:errors path="email" class="alert-danger alert" element="div"/>
+		<form:errors path="email" delimiter=", " element="div" class="alert alert-danger"/>
     </div>
 	<button id="registerButton" type="submit" class="btn btn-default">Register</button>
 </form:form>

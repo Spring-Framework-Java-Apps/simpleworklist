@@ -133,7 +133,7 @@ public class PasswordRecoveryController {
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
                 }
-                return "user/resetRasswordConfirmed";
+                return "user/resetPasswordConfirmed";
             }
         } else {
             return "user/resetPasswordNotConfirmed";

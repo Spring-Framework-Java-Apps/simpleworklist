@@ -35,7 +35,7 @@
     </definition>
 
     <definition name="user/resetPasswordConfirmed" extends="page">
-        <put-attribute name="content" value="/WEB-INF/views/user/resetRasswordConfirmed.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/user/resetPasswordConfirmed.jsp" />
     </definition>
 
     <definition name="user/resetPasswordNotConfirmed" extends="page">

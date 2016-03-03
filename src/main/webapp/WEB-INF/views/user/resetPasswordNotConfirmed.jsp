@@ -3,8 +3,7 @@
 <div class="well">
 <div>
     <p>
-        Entschuldigung!
-        Dieser Vorgang ist uns unbekannt.
+        Sorry. There is nothing known for your Request.
     </p>
 </div>
 </div>
