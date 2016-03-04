@@ -264,6 +264,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
     @Test
     public void testEditDataFormCategory0() throws Exception {
         makeActiveUser(emails[0]);
+        UserAccount user = userService.retrieveCurrentUser();
         for(int i = 100; i<110; i++){
             Task ai = new Task();
             ai.setProject(null);
@@ -274,7 +275,7 @@ public class DataAndProjectControllerTest extends AbstractTest {
         int pageNr = 0;
         int pageSize = 10;
         Pageable request = new PageRequest(pageNr, pageSize);
-        Page<Task> all = taskService.findByRootProject(request);
+        Page<Task> all = taskService.findByRootProject(request, user);
         for (Task task : all.getContent()) {
             this.mockMvc.perform(
                     get("/task/detail/" + task.getId())).andDo(print())

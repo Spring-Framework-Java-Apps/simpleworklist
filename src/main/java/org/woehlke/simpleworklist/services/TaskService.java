@@ -10,7 +10,7 @@ public interface TaskService {
 
     Page<Task> findByProject(Project thisProject, Pageable request);
 
-    Page<Task> findByRootProject(Pageable request);
+    Page<Task> findByRootProject(Pageable request, UserAccount userAccount);
 
     Task findOne(long dataId);
 

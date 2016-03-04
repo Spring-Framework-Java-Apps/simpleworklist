@@ -57,7 +57,8 @@ public class ProjectController extends AbstractController {
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
-            dataLeafPage = taskService.findByRootProject(request);
+            UserAccount userAccount = userService.retrieveCurrentUser();
+            dataLeafPage = taskService.findByRootProject(request, userAccount);
         }
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
         int current = dataLeafPage.getNumber() + 1;

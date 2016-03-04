@@ -29,6 +29,11 @@ public class TaskServiceImplTest extends AbstractTest {
 
     @Test
     public void storeRootData() {
+        for(UserAccount user:testUser){
+            userService.saveAndFlush(user);
+        }
+        makeActiveUser(emails[0]);
+        UserAccount userAccount = userService.retrieveCurrentUser();
         Task rootTask01 = new Task();
         rootTask01.setProject(null);
         rootTask01.setText("TEXT01");
@@ -40,7 +45,7 @@ public class TaskServiceImplTest extends AbstractTest {
         Assert.assertNotNull(taskService.saveAndFlush(rootTask01).getId());
         Assert.assertNotNull(taskService.saveAndFlush(rootTask02).getId());
         Pageable pageRequest = new PageRequest(0, 10);
-        List<Task> list = taskService.findByRootProject(pageRequest).getContent();
+        List<Task> list = taskService.findByRootProject(pageRequest, userAccount).getContent();
         boolean rootData01found = false;
         boolean rootData02found = false;
         for (Task leaf : list) {
@@ -58,6 +63,7 @@ public class TaskServiceImplTest extends AbstractTest {
 
     @Test
     public void testFindOne(){
+        UserAccount userAccount = userService.retrieveCurrentUser();
         Task rootTask01 = new Task();
         rootTask01.setProject(null);
         rootTask01.setText("TEXT01");
@@ -69,13 +75,13 @@ public class TaskServiceImplTest extends AbstractTest {
         Assert.assertNotNull(taskService.saveAndFlush(rootTask01).getId());
         Assert.assertNotNull(taskService.saveAndFlush(rootTask02).getId());
         Pageable pageRequest = new PageRequest(0, 10);
-        List<Task> list = taskService.findByRootProject(pageRequest).getContent();
+        List<Task> list = taskService.findByRootProject(pageRequest, userAccount).getContent();
         for (Task leaf : list) {
             Task found =  taskService.findOne(leaf.getId());
             Assert.assertEquals(found.getId().longValue(),leaf.getId().longValue());
             taskService.delete(leaf);
         }
-        List<Task> list2 = taskService.findByRootProject(pageRequest).getContent();
+        List<Task> list2 = taskService.findByRootProject(pageRequest, userAccount).getContent();
         Assert.assertTrue(list2.size()==0);
     }
 

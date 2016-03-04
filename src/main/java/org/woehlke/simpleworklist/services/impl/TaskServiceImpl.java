@@ -36,8 +36,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByRootProject(Pageable request) {
-        return taskRepository.findByProjectIsNull(request);
+    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount) {
+        return taskRepository.findByProjectIsNullAndUserAccount(request, userAccount);
     }
 
     @Override
