@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 public class UserAccountFormBean {
 
@@ -13,14 +14,17 @@ public class UserAccountFormBean {
     @Email(message = "Email Address is not a valid format")
     private String userEmail;
 
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")
     private String userPassword;
 
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")
     private String userPasswordConfirmation;
 
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Fullname is compulsory")
     @NotBlank(message = "Fullname is compulsory")
     private String userFullname;

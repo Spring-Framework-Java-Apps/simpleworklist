@@ -84,3 +84,6 @@
         </div>
     </nav>
 </c:if>
+<c:if test="${empty dataList}">
+    <p>You have no scheduled Tasks</p>
+</c:if>

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
@@ -38,6 +39,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @Column(nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
@@ -49,14 +51,14 @@ public class Project {
     @JoinColumn(name = "userAccountId")
     private UserAccount userAccount;
 
-    @SafeHtml
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
     @Column(nullable = false)
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String name;
 
-    @SafeHtml
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=0,max=65535)
     @Column(nullable = true, length = 65535, columnDefinition="text")

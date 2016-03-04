@@ -115,3 +115,6 @@
 					</div>			
 				</nav>
 				</c:if>
+				<c:if test="${empty dataList}">
+					There is nothing to do in this project.
+				</c:if>

@@ -80,3 +80,6 @@
         </div>
     </nav>
 </c:if>
+<c:if test="${empty dataList}">
+    <p>You are not waiting for others</p>
+</c:if>

@@ -1,5 +1,8 @@
 package org.woehlke.simpleworklist.entities;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.SafeHtml;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
@@ -25,19 +29,24 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Email
     @Column(nullable = false, unique = true)
     private String userEmail;
 
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @Column(nullable = false)
     private String userPassword;
 
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @Column(nullable = false)
     private String userFullname;
 
+    @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date createdTimestamp;
 
+    @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date lastLoginTimestamp;

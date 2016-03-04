@@ -27,7 +27,7 @@ public class UserMessage {
     @Column(nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
-    @SafeHtml
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=1,max=65535)
     @Column(nullable = false, length = 65535, columnDefinition="text")

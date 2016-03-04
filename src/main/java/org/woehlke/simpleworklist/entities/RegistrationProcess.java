@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.entities;
 
+import org.hibernate.validator.constraints.Email;
 import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessStatus;
 import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
 
@@ -19,6 +20,7 @@ public class RegistrationProcess {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Email
     @Column(nullable = false)
     private String email;
 

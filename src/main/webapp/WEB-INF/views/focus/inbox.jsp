@@ -81,3 +81,6 @@
         </div>
     </nav>
 </c:if>
+<c:if test="${empty dataList}">
+    <p>You have no Tasks in Your Inbox</p>
+</c:if>

@@ -80,3 +80,6 @@
         </div>
     </nav>
 </c:if>
+<c:if test="${empty dataList}">
+    <p>You have no Tasks to do Next</p>
+</c:if>

@@ -83,3 +83,6 @@
         </div>
     </nav>
 </c:if>
+<c:if test="${empty dataList}">
+    <p>You have no deleted Tasks in your Trash</p>
+</c:if>

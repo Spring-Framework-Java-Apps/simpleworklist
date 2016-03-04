@@ -39,14 +39,14 @@ public class Task {
     @JoinColumn(name = "userAccountId")
     private UserAccount userAccount;
 
-    @SafeHtml
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
     @Column(nullable = false)
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String title;
 
-    @SafeHtml
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=0,max=65535)
     @Column(nullable = false, length = 65535, columnDefinition="text")
