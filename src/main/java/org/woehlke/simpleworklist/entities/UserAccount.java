@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.entities;
 
+import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -31,6 +32,7 @@ public class UserAccount {
 
     @Email
     @Column(nullable = false, unique = true)
+    @Field
     private String userEmail;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)

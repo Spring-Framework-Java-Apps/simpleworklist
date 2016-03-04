@@ -37,6 +37,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @DocumentId(name="id")
     private Long id;
 
     @NotNull
@@ -49,6 +50,7 @@ public class Project {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "userAccountId")
+    @IndexedEmbedded(includeEmbeddedObjectId=true)
     private UserAccount userAccount;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)

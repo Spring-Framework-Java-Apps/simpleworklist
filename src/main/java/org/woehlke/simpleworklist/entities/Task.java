@@ -27,6 +27,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @DocumentId(name="id")
     private Long id;
 
     @Column(nullable = false)
@@ -37,6 +38,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "userAccountId")
+    @IndexedEmbedded(includeEmbeddedObjectId=true)
     private UserAccount userAccount;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)

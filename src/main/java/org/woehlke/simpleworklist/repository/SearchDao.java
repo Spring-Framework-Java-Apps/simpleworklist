@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.repository;
 
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
 
 /**
@@ -7,7 +8,7 @@ import org.woehlke.simpleworklist.model.SearchResult;
  */
 public interface SearchDao {
 
-    SearchResult search(String searchterm);
+    SearchResult search(String searchterm, UserAccount userAccount);
 
     void resetSearchIndex();
 

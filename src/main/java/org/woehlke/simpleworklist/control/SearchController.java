@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
 import org.woehlke.simpleworklist.services.SearchService;
 
@@ -25,8 +26,9 @@ public class SearchController extends AbstractController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public final String loginForm(@RequestParam String searchterm, Model model) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
         LOGGER.info("Search: "+searchterm);
-        SearchResult searchResult = searchService.search(searchterm);
+        SearchResult searchResult = searchService.search(searchterm, userAccount);
         LOGGER.info("found: "+searchResult.toString());
         model.addAttribute("searchResult",searchResult);
         return "search/resultlist";

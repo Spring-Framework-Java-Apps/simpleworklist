@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
 import org.woehlke.simpleworklist.repository.SearchDao;
 import org.woehlke.simpleworklist.services.SearchService;
@@ -24,8 +25,8 @@ public class SearchServiceImpl implements SearchService {
     private SearchDao searchDao;
 
     @Override
-    public SearchResult search(String searchterm) {
-        SearchResult searchResult = searchDao.search(searchterm);
+    public SearchResult search(String searchterm, UserAccount userAccount) {
+        SearchResult searchResult = searchDao.search(searchterm, userAccount);
         return searchResult;
     }
 
