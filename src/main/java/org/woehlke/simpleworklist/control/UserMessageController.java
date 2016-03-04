@@ -26,17 +26,17 @@ public class UserMessageController extends AbstractController {
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         UserMessage newUserMessage = new UserMessage();
-        UserAccount thisUser = userService.retrieveCurrentUser();
-        UserAccount otherUser = super.userService.findUserById(userId);
-        List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
+        UserAccount receiver = userService.retrieveCurrentUser();
+        UserAccount sender = super.userService.findUserById(userId);
+        List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(receiver,sender);
         for(UserMessage userMessage:userMessageList){
-            if((!userMessage.isReadByReceiver()) && (userMessage.getReceiver().getId() == thisUser.getId())){
+            if((!userMessage.isReadByReceiver()) && (receiver.getId()==userMessage.getReceiver().getId())){
                 userMessage.setReadByReceiver(true);
                 userMessageService.update(userMessage);
             }
         }
         model.addAttribute("newUserMessage",newUserMessage);
-        model.addAttribute("otherUser",otherUser);
+        model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList",userMessageList);
         return "pages/userMessages";
     }
@@ -48,8 +48,8 @@ public class UserMessageController extends AbstractController {
             BindingResult result,
             @PathVariable long userId) {
         LOGGER.info("sendNewMessageToOtherUser");
-        UserAccount thisUser = userService.retrieveCurrentUser();
-        UserAccount otherUser = super.userService.findUserById(userId);
+        UserAccount sender = userService.retrieveCurrentUser();
+        UserAccount receiver = super.userService.findUserById(userId);
         if(result.hasErrors()){
             /*
             for (ObjectError e : result.getAllErrors()) {
@@ -57,12 +57,12 @@ public class UserMessageController extends AbstractController {
             }
             */
             LOGGER.info("result.hasErrors");
-            List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser);
-            model.addAttribute("otherUser",otherUser);
+            List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(sender,receiver);
+            model.addAttribute("otherUser",receiver);
             model.addAttribute("userMessageList",userMessageList);
             return "pages/userMessages";
         } else {
-            userMessageService.sendNewUserMessage(thisUser,otherUser,newUserMessage);
+            userMessageService.sendNewUserMessage(sender,receiver,newUserMessage);
             return "redirect:/user/"+userId+"/messages/";
         }
     }

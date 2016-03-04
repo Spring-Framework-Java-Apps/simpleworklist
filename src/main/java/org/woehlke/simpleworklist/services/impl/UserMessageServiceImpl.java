@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,9 @@ public class UserMessageServiceImpl implements UserMessageService {
     public List<UserMessage> getLast20MessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser) {
         LOGGER.info("getLast20MessagesBetweenCurrentAndOtherUser");
         Pageable pageRequest = new PageRequest(0, 20);
-        List<UserMessage> userMessageList =
+        Page<UserMessage> userMessageList =
         userMessageRepository.findFirst20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser,pageRequest);
-        return userMessageList;
+        return userMessageList.getContent();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class UserMessageServiceImpl implements UserMessageService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void update(UserMessage userMessage) {
-        userMessageRepository.save(userMessage);
+        userMessageRepository.saveAndFlush(userMessage);
     }
 
     @Override

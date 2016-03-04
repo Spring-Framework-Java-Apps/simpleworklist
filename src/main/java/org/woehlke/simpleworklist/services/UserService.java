@@ -33,6 +33,6 @@ public interface UserService extends UserDetailsService {
 
     UserAccount findUserById(long userId);
 
-    Map<Long,Integer> getNewIncomingMessagesForEachOtherUser();
+    Map<Long,Integer> getNewIncomingMessagesForEachOtherUser(UserAccount receiver);
 
 }

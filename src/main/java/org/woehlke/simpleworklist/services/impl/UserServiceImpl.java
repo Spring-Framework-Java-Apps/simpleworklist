@@ -137,9 +137,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<Long, Integer> getNewIncomingMessagesForEachOtherUser() {
+    public Map<Long, Integer> getNewIncomingMessagesForEachOtherUser(UserAccount receiver) {
         Map<Long, Integer> newIncomingMessagesForEachOtherUser = new HashMap<>();
-        UserAccount receiver = this.retrieveCurrentUser();
         List<UserAccount> allUsers = userAccountRepository.findAll();
         for(UserAccount sender :allUsers ){
             if(receiver.getId() == sender.getId()){

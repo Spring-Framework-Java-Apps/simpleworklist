@@ -28,7 +28,7 @@ public class PagesController extends AbstractController {
     public final String getRegisteredUsers(Model model) {
         UserAccount user = userService.retrieveCurrentUser();
         List<UserAccount> users = userService.findAll();
-        Map<Long,Integer> usersToNewMessages = userService.getNewIncomingMessagesForEachOtherUser();
+        Map<Long,Integer> usersToNewMessages = userService.getNewIncomingMessagesForEachOtherUser(user);
         model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
         model.addAttribute("thisUser", user);
