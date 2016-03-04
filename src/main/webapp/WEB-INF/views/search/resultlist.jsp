@@ -1,5 +1,8 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <h1>Search Result for searchterm <i>${searchResult.searchterm}</i></h1>
+<c:if test="${empty searchResult.taskList}">
+<h2>No Tasks found</h2>
+</c:if>
 <c:if test="${! empty searchResult.taskList}">
 <h2>Tasks</h2>
 <table class="table table-striped table-hover">
@@ -59,6 +62,9 @@
     </tr>
 </c:forEach>
 </table>
+</c:if>
+<c:if test="${empty searchResult.projectList}">
+    <h2>No Projects found</h2>
 </c:if>
 <c:if test="${! empty searchResult.projectList}">
 <h2>Projects</h2>
