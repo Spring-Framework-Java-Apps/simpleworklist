@@ -1,8 +1,8 @@
 SimpleWorklist
 
-    Worklists can be ordered by Action Items and hierarchical Categories in a Multiuser Webapp.
+    Todo List for Getting Things Done
 
-    Software-Stack: {{{http://docs.oracle.com/javaee/6/tutorial/doc/}Java EE}}, {{{http://www.springsource.org/spring-data/jpa}JPA}}, {{{http://www.springsource.org/spring-framework}Spring Frameworks}}, {{{http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html}Spring MVC}}, {{{http://getbootstrap.com/2.3.2/}Twitter Bootstrap}}, {{{http://jquery.com/}jQuery}}, HTML5
+    Software-Stack: {{{http://docs.oracle.com/javaee/6/tutorial/doc/}Java EE}}, {{{http://www.springsource.org/spring-data/jpa}JPA}}, {{{http://www.springsource.org/spring-framework}Spring Frameworks}}, {{{http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html}Spring MVC}}, {{{http://getbootstrap.com/2.3.5/}Twitter Bootstrap}}, {{{http://jquery.com/}jQuery}}, HTML5
 
     Repository: {{https://github.com/phasenraum2010/simpleworklist}}
 
