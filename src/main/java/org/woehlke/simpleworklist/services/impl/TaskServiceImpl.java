@@ -31,8 +31,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> findByProject(Project thisProject,
-                                    Pageable request) {
-        return taskRepository.findByProject(thisProject, request);
+                                    Pageable request, UserAccount userAccount) {
+        if(thisProject.getUserAccount().getId()==userAccount.getId()){
+            return taskRepository.findByProject(thisProject, request);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -41,38 +45,53 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findOne(long dataId) {
-        return taskRepository.findOne(dataId);
+    public Task findOne(long dataId, UserAccount userAccount) {
+        Task t =  taskRepository.findOne(dataId);
+        if(t.getUserAccount().getId()==userAccount.getId()){
+            return t;
+        } else {
+            return null;
+        }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task saveAndFlush(Task entity) {
-        entity.setLastChangeTimestamp(new Date());
-        entity = taskRepository.saveAndFlush(entity);
-        LOGGER.info("saved: "+entity.toString());
+    public Task saveAndFlush(Task entity, UserAccount userAccount) {
+        if(entity.getUserAccount().getId()==userAccount.getId()) {
+            entity.setLastChangeTimestamp(new Date());
+            entity = taskRepository.saveAndFlush(entity);
+            LOGGER.info("saved: " + entity.toString());
+        }
         return entity;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void delete(Task task) {
-        task.setFocusType(FocusType.TRASHED);
-        task.setLastChangeTimestamp(new Date());
-        taskRepository.saveAndFlush(task);
+    public void delete(Task task, UserAccount userAccount) {
+        if(task.getUserAccount().getId()==userAccount.getId()) {
+            task.setFocusType(FocusType.TRASHED);
+            task.setLastChangeTimestamp(new Date());
+            taskRepository.saveAndFlush(task);
+        }
     }
 
     @Override
-    public boolean projectHasNoTasks(Project project) {
-        return taskRepository.findByProject(project).isEmpty();
+    public boolean projectHasNoTasks(Project project, UserAccount userAccount) {
+        if(project.getUserAccount().getId()==userAccount.getId()) {
+            return taskRepository.findByProject(project).isEmpty();
+        } else {
+            return true;
+        }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void undelete(Task task) {
-        task.switchToLastFocusType();
-        task.setLastChangeTimestamp(new Date());
-        taskRepository.saveAndFlush(task);
+    public void undelete(Task task, UserAccount userAccount) {
+        if(task.getUserAccount().getId()==userAccount.getId()) {
+            task.switchToLastFocusType();
+            task.setLastChangeTimestamp(new Date());
+            taskRepository.saveAndFlush(task);
+        }
     }
 
     @Override
@@ -86,18 +105,22 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void complete(Task task) {
-        task.setFocusType(FocusType.COMPLETED);
-        task.setLastChangeTimestamp(new Date());
-        taskRepository.saveAndFlush(task);
+    public void complete(Task task, UserAccount userAccount) {
+        if(task.getUserAccount().getId()==userAccount.getId()) {
+            task.setFocusType(FocusType.COMPLETED);
+            task.setLastChangeTimestamp(new Date());
+            taskRepository.saveAndFlush(task);
+        }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void incomplete(Task task) {
-        task.switchToLastFocusType();
-        task.setLastChangeTimestamp(new Date());
-        taskRepository.saveAndFlush(task);
+    public void incomplete(Task task, UserAccount userAccount) {
+        if(task.getUserAccount().getId()==userAccount.getId()) {
+            task.switchToLastFocusType();
+            task.setLastChangeTimestamp(new Date());
+            taskRepository.saveAndFlush(task);
+        }
     }
 
 }

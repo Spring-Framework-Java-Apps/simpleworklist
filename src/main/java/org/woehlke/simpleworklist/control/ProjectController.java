@@ -46,21 +46,21 @@ public class ProjectController extends AbstractController {
             @PathVariable int pageNumber,
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
         ModelAndView mav = new ModelAndView("project/show");
         Project thisProject = null;
         Page<Task> dataLeafPage = null;
         Pageable request =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         if (projectId != 0) {
-            thisProject = projectService.findByProjectId(projectId);
-            dataLeafPage = taskService.findByProject(thisProject, request);
+            thisProject = projectService.findByProjectId(projectId, userAccount);
+            dataLeafPage = taskService.findByProject(thisProject, request,userAccount );
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
-            UserAccount userAccount = userService.retrieveCurrentUser();
             dataLeafPage = taskService.findByRootProject(request, userAccount);
         }
-        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
+        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
         int current = dataLeafPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
@@ -69,8 +69,10 @@ public class ProjectController extends AbstractController {
         mav.addObject("currentIndex", current);
         mav.addObject("breadcrumb", breadcrumb);
         mav.addObject("thisProject", thisProject);
-        mav.addObject("dataList", dataLeafPage.getContent());
-        mav.addObject("totalPages", dataLeafPage.getTotalPages());
+        if(dataLeafPage != null){
+            mav.addObject("dataList", dataLeafPage.getContent());
+            mav.addObject("totalPages", dataLeafPage.getTotalPages());
+        }
         if(message != null){
             mav.addObject("message",message);
             mav.addObject("isDeleted",isDeleted);
@@ -85,19 +87,19 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/project/addchild/{projectId}", method = RequestMethod.GET)
     public final String addNewProjectForm(@PathVariable long projectId, Model model) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
         Project thisProject = null;
         Project project = null;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
-            UserAccount userAccount = userService.retrieveCurrentUser();
             thisProject.setUserAccount(userAccount);
             project = Project.newRootProjectFactory(userAccount);
         } else {
-            thisProject = projectService.findByProjectId(projectId);
+            thisProject = projectService.findByProjectId(projectId, userAccount);
             project = Project.newProjectFactory(thisProject);
         }
-        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
+        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
@@ -111,33 +113,32 @@ public class ProjectController extends AbstractController {
             @Valid Project project,
             BindingResult result,
             Model model) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
         if(result.hasErrors()){
             Project thisProject = null;
             if (projectId == 0) {
                 thisProject = new Project();
                 thisProject.setId(0L);
-                UserAccount userAccount = userService.retrieveCurrentUser();
                 thisProject.setUserAccount(userAccount);
             } else {
-                thisProject = projectService.findByProjectId(projectId);
+                thisProject = projectService.findByProjectId(projectId, userAccount);
             }
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
+            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
             return "project/add";
         } else {
-            UserAccount userAccount = userService.retrieveCurrentUser();
             project.setUserAccount(userAccount);
             if (projectId == 0) {
-                project = projectService.saveAndFlush(project);
+                project = projectService.saveAndFlush(project, userAccount);
             } else {
-                Project thisProject = projectService.findByProjectId(projectId);
+                Project thisProject = projectService.findByProjectId(projectId, userAccount);
                 List<Project> children = thisProject.getChildren();
                 children.add(project);
                 thisProject.setChildren(children);
                 project.setParent(thisProject);
-                project = projectService.saveAndFlush(project);
+                project = projectService.saveAndFlush(project, userAccount);
                 projectId = project.getId();
                 LOGGER.info("project:     "+ project.toString());
                 LOGGER.info("thisProject: "+ thisProject.toString());
@@ -150,11 +151,12 @@ public class ProjectController extends AbstractController {
     public final String moveProject(
             @PathVariable long projectId,
             @PathVariable long targetProjectId) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
         Project thisProject = null;
         if (projectId != 0) {
-            thisProject = projectService.findByProjectId(projectId);
-            Project targetProject = projectService.findByProjectId(targetProjectId);
-            projectService.moveProjectToAnotherProject(thisProject, targetProject);
+            thisProject = projectService.findByProjectId(projectId, userAccount);
+            Project targetProject = projectService.findByProjectId(targetProjectId, userAccount);
+            projectService.moveProjectToAnotherProject(thisProject, targetProject,userAccount );
         }
         return "redirect:/project/" + projectId + "/page/1";
     }
@@ -163,8 +165,9 @@ public class ProjectController extends AbstractController {
     public final String editProjectForm(
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
-            Project thisProject = projectService.findByProjectId(projectId);
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
+            UserAccount userAccount = userService.retrieveCurrentUser();
+            Project thisProject = projectService.findByProjectId(projectId, userAccount);
+            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", thisProject);
@@ -179,19 +182,20 @@ public class ProjectController extends AbstractController {
             @PathVariable long projectId,
             @Valid Project project,
             BindingResult result, Model model) {
+        UserAccount userAccount = userService.retrieveCurrentUser();
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-            Project thisProject = projectService.findByProjectId(projectId);
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject);
+            Project thisProject = projectService.findByProjectId(projectId, userAccount);
+            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
             model.addAttribute("breadcrumb", breadcrumb);
             return "project/edit";
         } else {
-            Project thisProject = projectService.findByProjectId(project.getId());
+            Project thisProject = projectService.findByProjectId(project.getId(), userAccount);
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
-            projectService.saveAndFlush(thisProject);
+            projectService.saveAndFlush(thisProject, userAccount);
             return "redirect:/project/" + projectId + "/page/1";
         }
     }
@@ -200,48 +204,51 @@ public class ProjectController extends AbstractController {
     public final String deleteProject(
             @PathVariable long projectId, Model model) {
         long newProjectId = projectId;
+        UserAccount userAccount = userService.retrieveCurrentUser();
         if (projectId > 0) {
-            Project project = projectService.findByProjectId(projectId);
-            boolean hasNoData = taskService.projectHasNoTasks(project);
-            boolean hasNoChildren = project.hasNoChildren();
-            if (hasNoData && hasNoChildren) {
-                if (!project.isRootCategory()) {
-                    newProjectId = project.getParent().getId();
+            Project project = projectService.findByProjectId(projectId, userAccount);
+            if(project != null){
+                boolean hasNoData = taskService.projectHasNoTasks(project, userAccount);
+                boolean hasNoChildren = project.hasNoChildren();
+                if (hasNoData && hasNoChildren) {
+                    if (!project.isRootCategory()) {
+                        newProjectId = project.getParent().getId();
+                    } else {
+                        newProjectId = 0;
+                    }
+                    projectService.delete(project, userAccount);
+                    String message = "Project is deleted. You see its parent project now.";
+                    model.addAttribute("message",message);
+                    model.addAttribute("isDeleted",true);
                 } else {
-                    newProjectId = 0;
+                    StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
+                    LOGGER.info("Deletion rejected for Project " + project.getId());
+                    if (!hasNoData) {
+                        LOGGER.warn("Project " + project.getId() + " has actionItem");
+                        s.append("Project has actionItems.");
+                    }
+                    if (!hasNoChildren) {
+                        LOGGER.info("Project " + project.getId() + " has children");
+                        s.append("Project has child categories.");
+                    }
+                    model.addAttribute("message",s.toString());
+                    model.addAttribute("isDeleted",false);
+                    List<Project> breadcrumb = projectService.getBreadcrumb(project, userAccount);
+                    int pageNumber = 1;
+                    Pageable request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
+                    Page<Task> dataLeafPage = taskService.findByProject(project, request, userAccount);
+                    int current = dataLeafPage.getNumber() + 1;
+                    int begin = Math.max(1, current - 5);
+                    int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
+                    model.addAttribute("beginIndex", begin);
+                    model.addAttribute("endIndex", end);
+                    model.addAttribute("currentIndex", current);
+                    model.addAttribute("breadcrumb", breadcrumb);
+                    model.addAttribute("thisProject", project);
+                    model.addAttribute("dataList", dataLeafPage.getContent());
+                    model.addAttribute("totalPages", dataLeafPage.getTotalPages());
+                    return "project/show";
                 }
-                projectService.delete(project);
-                String message = "Project is deleted. You see its parent project now.";
-                model.addAttribute("message",message);
-                model.addAttribute("isDeleted",true);
-            } else {
-                StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
-                LOGGER.info("Deletion rejected for Project " + project.getId());
-                if (!hasNoData) {
-                    LOGGER.warn("Project " + project.getId() + " has actionItem");
-                    s.append("Project has actionItems.");
-                }
-                if (!hasNoChildren) {
-                    LOGGER.info("Project " + project.getId() + " has children");
-                    s.append("Project has child categories.");
-                }
-                model.addAttribute("message",s.toString());
-                model.addAttribute("isDeleted",false);
-                List<Project> breadcrumb = projectService.getBreadcrumb(project);
-                int pageNumber = 1;
-                Pageable request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
-                Page<Task> dataLeafPage = taskService.findByProject(project, request);
-                int current = dataLeafPage.getNumber() + 1;
-                int begin = Math.max(1, current - 5);
-                int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
-                model.addAttribute("beginIndex", begin);
-                model.addAttribute("endIndex", end);
-                model.addAttribute("currentIndex", current);
-                model.addAttribute("breadcrumb", breadcrumb);
-                model.addAttribute("thisProject", project);
-                model.addAttribute("dataList", dataLeafPage.getContent());
-                model.addAttribute("totalPages", dataLeafPage.getTotalPages());
-                return "project/show";
             }
         }
         return "redirect:/project/" + newProjectId + "/page/1";

@@ -19,7 +19,6 @@ import org.woehlke.simpleworklist.services.FocusService;
 import org.woehlke.simpleworklist.services.TaskService;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * Created by tw on 21.02.16.
@@ -182,29 +181,36 @@ public class FocusController extends AbstractController {
     @RequestMapping(value = "/focus/move/{taskId}/to/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to inbox");
-        Task task = taskService.findOne(taskId);
-        task.setFocusType(FocusType.INBOX);
-        task=taskService.saveAndFlush(task);
-        LOGGER.info("dragged and dropped "+taskId+" to inbox: "+task.toString());
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId,thisUser);
+        if(task!=null){
+            task.setFocusType(FocusType.INBOX);
+            task=taskService.saveAndFlush(task, thisUser);
+            LOGGER.info("dragged and dropped "+taskId+" to inbox: "+task.toString());
+        }
         return "redirect:/focus/inbox";
     }
 
     @RequestMapping(value = "/focus/move/{taskId}/to/today", method = RequestMethod.GET)
     public final String moveTaskToToday(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to today");
-        Task task = taskService.findOne(taskId);
-        task.setFocusType(FocusType.TODAY);
-        task=taskService.saveAndFlush(task);
-        LOGGER.info("dragged and dropped "+taskId+" to today: "+task.toString());
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, thisUser);
+        if(task!=null) {
+            task.setFocusType(FocusType.TODAY);
+            task = taskService.saveAndFlush(task, thisUser);
+            LOGGER.info("dragged and dropped " + taskId + " to today: " + task.toString());
+        }
         return "redirect:/focus/today";
     }
 
     @RequestMapping(value = "/focus/move/{taskId}/to/next", method = RequestMethod.GET)
     public final String moveTaskToNext(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to next");
-        Task task = taskService.findOne(taskId);
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, thisUser);
         task.setFocusType(FocusType.NEXT);
-        task=taskService.saveAndFlush(task);
+        task=taskService.saveAndFlush(task, thisUser);
         LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
         return "redirect:/focus/next";
     }
@@ -212,40 +218,52 @@ public class FocusController extends AbstractController {
     @RequestMapping(value = "/focus/move/{taskId}/to/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to waiting");
-        Task task = taskService.findOne(taskId);
-        task.setFocusType(FocusType.WAITING);
-        task=taskService.saveAndFlush(task);
-        LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, thisUser);
+        if(task!=null){
+            task.setFocusType(FocusType.WAITING);
+            task=taskService.saveAndFlush(task, thisUser);
+            LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
+        }
         return "redirect:/focus/waiting";
     }
 
     @RequestMapping(value = "/focus/move/{taskId}/to/someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to someday");
-        Task task = taskService.findOne(taskId);
-        task.setFocusType(FocusType.SOMEDAY);
-        task=taskService.saveAndFlush(task);
-        LOGGER.info("dragged and dropped "+taskId+" to someday: "+task.toString());
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, thisUser);
+        if(task!=null) {
+            task.setFocusType(FocusType.SOMEDAY);
+            task = taskService.saveAndFlush(task, thisUser);
+            LOGGER.info("dragged and dropped " + taskId + " to someday: " + task.toString());
+        }
         return "redirect:/focus/someday";
     }
 
     @RequestMapping(value = "/focus/move/{taskId}/to/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to completed");
-        Task task = taskService.findOne(taskId);
-        task.setFocusType(FocusType.COMPLETED);
-        task=taskService.saveAndFlush(task);
-        LOGGER.info("dragged and dropped "+taskId+" to completed: "+task.toString());
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, thisUser);
+        if(task!=null) {
+            task.setFocusType(FocusType.COMPLETED);
+            task = taskService.saveAndFlush(task, thisUser);
+            LOGGER.info("dragged and dropped " + taskId + " to completed: " + task.toString());
+        }
         return "redirect:/focus/completed";
     }
 
     @RequestMapping(value = "/focus/move/{taskId}/to/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to trash");
-        Task task = taskService.findOne(taskId);
-        task.setFocusType(FocusType.TRASHED);
-        task=taskService.saveAndFlush(task);
-        LOGGER.info("dragged and dropped "+taskId+" to trash: "+task.toString());
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, thisUser);
+        if(task!=null) {
+            task.setFocusType(FocusType.TRASHED);
+            task = taskService.saveAndFlush(task, thisUser);
+            LOGGER.info("dragged and dropped " + taskId + " to trash: " + task.toString());
+        }
         return "redirect:/focus/trash";
     }
 

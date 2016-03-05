@@ -21,16 +21,18 @@ public class ProjectServiceImpl implements ProjectService {
     @Inject
     private ProjectRepository projectRepository;
 
-    public List<Project> getBreadcrumb(Project thisProject) {
+    public List<Project> getBreadcrumb(Project thisProject, UserAccount user) {
         List<Project> breadcrumb = new ArrayList<Project>();
-        Stack<Project> stack = new Stack<Project>();
-        Project breadcrumbProject = thisProject;
-        while (breadcrumbProject != null) {
-            stack.push(breadcrumbProject);
-            breadcrumbProject = breadcrumbProject.getParent();
-        }
-        while (!stack.empty()) {
-            breadcrumb.add(stack.pop());
+        if(thisProject.getUserAccount().getId()==user.getId()) {
+            Stack<Project> stack = new Stack<Project>();
+            Project breadcrumbProject = thisProject;
+            while (breadcrumbProject != null) {
+                stack.push(breadcrumbProject);
+                breadcrumbProject = breadcrumbProject.getParent();
+            }
+            while (!stack.empty()) {
+                breadcrumb.add(stack.pop());
+            }
         }
         return breadcrumb;
     }
@@ -41,14 +43,23 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project findByProjectId(long categoryId) {
-        return projectRepository.findOne(categoryId);
+    public Project findByProjectId(long categoryId, UserAccount user) {
+        Project p = projectRepository.findOne(categoryId);
+        if(p.getUserAccount().getId()==user.getId()){
+            return p;
+        } else {
+            return null;
+        }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project saveAndFlush(Project entity) {
-        return projectRepository.saveAndFlush(entity);
+    public Project saveAndFlush(Project entity, UserAccount user) {
+        if(entity.getUserAccount().getId()==user.getId()){
+            return projectRepository.saveAndFlush(entity);
+        } else {
+            return entity;
+        }
     }
 
     @Override
@@ -58,25 +69,29 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void delete(Project thisProject) {
-        Project oldParent = thisProject.getParent();
-        if (oldParent != null) {
-            oldParent.getChildren().remove(thisProject);
-            projectRepository.saveAndFlush(oldParent);
+    public void delete(Project thisProject, UserAccount user) {
+        if(thisProject.getUserAccount().getId()==user.getId()){
+            Project oldParent = thisProject.getParent();
+            if (oldParent != null) {
+                oldParent.getChildren().remove(thisProject);
+                projectRepository.saveAndFlush(oldParent);
+            }
+            projectRepository.delete(thisProject);
         }
-        projectRepository.delete(thisProject);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveProjectToAnotherProject(Project thisProject,
-                                            Project targetProject) {
-        Project oldParent = thisProject.getParent();
-        if (oldParent != null) {
-            oldParent.getChildren().remove(thisProject);
-            projectRepository.saveAndFlush(oldParent);
+                                            Project targetProject, UserAccount user) {
+        if(thisProject.getUserAccount().getId()==user.getId()) {
+            Project oldParent = thisProject.getParent();
+            if (oldParent != null) {
+                oldParent.getChildren().remove(thisProject);
+                projectRepository.saveAndFlush(oldParent);
+            }
+            thisProject.setParent(targetProject);
+            projectRepository.saveAndFlush(thisProject);
         }
-        thisProject.setParent(targetProject);
-        projectRepository.saveAndFlush(thisProject);
     }
 }

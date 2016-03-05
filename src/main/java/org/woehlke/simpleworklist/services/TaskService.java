@@ -8,23 +8,23 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 
 public interface TaskService {
 
-    Page<Task> findByProject(Project thisProject, Pageable request);
+    Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount);
 
     Page<Task> findByRootProject(Pageable request, UserAccount userAccount);
 
-    Task findOne(long dataId);
+    Task findOne(long dataId, UserAccount userAccount);
 
-    Task saveAndFlush(Task persistentTask);
+    Task saveAndFlush(Task persistentTask, UserAccount userAccount);
 
-    void delete(Task task);
+    void delete(Task task, UserAccount userAccount);
 
-    boolean projectHasNoTasks(Project project);
+    boolean projectHasNoTasks(Project project, UserAccount userAccount);
 
-    void undelete(Task task);
+    void undelete(Task task, UserAccount userAccount);
 
     void emptyTrash(UserAccount userAccount);
 
-    void complete(Task task);
+    void complete(Task task, UserAccount userAccount);
 
-    void incomplete(Task task);
+    void incomplete(Task task, UserAccount userAccount);
 }

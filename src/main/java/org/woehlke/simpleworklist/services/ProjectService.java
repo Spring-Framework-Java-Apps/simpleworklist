@@ -7,17 +7,17 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 
 public interface ProjectService {
 
-    List<Project> getBreadcrumb(Project thisProject);
+    List<Project> getBreadcrumb(Project thisProject, UserAccount user);
 
     List<Project> findRootProjectsByUserAccount(UserAccount userAccount);
 
     List<Project> findAllProjectsByUserAccount(UserAccount user);
 
-    void moveProjectToAnotherProject(Project thisProject, Project targetProject);
+    void moveProjectToAnotherProject(Project thisProject, Project targetProject, UserAccount user);
 
-    Project findByProjectId(long categoryId);
+    Project findByProjectId(long categoryId, UserAccount user);
 
-    Project saveAndFlush(Project project);
+    Project saveAndFlush(Project project, UserAccount user);
 
-    void delete(Project project);
+    void delete(Project project, UserAccount user);
 }
