@@ -1,10 +1,12 @@
 SimpleWorklist
 
-    Todo List for Getting Things Done
+    Your Todo-List for Getting Things Done
 
     Software-Stack: {{{http://docs.oracle.com/javaee/6/tutorial/doc/}Java EE}}, {{{http://www.springsource.org/spring-data/jpa}JPA}}, {{{http://www.springsource.org/spring-framework}Spring Frameworks}}, {{{http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html}Spring MVC}}, {{{http://getbootstrap.com/2.3.5/}Twitter Bootstrap}}, {{{http://jquery.com/}jQuery}}, HTML5
 
     Repository: {{https://github.com/phasenraum2010/simpleworklist}}
+
+    Demo: {{http://jbosswildfly-simpleworklist.rhcloud.com/}}
 
 * Use Cases
 
@@ -12,9 +14,9 @@ SimpleWorklist
 
 [img/Use_Cases_User.jpg] Figure Use Cases User
 
-** Action Items and Categories
+** Tasks and Projects
 
-[img/Use_Cases_Data.jpg] Figure Use Cases Action Items and Categories
+[img/Use_Cases_Data.jpg] Figure Use Cases Tasks and Projects
 
 ** Use Case: Registration
 
@@ -34,11 +36,9 @@ SimpleWorklist
 
 [img/Domain_Model.jpg] Figure Domain Model
 
-** Services
+** Domain Model Details
 
-[img/Service_Model.jpg] Figure Service Model
-
-* Domain Model Details
+[img/Domain_Model_Details.jpg] Figure Domain Model Details
 
 ** Use Case Details
 
@@ -46,28 +46,9 @@ SimpleWorklist
 
 [img/Registration_Request_Details.jpg] Figure Registration Request Details
 
-[img/Registration_Perform_Details.jpg] Figure Registration Request Details
+[img/Registration_Perform_Details.jpg] Figure Registration Perform Details
 
-*** Use Case Details: Passwort Recovery
+** Services
 
-**  Entities Details
+[img/Service_Model.jpg] Figure Service Model
 
-[img/Domain_Model_Details.jpg] Figure Domain Model Details
-
-**  Services Details
-
-*** Services Details: UserController
-
-[img/Service_Model_Details_UserController.jpg] Figure Domain Model Details UserController
-
-*** Services Details: RegistrationController
-
-[img/Service_Model_Details_RegistrationController.jpg] Figure Domain Model Details UserController
-
-*** Services Details: PasswordRecoveryController
-
-[img/Service_Model_Details_PasswordRecoveryController.jpg] Figure Domain Model Details UserController
-
-*** Services Details: ActionItemAndCategoryController
-
-[img/Service_Model_Details_ActionItems.jpg] Figure Domain Model Details ActionItems

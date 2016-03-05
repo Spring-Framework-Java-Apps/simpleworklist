@@ -32,7 +32,7 @@
                 <name>SimpleWorklist</name>
                 <href>https://github.com/phasenraum2010/simpleworklist</href>
             </brand>
-            <slogan>Worklists can be ordered by Action Items and hierarchical Categories in a Multiuser Webapp</slogan>
+            <slogan>Your Todo List for Getting Things Done</slogan>
             <titleTemplate>%2$s | %1$s</titleTemplate>
             <toc>top</toc>
             <topNav>Download|reports</topNav>
@@ -41,9 +41,7 @@
                 <column>Documentation</column>
                 <column>reports|modules</column>
             </bottomNav>
-            <bottomDescription>
-                Worklists can be ordered by Action Items and hierarchical Categories in a Multiuser Webapp
-            </bottomDescription>
+            <bottomDescription>Your Todo List for Getting Things Done</bottomDescription>
             <pages>
                 <index project="project-id">
                     <shortTitle>Welcome</shortTitle>
