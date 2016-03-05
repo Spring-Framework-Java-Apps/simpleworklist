@@ -115,6 +115,7 @@ public class TestServiceImpl implements TestService {
             d.setTitle(title);
             d.setProject(c02020303);
             d.setCreatedTimestamp(new Date());
+            d.setLastChangeTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setFocusType(FocusType.INBOX);
             taskRepository.saveAndFlush(d);
@@ -127,6 +128,7 @@ public class TestServiceImpl implements TestService {
             d.setText(text);
             d.setTitle(title);
             d.setCreatedTimestamp(new Date());
+            d.setLastChangeTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setFocusType(FocusType.INBOX);
             taskRepository.saveAndFlush(d);

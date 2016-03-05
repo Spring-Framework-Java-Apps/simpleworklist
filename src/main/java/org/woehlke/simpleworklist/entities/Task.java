@@ -36,7 +36,7 @@ public class Task {
     @ManyToOne(optional = true)
     private Project project;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "userAccountId")
     @IndexedEmbedded(includeEmbeddedObjectId=true)
     private UserAccount userAccount;
@@ -77,7 +77,7 @@ public class Task {
     private Date createdTimestamp;
 
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Date lastChangeTimestamp;
 
     @Transient

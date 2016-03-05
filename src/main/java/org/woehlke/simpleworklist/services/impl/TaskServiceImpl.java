@@ -48,6 +48,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task saveAndFlush(Task entity) {
+        entity.setLastChangeTimestamp(new Date());
         entity = taskRepository.saveAndFlush(entity);
         LOGGER.info("saved: "+entity.toString());
         return entity;

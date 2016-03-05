@@ -50,7 +50,7 @@ public class ProjectController extends AbstractController {
         Project thisProject = null;
         Page<Task> dataLeafPage = null;
         Pageable request =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
+                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId);
             dataLeafPage = taskService.findByProject(thisProject, request);
