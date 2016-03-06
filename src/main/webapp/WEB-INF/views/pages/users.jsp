@@ -24,8 +24,8 @@
 		</td>
 		<td><c:out value="${user.userEmail}"/></td>
 		<td><c:out value="${user.userFullname}"/></td>
-		<td><c:out value="${user.lastLoginTimestamp}"/></td>
-		<td><c:out value="${user.createdTimestamp}"/></td>
+		<td><fmt:formatDate value="${user.lastLoginTimestamp}" type="BOTH" /></td>
+		<td><fmt:formatDate value="${user.createdTimestamp}" type="BOTH" /></td>
 	</tr>
 </c:forEach>
 </table>
