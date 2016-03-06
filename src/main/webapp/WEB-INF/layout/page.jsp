@@ -140,6 +140,7 @@
 						<li><a id="focus_waiting" href='<c:url value="/tasks/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting</a></li>
 						<li><a id="focus_scheduled" href='<c:url value="/tasks/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a></li>
 						<li><a id="focus_someday" href='<c:url value="/tasks/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a></li>
+						<li><a id="star" href='<c:url value="/tasks/focus"/>'><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Focus</a></li>
 						<li><jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" /></li>
 						<li><a id="focus_completed" href='<c:url value="/tasks/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a></li>
 						<li><a id="focus_trash" href='<c:url value="/tasks/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></li>

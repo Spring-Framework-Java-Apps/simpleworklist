@@ -22,4 +22,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByTaskStateAndUserAccount(TaskState taskState, UserAccount userAccount);
 
+    Page<Task> findByFocusAndUserAccount(boolean focus, UserAccount thisUser, Pageable request);
 }

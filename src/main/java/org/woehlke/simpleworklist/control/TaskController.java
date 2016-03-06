@@ -266,4 +266,76 @@ public class TaskController extends AbstractController {
             return "redirect:/tasks/inbox";
         }
     }
+
+    @RequestMapping(value = "/task/setfocus/{taskId}", method = RequestMethod.GET)
+    public final String setFocus(@PathVariable long taskId,
+                                 @RequestParam(required=false) String back,
+                                 Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, userAccount);
+        if(task !=null) {
+            taskService.setFocus(task, userAccount);
+            if(back != null && back.contentEquals("project")){
+                if(task.getProject() != null) {
+                    return "redirect:/project/" + task.getProject().getId();
+                } else {
+                    return "redirect:/project/0";
+                }
+            }
+            switch (task.getTaskState()) {
+                case TODAY:
+                    return "redirect:/tasks/today";
+                case NEXT:
+                    return "redirect:/tasks/next";
+                case WAITING:
+                    return "redirect:/tasks/waiting";
+                case SCHEDULED:
+                    return "redirect:/tasks/scheduled";
+                case SOMEDAY:
+                    return "redirect:/tasks/someday";
+                case COMPLETED:
+                    return "redirect:/tasks/completed";
+                default:
+                    return "redirect:/tasks/inbox";
+            }
+        } else {
+            return "redirect:/tasks/inbox";
+        }
+    }
+
+    @RequestMapping(value = "/task/unsetfocus/{taskId}", method = RequestMethod.GET)
+    public final String unsetFocus(@PathVariable long taskId,
+                                   @RequestParam(required=false) String back,
+                                   Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task task = taskService.findOne(taskId, userAccount);
+        if(task !=null) {
+            taskService.unsetFocus(task, userAccount);
+            if(back != null && back.contentEquals("project")){
+                if(task.getProject() != null) {
+                    return "redirect:/project/" + task.getProject().getId();
+                } else {
+                    return "redirect:/project/0";
+                }
+            }
+            switch (task.getTaskState()) {
+                case TODAY:
+                    return "redirect:/tasks/today";
+                case NEXT:
+                    return "redirect:/tasks/next";
+                case WAITING:
+                    return "redirect:/tasks/waiting";
+                case SCHEDULED:
+                    return "redirect:/tasks/scheduled";
+                case SOMEDAY:
+                    return "redirect:/tasks/someday";
+                case COMPLETED:
+                    return "redirect:/tasks/completed";
+                default:
+                    return "redirect:/tasks/inbox";
+            }
+        } else {
+            return "redirect:/tasks/inbox";
+        }
+    }
 }

@@ -34,6 +34,13 @@
 							<c:if test="${task.taskState.name() ne 'COMPLETED'}">
 								<a alt="complete" href='<c:url value="/task/complete/${task.id}"/>'><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span></a>
 							</c:if>
+							&nbsp;&nbsp;
+							<c:if test="${task.focus}">
+								<a alt="focus" href='<c:url value="/task/unsetfocus/${task.id}?back=project"/>'><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+							</c:if>
+							<c:if test="${! task.focus}">
+								<a alt="focus" href='<c:url value="/task/setfocus/${task.id}?back=project"/>'><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
+							</c:if>
 						</td>
 						<td>
 							<c:if test="${task.taskState.name() eq 'COMPLETED'}">

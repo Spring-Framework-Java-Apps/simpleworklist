@@ -74,4 +74,9 @@ public class TaskStateServiceImpl implements TaskStateService {
             taskRepository.save(task);
         }
     }
+
+    @Override
+    public Page<Task> getFocus(UserAccount thisUser, Pageable request) {
+        return taskRepository.findByFocusAndUserAccount(true, thisUser, request);
+    }
 }

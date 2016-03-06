@@ -123,4 +123,24 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void setFocus(Task task, UserAccount userAccount) {
+        if(task.getUserAccount().getId()==userAccount.getId()) {
+            task.setFocus(true);
+            task.setLastChangeTimestamp(new Date());
+            taskRepository.saveAndFlush(task);
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void unsetFocus(Task task, UserAccount userAccount) {
+        if(task.getUserAccount().getId()==userAccount.getId()) {
+            task.setFocus(false);
+            task.setLastChangeTimestamp(new Date());
+            taskRepository.saveAndFlush(task);
+        }
+    }
+
 }

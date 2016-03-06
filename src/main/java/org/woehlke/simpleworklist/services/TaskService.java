@@ -27,4 +27,8 @@ public interface TaskService {
     void complete(Task task, UserAccount userAccount);
 
     void incomplete(Task task, UserAccount userAccount);
+
+    void setFocus(Task task, UserAccount userAccount);
+
+    void unsetFocus(Task task, UserAccount userAccount);
 }

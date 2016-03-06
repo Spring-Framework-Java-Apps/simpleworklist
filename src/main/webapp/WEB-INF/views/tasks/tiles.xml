@@ -34,4 +34,8 @@
         <put-attribute name="content" value="/WEB-INF/views/tasks/trash.jsp" />
     </definition>
 
+    <definition name="tasks/focus" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/focus.jsp" />
+    </definition>
+
 </tiles-definitions>

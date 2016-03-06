@@ -54,6 +54,9 @@ public class Task {
     @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String text;
 
+    @Column(nullable = false)
+    private Boolean focus;
+
     /**
      * The current TaskState;
      */
@@ -143,6 +146,14 @@ public class Task {
         return taskState;
     }
 
+    public Boolean getFocus() {
+        return focus;
+    }
+
+    public void setFocus(Boolean focus) {
+        this.focus = focus;
+    }
+
     /**
      * Sets also 'history back' for taskState
      */
@@ -196,6 +207,7 @@ public class Task {
         if (userAccount != null ? !userAccount.equals(task.userAccount) : task.userAccount != null) return false;
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (text != null ? !text.equals(task.text) : task.text != null) return false;
+        if (focus != null ? !focus.equals(task.focus) : task.focus != null) return false;
         if (taskState != task.taskState) return false;
         if (lastTaskState != task.lastTaskState) return false;
         if (dueDate != null ? !dueDate.equals(task.dueDate) : task.dueDate != null) return false;
@@ -213,6 +225,7 @@ public class Task {
         result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
+        result = 31 * result + (focus != null ? focus.hashCode() : 0);
         result = 31 * result + (taskState != null ? taskState.hashCode() : 0);
         result = 31 * result + (lastTaskState != null ? lastTaskState.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
@@ -230,6 +243,7 @@ public class Task {
                 ", userAccount=" + userAccount +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
+                ", focus=" + focus +
                 ", taskState=" + taskState +
                 ", lastTaskState=" + lastTaskState +
                 ", dueDate=" + dueDate +

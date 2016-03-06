@@ -273,4 +273,22 @@ public class TaskStateController extends AbstractController {
         taskStateService.deleteAllCompleted(thisUser);
         return "redirect:/tasks/trash";
     }
+
+    @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
+    public final String focus(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
+        UserAccount thisUser = userService.retrieveCurrentUser();
+        Pageable request =
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+        Page<Task> taskPage = taskStateService.getFocus(thisUser, request);
+        int current = taskPage.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, taskPage.getTotalPages());
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        model.addAttribute("dataList", taskPage.getContent());
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute("focustype", "Inbox");
+        return "tasks/focus";
+    }
 }
