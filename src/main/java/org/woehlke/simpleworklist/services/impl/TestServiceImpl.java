@@ -118,6 +118,7 @@ public class TestServiceImpl implements TestService {
             d.setLastChangeTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setTaskState(TaskState.INBOX);
+            d.setFocus(false);
             taskRepository.saveAndFlush(d);
         }
         /* without Project for Main INBOX */
@@ -131,6 +132,7 @@ public class TestServiceImpl implements TestService {
             d.setLastChangeTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setTaskState(TaskState.INBOX);
+            d.setFocus(false);
             taskRepository.saveAndFlush(d);
         }
     }

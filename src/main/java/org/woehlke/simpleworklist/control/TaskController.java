@@ -138,6 +138,7 @@ public class TaskController extends AbstractController {
             } else {
                 task.setTaskState(TaskState.SCHEDULED);
             }
+            task.setFocus(false);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";

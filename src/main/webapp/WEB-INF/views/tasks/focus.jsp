@@ -21,7 +21,12 @@
             <c:forEach items="${dataList}" var="task">
                 <tr>
                     <td>
-                        <a alt="complete" href='<c:url value="/task/complete/${task.id}"/>'><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span></a>
+                        <c:if test="${task.taskState.name() eq 'COMPLETED'}">
+                            <a alt="complete" href='<c:url value="/task/incomplete/${task.id}"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
+                        </c:if>
+                        <c:if test="${task.taskState.name() ne 'COMPLETED'}">
+                            <a alt="complete" href='<c:url value="/task/complete/${task.id}"/>'><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span></a>
+                        </c:if>
                         &nbsp;&nbsp;
                         <c:if test="${task.focus}">
                             <a alt="focus" href='<c:url value="/task/unsetfocus/${task.id}"/>'><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
@@ -31,12 +36,24 @@
                         </c:if>
                     </td>
                     <td>
-                        <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
-                           id="dataDetail_${task.id}" ><c:out
-                                value="${task.title}" /></a>
+                        <c:if test="${task.taskState.name() eq 'COMPLETED'}">
+                            <del>
+                        </c:if>
+                            <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
+                               id="dataDetail_${task.id}" ><c:out
+                                    value="${task.title}" /></a>
+                        <c:if test="${task.taskState.name() eq 'COMPLETED'}">
+                            </del>
+                        </c:if>
                     </td>
                     <td>
+                        <c:if test="${task.taskState.name() eq 'COMPLETED'}">
+                            <del>
+                        </c:if>
                         <c:out value="${task.textShortened}" />
+                        <c:if test="${task.taskState.name() eq 'COMPLETED'}">
+                            </del>
+                        </c:if>
                     </td>
                     <td>
                         <fmt:formatDate value="${task.dueDate}" />
