@@ -17,7 +17,7 @@ public class PagesController extends AbstractController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String home() {
-        return "redirect:/focus/inbox";
+        return "redirect:/tasks/inbox";
     }
 
     /**

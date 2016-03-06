@@ -5,7 +5,7 @@ import javax.persistence.Enumerated;
 /**
  * Created by tw on 21.02.16.
  */
-public enum FocusType {
+public enum TaskState {
 
     @Enumerated
     INBOX,

@@ -49,29 +49,30 @@ public class ProjectController extends AbstractController {
         UserAccount userAccount = userService.retrieveCurrentUser();
         ModelAndView mav = new ModelAndView("project/show");
         Project thisProject = null;
-        Page<Task> dataLeafPage = null;
+        Page<Task> taskPage = null;
         Pageable request =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
-            dataLeafPage = taskService.findByProject(thisProject, request,userAccount );
+            taskPage = taskService.findByProject(thisProject, request,userAccount );
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
-            dataLeafPage = taskService.findByRootProject(request, userAccount);
+            thisProject.setUserAccount(userAccount);
+            taskPage = taskService.findByRootProject(request, userAccount);
         }
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
-        int current = dataLeafPage.getNumber() + 1;
+        int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
+        int end = Math.min(begin + 10, taskPage.getTotalPages());
         mav.addObject("beginIndex", begin);
         mav.addObject("endIndex", end);
         mav.addObject("currentIndex", current);
         mav.addObject("breadcrumb", breadcrumb);
         mav.addObject("thisProject", thisProject);
-        if(dataLeafPage != null){
-            mav.addObject("dataList", dataLeafPage.getContent());
-            mav.addObject("totalPages", dataLeafPage.getTotalPages());
+        if(taskPage != null){
+            mav.addObject("dataList", taskPage.getContent());
+            mav.addObject("totalPages", taskPage.getTotalPages());
         }
         if(message != null){
             mav.addObject("message",message);

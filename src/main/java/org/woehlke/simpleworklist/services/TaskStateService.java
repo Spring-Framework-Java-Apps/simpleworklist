@@ -8,7 +8,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 /**
  * Created by tw on 21.02.16.
  */
-public interface FocusService {
+public interface TaskStateService {
 
     Page<Task> getInbox(UserAccount thisUser, Pageable request);
 

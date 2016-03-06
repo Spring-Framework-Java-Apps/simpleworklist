@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.enumerations.FocusType;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TaskService;
@@ -36,6 +36,7 @@ public class TaskController extends AbstractController {
             if (task.getProject() == null) {
                 thisProject = new Project();
                 thisProject.setId(0L);
+                thisProject.setUserAccount(userAccount);
             } else {
                 thisProject = task.getProject();
             }
@@ -45,7 +46,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("task", task);
             return "task/show";
         } else {
-            return "redirect:/focus/inbox";
+            return "redirect:/tasks/inbox";
         }
     }
 
@@ -61,6 +62,7 @@ public class TaskController extends AbstractController {
         if (persistentTask.getProject() == null) {
             thisProject = new Project();
             thisProject.setId(0L);
+            thisProject.setUserAccount(userAccount);
         } else {
             thisProject = persistentTask.getProject();
             projectId = thisProject.getId();
@@ -79,7 +81,7 @@ public class TaskController extends AbstractController {
             persistentTask.setText(task.getText());
             if(task.getDueDate()!=null){
                 persistentTask.setDueDate(task.getDueDate());
-                persistentTask.setFocusType(FocusType.SCHEDULED);
+                persistentTask.setTaskState(TaskState.SCHEDULED);
             }
             persistentTask.setLastChangeTimestamp(new Date());
             taskService.saveAndFlush(persistentTask, userAccount);
@@ -94,13 +96,14 @@ public class TaskController extends AbstractController {
             Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
         Task task = new Task();
-        task.setFocusType(FocusType.INBOX);
+        task.setTaskState(TaskState.INBOX);
         task.setUserAccount(userAccount);
         task.setCreatedTimestamp(new Date());
         Project thisProject = null;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
+            thisProject.setUserAccount(userAccount);
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             task.setProject(thisProject);
@@ -131,9 +134,9 @@ public class TaskController extends AbstractController {
                 task.setProject(thisProject);
             }
             if(task.getDueDate()==null){
-                task.setFocusType(FocusType.INBOX);
+                task.setTaskState(TaskState.INBOX);
             } else {
-                task.setFocusType(FocusType.SCHEDULED);
+                task.setTaskState(TaskState.SCHEDULED);
             }
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
@@ -148,7 +151,7 @@ public class TaskController extends AbstractController {
         if(task!= null){
             taskService.delete(task, userAccount);
         }
-        return "redirect:/focus/trash";
+        return "redirect:/tasks/trash";
     }
 
     @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
@@ -161,14 +164,14 @@ public class TaskController extends AbstractController {
                 long projectId = task.getProject().getId();
                 return "redirect:/project/" + projectId + "/";
             }
-            switch (task.getFocusType()) {
+            switch (task.getTaskState()) {
                 case SCHEDULED:
-                    return "redirect:/focus/scheduled";
+                    return "redirect:/tasks/scheduled";
                 default:
-                    return "redirect:/focus/inbox";
+                    return "redirect:/tasks/inbox";
             }
         } else {
-            return "redirect:/focus/inbox";
+            return "redirect:/tasks/inbox";
         }
     }
 
@@ -176,7 +179,7 @@ public class TaskController extends AbstractController {
     public final String emptyTrash() {
         UserAccount userAccount = userService.retrieveCurrentUser();
         taskService.emptyTrash(userAccount);
-        return "redirect:/focus/trash";
+        return "redirect:/tasks/trash";
     }
 
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
@@ -236,7 +239,7 @@ public class TaskController extends AbstractController {
         if(task != null){
             taskService.complete(task, userAccount);
         }
-        return "redirect:/focus/completed";
+        return "redirect:/tasks/completed";
     }
 
     @RequestMapping(value = "/task/incomplete/{taskId}", method = RequestMethod.GET)
@@ -245,22 +248,22 @@ public class TaskController extends AbstractController {
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.incomplete(task, userAccount);
-            switch (task.getFocusType()) {
+            switch (task.getTaskState()) {
                 case TODAY:
-                    return "redirect:/focus/today";
+                    return "redirect:/tasks/today";
                 case NEXT:
-                    return "redirect:/focus/next";
+                    return "redirect:/tasks/next";
                 case WAITING:
-                    return "redirect:/focus/waiting";
+                    return "redirect:/tasks/waiting";
                 case SCHEDULED:
-                    return "redirect:/focus/scheduled";
+                    return "redirect:/tasks/scheduled";
                 case SOMEDAY:
-                    return "redirect:/focus/someday";
+                    return "redirect:/tasks/someday";
                 default:
-                    return "redirect:/focus/inbox";
+                    return "redirect:/tasks/inbox";
             }
         } else {
-            return "redirect:/focus/inbox";
+            return "redirect:/tasks/inbox";
         }
     }
 }

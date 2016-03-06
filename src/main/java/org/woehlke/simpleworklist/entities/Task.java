@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
@@ -12,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.woehlke.simpleworklist.entities.enumerations.FocusType;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 
 
 @Entity
@@ -56,16 +55,17 @@ public class Task {
     private String text;
 
     /**
-     * The current FocusType;
+     * The current TaskState;
      */
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private FocusType focusType;
+    private TaskState taskState;
 
     /**
-     * The FocusType before the current FocusType;
+     * The TaskState before the current TaskState;
      */
     @Enumerated(EnumType.STRING)
-    private FocusType lastFocusType;
+    private TaskState lastTaskState;
 
     @Temporal(value = TemporalType.DATE)
     @Column(nullable = true)
@@ -139,16 +139,16 @@ public class Task {
         this.text = text;
     }
 
-    public FocusType getFocusType() {
-        return focusType;
+    public TaskState getTaskState() {
+        return taskState;
     }
 
     /**
-     * Sets also 'history back' for focusType
+     * Sets also 'history back' for taskState
      */
-    public void setFocusType(FocusType focusType) {
-        this.lastFocusType = this.focusType;
-        this.focusType = focusType;
+    public void setTaskState(TaskState taskState) {
+        this.lastTaskState = this.taskState;
+        this.taskState = taskState;
     }
 
     public Date getDueDate() {
@@ -175,12 +175,12 @@ public class Task {
         this.lastChangeTimestamp = lastChangeTimestamp;
     }
 
-    public FocusType getLastFocusType() {
-        return lastFocusType;
+    public TaskState getLastTaskState() {
+        return lastTaskState;
     }
 
-    public void setLastFocusType(FocusType lastFocusType) {
-        this.lastFocusType = lastFocusType;
+    public void setLastTaskState(TaskState lastTaskState) {
+        this.lastTaskState = lastTaskState;
     }
 
     @Override
@@ -196,8 +196,8 @@ public class Task {
         if (userAccount != null ? !userAccount.equals(task.userAccount) : task.userAccount != null) return false;
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (text != null ? !text.equals(task.text) : task.text != null) return false;
-        if (focusType != task.focusType) return false;
-        if (lastFocusType != task.lastFocusType) return false;
+        if (taskState != task.taskState) return false;
+        if (lastTaskState != task.lastTaskState) return false;
         if (dueDate != null ? !dueDate.equals(task.dueDate) : task.dueDate != null) return false;
         if (createdTimestamp != null ? !createdTimestamp.equals(task.createdTimestamp) : task.createdTimestamp != null)
             return false;
@@ -213,8 +213,8 @@ public class Task {
         result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (focusType != null ? focusType.hashCode() : 0);
-        result = 31 * result + (lastFocusType != null ? lastFocusType.hashCode() : 0);
+        result = 31 * result + (taskState != null ? taskState.hashCode() : 0);
+        result = 31 * result + (lastTaskState != null ? lastTaskState.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
         result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastChangeTimestamp != null ? lastChangeTimestamp.hashCode() : 0);
@@ -230,8 +230,8 @@ public class Task {
                 ", userAccount=" + userAccount +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", focusType=" + focusType +
-                ", lastFocusType=" + lastFocusType +
+                ", taskState=" + taskState +
+                ", lastTaskState=" + lastTaskState +
                 ", dueDate=" + dueDate +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastChangeTimestamp=" + lastChangeTimestamp +
@@ -239,13 +239,13 @@ public class Task {
     }
 
     /**
-     * performs 'history back' for focusType
+     * performs 'history back' for taskState
      */
     @Transient
     public void switchToLastFocusType() {
-        FocusType old = this.focusType;
-        this.focusType = this.lastFocusType;
-        this.lastFocusType = old;
+        TaskState old = this.taskState;
+        this.taskState = this.lastTaskState;
+        this.lastTaskState = old;
     }
 
 }

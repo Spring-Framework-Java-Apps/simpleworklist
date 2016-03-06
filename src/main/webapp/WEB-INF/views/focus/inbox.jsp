@@ -40,7 +40,7 @@
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/focus/inbox?page=1" />
+        <c:url var="firstUrl" value="/tasks/inbox?page=1" />
         <c:url var="lastUrl" value="/focus/inbox?page=${totalPages}" />
         <c:url var="prevUrl" value="/focus/inbox?page=${currentIndex - 1}" />
         <c:url var="nextUrl" value="/focus/inbox?page=${currentIndex + 1}" />

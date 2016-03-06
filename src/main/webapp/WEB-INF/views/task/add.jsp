@@ -3,7 +3,7 @@
 <h1><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp; Add Task</h1>
 <div>
 <form:form id="formId" commandName="task" method="post">
-	<form:hidden path="focusType" />
+	<form:hidden path="taskState" />
 	<form:hidden path="userAccount.id" />
 	<form:hidden path="createdTimestamp.time" />
 	<div class="form-group">

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.entities.enumerations.FocusType;
-import org.woehlke.simpleworklist.services.FocusService;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
+import org.woehlke.simpleworklist.services.TaskStateService;
 import org.woehlke.simpleworklist.services.TaskService;
 
 import javax.inject.Inject;
@@ -24,22 +24,22 @@ import javax.inject.Inject;
  * Created by tw on 21.02.16.
  */
 @Controller
-public class FocusController extends AbstractController {
+public class TaskStateController extends AbstractController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FocusController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskStateController.class);
 
     @Inject
-    private FocusService focusService;
+    private TaskStateService taskStateService;
 
     @Inject
     private TaskService taskService;
 
-    @RequestMapping(value = "/focus/inbox", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/inbox", method = RequestMethod.GET)
     public final String inbox(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getInbox(thisUser, request);
+        Page<Task> taskPage = taskStateService.getInbox(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -52,12 +52,12 @@ public class FocusController extends AbstractController {
         return "focus/inbox";
     }
 
-    @RequestMapping(value = "/focus/today", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/today", method = RequestMethod.GET)
     public final String today(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getToday(thisUser, request);
+        Page<Task> taskPage = taskStateService.getToday(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -70,12 +70,12 @@ public class FocusController extends AbstractController {
         return "focus/today";
     }
 
-    @RequestMapping(value = "/focus/next", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/next", method = RequestMethod.GET)
     public final String next(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getNext(thisUser, request);
+        Page<Task> taskPage = taskStateService.getNext(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -88,12 +88,12 @@ public class FocusController extends AbstractController {
         return "focus/next";
     }
 
-    @RequestMapping(value = "/focus/waiting", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/waiting", method = RequestMethod.GET)
     public final String waiting(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getWaiting(thisUser, request);
+        Page<Task> taskPage = taskStateService.getWaiting(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -106,12 +106,12 @@ public class FocusController extends AbstractController {
         return "focus/waiting";
     }
 
-    @RequestMapping(value = "/focus/scheduled", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/scheduled", method = RequestMethod.GET)
     public final String scheduled(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getScheduled(thisUser, request);
+        Page<Task> taskPage = taskStateService.getScheduled(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -124,12 +124,12 @@ public class FocusController extends AbstractController {
         return "focus/scheduled";
     }
 
-    @RequestMapping(value = "/focus/someday", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/someday", method = RequestMethod.GET)
     public final String someday(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getSomeday(thisUser, request);
+        Page<Task> taskPage = taskStateService.getSomeday(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -142,12 +142,12 @@ public class FocusController extends AbstractController {
         return "focus/someday";
     }
 
-    @RequestMapping(value = "/focus/completed", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/completed", method = RequestMethod.GET)
     public final String completed(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getCompleted(thisUser, request);
+        Page<Task> taskPage = taskStateService.getCompleted(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -160,12 +160,12 @@ public class FocusController extends AbstractController {
         return "focus/completed";
     }
 
-    @RequestMapping(value = "/focus/trash", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/trash", method = RequestMethod.GET)
     public final String trash(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
-        Page<Task> taskPage = focusService.getTrash(thisUser, request);
+        Page<Task> taskPage = taskStateService.getTrash(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
@@ -178,99 +178,99 @@ public class FocusController extends AbstractController {
         return "focus/trash";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/inbox", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to inbox");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId,thisUser);
         if(task!=null){
-            task.setFocusType(FocusType.INBOX);
+            task.setTaskState(TaskState.INBOX);
             task=taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped "+taskId+" to inbox: "+task.toString());
         }
-        return "redirect:/focus/inbox";
+        return "redirect:/tasks/inbox";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/today", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/today", method = RequestMethod.GET)
     public final String moveTaskToToday(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to today");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            task.setFocusType(FocusType.TODAY);
+            task.setTaskState(TaskState.TODAY);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to today: " + task.toString());
         }
-        return "redirect:/focus/today";
+        return "redirect:/tasks/today";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/next", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/next", method = RequestMethod.GET)
     public final String moveTaskToNext(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to next");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
-        task.setFocusType(FocusType.NEXT);
+        task.setTaskState(TaskState.NEXT);
         task=taskService.saveAndFlush(task, thisUser);
         LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
-        return "redirect:/focus/next";
+        return "redirect:/tasks/next";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/waiting", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to waiting");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null){
-            task.setFocusType(FocusType.WAITING);
+            task.setTaskState(TaskState.WAITING);
             task=taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
         }
-        return "redirect:/focus/waiting";
+        return "redirect:/tasks/waiting";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/someday", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to someday");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            task.setFocusType(FocusType.SOMEDAY);
+            task.setTaskState(TaskState.SOMEDAY);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to someday: " + task.toString());
         }
-        return "redirect:/focus/someday";
+        return "redirect:/tasks/someday";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/completed", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to completed");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            task.setFocusType(FocusType.COMPLETED);
+            task.setTaskState(TaskState.COMPLETED);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to completed: " + task.toString());
         }
-        return "redirect:/focus/completed";
+        return "redirect:/tasks/completed";
     }
 
-    @RequestMapping(value = "/focus/move/{taskId}/to/trash", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/move/{taskId}/to/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to trash");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            task.setFocusType(FocusType.TRASHED);
+            task.setTaskState(TaskState.TRASHED);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to trash: " + task.toString());
         }
-        return "redirect:/focus/trash";
+        return "redirect:/tasks/trash";
     }
 
-    @RequestMapping(value = "/focus/completed/deleteall", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/completed/deleteall", method = RequestMethod.GET)
     public final String deleteallCompleted(Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
-        focusService.deleteAllCompleted(thisUser);
-        return "redirect:/focus/trash";
+        taskStateService.deleteAllCompleted(thisUser);
+        return "redirect:/tasks/trash";
     }
 }

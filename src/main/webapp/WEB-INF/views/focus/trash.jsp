@@ -42,7 +42,7 @@
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/focus/trash?page=1" />
+        <c:url var="firstUrl" value="/tasks/trash?page=1" />
         <c:url var="lastUrl" value="/focus/trash?page=${totalPages}" />
         <c:url var="prevUrl" value="/focus/trash?page=${currentIndex - 1}" />
         <c:url var="nextUrl" value="/focus/trash?page=${currentIndex + 1}" />

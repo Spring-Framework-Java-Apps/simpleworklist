@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.entities.enumerations.FocusType;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.TaskService;
 
@@ -69,7 +69,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId()==userAccount.getId()) {
-            task.setFocusType(FocusType.TRASHED);
+            task.setTaskState(TaskState.TRASHED);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
@@ -97,7 +97,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void emptyTrash(UserAccount userAccount) {
-        List<Task> taskList = taskRepository.findByFocusTypeAndUserAccount(FocusType.TRASHED,userAccount);
+        List<Task> taskList = taskRepository.findByTaskStateAndUserAccount(TaskState.TRASHED,userAccount);
         for(Task task:taskList){
             taskRepository.delete(task);
         }
@@ -107,7 +107,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void complete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId()==userAccount.getId()) {
-            task.setFocusType(FocusType.COMPLETED);
+            task.setTaskState(TaskState.COMPLETED);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }

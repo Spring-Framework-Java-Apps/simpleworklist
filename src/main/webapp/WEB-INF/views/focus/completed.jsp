@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
 <h1><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</h1>
-<a href='<c:url value="/focus/completed/deleteall"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete All Completed Tasks</a>
+<a href='<c:url value="/tasks/completed/deleteall"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete All Completed Tasks</a>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -40,7 +40,7 @@
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/focus/completed?page=1" />
+        <c:url var="firstUrl" value="/tasks/completed?page=1" />
         <c:url var="lastUrl" value="/focus/completed?page=${totalPages}" />
         <c:url var="prevUrl" value="/focus/completed?page=${currentIndex - 1}" />
         <c:url var="nextUrl" value="/focus/completed?page=${currentIndex + 1}" />

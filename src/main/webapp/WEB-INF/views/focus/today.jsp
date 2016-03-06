@@ -39,7 +39,7 @@
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/focus/today?page=1" />
+        <c:url var="firstUrl" value="/tasks/today?page=1" />
         <c:url var="lastUrl" value="/focus/today?page=${totalPages}" />
         <c:url var="prevUrl" value="/focus/today?page=${currentIndex - 1}" />
         <c:url var="nextUrl" value="/focus/today?page=${currentIndex + 1}" />
