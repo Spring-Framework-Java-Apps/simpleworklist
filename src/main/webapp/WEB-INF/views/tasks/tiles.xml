@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="tasks/inbox" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/inbox.jsp" />
+    </definition>
+
+    <definition name="tasks/today" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/today.jsp" />
+    </definition>
+
+    <definition name="tasks/next" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/next.jsp" />
+    </definition>
+
+    <definition name="tasks/waiting" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/waiting.jsp" />
+    </definition>
+
+    <definition name="tasks/scheduled" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/scheduled.jsp" />
+    </definition>
+
+    <definition name="tasks/someday" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/someday.jsp" />
+    </definition>
+
+    <definition name="tasks/completed" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/completed.jsp" />
+    </definition>
+
+    <definition name="tasks/trash" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/trash.jsp" />
+    </definition>
+
+</tiles-definitions>
