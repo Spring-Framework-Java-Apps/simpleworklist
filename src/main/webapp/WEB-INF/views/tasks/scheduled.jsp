@@ -31,7 +31,7 @@
                         <c:out value="${task.textShortened}" />
                     </td>
                     <td>
-                        <c:out value="${task.dueDate}" />
+                        <fmt:formatDate value="${task.dueDate}" />
                     </td>
                     <td>
                         <c:if test="${task.project != null}">
@@ -44,9 +44,9 @@
     </div>
     <nav>
         <c:url var="firstUrl" value="/tasks/scheduled?page=1" />
-        <c:url var="lastUrl" value="/focus/scheduled?page=${totalPages}" />
-        <c:url var="prevUrl" value="/focus/scheduled?page=${currentIndex - 1}" />
-        <c:url var="nextUrl" value="/focus/scheduled?page=${currentIndex + 1}" />
+        <c:url var="lastUrl" value="/tasks/scheduled?page=${totalPages}" />
+        <c:url var="prevUrl" value="/tasks/scheduled?page=${currentIndex - 1}" />
+        <c:url var="nextUrl" value="/tasks/scheduled?page=${currentIndex + 1}" />
         <div>
             <ul class="pagination">
                 <c:choose>
@@ -60,7 +60,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/focus/scheduled?page=${i}" />
+                    <c:url var="pageUrl" value="/tasks/scheduled?page=${i}" />
                     <c:choose>
                         <c:when test="${i == currentIndex}">
                             <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>

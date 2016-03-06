@@ -56,7 +56,7 @@
 							</c:if>
 						</td>
 						<td>
-							<c:out value="${task.dueDate}" />
+							<fmt:formatDate value="${task.dueDate}" />
 						</td>
 						<td>
 							<c:choose>

@@ -41,9 +41,9 @@
     </div>
     <nav>
         <c:url var="firstUrl" value="/tasks/completed?page=1" />
-        <c:url var="lastUrl" value="/focus/completed?page=${totalPages}" />
-        <c:url var="prevUrl" value="/focus/completed?page=${currentIndex - 1}" />
-        <c:url var="nextUrl" value="/focus/completed?page=${currentIndex + 1}" />
+        <c:url var="lastUrl" value="/tasks/completed?page=${totalPages}" />
+        <c:url var="prevUrl" value="/tasks/completed?page=${currentIndex - 1}" />
+        <c:url var="nextUrl" value="/tasks/completed?page=${currentIndex + 1}" />
         <div>
             <ul class="pagination">
                 <c:choose>
@@ -57,7 +57,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/focus/completed?page=${i}" />
+                    <c:url var="pageUrl" value="/tasks/completed?page=${i}" />
                     <c:choose>
                         <c:when test="${i == currentIndex}">
                             <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
