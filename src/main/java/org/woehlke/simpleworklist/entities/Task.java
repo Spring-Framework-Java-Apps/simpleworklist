@@ -11,7 +11,9 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
+import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 
 
 @Entity
@@ -69,6 +71,14 @@ public class Task {
      */
     @Enumerated(EnumType.STRING)
     private TaskState lastTaskState;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskEnergy taskEnergy;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskTime taskTime;
 
     @Temporal(value = TemporalType.DATE)
     @Column(nullable = true)
@@ -194,6 +204,23 @@ public class Task {
         this.lastTaskState = lastTaskState;
     }
 
+    public TaskEnergy getTaskEnergy() {
+        return taskEnergy;
+    }
+
+    public void setTaskEnergy(TaskEnergy taskEnergy) {
+        this.taskEnergy = taskEnergy;
+    }
+
+    public TaskTime getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(TaskTime taskTime) {
+        this.taskTime = taskTime;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -210,6 +237,8 @@ public class Task {
         if (focus != null ? !focus.equals(task.focus) : task.focus != null) return false;
         if (taskState != task.taskState) return false;
         if (lastTaskState != task.lastTaskState) return false;
+        if (taskEnergy != task.taskEnergy) return false;
+        if (taskTime != task.taskTime) return false;
         if (dueDate != null ? !dueDate.equals(task.dueDate) : task.dueDate != null) return false;
         if (createdTimestamp != null ? !createdTimestamp.equals(task.createdTimestamp) : task.createdTimestamp != null)
             return false;
@@ -228,6 +257,8 @@ public class Task {
         result = 31 * result + (focus != null ? focus.hashCode() : 0);
         result = 31 * result + (taskState != null ? taskState.hashCode() : 0);
         result = 31 * result + (lastTaskState != null ? lastTaskState.hashCode() : 0);
+        result = 31 * result + (taskEnergy != null ? taskEnergy.hashCode() : 0);
+        result = 31 * result + (taskTime != null ? taskTime.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
         result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastChangeTimestamp != null ? lastChangeTimestamp.hashCode() : 0);
@@ -246,6 +277,8 @@ public class Task {
                 ", focus=" + focus +
                 ", taskState=" + taskState +
                 ", lastTaskState=" + lastTaskState +
+                ", taskEnergy=" + taskEnergy +
+                ", taskTime=" + taskTime +
                 ", dueDate=" + dueDate +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastChangeTimestamp=" + lastChangeTimestamp +

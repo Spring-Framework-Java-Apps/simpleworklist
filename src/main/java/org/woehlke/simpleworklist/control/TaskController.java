@@ -14,9 +14,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.services.TaskService;
 
 @Controller
@@ -83,6 +85,8 @@ public class TaskController extends AbstractController {
                 persistentTask.setDueDate(task.getDueDate());
                 persistentTask.setTaskState(TaskState.SCHEDULED);
             }
+            persistentTask.setTaskTime(task.getTaskTime());
+            persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
             taskService.saveAndFlush(persistentTask, userAccount);
             return "redirect:/project/" + projectId + "/";
@@ -99,6 +103,8 @@ public class TaskController extends AbstractController {
         task.setTaskState(TaskState.INBOX);
         task.setUserAccount(userAccount);
         task.setCreatedTimestamp(new Date());
+        task.setTaskEnergy(TaskEnergy.NONE);
+        task.setTaskTime(TaskTime.NONE);
         Project thisProject = null;
         if (projectId == 0) {
             thisProject = new Project();

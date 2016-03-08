@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.repository.ProjectRepository;
 import org.woehlke.simpleworklist.services.TestService;
@@ -119,6 +121,8 @@ public class TestServiceImpl implements TestService {
             d.setUserAccount(userAccount);
             d.setTaskState(TaskState.INBOX);
             d.setFocus(false);
+            d.setTaskEnergy(TaskEnergy.NONE);
+            d.setTaskTime(TaskTime.NONE);
             taskRepository.saveAndFlush(d);
         }
         /* without Project for Main INBOX */
@@ -133,6 +137,8 @@ public class TestServiceImpl implements TestService {
             d.setUserAccount(userAccount);
             d.setTaskState(TaskState.INBOX);
             d.setFocus(false);
+            d.setTaskEnergy(TaskEnergy.NONE);
+            d.setTaskTime(TaskTime.NONE);
             taskRepository.saveAndFlush(d);
         }
     }

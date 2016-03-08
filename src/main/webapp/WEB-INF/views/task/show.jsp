@@ -16,11 +16,27 @@
 		<form:input id="taskDueDate" path="dueDate" class="form-control"/>
 		<form:errors path="dueDate" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
-     <div class="form-group">
+ 	<div class="form-group">
 		 <form:label path="text">Text</form:label>
 		 <form:textarea path="text" rows="10" cols="50" class="form-control"/>
 		 <form:errors path="text" delimiter=", " element="div" class="alert alert-danger"/>
     </div>
+	<div>
+	<span class="form-group">
+		<form:label path="taskEnergy">Energy</form:label>
+		<form:select  path="taskEnergy">
+			<form:options items="${TaskEnergy.values()}"></form:options>
+		</form:select>
+		<form:errors path="taskEnergy" delimiter=", " element="div" class="alert alert-danger"/>
+	</span>&nbsp;
+	<span class="form-group">
+		<form:label path="taskTime">Time</form:label>
+		<form:select  path="taskTime">
+			<form:options items="${TaskTime.values()}"></form:options>
+		</form:select>
+		<form:errors path="taskTime" delimiter=", " element="div" class="alert alert-danger"/>
+	</span>
+	</div>
 	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save Task</button>
 	&nbsp;&nbsp;&nbsp;<a href="<c:url value="/task/transform/${task.id}"/>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Transform into Project</a>
 </form:form>
