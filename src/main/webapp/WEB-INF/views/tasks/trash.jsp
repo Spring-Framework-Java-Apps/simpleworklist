@@ -17,6 +17,7 @@
                 <th>Text</th>
                 <th>&nbsp;</th>
                 <th>Project</th>
+                <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
@@ -35,6 +36,14 @@
                     <td>
                         <c:if test="${task.project != null}">
                             <a href='<c:url value="/project/${task.project.id}"/>'><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <c:out value="${task.project.name}" /></a>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${task.taskEnergy ne 'NONE'}">
+                            <span class="badge"><c:out value="${task.taskEnergy}"></c:out></span>
+                        </c:if>
+                        <c:if test="${task.taskTime ne 'NONE'}">
+                            <span class="badge"><c:out value="${task.taskTime}"></c:out></span>
                         </c:if>
                     </td>
                 </tr>

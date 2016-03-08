@@ -8,42 +8,59 @@ import javax.persistence.Enumerated;
 public enum TaskTime {
 
     @Enumerated
-    MIN5,
+    MIN5("5 min"),
 
     @Enumerated
-    MIN10,
+    MIN10("10 min"),
 
     @Enumerated
-    MIN15,
+    MIN15("15 min"),
 
     @Enumerated
-    MIN30,
+    MIN30("30 min"),
 
     @Enumerated
-    MIN45,
+    MIN45("45 min"),
 
     @Enumerated
-    HOUR1,
+    HOUR1("1 hour"),
 
     @Enumerated
-    HOUR2,
+    HOUR2("2 hours"),
 
     @Enumerated
-    HOUR3,
+    HOUR3("3 hours"),
 
     @Enumerated
-    HOUR4,
+    HOUR4("4 hours"),
 
     @Enumerated
-    HOUR6,
+    HOUR6("6 hours"),
 
     @Enumerated
-    HOUR8,
+    HOUR8("8 hours"),
 
     @Enumerated
-    MORE,
+    MORE("more"),
 
     @Enumerated
-    NONE
+    NONE("none");
 
+    private String s;
+
+    private TaskTime(String s){
+        this.s = s;
+    }
+
+    public String getValue(){
+        return this.name();
+    }
+
+    public String getLabel(){
+        return s;
+    }
+
+    public String toString(){
+        return s;
+    }
 }

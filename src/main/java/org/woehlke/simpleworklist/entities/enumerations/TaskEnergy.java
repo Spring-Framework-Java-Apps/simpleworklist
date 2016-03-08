@@ -8,14 +8,32 @@ import javax.persistence.Enumerated;
 public enum TaskEnergy {
 
     @Enumerated
-    LOW,
+    LOW("low"),
 
     @Enumerated
-    MEDIUM,
+    MEDIUM("medium"),
 
     @Enumerated
-    HIGH,
+    HIGH("high"),
 
     @Enumerated
-    NONE
+    NONE("none");
+
+    private String s;
+
+    private TaskEnergy(String s) {
+        this.s = s;
+    }
+
+    public String getValue(){
+        return this.name();
+    }
+
+    public String getLabel(){
+        return s;
+    }
+
+    public String toString(){
+        return s;
+    }
 }

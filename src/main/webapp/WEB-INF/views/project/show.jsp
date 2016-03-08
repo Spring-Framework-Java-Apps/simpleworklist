@@ -24,6 +24,7 @@
 						<th>Text</th>
 						<th>Due Date</th>
 						<th>Task State</th>
+						<th>&nbsp;</th>
 					</tr>
 					<c:forEach items="${dataList}" var="task">
 					<tr>
@@ -92,6 +93,14 @@
 									<a href='<c:url value="/tasks/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a>
 								</c:when>
 							</c:choose>
+						</td>
+						<td>
+							<c:if test="${task.taskEnergy ne 'NONE'}">
+								<span class="badge"><c:out value="${task.taskEnergy}"></c:out></span>
+							</c:if>
+							<c:if test="${task.taskTime ne 'NONE'}">
+								<span class="badge"><c:out value="${task.taskTime}"></c:out></span>
+							</c:if>
 						</td>
 					</tr>
 					</c:forEach>

@@ -1,4 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskEnergy" %>
+<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskTime" %>
 <!-- Document Window -->
 <h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp; Edit Task</h1>
 <div>
@@ -25,14 +27,14 @@
 	<span class="form-group">
 		<form:label path="taskEnergy">Energy</form:label>
 		<form:select  path="taskEnergy">
-			<form:options items="${TaskEnergy.values()}"></form:options>
+			<form:options items="${TaskEnergy.values()}" itemLabel="label" itemValue="value"></form:options>
 		</form:select>
 		<form:errors path="taskEnergy" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>&nbsp;
 	<span class="form-group">
 		<form:label path="taskTime">Time</form:label>
 		<form:select  path="taskTime">
-			<form:options items="${TaskTime.values()}"></form:options>
+			<form:options items="${TaskTime.values()}" itemLabel="label" itemValue="value"></form:options>
 		</form:select>
 		<form:errors path="taskTime" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>
