@@ -11,5 +11,6 @@ response.setHeader("Expires","0");
 <%@ taglib prefix="form"     uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tiles"    uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="sec"      uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring"   uri="http://www.springframework.org/tags" %>
 
 <c:set var="ctx" value="${pageContext['request'].contextPath}"/>

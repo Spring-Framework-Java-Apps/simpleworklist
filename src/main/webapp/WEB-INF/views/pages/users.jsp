@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
 <c:if test="${! empty users}">
-<h1>List of registered Users</h1>
+<h1><spring:message code="pages.users.h1" text="Bla Bla" /></h1>
 <table class="table table-striped">
 	<tr>
 		<th>Messages</th>

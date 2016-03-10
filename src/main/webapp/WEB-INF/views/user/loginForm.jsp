@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <div>
-	<h1>Welcome to SimpleWorklist</h1>
+	<h1><spring:message code="user.loginForm.h1" text="Bla Bla" /></h1>
 	<h2>Your Todo-List for Getting Things Done&reg;</h2>
 	<p>Please login or <a href="/register">register as new user</a>.</p>
 </div>
