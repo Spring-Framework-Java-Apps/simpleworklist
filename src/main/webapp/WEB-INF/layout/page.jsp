@@ -18,7 +18,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
+        <div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -89,21 +89,35 @@
 					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 				</form>
 				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
 				<ul class="nav navbar-nav navbar-right">
+					<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href='<c:url value="/logout"/>'>
 							Signed in as <sec:authentication property="principal.username" />
 						</a>
 					</li>
+					</sec:authorize>
+					<li class="dropdown">
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<span class="glyphicon glyphicon-globe"> </span><b class="caret"></b></a>
+						<ul id="languageMenu" class="dropdown-menu">
+							<li class="active">
+								<a href="${ctx}?lang=de" class="lang-switcher-de">
+									<img src="<c:url value="/img/de.png"/>">&nbsp; deutsch</a>
+							</li>
+							<li>
+								<a href="${ctx}?lang=en" class="lang-switcher-en">
+									<img src="<c:url value="/img/gb.png"/>">&nbsp; english</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
-				</sec:authorize>
 			</div>
 		</div>
 	</nav>
 
 	<sec:authorize access="isAuthenticated()">
-	<div class="container-fluid">
+	<div class="container">
 	<ol class="breadcrumb">
 		<c:choose>
 			<c:when test="${breadcrumb.size() > 1}">
@@ -127,7 +141,7 @@
 	</div>
 	</sec:authorize>
 
-	<div class="container-fluid">
+	<div class="container">
 	<div class="row">
 
         <div class="col-md-3">
@@ -159,7 +173,7 @@
 	</div>
 
 	<footer class="footer">
-		<div class="container-fluid">
+		<div class="container">
 			<p class="text-muted">&copy; 2016 Thomas W&ouml;hlke</p>
 		</div>
 	</footer>
