@@ -29,7 +29,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<c:url value="/"/>">Simple Worklist</a>
+				<a class="navbar-brand" href="<c:url value="/"/>">SimpleWorklist</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,13 +71,13 @@
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
 						<li>
-							<a href='<c:url value="/register"/>'><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register as New User</a>
+							<a href='<c:url value="/register"/>'><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <spring:message code="layout.page.register" text="Register as New User" /></a>
 						</li>
 						<li>
-							<a href='<c:url value="/login"/>'><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a>
+							<a href='<c:url value="/login"/>'><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> <spring:message code="layout.page.login" text="Login" /></a>
 						</li>
 						<li>
-							<a href='<c:url value="/resetPassword"/>'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Password forgotten?</a>
+							<a href='<c:url value="/resetPassword"/>'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <spring:message code="layout.page.passwordForgotten" text="Password forgotten?" /></a>
 						</li>
 					</sec:authorize>
 				</ul>

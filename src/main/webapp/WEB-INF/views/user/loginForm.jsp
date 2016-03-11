@@ -1,13 +1,13 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <div>
-	<h1><spring:message code="user.loginForm.h1" text="Bla Bla" /></h1>
-	<h2>Your Todo-List for Getting Things Done&reg;</h2>
-	<p>Please login or <a href="/register">register as new user</a>.</p>
+	<h1><spring:message code="user.loginForm.h1" text="Welcome to SimpleWorklist" /></h1>
+	<h2><spring:message code="user.loginForm.h2" text="Your Todo-List for Getting Things Done&reg;" /></h2>
+	<p><spring:message code="user.loginForm.login" text="Please login or" /> <a href="/register"><spring:message code="user.loginForm.register" text="register as new user" /></a>.</p>
 </div>
 <div class="well">
 	<c:if test="${not empty param.login_error}">
 		<div class="alert alert-danger" role="alert">
-			Your login attempt was not successful, try again.<br /> Caused :
+			<spring:message code="user.loginForm.loginError" text="Your login attempt was not successful, try again." /><br /><spring:message code="user.loginForm.loginError.caused" text="Caused:" />
 			<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
 		</div>
 	</c:if>
@@ -20,25 +20,25 @@
 			<input id="j_username" type='text' name="j_username" class="form-control"/>
 		</div>
 		<div class="form-group">
-			<label for="j_password">Password</label>
+			<label for="j_password"><spring:message code="user.loginForm.password" text="Password" /></label>
 			<input id="j_password" type="password" name="j_password" class="form-control"/>
 		</div>
-		<button id="loginButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</button>
+		<button id="loginButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> <spring:message code="user.loginForm.loginButton" text="Login" /></button>
 	</form>
 	<br/>
-	<a href='<c:url value="/resetPassword"/>'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Password forgotten?</a>
+	<a href='<c:url value="/resetPassword"/>'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <spring:message code="user.loginForm.passwordReset" text="Password forgotten?" /></a>
 </div>
 <div>
 	<p>
-		For More Information please visit:
+		<spring:message code="user.loginForm.moreInformation" text="For More Information please visit:" />
 	<ul>
-		<li>Github: <a href="https://github.com/phasenraum2010/simpleworklist">https://github.com/phasenraum2010/simpleworklist</a></li>
-		<li>My Blog: <a href="http://thomas-woehlke.blogspot.de/">http://thomas-woehlke.blogspot.de/</a></li>
-		<li>The Project Page: <a href="http://woehlke.org/p/simpleworklist/">http://woehlke.org/p/simpleworklist/</a></li>
+		<li><spring:message code="user.loginForm.github" text="Github:" /> <a href="https://github.com/phasenraum2010/simpleworklist">https://github.com/phasenraum2010/simpleworklist</a></li>
+		<li><spring:message code="user.loginForm.myBlog" text="My Blog:" /> <a href="http://thomas-woehlke.blogspot.de/">http://thomas-woehlke.blogspot.de/</a></li>
+		<li><spring:message code="user.loginForm.projectPage" text="The Project Page:" /> <a href="http://woehlke.org/p/simpleworklist/">http://woehlke.org/p/simpleworklist/</a></li>
 	</ul>
 	</p>
 	<p>
-		<small>GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
-			not affiliated with or endorsed by the David Allen Company.</small>
+		<small><spring:message code="user.loginForm.gtd.copyright" text="GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
+			not affiliated with or endorsed by the David Allen Company." /></small>
 	</p>
 </div>
