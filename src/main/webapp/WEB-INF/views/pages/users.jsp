@@ -4,18 +4,18 @@
 <h1><spring:message code="pages.users.h1" text="Bla Bla" /></h1>
 <table class="table table-striped">
 	<tr>
-		<th>Messages</th>
+		<th><spring:message code="pages.users.messages" text="Messages" /></th>
 		<th>Email</th>
 		<th>Name</th>
-		<th>Last Login</th>
-		<th>Date of registration</th>
+		<th><spring:message code="pages.users.lastLogin" text="Last Login" /></th>
+		<th><spring:message code="pages.users.dateOfRegistration" text="Date of registration" /></th>
 	</tr>
 <c:forEach items="${users}" var="user">
 	<tr>
 		<td>
 			<c:if test="${user.id != thisUser.id}">
 			<a href='<c:url value="/user/${user.id}/messages/"/>'>
-				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Messages
+				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <spring:message code="pages.users.messages" text="Messages" />
 				<c:if test="${usersToNewMessages.get(user.id) > 0}">
 				<span class="badge"><c:out value="${usersToNewMessages.get(user.id)}"/></span>
 				</c:if>
