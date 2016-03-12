@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</h1>
+<h1><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <spring:message code="tasks.scheduled.h1" text="Scheduled" /></h1>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -12,10 +12,10 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th>Title</th>
-                <th>Text</th>
-                <th>Due Date</th>
-                <th>Project</th>
+                <th><spring:message code="tasks.scheduled.title" text="Title" /></th>
+                <th><spring:message code="tasks.scheduled.text" text="Text" /></th>
+                <th><spring:message code="tasks.scheduled.dueDate" text="Due Date" /></th>
+                <th><spring:message code="tasks.scheduled.project" text="Project" /></th>
                 <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
@@ -101,5 +101,5 @@
     </nav>
 </c:if>
 <c:if test="${empty dataList}">
-    <p>You have no scheduled Tasks</p>
+    <p><spring:message code="tasks.scheduled.noTasks" text="You have no scheduled Tasks" /></p>
 </c:if>

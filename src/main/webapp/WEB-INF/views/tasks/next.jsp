@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</h1>
+<h1><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <spring:message code="tasks.next.h1" text="Next" /></h1>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -12,9 +12,9 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th>Title</th>
-                <th>Text</th>
-                <th>Project</th>
+                <th><spring:message code="tasks.next.title" text="Title" /></th>
+                <th><spring:message code="tasks.next.text" text="Text" /></th>
+                <th><spring:message code="tasks.next.project" text="Project" /></th>
                 <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
@@ -97,5 +97,5 @@
     </nav>
 </c:if>
 <c:if test="${empty dataList}">
-    <p>You have no Tasks to do Next</p>
+    <p><spring:message code="tasks.next.noTasks" text="You have no Tasks to do Next" /></p>
 </c:if>

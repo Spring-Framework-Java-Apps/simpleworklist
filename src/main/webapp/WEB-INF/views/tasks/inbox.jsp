@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</h1>
-<a href='<c:url value="/task/addtoproject/0"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Task</a><br />
+<h1><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <spring:message code="tasks.inbox.h1" text="Inbox" /></h1>
+<a href='<c:url value="/task/addtoproject/0"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <spring:message code="tasks.inbox.addTask" text="Add Task" /></a><br />
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -13,9 +13,9 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th>Title</th>
-                <th>Text</th>
-                <th>Project</th>
+                <th><spring:message code="tasks.inbox.title" text="Title" /></th>
+                <th><spring:message code="tasks.inbox.text" text="Text" /></th>
+                <th><spring:message code="tasks.inbox.project" text="Project" /></th>
                 <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
@@ -98,5 +98,5 @@
     </nav>
 </c:if>
 <c:if test="${empty dataList}">
-    <p>You have no Tasks in Your Inbox</p>
+    <p><spring:message code="tasks.inbox.noTasks" text="You have no Tasks in Your Inbox" /></p>
 </c:if>

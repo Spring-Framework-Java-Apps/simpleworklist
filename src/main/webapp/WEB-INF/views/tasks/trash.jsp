@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!-- Document Window -->
-<h1><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</h1>
-<a href='<c:url value="/task/trash/empty"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Empty Trash</a>
+<h1><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="tasks.trash.h1" text="Trash" /></h1>
+<a href='<c:url value="/task/trash/empty"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="tasks.trash.empty" text="Empty Trash" /></a>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -13,10 +13,10 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th>Title</th>
-                <th>Text</th>
+                <th><spring:message code="tasks.trash.title" text="Title" /></th>
+                <th><spring:message code="tasks.trash.text" text="Text" /></th>
                 <th>&nbsp;</th>
-                <th>Project</th>
+                <th><spring:message code="tasks.trash.project" text="Project" /></th>
                 <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
@@ -93,5 +93,5 @@
     </nav>
 </c:if>
 <c:if test="${empty dataList}">
-    <p>You have no deleted Tasks in your Trash</p>
+    <p><spring:message code="tasks.trash.noTasks" text="You have no deleted Tasks in your Trash" /></p>
 </c:if>
