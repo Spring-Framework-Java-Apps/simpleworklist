@@ -1,6 +1,8 @@
 package org.woehlke.simpleworklist.entities.enumerations;
 
 import javax.persistence.Enumerated;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by tw on 08.03.16.
@@ -8,32 +10,30 @@ import javax.persistence.Enumerated;
 public enum TaskEnergy {
 
     @Enumerated
-    LOW("low"),
+    LOW,
 
     @Enumerated
-    MEDIUM("medium"),
+    MEDIUM,
 
     @Enumerated
-    HIGH("high"),
+    HIGH,
 
     @Enumerated
-    NONE("none");
+    NONE;
 
-    private String s;
-
-    private TaskEnergy(String s) {
-        this.s = s;
+    public int getId(){
+        return this.ordinal();
     }
 
     public String getValue(){
         return this.name();
     }
 
-    public String getLabel(){
-        return s;
+    public String getCode(){
+        return "enum."+this.getClass().getSimpleName().toLowerCase() + "." + this.name().toLowerCase();
     }
 
-    public String toString(){
-        return s;
+    public static List<TaskEnergy> list() {
+        return Arrays.asList(values());
     }
 }

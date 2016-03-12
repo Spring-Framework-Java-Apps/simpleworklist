@@ -48,10 +48,10 @@
                     </td>
                     <td>
                         <c:if test="${task.taskEnergy ne 'NONE'}">
-                            <span class="badge"><c:out value="${task.taskEnergy}"></c:out></span>
+                            <span class="badge"><spring:message code="${task.taskEnergy.code}" /></span>
                         </c:if>
                         <c:if test="${task.taskTime ne 'NONE'}">
-                            <span class="badge"><c:out value="${task.taskTime}"></c:out></span>
+                            <span class="badge"><spring:message code="${task.taskTime.code}" /></span>
                         </c:if>
                     </td>
                 </tr>

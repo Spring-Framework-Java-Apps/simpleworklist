@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
+import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.services.ProjectService;
 import org.woehlke.simpleworklist.services.UserMessageService;
 import org.woehlke.simpleworklist.services.UserService;
@@ -44,5 +46,15 @@ public abstract class AbstractController {
     public final int getNumberOfNewIncomingMessages(){
         UserAccount user = userService.retrieveCurrentUser();
         return userMessageService.getNumberOfNewIncomingMessagesForUser(user);
+    }
+
+    @ModelAttribute("listTaskEnergy")
+    public final List<TaskEnergy> getListTaskEnergy(){
+        return TaskEnergy.list();
+    }
+
+    @ModelAttribute("listTaskTime")
+    public final List<TaskTime> getListTaskTime(){
+        return TaskTime.list();
     }
 }

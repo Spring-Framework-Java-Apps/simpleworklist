@@ -1,6 +1,8 @@
 package org.woehlke.simpleworklist.entities.enumerations;
 
 import javax.persistence.Enumerated;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by tw on 08.03.16.
@@ -8,59 +10,57 @@ import javax.persistence.Enumerated;
 public enum TaskTime {
 
     @Enumerated
-    MIN5("5 min"),
+    MIN5,
 
     @Enumerated
-    MIN10("10 min"),
+    MIN10,
 
     @Enumerated
-    MIN15("15 min"),
+    MIN15,
 
     @Enumerated
-    MIN30("30 min"),
+    MIN30,
 
     @Enumerated
-    MIN45("45 min"),
+    MIN45,
 
     @Enumerated
-    HOUR1("1 hour"),
+    HOUR1,
 
     @Enumerated
-    HOUR2("2 hours"),
+    HOUR2,
 
     @Enumerated
-    HOUR3("3 hours"),
+    HOUR3,
 
     @Enumerated
-    HOUR4("4 hours"),
+    HOUR4,
 
     @Enumerated
-    HOUR6("6 hours"),
+    HOUR6,
 
     @Enumerated
-    HOUR8("8 hours"),
+    HOUR8,
 
     @Enumerated
-    MORE("more"),
+    MORE,
 
     @Enumerated
-    NONE("none");
+    NONE;
 
-    private String s;
-
-    private TaskTime(String s){
-        this.s = s;
+    public int getId(){
+        return this.ordinal();
     }
 
     public String getValue(){
         return this.name();
     }
 
-    public String getLabel(){
-        return s;
+    public String getCode(){
+        return "enum."+this.getClass().getSimpleName().toLowerCase() + "." + this.name().toLowerCase();
     }
 
-    public String toString(){
-        return s;
+    public static List<TaskTime> list() {
+        return Arrays.asList(values());
     }
 }

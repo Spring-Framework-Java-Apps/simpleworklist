@@ -27,14 +27,32 @@
 	<span class="form-group">
 		<form:label path="taskEnergy"><spring:message code="task.show.taskEnergy" text="Energy" /></form:label>
 		<form:select  path="taskEnergy">
-			<form:options items="${TaskEnergy.values()}" itemLabel="label" itemValue="value"></form:options>
+			<c:forEach items="${listTaskEnergy}" var="taskEnergyItem">
+				<c:choose>
+					<c:when test="${taskEnergyItem.id == task.taskEnergy.id}">
+						<option value="${taskEnergyItem.value}" selected><spring:message code="${taskEnergyItem.code}" /></option>
+					</c:when>
+					<c:otherwise>
+						<option value="${taskEnergyItem.value}"><spring:message code="${taskEnergyItem.code}" /></option>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 		</form:select>
 		<form:errors path="taskEnergy" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>&nbsp;
 	<span class="form-group">
 		<form:label path="taskTime"><spring:message code="task.show.taskTime" text="Time" /></form:label>
 		<form:select  path="taskTime">
-			<form:options items="${TaskTime.values()}" itemLabel="label" itemValue="value"></form:options>
+			<c:forEach items="${listTaskTime}" var="taskTimeItem">
+				<c:choose>
+					<c:when test="${taskTimeItem.id == task.taskTime.id}">
+						<option value="${taskTimeItem.value}" selected><spring:message code="${taskTimeItem.code}" text="${taskTimeItem.value}" /></option>
+					</c:when>
+					<c:otherwise>
+						<option value="${taskTimeItem.value}"><spring:message code="${taskTimeItem.code}" text="${taskTimeItem.value}" /></option>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 		</form:select>
 		<form:errors path="taskTime" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>
