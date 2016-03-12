@@ -40,33 +40,33 @@
 							<a href="#" class="dropdown-toggle"
 							   data-toggle="dropdown"
 							   role="button" aria-haspopup="true"
-							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New Content<span class="caret"></span></a>
+							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <spring:message code="layout.page.newContent" text="New Content" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<c:set var="pid" value="0"/>
 								<c:if test="${! empty thisProject}">
 									<c:set var="pid" value="${thisProject.id}"/>
 								</c:if>
 								<li>
-									<a href='<c:url value="/project/addchild/${pid}"/>'>Add a Project</a>
+									<a href='<c:url value="/project/addchild/${pid}"/>'><spring:message code="layout.page.addProject" text="Add a Project" /></a>
 								</li>
 								<li>
-									<a href='<c:url value="/task/addtoproject/${pid}"/>'>Add a Task</a>
+									<a href='<c:url value="/task/addtoproject/${pid}"/>'><spring:message code="layout.page.addTask" text="Add a Task" /></a>
 								</li>
 								<li role="separator" class="divider"></li>
 								<li>
-									<a href="<c:url value="/test/helper/project/createTree" />">Create Test Data</a>
+									<a href="<c:url value="/test/helper/project/createTree" />"><spring:message code="layout.page.createTestData" text="Create Test Data" /></a>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Show Users
+							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <spring:message code="layout.page.showUsers" text="Show Users" />
 							<c:if test="${numberOfNewIncomingMessages > 0}">
 								<span class="badge">${numberOfNewIncomingMessages}</span>
 							</c:if>
 							</a>
 						</li>
 						<li>
-							<a href='<c:url value="/logout"/>'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
+							<a href='<c:url value="/logout"/>'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <spring:message code="layout.page.logout" text="Logout" /></a>
 						</li>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
@@ -93,7 +93,7 @@
 					<sec:authorize access="isAuthenticated()">
 					<li>
 						<a href='<c:url value="/logout"/>'>
-							Signed in as <sec:authentication property="principal.username" />
+							<spring:message code="layout.page.signedInUser" text="Signed in as" /> <sec:authentication property="principal.username" />
 						</a>
 					</li>
 					</sec:authorize>
@@ -148,16 +148,16 @@
 			<sec:authorize access="fullyAuthenticated">
              	<div id="categoryNavigationWell" class="well sidebar-nav">
 					<ul id="rootProject" class="nav nav-list">
-						<li><a id="focus_inbox" href='<c:url value="/tasks/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</a></li>
-						<li><a id="focus_today" href='<c:url value="/tasks/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> Today</a></li>
-						<li><a id="focus_next" href='<c:url value="/tasks/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</a></li>
-						<li><a id="focus_waiting" href='<c:url value="/tasks/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting</a></li>
-						<li><a id="focus_scheduled" href='<c:url value="/tasks/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a></li>
-						<li><a id="focus_someday" href='<c:url value="/tasks/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a></li>
-						<li><a id="star" href='<c:url value="/tasks/focus"/>'><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Focus</a></li>
+						<li><a id="focus_inbox" href='<c:url value="/tasks/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <spring:message code="layout.page.inbox" text="Inbox" /></a></li>
+						<li><a id="focus_today" href='<c:url value="/tasks/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> <spring:message code="layout.page.today" text="Today" /></a></li>
+						<li><a id="focus_next" href='<c:url value="/tasks/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <spring:message code="layout.page.next" text="Next" /></a></li>
+						<li><a id="focus_waiting" href='<c:url value="/tasks/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> <spring:message code="layout.page.waiting" text="Waiting" /></a></li>
+						<li><a id="focus_scheduled" href='<c:url value="/tasks/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <spring:message code="layout.page.scheduled" text="Scheduled" /></a></li>
+						<li><a id="focus_someday" href='<c:url value="/tasks/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> <spring:message code="layout.page.someday" text="Someday" /></a></li>
+						<li><a id="star" href='<c:url value="/tasks/focus"/>'><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <spring:message code="layout.page.focus" text="Focus" /></a></li>
 						<li><jsp:include page="/WEB-INF/views/categoryMenuContainer.jsp" /></li>
-						<li><a id="focus_completed" href='<c:url value="/tasks/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a></li>
-						<li><a id="focus_trash" href='<c:url value="/tasks/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></li>
+						<li><a id="focus_completed" href='<c:url value="/tasks/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <spring:message code="layout.page.completed" text="Completed Tasks" /></a></li>
+						<li><a id="focus_trash" href='<c:url value="/tasks/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="layout.page.trash" text="Trash" /></a></li>
 					</ul>
 				</div>
 			</sec:authorize>

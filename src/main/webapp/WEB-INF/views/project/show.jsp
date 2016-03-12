@@ -3,9 +3,9 @@
 				<c:if test="${thisProject.id > 0}">
 					<h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; <c:out value="${thisProject.name}" /></h1>
 					<c:out value="${thisProject.description}" /><br /><br />
-					<a href='<c:url value="/project/${thisProject.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Project</a> |
-					<a href='<c:url value="/project/${thisProject.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Project</a> |
-					<a href='<c:url value="/task/addtoproject/${thisProject.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Task</a><br />
+					<a href='<c:url value="/project/${thisProject.id}/edit"/>'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <spring:message code="project.show.edit" text="Edit Project" /></a> |
+					<a href='<c:url value="/project/${thisProject.id}/delete"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="project.show.delete" text="Delete Project" /></a> |
+					<a href='<c:url value="/task/addtoproject/${thisProject.id}"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <spring:message code="project.show.addTask" text="Add Task" /></a><br />
 				</c:if>
 				<br />
 				<c:if test="${! empty message}">
@@ -20,10 +20,10 @@
 					<table class="table table-striped table-hover">
 					<tr>
 						<th>&nbsp;</th>
-						<th>Title</th>
-						<th>Text</th>
-						<th>Due Date</th>
-						<th>Task State</th>
+						<th><spring:message code="project.show.title" text="Title" /></th>
+						<th><spring:message code="project.show.text" text="Text" /></th>
+						<th><spring:message code="project.show.dueDate" text="Due Date" /></th>
+						<th><spring:message code="project.show.taskState" text="Task State" /></th>
 						<th>&nbsp;</th>
 					</tr>
 					<c:forEach items="${dataList}" var="task">
@@ -69,28 +69,28 @@
 						<td>
 							<c:choose>
 								<c:when test="${task.taskState.name() eq 'INBOX'}">
-									<a href='<c:url value="/tasks/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox</a>
+									<a href='<c:url value="/tasks/inbox"/>'><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <spring:message code="project.show.state.inbox" text="Inbox" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'TODAY'}">
-									<a href='<c:url value="/tasks/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> Today</a>
+									<a href='<c:url value="/tasks/today"/>'><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> <spring:message code="project.show.state.today" text="Today" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'NEXT'}">
-									<a href='<c:url value="/tasks/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Next</a>
+									<a href='<c:url value="/tasks/next"/>'><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <spring:message code="project.show.state.next" text="Next" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'WAITING'}">
-									<a href='<c:url value="/tasks/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Waiting</a>
+									<a href='<c:url value="/tasks/waiting"/>'><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> <spring:message code="project.show.state.waiting" text="Waiting" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'SCHEDULED'}">
-									<a href='<c:url value="/tasks/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Scheduled</a>
+									<a href='<c:url value="/tasks/scheduled"/>'><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <spring:message code="project.show.state.scheduled" text="Scheduled" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'SOMEDAY'}">
-									<a href='<c:url value="/tasks/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Someday</a>
+									<a href='<c:url value="/tasks/someday"/>'><span class="glyphicon glyphicon-road" aria-hidden="true"></span> <spring:message code="project.show.state.someday" text="Someday" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'COMPLETED'}">
-									<a href='<c:url value="/tasks/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Completed Tasks</a>
+									<a href='<c:url value="/tasks/completed"/>'><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <spring:message code="project.show.state.completed" text="Completed Tasks" /></a>
 								</c:when>
 								<c:when test="${task.taskState.name() eq 'TRASHED'}">
-									<a href='<c:url value="/tasks/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a>
+									<a href='<c:url value="/tasks/trash"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="project.show.state.trash" text="Trash" /></a>
 								</c:when>
 							</c:choose>
 						</td>
@@ -149,5 +149,5 @@
 				</nav>
 				</c:if>
 				<c:if test="${empty dataList}">
-					There is nothing to do in this project.
+					<spring:message code="project.show.nothingToDo" text="There is nothing to do in this project." />
 				</c:if>
