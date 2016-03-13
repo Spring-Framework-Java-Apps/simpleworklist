@@ -40,6 +40,24 @@
 							<a href="#" class="dropdown-toggle"
 							   data-toggle="dropdown"
 							   role="button" aria-haspopup="true"
+							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <spring:message code="layout.page.areas" text="Area" /> ( <c:out value="${area}"/> )<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<c:forEach items="${areas}" var="area">
+									<li>
+										<a href='<c:url value="/area/choose/${area.id}"/>'><c:out value="${area.name}"/></a>
+									</li>
+								</c:forEach>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href='<c:url value="/area/choose/0"/>'>all</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							   data-toggle="dropdown"
+							   role="button" aria-haspopup="true"
 							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <spring:message code="layout.page.newContent" text="New Content" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<c:set var="pid" value="0"/>
@@ -59,7 +77,8 @@
 							</ul>
 						</li>
 						<li>
-							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <spring:message code="layout.page.showUsers" text="Show Users" />
+							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <spring:message code="layout.page.showUsers" text="Users" />
+							( <sec:authentication property="principal.username" /> )
 							<c:if test="${numberOfNewIncomingMessages > 0}">
 								<span class="badge">${numberOfNewIncomingMessages}</span>
 							</c:if>
@@ -90,13 +109,6 @@
 				</form>
 				</sec:authorize>
 				<ul class="nav navbar-nav navbar-right">
-					<sec:authorize access="isAuthenticated()">
-					<li>
-						<a href='<c:url value="/logout"/>'>
-							<spring:message code="layout.page.signedInUser" text="Signed in as" /> <sec:authentication property="principal.username" />
-						</a>
-					</li>
-					</sec:authorize>
 					<li class="dropdown">
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<span class="glyphicon glyphicon-globe"> </span><b class="caret"></b></a>

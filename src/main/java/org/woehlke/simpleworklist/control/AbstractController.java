@@ -1,11 +1,18 @@
 package org.woehlke.simpleworklist.control;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
+import org.woehlke.simpleworklist.model.UserSessionBean;
+import org.woehlke.simpleworklist.services.AreaService;
 import org.woehlke.simpleworklist.services.ProjectService;
 import org.woehlke.simpleworklist.services.UserMessageService;
 import org.woehlke.simpleworklist.services.UserService;
@@ -16,6 +23,7 @@ import java.util.List;
 /**
  * Created by tw on 14.02.16.
  */
+@SessionAttributes("areaId")
 public abstract class AbstractController {
 
     @Value("${mvc.controller.pageSize}")
@@ -29,6 +37,9 @@ public abstract class AbstractController {
 
     @Inject
     protected UserMessageService userMessageService;
+
+    @Inject
+    protected AreaService areaService;
 
     @ModelAttribute("allCategories")
     public final List<Project> getAllCategories() {
@@ -57,4 +68,28 @@ public abstract class AbstractController {
     public final List<TaskTime> getListTaskTime(){
         return TaskTime.list();
     }
+
+    @ModelAttribute("areas")
+    public final List<Area> getAreas(){
+        UserAccount user = userService.retrieveCurrentUser();
+        return areaService.getAllForUser(user);
+    }
+
+    @ModelAttribute("area")
+    public final String getCurrentArea(@ModelAttribute("areaId") UserSessionBean areaId,
+                                       BindingResult result, Model model){
+        //TODO: i18n
+        String retVal = "all";
+        if(!result.hasErrors()){
+            UserAccount user = userService.retrieveCurrentUser();
+            if (areaId.getAreaId() > 0) {
+                Area found = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
+                if(found != null){
+                    retVal = found.getName();
+                }
+            }
+        }
+        return retVal;
+    }
+
 }

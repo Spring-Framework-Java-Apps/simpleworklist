@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
@@ -18,6 +19,8 @@ import org.woehlke.simpleworklist.services.TestService;
 
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 
 @Service
@@ -33,6 +36,9 @@ public class TestServiceImpl implements TestService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
+        List<Area> areas = userAccount.getAreas();
+        Iterator<Area> iterator = areas.iterator();
+        Area areaWork = iterator.next();
         Assert.notNull(userAccount);
         LOGGER.info("----------------------------------------------");
         LOGGER.info("createTestCategoryTreeForUserAccount");
@@ -51,8 +57,8 @@ public class TestServiceImpl implements TestService {
         String name02020301 = "test02020301_" + now;
         String name02020302 = "test02020302_" + now;
         String name02020303 = "test02020303_" + now;
-        Project c01 = Project.newRootProjectFactory(userAccount);
-        Project c02 = Project.newRootProjectFactory(userAccount);
+        Project c01 = Project.newRootProjectFactory(userAccount,areaWork);
+        Project c02 = Project.newRootProjectFactory(userAccount,areaWork);
         c01.setName(name01);
         c02.setName(name02);
         c01.setDescription("description01 for " + name01);
@@ -123,6 +129,7 @@ public class TestServiceImpl implements TestService {
             d.setFocus(false);
             d.setTaskEnergy(TaskEnergy.NONE);
             d.setTaskTime(TaskTime.NONE);
+            d.setArea(areaWork);
             taskRepository.saveAndFlush(d);
         }
         /* without Project for Main INBOX */
@@ -139,6 +146,7 @@ public class TestServiceImpl implements TestService {
             d.setFocus(false);
             d.setTaskEnergy(TaskEnergy.NONE);
             d.setTaskTime(TaskTime.NONE);
+            d.setArea(areaWork);
             taskRepository.saveAndFlush(d);
         }
     }

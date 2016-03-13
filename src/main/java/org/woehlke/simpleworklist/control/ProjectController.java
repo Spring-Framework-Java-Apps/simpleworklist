@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -95,7 +96,9 @@ public class ProjectController extends AbstractController {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            project = Project.newRootProjectFactory(userAccount);
+            //TODO: add Area
+            Area dummy = null;
+            project = Project.newRootProjectFactory(userAccount,dummy);
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             project = Project.newProjectFactory(thisProject);

@@ -5,17 +5,11 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -52,6 +46,9 @@ public class UserAccount {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date lastLoginTimestamp;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userAccount", cascade = { CascadeType.ALL })
+    private List<Area> areas = new ArrayList<Area>();
 
     public Long getId() {
         return id;
@@ -101,31 +98,41 @@ public class UserAccount {
         this.lastLoginTimestamp = lastLoginTimestamp;
     }
 
+    public List<Area> getAreas() {
+        return areas;
+    }
+
+    public void setAreas(List<Area> areas) {
+        this.areas = areas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserAccount)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         UserAccount that = (UserAccount) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
-        if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
-        if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
-        if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
+        if (!userEmail.equals(that.userEmail)) return false;
+        if (!userPassword.equals(that.userPassword)) return false;
+        if (!userFullname.equals(that.userFullname)) return false;
+        if (!createdTimestamp.equals(that.createdTimestamp)) return false;
+        if (lastLoginTimestamp != null ? !lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp != null)
             return false;
-        return lastLoginTimestamp != null ? lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp == null;
+        return areas.equals(that.areas);
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
-        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
-        result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
-        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
+        result = 31 * result + userEmail.hashCode();
+        result = 31 * result + userPassword.hashCode();
+        result = 31 * result + userFullname.hashCode();
+        result = 31 * result + createdTimestamp.hashCode();
         result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
+        result = 31 * result + areas.hashCode();
         return result;
     }
 
@@ -134,6 +141,7 @@ public class UserAccount {
         return "UserAccount{" +
                 "id=" + id +
                 ", userEmail='" + userEmail + '\'' +
+                ", userPassword='" + userPassword + '\'' +
                 ", userFullname='" + userFullname + '\'' +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastLoginTimestamp=" + lastLoginTimestamp +

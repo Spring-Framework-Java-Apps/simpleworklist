@@ -19,11 +19,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.model.UserDetailsBean;
+import org.woehlke.simpleworklist.repository.AreaRepository;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserService;
@@ -39,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private UserMessageRepository userMessageRepository;
+
+    @Inject
+    private AreaRepository areaRepository;
 
     @Inject
     private PasswordEncoder encoder;
@@ -59,6 +64,17 @@ public class UserServiceImpl implements UserService {
         u.setLastLoginTimestamp(now);
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
+        //TODO: i18n,
+        Area work = new Area("work");
+        Area priv = new Area("private");
+        work.setUserAccount(u);
+        priv.setUserAccount(u);
+        u.getAreas().add(work);
+        u.getAreas().add(priv);
+        LOGGER.info("About to save " + work.toString());
+        areaRepository.saveAndFlush(work);
+        LOGGER.info("About to save " + priv.toString());
+        areaRepository.saveAndFlush(priv);
         LOGGER.info("Saved " + u.toString());
     }
 

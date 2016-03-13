@@ -29,8 +29,9 @@ import org.hibernate.validator.constraints.SafeHtml;
         columnNames = {
                 "uuid",
                 "parentId",
-                "userAccountId" }
-        )
+                "userAccountId",
+                "areaId"
+        })
 )
 @Indexed
 public class Project {
@@ -52,6 +53,10 @@ public class Project {
     @JoinColumn(name = "userAccountId")
     @IndexedEmbedded(includeEmbeddedObjectId=true)
     private UserAccount userAccount;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "areaId")
+    private Area area;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
@@ -131,62 +136,72 @@ public class Project {
         this.userAccount = userAccount;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (id != null ? !id.equals(project.id) : project.id != null) return false;
+        if (!uuid.equals(project.uuid)) return false;
+        if (parent != null ? !parent.equals(project.parent) : project.parent != null) return false;
+        if (!userAccount.equals(project.userAccount)) return false;
+        if (!area.equals(project.area)) return false;
+        if (!name.equals(project.name)) return false;
+        if (description != null ? !description.equals(project.description) : project.description != null) return false;
+        return children != null ? children.equals(project.children) : project.children == null;
+
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((parent == null) ? 0 : parent.hashCode());
-        result = prime * result
-                + ((userAccount == null) ? 0 : userAccount.hashCode());
-        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + uuid.hashCode();
+        result = 31 * result + (parent != null ? parent.hashCode() : 0);
+        result = 31 * result + userAccount.hashCode();
+        result = 31 * result + area.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (children != null ? children.hashCode() : 0);
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Project other = (Project) obj;
-        if (parent == null) {
-            if (other.parent != null)
-                return false;
-        } else if (!parent.equals(other.parent))
-            return false;
-        if (userAccount == null) {
-            if (other.userAccount != null)
-                return false;
-        } else if (!userAccount.equals(other.userAccount))
-            return false;
-        if (uuid == null) {
-            if (other.uuid != null)
-                return false;
-        } else if (!uuid.equals(other.uuid))
-            return false;
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "CategoryNode [id=" + id + ", uuid=" + uuid + ", parent="
-                + parent + ", name=" + name + ", description=" + description
-                + "]";
+        return "Project{" +
+                "id=" + id +
+                ", uuid='" + uuid + '\'' +
+                ", parent=" + parent +
+                ", userAccount=" + userAccount +
+                ", area=" + area +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", children=" + children +
+                '}';
     }
 
     public static Project newProjectFactory(Project parent) {
         Project n = new Project();
         n.setParent(parent);
         n.setUserAccount(parent.getUserAccount());
+        n.setArea(parent.getArea());
         return n;
     }
 
-    public static Project newRootProjectFactory(UserAccount userAccount) {
+    public static Project newRootProjectFactory(UserAccount userAccount,Area area) {
         Project n = new Project();
         n.setParent(null);
         n.setUserAccount(userAccount);
+        n.setArea(area);
         return n;
     }
 
