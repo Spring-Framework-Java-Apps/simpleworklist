@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
