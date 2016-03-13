@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 
@@ -29,4 +30,21 @@ public interface TaskStateService {
     void deleteAllCompleted(UserAccount thisUser);
 
     Page<Task> getFocus(UserAccount thisUser, Pageable request);
+
+    Page<Task> getInbox(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getToday(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getNext(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getWaiting(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getScheduled(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getSomeday(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getCompleted(UserAccount thisUser, Area area, Pageable request);
+
+    Page<Task> getTrash(UserAccount thisUser, Area area, Pageable request);
+
 }

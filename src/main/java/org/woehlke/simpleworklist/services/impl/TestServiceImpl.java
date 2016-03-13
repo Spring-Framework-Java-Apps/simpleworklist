@@ -13,6 +13,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
+import org.woehlke.simpleworklist.repository.AreaRepository;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.repository.ProjectRepository;
 import org.woehlke.simpleworklist.services.TestService;
@@ -34,9 +35,12 @@ public class TestServiceImpl implements TestService {
     @Inject
     private TaskRepository taskRepository;
 
+    @Inject
+    private AreaRepository areaRepository;
+
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
-        List<Area> areas = userAccount.getAreas();
+        List<Area> areas = areaRepository.findByUserAccount(userAccount);
         Iterator<Area> iterator = areas.iterator();
         Area areaWork = iterator.next();
         Assert.notNull(userAccount);

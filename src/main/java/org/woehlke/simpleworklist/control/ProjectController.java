@@ -10,15 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
 import javax.inject.Inject;
@@ -42,44 +40,54 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/project/{projectId}/page/{pageNumber}", method = RequestMethod.GET)
-    public final ModelAndView showProject(
+    public final String showProject(
             @PathVariable long projectId,
             @PathVariable int pageNumber,
             @RequestParam(required = false) String message,
-            @RequestParam(required = false) boolean isDeleted) {
+            @RequestParam(required = false) boolean isDeleted,
+            @ModelAttribute("areaId") UserSessionBean areaId,
+            BindingResult result,Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
-        ModelAndView mav = new ModelAndView("project/show");
+        Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
         Project thisProject = null;
         Page<Task> taskPage = null;
-        Pageable request =
+        Pageable pageRequest =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
-            taskPage = taskService.findByProject(thisProject, request,userAccount );
+            if(areaId.getAreaId() == 0) {
+                taskPage = taskService.findByProject(thisProject, pageRequest, userAccount);
+            } else {
+                taskPage = taskService.findByProject(thisProject, pageRequest, userAccount, area);
+            }
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            taskPage = taskService.findByRootProject(request, userAccount);
+            if(areaId.getAreaId() == 0) {
+                taskPage = taskService.findByRootProject(pageRequest, userAccount);
+            } else {
+                taskPage = taskService.findByRootProject(pageRequest, userAccount, area);
+            }
         }
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        mav.addObject("beginIndex", begin);
-        mav.addObject("endIndex", end);
-        mav.addObject("currentIndex", current);
-        mav.addObject("breadcrumb", breadcrumb);
-        mav.addObject("thisProject", thisProject);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
         if(taskPage != null){
-            mav.addObject("dataList", taskPage.getContent());
-            mav.addObject("totalPages", taskPage.getTotalPages());
+            model.addAttribute("dataList", taskPage.getContent());
+            model.addAttribute("totalPages", taskPage.getTotalPages());
         }
         if(message != null){
-            mav.addObject("message",message);
-            mav.addObject("isDeleted",isDeleted);
+            model.addAttribute("message",message);
+            model.addAttribute("isDeleted",isDeleted);
         }
-        return mav;
+        return "project/show";
     }
 
     @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)
@@ -96,9 +104,7 @@ public class ProjectController extends AbstractController {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            //TODO: add Area
-            Area dummy = null;
-            project = Project.newRootProjectFactory(userAccount,dummy);
+            project = Project.newRootProjectFactory(userAccount);
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             project = Project.newProjectFactory(thisProject);
@@ -114,6 +120,7 @@ public class ProjectController extends AbstractController {
             method = RequestMethod.POST)
     public final String addNewProjectStore(
             @PathVariable long projectId,
+            @ModelAttribute("areaId") UserSessionBean areaId,
             @Valid Project project,
             BindingResult result,
             Model model) {
@@ -134,6 +141,10 @@ public class ProjectController extends AbstractController {
             return "project/add";
         } else {
             project.setUserAccount(userAccount);
+            if(areaId.getAreaId()>0) {
+                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+                project.setArea(area);
+            }
             if (projectId == 0) {
                 project = projectService.saveAndFlush(project, userAccount);
             } else {

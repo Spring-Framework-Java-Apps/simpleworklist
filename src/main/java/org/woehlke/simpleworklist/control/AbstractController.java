@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.control;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,15 +41,27 @@ public abstract class AbstractController {
     protected AreaService areaService;
 
     @ModelAttribute("allCategories")
-    public final List<Project> getAllCategories() {
+    public final List<Project> getAllCategories(@ModelAttribute("areaId") UserSessionBean areaId,
+                                                BindingResult result, Model model) {
         UserAccount user = userService.retrieveCurrentUser();
-        return projectService.findAllProjectsByUserAccount(user);
+        if (areaId.getAreaId() == 0) {
+            return projectService.findAllProjectsByUserAccount(user);
+        } else {
+            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
+            return projectService.findAllProjectsByUserAccountAndArea(user,area);
+        }
     }
 
     @ModelAttribute("rootCategories")
-    public final List<Project> getRootCategories() {
+    public final List<Project> getRootCategories(@ModelAttribute("areaId") UserSessionBean areaId,
+                                                 BindingResult result, Model model) {
         UserAccount user = userService.retrieveCurrentUser();
-        return projectService.findRootProjectsByUserAccount(user);
+        if (areaId.getAreaId() == 0) {
+            return projectService.findRootProjectsByUserAccount(user);
+        } else {
+            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
+            return projectService.findRootProjectsByUserAccountAndArea(user,area);
+        }
     }
 
     @ModelAttribute("numberOfNewIncomingMessages")

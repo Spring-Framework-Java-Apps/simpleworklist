@@ -47,9 +47,6 @@ public class UserAccount {
     @Column(nullable = false)
     private Date lastLoginTimestamp;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userAccount", cascade = { CascadeType.ALL })
-    private List<Area> areas = new ArrayList<Area>();
-
     public Long getId() {
         return id;
     }
@@ -98,14 +95,6 @@ public class UserAccount {
         this.lastLoginTimestamp = lastLoginTimestamp;
     }
 
-    public List<Area> getAreas() {
-        return areas;
-    }
-
-    public void setAreas(List<Area> areas) {
-        this.areas = areas;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,25 +103,23 @@ public class UserAccount {
         UserAccount that = (UserAccount) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (!userEmail.equals(that.userEmail)) return false;
-        if (!userPassword.equals(that.userPassword)) return false;
-        if (!userFullname.equals(that.userFullname)) return false;
-        if (!createdTimestamp.equals(that.createdTimestamp)) return false;
-        if (lastLoginTimestamp != null ? !lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp != null)
+        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
+        if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
+        if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
+        if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
             return false;
-        return areas.equals(that.areas);
+        return lastLoginTimestamp != null ? lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + userEmail.hashCode();
-        result = 31 * result + userPassword.hashCode();
-        result = 31 * result + userFullname.hashCode();
-        result = 31 * result + createdTimestamp.hashCode();
+        result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
+        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
+        result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
+        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
-        result = 31 * result + areas.hashCode();
         return result;
     }
 

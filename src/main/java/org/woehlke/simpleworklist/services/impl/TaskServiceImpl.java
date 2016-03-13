@@ -5,10 +5,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -16,6 +18,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.TaskService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -140,6 +143,24 @@ public class TaskServiceImpl implements TaskService {
             task.setFocus(false);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
+        }
+    }
+
+    @Override
+    public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area) {
+        if((area.getUserAccount().getId() != userAccount.getId())||(thisProject.getArea().getId()!=area.getId())){
+            return new PageImpl<Task>(new ArrayList<Task>());
+        } else {
+            return taskRepository.findByProject(thisProject,request);
+        }
+    }
+
+    @Override
+    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Area area) {
+        if(area.getUserAccount().getId() != userAccount.getId()){
+            return new PageImpl<Task>(new ArrayList<Task>());
+        } else {
+            return taskRepository.findByProjectIsNullAndArea(area,request);
         }
     }
 

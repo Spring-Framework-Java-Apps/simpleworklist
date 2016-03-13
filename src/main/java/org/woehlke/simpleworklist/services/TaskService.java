@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -31,4 +32,9 @@ public interface TaskService {
     void setFocus(Task task, UserAccount userAccount);
 
     void unsetFocus(Task task, UserAccount userAccount);
+
+    Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area);
+
+    Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Area area);
+
 }

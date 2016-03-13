@@ -38,7 +38,7 @@ public class Task {
     @ManyToOne(optional = true)
     private Project project;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "areaId")
     private Area area;
 
@@ -241,19 +241,20 @@ public class Task {
         Task task = (Task) o;
 
         if (id != null ? !id.equals(task.id) : task.id != null) return false;
-        if (!uuid.equals(task.uuid)) return false;
+        if (uuid != null ? !uuid.equals(task.uuid) : task.uuid != null) return false;
         if (project != null ? !project.equals(task.project) : task.project != null) return false;
-        if (!area.equals(task.area)) return false;
-        if (!userAccount.equals(task.userAccount)) return false;
-        if (!title.equals(task.title)) return false;
-        if (!text.equals(task.text)) return false;
-        if (!focus.equals(task.focus)) return false;
+        if (area != null ? !area.equals(task.area) : task.area != null) return false;
+        if (userAccount != null ? !userAccount.equals(task.userAccount) : task.userAccount != null) return false;
+        if (title != null ? !title.equals(task.title) : task.title != null) return false;
+        if (text != null ? !text.equals(task.text) : task.text != null) return false;
+        if (focus != null ? !focus.equals(task.focus) : task.focus != null) return false;
         if (taskState != task.taskState) return false;
         if (lastTaskState != task.lastTaskState) return false;
         if (taskEnergy != task.taskEnergy) return false;
         if (taskTime != task.taskTime) return false;
         if (dueDate != null ? !dueDate.equals(task.dueDate) : task.dueDate != null) return false;
-        if (!createdTimestamp.equals(task.createdTimestamp)) return false;
+        if (createdTimestamp != null ? !createdTimestamp.equals(task.createdTimestamp) : task.createdTimestamp != null)
+            return false;
         return lastChangeTimestamp != null ? lastChangeTimestamp.equals(task.lastChangeTimestamp) : task.lastChangeTimestamp == null;
 
     }
@@ -261,19 +262,19 @@ public class Task {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + uuid.hashCode();
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
-        result = 31 * result + area.hashCode();
-        result = 31 * result + userAccount.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + text.hashCode();
-        result = 31 * result + focus.hashCode();
-        result = 31 * result + taskState.hashCode();
+        result = 31 * result + (area != null ? area.hashCode() : 0);
+        result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
+        result = 31 * result + (focus != null ? focus.hashCode() : 0);
+        result = 31 * result + (taskState != null ? taskState.hashCode() : 0);
         result = 31 * result + (lastTaskState != null ? lastTaskState.hashCode() : 0);
-        result = 31 * result + taskEnergy.hashCode();
-        result = 31 * result + taskTime.hashCode();
+        result = 31 * result + (taskEnergy != null ? taskEnergy.hashCode() : 0);
+        result = 31 * result + (taskTime != null ? taskTime.hashCode() : 0);
         result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
-        result = 31 * result + createdTimestamp.hashCode();
+        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastChangeTimestamp != null ? lastChangeTimestamp.hashCode() : 0);
         return result;
     }
@@ -284,8 +285,6 @@ public class Task {
                 "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", project=" + project +
-                ", area=" + area +
-                ", userAccount=" + userAccount +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", focus=" + focus +

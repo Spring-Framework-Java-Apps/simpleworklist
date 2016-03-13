@@ -88,18 +88,18 @@ public class Area {
         Area area = (Area) o;
 
         if (id != null ? !id.equals(area.id) : area.id != null) return false;
-        if (!uuid.equals(area.uuid)) return false;
-        if (!userAccount.equals(area.userAccount)) return false;
-        return name.equals(area.name);
+        if (uuid != null ? !uuid.equals(area.uuid) : area.uuid != null) return false;
+        if (userAccount != null ? !userAccount.equals(area.userAccount) : area.userAccount != null) return false;
+        return name != null ? name.equals(area.name) : area.name == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + uuid.hashCode();
-        result = 31 * result + userAccount.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+        result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 

@@ -54,7 +54,7 @@ public class Project {
     @IndexedEmbedded(includeEmbeddedObjectId=true)
     private UserAccount userAccount;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "areaId")
     private Area area;
 
@@ -152,11 +152,11 @@ public class Project {
         Project project = (Project) o;
 
         if (id != null ? !id.equals(project.id) : project.id != null) return false;
-        if (!uuid.equals(project.uuid)) return false;
+        if (uuid != null ? !uuid.equals(project.uuid) : project.uuid != null) return false;
         if (parent != null ? !parent.equals(project.parent) : project.parent != null) return false;
-        if (!userAccount.equals(project.userAccount)) return false;
-        if (!area.equals(project.area)) return false;
-        if (!name.equals(project.name)) return false;
+        if (userAccount != null ? !userAccount.equals(project.userAccount) : project.userAccount != null) return false;
+        if (area != null ? !area.equals(project.area) : project.area != null) return false;
+        if (name != null ? !name.equals(project.name) : project.name != null) return false;
         if (description != null ? !description.equals(project.description) : project.description != null) return false;
         return children != null ? children.equals(project.children) : project.children == null;
 
@@ -165,11 +165,11 @@ public class Project {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + uuid.hashCode();
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
-        result = 31 * result + userAccount.hashCode();
-        result = 31 * result + area.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
+        result = 31 * result + (area != null ? area.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         return result;
@@ -185,7 +185,6 @@ public class Project {
                 ", area=" + area +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", children=" + children +
                 '}';
     }
 
@@ -194,6 +193,13 @@ public class Project {
         n.setParent(parent);
         n.setUserAccount(parent.getUserAccount());
         n.setArea(parent.getArea());
+        return n;
+    }
+
+    public static Project newRootProjectFactory(UserAccount userAccount) {
+        Project n = new Project();
+        n.setParent(null);
+        n.setUserAccount(userAccount);
         return n;
     }
 

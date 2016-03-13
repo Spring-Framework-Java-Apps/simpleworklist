@@ -13,12 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
+import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
 @Controller
@@ -97,6 +99,8 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.GET)
     public final String addNewTaskToProjectForm(
             @PathVariable long projectId,
+            @ModelAttribute("areaId") UserSessionBean areaId,
+            BindingResult result,
             Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
         Task task = new Task();
@@ -105,6 +109,10 @@ public class TaskController extends AbstractController {
         task.setCreatedTimestamp(new Date());
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
+        if(areaId.getAreaId()>0) {
+            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+            task.setArea(area);
+        }
         Project thisProject = null;
         if (projectId == 0) {
             thisProject = new Project();
@@ -124,6 +132,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
     public final String addNewTaskToProjectStore(
             @PathVariable long projectId,
+            @ModelAttribute("areaId") UserSessionBean areaId,
             @Valid Task task,
             BindingResult result, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
@@ -138,6 +147,7 @@ public class TaskController extends AbstractController {
             } else {
                 Project thisProject = projectService.findByProjectId(projectId, userAccount);
                 task.setProject(thisProject);
+                task.setArea(thisProject.getArea());
             }
             if(task.getDueDate()==null){
                 task.setTaskState(TaskState.INBOX);
@@ -145,6 +155,10 @@ public class TaskController extends AbstractController {
                 task.setTaskState(TaskState.SCHEDULED);
             }
             task.setFocus(false);
+            if(areaId.getAreaId()>0) {
+                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+                task.setArea(area);
+            }
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";
