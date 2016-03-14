@@ -77,7 +77,7 @@
 							</ul>
 						</li>
 						<li>
-							<a href="<c:url value="/users" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <spring:message code="layout.page.showUsers" text="Users" />
+							<a href="<c:url value="/user/selfservice" />"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <spring:message code="layout.page.showUsers" text="User" />
 							( <sec:authentication property="principal.username" /> )
 							<c:if test="${numberOfNewIncomingMessages > 0}">
 								<span class="badge">${numberOfNewIncomingMessages}</span>

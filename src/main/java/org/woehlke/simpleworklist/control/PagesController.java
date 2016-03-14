@@ -20,18 +20,4 @@ public class PagesController extends AbstractController {
         return "redirect:/tasks/inbox";
     }
 
-    /**
-     * @param model
-     * @return List of all registered users.
-     */
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public final String getRegisteredUsers(Model model) {
-        UserAccount user = userService.retrieveCurrentUser();
-        List<UserAccount> users = userService.findAll();
-        Map<Long,Integer> usersToNewMessages = userService.getNewIncomingMessagesForEachOtherUser(user);
-        model.addAttribute("usersToNewMessages", usersToNewMessages);
-        model.addAttribute("users", users);
-        model.addAttribute("thisUser", user);
-        return "pages/users";
-    }
 }

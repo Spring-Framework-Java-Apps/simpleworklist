@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="user/selfservice/profile" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/profile.jsp" />
+	</definition>
+
+	<definition name="user/selfservice/name" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/name.jsp" />
+	</definition>
+
+	<definition name="user/selfservice/password" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/password.jsp" />
+	</definition>
+
+	<definition name="user/selfservice/areas" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areas.jsp" />
+	</definition>
+
+	<definition name="user/selfservice/language" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/language.jsp" />
+	</definition>
+
+</tiles-definitions>
