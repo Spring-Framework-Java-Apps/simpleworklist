@@ -17,14 +17,15 @@ import java.util.UUID;
         columnNames = {
                 "uuid",
                 "userAccountId",
-                "name"
+                "nameEn",
+                "nameDe"
         })
 )
 public class Area {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @DocumentId(name="id")
+    @DocumentId(name = "id")
     private Long id;
 
     @NotNull
@@ -33,19 +34,27 @@ public class Area {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "userAccountId")
-    @IndexedEmbedded(includeEmbeddedObjectId=true)
+    @IndexedEmbedded(includeEmbeddedObjectId = true)
     private UserAccount userAccount;
 
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
-    @Length(min=1,max=255)
+    @Length(min = 1, max = 255)
     @Column(nullable = false)
-    private String name;
+    private String nameDe;
 
-    public Area(){}
+    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    @NotBlank
+    @Length(min = 1, max = 255)
+    @Column(nullable = false)
+    private String nameEn;
 
-    public Area(String name){
-        this.name = name;
+    public Area() {
+    }
+
+    public Area(String nameDe,String nameEn) {
+        this.nameDe = nameDe;
+        this.nameEn = nameEn;
     }
 
     public Long getId() {
@@ -72,12 +81,20 @@ public class Area {
         this.userAccount = userAccount;
     }
 
-    public String getName() {
-        return name;
+    public String getNameDe() {
+        return nameDe;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameDe(String name) {
+        this.nameDe = name;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 
     @Override
@@ -90,7 +107,8 @@ public class Area {
         if (id != null ? !id.equals(area.id) : area.id != null) return false;
         if (uuid != null ? !uuid.equals(area.uuid) : area.uuid != null) return false;
         if (userAccount != null ? !userAccount.equals(area.userAccount) : area.userAccount != null) return false;
-        return name != null ? name.equals(area.name) : area.name == null;
+        if (nameDe != null ? !nameDe.equals(area.nameDe) : area.nameDe != null) return false;
+        return nameEn != null ? nameEn.equals(area.nameEn) : area.nameEn == null;
 
     }
 
@@ -99,7 +117,8 @@ public class Area {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (nameDe != null ? nameDe.hashCode() : 0);
+        result = 31 * result + (nameEn != null ? nameEn.hashCode() : 0);
         return result;
     }
 
@@ -109,7 +128,8 @@ public class Area {
                 "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", userAccount=" + userAccount +
-                ", name='" + name + '\'' +
+                ", nameDe='" + nameDe + '\'' +
+                ", nameEn='" + nameEn + '\'' +
                 '}';
     }
 }

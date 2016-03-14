@@ -44,12 +44,27 @@
 							<ul class="dropdown-menu">
 								<c:forEach items="${areas}" var="area">
 									<li>
-										<a href='<c:url value="/area/choose/${area.id}"/>'><c:out value="${area.name}"/></a>
+										<c:choose>
+											<c:when test="${locale eq 'de'}">
+												<a href='<c:url value="/area/choose/${area.id}"/>'><c:out value="${area.nameDe}"/></a>
+											</c:when>
+											<c:otherwise>
+												<a href='<c:url value="/area/choose/${area.id}"/>'><c:out value="${area.nameEn}"/></a>
+											</c:otherwise>
+										</c:choose>
 									</li>
 								</c:forEach>
 								<li role="separator" class="divider"></li>
 								<li>
-									<a href='<c:url value="/area/choose/0"/>'>all</a>
+										<c:choose>
+										<c:when test="${locale eq 'de'}">
+											<a href='<c:url value="/area/choose/0"/>'>Alle</a>
+										</c:when>
+										<c:otherwise>
+											<a href='<c:url value="/area/choose/0"/>'>All</a>
+										</c:otherwise>
+										</c:choose>
+									</a>
 								</li>
 							</ul>
 						</li>

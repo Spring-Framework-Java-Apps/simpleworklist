@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
         //TODO: i18n,
-        Area work = new Area("work");
-        Area priv = new Area("private");
+        Area work = new Area("Arbeit","Work");
+        Area priv = new Area("Privat","Private");
         work.setUserAccount(u);
         priv.setUserAccount(u);
         LOGGER.info("About to save " + work.toString());

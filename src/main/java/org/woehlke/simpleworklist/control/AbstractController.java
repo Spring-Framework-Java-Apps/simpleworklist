@@ -18,6 +18,7 @@ import org.woehlke.simpleworklist.services.UserService;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by tw on 14.02.16.
@@ -88,19 +89,31 @@ public abstract class AbstractController {
 
     @ModelAttribute("area")
     public final String getCurrentArea(@ModelAttribute("areaId") UserSessionBean areaId,
-                                       BindingResult result, Model model){
+                                       BindingResult result, Locale locale, Model model){
         //TODO: i18n
-        String retVal = "all";
+        String retVal = "All";
+        if(locale.getLanguage().equalsIgnoreCase("de")){
+            retVal = "Alle";
+        }
         if(!result.hasErrors()){
             UserAccount user = userService.retrieveCurrentUser();
             if (areaId.getAreaId() > 0) {
                 Area found = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
                 if(found != null){
-                    retVal = found.getName();
+                    if(locale.getLanguage().equalsIgnoreCase("de")){
+                        retVal = found.getNameDe();
+                    } else {
+                        retVal = found.getNameEn();
+                    }
                 }
             }
         }
         return retVal;
+    }
+
+    @ModelAttribute("locale")
+    public final String getCurrentLocale(Locale locale, Model model){
+        return locale.getLanguage().toLowerCase();
     }
 
 }
