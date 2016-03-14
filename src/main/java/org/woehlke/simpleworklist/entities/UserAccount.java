@@ -144,7 +144,6 @@ public class UserAccount {
         result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
         result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
         result = 31 * result + (defaultLocale != null ? defaultLocale.hashCode() : 0);
-        result = 31 * result + (defaultArea != null ? defaultArea.hashCode() : 0);
         result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
         return result;
@@ -157,8 +156,6 @@ public class UserAccount {
                 ", userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userFullname='" + userFullname + '\'' +
-                ", defaultLocale='" + defaultLocale + '\'' +
-                ", defaultArea=" + defaultArea +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastLoginTimestamp=" + lastLoginTimestamp +
                 '}';
