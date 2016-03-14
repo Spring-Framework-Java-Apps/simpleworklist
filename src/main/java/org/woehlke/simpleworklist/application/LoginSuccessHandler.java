@@ -31,8 +31,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
         super.onAuthenticationSuccess(request, response, authentication);
-        LOGGER.info("successful logged in");
         UserAccount user = userService.retrieveCurrentUser();
         userService.updateLastLoginTimestamp(user);
+        LOGGER.info("successful logged in "+user.getUserEmail());
     }
 }

@@ -2,10 +2,13 @@ package org.woehlke.simpleworklist.control;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.UserNameFormBean;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +33,24 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.GET)
     public String userNameForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
+        UserNameFormBean bean = new UserNameFormBean(user.getUserFullname());
+        model.addAttribute("username", bean);
         model.addAttribute("thisUser", user);
         return "user/selfservice/name";
+    }
+
+    @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.POST)
+    public String userNameStore(@Valid UserNameFormBean username, BindingResult result, Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        if(result.hasErrors()) {
+            model.addAttribute("username", username);
+            model.addAttribute("thisUser", user);
+            return "user/selfservice/name";
+        } else {
+            user.setUserFullname(username.getUserFullname());
+            userService.saveAndFlush(user);
+            return "redirect:/user/selfservice";
+        }
     }
 
     @RequestMapping(value = "/user/selfservice/password", method = RequestMethod.GET)
