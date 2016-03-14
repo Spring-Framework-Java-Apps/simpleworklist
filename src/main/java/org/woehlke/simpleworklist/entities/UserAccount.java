@@ -37,6 +37,12 @@ public class UserAccount {
     @Column(nullable = false)
     private String userFullname;
 
+    @Column(nullable = false)
+    private String defaultLocale;
+
+    @ManyToOne
+    private Area defaultArea;
+
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -95,6 +101,22 @@ public class UserAccount {
         this.lastLoginTimestamp = lastLoginTimestamp;
     }
 
+    public String getDefaultLocale() {
+        return defaultLocale;
+    }
+
+    public void setDefaultLocale(String defaultLocale) {
+        this.defaultLocale = defaultLocale;
+    }
+
+    public Area getDefaultArea() {
+        return defaultArea;
+    }
+
+    public void setDefaultArea(Area defaultArea) {
+        this.defaultArea = defaultArea;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,6 +128,9 @@ public class UserAccount {
         if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
         if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
         if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
+        if (defaultLocale != null ? !defaultLocale.equals(that.defaultLocale) : that.defaultLocale != null)
+            return false;
+        if (defaultArea != null ? !defaultArea.equals(that.defaultArea) : that.defaultArea != null) return false;
         if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
             return false;
         return lastLoginTimestamp != null ? lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp == null;
@@ -118,6 +143,8 @@ public class UserAccount {
         result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
         result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
         result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
+        result = 31 * result + (defaultLocale != null ? defaultLocale.hashCode() : 0);
+        result = 31 * result + (defaultArea != null ? defaultArea.hashCode() : 0);
         result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
         return result;
@@ -130,6 +157,8 @@ public class UserAccount {
                 ", userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userFullname='" + userFullname + '\'' +
+                ", defaultLocale='" + defaultLocale + '\'' +
+                ", defaultArea=" + defaultArea +
                 ", createdTimestamp=" + createdTimestamp +
                 ", lastLoginTimestamp=" + lastLoginTimestamp +
                 '}';

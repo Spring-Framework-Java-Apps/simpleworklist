@@ -59,12 +59,12 @@ public class UserServiceImpl implements UserService {
         u.setUserEmail(userAccount.getUserEmail());
         u.setUserFullname(userAccount.getUserFullname());
         u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
+        u.setDefaultLocale("en");
         Date now = new Date();
         u.setCreatedTimestamp(now);
         u.setLastLoginTimestamp(now);
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
-        //TODO: i18n,
         Area work = new Area("Arbeit","Work");
         Area priv = new Area("Privat","Private");
         work.setUserAccount(u);
@@ -73,6 +73,8 @@ public class UserServiceImpl implements UserService {
         areaRepository.saveAndFlush(work);
         LOGGER.info("About to save " + priv.toString());
         areaRepository.saveAndFlush(priv);
+        u.setDefaultArea(work);
+        u = userAccountRepository.saveAndFlush(u);
         LOGGER.info("Saved " + u.toString());
     }
 
