@@ -9,7 +9,7 @@
             <form:input path="userFullname" class="form-control"/><br/>
             <form:errors path="userFullname" delimiter=", " element="div" class="alert alert-danger"/>
         </div>
-        <button id="save-username" type="submit" class="btn btn-default"><spring:message code="user.selfservice.name.button" text="Save Username" /></button>
+        <button id="save-username" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="user.selfservice.name.button" text="Save Username" /></button>
     </form:form>
 </div>
 

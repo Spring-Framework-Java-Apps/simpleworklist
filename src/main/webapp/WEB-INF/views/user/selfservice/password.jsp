@@ -18,7 +18,7 @@
             <form:password path="userPasswordConfirmation" class="form-control"/><br/>
             <form:errors path="userPasswordConfirmation" delimiter=", " element="div" class="alert alert-danger"/>
         </div>
-        <button id="saveNewPassword" type="submit" class="btn btn-default"><spring:message code="user.resetPasswordConfirmed.button" text="Save New Password" /></button>
+        <button id="saveNewPassword" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="user.resetPasswordConfirmed.button" text="Save New Password" /></button>
     </form:form>
 </div>
 <br/>
