@@ -130,4 +130,26 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/language";
     }
 
+    @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.POST)
+    public String userLanguageStore(@Valid UserChangeLanguageFormBean userChangeLanguageFormBean,
+                                    BindingResult result, Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        if(result.hasErrors()){
+            LOGGER.info("userLanguageStore: result has Errors");
+            for(ObjectError error : result.getAllErrors()){
+                LOGGER.info(error.toString());
+            }
+            return "user/selfservice/language";
+        } else {
+            user.setDefaultLanguage(userChangeLanguageFormBean.getDefaultLanguage());
+            userService.saveAndFlush(user);
+            String returnUrl;
+            switch (userChangeLanguageFormBean.getDefaultLanguage()){
+                case DE: returnUrl="redirect:/user/selfservice?lang=de"; break;
+                default: returnUrl="redirect:/user/selfservice?lang=en"; break;
+            }
+            return returnUrl;
+        }
+    }
+
 }
