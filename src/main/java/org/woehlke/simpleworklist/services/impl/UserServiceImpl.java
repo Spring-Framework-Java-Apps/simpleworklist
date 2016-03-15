@@ -10,6 +10,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,6 +50,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private PasswordEncoder encoder;
+
+    @Inject
+    private AuthenticationManager authenticationManager;
 
     public boolean isEmailAvailable(String email) {
         return userAccountRepository.findByUserEmail(email) == null;
@@ -142,9 +147,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void changeUsersPassword(UserPasswordChangeFormBean userAccountFormBean, UserAccount user) {
-        String oldPwEncoded = encoder.encode(userAccountFormBean.getOldUserPassword());
-        UserAccount ua = userAccountRepository.findByUserEmailAndUserPassword(user.getUserEmail(),oldPwEncoded);
-        if(ua != null){
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUserEmail(), userAccountFormBean.getOldUserPassword());
+        Authentication authenticationResult = authenticationManager.authenticate(token);
+        if(authenticationResult.isAuthenticated()){
+            UserAccount ua = userAccountRepository.findByUserEmail(user.getUserEmail());
             String pwEncoded = encoder.encode(userAccountFormBean.getUserPassword());
             ua.setUserPassword(pwEncoded);
             userAccountRepository.saveAndFlush(ua);
@@ -180,9 +186,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean confirmUserByLoginAndPassword(String userEmail, String oldUserPassword) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userEmail, oldUserPassword);
+        Authentication authenticationResult = authenticationManager.authenticate(token);
         String oldPwEncoded = encoder.encode(oldUserPassword);
-        UserAccount ua = userAccountRepository.findByUserEmailAndUserPassword(userEmail,oldPwEncoded);
-        return (ua != null);
+        LOGGER.info(userEmail+", "+oldPwEncoded);
+        return authenticationResult.isAuthenticated();
     }
 
 }
