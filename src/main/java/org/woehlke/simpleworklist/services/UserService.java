@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
+import org.woehlke.simpleworklist.model.UserPasswordChangeFormBean;
 
 public interface UserService extends UserDetailsService {
 
@@ -29,10 +30,14 @@ public interface UserService extends UserDetailsService {
 
     void changeUsersPassword(UserAccountFormBean userAccount);
 
+    void changeUsersPassword(UserPasswordChangeFormBean userAccountFormBean, UserAccount user);
+
     void updateLastLoginTimestamp(UserAccount user);
 
     UserAccount findUserById(long userId);
 
     Map<Long,Integer> getNewIncomingMessagesForEachOtherUser(UserAccount receiver);
+
+    boolean confirmUserByLoginAndPassword(String userEmail, String oldUserPassword);
 
 }

@@ -25,6 +25,7 @@ import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.model.UserDetailsBean;
+import org.woehlke.simpleworklist.model.UserPasswordChangeFormBean;
 import org.woehlke.simpleworklist.repository.AreaRepository;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
@@ -130,14 +131,24 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void changeUsersPassword(UserAccountFormBean userAccount) {
-    	Assert.notNull(userAccount);
-    	Assert.notNull(userAccount.getUserEmail());
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
-        Assert.notNull(ua);
-        String pwEncoded = encoder.encode(userAccount.getUserPassword());
-        ua.setUserPassword(pwEncoded);
-        Assert.notNull(ua);
-        userAccountRepository.saveAndFlush(ua);
+        if(ua != null) {
+            String pwEncoded = encoder.encode(userAccount.getUserPassword());
+            ua.setUserPassword(pwEncoded);
+            userAccountRepository.saveAndFlush(ua);
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void changeUsersPassword(UserPasswordChangeFormBean userAccountFormBean, UserAccount user) {
+        String oldPwEncoded = encoder.encode(userAccountFormBean.getOldUserPassword());
+        UserAccount ua = userAccountRepository.findByUserEmailAndUserPassword(user.getUserEmail(),oldPwEncoded);
+        if(ua != null){
+            String pwEncoded = encoder.encode(userAccountFormBean.getUserPassword());
+            ua.setUserPassword(pwEncoded);
+            userAccountRepository.saveAndFlush(ua);
+        }
     }
 
     @Override
@@ -165,6 +176,13 @@ public class UserServiceImpl implements UserService {
             }
         }
         return newIncomingMessagesForEachOtherUser;
+    }
+
+    @Override
+    public boolean confirmUserByLoginAndPassword(String userEmail, String oldUserPassword) {
+        String oldPwEncoded = encoder.encode(oldUserPassword);
+        UserAccount ua = userAccountRepository.findByUserEmailAndUserPassword(userEmail,oldPwEncoded);
+        return (ua != null);
     }
 
 }
