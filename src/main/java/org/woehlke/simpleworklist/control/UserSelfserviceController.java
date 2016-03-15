@@ -10,8 +10,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.UserNameFormBean;
-import org.woehlke.simpleworklist.model.UserPasswordChangeFormBean;
+import org.woehlke.simpleworklist.entities.enumerations.Language;
+import org.woehlke.simpleworklist.model.UserChangeLanguageFormBean;
+import org.woehlke.simpleworklist.model.UserChangeNameFormBean;
+import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -40,14 +42,14 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.GET)
     public String userNameForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
-        UserNameFormBean bean = new UserNameFormBean(user.getUserFullname());
+        UserChangeNameFormBean bean = new UserChangeNameFormBean(user.getUserFullname());
         model.addAttribute("username", bean);
         model.addAttribute("thisUser", user);
         return "user/selfservice/name";
     }
 
     @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.POST)
-    public String userNameStore(@Valid UserNameFormBean username, BindingResult result, Model model){
+    public String userNameStore(@Valid UserChangeNameFormBean username, BindingResult result, Model model){
         UserAccount user = userService.retrieveCurrentUser();
         if(result.hasErrors()) {
             model.addAttribute("username", username);
@@ -64,13 +66,13 @@ public class UserSelfserviceController extends AbstractController {
     public String userPasswordForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        UserPasswordChangeFormBean userPasswordChangeFormBean = new UserPasswordChangeFormBean();
-        model.addAttribute("userPasswordChangeFormBean", userPasswordChangeFormBean);
+        UserChangePasswordFormBean userChangePasswordFormBean = new UserChangePasswordFormBean();
+        model.addAttribute("userChangePasswordFormBean", userChangePasswordFormBean);
         return "user/selfservice/password";
     }
 
     @RequestMapping(value = "/user/selfservice/password", method = RequestMethod.POST)
-    public String userPasswordStore(@Valid UserPasswordChangeFormBean userPasswordChangeFormBean,
+    public String userPasswordStore(@Valid UserChangePasswordFormBean userChangePasswordFormBean,
                                    BindingResult result, Model model) {
         LOGGER.info("---------------------------------------------------------");
         LOGGER.info("userPasswordStore");
@@ -82,9 +84,9 @@ public class UserSelfserviceController extends AbstractController {
             }
             return "user/selfservice/password";
         } else {
-            if(! userPasswordChangeFormBean.passwordsAreTheSame()){
+            if(! userChangePasswordFormBean.passwordsAreTheSame()){
                 LOGGER.info("passwords Are Not The Same");
-                String objectName = "userPasswordChangeFormBean";
+                String objectName = "userChangePasswordFormBean";
                 String field = "userPassword";
                 String defaultMessage = "Passwords aren't the same.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
@@ -94,9 +96,9 @@ public class UserSelfserviceController extends AbstractController {
                 }
                 return "user/selfservice/password";
             }
-            if(!userService.confirmUserByLoginAndPassword(user.getUserEmail(),userPasswordChangeFormBean.getOldUserPassword())){
+            if(!userService.confirmUserByLoginAndPassword(user.getUserEmail(), userChangePasswordFormBean.getOldUserPassword())){
                 LOGGER.info("old Password is wrong");
-                String objectName = "userPasswordChangeFormBean";
+                String objectName = "userChangePasswordFormBean";
                 String field = "oldUserPassword";
                 String defaultMessage = "Password is incorrect";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
@@ -107,7 +109,7 @@ public class UserSelfserviceController extends AbstractController {
                 return "user/selfservice/password";
             }
             LOGGER.info("OK");
-            userService.changeUsersPassword(userPasswordChangeFormBean,user);
+            userService.changeUsersPassword(userChangePasswordFormBean,user);
             return "redirect:/user/selfservice";
         }
     }
@@ -123,6 +125,8 @@ public class UserSelfserviceController extends AbstractController {
     public String userLanguageForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
+        model.addAttribute("languages", Language.list());
+        model.addAttribute("userChangeLanguageFormBean",new UserChangeLanguageFormBean(user.getDefaultLanguage()));
         return "user/selfservice/language";
     }
 

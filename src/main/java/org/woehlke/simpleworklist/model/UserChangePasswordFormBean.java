@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by tw on 15.03.16.
  */
-public class UserPasswordChangeFormBean {
+public class UserChangePasswordFormBean {
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
@@ -60,7 +60,7 @@ public class UserPasswordChangeFormBean {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserPasswordChangeFormBean that = (UserPasswordChangeFormBean) o;
+        UserChangePasswordFormBean that = (UserChangePasswordFormBean) o;
 
         if (oldUserPassword != null ? !oldUserPassword.equals(that.oldUserPassword) : that.oldUserPassword != null)
             return false;

@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.entities;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.woehlke.simpleworklist.entities.enumerations.Language;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +39,8 @@ public class UserAccount {
     private String userFullname;
 
     @Column(nullable = false)
-    private String defaultLocale;
+    @Enumerated(EnumType.STRING)
+    private Language defaultLanguage;
 
     @ManyToOne
     private Area defaultArea;
@@ -101,14 +103,6 @@ public class UserAccount {
         this.lastLoginTimestamp = lastLoginTimestamp;
     }
 
-    public String getDefaultLocale() {
-        return defaultLocale;
-    }
-
-    public void setDefaultLocale(String defaultLocale) {
-        this.defaultLocale = defaultLocale;
-    }
-
     public Area getDefaultArea() {
         return defaultArea;
     }
@@ -117,10 +111,18 @@ public class UserAccount {
         this.defaultArea = defaultArea;
     }
 
+    public Language getDefaultLanguage() {
+        return defaultLanguage;
+    }
+
+    public void setDefaultLanguage(Language defaultLanguage) {
+        this.defaultLanguage = defaultLanguage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof UserAccount)) return false;
 
         UserAccount that = (UserAccount) o;
 
@@ -128,8 +130,7 @@ public class UserAccount {
         if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
         if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
         if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
-        if (defaultLocale != null ? !defaultLocale.equals(that.defaultLocale) : that.defaultLocale != null)
-            return false;
+        if (defaultLanguage != that.defaultLanguage) return false;
         if (defaultArea != null ? !defaultArea.equals(that.defaultArea) : that.defaultArea != null) return false;
         if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
             return false;
@@ -143,7 +144,7 @@ public class UserAccount {
         result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
         result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
         result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
-        result = 31 * result + (defaultLocale != null ? defaultLocale.hashCode() : 0);
+        result = 31 * result + (defaultLanguage != null ? defaultLanguage.hashCode() : 0);
         result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
         result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
         return result;

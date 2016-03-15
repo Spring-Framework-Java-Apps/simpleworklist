@@ -2,7 +2,7 @@
 <h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <spring:message code="user.selfservice.profile.changePassword" text="Change Password" /></h1>
 <h2>for User: <strong><sec:authentication property="principal.username" /></strong></h2>
 <div>
-    <form:form id="formId" commandName="userPasswordChangeFormBean" method="post">
+    <form:form id="formId" commandName="userChangePasswordFormBean" method="post">
         <div class="form-group">
             <form:label path="oldUserPassword"><spring:message code="user.resetPasswordConfirmed.oldUserPassword" text="Current Password" /></form:label>
             <form:password path="oldUserPassword" class="form-control"/><br/>

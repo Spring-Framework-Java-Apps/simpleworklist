@@ -8,16 +8,16 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by tw on 14.03.16.
  */
-public class UserNameFormBean {
+public class UserChangeNameFormBean {
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Fullname is compulsory")
     @NotBlank(message = "Fullname is compulsory")
     private String userFullname;
 
-    public UserNameFormBean(){}
+    public UserChangeNameFormBean(){}
 
-    public UserNameFormBean(String userFullname){
+    public UserChangeNameFormBean(String userFullname){
         this.userFullname = userFullname;
     }
 
@@ -34,7 +34,7 @@ public class UserNameFormBean {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserNameFormBean that = (UserNameFormBean) o;
+        UserChangeNameFormBean that = (UserChangeNameFormBean) o;
 
         return userFullname != null ? userFullname.equals(that.userFullname) : that.userFullname == null;
 
@@ -47,7 +47,7 @@ public class UserNameFormBean {
 
     @Override
     public String toString() {
-        return "UserNameFormBean{" +
+        return "UserChangeNameFormBean{" +
                 "userFullname='" + userFullname + '\'' +
                 '}';
     }

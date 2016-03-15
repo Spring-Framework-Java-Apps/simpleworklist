@@ -20,14 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.UserMessage;
+import org.woehlke.simpleworklist.entities.enumerations.Language;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
+import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
 import org.woehlke.simpleworklist.model.UserDetailsBean;
-import org.woehlke.simpleworklist.model.UserPasswordChangeFormBean;
 import org.woehlke.simpleworklist.repository.AreaRepository;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         u.setUserEmail(userAccount.getUserEmail());
         u.setUserFullname(userAccount.getUserFullname());
         u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
-        u.setDefaultLocale("en");
+        u.setDefaultLanguage(Language.EN);
         Date now = new Date();
         u.setCreatedTimestamp(now);
         u.setLastLoginTimestamp(now);
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void changeUsersPassword(UserPasswordChangeFormBean userAccountFormBean, UserAccount user) {
+    public void changeUsersPassword(UserChangePasswordFormBean userAccountFormBean, UserAccount user) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUserEmail(), userAccountFormBean.getOldUserPassword());
         Authentication authenticationResult = authenticationManager.authenticate(token);
         if(authenticationResult.isAuthenticated()){
