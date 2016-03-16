@@ -18,6 +18,14 @@
 		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areas.jsp" />
 	</definition>
 
+	<definition name="user/selfservice/areaAdd" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areaAdd.jsp" />
+	</definition>
+
+	<definition name="user/selfservice/areaEdit" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areaEdit.jsp" />
+	</definition>
+
 	<definition name="user/selfservice/language" extends="page">
 		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/language.jsp" />
 	</definition>

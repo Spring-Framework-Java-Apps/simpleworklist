@@ -15,6 +15,7 @@ public interface AreaService {
 
     Area findByIdAndUserAccount(long newAreaId, UserAccount userAccount);
 
-    void saveAndFlush(NewAreaFormBean newArea, UserAccount user);
+    void createNewArea(NewAreaFormBean newArea, UserAccount user);
 
+    void updateArea(NewAreaFormBean editArea, UserAccount user, long areaId);
 }

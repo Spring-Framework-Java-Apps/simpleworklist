@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.Area;
@@ -122,28 +123,57 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", user);
         List<Area> areas = areaService.getAllForUser(user);
         model.addAttribute("areas", areas);
-        NewAreaFormBean newArea = new NewAreaFormBean();
-        model.addAttribute("newArea", newArea);
         return "user/selfservice/areas";
     }
 
-    @RequestMapping(value = "/user/selfservice/areas", method = RequestMethod.POST)
-    public String userAreasStore(@Valid NewAreaFormBean newArea, BindingResult result, Model model){
+    @RequestMapping(value = "/user/selfservice/area/add", method = RequestMethod.GET)
+    public String userNewAreaForm(Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        model.addAttribute("thisUser", user);
+        NewAreaFormBean newArea = new NewAreaFormBean();
+        model.addAttribute("newArea", newArea);
+        return "user/selfservice/areaAdd";
+    }
+
+    @RequestMapping(value = "/user/selfservice/area/add", method = RequestMethod.POST)
+    public String userNewAreaStore(@Valid NewAreaFormBean newArea, BindingResult result, Model model){
         UserAccount user = userService.retrieveCurrentUser();
         if(result.hasErrors()){
-            LOGGER.info("userAreasForm: result has Errors");
+            LOGGER.info("userNewAreaStore: result has Errors");
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            model.addAttribute("thisUser", user);
-            List<Area> areas = areaService.getAllForUser(user);
-            model.addAttribute("areas", areas);
-            //model.addAttribute("newArea",newArea);
-            //model.addAttribute("result",result);
-            return "user/selfservice/areas";
+            return "user/selfservice/areaAdd";
         } else {
-            areaService.saveAndFlush(newArea,user);
-            return "redirect:/user/selfservice";
+            areaService.createNewArea(newArea,user);
+            return "redirect:/user/selfservice/areas";
+        }
+    }
+
+    @RequestMapping(value = "/user/selfservice/area/edit/{areaId}", method = RequestMethod.GET)
+    public String userEditAreaForm(@PathVariable long areaId, Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        model.addAttribute("thisUser", user);
+        Area area = areaService.findByIdAndUserAccount(areaId,user);
+        NewAreaFormBean editArea = new NewAreaFormBean();
+        editArea.setNameDe(area.getNameDe());
+        editArea.setNameEn(area.getNameEn());
+        model.addAttribute("editArea", editArea);
+        return "user/selfservice/areaEdit";
+    }
+
+    @RequestMapping(value = "/user/selfservice/area/edit/{areaId}", method = RequestMethod.POST)
+    public String userEditAreaStore(@Valid NewAreaFormBean editArea, BindingResult result, Model model, @PathVariable long areaId){
+        UserAccount user = userService.retrieveCurrentUser();
+        if(result.hasErrors()){
+            LOGGER.info("userEditAreaStore: result has Errors");
+            for(ObjectError error : result.getAllErrors()){
+                LOGGER.info(error.toString());
+            }
+            return "user/selfservice/areaEdit";
+        } else {
+            areaService.updateArea(editArea,user, areaId);
+            return "redirect:/user/selfservice/areas";
         }
     }
 

@@ -35,11 +35,22 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void saveAndFlush(NewAreaFormBean newArea, UserAccount user) {
+    public void createNewArea(NewAreaFormBean newArea, UserAccount user) {
         Area area = new Area();
         area.setNameEn(newArea.getNameEn());
         area.setNameDe(newArea.getNameDe());
         area.setUserAccount(user);
         areaRepository.saveAndFlush(area);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void updateArea(NewAreaFormBean editArea, UserAccount user, long areaId) {
+        Area area = areaRepository.findOne(areaId);
+        if(area.getUserAccount().getId() == user.getId()){
+            area.setNameEn(editArea.getNameEn());
+            area.setNameDe(editArea.getNameDe());
+            areaRepository.saveAndFlush(area);
+        }
     }
 }
