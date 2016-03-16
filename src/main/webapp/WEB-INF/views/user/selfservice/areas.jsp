@@ -23,10 +23,37 @@
             </td>
         </tr>
     </c:forEach>
-    <tr>
-
-    </tr>
     </table>
     </div>
+<div>
+    <form:form id="formId" commandName="thisUser" method="post">
+        <div class="form-group">
+            <form:hidden path="id"/>
+            <form:label path="defaultArea.id"><spring:message code="user.selfservice.area.default" text="Default Area" /></form:label>
+            <form:select  path="defaultArea.id">
+                <c:forEach items="${areas}" var="area">
+                    <c:choose>
+                        <c:when test="${locale == 'de'}">
+                            <c:set var="label" value="${area.nameDe}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="label" value="${area.nameEn}"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${area.id == thisUser.defaultArea.id}">
+                            <option value="${area.id}" selected><c:out value="${label}"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${area.id}"><c:out value="${label}"/></option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </form:select>
+            <form:errors path="defaultArea.id" delimiter=", " element="div" class="alert alert-danger"/>
+        </div>
+        <button id="saveLanguageButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="user.selfservice.area.default.button" text="Save Default Area" /></button>
+    </form:form>
+</div>
 <br/>
 <a href="<c:url value="/user/selfservice"/>"><spring:message code="button.back" text="back" /></a>

@@ -118,10 +118,32 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/user/selfservice/areas", method = RequestMethod.GET)
     public String userAreasForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
-        model.addAttribute("thisUser", user);
+        UserChangeDefaultAreaFormBean bean = new UserChangeDefaultAreaFormBean();
+        bean.setId(user.getId());
+        bean.setDefaultArea(user.getDefaultArea());
+        model.addAttribute("thisUser", bean);
         List<Area> areas = areaService.getAllForUser(user);
         model.addAttribute("areas", areas);
         return "user/selfservice/areas";
+    }
+
+    @RequestMapping(value = "/user/selfservice/areas", method = RequestMethod.POST)
+    public String userAreasSave(@Valid @ModelAttribute("thisUser") UserChangeDefaultAreaFormBean thisUser, BindingResult result, Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        if(result.hasErrors()){
+            LOGGER.info("userAreasSave: result has Errors");
+            for(ObjectError error : result.getAllErrors()){
+                LOGGER.info(error.toString());
+            }
+            return "user/selfservice/areas";
+        } else {
+            if(user.getId() == thisUser.getId()){
+                user.setDefaultArea(thisUser.getDefaultArea());
+                userService.saveAndFlush(user);
+                model.addAttribute("areaId",new UserSessionBean(thisUser.getDefaultArea().getId()));
+            }
+            return "redirect:/user/selfservice/areas";
+        }
     }
 
     @RequestMapping(value = "/user/selfservice/area/add", method = RequestMethod.GET)
