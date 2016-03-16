@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.NewAreaFormBean;
 import org.woehlke.simpleworklist.repository.AreaRepository;
 import org.woehlke.simpleworklist.services.AreaService;
 
@@ -30,5 +31,15 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public Area findByIdAndUserAccount(long newAreaId, UserAccount userAccount) {
         return areaRepository.findByIdAndUserAccount(newAreaId,userAccount);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void saveAndFlush(NewAreaFormBean newArea, UserAccount user) {
+        Area area = new Area();
+        area.setNameEn(newArea.getNameEn());
+        area.setNameDe(newArea.getNameDe());
+        area.setUserAccount(user);
+        areaRepository.saveAndFlush(area);
     }
 }

@@ -9,8 +9,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
+import org.woehlke.simpleworklist.model.NewAreaFormBean;
 import org.woehlke.simpleworklist.model.UserChangeLanguageFormBean;
 import org.woehlke.simpleworklist.model.UserChangeNameFormBean;
 import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
@@ -118,7 +120,31 @@ public class UserSelfserviceController extends AbstractController {
     public String userAreasForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
+        List<Area> areas = areaService.getAllForUser(user);
+        model.addAttribute("areas", areas);
+        NewAreaFormBean newArea = new NewAreaFormBean();
+        model.addAttribute("newArea", newArea);
         return "user/selfservice/areas";
+    }
+
+    @RequestMapping(value = "/user/selfservice/areas", method = RequestMethod.POST)
+    public String userAreasStore(@Valid NewAreaFormBean newArea, BindingResult result, Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        if(result.hasErrors()){
+            LOGGER.info("userAreasForm: result has Errors");
+            for(ObjectError error : result.getAllErrors()){
+                LOGGER.info(error.toString());
+            }
+            model.addAttribute("thisUser", user);
+            List<Area> areas = areaService.getAllForUser(user);
+            model.addAttribute("areas", areas);
+            //model.addAttribute("newArea",newArea);
+            //model.addAttribute("result",result);
+            return "user/selfservice/areas";
+        } else {
+            areaService.saveAndFlush(newArea,user);
+            return "redirect:/user/selfservice";
+        }
     }
 
     @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.GET)

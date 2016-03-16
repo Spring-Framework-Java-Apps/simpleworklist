@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.services;
 
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.NewAreaFormBean;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface AreaService {
     List<Area> getAllForUser(UserAccount user);
 
     Area findByIdAndUserAccount(long newAreaId, UserAccount userAccount);
+
+    void saveAndFlush(NewAreaFormBean newArea, UserAccount user);
+
 }
