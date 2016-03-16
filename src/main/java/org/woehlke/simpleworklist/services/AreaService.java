@@ -18,4 +18,8 @@ public interface AreaService {
     void createNewArea(NewAreaFormBean newArea, UserAccount user);
 
     void updateArea(NewAreaFormBean editArea, UserAccount user, long areaId);
+
+    boolean delete(Area area);
+
+    boolean areaHasItems(Area area);
 }

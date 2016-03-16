@@ -28,4 +28,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Page<Task> findByProjectIsNullAndArea(Area area, Pageable request);
 
     Page<Task> findByTaskStateAndArea(TaskState inbox, Area area, Pageable request);
+
+    List<Task> findByArea(Area area);
 }

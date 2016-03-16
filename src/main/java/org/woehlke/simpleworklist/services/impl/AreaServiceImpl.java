@@ -7,6 +7,8 @@ import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.NewAreaFormBean;
 import org.woehlke.simpleworklist.repository.AreaRepository;
+import org.woehlke.simpleworklist.repository.ProjectRepository;
+import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.AreaService;
 
 import javax.inject.Inject;
@@ -22,6 +24,11 @@ public class AreaServiceImpl implements AreaService {
     @Inject
     private AreaRepository areaRepository;
 
+    @Inject
+    private TaskRepository taskRepository;
+
+    @Inject
+    private ProjectRepository projectRepository;
 
     @Override
     public List<Area> getAllForUser(UserAccount user) {
@@ -52,5 +59,21 @@ public class AreaServiceImpl implements AreaService {
             area.setNameDe(editArea.getNameDe());
             areaRepository.saveAndFlush(area);
         }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public boolean delete(Area area) {
+        long areaId = area.getId();
+        areaRepository.delete(area);
+        Area areaFound = areaRepository.findOne(areaId);
+        return (areaFound == null);
+    }
+
+    @Override
+    public boolean areaHasItems(Area area) {
+        int numberOfTasks = taskRepository.findByArea(area).size();
+        int numberOfProjects = projectRepository.findByArea(area).size();
+        return ((numberOfTasks + numberOfProjects) > 0);
     }
 }

@@ -7,16 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
-import org.woehlke.simpleworklist.model.NewAreaFormBean;
-import org.woehlke.simpleworklist.model.UserChangeLanguageFormBean;
-import org.woehlke.simpleworklist.model.UserChangeNameFormBean;
-import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
+import org.woehlke.simpleworklist.model.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -175,6 +173,36 @@ public class UserSelfserviceController extends AbstractController {
             areaService.updateArea(editArea,user, areaId);
             return "redirect:/user/selfservice/areas";
         }
+    }
+
+    //TODO: is in session active? -> display message in frontend
+    //TODO: has projects or tasks? -> display message in frontend
+    @RequestMapping(value = "/user/selfservice/area/delete/{id}", method = RequestMethod.GET)
+    public String userDeleteArea(
+            @PathVariable long id,
+            @ModelAttribute("areaId") UserSessionBean areaId,
+            BindingResult result,
+            Model model){
+        UserAccount user = userService.retrieveCurrentUser();
+        model.addAttribute("thisUser", user);
+        Area area = areaService.findByIdAndUserAccount(id,user);
+        if(areaId.getAreaId() == area.getId()){
+            LOGGER.info("area is active in session: "+area);
+        } else {
+            if(user.getDefaultArea().getId() == area.getId()){
+                LOGGER.info("area is default area of this user: "+area);
+            } else {
+                if(areaService.areaHasItems(area)){
+                    LOGGER.info("area has items: "+area);
+                } else {
+                    boolean deleted = areaService.delete(area);
+                    if(!deleted){
+                        LOGGER.info("area not deleted: "+area);
+                    }
+                }
+            }
+        }
+        return "redirect:/user/selfservice/areas";
     }
 
     @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.GET)
