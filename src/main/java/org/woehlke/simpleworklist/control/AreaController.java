@@ -23,7 +23,7 @@ public class AreaController extends AbstractController {
 
     @RequestMapping(value = "/area/choose/{newAreaId}", method = RequestMethod.GET)
     public String switchArea(@PathVariable long newAreaId, Model model){
-        if(newAreaId != 0) {
+        if(newAreaId > 0) {
             UserAccount userAccount = userService.retrieveCurrentUser();
             Area foundArea = areaService.findByIdAndUserAccount(newAreaId, userAccount);
             if (foundArea == null) {

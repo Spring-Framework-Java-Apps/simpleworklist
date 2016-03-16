@@ -7,21 +7,19 @@ import java.io.Serializable;
  */
 public class UserSessionBean implements Serializable {
 
-    private long areaId;
+    private Long areaId;
 
-    public UserSessionBean(){
-        areaId=0;
-    }
+    public UserSessionBean(){}
 
     public UserSessionBean(long areaId){
         this.areaId=areaId;
     }
 
-    public long getAreaId() {
+    public Long getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(long areaId) {
+    public void setAreaId(Long areaId) {
         this.areaId = areaId;
     }
 

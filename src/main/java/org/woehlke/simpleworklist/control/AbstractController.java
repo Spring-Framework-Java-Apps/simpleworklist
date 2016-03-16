@@ -45,7 +45,7 @@ public abstract class AbstractController {
     public final List<Project> getAllCategories(@ModelAttribute("areaId") UserSessionBean areaId,
                                                 BindingResult result, Model model) {
         UserAccount user = userService.retrieveCurrentUser();
-        if (areaId.getAreaId() == 0) {
+        if ((areaId.getAreaId() == null)||(areaId.getAreaId() == 0)) {
             return projectService.findAllProjectsByUserAccount(user);
         } else {
             Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
@@ -57,7 +57,7 @@ public abstract class AbstractController {
     public final List<Project> getRootCategories(@ModelAttribute("areaId") UserSessionBean areaId,
                                                  BindingResult result, Model model) {
         UserAccount user = userService.retrieveCurrentUser();
-        if (areaId.getAreaId() == 0) {
+        if ((areaId.getAreaId() == null)||(areaId.getAreaId() == 0)) {
             return projectService.findRootProjectsByUserAccount(user);
         } else {
             Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
@@ -90,20 +90,28 @@ public abstract class AbstractController {
     @ModelAttribute("area")
     public final String getCurrentArea(@ModelAttribute("areaId") UserSessionBean areaId,
                                        BindingResult result, Locale locale, Model model){
-        //TODO: i18n
+        UserAccount user = userService.retrieveCurrentUser();
         String retVal = "All";
         if(locale.getLanguage().equalsIgnoreCase("de")){
             retVal = "Alle";
         }
-        if(!result.hasErrors()){
-            UserAccount user = userService.retrieveCurrentUser();
-            if (areaId.getAreaId() > 0) {
-                Area found = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
-                if(found != null){
-                    if(locale.getLanguage().equalsIgnoreCase("de")){
-                        retVal = found.getNameDe();
-                    } else {
-                        retVal = found.getNameEn();
+        if (areaId.getAreaId() == null) {
+            model.addAttribute("areaId", new UserSessionBean(user.getDefaultArea().getId()));
+            if (locale.getLanguage().equalsIgnoreCase("de")) {
+                retVal = user.getDefaultArea().getNameDe();
+            } else {
+                retVal = user.getDefaultArea().getNameEn();
+            }
+        } else {
+            if(!result.hasErrors()){
+                if (areaId.getAreaId() > 0) {
+                    Area found = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
+                    if(found != null){
+                        if(locale.getLanguage().equalsIgnoreCase("de")){
+                            retVal = found.getNameDe();
+                        } else {
+                            retVal = found.getNameEn();
+                        }
                     }
                 }
             }
