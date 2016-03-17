@@ -32,15 +32,15 @@
 	<p>
 		<spring:message code="user.loginForm.moreInformation" text="For More Information please visit:" />
 	<ul>
-		<li><spring:message code="user.loginForm.github" text="Github:" /> <a href="https://github.com/phasenraum2010/simpleworklist">https://github.com/phasenraum2010/simpleworklist</a></li>
-		<li><spring:message code="user.loginForm.myBlog" text="My Blog:" /> <a href="http://thomas-woehlke.blogspot.de/">http://thomas-woehlke.blogspot.de/</a></li>
-		<li><spring:message code="user.loginForm.projectPage" text="The Project Page:" /> <a href="http://woehlke.org/p/simpleworklist/">http://woehlke.org/p/simpleworklist/</a></li>
+		<li><spring:message code="user.loginForm.github" text="Github:" /> <a href="https://github.com/phasenraum2010/simpleworklist" target="_blank">https://github.com/phasenraum2010/simpleworklist</a></li>
+		<li><spring:message code="user.loginForm.myBlog" text="My Blog:" /> <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a></li>
+		<li><spring:message code="user.loginForm.projectPage" text="The Project Page:" /> <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
 		<c:choose>
 			<c:when test="${locale == 'de'}">
-				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://de.wikipedia.org/wiki/Getting_Things_Done">https://de.wikipedia.org/wiki/Getting_Things_Done/</a></li>
+				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank">https://de.wikipedia.org/wiki/Getting_Things_Done/</a></li>
 			</c:when>
 			<c:otherwise>
-				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://en.wikipedia.org/wiki/Getting_Things_Done">https://en.wikipedia.org/wiki/Getting_Things_Done</a></li>
+				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank">https://en.wikipedia.org/wiki/Getting_Things_Done</a></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>
