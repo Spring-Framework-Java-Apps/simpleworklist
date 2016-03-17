@@ -37,10 +37,10 @@
 		<li><spring:message code="user.loginForm.projectPage" text="The Project Page:" /> <a href="http://woehlke.org/p/simpleworklist/">http://woehlke.org/p/simpleworklist/</a></li>
 		<c:choose>
 			<c:when test="${locale == 'de'}">
-				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://de.wikipedia.org/wiki/Getting_Things_Done/">https://de.wikipedia.org/wiki/Getting_Things_Done/</a></li>
+				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://de.wikipedia.org/wiki/Getting_Things_Done">https://de.wikipedia.org/wiki/Getting_Things_Done/</a></li>
 			</c:when>
 			<c:otherwise>
-				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://en.wikipedia.org/wiki/Getting_Things_Done/">https://en.wikipedia.org/wiki/Getting_Things_Done</a></li>
+				<li>Getting Things Done&reg; @ Wikipedia:  <a href="https://en.wikipedia.org/wiki/Getting_Things_Done">https://en.wikipedia.org/wiki/Getting_Things_Done</a></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>
