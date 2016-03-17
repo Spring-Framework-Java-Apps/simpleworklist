@@ -54,7 +54,7 @@ public class AreaServiceImpl implements AreaService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void updateArea(NewAreaFormBean editArea, UserAccount user, long areaId) {
         Area area = areaRepository.findOne(areaId);
-        if(area.getUserAccount().getId() == user.getId()){
+        if(area.getUserAccount().getId().longValue() == user.getId().longValue()){
             area.setNameEn(editArea.getNameEn());
             area.setNameDe(editArea.getNameDe());
             areaRepository.saveAndFlush(area);

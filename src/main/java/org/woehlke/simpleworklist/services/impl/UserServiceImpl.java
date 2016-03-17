@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
         Map<Long, Integer> newIncomingMessagesForEachOtherUser = new HashMap<>();
         List<UserAccount> allUsers = userAccountRepository.findAll();
         for(UserAccount sender :allUsers ){
-            if(receiver.getId() == sender.getId()){
+            if(receiver.getId().longValue() == sender.getId().longValue()){
                 newIncomingMessagesForEachOtherUser.put(sender.getId(),0);
             } else {
                 List<UserMessage> userMessages = userMessageRepository.findBySenderAndReceiverAndReadByReceiver(sender,receiver,false);

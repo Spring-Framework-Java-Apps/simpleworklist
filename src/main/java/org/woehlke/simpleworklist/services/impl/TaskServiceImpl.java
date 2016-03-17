@@ -26,7 +26,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskServiceImpl implements TaskService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskServiceImpl.class);
 
 
     @Inject
@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Page<Task> findByProject(Project thisProject,
                                     Pageable request, UserAccount userAccount) {
-        if(thisProject.getUserAccount().getId()==userAccount.getId()){
+        if(thisProject.getUserAccount().getId().longValue() == userAccount.getId().longValue()){
             return taskRepository.findByProject(thisProject, request);
         } else {
             return null;
@@ -50,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task findOne(long dataId, UserAccount userAccount) {
         Task t =  taskRepository.findOne(dataId);
-        if(t.getUserAccount().getId()==userAccount.getId()){
+        if(t.getUserAccount().getId().longValue()==userAccount.getId().longValue()){
             return t;
         } else {
             return null;
@@ -60,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task saveAndFlush(Task entity, UserAccount userAccount) {
-        if(entity.getUserAccount().getId()==userAccount.getId()) {
+        if(entity.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             entity.setLastChangeTimestamp(new Date());
             entity = taskRepository.saveAndFlush(entity);
             LOGGER.info("saved: " + entity.toString());
@@ -71,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId()==userAccount.getId()) {
+        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setTaskState(TaskState.TRASHED);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
@@ -80,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean projectHasNoTasks(Project project, UserAccount userAccount) {
-        if(project.getUserAccount().getId()==userAccount.getId()) {
+        if(project.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             return taskRepository.findByProject(project).isEmpty();
         } else {
             return true;
@@ -90,7 +90,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void undelete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId()==userAccount.getId()) {
+        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.switchToLastFocusType();
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
@@ -109,7 +109,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void complete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId()==userAccount.getId()) {
+        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setTaskState(TaskState.COMPLETED);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
@@ -119,7 +119,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void incomplete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId()==userAccount.getId()) {
+        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.switchToLastFocusType();
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
@@ -129,7 +129,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void setFocus(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId()==userAccount.getId()) {
+        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setFocus(true);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
@@ -139,7 +139,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void unsetFocus(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId()==userAccount.getId()) {
+        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setFocus(false);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
@@ -148,7 +148,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area) {
-        if((area.getUserAccount().getId() != userAccount.getId())||(thisProject.getArea().getId()!=area.getId())){
+        if((area.getUserAccount().getId().longValue() != userAccount.getId().longValue())||(thisProject.getArea().getId().longValue()!=area.getId().longValue())){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProject(thisProject,request);
@@ -157,7 +157,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Area area) {
-        if(area.getUserAccount().getId() != userAccount.getId()){
+        if(area.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProjectIsNullAndArea(area,request);

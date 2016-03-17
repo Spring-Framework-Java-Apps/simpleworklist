@@ -85,7 +85,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getInbox(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.INBOX,area,request);
@@ -94,7 +94,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getToday(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.TODAY,area,request);
@@ -103,7 +103,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getNext(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.NEXT,area,request);
@@ -112,7 +112,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getWaiting(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.WAITING,area,request);
@@ -121,7 +121,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getScheduled(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.SCHEDULED,area,request);
@@ -130,7 +130,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getSomeday(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.SOMEDAY,area,request);
@@ -139,7 +139,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getCompleted(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.COMPLETED,area,request);
@@ -148,7 +148,7 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     public Page<Task> getTrash(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId()!=area.getUserAccount().getId()){
+        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
             return taskRepository.findByTaskStateAndArea(TaskState.TRASHED,area,request);
