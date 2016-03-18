@@ -6,6 +6,8 @@ import java.util.Stack;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +21,14 @@ import org.woehlke.simpleworklist.services.ProjectService;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ProjectServiceImpl implements ProjectService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
+
     @Inject
     private ProjectRepository projectRepository;
 
     public List<Project> getBreadcrumb(Project thisProject, UserAccount user) {
         List<Project> breadcrumb = new ArrayList<Project>();
-        if(thisProject.getUserAccount().getId()==user.getId()) {
+        if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue() ) {
             Stack<Project> stack = new Stack<Project>();
             Project breadcrumbProject = thisProject;
             while (breadcrumbProject != null) {
@@ -44,12 +48,28 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project findByProjectId(long categoryId, UserAccount user) {
-        Project p = projectRepository.findOne(categoryId);
-        if((p != null)&&(p.getUserAccount().getId()==user.getId())){
-            return p;
-        } else {
+    public Project findByProjectId(long projectId, UserAccount user) {
+        Project p = projectRepository.findOne(projectId);
+        if( (p == null) || (p.getUserAccount().getId().longValue() != user.getId().longValue()) ){
+            /*
+            LOGGER.info("FEHLER");
+            LOGGER.info("---------------------");
+            LOGGER.info("user: " + user);
+            LOGGER.info("---------------------");
+            LOGGER.info("found project: "+p);
+            LOGGER.info("---------------------");
+            */
             return null;
+        } else {
+            /*
+            LOGGER.info("OK");
+            LOGGER.info("---------------------");
+            LOGGER.info("user: " + user);
+            LOGGER.info("---------------------");
+            LOGGER.info("found project: "+p);
+            LOGGER.info("---------------------");
+            */
+            return p;
         }
     }
 
@@ -71,7 +91,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Project thisProject, UserAccount user) {
-        if(thisProject.getUserAccount().getId()==user.getId()){
+        if(thisProject.getUserAccount().getId().longValue() ==user.getId().longValue()){
             Project oldParent = thisProject.getParent();
             if (oldParent != null) {
                 oldParent.getChildren().remove(thisProject);
@@ -83,7 +103,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> findAllProjectsByUserAccountAndArea(UserAccount user, Area area) {
-        if(user.getId() == area.getUserAccount().getId()){
+        if(user.getId().longValue() == area.getUserAccount().getId().longValue()){
             return projectRepository.findByArea(area);
         } else {
             return new ArrayList<Project>();
@@ -92,7 +112,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> findRootProjectsByUserAccountAndArea(UserAccount user, Area area) {
-        if(user.getId() == area.getUserAccount().getId()){
+        if(user.getId().longValue() == area.getUserAccount().getId().longValue()){
             return projectRepository.findByParentIsNullAndArea(area);
         } else {
             return new ArrayList<Project>();
@@ -103,7 +123,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveProjectToAnotherProject(Project thisProject,
                                             Project targetProject, UserAccount user) {
-        if(thisProject.getUserAccount().getId()==user.getId()) {
+        if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue()) {
             Project oldParent = thisProject.getParent();
             if (oldParent != null) {
                 oldParent.getChildren().remove(thisProject);

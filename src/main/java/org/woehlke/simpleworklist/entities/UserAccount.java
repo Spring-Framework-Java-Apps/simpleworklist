@@ -131,7 +131,6 @@ public class UserAccount {
         if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
         if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
         if (defaultLanguage != that.defaultLanguage) return false;
-        if (defaultArea != null ? !defaultArea.equals(that.defaultArea) : that.defaultArea != null) return false;
         if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
             return false;
         return lastLoginTimestamp != null ? lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp == null;
