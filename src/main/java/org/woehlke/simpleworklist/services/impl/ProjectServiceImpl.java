@@ -121,6 +121,18 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveProjectToAnotherArea(Project thisProject, Area newArea, UserAccount userAccount) {
+        if(thisProject.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
+            LOGGER.info("----------------------------------------------------");
+            LOGGER.info("moveProjectToAnotherArea: Project: "+thisProject.toString());
+            LOGGER.info("----------------------------------------------------");
+            LOGGER.info("moveProjectToAnotherArea: newArea: "+newArea.toString());
+            LOGGER.info("----------------------------------------------------");
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveProjectToAnotherProject(Project thisProject,
                                             Project targetProject, UserAccount user) {
         if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue()) {

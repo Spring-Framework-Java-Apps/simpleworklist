@@ -180,8 +180,10 @@ public class ProjectController extends AbstractController {
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
             UserAccount userAccount = userService.retrieveCurrentUser();
+            List<Area> areas = areaService.getAllForUser(userAccount);
             Project thisProject = projectService.findByProjectId(projectId, userAccount);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
+            model.addAttribute("areas",areas);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", thisProject);
@@ -209,7 +211,14 @@ public class ProjectController extends AbstractController {
             Project thisProject = projectService.findByProjectId(project.getId(), userAccount);
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
-            projectService.saveAndFlush(thisProject, userAccount);
+            Area newArea = project.getArea();
+            boolean areaChanged = (newArea.getId().longValue() != thisProject.getArea().getId().longValue());
+            if(areaChanged){
+                newArea = areaService.findByIdAndUserAccount(newArea.getId().longValue(), userAccount);
+                projectService.moveProjectToAnotherArea(thisProject,newArea, userAccount);
+            } else {
+                projectService.saveAndFlush(thisProject, userAccount);
+            }
             return "redirect:/project/" + projectId + "/page/1";
         }
     }
