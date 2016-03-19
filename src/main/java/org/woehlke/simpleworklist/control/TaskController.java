@@ -34,6 +34,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
+        List<Area> areas = areaService.getAllForUser(userAccount);
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
             Project thisProject = null;
@@ -48,6 +49,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
+            model.addAttribute("areas",areas);
             return "task/show";
         } else {
             return "redirect:/tasks/inbox";
@@ -90,6 +92,7 @@ public class TaskController extends AbstractController {
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
+            persistentTask.setArea(task.getArea());
             taskService.saveAndFlush(persistentTask, userAccount);
             return "redirect:/project/" + projectId + "/";
         }
