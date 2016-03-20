@@ -216,6 +216,7 @@ public class ProjectController extends AbstractController {
             if(areaChanged){
                 newArea = areaService.findByIdAndUserAccount(newArea.getId().longValue(), userAccount);
                 projectService.moveProjectToAnotherArea(thisProject,newArea, userAccount);
+                model.addAttribute("areaId", new UserSessionBean(newArea.getId().longValue()));
             } else {
                 projectService.saveAndFlush(thisProject, userAccount);
             }
