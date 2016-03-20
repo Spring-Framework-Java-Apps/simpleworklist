@@ -54,7 +54,7 @@ public class ProjectController extends AbstractController {
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
-            if(areaId.getAreaId() == 0) {
+            if(areaId.getAreaId() == null || areaId.getAreaId() == 0) {
                 taskPage = taskService.findByProject(thisProject, pageRequest, userAccount);
             } else {
                 taskPage = taskService.findByProject(thisProject, pageRequest, userAccount, area);
@@ -63,7 +63,7 @@ public class ProjectController extends AbstractController {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            if(areaId.getAreaId() == 0) {
+            if(areaId.getAreaId() == null || areaId.getAreaId() == 0) {
                 taskPage = taskService.findByRootProject(pageRequest, userAccount);
             } else {
                 taskPage = taskService.findByRootProject(pageRequest, userAccount, area);
@@ -90,12 +90,15 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)
-    public final String addNewProjectForm(Model model){
-        return addNewProjectForm(0,model);
+    public final String addNewProjectForm(@ModelAttribute("areaId") UserSessionBean areaId,
+                                          Model model){
+        return addNewProjectForm(0,areaId,model);
     }
 
     @RequestMapping(value = "/project/addchild/{projectId}", method = RequestMethod.GET)
-    public final String addNewProjectForm(@PathVariable long projectId, Model model) {
+    public final String addNewProjectForm(@PathVariable long projectId,
+                                          @ModelAttribute("areaId") UserSessionBean areaId,
+                                          Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
         Project thisProject = null;
         Project project = null;
@@ -104,6 +107,13 @@ public class ProjectController extends AbstractController {
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
             project = Project.newRootProjectFactory(userAccount);
+            if(areaId.getAreaId() == 0L){
+                model.addAttribute("mustChooseArea", true);
+                project.setArea(userAccount.getDefaultArea());
+            } else {
+                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+                project.setArea(area);
+            }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             project = Project.newProjectFactory(thisProject);
@@ -140,12 +150,13 @@ public class ProjectController extends AbstractController {
             return "project/add";
         } else {
             project.setUserAccount(userAccount);
-            if(areaId.getAreaId()>0) {
-                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                project.setArea(area);
-            }
             if (projectId == 0) {
+                if(areaId.getAreaId()>0) {
+                    Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+                    project.setArea(area);
+                }
                 project = projectService.saveAndFlush(project, userAccount);
+                projectId = project.getId();
             } else {
                 Project thisProject = projectService.findByProjectId(projectId, userAccount);
                 List<Project> children = thisProject.getChildren();

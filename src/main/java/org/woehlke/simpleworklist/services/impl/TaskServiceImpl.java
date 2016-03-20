@@ -148,7 +148,22 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area) {
-        if((area.getUserAccount().getId().longValue() != userAccount.getId().longValue())||(thisProject.getArea().getId().longValue()!=area.getId().longValue())){
+        LOGGER.info("findByProject: ");
+        LOGGER.info("---------------------------------");
+        LOGGER.info("thisProject: "+thisProject);
+        LOGGER.info("---------------------------------");
+        LOGGER.info("userAccount: "+userAccount);
+        LOGGER.info("---------------------------------");
+        LOGGER.info("area:        "+area);
+        LOGGER.info("---------------------------------");
+        long areaUid = area.getUserAccount().getId().longValue();
+        long uid = userAccount.getId().longValue();
+        long projectAreaId = 0;
+        if (thisProject.getArea() != null){
+            projectAreaId = thisProject.getArea().getId().longValue();
+        }
+        long areaId = area.getId().longValue();
+        if((thisProject == null)||(area==null)||(areaUid != uid)||(projectAreaId!=areaId)){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProject(thisProject,request);
