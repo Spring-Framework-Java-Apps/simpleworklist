@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Area;
 import org.woehlke.simpleworklist.entities.Project;
+import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.repository.ProjectRepository;
+import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.ProjectService;
 
 @Service
@@ -25,6 +27,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Inject
     private ProjectRepository projectRepository;
+
+    @Inject
+    private TaskRepository taskRepository;
 
     public List<Project> getBreadcrumb(Project thisProject, UserAccount user) {
         List<Project> breadcrumb = new ArrayList<Project>();
@@ -51,24 +56,8 @@ public class ProjectServiceImpl implements ProjectService {
     public Project findByProjectId(long projectId, UserAccount user) {
         Project p = projectRepository.findOne(projectId);
         if( (p == null) || (p.getUserAccount().getId().longValue() != user.getId().longValue()) ){
-            /*
-            LOGGER.info("FEHLER");
-            LOGGER.info("---------------------");
-            LOGGER.info("user: " + user);
-            LOGGER.info("---------------------");
-            LOGGER.info("found project: "+p);
-            LOGGER.info("---------------------");
-            */
             return null;
         } else {
-            /*
-            LOGGER.info("OK");
-            LOGGER.info("---------------------");
-            LOGGER.info("user: " + user);
-            LOGGER.info("---------------------");
-            LOGGER.info("found project: "+p);
-            LOGGER.info("---------------------");
-            */
             return p;
         }
     }
@@ -128,7 +117,29 @@ public class ProjectServiceImpl implements ProjectService {
             LOGGER.info("----------------------------------------------------");
             LOGGER.info("moveProjectToAnotherArea: newArea: "+newArea.toString());
             LOGGER.info("----------------------------------------------------");
+            thisProject.setParent(null);
+            projectRepository.saveAndFlush(thisProject);
+            List<Project> list = getAllChildrenOfProject(thisProject);
+            for(Project p : list){
+                List<Task> tasks = taskRepository.findByProject(p);
+                for(Task t:tasks){
+                    t.setArea(newArea);
+                    taskRepository.saveAndFlush(t);
+                }
+                p.setArea(newArea);
+                projectRepository.saveAndFlush(p);
+            }
         }
+    }
+
+    private List<Project> getAllChildrenOfProject(Project thisProject) {
+        List<Project> retVal = new ArrayList<>();
+        retVal.add(thisProject);
+        for(Project p : thisProject.getChildren()){
+            List<Project> getNextGeneration = getAllChildrenOfProject(p);
+            retVal.addAll(getNextGeneration);
+        }
+        return retVal;
     }
 
     @Override

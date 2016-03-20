@@ -27,7 +27,7 @@
 					</c:otherwise>
 				</c:choose>
 				<c:choose>
-					<c:when test="${areaOption.id == task.area.id}">
+					<c:when test="${areaOption.id == project.area.id}">
 						<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
 					</c:when>
 					<c:otherwise>
