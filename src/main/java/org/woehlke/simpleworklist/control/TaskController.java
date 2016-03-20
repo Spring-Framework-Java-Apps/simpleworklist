@@ -118,18 +118,22 @@ public class TaskController extends AbstractController {
         task.setCreatedTimestamp(new Date());
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
-        if(areaId.getAreaId()>0) {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-            task.setArea(area);
-        }
         Project thisProject = null;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
+            if(areaId.getAreaId() == 0L){
+                model.addAttribute("mustChooseArea", true);
+                task.setArea(userAccount.getDefaultArea());
+            } else {
+                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+                task.setArea(area);
+            }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             task.setProject(thisProject);
+            task.setArea(thisProject.getArea());
         }
         model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
@@ -164,10 +168,8 @@ public class TaskController extends AbstractController {
                 task.setTaskState(TaskState.SCHEDULED);
             }
             task.setFocus(false);
-            if(areaId.getAreaId()>0) {
-                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                task.setArea(area);
-            }
+            Area area = areaService.findByIdAndUserAccount(task.getArea().getId(), userAccount);
+            task.setArea(area);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";
