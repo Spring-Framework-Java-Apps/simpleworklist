@@ -92,7 +92,13 @@ public class TaskController extends AbstractController {
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
-            persistentTask.setArea(task.getArea());
+            boolean areaChanged =  persistentTask.getArea().getId().longValue() != task.getArea().getId().longValue();
+            if(areaChanged){
+                persistentTask.setArea(task.getArea());
+                persistentTask.setProject(null);
+                model.addAttribute("areaId", new UserSessionBean(task.getArea().getId()));
+                return "redirect:/project/0/";
+            }
             taskService.saveAndFlush(persistentTask, userAccount);
             return "redirect:/project/" + projectId + "/";
         }
