@@ -55,6 +55,31 @@
 			</c:forEach>
 		</form:select>
 		<form:errors path="taskTime" delimiter=", " element="div" class="alert alert-danger"/>
+	</span>&nbsp;
+	<span class="form-group">
+		<form:hidden path="id"/>
+		<form:label path="area.id"><spring:message code="task.show.area" text="Area" /></form:label>
+		<form:select  path="area.id">
+			<c:forEach items="${areas}" var="areaOption">
+				<c:choose>
+					<c:when test="${locale == 'de'}">
+						<c:set var="label" value="${areaOption.nameDe}"/>
+					</c:when>
+					<c:otherwise>
+						<c:set var="label" value="${areaOption.nameEn}"/>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${areaOption.id == task.area.id}">
+						<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
+					</c:when>
+					<c:otherwise>
+						<option value="${areaOption.id}"><c:out value="${label}"/></option>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</form:select>
+		<form:errors path="area.id" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>
 	</div>
 	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="task.show.button" text="Save Task" /></button>

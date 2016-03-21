@@ -54,7 +54,7 @@ public class Project {
     @IndexedEmbedded(includeEmbeddedObjectId=true)
     private UserAccount userAccount;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "areaId")
     private Area area;
 

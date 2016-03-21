@@ -25,4 +25,7 @@ public interface ProjectService {
     List<Project> findAllProjectsByUserAccountAndArea(UserAccount user, Area area);
 
     List<Project> findRootProjectsByUserAccountAndArea(UserAccount user, Area area);
+
+    void moveProjectToAnotherArea(Project thisProject, Area newArea, UserAccount userAccount);
+
 }

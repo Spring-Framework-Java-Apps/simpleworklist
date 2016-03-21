@@ -34,6 +34,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
+        List<Area> areas = areaService.getAllForUser(userAccount);
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
             Project thisProject = null;
@@ -48,6 +49,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
+            model.addAttribute("areas",areas);
             return "task/show";
         } else {
             return "redirect:/tasks/inbox";
@@ -90,6 +92,13 @@ public class TaskController extends AbstractController {
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
+            boolean areaChanged =  persistentTask.getArea().getId().longValue() != task.getArea().getId().longValue();
+            if(areaChanged){
+                persistentTask.setArea(task.getArea());
+                persistentTask.setProject(null);
+                model.addAttribute("areaId", new UserSessionBean(task.getArea().getId()));
+                return "redirect:/project/0/";
+            }
             taskService.saveAndFlush(persistentTask, userAccount);
             return "redirect:/project/" + projectId + "/";
         }
@@ -109,18 +118,22 @@ public class TaskController extends AbstractController {
         task.setCreatedTimestamp(new Date());
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
-        if(areaId.getAreaId()>0) {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-            task.setArea(area);
-        }
         Project thisProject = null;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
+            if(areaId.getAreaId() == 0L){
+                model.addAttribute("mustChooseArea", true);
+                task.setArea(userAccount.getDefaultArea());
+            } else {
+                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+                task.setArea(area);
+            }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             task.setProject(thisProject);
+            task.setArea(thisProject.getArea());
         }
         model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
@@ -155,10 +168,8 @@ public class TaskController extends AbstractController {
                 task.setTaskState(TaskState.SCHEDULED);
             }
             task.setFocus(false);
-            if(areaId.getAreaId()>0) {
-                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                task.setArea(area);
-            }
+            Area area = areaService.findByIdAndUserAccount(task.getArea().getId(), userAccount);
+            task.setArea(area);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";

@@ -38,7 +38,7 @@ public class Task {
     @ManyToOne(optional = true)
     private Project project;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "areaId")
     private Area area;
 
