@@ -31,8 +31,8 @@
                 </td>
                 <td><c:out value="${user.userEmail}"/></td>
                 <td><c:out value="${user.userFullname}"/></td>
-                <td><fmt:formatDate value="${user.lastLoginTimestamp}" type="BOTH" /></td>
-                <td><fmt:formatDate value="${user.createdTimestamp}" type="BOTH" /></td>
+                <td><fmt:formatDate value="${user.lastLoginTimestamp}" type="BOTH" timeZone="Europe/Berlin" /></td>
+                <td><fmt:formatDate value="${user.createdTimestamp}" type="BOTH" timeZone="Europe/Berlin" /></td>
             </tr>
         </c:forEach>
     </table>
