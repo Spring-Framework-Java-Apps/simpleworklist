@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -44,29 +44,29 @@ public class ProjectController extends AbstractController {
             @PathVariable int pageNumber,
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result,Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
-        Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         Project thisProject = null;
         Page<Task> taskPage = null;
         Pageable pageRequest =
                 new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
-            if(areaId.getAreaId() == null || areaId.getAreaId() == 0) {
+            if(userSession.getContextId() == null || userSession.getContextId() == 0) {
                 taskPage = taskService.findByProject(thisProject, pageRequest, userAccount);
             } else {
-                taskPage = taskService.findByProject(thisProject, pageRequest, userAccount, area);
+                taskPage = taskService.findByProject(thisProject, pageRequest, userAccount, context);
             }
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            if(areaId.getAreaId() == null || areaId.getAreaId() == 0) {
+            if(userSession.getContextId() == null || userSession.getContextId() == 0) {
                 taskPage = taskService.findByRootProject(pageRequest, userAccount);
             } else {
-                taskPage = taskService.findByRootProject(pageRequest, userAccount, area);
+                taskPage = taskService.findByRootProject(pageRequest, userAccount, context);
             }
         }
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
@@ -90,14 +90,14 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)
-    public final String addNewProjectForm(@ModelAttribute("areaId") UserSessionBean areaId,
+    public final String addNewProjectForm(@ModelAttribute("userSession") UserSessionBean userSession,
                                           Model model){
-        return addNewProjectForm(0,areaId,model);
+        return addNewProjectForm(0, userSession,model);
     }
 
     @RequestMapping(value = "/project/addchild/{projectId}", method = RequestMethod.GET)
     public final String addNewProjectForm(@PathVariable long projectId,
-                                          @ModelAttribute("areaId") UserSessionBean areaId,
+                                          @ModelAttribute("userSession") UserSessionBean userSession,
                                           Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
         Project thisProject = null;
@@ -107,12 +107,12 @@ public class ProjectController extends AbstractController {
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
             project = Project.newRootProjectFactory(userAccount);
-            if(areaId.getAreaId() == 0L){
+            if(userSession.getContextId() == 0L){
                 model.addAttribute("mustChooseArea", true);
-                project.setArea(userAccount.getDefaultArea());
+                project.setContext(userAccount.getDefaultContext());
             } else {
-                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                project.setArea(area);
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                project.setContext(context);
             }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
@@ -129,7 +129,7 @@ public class ProjectController extends AbstractController {
             method = RequestMethod.POST)
     public final String addNewProjectStore(
             @PathVariable long projectId,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Project project,
             BindingResult result,
             Model model) {
@@ -151,9 +151,9 @@ public class ProjectController extends AbstractController {
         } else {
             project.setUserAccount(userAccount);
             if (projectId == 0) {
-                if(areaId.getAreaId()>0) {
-                    Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                    project.setArea(area);
+                if(userSession.getContextId()>0) {
+                    Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                    project.setContext(context);
                 }
                 project = projectService.saveAndFlush(project, userAccount);
                 projectId = project.getId();
@@ -191,10 +191,10 @@ public class ProjectController extends AbstractController {
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
             UserAccount userAccount = userService.retrieveCurrentUser();
-            List<Area> areas = areaService.getAllForUser(userAccount);
+            List<Context> contexts = contextService.getAllForUser(userAccount);
             Project thisProject = projectService.findByProjectId(projectId, userAccount);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
-            model.addAttribute("areas",areas);
+            model.addAttribute("areas", contexts);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", thisProject);
@@ -222,12 +222,12 @@ public class ProjectController extends AbstractController {
             Project thisProject = projectService.findByProjectId(project.getId(), userAccount);
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
-            Area newArea = project.getArea();
-            boolean areaChanged = (newArea.getId().longValue() != thisProject.getArea().getId().longValue());
+            Context newContext = project.getContext();
+            boolean areaChanged = (newContext.getId().longValue() != thisProject.getContext().getId().longValue());
             if(areaChanged){
-                newArea = areaService.findByIdAndUserAccount(newArea.getId().longValue(), userAccount);
-                projectService.moveProjectToAnotherArea(thisProject,newArea, userAccount);
-                model.addAttribute("areaId", new UserSessionBean(newArea.getId().longValue()));
+                newContext = contextService.findByIdAndUserAccount(newContext.getId().longValue(), userAccount);
+                projectService.moveProjectToAnotherContext(thisProject, newContext, userAccount);
+                model.addAttribute("userSession", new UserSessionBean(newContext.getId().longValue()));
             } else {
                 projectService.saveAndFlush(thisProject, userAccount);
             }

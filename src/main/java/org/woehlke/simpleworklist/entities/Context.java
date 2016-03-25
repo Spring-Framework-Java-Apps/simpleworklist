@@ -21,7 +21,7 @@ import java.util.UUID;
                 "nameDe"
         })
 )
-public class Area {
+public class Context {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,10 +49,10 @@ public class Area {
     @Column(nullable = false)
     private String nameEn;
 
-    public Area() {
+    public Context() {
     }
 
-    public Area(String nameDe,String nameEn) {
+    public Context(String nameDe, String nameEn) {
         this.nameDe = nameDe;
         this.nameEn = nameEn;
     }
@@ -102,13 +102,13 @@ public class Area {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Area area = (Area) o;
+        Context context = (Context) o;
 
-        if (id != null ? !id.equals(area.id) : area.id != null) return false;
-        if (uuid != null ? !uuid.equals(area.uuid) : area.uuid != null) return false;
-        if (userAccount != null ? !userAccount.equals(area.userAccount) : area.userAccount != null) return false;
-        if (nameDe != null ? !nameDe.equals(area.nameDe) : area.nameDe != null) return false;
-        return nameEn != null ? nameEn.equals(area.nameEn) : area.nameEn == null;
+        if (id != null ? !id.equals(context.id) : context.id != null) return false;
+        if (uuid != null ? !uuid.equals(context.uuid) : context.uuid != null) return false;
+        if (userAccount != null ? !userAccount.equals(context.userAccount) : context.userAccount != null) return false;
+        if (nameDe != null ? !nameDe.equals(context.nameDe) : context.nameDe != null) return false;
+        return nameEn != null ? nameEn.equals(context.nameEn) : context.nameEn == null;
 
     }
 
@@ -124,7 +124,7 @@ public class Area {
 
     @Override
     public String toString() {
-        return "Area{" +
+        return "Context{" +
                 "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", userAccount=" + userAccount +

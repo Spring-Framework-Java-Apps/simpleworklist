@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.services;
 
 import java.util.List;
 
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 
@@ -22,10 +22,10 @@ public interface ProjectService {
 
     void delete(Project project, UserAccount user);
 
-    List<Project> findAllProjectsByUserAccountAndArea(UserAccount user, Area area);
+    List<Project> findAllProjectsByUserAccountAndContext(UserAccount user, Context context);
 
-    List<Project> findRootProjectsByUserAccountAndArea(UserAccount user, Area area);
+    List<Project> findRootProjectsByUserAccountAndContext(UserAccount user, Context context);
 
-    void moveProjectToAnotherArea(Project thisProject, Area newArea, UserAccount userAccount);
+    void moveProjectToAnotherContext(Project thisProject, Context newContext, UserAccount userAccount);
 
 }

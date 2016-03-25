@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
@@ -28,7 +28,7 @@ import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
 import org.woehlke.simpleworklist.model.UserDetailsBean;
-import org.woehlke.simpleworklist.repository.AreaRepository;
+import org.woehlke.simpleworklist.repository.ContextRepository;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserService;
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     private UserMessageRepository userMessageRepository;
 
     @Inject
-    private AreaRepository areaRepository;
+    private ContextRepository contextRepository;
 
     @Inject
     private PasswordEncoder encoder;
@@ -71,15 +71,15 @@ public class UserServiceImpl implements UserService {
         u.setLastLoginTimestamp(now);
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
-        Area work = new Area("Arbeit","Work");
-        Area priv = new Area("Privat","Private");
+        Context work = new Context("Arbeit","Work");
+        Context priv = new Context("Privat","Private");
         work.setUserAccount(u);
         priv.setUserAccount(u);
         LOGGER.info("About to save " + work.toString());
-        areaRepository.saveAndFlush(work);
+        contextRepository.saveAndFlush(work);
         LOGGER.info("About to save " + priv.toString());
-        areaRepository.saveAndFlush(priv);
-        u.setDefaultArea(work);
+        contextRepository.saveAndFlush(priv);
+        u.setDefaultContext(work);
         u = userAccountRepository.saveAndFlush(u);
         LOGGER.info("Saved " + u.toString());
     }

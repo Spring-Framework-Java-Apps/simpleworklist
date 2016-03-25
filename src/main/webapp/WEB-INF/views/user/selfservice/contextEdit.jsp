@@ -1,8 +1,8 @@
 <%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <spring:message code="user.selfservice.areas.edit" text="Edit Area" /></h1>
+<h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <spring:message code="user.selfservice.contexts.edit" text="Edit Area" /></h1>
 <h2><spring:message code="user.selfservice.forUser" text="for User:" /> <strong><sec:authentication property="principal.username" /></strong></h2>
 <div>
-    <form:form id="formId" commandName="editArea" method="post">
+    <form:form id="formId" commandName="editContext" method="post">
         <td>
             <div class="form-group">
                 <form:label path="nameEn"><spring:message code="enum.language.en" text="Englisch" /></form:label>
@@ -20,7 +20,7 @@
         <td>
             <button id="createNewProject" type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                <spring:message code="user.selfservice.areas.edit.button" text="Edit Area" />
+                <spring:message code="user.selfservice.contexts.edit.button" text="Edit Area" />
             </button>
         </td>
         <td>&nbsp;</td>

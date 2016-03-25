@@ -7,20 +7,20 @@ import java.io.Serializable;
  */
 public class UserSessionBean implements Serializable {
 
-    private Long areaId;
+    private Long contextId;
 
     public UserSessionBean(){}
 
-    public UserSessionBean(long areaId){
-        this.areaId=areaId;
+    public UserSessionBean(long contextId){
+        this.contextId = contextId;
     }
 
-    public Long getAreaId() {
-        return areaId;
+    public Long getContextId() {
+        return contextId;
     }
 
-    public void setAreaId(Long areaId) {
-        this.areaId = areaId;
+    public void setContextId(Long contextId) {
+        this.contextId = contextId;
     }
 
     @Override
@@ -30,18 +30,18 @@ public class UserSessionBean implements Serializable {
 
         UserSessionBean that = (UserSessionBean) o;
 
-        return areaId == that.areaId;
+        return contextId == that.contextId;
     }
 
     @Override
     public int hashCode() {
-        return (int) (areaId ^ (areaId >>> 32));
+        return (int) (contextId ^ (contextId >>> 32));
     }
 
     @Override
     public String toString() {
         return "UserSessionBean{" +
-                "areaId=" + areaId +
+                "contextId=" + contextId +
                 '}';
     }
 }

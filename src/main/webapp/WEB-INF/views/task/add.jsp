@@ -59,9 +59,9 @@
 	</div>
 	<c:if test="${mustChooseArea}">
 		<div class="form-group">
-			<form:label path="area.id"><spring:message code="project.edit.area" text="Area" /></form:label>
-			<form:select  path="area.id">
-				<c:forEach items="${areas}" var="areaOption">
+			<form:label path="context.id"><spring:message code="project.edit.context" text="Area" /></form:label>
+			<form:select  path="context.id">
+				<c:forEach items="${contexts}" var="areaOption">
 					<c:choose>
 						<c:when test="${locale == 'de'}">
 							<c:set var="label" value="${areaOption.nameDe}"/>
@@ -71,7 +71,7 @@
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${areaOption.id == task.area.id}">
+						<c:when test="${areaOption.id == task.context.id}">
 							<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
 						</c:when>
 						<c:otherwise>
@@ -80,11 +80,11 @@
 					</c:choose>
 				</c:forEach>
 			</form:select>
-			<form:errors path="area.id" delimiter=", " element="div" class="alert alert-danger"/>
+			<form:errors path="context.id" delimiter=", " element="div" class="alert alert-danger"/>
 		</div>
 	</c:if>
 	<c:if test="${! mustChooseArea}">
-		<form:hidden path="area.id"/>
+		<form:hidden path="context.id"/>
 	</c:if>
 	<button id="createNewTask" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="task.add.button" text="Add Task" /></button>
 </form:form>

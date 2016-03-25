@@ -14,16 +14,16 @@
 		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/password.jsp" />
 	</definition>
 
-	<definition name="user/selfservice/areas" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areas.jsp" />
+	<definition name="user/selfservice/contexts" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/contexts.jsp" />
 	</definition>
 
-	<definition name="user/selfservice/areaAdd" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areaAdd.jsp" />
+	<definition name="user/selfservice/contextAdd" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/contextAdd.jsp" />
 	</definition>
 
-	<definition name="user/selfservice/areaEdit" extends="page">
-		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/areaEdit.jsp" />
+	<definition name="user/selfservice/contextEdit" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/user/selfservice/contextEdit.jsp" />
 	</definition>
 
 	<definition name="user/selfservice/language" extends="page">

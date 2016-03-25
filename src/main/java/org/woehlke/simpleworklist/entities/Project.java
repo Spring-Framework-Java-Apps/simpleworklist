@@ -30,7 +30,7 @@ import org.hibernate.validator.constraints.SafeHtml;
                 "uuid",
                 "parentId",
                 "userAccountId",
-                "areaId"
+                "contextId"
         })
 )
 @Indexed
@@ -55,8 +55,8 @@ public class Project {
     private UserAccount userAccount;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "areaId")
-    private Area area;
+    @JoinColumn(name = "contextId")
+    private Context context;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
@@ -136,12 +136,12 @@ public class Project {
         this.userAccount = userAccount;
     }
 
-    public Area getArea() {
-        return area;
+    public Context getContext() {
+        return context;
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -155,7 +155,7 @@ public class Project {
         if (uuid != null ? !uuid.equals(project.uuid) : project.uuid != null) return false;
         if (parent != null ? !parent.equals(project.parent) : project.parent != null) return false;
         if (userAccount != null ? !userAccount.equals(project.userAccount) : project.userAccount != null) return false;
-        if (area != null ? !area.equals(project.area) : project.area != null) return false;
+        if (context != null ? !context.equals(project.context) : project.context != null) return false;
         if (name != null ? !name.equals(project.name) : project.name != null) return false;
         if (description != null ? !description.equals(project.description) : project.description != null) return false;
         return children != null ? children.equals(project.children) : project.children == null;
@@ -168,7 +168,7 @@ public class Project {
         result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
-        result = 31 * result + (area != null ? area.hashCode() : 0);
+        result = 31 * result + (context != null ? context.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
@@ -182,7 +182,7 @@ public class Project {
                 ", uuid='" + uuid + '\'' +
                 ", parent=" + parent +
                 ", userAccount=" + userAccount +
-                ", area=" + area +
+                ", context=" + context +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
@@ -192,7 +192,7 @@ public class Project {
         Project n = new Project();
         n.setParent(parent);
         n.setUserAccount(parent.getUserAccount());
-        n.setArea(parent.getArea());
+        n.setContext(parent.getContext());
         return n;
     }
 
@@ -203,11 +203,11 @@ public class Project {
         return n;
     }
 
-    public static Project newRootProjectFactory(UserAccount userAccount,Area area) {
+    public static Project newRootProjectFactory(UserAccount userAccount,Context context) {
         Project n = new Project();
         n.setParent(null);
         n.setUserAccount(userAccount);
-        n.setArea(area);
+        n.setContext(context);
         return n;
     }
 

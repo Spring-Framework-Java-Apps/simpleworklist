@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
@@ -84,74 +84,74 @@ public class TaskStateServiceImpl implements TaskStateService {
     }
 
     @Override
-    public Page<Task> getInbox(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getInbox(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.INBOX,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.INBOX, context,request);
         }
     }
 
     @Override
-    public Page<Task> getToday(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getToday(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.TODAY,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.TODAY, context,request);
         }
     }
 
     @Override
-    public Page<Task> getNext(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getNext(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.NEXT,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.NEXT, context,request);
         }
     }
 
     @Override
-    public Page<Task> getWaiting(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getWaiting(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.WAITING,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.WAITING, context,request);
         }
     }
 
     @Override
-    public Page<Task> getScheduled(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getScheduled(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.SCHEDULED,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.SCHEDULED, context,request);
         }
     }
 
     @Override
-    public Page<Task> getSomeday(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getSomeday(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.SOMEDAY,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.SOMEDAY, context,request);
         }
     }
 
     @Override
-    public Page<Task> getCompleted(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getCompleted(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.COMPLETED,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context,request);
         }
     }
 
     @Override
-    public Page<Task> getTrash(UserAccount thisUser, Area area, Pageable request) {
-        if(thisUser.getId().longValue() != area.getUserAccount().getId().longValue()){
+    public Page<Task> getTrash(UserAccount thisUser, Context context, Pageable request) {
+        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>(),request,0);
         } else {
-            return taskRepository.findByTaskStateAndArea(TaskState.TRASHED,area,request);
+            return taskRepository.findByTaskStateAndContext(TaskState.TRASHED, context,request);
         }
     }
 

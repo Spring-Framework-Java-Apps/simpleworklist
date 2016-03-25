@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -147,23 +147,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area) {
+    public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Context context) {
         LOGGER.info("findByProject: ");
         LOGGER.info("---------------------------------");
         LOGGER.info("thisProject: "+thisProject);
         LOGGER.info("---------------------------------");
         LOGGER.info("userAccount: "+userAccount);
         LOGGER.info("---------------------------------");
-        LOGGER.info("area:        "+area);
+        LOGGER.info("context:        "+ context);
         LOGGER.info("---------------------------------");
-        long areaUid = area.getUserAccount().getId().longValue();
+        long contextUid = context.getUserAccount().getId().longValue();
         long uid = userAccount.getId().longValue();
-        long projectAreaId = 0;
-        if (thisProject.getArea() != null){
-            projectAreaId = thisProject.getArea().getId().longValue();
+        long projectContextId = 0;
+        if (thisProject.getContext() != null){
+            projectContextId = thisProject.getContext().getId().longValue();
         }
-        long areaId = area.getId().longValue();
-        if((thisProject == null)||(area==null)||(areaUid != uid)||(projectAreaId!=areaId)){
+        long contextId = context.getId().longValue();
+        if((thisProject == null)||(context ==null)||(contextUid != uid)||(projectContextId!=contextId)){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProject(thisProject,request);
@@ -171,11 +171,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Area area) {
-        if(area.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
+    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context) {
+        if(context.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
-            return taskRepository.findByProjectIsNullAndArea(area,request);
+            return taskRepository.findByProjectIsNullAndContext(context,request);
         }
     }
 

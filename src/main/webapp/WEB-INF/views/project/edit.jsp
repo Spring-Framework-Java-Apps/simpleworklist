@@ -15,9 +15,9 @@
 	</div>
 	<div class="form-group">
 		<form:hidden path="id"/>
-		<form:label path="area.id"><spring:message code="project.edit.area" text="Area" /></form:label>
-		<form:select  path="area.id">
-			<c:forEach items="${areas}" var="areaOption">
+		<form:label path="context.id"><spring:message code="project.edit.context" text="Area" /></form:label>
+		<form:select  path="context.id">
+			<c:forEach items="${contexts}" var="areaOption">
 				<c:choose>
 					<c:when test="${locale == 'de'}">
 						<c:set var="label" value="${areaOption.nameDe}"/>
@@ -27,7 +27,7 @@
 					</c:otherwise>
 				</c:choose>
 				<c:choose>
-					<c:when test="${areaOption.id == project.area.id}">
+					<c:when test="${areaOption.id == project.context.id}">
 						<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
 					</c:when>
 					<c:otherwise>
@@ -36,7 +36,7 @@
 				</c:choose>
 			</c:forEach>
 		</form:select>
-		<form:errors path="area.id" delimiter=", " element="div" class="alert alert-danger"/>
+		<form:errors path="context.id" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
 	<form:hidden path="id"/>
 	<button id="saveEditedProject" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="project.edit.button" text="Save Project" /></button>

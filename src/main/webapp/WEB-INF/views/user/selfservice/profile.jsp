@@ -4,7 +4,7 @@
     <li><spring:message code="user.selfservice.profile.userEmail" text="User Email:" /> <strong><sec:authentication property="principal.username" /></strong></li>
     <li><spring:message code="user.selfservice.profile.name" text="Name:" /> <a href="<c:url value="/user/selfservice/name"/>"><c:out value="${thisUser.userFullname}"/> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
     <li><a href="<c:url value="/user/selfservice/password"/>"><spring:message code="user.selfservice.profile.changePassword" text="Change Password" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
-    <li><a href="<c:url value="/user/selfservice/areas"/>"><spring:message code="user.selfservice.profile.changeAreas" text="Change Areas" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
+    <li><a href="<c:url value="/user/selfservice/contexts"/>"><spring:message code="user.selfservice.profile.changeContexts" text="Change Areas" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
     <li><a href="<c:url value="/user/selfservice/language"/>"><spring:message code="user.selfservice.profile.changeLanguage" text="Set Default Language" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
 </ul>
 <c:if test="${! empty users}">

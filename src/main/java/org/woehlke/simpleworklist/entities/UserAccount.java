@@ -5,10 +5,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,7 +40,7 @@ public class UserAccount {
     private Language defaultLanguage;
 
     @ManyToOne
-    private Area defaultArea;
+    private Context defaultContext;
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -103,12 +100,12 @@ public class UserAccount {
         this.lastLoginTimestamp = lastLoginTimestamp;
     }
 
-    public Area getDefaultArea() {
-        return defaultArea;
+    public Context getDefaultContext() {
+        return defaultContext;
     }
 
-    public void setDefaultArea(Area defaultArea) {
-        this.defaultArea = defaultArea;
+    public void setDefaultContext(Context defaultContext) {
+        this.defaultContext = defaultContext;
     }
 
     public Language getDefaultLanguage() {

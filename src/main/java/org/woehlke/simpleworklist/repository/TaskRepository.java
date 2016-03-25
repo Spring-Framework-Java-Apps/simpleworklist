@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -25,9 +25,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByFocusAndUserAccount(boolean focus, UserAccount thisUser, Pageable request);
 
-    Page<Task> findByProjectIsNullAndArea(Area area, Pageable request);
+    Page<Task> findByProjectIsNullAndContext(Context context, Pageable request);
 
-    Page<Task> findByTaskStateAndArea(TaskState inbox, Area area, Pageable request);
+    Page<Task> findByTaskStateAndContext(TaskState inbox, Context context, Pageable request);
 
-    List<Task> findByArea(Area area);
+    List<Task> findByContext(Context context);
 }

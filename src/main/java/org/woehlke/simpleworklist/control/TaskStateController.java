@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
@@ -36,17 +36,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/inbox", method = RequestMethod.GET)
     public final String inbox(@RequestParam(defaultValue = "1", required = false) int page,
-                              @ModelAttribute("areaId") UserSessionBean areaId,
+                              @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId()==0){
+        if(userSession.getContextId()==0){
             taskPage = taskStateService.getInbox(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getInbox(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getInbox(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -62,17 +62,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/today", method = RequestMethod.GET)
     public final String today(@RequestParam(defaultValue = "1", required = false) int page,
-                              @ModelAttribute("areaId") UserSessionBean areaId,
+                              @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getToday(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getToday(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getToday(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -88,17 +88,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/next", method = RequestMethod.GET)
     public final String next(@RequestParam(defaultValue = "1", required = false) int page,
-                             @ModelAttribute("areaId") UserSessionBean areaId,
+                             @ModelAttribute("userSession") UserSessionBean userSession,
                              BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getNext(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getNext(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getNext(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -114,17 +114,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/waiting", method = RequestMethod.GET)
     public final String waiting(@RequestParam(defaultValue = "1", required = false) int page,
-                                @ModelAttribute("areaId") UserSessionBean areaId,
+                                @ModelAttribute("userSession") UserSessionBean userSession,
                                 BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getWaiting(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getWaiting(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getWaiting(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -140,17 +140,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/scheduled", method = RequestMethod.GET)
     public final String scheduled(@RequestParam(defaultValue = "1", required = false) int page,
-                                  @ModelAttribute("areaId") UserSessionBean areaId,
+                                  @ModelAttribute("userSession") UserSessionBean userSession,
                                   BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getScheduled(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getScheduled(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getScheduled(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -166,17 +166,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/someday", method = RequestMethod.GET)
     public final String someday(@RequestParam(defaultValue = "1", required = false) int page,
-                                @ModelAttribute("areaId") UserSessionBean areaId,
+                                @ModelAttribute("userSession") UserSessionBean userSession,
                                 BindingResult result,  Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getSomeday(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getSomeday(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getSomeday(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -192,17 +192,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/completed", method = RequestMethod.GET)
     public final String completed(@RequestParam(defaultValue = "1", required = false) int page,
-                                  @ModelAttribute("areaId") UserSessionBean areaId,
+                                  @ModelAttribute("userSession") UserSessionBean userSession,
                                   BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getCompleted(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getCompleted(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getCompleted(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -218,17 +218,17 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/tasks/trash", method = RequestMethod.GET)
     public final String trash(@RequestParam(defaultValue = "1", required = false) int page,
-                              @ModelAttribute("areaId") UserSessionBean areaId,
+                              @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = null;
-        if(areaId.getAreaId() == 0){
+        if(userSession.getContextId() == 0){
             taskPage = taskStateService.getTrash(thisUser, request);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), thisUser);
-            taskPage = taskStateService.getTrash(thisUser, area, request);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+            taskPage = taskStateService.getTrash(thisUser, context, request);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);

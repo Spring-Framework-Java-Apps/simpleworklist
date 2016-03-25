@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
@@ -34,7 +34,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
-        List<Area> areas = areaService.getAllForUser(userAccount);
+        List<Context> contexts = contextService.getAllForUser(userAccount);
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
             Project thisProject = null;
@@ -49,7 +49,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            model.addAttribute("areas",areas);
+            model.addAttribute("areas", contexts);
             return "task/show";
         } else {
             return "redirect:/tasks/inbox";
@@ -92,11 +92,11 @@ public class TaskController extends AbstractController {
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
-            boolean areaChanged =  persistentTask.getArea().getId().longValue() != task.getArea().getId().longValue();
+            boolean areaChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
             if(areaChanged){
-                persistentTask.setArea(task.getArea());
+                persistentTask.setContext(task.getContext());
                 persistentTask.setProject(null);
-                model.addAttribute("areaId", new UserSessionBean(task.getArea().getId()));
+                model.addAttribute("userSession", new UserSessionBean(task.getContext().getId()));
                 return "redirect:/project/0/";
             }
             taskService.saveAndFlush(persistentTask, userAccount);
@@ -108,7 +108,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.GET)
     public final String addNewTaskToProjectForm(
             @PathVariable long projectId,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result,
             Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
@@ -123,17 +123,17 @@ public class TaskController extends AbstractController {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            if(areaId.getAreaId() == 0L){
+            if(userSession.getContextId() == 0L){
                 model.addAttribute("mustChooseArea", true);
-                task.setArea(userAccount.getDefaultArea());
+                task.setContext(userAccount.getDefaultContext());
             } else {
-                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                task.setArea(area);
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                task.setContext(context);
             }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             task.setProject(thisProject);
-            task.setArea(thisProject.getArea());
+            task.setContext(thisProject.getContext());
         }
         model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
@@ -145,7 +145,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
     public final String addNewTaskToProjectStore(
             @PathVariable long projectId,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Task task,
             BindingResult result, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
@@ -160,7 +160,7 @@ public class TaskController extends AbstractController {
             } else {
                 Project thisProject = projectService.findByProjectId(projectId, userAccount);
                 task.setProject(thisProject);
-                task.setArea(thisProject.getArea());
+                task.setContext(thisProject.getContext());
             }
             if(task.getDueDate()==null){
                 task.setTaskState(TaskState.INBOX);
@@ -168,8 +168,8 @@ public class TaskController extends AbstractController {
                 task.setTaskState(TaskState.SCHEDULED);
             }
             task.setFocus(false);
-            Area area = areaService.findByIdAndUserAccount(task.getArea().getId(), userAccount);
-            task.setArea(area);
+            Context context = contextService.findByIdAndUserAccount(task.getContext().getId(), userAccount);
+            task.setContext(context);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";
