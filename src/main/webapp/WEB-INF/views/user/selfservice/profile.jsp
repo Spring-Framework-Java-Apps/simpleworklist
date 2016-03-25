@@ -12,7 +12,6 @@
     <table class="table table-striped">
         <tr>
             <th><spring:message code="pages.users.messages" text="Messages" /></th>
-            <th>Email</th>
             <th>Name</th>
             <th><spring:message code="pages.users.lastLogin" text="Last Login" /></th>
             <th><spring:message code="pages.users.dateOfRegistration" text="Date of registration" /></th>
@@ -29,7 +28,6 @@
                         </a>
                     </c:if>
                 </td>
-                <td><c:out value="${user.userEmail}"/></td>
                 <td><c:out value="${user.userFullname}"/></td>
                 <td><fmt:formatDate value="${user.lastLoginTimestamp}" type="BOTH" timeZone="Europe/Berlin" /></td>
                 <td><fmt:formatDate value="${user.createdTimestamp}" type="BOTH" timeZone="Europe/Berlin" /></td>

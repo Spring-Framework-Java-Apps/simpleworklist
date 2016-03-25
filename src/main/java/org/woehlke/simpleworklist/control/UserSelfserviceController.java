@@ -33,6 +33,9 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = userService.retrieveCurrentUser();
         //TODO: change from List to Page
         List<UserAccount> users = userService.findAll();
+        for(UserAccount u:users){
+            LOGGER.info(u.getUserFullname()+": "+u.getUserEmail());
+        }
         Map<Long,Integer> usersToNewMessages = userService.getNewIncomingMessagesForEachOtherUser(user);
         model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
