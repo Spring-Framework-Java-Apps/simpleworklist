@@ -124,4 +124,9 @@ public abstract class AbstractController {
         return locale.getLanguage().toLowerCase();
     }
 
+    @ModelAttribute("refreshMessages")
+    public final boolean refreshMessagePage(){
+        return false;
+    }
+
 }

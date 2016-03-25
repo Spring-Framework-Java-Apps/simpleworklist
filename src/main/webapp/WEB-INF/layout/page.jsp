@@ -15,6 +15,9 @@
 	<link rel="stylesheet" href="<c:url value="/css/main.css"/>"/>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<c:if test="${refreshMessages}">
+		<meta http-equiv="refresh" content="5">
+	</c:if>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">

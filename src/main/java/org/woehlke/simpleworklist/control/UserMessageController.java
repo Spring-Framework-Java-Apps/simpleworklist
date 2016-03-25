@@ -38,6 +38,7 @@ public class UserMessageController extends AbstractController {
         model.addAttribute("newUserMessage",newUserMessage);
         model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList",userMessageList);
+        model.addAttribute("refreshMessages",true);
         return "pages/userMessages";
     }
 
