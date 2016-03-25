@@ -22,7 +22,7 @@
     <c:out value="${m.messageText}" />
     <span style="float:right">
     <small>
-    <fmt:formatDate type="BOTH" value="${m.createdTimestamp}" />
+    <fmt:formatDate type="BOTH" timeZone="Europe/Berlin" value="${m.createdTimestamp}" />
     <c:if test="${m.readByReceiver}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></c:if>
     </small>
     </span>
