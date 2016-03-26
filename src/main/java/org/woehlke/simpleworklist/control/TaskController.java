@@ -8,6 +8,10 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -374,5 +378,23 @@ public class TaskController extends AbstractController {
         } else {
             return "redirect:/tasks/inbox";
         }
+    }
+
+    @RequestMapping(value = "/tasks/all", method = RequestMethod.GET)
+    public String getAllTasksForUser(@RequestParam(defaultValue = "1", required = false) int page,
+                                     Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Pageable request =
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+        Page<Task> taskPage = taskService.findByUser(userAccount,request);
+        int current = taskPage.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, taskPage.getTotalPages());
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        model.addAttribute("dataList", taskPage.getContent());
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+        return "tasks/all";
     }
 }

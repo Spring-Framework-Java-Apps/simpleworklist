@@ -37,4 +37,5 @@ public interface TaskService {
 
     Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context);
 
+    Page<Task> findByUser(UserAccount userAccount, Pageable request);
 }
