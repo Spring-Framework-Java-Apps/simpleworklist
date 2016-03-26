@@ -85,15 +85,20 @@ public class TaskController extends AbstractController {
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
-            if(task.getDueDate()!=null){
+            if(task.getDueDate()==null){
+                persistentTask.setDueDate(null);
+                if(persistentTask.getTaskState().compareTo(TaskState.SCHEDULED)==0){
+                    persistentTask.setTaskState(TaskState.INBOX);
+                }
+            } else {
                 persistentTask.setDueDate(task.getDueDate());
                 persistentTask.setTaskState(TaskState.SCHEDULED);
             }
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
-            boolean areaChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
-            if(areaChanged){
+            boolean contextChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
+            if(contextChanged){
                 persistentTask.setContext(task.getContext());
                 persistentTask.setProject(null);
                 model.addAttribute("userSession", new UserSessionBean(task.getContext().getId()));

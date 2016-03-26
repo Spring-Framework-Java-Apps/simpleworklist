@@ -16,7 +16,7 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<c:if test="${refreshMessages}">
-		<meta http-equiv="refresh" content="5">
+		<meta http-equiv="refresh" content="25">
 	</c:if>
 </head>
 <body>
