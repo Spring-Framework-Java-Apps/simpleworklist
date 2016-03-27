@@ -12,11 +12,11 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th><spring:message code="tasks.focus.title" text="Title" /></th>
-                <th><spring:message code="tasks.focus.text" text="Text" /></th>
-                <th><spring:message code="tasks.focus.dueDate" text="Due Date" /></th>
-                <th><spring:message code="tasks.focus.taskState" text="Task State" /></th>
-                <th><spring:message code="tasks.focus.project" text="Project" /></th>
+                <th><a href="?sort=title"><spring:message code="tasks.focus.title" text="Title" /></a></th>
+                <th><a href="?sort=text"><spring:message code="tasks.focus.text" text="Text" /></a></th>
+                <th><a href="?sort=duedate"><spring:message code="tasks.focus.dueDate" text="Due Date" /></a></th>
+                <th><a href="?sort=state"><spring:message code="tasks.focus.taskState" text="Task State" /></a></th>
+                <th><a href="?sort=project"><spring:message code="tasks.focus.project" text="Project" /></a></th>
                 <th>&nbsp;</th>
             </tr>
             <c:forEach items="${dataList}" var="task">
@@ -105,10 +105,10 @@
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/tasks/all?page=1" />
-        <c:url var="lastUrl" value="/tasks/all?page=${totalPages}" />
-        <c:url var="prevUrl" value="/tasks/all?page=${currentIndex - 1}" />
-        <c:url var="nextUrl" value="/tasks/all?page=${currentIndex + 1}" />
+        <c:url var="firstUrl" value="/tasks/all?sort=${sort}&page=1" />
+        <c:url var="lastUrl" value="/tasks/all?sort=${sort}&page=${totalPages}" />
+        <c:url var="prevUrl" value="/tasks/all?sort=${sort}&page=${currentIndex - 1}" />
+        <c:url var="nextUrl" value="/tasks/all?sort=${sort}&page=${currentIndex + 1}" />
         <div>
             <ul class="pagination">
                 <c:choose>
@@ -122,7 +122,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/tasks/all?page=${i}" />
+                    <c:url var="pageUrl" value="/tasks/all?sort=${sort}&page=${i}" />
                     <c:choose>
                         <c:when test="${i == currentIndex}">
                             <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>

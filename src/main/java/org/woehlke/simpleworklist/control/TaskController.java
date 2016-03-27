@@ -381,11 +381,32 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/all", method = RequestMethod.GET)
-    public String getAllTasksForUser(@RequestParam(defaultValue = "1", required = false) int page,
-                                     Model model){
+    public String getAllTasksForUser(
+            @RequestParam(defaultValue = "changed", required = false) String sort,
+            @RequestParam(defaultValue = "1", required = false) int page,
+            Model model){
+        Sort.Direction sortDirection = Sort.Direction.DESC;
+        Pageable request = new PageRequest(page - 1, pageSize, sortDirection, "lastChangeTimestamp");
+        switch (sort){
+            case "title":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "title", "lastChangeTimestamp");
+                break;
+            case "text":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "text", "lastChangeTimestamp");
+                break;
+            case "duedate":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "dueDate", "lastChangeTimestamp");
+                break;
+            case "state":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "taskState", "lastChangeTimestamp");
+                break;
+            case "project":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "project.name", "lastChangeTimestamp");
+                break;
+            default:
+                break;
+        }
         UserAccount userAccount = userService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
         Page<Task> taskPage = taskService.findByUser(userAccount,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -395,6 +416,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("currentIndex", current);
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute("sort",sort);
         return "tasks/all";
     }
 }
