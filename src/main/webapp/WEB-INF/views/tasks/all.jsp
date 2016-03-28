@@ -12,12 +12,157 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th><a href="?sort=title"><spring:message code="tasks.focus.title" text="Title" /></a></th>
-                <th><a href="?sort=text"><spring:message code="tasks.focus.text" text="Text" /></a></th>
-                <th><a href="?sort=duedate"><spring:message code="tasks.focus.dueDate" text="Due Date" /></a></th>
-                <th><a href="?sort=state"><spring:message code="tasks.focus.taskState" text="Task State" /></a></th>
-                <th><a href="?sort=project"><spring:message code="tasks.focus.project" text="Project" /></a></th>
+                <c:choose>
+                    <c:when test="${sortDir eq 'desc'}">
+                        <c:set var="sortDirection" value="asc"/>
+                        <c:set var="sign" value="down" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="sortDirection" value="desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sort eq 'title'}">
+                        <c:set var="urlpostfix" value="?sort=title&sortDir=${sortDirection}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="urlpostfix" value="?sort=title&sortDir=desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <th>
+                    <a href="${urlpostfix}">
+                        <spring:message code="tasks.focus.title" text="Title" />
+                        <span class="glyphicon glyphicon-chevron-${sign}" aria-hidden="true"></span>
+                    </a>
+                </th>
+                <c:choose>
+                    <c:when test="${sortDir eq 'desc'}">
+                        <c:set var="sortDirection" value="asc"/>
+                        <c:set var="sign" value="down" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="sortDirection" value="desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sort eq 'text'}">
+                        <c:set var="urlpostfix" value="?sort=text&sortDir=${sortDirection}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="urlpostfix" value="?sort=text&sortDir=desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <th>
+                    <a href="${urlpostfix}">
+                        <spring:message code="tasks.focus.text" text="Text" />
+                        <span class="glyphicon glyphicon-chevron-${sign}" aria-hidden="true"></span>
+                    </a>
+                </th>
+                <c:choose>
+                    <c:when test="${sortDir eq 'desc'}">
+                        <c:set var="sortDirection" value="asc"/>
+                        <c:set var="sign" value="down" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="sortDirection" value="desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sort eq 'duedate'}">
+                        <c:set var="urlpostfix" value="?sort=duedate&sortDir=${sortDirection}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="urlpostfix" value="?sort=duedate&sortDir=desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <th>
+                    <a href="${urlpostfix}">
+                        <spring:message code="tasks.focus.dueDate" text="Due Date" />
+                        <span class="glyphicon glyphicon-chevron-${sign}" aria-hidden="true"></span>
+                    </a>
+                </th>
+                <c:choose>
+                    <c:when test="${sortDir eq 'desc'}">
+                        <c:set var="sortDirection" value="asc"/>
+                        <c:set var="sign" value="down" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="sortDirection" value="desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sort eq 'state'}">
+                        <c:set var="urlpostfix" value="?sort=state&sortDir=${sortDirection}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="urlpostfix" value="?sort=state&sortDir=desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <th>
+                    <a href="${urlpostfix}">
+                        <spring:message code="tasks.focus.taskState" text="Task State" />
+                        <span class="glyphicon glyphicon-chevron-${sign}" aria-hidden="true"></span>
+                    </a>
+                </th>
+                <c:choose>
+                    <c:when test="${sortDir eq 'desc'}">
+                        <c:set var="sortDirection" value="asc"/>
+                        <c:set var="sign" value="down" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="sortDirection" value="desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sort eq 'project'}">
+                        <c:set var="urlpostfix" value="?sort=project&sortDir=${sortDirection}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="urlpostfix" value="?sort=project&sortDir=desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <th>
+                    <a href="${urlpostfix}">
+                        <spring:message code="tasks.focus.project" text="Project" />
+                        <span class="glyphicon glyphicon-chevron-${sign}" aria-hidden="true"></span>
+                    </a>
+                </th>
                 <th>&nbsp;</th>
+                <c:choose>
+                    <c:when test="${sortDir eq 'desc'}">
+                        <c:set var="sortDirection" value="asc"/>
+                        <c:set var="sign" value="down" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="sortDirection" value="desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sort eq 'context'}">
+                        <c:set var="urlpostfix" value="?sort=context&sortDir=${sortDirection}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="urlpostfix" value="?sort=context&sortDir=desc"/>
+                        <c:set var="sign" value="up" />
+                    </c:otherwise>
+                </c:choose>
+                <th>
+                    <a href="${urlpostfix}">
+                        <spring:message code="tasks.all.context" text="Context" />
+                        <span class="glyphicon glyphicon-chevron-${sign}" aria-hidden="true"></span>
+                    </a>
+                </th>
             </tr>
             <c:forEach items="${dataList}" var="task">
                 <tr>
@@ -100,15 +245,25 @@
                             <span class="badge"><spring:message code="${task.taskTime.code}" /></span>
                         </c:if>
                     </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${locale eq 'de'}">
+                                <c:out value="${task.context.nameDe}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="${task.context.nameEn}"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/tasks/all?sort=${sort}&page=1" />
-        <c:url var="lastUrl" value="/tasks/all?sort=${sort}&page=${totalPages}" />
-        <c:url var="prevUrl" value="/tasks/all?sort=${sort}&page=${currentIndex - 1}" />
-        <c:url var="nextUrl" value="/tasks/all?sort=${sort}&page=${currentIndex + 1}" />
+        <c:url var="firstUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=1" />
+        <c:url var="lastUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${totalPages}" />
+        <c:url var="prevUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${currentIndex - 1}" />
+        <c:url var="nextUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${currentIndex + 1}" />
         <div>
             <ul class="pagination">
                 <c:choose>
@@ -122,7 +277,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/tasks/all?sort=${sort}&page=${i}" />
+                    <c:url var="pageUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${i}" />
                     <c:choose>
                         <c:when test="${i == currentIndex}">
                             <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>

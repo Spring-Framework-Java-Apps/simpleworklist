@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.control;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -383,9 +384,14 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/tasks/all", method = RequestMethod.GET)
     public String getAllTasksForUser(
             @RequestParam(defaultValue = "changed", required = false) String sort,
+            @RequestParam(defaultValue = "desc", required = false) String sortDir,
             @RequestParam(defaultValue = "1", required = false) int page,
+            Locale locale,
             Model model){
         Sort.Direction sortDirection = Sort.Direction.DESC;
+        if(sortDir.compareTo("asc") == 0){
+            sortDirection = Sort.Direction.ASC;
+        }
         Pageable request = new PageRequest(page - 1, pageSize, sortDirection, "lastChangeTimestamp");
         switch (sort){
             case "title":
@@ -403,6 +409,13 @@ public class TaskController extends AbstractController {
             case "project":
                 request = new PageRequest(page - 1, pageSize, sortDirection, "project.name", "lastChangeTimestamp");
                 break;
+            case "context":
+                if(locale.getLanguage().toLowerCase().compareTo("de")==0){
+                    request = new PageRequest(page - 1, pageSize, sortDirection, "context.nameDe", "lastChangeTimestamp");
+                } else {
+                    request = new PageRequest(page - 1, pageSize, sortDirection, "context.nameEn", "lastChangeTimestamp");
+                }
+                break;
             default:
                 break;
         }
@@ -417,6 +430,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("sort",sort);
+        model.addAttribute("sortDir",sortDir);
         return "tasks/all";
     }
 }

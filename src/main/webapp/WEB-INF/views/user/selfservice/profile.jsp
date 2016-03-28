@@ -6,6 +6,7 @@
     <li><a href="<c:url value="/user/selfservice/password"/>"><spring:message code="user.selfservice.profile.changePassword" text="Change Password" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
     <li><a href="<c:url value="/user/selfservice/contexts"/>"><spring:message code="user.selfservice.profile.changeContexts" text="Change Areas" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
     <li><a href="<c:url value="/user/selfservice/language"/>"><spring:message code="user.selfservice.profile.changeLanguage" text="Set Default Language" /> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></li>
+    <li><a href="<c:url value="/tasks/all"/>"><spring:message code="tasks.all.h1" text="All Tasks" /> <span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></li>
 </ul>
 <c:if test="${! empty users}">
     <h3><spring:message code="pages.users.h1" text="List of registered Users" /></h3>
