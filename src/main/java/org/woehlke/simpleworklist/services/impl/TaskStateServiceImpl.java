@@ -72,17 +72,25 @@ public class TaskStateServiceImpl implements TaskStateService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteAllCompleted(Context context, UserAccount thisUser) {
         if(context == null){
-            List<Task> taskList = taskRepository.findByTaskStateAndUserAccount(TaskState.COMPLETED, thisUser);
-            for (Task task : taskList) {
-                task.setTaskState(TaskState.TRASHED);
-                taskRepository.save(task);
+            List<Task> taskList = taskRepository.findByTaskStateAndUserAccountOrderByOrderIdTaskState(TaskState.COMPLETED, thisUser);
+            Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState.TRASHED, context);
+            long maxOrderIdTaskState = (task==null) ? 0 : task.getOrderIdTaskState();
+            for (Task mytask : taskList) {
+                maxOrderIdTaskState++;
+                mytask.setOrderIdTaskState(maxOrderIdTaskState);
+                mytask.setTaskState(TaskState.TRASHED);
+                taskRepository.save(mytask);
             }
         } else {
             if (thisUser.getId().longValue() == context.getUserAccount().getId().longValue()) {
-                List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context);
-                for (Task task : taskList) {
-                    task.setTaskState(TaskState.TRASHED);
-                    taskRepository.save(task);
+                List<Task> taskList = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskState(TaskState.COMPLETED, context);
+                Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState.TRASHED, context);
+                long maxOrderIdTaskState = (task==null) ? 0 : task.getOrderIdTaskState();
+                for (Task mytask : taskList) {
+                    maxOrderIdTaskState++;
+                    mytask.setOrderIdTaskState(maxOrderIdTaskState);
+                    mytask.setTaskState(TaskState.TRASHED);
+                    taskRepository.save(mytask);
                 }
             }
         }

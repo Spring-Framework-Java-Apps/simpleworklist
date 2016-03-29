@@ -27,15 +27,19 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByProjectIsNullAndContext(Context context, Pageable request);
 
-    Page<Task> findByTaskStateAndContext(TaskState inbox, Context context, Pageable request);
-
     List<Task> findByContext(Context context);
 
     Page<Task> findByUserAccount(UserAccount userAccount, Pageable request);
 
-    List<Task> findByTaskStateAndContext(TaskState inbox, Context context);
+    Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState inbox, Context context);
 
-    List<Task> findByProjectAndContext(Project project, Context context);
+    Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context);
 
     Page<Task> findByFocusAndUserAccount(boolean focus, UserAccount thisUser, Pageable request);
+
+    Page<Task> findByTaskStateAndContext(TaskState inbox, Context context, Pageable request);
+
+    List<Task> findByTaskStateAndUserAccountOrderByOrderIdTaskState(TaskState completed, UserAccount thisUser);
+
+    List<Task> findByTaskStateAndContextOrderByOrderIdTaskState(TaskState completed, Context context);
 }

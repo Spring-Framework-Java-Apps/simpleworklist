@@ -321,9 +321,9 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext(),thisUser);
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),thisUser);
             task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.SOMEDAY);
+            task.setTaskState(TaskState.COMPLETED);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to completed: " + task.toString());
         }

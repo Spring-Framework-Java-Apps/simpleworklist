@@ -188,13 +188,8 @@ public class TaskServiceImpl implements TaskService {
     public long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser) {
         long maxOrderIdTaskState = 0;
         if(context.getUserAccount().getId().longValue()==thisUser.getId().longValue()) {
-            //TODO: JPA Optimization
-            List<Task> tasks = taskRepository.findByTaskStateAndContext(inbox, context);
-            for(Task task:tasks){
-                if(task.getOrderIdTaskState()>maxOrderIdTaskState){
-                    maxOrderIdTaskState = task.getOrderIdTaskState();
-                }
-            }
+            Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(inbox, context);
+            maxOrderIdTaskState = (task==null) ? 0 : task.getOrderIdTaskState();
         }
         return maxOrderIdTaskState;
     }
@@ -203,13 +198,8 @@ public class TaskServiceImpl implements TaskService {
     public long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount) {
         long maxOrderIdProject = 0;
         if(context.getUserAccount().getId().longValue()==userAccount.getId().longValue()) {
-            //TODO: JPA Optimization
-            List<Task> tasks = taskRepository.findByProjectAndContext(project, context);
-            for(Task task:tasks) {
-                if (task.getOrderIdProject() > maxOrderIdProject) {
-                    maxOrderIdProject = task.getOrderIdProject();
-                }
-            }
+            Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(project, context);
+            maxOrderIdProject = (task==null) ? 0 : task.getOrderIdProject();
         }
         return maxOrderIdProject;
     }
