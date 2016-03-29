@@ -70,11 +70,13 @@ public class TaskStateServiceImpl implements TaskStateService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteAllCompleted(UserAccount thisUser) {
-        List<Task> taskList =  taskRepository.findByTaskStateAndUserAccount(TaskState.COMPLETED, thisUser);
-        for(Task task: taskList){
-            task.setTaskState(TaskState.TRASHED);
-            taskRepository.save(task);
+    public void deleteAllCompleted(Context context, UserAccount thisUser) {
+        if(thisUser.getId().longValue() == context.getUserAccount().getId().longValue()){
+            List<Task> taskList =  taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context);
+            for(Task task: taskList){
+                task.setTaskState(TaskState.TRASHED);
+                taskRepository.save(task);
+            }
         }
     }
 

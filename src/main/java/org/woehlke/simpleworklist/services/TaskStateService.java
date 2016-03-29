@@ -27,7 +27,7 @@ public interface TaskStateService {
 
     Page<Task> getTrash(UserAccount thisUser, Pageable request);
 
-    void deleteAllCompleted(UserAccount thisUser);
+    void deleteAllCompleted(Context context, UserAccount thisUser);
 
     Page<Task> getFocus(UserAccount thisUser, Pageable request);
 

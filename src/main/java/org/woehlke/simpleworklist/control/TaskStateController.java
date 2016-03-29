@@ -345,11 +345,12 @@ public class TaskStateController extends AbstractController {
         return "redirect:/tasks/trash";
     }
 
-    //TODO: Bug #67: all Completed Tasks of all Contexts are deleted
     @RequestMapping(value = "/tasks/completed/deleteall", method = RequestMethod.GET)
-    public final String deleteallCompleted(Model model) {
+    public final String deleteallCompleted(
+            @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
-        taskStateService.deleteAllCompleted(thisUser);
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        taskStateService.deleteAllCompleted(context,thisUser);
         return "redirect:/tasks/trash";
     }
 

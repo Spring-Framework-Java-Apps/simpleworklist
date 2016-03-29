@@ -251,8 +251,6 @@ public class TaskController extends AbstractController {
             task.setProject(project);
             long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),task.getContext(),userAccount);
             task.setOrderIdProject(++maxOrderIdProject);
-            //long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
-            //task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.saveAndFlush(task, userAccount);
         }
         return "redirect:/project/" + projectId + "/";
