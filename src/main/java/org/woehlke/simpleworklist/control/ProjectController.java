@@ -51,7 +51,7 @@ public class ProjectController extends AbstractController {
         Project thisProject = null;
         Page<Task> taskPage = null;
         Pageable pageRequest =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "orderIdProject");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             if(userSession.getContextId() == null || userSession.getContextId() == 0) {

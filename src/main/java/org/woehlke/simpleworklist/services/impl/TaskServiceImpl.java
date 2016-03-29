@@ -184,4 +184,34 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByUserAccount(userAccount,request);
     }
 
+    @Override
+    public long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser) {
+        long maxOrderIdTaskState = 0;
+        if(context.getUserAccount().getId().longValue()==thisUser.getId().longValue()) {
+            //TODO: JPA Optimization
+            List<Task> tasks = taskRepository.findByTaskStateAndContext(inbox, context);
+            for(Task task:tasks){
+                if(task.getOrderIdTaskState()>maxOrderIdTaskState){
+                    maxOrderIdTaskState = task.getOrderIdTaskState();
+                }
+            }
+        }
+        return maxOrderIdTaskState;
+    }
+
+    @Override
+    public long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount) {
+        long maxOrderIdProject = 0;
+        if(context.getUserAccount().getId().longValue()==userAccount.getId().longValue()) {
+            //TODO: JPA Optimization
+            List<Task> tasks = taskRepository.findByProjectAndContext(project, context);
+            for(Task task:tasks) {
+                if (task.getOrderIdProject() > maxOrderIdProject) {
+                    maxOrderIdProject = task.getOrderIdProject();
+                }
+            }
+        }
+        return maxOrderIdProject;
+    }
+
 }

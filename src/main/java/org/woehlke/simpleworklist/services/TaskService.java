@@ -6,6 +6,7 @@ import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 
 public interface TaskService {
 
@@ -38,4 +39,8 @@ public interface TaskService {
     Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context);
 
     Page<Task> findByUser(UserAccount userAccount, Pageable request);
+
+    long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser);
+
+    long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount);
 }

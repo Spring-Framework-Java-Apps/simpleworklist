@@ -134,6 +134,8 @@ public class TestServiceImpl implements TestService {
             d.setTaskEnergy(TaskEnergy.NONE);
             d.setTaskTime(TaskTime.NONE);
             d.setContext(contextWork);
+            d.setOrderIdProject(i);
+            d.setOrderIdTaskState(i);
             taskRepository.saveAndFlush(d);
         }
         /* without Project for Main INBOX */
@@ -151,6 +153,8 @@ public class TestServiceImpl implements TestService {
             d.setTaskEnergy(TaskEnergy.NONE);
             d.setTaskTime(TaskTime.NONE);
             d.setContext(contextWork);
+            d.setOrderIdProject(i);
+            d.setOrderIdTaskState(i+111);
             taskRepository.saveAndFlush(d);
         }
     }

@@ -98,6 +98,12 @@ public class Task {
     @Column(nullable = false)
     private Date lastChangeTimestamp;
 
+    @Column(nullable = false)
+    private long orderIdProject;
+
+    @Column(nullable = false)
+    private long orderIdTaskState;
+
     @Transient
     public String getTextShortened(){
         StringBuilder sb = new StringBuilder(this.getText());
@@ -231,6 +237,22 @@ public class Task {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public long getOrderIdProject() {
+        return orderIdProject;
+    }
+
+    public void setOrderIdProject(long orderIdProject) {
+        this.orderIdProject = orderIdProject;
+    }
+
+    public long getOrderIdTaskState() {
+        return orderIdTaskState;
+    }
+
+    public void setOrderIdTaskState(long orderIdTaskState) {
+        this.orderIdTaskState = orderIdTaskState;
     }
 
     @Override

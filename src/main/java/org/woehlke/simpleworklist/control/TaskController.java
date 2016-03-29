@@ -180,6 +180,10 @@ public class TaskController extends AbstractController {
             task.setFocus(false);
             Context context = contextService.findByIdAndUserAccount(task.getContext().getId(), userAccount);
             task.setContext(context);
+            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),context,userAccount);
+            task.setOrderIdProject(++maxOrderIdProject);
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";
@@ -245,6 +249,10 @@ public class TaskController extends AbstractController {
         if(task!=null){
             Project project = projectService.findByProjectId(projectId, userAccount);
             task.setProject(project);
+            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),task.getContext(),userAccount);
+            task.setOrderIdProject(++maxOrderIdProject);
+            //long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            //task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.saveAndFlush(task, userAccount);
         }
         return "redirect:/project/" + projectId + "/";
@@ -279,6 +287,8 @@ public class TaskController extends AbstractController {
         UserAccount userAccount = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null){
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),userAccount);
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.complete(task, userAccount);
         }
         return "redirect:/tasks/completed";
@@ -290,6 +300,9 @@ public class TaskController extends AbstractController {
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.incomplete(task, userAccount);
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
+            taskService.saveAndFlush(task,userAccount);
             switch (task.getTaskState()) {
                 case TODAY:
                     return "redirect:/tasks/today";

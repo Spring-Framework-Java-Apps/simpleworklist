@@ -33,4 +33,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByUserAccount(UserAccount userAccount, Pageable request);
 
+    List<Task> findByTaskStateAndContext(TaskState inbox, Context context);
+
+    List<Task> findByProjectAndContext(Project project, Context context);
 }

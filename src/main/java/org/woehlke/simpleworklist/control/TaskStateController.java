@@ -40,7 +40,7 @@ public class TaskStateController extends AbstractController {
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId()==0){
             taskPage = taskStateService.getInbox(thisUser, request);
@@ -66,7 +66,7 @@ public class TaskStateController extends AbstractController {
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getToday(thisUser, request);
@@ -92,7 +92,7 @@ public class TaskStateController extends AbstractController {
                              BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getNext(thisUser, request);
@@ -118,7 +118,7 @@ public class TaskStateController extends AbstractController {
                                 BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getWaiting(thisUser, request);
@@ -144,7 +144,7 @@ public class TaskStateController extends AbstractController {
                                   BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getScheduled(thisUser, request);
@@ -170,7 +170,7 @@ public class TaskStateController extends AbstractController {
                                 BindingResult result,  Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getSomeday(thisUser, request);
@@ -196,7 +196,7 @@ public class TaskStateController extends AbstractController {
                                   BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getCompleted(thisUser, request);
@@ -222,7 +222,7 @@ public class TaskStateController extends AbstractController {
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getTrash(thisUser, request);
@@ -248,7 +248,9 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId,thisUser);
         if(task!=null){
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.INBOX,task.getContext(),thisUser);
             task.setTaskState(TaskState.INBOX);
+            task.setOrderIdTaskState(++maxOrderId);
             task=taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped "+taskId+" to inbox: "+task.toString());
         }
@@ -261,6 +263,8 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TODAY,task.getContext(),thisUser);
+            task.setOrderIdTaskState(++maxOrderId);
             task.setTaskState(TaskState.TODAY);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to today: " + task.toString());
@@ -273,6 +277,8 @@ public class TaskStateController extends AbstractController {
         LOGGER.info("dragged and dropped "+taskId+" to next");
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
+        long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.NEXT,task.getContext(),thisUser);
+        task.setOrderIdTaskState(++maxOrderId);
         task.setTaskState(TaskState.NEXT);
         task=taskService.saveAndFlush(task, thisUser);
         LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
@@ -285,6 +291,8 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null){
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.WAITING,task.getContext(),thisUser);
+            task.setOrderIdTaskState(++maxOrderId);
             task.setTaskState(TaskState.WAITING);
             task=taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
@@ -298,6 +306,8 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext(),thisUser);
+            task.setOrderIdTaskState(++maxOrderId);
             task.setTaskState(TaskState.SOMEDAY);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to someday: " + task.toString());
@@ -311,7 +321,9 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            task.setTaskState(TaskState.COMPLETED);
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext(),thisUser);
+            task.setOrderIdTaskState(++maxOrderId);
+            task.setTaskState(TaskState.SOMEDAY);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to completed: " + task.toString());
         }
@@ -324,6 +336,8 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TRASHED,task.getContext(),thisUser);
+            task.setOrderIdTaskState(++maxOrderId);
             task.setTaskState(TaskState.TRASHED);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to trash: " + task.toString());
@@ -331,6 +345,7 @@ public class TaskStateController extends AbstractController {
         return "redirect:/tasks/trash";
     }
 
+    //TODO: Bug #67: all Completed Tasks of all Contexts are deleted
     @RequestMapping(value = "/tasks/completed/deleteall", method = RequestMethod.GET)
     public final String deleteallCompleted(Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
@@ -338,11 +353,12 @@ public class TaskStateController extends AbstractController {
         return "redirect:/tasks/trash";
     }
 
+    //TODO: Bug #68: all Focus Tasks of all Contexts are displayed
     @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
     public final String focus(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "lastChangeTimestamp");
+                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = taskStateService.getFocus(thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
