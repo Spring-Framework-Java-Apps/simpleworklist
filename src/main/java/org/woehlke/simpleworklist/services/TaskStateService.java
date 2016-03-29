@@ -29,7 +29,7 @@ public interface TaskStateService {
 
     void deleteAllCompleted(Context context, UserAccount thisUser);
 
-    Page<Task> getFocus(UserAccount thisUser, Pageable request);
+    Page<Task> getFocus(Context context, UserAccount thisUser, Pageable request);
 
     Page<Task> getInbox(UserAccount thisUser, Context context, Pageable request);
 

@@ -354,13 +354,14 @@ public class TaskStateController extends AbstractController {
         return "redirect:/tasks/trash";
     }
 
-    //TODO: Bug #68: all Focus Tasks of all Contexts are displayed
     @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
-    public final String focus(@RequestParam(defaultValue = "1", required = false) int page, Model model) {
+    public final String focus(@RequestParam(defaultValue = "1", required = false) int page,
+                              @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Pageable request =
                 new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
-        Page<Task> taskPage = taskStateService.getFocus(thisUser, request);
+        Page<Task> taskPage = taskStateService.getFocus(context, thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());

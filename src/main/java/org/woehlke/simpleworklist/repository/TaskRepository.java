@@ -23,7 +23,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByTaskStateAndUserAccount(TaskState taskState, UserAccount userAccount);
 
-    Page<Task> findByFocusAndUserAccount(boolean focus, UserAccount thisUser, Pageable request);
+    Page<Task> findByFocusAndContext(boolean focus, Context context, Pageable request);
 
     Page<Task> findByProjectIsNullAndContext(Context context, Pageable request);
 
@@ -36,4 +36,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTaskStateAndContext(TaskState inbox, Context context);
 
     List<Task> findByProjectAndContext(Project project, Context context);
+
+    Page<Task> findByFocusAndUserAccount(boolean focus, UserAccount thisUser, Pageable request);
 }

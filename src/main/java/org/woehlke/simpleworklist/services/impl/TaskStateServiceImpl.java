@@ -71,18 +71,30 @@ public class TaskStateServiceImpl implements TaskStateService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteAllCompleted(Context context, UserAccount thisUser) {
-        if(thisUser.getId().longValue() == context.getUserAccount().getId().longValue()){
-            List<Task> taskList =  taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context);
-            for(Task task: taskList){
+        if(context == null){
+            List<Task> taskList = taskRepository.findByTaskStateAndUserAccount(TaskState.COMPLETED, thisUser);
+            for (Task task : taskList) {
                 task.setTaskState(TaskState.TRASHED);
                 taskRepository.save(task);
+            }
+        } else {
+            if (thisUser.getId().longValue() == context.getUserAccount().getId().longValue()) {
+                List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context);
+                for (Task task : taskList) {
+                    task.setTaskState(TaskState.TRASHED);
+                    taskRepository.save(task);
+                }
             }
         }
     }
 
     @Override
-    public Page<Task> getFocus(UserAccount thisUser, Pageable request) {
-        return taskRepository.findByFocusAndUserAccount(true, thisUser, request);
+    public Page<Task> getFocus(Context context, UserAccount thisUser, Pageable request) {
+        if(context == null){
+            return taskRepository.findByFocusAndUserAccount(true, thisUser, request);
+        } else {
+            return taskRepository.findByFocusAndContext(true, context, request);
+        }
     }
 
     @Override
