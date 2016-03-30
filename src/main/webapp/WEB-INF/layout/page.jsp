@@ -226,8 +226,8 @@
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	 <script>
 		$(window).load( function() {
-			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: true  });
-			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: true  });
+			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: "invalid"  });
 			$( ".categoryNode" ).droppable({
 				drop: function( event, ui ) {
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
