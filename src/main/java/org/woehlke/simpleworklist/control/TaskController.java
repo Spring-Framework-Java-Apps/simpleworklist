@@ -444,4 +444,35 @@ public class TaskController extends AbstractController {
         model.addAttribute("sortDir",sortDir);
         return "tasks/all";
     }
+
+    @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String changeTaskOrderId(
+            @PathVariable long sourceTaskId,
+            @PathVariable long destinationTaskId,
+            Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
+        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        LOGGER.info("------------- changeTaskOrderId -------------");
+        LOGGER.info("source Task:      "+sourceTask.toString());
+        LOGGER.info("---------------------------------------------");
+        LOGGER.info("destination Task: "+destinationTask.toString());
+        LOGGER.info("---------------------------------------------");
+        String returnUrl = "redirect:/tasks/inbox";
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
+            boolean sameTaskType = (sourceTask.getTaskState().ordinal()==destinationTask.getTaskState().ordinal());
+            if(sameTaskType){
+                returnUrl = "redirect:/tasks/"+sourceTask.getTaskState().name().toLowerCase();
+            }
+            if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
+                returnUrl = "redirect:/project/0";
+            } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
+                boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
+                if (sameProject) {
+                    returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
+                }
+            }
+        }
+        return returnUrl;
+    }
 }

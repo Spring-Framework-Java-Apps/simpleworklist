@@ -245,6 +245,18 @@
 					window.location.replace(html4move);
 				}
 			});
+			$( ".dataDetailListTitle" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					if(draggableType == "dataDetail") {
+						var rootUrl = '<c:url value="/task"/>';
+						var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+						window.location.replace(html4move);
+					}
+				}
+			});
 			$("#focus_inbox").droppable({
 				drop: function( event, ui ) {
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
