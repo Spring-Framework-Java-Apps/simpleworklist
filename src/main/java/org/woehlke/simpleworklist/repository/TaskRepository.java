@@ -47,4 +47,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("select t from Task t where t.orderIdTaskState > :lowerTask and t.orderIdTaskState < :higherTask ")
     List<Task> getTasksToReorderByOrderIdTaskState(@Param("lowerTask") long lowerTaskId, @Param("higherTask") long higherTaskId);
+
+    @Query("select t from Task t where t.orderIdProject > :lowerTask and t.orderIdProject < :higherTask ")
+    List<Task> getTasksToReorderByOrderIdProject(@Param("lowerTask") long lowerTaskId, @Param("higherTask") long higherTaskId);
 }

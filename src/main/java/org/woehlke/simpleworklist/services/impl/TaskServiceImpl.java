@@ -232,10 +232,25 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveOrderIdProject(Task sourceTask, Task destinationTask) {
+        long destinationOrderIdProject = destinationTask.getOrderIdProject();
         if(sourceTask.getOrderIdProject()<destinationTask.getOrderIdProject()){
-
+            List<Task> tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdProject(),destinationTask.getOrderIdProject());
+            for(Task task:tasks){
+                task.setOrderIdProject(task.getOrderIdProject()-1);
+                taskRepository.saveAndFlush(task);
+            }
+            destinationTask.setOrderIdProject(destinationTask.getOrderIdProject()-1);
+            taskRepository.saveAndFlush(destinationTask);
+            sourceTask.setOrderIdProject(destinationOrderIdProject);
+            taskRepository.saveAndFlush(sourceTask);
         } else {
-
+            List<Task> tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdProject(),sourceTask.getOrderIdProject());
+            for(Task task:tasks){
+                task.setOrderIdProject(task.getOrderIdProject()+1);
+                taskRepository.saveAndFlush(task);
+            }
+            sourceTask.setOrderIdProject(destinationOrderIdProject+1);
+            taskRepository.saveAndFlush(sourceTask);
         }
     }
 
