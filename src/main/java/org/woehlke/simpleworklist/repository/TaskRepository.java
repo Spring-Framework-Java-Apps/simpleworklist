@@ -41,6 +41,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByTaskStateAndContext(TaskState inbox, Context context, Pageable request);
 
+    List<Task> findByTaskStateAndContext(TaskState trashed, Context context);
+
     List<Task> findByTaskStateAndUserAccountOrderByOrderIdTaskState(TaskState completed, UserAccount thisUser);
 
     List<Task> findByTaskStateAndContextOrderByOrderIdTaskState(TaskState completed, Context context);
@@ -50,4 +52,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("select t from Task t where t.orderIdProject > :lowerTask and t.orderIdProject < :higherTask ")
     List<Task> getTasksToReorderByOrderIdProject(@Param("lowerTask") long lowerTaskId, @Param("higherTask") long higherTaskId);
+
 }

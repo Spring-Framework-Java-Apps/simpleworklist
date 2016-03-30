@@ -15,7 +15,6 @@
                 <th>&nbsp;</th>
                 <th><spring:message code="tasks.trash.title" text="Title" /></th>
                 <th><spring:message code="tasks.trash.text" text="Text" /></th>
-                <th>&nbsp;</th>
                 <th><spring:message code="tasks.trash.project" text="Project" /></th>
                 <th>&nbsp;</th>
             </tr>
@@ -29,9 +28,6 @@
                     </td>
                     <td>
                         <del><c:out value="${task.textShortened}" /></del>
-                    </td>
-                    <td>
-                        <a href='<c:url value="/task/undelete/${task.id}"/>'><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Undelete</a>
                     </td>
                     <td>
                         <c:if test="${task.project != null}">

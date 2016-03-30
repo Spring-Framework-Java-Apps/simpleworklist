@@ -24,7 +24,7 @@ public interface TaskService {
 
     void undelete(Task task, UserAccount userAccount);
 
-    void emptyTrash(UserAccount userAccount);
+    void emptyTrash(UserAccount userAccount, Context context);
 
     void complete(Task task, UserAccount userAccount);
 

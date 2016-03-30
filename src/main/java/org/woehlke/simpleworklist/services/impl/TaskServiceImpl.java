@@ -99,8 +99,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void emptyTrash(UserAccount userAccount) {
-        List<Task> taskList = taskRepository.findByTaskStateAndUserAccount(TaskState.TRASHED,userAccount);
+    public void emptyTrash(UserAccount userAccount, Context context) {
+        List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.TRASHED,context);
         for(Task task:taskList){
             taskRepository.delete(task);
         }

@@ -206,25 +206,18 @@ public class TaskController extends AbstractController {
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
             taskService.undelete(task, userAccount);
-            if (task.getProject() != null) {
-                long projectId = task.getProject().getId();
-                return "redirect:/project/" + projectId + "/";
-            }
-            switch (task.getTaskState()) {
-                case SCHEDULED:
-                    return "redirect:/tasks/scheduled";
-                default:
-                    return "redirect:/tasks/inbox";
-            }
+            return "redirect:/tasks/completed";
         } else {
-            return "redirect:/tasks/inbox";
+            return "redirect:/tasks/trash";
         }
     }
 
     @RequestMapping(value = "/task/trash/empty", method = RequestMethod.GET)
-    public final String emptyTrash() {
+    public final String emptyTrash(
+            @ModelAttribute("userSession") UserSessionBean userSession,Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
-        taskService.emptyTrash(userAccount);
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+        taskService.emptyTrash(userAccount,context);
         return "redirect:/tasks/trash";
     }
 
@@ -312,6 +305,10 @@ public class TaskController extends AbstractController {
                     return "redirect:/tasks/scheduled";
                 case SOMEDAY:
                     return "redirect:/tasks/someday";
+                case COMPLETED:
+                    return "redirect:/tasks/completed";
+                case TRASHED:
+                    return "redirect:/tasks/trash";
                 default:
                     return "redirect:/tasks/inbox";
             }
