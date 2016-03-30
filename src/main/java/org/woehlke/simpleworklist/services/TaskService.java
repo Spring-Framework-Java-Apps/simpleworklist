@@ -43,4 +43,9 @@ public interface TaskService {
     long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser);
 
     long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount);
+
+    void moveOrderIdTaskState(Task sourceTask, Task destinationTask);
+
+    void moveOrderIdProject(Task sourceTask, Task destinationTask);
+
 }

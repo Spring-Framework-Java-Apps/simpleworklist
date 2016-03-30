@@ -48,7 +48,7 @@
 								<del>
 							</c:if>
 							<a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
-							id="dataDetail_${task.id}" ><c:out
+							id="dataDetailProject_${task.id}" ><c:out
 									value="${task.title}" /></a>
 							<c:if test="${task.taskState.name() eq 'COMPLETED'}">
 								</del>

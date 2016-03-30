@@ -234,7 +234,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						rootUrl += '<c:url value="/task"/>';
 					} else {
 						rootUrl += '<c:url value="/project"/>';
@@ -250,11 +250,14 @@
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
 					if(draggableType == "dataDetail") {
-						var rootUrl = '<c:url value="/task"/>';
-						var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
-						window.location.replace(html4move);
+						rootUrl = '<c:url value="/task"/>';
+					} else if(draggableType == "dataDetailProject") {
+						rootUrl = '<c:url value="/project/task"/>';
 					}
+					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+					window.location.replace(html4move);
 				}
 			});
 			$("#focus_inbox").droppable({
@@ -263,7 +266,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/inbox';
 						window.location.replace(html4move);
 					}
@@ -275,7 +278,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/today';
 						window.location.replace(html4move);
 					}
@@ -287,7 +290,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/next';
 						window.location.replace(html4move);
 					}
@@ -299,7 +302,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/waiting';
 						window.location.replace(html4move);
 					}
@@ -311,7 +314,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/someday';
 						window.location.replace(html4move);
 					}
@@ -323,7 +326,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/completed';
 						window.location.replace(html4move);
 					}
@@ -335,7 +338,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/trash';
 						window.location.replace(html4move);
 					}

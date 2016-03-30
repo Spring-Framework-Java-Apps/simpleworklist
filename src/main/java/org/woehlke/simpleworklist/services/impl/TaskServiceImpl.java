@@ -204,4 +204,39 @@ public class TaskServiceImpl implements TaskService {
         return maxOrderIdProject;
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveOrderIdTaskState(Task sourceTask, Task destinationTask) {
+       long destinationTaskOrderIdTaskState = destinationTask.getOrderIdTaskState();
+       if(sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState()){
+           List<Task> tasks = taskRepository.getTasksToReorderByOrderIdTaskState(sourceTask.getOrderIdTaskState(),destinationTask.getOrderIdTaskState());
+           for(Task task:tasks){
+               task.setOrderIdTaskState(task.getOrderIdTaskState()-1);
+               taskRepository.saveAndFlush(task);
+           }
+           destinationTask.setOrderIdTaskState(destinationTask.getOrderIdTaskState()-1);
+           taskRepository.saveAndFlush(destinationTask);
+           sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState);
+           taskRepository.saveAndFlush(sourceTask);
+       } else {
+           List<Task> tasks = taskRepository.getTasksToReorderByOrderIdTaskState(destinationTask.getOrderIdTaskState(),sourceTask.getOrderIdTaskState());
+           for(Task task:tasks){
+               task.setOrderIdTaskState(task.getOrderIdTaskState()+1);
+               taskRepository.saveAndFlush(task);
+           }
+           sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState+1);
+           taskRepository.saveAndFlush(sourceTask);
+       }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveOrderIdProject(Task sourceTask, Task destinationTask) {
+        if(sourceTask.getOrderIdProject()<destinationTask.getOrderIdProject()){
+
+        } else {
+
+        }
+    }
+
 }

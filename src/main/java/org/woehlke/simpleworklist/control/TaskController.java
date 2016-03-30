@@ -459,16 +459,38 @@ public class TaskController extends AbstractController {
         LOGGER.info("destination Task: "+destinationTask.toString());
         LOGGER.info("---------------------------------------------");
         String returnUrl = "redirect:/tasks/inbox";
-        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
-            boolean sameTaskType = (sourceTask.getTaskState().ordinal()==destinationTask.getTaskState().ordinal());
-            if(sameTaskType){
-                returnUrl = "redirect:/tasks/"+sourceTask.getTaskState().name().toLowerCase();
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()) {
+            boolean sameTaskType = (sourceTask.getTaskState().ordinal() == destinationTask.getTaskState().ordinal());
+            if (sameTaskType) {
+                taskService.moveOrderIdTaskState(sourceTask, destinationTask);
+                returnUrl = "redirect:/tasks/" + sourceTask.getTaskState().name().toLowerCase();
             }
+        }
+        return returnUrl;
+    }
+
+    @RequestMapping(value = "/project/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String changeTaskOrderIdByProject(
+            @PathVariable long sourceTaskId,
+            @PathVariable long destinationTaskId,
+            Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
+        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        LOGGER.info("--------- changeTaskOrderIdByProject  -------");
+        LOGGER.info("source Task:      "+sourceTask.toString());
+        LOGGER.info("---------------------------------------------");
+        LOGGER.info("destination Task: "+destinationTask.toString());
+        LOGGER.info("---------------------------------------------");
+        String returnUrl = "redirect:/tasks/inbox";
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
             if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
+                taskService.moveOrderIdProject(sourceTask,destinationTask);
                 returnUrl = "redirect:/project/0";
             } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
                 boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
                 if (sameProject) {
+                    taskService.moveOrderIdProject(sourceTask,destinationTask);
                     returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
                 }
             }
