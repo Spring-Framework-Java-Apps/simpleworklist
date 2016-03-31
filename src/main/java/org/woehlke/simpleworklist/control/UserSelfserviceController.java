@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
 import org.woehlke.simpleworklist.model.*;
@@ -33,6 +33,9 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = userService.retrieveCurrentUser();
         //TODO: change from List to Page
         List<UserAccount> users = userService.findAll();
+        for(UserAccount u:users){
+            LOGGER.info(u.getUserFullname()+": "+u.getUserEmail());
+        }
         Map<Long,Integer> usersToNewMessages = userService.getNewIncomingMessagesForEachOtherUser(user);
         model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
@@ -115,116 +118,116 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/areas", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/selfservice/contexts", method = RequestMethod.GET)
     public String userAreasForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
-        UserChangeDefaultAreaFormBean bean = new UserChangeDefaultAreaFormBean();
+        UserChangeDefaultContextFormBean bean = new UserChangeDefaultContextFormBean();
         bean.setId(user.getId());
-        bean.setDefaultArea(user.getDefaultArea());
+        bean.setDefaultContext(user.getDefaultContext());
         model.addAttribute("thisUser", bean);
-        List<Area> areas = areaService.getAllForUser(user);
-        model.addAttribute("areas", areas);
-        return "user/selfservice/areas";
+        List<Context> contexts = contextService.getAllForUser(user);
+        model.addAttribute("contexts", contexts);
+        return "user/selfservice/contexts";
     }
 
-    @RequestMapping(value = "/user/selfservice/areas", method = RequestMethod.POST)
-    public String userAreasSave(@Valid @ModelAttribute("thisUser") UserChangeDefaultAreaFormBean thisUser, BindingResult result, Model model){
+    @RequestMapping(value = "/user/selfservice/contexts", method = RequestMethod.POST)
+    public String userAreasSave(@Valid @ModelAttribute("thisUser") UserChangeDefaultContextFormBean thisUser, BindingResult result, Model model){
         UserAccount user = userService.retrieveCurrentUser();
         if(result.hasErrors()){
             LOGGER.info("userAreasSave: result has Errors");
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "user/selfservice/areas";
+            return "user/selfservice/contexts";
         } else {
             if(user.getId() == thisUser.getId()){
-                user.setDefaultArea(thisUser.getDefaultArea());
+                user.setDefaultContext(thisUser.getDefaultContext());
                 userService.saveAndFlush(user);
-                model.addAttribute("areaId",new UserSessionBean(thisUser.getDefaultArea().getId()));
+                model.addAttribute("userSession",new UserSessionBean(thisUser.getDefaultContext().getId()));
             }
-            return "redirect:/user/selfservice/areas";
+            return "redirect:/user/selfservice/contexts";
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/area/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/selfservice/context/add", method = RequestMethod.GET)
     public String userNewAreaForm(Model model){
         UserAccount user = userService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        NewAreaFormBean newArea = new NewAreaFormBean();
-        model.addAttribute("newArea", newArea);
-        return "user/selfservice/areaAdd";
+        NewContextFormBean newContext = new NewContextFormBean();
+        model.addAttribute("newContext", newContext);
+        return "user/selfservice/contextAdd";
     }
 
-    @RequestMapping(value = "/user/selfservice/area/add", method = RequestMethod.POST)
-    public String userNewAreaStore(@Valid NewAreaFormBean newArea, BindingResult result, Model model){
+    @RequestMapping(value = "/user/selfservice/context/add", method = RequestMethod.POST)
+    public String userNewAreaStore(@Valid NewContextFormBean newContext, BindingResult result, Model model){
         UserAccount user = userService.retrieveCurrentUser();
         if(result.hasErrors()){
             LOGGER.info("userNewAreaStore: result has Errors");
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "user/selfservice/areaAdd";
+            return "user/selfservice/contextAdd";
         } else {
-            areaService.createNewArea(newArea,user);
-            return "redirect:/user/selfservice/areas";
+            contextService.createNewContext(newContext,user);
+            return "redirect:/user/selfservice/contexts";
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/area/edit/{areaId}", method = RequestMethod.GET)
-    public String userEditAreaForm(@PathVariable long areaId, Model model){
+    @RequestMapping(value = "/user/selfservice/context/edit/{contextId}", method = RequestMethod.GET)
+    public String userEditAreaForm(@PathVariable long contextId, Model model){
         UserAccount user = userService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        Area area = areaService.findByIdAndUserAccount(areaId,user);
-        NewAreaFormBean editArea = new NewAreaFormBean();
-        editArea.setNameDe(area.getNameDe());
-        editArea.setNameEn(area.getNameEn());
-        model.addAttribute("editArea", editArea);
-        return "user/selfservice/areaEdit";
+        Context context = contextService.findByIdAndUserAccount(contextId,user);
+        NewContextFormBean editContext = new NewContextFormBean();
+        editContext.setNameDe(context.getNameDe());
+        editContext.setNameEn(context.getNameEn());
+        model.addAttribute("editContext", editContext);
+        return "user/selfservice/contextEdit";
     }
 
-    @RequestMapping(value = "/user/selfservice/area/edit/{areaId}", method = RequestMethod.POST)
-    public String userEditAreaStore(@Valid NewAreaFormBean editArea, BindingResult result, Model model, @PathVariable long areaId){
+    @RequestMapping(value = "/user/selfservice/context/edit/{contextId}", method = RequestMethod.POST)
+    public String userEditAreaStore(@Valid NewContextFormBean editContext, BindingResult result, Model model, @PathVariable long contextId){
         UserAccount user = userService.retrieveCurrentUser();
         if(result.hasErrors()){
             LOGGER.info("userEditAreaStore: result has Errors");
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "user/selfservice/areaEdit";
+            return "user/selfservice/contextEdit";
         } else {
-            areaService.updateArea(editArea,user, areaId);
-            return "redirect:/user/selfservice/areas";
+            contextService.updateContext(editContext,user, contextId);
+            return "redirect:/user/selfservice/contexts";
         }
     }
 
     //TODO: is in session active? -> display message in frontend
     //TODO: has projects or tasks? -> display message in frontend
-    @RequestMapping(value = "/user/selfservice/area/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/selfservice/context/delete/{id}", method = RequestMethod.GET)
     public String userDeleteArea(
             @PathVariable long id,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result,
             Model model){
         UserAccount user = userService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        Area area = areaService.findByIdAndUserAccount(id,user);
-        if(areaId.getAreaId() == area.getId()){
-            LOGGER.info("area is active in session: "+area);
+        Context context = contextService.findByIdAndUserAccount(id,user);
+        if(userSession.getContextId() == context.getId()){
+            LOGGER.info("context is active in session: "+ context);
         } else {
-            if(user.getDefaultArea().getId() == area.getId()){
-                LOGGER.info("area is default area of this user: "+area);
+            if(user.getDefaultContext().getId() == context.getId()){
+                LOGGER.info("context is default context of this user: "+ context);
             } else {
-                if(areaService.areaHasItems(area)){
-                    LOGGER.info("area has items: "+area);
+                if(contextService.contextHasItems(context)){
+                    LOGGER.info("context has items: "+ context);
                 } else {
-                    boolean deleted = areaService.delete(area);
+                    boolean deleted = contextService.delete(context);
                     if(!deleted){
-                        LOGGER.info("area not deleted: "+area);
+                        LOGGER.info("context not deleted: "+ context);
                     }
                 }
             }
         }
-        return "redirect:/user/selfservice/areas";
+        return "redirect:/user/selfservice/contexts";
     }
 
     @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.GET)

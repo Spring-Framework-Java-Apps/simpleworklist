@@ -9,7 +9,7 @@ import javax.persistence.Column;
 /**
  * Created by tw on 15.03.16.
  */
-public class NewAreaFormBean {
+public class NewContextFormBean {
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
@@ -42,9 +42,9 @@ public class NewAreaFormBean {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof NewAreaFormBean)) return false;
+        if (!(o instanceof NewContextFormBean)) return false;
 
-        NewAreaFormBean that = (NewAreaFormBean) o;
+        NewContextFormBean that = (NewContextFormBean) o;
 
         if (nameDe != null ? !nameDe.equals(that.nameDe) : that.nameDe != null) return false;
         return nameEn != null ? nameEn.equals(that.nameEn) : that.nameEn == null;
@@ -60,7 +60,7 @@ public class NewAreaFormBean {
 
     @Override
     public String toString() {
-        return "NewAreaFormBean{" +
+        return "NewContextFormBean{" +
                 "nameDe='" + nameDe + '\'' +
                 ", nameEn='" + nameEn + '\'' +
                 '}';

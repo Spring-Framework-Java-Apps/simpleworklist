@@ -21,7 +21,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
         columnNames = {
                 "uuid",
                 "userAccountId",
-                "areaId"
+                "contextId"
         })
 )
 @Indexed
@@ -39,8 +39,8 @@ public class Task {
     private Project project;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "areaId")
-    private Area area;
+    @JoinColumn(name = "contextId")
+    private Context context;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "userAccountId")
@@ -97,6 +97,12 @@ public class Task {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date lastChangeTimestamp;
+
+    @Column(nullable = false)
+    private long orderIdProject;
+
+    @Column(nullable = false)
+    private long orderIdTaskState;
 
     @Transient
     public String getTextShortened(){
@@ -225,12 +231,28 @@ public class Task {
         this.taskTime = taskTime;
     }
 
-    public Area getArea() {
-        return area;
+    public Context getContext() {
+        return context;
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public long getOrderIdProject() {
+        return orderIdProject;
+    }
+
+    public void setOrderIdProject(long orderIdProject) {
+        this.orderIdProject = orderIdProject;
+    }
+
+    public long getOrderIdTaskState() {
+        return orderIdTaskState;
+    }
+
+    public void setOrderIdTaskState(long orderIdTaskState) {
+        this.orderIdTaskState = orderIdTaskState;
     }
 
     @Override
@@ -243,7 +265,7 @@ public class Task {
         if (id != null ? !id.equals(task.id) : task.id != null) return false;
         if (uuid != null ? !uuid.equals(task.uuid) : task.uuid != null) return false;
         if (project != null ? !project.equals(task.project) : task.project != null) return false;
-        if (area != null ? !area.equals(task.area) : task.area != null) return false;
+        if (context != null ? !context.equals(task.context) : task.context != null) return false;
         if (userAccount != null ? !userAccount.equals(task.userAccount) : task.userAccount != null) return false;
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (text != null ? !text.equals(task.text) : task.text != null) return false;
@@ -264,7 +286,7 @@ public class Task {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
-        result = 31 * result + (area != null ? area.hashCode() : 0);
+        result = 31 * result + (context != null ? context.hashCode() : 0);
         result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);

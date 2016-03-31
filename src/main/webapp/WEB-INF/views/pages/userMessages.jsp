@@ -20,6 +20,12 @@
 <div class="alert alert-info" role="alert" style="width: 66%; float:left">
 </c:if>
     <c:out value="${m.messageText}" />
+    <span style="float:right">
+    <small>
+    <fmt:formatDate type="BOTH" timeZone="Europe/Berlin" value="${m.createdTimestamp}" />
+    <c:if test="${m.readByReceiver}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></c:if>
+    </small>
+    </span>
 </div>
 </c:forEach>
 </div>

@@ -2,10 +2,11 @@ package org.woehlke.simpleworklist.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 
 public interface TaskService {
 
@@ -23,7 +24,7 @@ public interface TaskService {
 
     void undelete(Task task, UserAccount userAccount);
 
-    void emptyTrash(UserAccount userAccount);
+    void emptyTrash(UserAccount userAccount, Context context);
 
     void complete(Task task, UserAccount userAccount);
 
@@ -33,8 +34,18 @@ public interface TaskService {
 
     void unsetFocus(Task task, UserAccount userAccount);
 
-    Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area);
+    Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Context context);
 
-    Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Area area);
+    Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context);
+
+    Page<Task> findByUser(UserAccount userAccount, Pageable request);
+
+    long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser);
+
+    long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount);
+
+    void moveOrderIdTaskState(Task sourceTask, Task destinationTask);
+
+    void moveOrderIdProject(Task sourceTask, Task destinationTask);
 
 }

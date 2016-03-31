@@ -15,6 +15,9 @@
 	<link rel="stylesheet" href="<c:url value="/css/main.css"/>"/>
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<c:if test="${refreshMessages}">
+		<meta http-equiv="refresh" content="25">
+	</c:if>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -40,16 +43,16 @@
 							<a href="#" class="dropdown-toggle"
 							   data-toggle="dropdown"
 							   role="button" aria-haspopup="true"
-							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <spring:message code="layout.page.areas" text="Area" /> ( <c:out value="${area}"/> )<span class="caret"></span></a>
+							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <spring:message code="layout.page.contexts" text="Area" /> ( <c:out value="${context}"/> )<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<c:forEach items="${areas}" var="area">
+								<c:forEach items="${contexts}" var="context">
 									<li>
 										<c:choose>
 											<c:when test="${locale eq 'de'}">
-												<a href='<c:url value="/area/choose/${area.id}"/>'><c:out value="${area.nameDe}"/></a>
+												<a href='<c:url value="/context/choose/${context.id}"/>'><c:out value="${context.nameDe}"/></a>
 											</c:when>
 											<c:otherwise>
-												<a href='<c:url value="/area/choose/${area.id}"/>'><c:out value="${area.nameEn}"/></a>
+												<a href='<c:url value="/context/choose/${context.id}"/>'><c:out value="${context.nameEn}"/></a>
 											</c:otherwise>
 										</c:choose>
 									</li>
@@ -58,10 +61,10 @@
 								<li>
 										<c:choose>
 										<c:when test="${locale eq 'de'}">
-											<a href='<c:url value="/area/choose/0"/>'>Alle</a>
+											<a href='<c:url value="/context/choose/0"/>'>Alle</a>
 										</c:when>
 										<c:otherwise>
-											<a href='<c:url value="/area/choose/0"/>'>All</a>
+											<a href='<c:url value="/context/choose/0"/>'>All</a>
 										</c:otherwise>
 										</c:choose>
 									</a>
@@ -204,7 +207,7 @@
 			<p class="text-muted">&copy; 2016 Thomas W&ouml;hlke</p>
 		</div>
 	</footer>
-	<!--
+
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -215,7 +218,7 @@
 		ga('send', 'pageview');
 
 	</script>
-	-->
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
@@ -223,15 +226,15 @@
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	 <script>
 		$(window).load( function() {
-			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: true  });
-			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: true  });
+			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: "invalid"  });
 			$( ".categoryNode" ).droppable({
 				drop: function( event, ui ) {
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						rootUrl += '<c:url value="/task"/>';
 					} else {
 						rootUrl += '<c:url value="/project"/>';
@@ -242,13 +245,28 @@
 					window.location.replace(html4move);
 				}
 			});
+			$( ".dataDetailListTitle" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail") {
+						rootUrl = '<c:url value="/task"/>';
+					} else if(draggableType == "dataDetailProject") {
+						rootUrl = '<c:url value="/project/task"/>';
+					}
+					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+					window.location.replace(html4move);
+				}
+			});
 			$("#focus_inbox").droppable({
 				drop: function( event, ui ) {
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/inbox';
 						window.location.replace(html4move);
 					}
@@ -260,7 +278,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/today';
 						window.location.replace(html4move);
 					}
@@ -272,7 +290,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/next';
 						window.location.replace(html4move);
 					}
@@ -284,7 +302,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/waiting';
 						window.location.replace(html4move);
 					}
@@ -296,7 +314,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/someday';
 						window.location.replace(html4move);
 					}
@@ -308,7 +326,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/completed';
 						window.location.replace(html4move);
 					}
@@ -320,7 +338,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail"){
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
 						var html4move = '/tasks/move/'+draggableId+'/to/trash';
 						window.location.replace(html4move);
 					}

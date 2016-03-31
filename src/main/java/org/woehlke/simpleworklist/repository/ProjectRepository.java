@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 
@@ -15,7 +15,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByUserAccount(UserAccount userAccount);
 
-    List<Project> findByArea(Area area);
+    List<Project> findByContext(Context context);
 
-    List<Project> findByParentIsNullAndArea(Area area);
+    List<Project> findByParentIsNullAndContext(Context context);
 }

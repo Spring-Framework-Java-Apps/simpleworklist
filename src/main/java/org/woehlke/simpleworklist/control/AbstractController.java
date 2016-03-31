@@ -5,13 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.model.UserSessionBean;
-import org.woehlke.simpleworklist.services.AreaService;
+import org.woehlke.simpleworklist.services.ContextService;
 import org.woehlke.simpleworklist.services.ProjectService;
 import org.woehlke.simpleworklist.services.UserMessageService;
 import org.woehlke.simpleworklist.services.UserService;
@@ -23,7 +23,7 @@ import java.util.Locale;
 /**
  * Created by tw on 14.02.16.
  */
-@SessionAttributes("areaId")
+@SessionAttributes("userSession")
 public abstract class AbstractController {
 
     @Value("${mvc.controller.pageSize}")
@@ -39,29 +39,29 @@ public abstract class AbstractController {
     protected UserMessageService userMessageService;
 
     @Inject
-    protected AreaService areaService;
+    protected ContextService contextService;
 
     @ModelAttribute("allCategories")
-    public final List<Project> getAllCategories(@ModelAttribute("areaId") UserSessionBean areaId,
+    public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                 BindingResult result, Model model) {
         UserAccount user = userService.retrieveCurrentUser();
-        if ((areaId.getAreaId() == null)||(areaId.getAreaId() == 0)) {
+        if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
             return projectService.findAllProjectsByUserAccount(user);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
-            return projectService.findAllProjectsByUserAccountAndArea(user,area);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
+            return projectService.findAllProjectsByUserAccountAndContext(user, context);
         }
     }
 
     @ModelAttribute("rootCategories")
-    public final List<Project> getRootCategories(@ModelAttribute("areaId") UserSessionBean areaId,
+    public final List<Project> getRootCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                  BindingResult result, Model model) {
         UserAccount user = userService.retrieveCurrentUser();
-        if ((areaId.getAreaId() == null)||(areaId.getAreaId() == 0)) {
+        if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
             return projectService.findRootProjectsByUserAccount(user);
         } else {
-            Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
-            return projectService.findRootProjectsByUserAccountAndArea(user,area);
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
+            return projectService.findRootProjectsByUserAccountAndContext(user, context);
         }
     }
 
@@ -81,31 +81,31 @@ public abstract class AbstractController {
         return TaskTime.list();
     }
 
-    @ModelAttribute("areas")
-    public final List<Area> getAreas(){
+    @ModelAttribute("contexts")
+    public final List<Context> getContexts(){
         UserAccount user = userService.retrieveCurrentUser();
-        return areaService.getAllForUser(user);
+        return contextService.getAllForUser(user);
     }
 
-    @ModelAttribute("area")
-    public final String getCurrentArea(@ModelAttribute("areaId") UserSessionBean areaId,
+    @ModelAttribute("context")
+    public final String getCurrentArea(@ModelAttribute("userSession") UserSessionBean userSession,
                                        BindingResult result, Locale locale, Model model){
         UserAccount user = userService.retrieveCurrentUser();
         String retVal = "All";
         if(locale.getLanguage().equalsIgnoreCase("de")){
             retVal = "Alle";
         }
-        if (areaId.getAreaId() == null) {
-            model.addAttribute("areaId", new UserSessionBean(user.getDefaultArea().getId()));
+        if (userSession.getContextId() == null) {
+            model.addAttribute("userSession", new UserSessionBean(user.getDefaultContext().getId()));
             if (locale.getLanguage().equalsIgnoreCase("de")) {
-                retVal = user.getDefaultArea().getNameDe();
+                retVal = user.getDefaultContext().getNameDe();
             } else {
-                retVal = user.getDefaultArea().getNameEn();
+                retVal = user.getDefaultContext().getNameEn();
             }
         } else {
             if(!result.hasErrors()){
-                if (areaId.getAreaId() > 0) {
-                    Area found = areaService.findByIdAndUserAccount(areaId.getAreaId(), user);
+                if (userSession.getContextId() > 0) {
+                    Context found = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
                     if(found != null){
                         if(locale.getLanguage().equalsIgnoreCase("de")){
                             retVal = found.getNameDe();
@@ -122,6 +122,11 @@ public abstract class AbstractController {
     @ModelAttribute("locale")
     public final String getCurrentLocale(Locale locale, Model model){
         return locale.getLanguage().toLowerCase();
+    }
+
+    @ModelAttribute("refreshMessages")
+    public final boolean refreshMessagePage(){
+        return false;
     }
 
 }

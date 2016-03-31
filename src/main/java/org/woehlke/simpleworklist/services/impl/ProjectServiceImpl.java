@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -91,18 +91,18 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> findAllProjectsByUserAccountAndArea(UserAccount user, Area area) {
-        if(user.getId().longValue() == area.getUserAccount().getId().longValue()){
-            return projectRepository.findByArea(area);
+    public List<Project> findAllProjectsByUserAccountAndContext(UserAccount user, Context context) {
+        if(user.getId().longValue() == context.getUserAccount().getId().longValue()){
+            return projectRepository.findByContext(context);
         } else {
             return new ArrayList<Project>();
         }
     }
 
     @Override
-    public List<Project> findRootProjectsByUserAccountAndArea(UserAccount user, Area area) {
-        if(user.getId().longValue() == area.getUserAccount().getId().longValue()){
-            return projectRepository.findByParentIsNullAndArea(area);
+    public List<Project> findRootProjectsByUserAccountAndContext(UserAccount user, Context context) {
+        if(user.getId().longValue() == context.getUserAccount().getId().longValue()){
+            return projectRepository.findByParentIsNullAndContext(context);
         } else {
             return new ArrayList<Project>();
         }
@@ -110,12 +110,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveProjectToAnotherArea(Project thisProject, Area newArea, UserAccount userAccount) {
+    public void moveProjectToAnotherContext(Project thisProject, Context newContext, UserAccount userAccount) {
         if(thisProject.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             LOGGER.info("----------------------------------------------------");
-            LOGGER.info("moveProjectToAnotherArea: Project: "+thisProject.toString());
+            LOGGER.info("moveProjectToAnotherContext: Project: "+thisProject.toString());
             LOGGER.info("----------------------------------------------------");
-            LOGGER.info("moveProjectToAnotherArea: newArea: "+newArea.toString());
+            LOGGER.info("moveProjectToAnotherContext: newContext: "+ newContext.toString());
             LOGGER.info("----------------------------------------------------");
             thisProject.setParent(null);
             projectRepository.saveAndFlush(thisProject);
@@ -123,10 +123,10 @@ public class ProjectServiceImpl implements ProjectService {
             for(Project p : list){
                 List<Task> tasks = taskRepository.findByProject(p);
                 for(Task t:tasks){
-                    t.setArea(newArea);
+                    t.setContext(newContext);
                     taskRepository.saveAndFlush(t);
                 }
-                p.setArea(newArea);
+                p.setContext(newContext);
                 projectRepository.saveAndFlush(p);
             }
         }

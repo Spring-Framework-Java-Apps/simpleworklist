@@ -38,4 +38,8 @@
         <put-attribute name="content" value="/WEB-INF/views/tasks/focus.jsp" />
     </definition>
 
+    <definition name="tasks/all" extends="page">
+        <put-attribute name="content" value="/WEB-INF/views/tasks/all.jsp" />
+    </definition>
+
 </tiles-definitions>

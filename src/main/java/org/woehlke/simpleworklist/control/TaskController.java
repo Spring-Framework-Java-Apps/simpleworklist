@@ -2,18 +2,23 @@ package org.woehlke.simpleworklist.control;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
@@ -34,7 +39,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
-        List<Area> areas = areaService.getAllForUser(userAccount);
+        List<Context> contexts = contextService.getAllForUser(userAccount);
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
             Project thisProject = null;
@@ -49,7 +54,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            model.addAttribute("areas",areas);
+            model.addAttribute("areas", contexts);
             return "task/show";
         } else {
             return "redirect:/tasks/inbox";
@@ -85,18 +90,23 @@ public class TaskController extends AbstractController {
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
-            if(task.getDueDate()!=null){
+            if(task.getDueDate()==null){
+                persistentTask.setDueDate(null);
+                if(persistentTask.getTaskState().compareTo(TaskState.SCHEDULED)==0){
+                    persistentTask.setTaskState(TaskState.INBOX);
+                }
+            } else {
                 persistentTask.setDueDate(task.getDueDate());
                 persistentTask.setTaskState(TaskState.SCHEDULED);
             }
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
             persistentTask.setLastChangeTimestamp(new Date());
-            boolean areaChanged =  persistentTask.getArea().getId().longValue() != task.getArea().getId().longValue();
-            if(areaChanged){
-                persistentTask.setArea(task.getArea());
+            boolean contextChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
+            if(contextChanged){
+                persistentTask.setContext(task.getContext());
                 persistentTask.setProject(null);
-                model.addAttribute("areaId", new UserSessionBean(task.getArea().getId()));
+                model.addAttribute("userSession", new UserSessionBean(task.getContext().getId()));
                 return "redirect:/project/0/";
             }
             taskService.saveAndFlush(persistentTask, userAccount);
@@ -108,7 +118,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.GET)
     public final String addNewTaskToProjectForm(
             @PathVariable long projectId,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result,
             Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
@@ -123,17 +133,17 @@ public class TaskController extends AbstractController {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            if(areaId.getAreaId() == 0L){
+            if(userSession.getContextId() == 0L){
                 model.addAttribute("mustChooseArea", true);
-                task.setArea(userAccount.getDefaultArea());
+                task.setContext(userAccount.getDefaultContext());
             } else {
-                Area area = areaService.findByIdAndUserAccount(areaId.getAreaId(), userAccount);
-                task.setArea(area);
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                task.setContext(context);
             }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             task.setProject(thisProject);
-            task.setArea(thisProject.getArea());
+            task.setContext(thisProject.getContext());
         }
         model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
@@ -145,7 +155,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
     public final String addNewTaskToProjectStore(
             @PathVariable long projectId,
-            @ModelAttribute("areaId") UserSessionBean areaId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Task task,
             BindingResult result, Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
@@ -160,7 +170,7 @@ public class TaskController extends AbstractController {
             } else {
                 Project thisProject = projectService.findByProjectId(projectId, userAccount);
                 task.setProject(thisProject);
-                task.setArea(thisProject.getArea());
+                task.setContext(thisProject.getContext());
             }
             if(task.getDueDate()==null){
                 task.setTaskState(TaskState.INBOX);
@@ -168,8 +178,12 @@ public class TaskController extends AbstractController {
                 task.setTaskState(TaskState.SCHEDULED);
             }
             task.setFocus(false);
-            Area area = areaService.findByIdAndUserAccount(task.getArea().getId(), userAccount);
-            task.setArea(area);
+            Context context = contextService.findByIdAndUserAccount(task.getContext().getId(), userAccount);
+            task.setContext(context);
+            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),context,userAccount);
+            task.setOrderIdProject(++maxOrderIdProject);
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";
@@ -192,25 +206,18 @@ public class TaskController extends AbstractController {
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
             taskService.undelete(task, userAccount);
-            if (task.getProject() != null) {
-                long projectId = task.getProject().getId();
-                return "redirect:/project/" + projectId + "/";
-            }
-            switch (task.getTaskState()) {
-                case SCHEDULED:
-                    return "redirect:/tasks/scheduled";
-                default:
-                    return "redirect:/tasks/inbox";
-            }
+            return "redirect:/tasks/completed";
         } else {
-            return "redirect:/tasks/inbox";
+            return "redirect:/tasks/trash";
         }
     }
 
     @RequestMapping(value = "/task/trash/empty", method = RequestMethod.GET)
-    public final String emptyTrash() {
+    public final String emptyTrash(
+            @ModelAttribute("userSession") UserSessionBean userSession,Model model) {
         UserAccount userAccount = userService.retrieveCurrentUser();
-        taskService.emptyTrash(userAccount);
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+        taskService.emptyTrash(userAccount,context);
         return "redirect:/tasks/trash";
     }
 
@@ -235,6 +242,8 @@ public class TaskController extends AbstractController {
         if(task!=null){
             Project project = projectService.findByProjectId(projectId, userAccount);
             task.setProject(project);
+            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),task.getContext(),userAccount);
+            task.setOrderIdProject(++maxOrderIdProject);
             taskService.saveAndFlush(task, userAccount);
         }
         return "redirect:/project/" + projectId + "/";
@@ -269,6 +278,8 @@ public class TaskController extends AbstractController {
         UserAccount userAccount = userService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null){
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),userAccount);
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.complete(task, userAccount);
         }
         return "redirect:/tasks/completed";
@@ -280,6 +291,9 @@ public class TaskController extends AbstractController {
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.incomplete(task, userAccount);
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
+            taskService.saveAndFlush(task,userAccount);
             switch (task.getTaskState()) {
                 case TODAY:
                     return "redirect:/tasks/today";
@@ -291,6 +305,10 @@ public class TaskController extends AbstractController {
                     return "redirect:/tasks/scheduled";
                 case SOMEDAY:
                     return "redirect:/tasks/someday";
+                case COMPLETED:
+                    return "redirect:/tasks/completed";
+                case TRASHED:
+                    return "redirect:/tasks/trash";
                 default:
                     return "redirect:/tasks/inbox";
             }
@@ -369,5 +387,111 @@ public class TaskController extends AbstractController {
         } else {
             return "redirect:/tasks/inbox";
         }
+    }
+
+    @RequestMapping(value = "/tasks/all", method = RequestMethod.GET)
+    public String getAllTasksForUser(
+            @RequestParam(defaultValue = "changed", required = false) String sort,
+            @RequestParam(defaultValue = "desc", required = false) String sortDir,
+            @RequestParam(defaultValue = "1", required = false) int page,
+            Locale locale,
+            Model model){
+        Sort.Direction sortDirection = Sort.Direction.DESC;
+        if(sortDir.compareTo("asc") == 0){
+            sortDirection = Sort.Direction.ASC;
+        }
+        Pageable request = new PageRequest(page - 1, pageSize, sortDirection, "lastChangeTimestamp");
+        switch (sort){
+            case "title":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "title", "lastChangeTimestamp");
+                break;
+            case "text":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "text", "lastChangeTimestamp");
+                break;
+            case "duedate":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "dueDate", "lastChangeTimestamp");
+                break;
+            case "state":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "taskState", "lastChangeTimestamp");
+                break;
+            case "project":
+                request = new PageRequest(page - 1, pageSize, sortDirection, "project.name", "lastChangeTimestamp");
+                break;
+            case "context":
+                if(locale.getLanguage().toLowerCase().compareTo("de")==0){
+                    request = new PageRequest(page - 1, pageSize, sortDirection, "context.nameDe", "lastChangeTimestamp");
+                } else {
+                    request = new PageRequest(page - 1, pageSize, sortDirection, "context.nameEn", "lastChangeTimestamp");
+                }
+                break;
+            default:
+                break;
+        }
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Page<Task> taskPage = taskService.findByUser(userAccount,request);
+        int current = taskPage.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, taskPage.getTotalPages());
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        model.addAttribute("dataList", taskPage.getContent());
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute("sort",sort);
+        model.addAttribute("sortDir",sortDir);
+        return "tasks/all";
+    }
+
+    @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String changeTaskOrderId(
+            @PathVariable long sourceTaskId,
+            @PathVariable long destinationTaskId,
+            Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
+        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        LOGGER.info("------------- changeTaskOrderId -------------");
+        LOGGER.info("source Task:      "+sourceTask.toString());
+        LOGGER.info("---------------------------------------------");
+        LOGGER.info("destination Task: "+destinationTask.toString());
+        LOGGER.info("---------------------------------------------");
+        String returnUrl = "redirect:/tasks/inbox";
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()) {
+            boolean sameTaskType = (sourceTask.getTaskState().ordinal() == destinationTask.getTaskState().ordinal());
+            if (sameTaskType) {
+                taskService.moveOrderIdTaskState(sourceTask, destinationTask);
+                returnUrl = "redirect:/tasks/" + sourceTask.getTaskState().name().toLowerCase();
+            }
+        }
+        return returnUrl;
+    }
+
+    @RequestMapping(value = "/project/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String changeTaskOrderIdByProject(
+            @PathVariable long sourceTaskId,
+            @PathVariable long destinationTaskId,
+            Model model){
+        UserAccount userAccount = userService.retrieveCurrentUser();
+        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
+        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        LOGGER.info("--------- changeTaskOrderIdByProject  -------");
+        LOGGER.info("source Task:      "+sourceTask.toString());
+        LOGGER.info("---------------------------------------------");
+        LOGGER.info("destination Task: "+destinationTask.toString());
+        LOGGER.info("---------------------------------------------");
+        String returnUrl = "redirect:/tasks/inbox";
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
+            if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
+                taskService.moveOrderIdProject(sourceTask,destinationTask);
+                returnUrl = "redirect:/project/0";
+            } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
+                boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
+                if (sameProject) {
+                    taskService.moveOrderIdProject(sourceTask,destinationTask);
+                    returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
+                }
+            }
+        }
+        return returnUrl;
     }
 }

@@ -30,7 +30,7 @@ public class UserMessageController extends AbstractController {
         UserAccount sender = super.userService.findUserById(userId);
         List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(receiver,sender);
         for(UserMessage userMessage:userMessageList){
-            if((!userMessage.isReadByReceiver()) && (receiver.getId()==userMessage.getReceiver().getId())){
+            if((!userMessage.isReadByReceiver()) && (receiver.getId().longValue()==userMessage.getReceiver().getId().longValue())){
                 userMessage.setReadByReceiver(true);
                 userMessageService.update(userMessage);
             }
@@ -38,6 +38,7 @@ public class UserMessageController extends AbstractController {
         model.addAttribute("newUserMessage",newUserMessage);
         model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList",userMessageList);
+        model.addAttribute("refreshMessages",true);
         return "pages/userMessages";
     }
 

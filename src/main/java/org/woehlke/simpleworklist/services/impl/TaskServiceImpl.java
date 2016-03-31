@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.Area;
+import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -99,8 +99,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void emptyTrash(UserAccount userAccount) {
-        List<Task> taskList = taskRepository.findByTaskStateAndUserAccount(TaskState.TRASHED,userAccount);
+    public void emptyTrash(UserAccount userAccount, Context context) {
+        List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.TRASHED,context);
         for(Task task:taskList){
             taskRepository.delete(task);
         }
@@ -147,23 +147,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Area area) {
+    public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Context context) {
         LOGGER.info("findByProject: ");
         LOGGER.info("---------------------------------");
         LOGGER.info("thisProject: "+thisProject);
         LOGGER.info("---------------------------------");
         LOGGER.info("userAccount: "+userAccount);
         LOGGER.info("---------------------------------");
-        LOGGER.info("area:        "+area);
+        LOGGER.info("context:        "+ context);
         LOGGER.info("---------------------------------");
-        long areaUid = area.getUserAccount().getId().longValue();
+        long contextUid = context.getUserAccount().getId().longValue();
         long uid = userAccount.getId().longValue();
-        long projectAreaId = 0;
-        if (thisProject.getArea() != null){
-            projectAreaId = thisProject.getArea().getId().longValue();
+        long projectContextId = 0;
+        if (thisProject.getContext() != null){
+            projectContextId = thisProject.getContext().getId().longValue();
         }
-        long areaId = area.getId().longValue();
-        if((thisProject == null)||(area==null)||(areaUid != uid)||(projectAreaId!=areaId)){
+        long contextId = context.getId().longValue();
+        if((thisProject == null)||(context ==null)||(contextUid != uid)||(projectContextId!=contextId)){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProject(thisProject,request);
@@ -171,11 +171,86 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Area area) {
-        if(area.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
+    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context) {
+        if(context.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
-            return taskRepository.findByProjectIsNullAndArea(area,request);
+            return taskRepository.findByProjectIsNullAndContext(context,request);
+        }
+    }
+
+    @Override
+    public Page<Task> findByUser(UserAccount userAccount, Pageable request) {
+        return taskRepository.findByUserAccount(userAccount,request);
+    }
+
+    @Override
+    public long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser) {
+        long maxOrderIdTaskState = 0;
+        if(context.getUserAccount().getId().longValue()==thisUser.getId().longValue()) {
+            Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(inbox, context);
+            maxOrderIdTaskState = (task==null) ? 0 : task.getOrderIdTaskState();
+        }
+        return maxOrderIdTaskState;
+    }
+
+    @Override
+    public long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount) {
+        long maxOrderIdProject = 0;
+        if(context.getUserAccount().getId().longValue()==userAccount.getId().longValue()) {
+            Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(project, context);
+            maxOrderIdProject = (task==null) ? 0 : task.getOrderIdProject();
+        }
+        return maxOrderIdProject;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveOrderIdTaskState(Task sourceTask, Task destinationTask) {
+       long destinationTaskOrderIdTaskState = destinationTask.getOrderIdTaskState();
+       if(sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState()){
+           List<Task> tasks = taskRepository.getTasksToReorderByOrderIdTaskState(sourceTask.getOrderIdTaskState(),destinationTask.getOrderIdTaskState());
+           for(Task task:tasks){
+               task.setOrderIdTaskState(task.getOrderIdTaskState()-1);
+               taskRepository.saveAndFlush(task);
+           }
+           destinationTask.setOrderIdTaskState(destinationTask.getOrderIdTaskState()-1);
+           taskRepository.saveAndFlush(destinationTask);
+           sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState);
+           taskRepository.saveAndFlush(sourceTask);
+       } else {
+           List<Task> tasks = taskRepository.getTasksToReorderByOrderIdTaskState(destinationTask.getOrderIdTaskState(),sourceTask.getOrderIdTaskState());
+           for(Task task:tasks){
+               task.setOrderIdTaskState(task.getOrderIdTaskState()+1);
+               taskRepository.saveAndFlush(task);
+           }
+           sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState+1);
+           taskRepository.saveAndFlush(sourceTask);
+       }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveOrderIdProject(Task sourceTask, Task destinationTask) {
+        long destinationOrderIdProject = destinationTask.getOrderIdProject();
+        if(sourceTask.getOrderIdProject()<destinationTask.getOrderIdProject()){
+            List<Task> tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdProject(),destinationTask.getOrderIdProject());
+            for(Task task:tasks){
+                task.setOrderIdProject(task.getOrderIdProject()-1);
+                taskRepository.saveAndFlush(task);
+            }
+            destinationTask.setOrderIdProject(destinationTask.getOrderIdProject()-1);
+            taskRepository.saveAndFlush(destinationTask);
+            sourceTask.setOrderIdProject(destinationOrderIdProject);
+            taskRepository.saveAndFlush(sourceTask);
+        } else {
+            List<Task> tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdProject(),sourceTask.getOrderIdProject());
+            for(Task task:tasks){
+                task.setOrderIdProject(task.getOrderIdProject()+1);
+                taskRepository.saveAndFlush(task);
+            }
+            sourceTask.setOrderIdProject(destinationOrderIdProject+1);
+            taskRepository.saveAndFlush(sourceTask);
         }
     }
 
