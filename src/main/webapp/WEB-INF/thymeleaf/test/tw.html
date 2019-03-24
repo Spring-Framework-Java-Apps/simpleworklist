@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="tw-head">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Thomas Woehlke">
+    <meta name="generator" content="Spring Boot and Java">
+    <title th:text="${title}">SimpleWorklist</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" mediaType="text/css" media="all" rel="stylesheet" />
+</head>
+<body>
+<div id="page">
+    <header th:fragment="tw-header">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{/home}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/jobs/all/}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="fas fa-bullseye"></i> Jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/directories/all/}"  href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-folder-open"></i> Directories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/files/all/}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file"></i> Files</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-chart-area"></i> Reports</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" th:href="@{/reports/filetypes}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="fas fa-chart-area"></i> FileTypes</a>
+                                <a class="dropdown-item" th:href="@{/reports/fileextensions}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="fas fa-chart-area"></i> FileExtensions</a>
+                                <a class="dropdown-item" th:href="@{/reports/fileinfos}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="fas fa-chart-area"></i> FileInfos</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-file-code"></i> Tests</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
+                                <a class="dropdown-item" th:href="@{/test/greeting}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file-code"></i> greeting</a>
+                                <a class="dropdown-item" th:href="@{/test/dashboard}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file-code"></i> dashboard</a>
+                                <a class="dropdown-item" th:href="@{/test/grid}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file-code"></i> grid</a>
+                                <a class="dropdown-item" th:href="@{/test/jumbotron}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file-code"></i> jumbotron</a>
+                                <a class="dropdown-item" th:href="@{/test/navbar-fixed}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file-code"></i> navbar-fixed</a>
+                                <a class="dropdown-item" th:href="@{/test/sticky-footer-navbar}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#"><i class="far fa-file-code"></i> sticky-footer-navbar</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3" th:text="${title}">Hello, world!</h1>
+                <p th:text="${description}">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                <p><a class="btn btn-primary btn-lg" th:href="@{/home}" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#" role="button">Home Â»</a></p>
+            </div>
+        </div>
+    </header>
+    <main role="main">
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-secondary" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#" role="button">View details Â»</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-secondary" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#" role="button">View details Â»</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                    <p><a class="btn btn-secondary" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/#" role="button">View details Â»</a></p>
+                </div>
+            </div>
+        </div> <!-- /container -->
+    </main>
+</div>
+<div th:fragment="tw-footer">
+    <footer class="container">
+        <p><hr/></p>
+        <p>&copy; 2019 Thomas Wöhlke</p>
+    </footer>
+    <script th:src="@{/js/google-analytics.js}"></script>
+    <script th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
+</div>
+</body>
+</html>

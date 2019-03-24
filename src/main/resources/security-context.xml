@@ -28,6 +28,7 @@
     <security:http auto-config="false" use-expressions="true">
 		<security:headers disabled="true"/>
 		<security:csrf disabled="false"/>
+		<security:intercept-url pattern="/test*/**" access="permitAll"/>
     	<security:intercept-url pattern="/login*" access="permitAll"/>
     	<security:intercept-url pattern="/register*" access="permitAll"/>
     	<security:intercept-url pattern="/confirm*/**" access="permitAll"/>

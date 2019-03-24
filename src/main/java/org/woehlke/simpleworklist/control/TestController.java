@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.control;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,5 +26,12 @@ public class TestController {
         Assert.notNull(user);
         testService.createTestCategoryTreeForUserAccount(user);
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/test/tw/thymeleaf", method = RequestMethod.GET)
+    public final String zhymeleafTest(Model model) {
+        model.addAttribute("title","Hello, Thomas Woehlke");
+        model.addAttribute("description","bla blupp blopp honk tonk");
+        return "test/tw";
     }
 }

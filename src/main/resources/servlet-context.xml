@@ -51,7 +51,7 @@
 	
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
   		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-  		<property name="order" value="0"/>
+  		<property name="order" value="1"/>
 	</bean>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -60,6 +60,40 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1"/>
+	</bean>
+
+	<!-- You might want to try
+             class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver"
+
+	<bean id="templateResolver"
+		  class="org.thymeleaf.templateresolver.ServletContextTemplateResolver"> -->
+	<bean id="templateResolver"
+		  class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		<property name="prefix" value="/WEB-INF/thymeleaf/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML" />
+		<property name="cacheable" value="false" />
+	</bean>
+
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+		<!--
+        <property name="additionalDialects">
+            <set>
+                <bean class="org.thymeleaf.presentation.dialect.PresentationDialect"/>
+                <bean class="eionet.thymeleaf.LayoutDialect"/>
+            </set>
+        </property>
+        -->
+	</bean>
+
+	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+		<property name="order" value="0" />
+		<property name="viewNames" value="test/*" />
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
