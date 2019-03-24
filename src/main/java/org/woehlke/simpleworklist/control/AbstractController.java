@@ -26,7 +26,7 @@ import java.util.Locale;
 @SessionAttributes("userSession")
 public abstract class AbstractController {
 
-    @Value("${mvc.controller.pageSize}")
+    @Value("${org.woehlke.simpleworklist.mvc.controller.pageSize}")
     protected int pageSize;
 
     @Inject

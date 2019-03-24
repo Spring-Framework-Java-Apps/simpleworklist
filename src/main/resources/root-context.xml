@@ -19,76 +19,52 @@
     http://www.springframework.org/schema/jee
     http://www.springframework.org/schema/jee/spring-jee.xsd">
 	
-	<context:property-placeholder location="classpath:/worklist.properties" />
+	<context:property-placeholder location="classpath:/application.properties" />
 	
 	<jpa:repositories base-package="org.woehlke.simpleworklist" />
 
-	<!-- Look up the database in JNDI -->
 	<jee:jndi-lookup jndi-name="java:jboss/datasources/ExampleDS" id="dataSource"
 					 expected-type="javax.sql.DataSource" />
 
-	<!-- Look up the container deployed EntityManager -->
 	<jee:jndi-lookup jndi-name="java:/mySimpleWorkListEntityManager"
 					 id="entityManager" expected-type="javax.persistence.EntityManager" />
-
-	<!-- Look up the container deployed EntityManager -->
 	<jee:jndi-lookup jndi-name="java:jboss/mySimpleWorkListEntityManagerFactory"
 					 id="entityManagerFactory" expected-type="javax.persistence.EntityManagerFactory" />
 
-
-	<!-- JPA Configuration -->
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
 
-	<!-- Use JTA transactions with the container-deployed EntityManager -->
 	<tx:jta-transaction-manager />
-
-	<!-- Transactions -->
-	<tx:annotation-driven transaction-manager="transactionManager" />	
-	
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:component-scan base-package="org.woehlke.simpleworklist" />
-	
-	<!-- Integration -->
-	
-	<int:poller default="true" fixed-rate="500" />
 
+	<int:poller default="true" fixed-rate="500" />
 	<int:channel id="controlBusChannel" />
-	<!-- See also: http://static.springsource.org/spring-integration/reference/htmlsingle/#control-bus 
-		http://www.eaipatterns.com/ControlBus.html -->
 	<int:control-bus id="controlBus" input-channel="controlBusChannel" />
-	
 	<int:channel id="registrationProcessEmailSenderChannel">
 		<int:queue capacity="100" />
 	</int:channel>
-	
 	<int:service-activator input-channel="registrationProcessEmailSenderChannel"
 		output-channel="nullChannel" id="sendEmailToRegisterNewUser"
 		ref="emailPipeline" method="sendEmailToRegisterNewUser" />
-
     <int:channel id="passwordResetEmailSenderChannel">
         <int:queue capacity="100" />
     </int:channel>
-
     <int:service-activator input-channel="passwordResetEmailSenderChannel"
                            output-channel="nullChannel" id="sendEmailForPasswordReset"
                            ref="emailPipeline" method="sendEmailForPasswordReset" />
-		
-	<!-- Mail service -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	    <property name="host" value="${java.mail.host}"/>
-	    <property name="port" value="${java.mail.port}"/>
-	    <property name="username" value="${java.mail.username}"/>
-	    <property name="password" value="${java.mail.password}"/>
+	    <property name="host" value="${org.woehlke.simpleworklist.mail.host}"/>
+	    <property name="port" value="${org.woehlke.simpleworklist.mail.port}"/>
+	    <property name="username" value="${org.woehlke.simpleworklist.mail.username}"/>
+	    <property name="password" value="${org.woehlke.simpleworklist.mail.password}"/>
 	    <property name="javaMailProperties">
 	        <props>
-	            <!-- Use SMTP-AUTH to authenticate to SMTP server -->
-	            <prop key="mail.smtp.auth">${java.mail.smtp.auth}</prop>
-	            <!-- Use TLS to encrypt communication with SMTP server -->
-		    <!--
-	            <prop key="mail.smtp.ssl.enable">${java.mail.smtp.ssl.enable}</prop>
-		    -->
-		    <prop key="mail.smtp.starttls.enable">${java.mail.smtp.starttls.enable}</prop>
+	            <prop key="mail.smtp.auth">${org.woehlke.simpleworklist.mail.smtp.auth}</prop>
+				<prop key="mail.smtp.ssl.enable">${org.woehlke.simpleworklist.mail.smtp.ssl.enable}</prop>
+				<prop key="mail.smtp.socketFactory.port">${org.woehlke.simpleworklist.mail.smtp.socketFactory.port}</prop>
+				<prop key="mail.smtp.socketFactory.class">${org.woehlke.simpleworklist.mail.smtp.socketFactory.class}</prop>
 	        </props>
 	    </property>
 	</bean>

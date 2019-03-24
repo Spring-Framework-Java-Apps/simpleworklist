@@ -27,10 +27,10 @@ import org.woehlke.simpleworklist.services.RegistrationProcessService;
 public class RegistrationProcessServiceImpl implements
         RegistrationProcessService {
 
-    @Value("${worklist.registration.max.retries}")
+    @Value("${org.woehlke.simpleworklist.registration.max.retries}")
     private int maxRetries;
 
-    @Value("${worklist.registration.ttl.email.verifcation.request}")
+    @Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
     private long ttlEmailVerificationRequest;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationProcessServiceImpl.class);

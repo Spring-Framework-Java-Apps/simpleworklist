@@ -25,10 +25,10 @@ public class EmailPipelineImpl implements EmailPipeline {
     @Inject
     private RegistrationProcessService registrationProcessService;
 
-    @Value("${worklist.registration.url.host}")
+    @Value("${org.woehlke.simpleworklist.registration.url.host}")
     private String urlHost;
 
-    @Value("${worklist.registration.mail.from}")
+    @Value("${org.woehlke.simpleworklist.registration.mail.from}")
     private String mailFrom;
 
     @Override

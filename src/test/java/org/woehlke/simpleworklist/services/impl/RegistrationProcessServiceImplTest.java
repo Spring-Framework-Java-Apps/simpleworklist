@@ -16,7 +16,7 @@ public class RegistrationProcessServiceImplTest extends AbstractTest {
     @Value("${worklist.registration.max.retries}")
     private int maxRetries;
 
-    @Value("${worklist.registration.ttl.email.verifcation.request}")
+    @Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
     private long ttlEmailVerificationRequest;
 
     @Inject

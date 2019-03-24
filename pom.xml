@@ -214,6 +214,16 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
                 <version>${org.springframework-version}</version>
             </dependency>
@@ -228,6 +238,11 @@
                 <version>${org.springframework-version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-search-orm</artifactId>
                 <version>${hibernate-search.version}</version>
@@ -237,6 +252,12 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-search-engine</artifactId>
                 <version>${hibernate-search.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>5.3.1</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -343,68 +364,6 @@
                 <version>1.8.3</version>
                 <scope>provided</scope>
             </dependency>
-            <!--
-            <dependency>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-plugin</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-providers</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-providers-svn</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-provider-svnexe</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-provider-svn-commons</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-providers-git</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-provider-gitexe</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-provider-git-commons</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-manager-plexus</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-managers</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.scm</groupId>
-                <artifactId>maven-scm-client</artifactId>
-                <version>${maven.scm.version}</version>
-            </dependency>
-            -->
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm</artifactId>
@@ -568,6 +527,18 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
         </dependency>
         <dependency>
@@ -583,6 +554,10 @@
             <artifactId>spring-data-jpa</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
             <scope>provided</scope>
@@ -590,6 +565,11 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-engine</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -765,96 +745,6 @@
 					<artifactId>maven-scm-plugin</artifactId>
 					<version>${maven.scm.version}</version>
 				</plugin>
-                <!--
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-providers</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-providers-svn</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-provider-svnexe</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-provider-svn-commons</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-providers-git</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-provider-gitexe</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-provider-git-commons</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-manager-plexus</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-managers</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-client</artifactId>
-					<version>${maven.scm.version}</version>
-					<configuration>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				-->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
@@ -878,18 +768,12 @@
                             </goals>
                             <configuration>
                                 <failOnWarning>false</failOnWarning>
-
-                                <!-- ignore jsr305 for both "used but undeclared" and "declared but unused" -->
                                 <ignoredDependencies>
                                     <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
                                 </ignoredDependencies>
-
-                                <!-- ignore annotations for "used but undeclared" warnings -->
                                 <ignoredUsedUndeclaredDependencies>
                                     <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
                                 </ignoredUsedUndeclaredDependencies>
-
-                                <!-- ignore annotations for "unused but declared" warnings -->
                                 <ignoredUnusedDeclaredDependencies>
                                     <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                 </ignoredUnusedDeclaredDependencies>
@@ -1004,6 +888,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
+                <finalName>jbosswildfly</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -1016,13 +901,20 @@
 							<skipTests>true</skipTests>
 						</configuration>
 					</plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
-			<id>openshift</id>
+			<id>testing</id>
 			<build>
-				<finalName>jbosswildfly</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -1032,15 +924,7 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
-							<skipTests>true</skipTests>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-						<configuration>
-							<failOnMissingWebXml>false</failOnMissingWebXml>
-							<warName>ROOT</warName>
+							<skipTests>false</skipTests>
 						</configuration>
 					</plugin>
 				</plugins>
