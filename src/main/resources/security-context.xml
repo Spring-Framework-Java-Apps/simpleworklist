@@ -18,7 +18,8 @@
 	<!-- 
 	http://static.springsource.org/spring-security/site/docs/3.1.x/reference/springsecurity-single.html
 	 -->
-    
+
+	<security:http pattern="/webjars/**" security="none"/>
     <security:http pattern="/css/**" security="none"/>
     <security:http pattern="/img/**" security="none"/>
     <security:http pattern="/js/**" security="none"/>
