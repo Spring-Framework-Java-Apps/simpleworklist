@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="project/add" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/project/add.jsp" />
+	</definition>
+
+	<definition name="project/show" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/project/show.jsp" />
+	</definition>
+
+	<definition name="project/edit" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/project/edit.jsp" />
+	</definition>
+
+</tiles-definitions>
