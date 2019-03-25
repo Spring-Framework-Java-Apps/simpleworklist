@@ -43,7 +43,7 @@ public class UserLoginController {
         LoginFormBean loginFormBean = new LoginFormBean();
         model.addAttribute("loginFormBean", loginFormBean);
         model.addAttribute("locale",locale.getLanguage().toLowerCase());
-        return "user/loginForm";
+        return "t/user/loginForm";
     }
 
     /**
@@ -70,7 +70,7 @@ public class UserLoginController {
             FieldError e = new FieldError(objectName, field, defaultMessage);
             result.addError(e);
             LOGGER.info("not logged in");
-            return "user/loginForm";
+            return "t/user/loginForm";
         }
     }
 
