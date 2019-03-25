@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class UserSessionBean implements Serializable {
 
+    private static final long serialVersionUID = 1;
+
     private Long contextId;
 
     public UserSessionBean(){}
