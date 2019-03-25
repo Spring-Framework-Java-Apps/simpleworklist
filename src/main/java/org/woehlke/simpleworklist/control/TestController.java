@@ -28,10 +28,10 @@ public class TestController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/test/tw/thymeleaf", method = RequestMethod.GET)
+    @RequestMapping(value = "/t/tw/thymeleaf", method = RequestMethod.GET)
     public final String zhymeleafTest(Model model) {
         model.addAttribute("title","Hello, Thomas Woehlke");
         model.addAttribute("description","bla blupp blopp honk tonk");
-        return "test/tw";
+        return "t/tw";
     }
 }
