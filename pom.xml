@@ -58,6 +58,16 @@
 		</repository>
     </repositories>
 	<pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>central</name>
+            <url>http://central.maven.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>repo.spring.io.milestone</id>
+            <name>SpringSource Maven Milestone Repository</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+        </pluginRepository>
 		<pluginRepository>
 			<id>eap</id>
 			<url>http://maven.repository.redhat.com/techpreview/all</url>
