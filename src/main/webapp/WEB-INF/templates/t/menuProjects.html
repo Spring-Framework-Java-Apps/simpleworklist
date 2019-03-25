@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<li th:fragment="tw-project-menu-container">
+	<ul id="menu" class="nav nav-list">
+		<li th:switch="${thisProject.id}">
+            <span th:case="0" id="categoryNode_0" class="categoryNode">
+                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                <strong><span th:text="${{right.nav.projects}}">Projects</span></strong>
+            </span>
+			<span th:case="*" id="categoryNode_0" class="categoryNode">
+                <a href='<c:url value="/project/0"/>'>
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                    <span th:text="${{right.nav.projects}}">Projects</span>
+                </a>
+            </span>
+			<ul class="nav nav-list" th:if="${rootCategories.size() > 0}">
+				<li th:include="t/menuProjects :: tw-project-submenu(categories=${rootCategories})"></li>
+			</ul>
+		</li>
+	</ul>
+</li>
+
+<ul class="nav nav-list" th:fragment="tw-project-submenu">
+	<li th:each="project : ${categories}" th:class="${project==thisProject ? 'active' : ''" >
+	  	    <!-- http://jqueryui.com/droppable/ -->
+	  		<span th:id="{|category_${project.id}|}" th:if="${project==thisProject}">
+	  			<strong>
+					<span th:id="{|categoryNode_${project.id}|}" class="categoryNode" th:text="${project.name}">
+					</span>
+				</strong>
+			</span>
+	  		<span th:id="{|category_${project.id}|}" class="categoryNode" th:if="${project!=thisProject}">
+				<a th:href="@{/project/{id}(id=${project.id})}"/>">
+					<span th:text="${project.name}"></span>
+				</a>
+			</span>
+	  	<ul class="nav nav-list" th:if="${project.children.size() > 0}">
+			<li th:include="t/menuProjects :: tw-project-submenu(categories=${project.children})"></li>
+      	</ul>
+	</li>
+</ul>
+
+</html>

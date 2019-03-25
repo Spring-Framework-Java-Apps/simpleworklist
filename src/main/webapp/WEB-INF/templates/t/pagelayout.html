@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="refresh" content="25" th:if="${refreshMessages}">
+	<title>SimpleWorklist</title>
+	<link th:href="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+	<link th:href="@{/css/main.css}" rel="stylesheet"/>
+</head>
+<body th:fragment="tw-page-body(twcontent)">
+	<nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#mynavbar"
+						aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" th:href="@{/}">SimpleWorklist</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="mynavbar">
+				<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							   data-toggle="dropdown"
+							   role="button" aria-haspopup="true"
+							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <span th:text="${{layout.page.contexts}}}">"Area</span> ( <span th:text="${context}"/> )<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li th:each="context : ${contexts}">
+									<a th:href="@{/context/choose/{contextId}(contextId=${context.id})">
+										<span th:if="${locale == 'de'}" th:text="${context.nameDe}"></span>
+										<span th:if="${locale != 'de'}" th:text="${context.nameEn}"></span>
+									</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a th:href="@{/context/choose/0}">
+										<span th:if="${locale == 'de'}">Alle</span>
+										<span th:if="${locale != 'de'}">All</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							   data-toggle="dropdown"
+							   role="button" aria-haspopup="true"
+							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <span th:text="${{layout.page.newContent))">New Content</span><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a th:href="@{/project/addchild/{pid}(pid=${thisProject != null ? thisProject.id : 0})}"><span th:text="${{layout.page.addProject}}">Add a Project</span></a>
+								</li>
+								<li>
+									<a th:href="@{/task/addtoproject/{pid}(pid=${thisProject != null ? thisProject.id : 0})}"><span th:text="${{layout.page.addTask}}">Add a Task</span></a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a th:href="@{/test/helper/project/createTree}"><span th:text="${{layout.page.createTestData}}">Create Test Data</span></a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a th:href="@{/user/selfservice}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span th:text="${{layout.page.showUsers}}">User</span>
+								( <span sec:property="principal.username"></span> )
+								<span class="badge" th:if="${numberOfNewIncomingMessages > 0}">${numberOfNewIncomingMessages}</span>
+							</a>
+						</li>
+						<li>
+							<a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span th:text="${{layout.page.logout}}">Logout</span></a>
+						</li>
+					</ul>
+				<ul class="nav navbar-nav" sec:authorize="isAnonymous()">
+					<li>
+						<a th:href="@{/register}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span th:text="${{layout.page.register}}">Register as New User</span></a>
+					</li>
+					<li>
+						<a th:href="@{/login}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> <span th:text="${{layout.page.login}}">Login</span></a>
+					</li>
+					<li>
+						<a th:href="@{/resetPassword}"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> <span th:text="${{layout.page.passwordForgotten}}">Password forgotten?</span></a>
+					</li>
+				</ul>
+				<form th:action="@{/search}" class="navbar-form navbar-right" role="search" method="get" sec:authorize="isAuthenticated()">
+					<div class="form-group">
+						<input name="searchterm" type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<span class="glyphicon glyphicon-globe"> </span><b class="caret"></b></a>
+						<ul id="languageMenu" class="dropdown-menu">
+							<li class="active">
+								<a th:href="@{/{ctx}(lang=de,ctx=${ctx})}" class="lang-switcher-de">
+									<img th:src="@{/img/de.png}">&nbsp; deutsch
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/{ctx}(lang=en,ctx=${ctx})}" class="lang-switcher-en">
+									<img th:src="@{/img/gb.png}">&nbsp; english
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container" sec:authorize="isAuthenticated()">
+		<ol class="breadcrumb" th:if="${breadcrumb.size() > 1}">
+			<li><a th:href="@{/project/0/page/1}">Home</a></li>
+			<li th:each="bc : ${breadcrumb}" >
+			<li th:each="bc,iterStat : ${breadcrumb}" th:class="${i.last ? 'active'} : ''">
+				<span th:if="${iterStat == breadcrumb.size()-1}" th:text="${bc.name}"></span>
+				<a th:if="${iterStat != breadcrumb.size()-1}" th:href="@{/project/{bcId}(bcId=${bc.id})}">
+					<span th:text="${bc.name}"></span>
+				</a>
+			</li>
+		</ol>
+		<ol class="breadcrumb" th:if="${breadcrumb.size() < 2}">
+			<li class="active">Home</li>
+		</ol>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div id="categoryNavigationWell" class="well sidebar-nav" sec:authorize="isAuthenticated()">
+					<ul id="rootProject" class="nav nav-list">
+						<li><a id="focus_inbox" th:href="@{/tasks/inbox}"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <span th:text="${{layout.page.inbox}}">Inbox</span></a></li>
+						<li><a id="focus_today" th:href="@{/tasks/today}"><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> <span th:text="${{layout.page.today}}">Today</span></a></li>
+						<li><a id="focus_next" th:href="@{/tasks/next}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span th:text="${{layout.page.next}}">Next</span></a></li>
+						<li><a id="focus_waiting" th:href="@{/tasks/waiting}"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> <span th:text="${{layout.page.waiting}}">Waiting</span></a></li>
+						<li><a id="focus_scheduled" th:href="@{/tasks/scheduled}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <span th:text="${{layout.page.scheduled}}">Scheduled</span></a></li>
+						<li><a id="focus_someday" th:href="@{/tasks/someday}"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> <span th:text="${{layout.page.someday}}">Someday</span></a></li>
+						<li><a id="star" th:href="@{/tasks/focus}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span th:text="${{layout.page.focus}}">Focus</span></a></li>
+						<li th:replace="t/menuProjects :: tw-project-menu-container(rootCategories=${rootCategories})">
+						</li>
+						<li><a id="focus_completed" th:href="@{/tasks/completed}"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <span th:text="${{layout.page.completed}}">Completed Tasks</span></a></li>
+						<li><a id="focus_trash" th:href="@{/tasks/trash}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <span th:text="${{layout.page.trash}}">Trash</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-9">
+                <!-- Document Window -->
+                <th:block th:replace="${twcontent}" />
+			</div>
+		</div>
+	</div>
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">&copy; 2016-2019 Thomas W&ouml;hlke</p>
+		</div>
+	</footer>
+	<script th:src="@{/js/google-analytics.js}"></script>
+	<script th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
+	<script th:inline="javascript">
+		$(window).load( function() {
+			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						rootUrl += '[(@{/task})]';
+					} else {
+						rootUrl += '[(@{/project})]';
+					}
+					//var html4move = '<a href="'+rootUrl+'/'+draggableId+'/moveto/'+selfId+'">move</a>';
+					//$( this ).html(html4move);
+					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$( ".dataDetailListTitle" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail") {
+						rootUrl = '[(@{/task})]';
+					} else if(draggableType == "dataDetailProject") {
+						rootUrl = '[(@{/project/task})]';
+					}
+					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$("#focus_inbox").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/inbox';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_today").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/today';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_next").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/next';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_waiting").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/waiting';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_someday").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/someday';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_completed").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/completed';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_trash").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/tasks/move/'+draggableId+'/to/trash';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#taskDueDate ").datepicker({
+				dateFormat: 'mm/dd/yy',
+				constrainInput: false
+			});
+		});
+	</script>
+</body>
+</html>
