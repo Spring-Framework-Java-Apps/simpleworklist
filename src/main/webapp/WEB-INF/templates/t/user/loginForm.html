@@ -2,9 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="t/pagelayout :: head">
+<head th:replace="t/layout/page :: head">
 </head>
-<body th:replace="t/pagelayout :: headtw-page-body(~{::mytwcontent})">
+<body th:replace="t/layout/page :: headtw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
 <div>

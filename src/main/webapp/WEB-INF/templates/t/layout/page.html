@@ -149,7 +149,7 @@
 						<li><a id="focus_scheduled" th:href="@{/tasks/scheduled}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <span th:text="${{layout.page.scheduled}}">Scheduled</span></a></li>
 						<li><a id="focus_someday" th:href="@{/tasks/someday}"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> <span th:text="${{layout.page.someday}}">Someday</span></a></li>
 						<li><a id="star" th:href="@{/tasks/focus}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span th:text="${{layout.page.focus}}">Focus</span></a></li>
-						<li th:replace="t/menuProjects :: tw-project-menu-container(rootCategories=${rootCategories})">
+						<li th:replace="t/layout/menuProjects :: tw-project-menu-container(rootCategories=${rootCategories})">
 						</li>
 						<li><a id="focus_completed" th:href="@{/tasks/completed}"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <span th:text="${{layout.page.completed}}">Completed Tasks</span></a></li>
 						<li><a id="focus_trash" th:href="@{/tasks/trash}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <span th:text="${{layout.page.trash}}">Trash</span></a></li>

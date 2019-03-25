@@ -17,7 +17,7 @@
                 </a>
             </span>
 			<ul class="nav nav-list" th:if="${rootCategories.size() > 0}">
-				<li th:include="t/menuProjects :: tw-project-submenu(categories=${rootCategories})"></li>
+				<li th:include="t/layout/menuProjects :: tw-project-submenu(categories=${rootCategories})"></li>
 			</ul>
 		</li>
 	</ul>
@@ -38,7 +38,7 @@
 				</a>
 			</span>
 	  	<ul class="nav nav-list" th:if="${project.children.size() > 0}">
-			<li th:include="t/menuProjects :: tw-project-submenu(categories=${project.children})"></li>
+			<li th:include="t/layout/menuProjects :: tw-project-submenu(categories=${project.children})"></li>
       	</ul>
 	</li>
 </ul>
