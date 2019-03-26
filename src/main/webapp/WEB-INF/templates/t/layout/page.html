@@ -30,56 +30,68 @@
 			</div>
 			<div class="collapse navbar-collapse" id="mynavbar">
 				<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle"
-							   data-toggle="dropdown"
-							   role="button" aria-haspopup="true"
-							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <span th:text="#{layout.page.contexts}">"Area</span> ( <span th:text="${context}"/> )<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li th:each="context : ${contexts}">
-									<a th:href="@{/context/choose/{id}(id=${context.id})}">
-										<span th:if="${locale == 'de'}" th:text="${context.nameDe}"></span>
-										<span th:if="${locale != 'de'}" th:text="${context.nameEn}"></span>
-									</a>
-								</li>contextId
-								<li role="separator" class="divider"></li>
-								<li>
-									<a th:href="@{/context/choose/0}">
-										<span th:if="${locale == 'de'}">Alle</span>
-										<span th:if="${locale != 'de'}">All</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle"
-							   data-toggle="dropdown"
-							   role="button" aria-haspopup="true"
-							   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <span th:text="#{layout.page.newContent}">New Content</span><span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<a th:href="@{/project/addchild/{pid}(pid=${thisProject != null ? thisProject.id : 0})}"><span th:text="#{layout.page.addProject}">Add a Project</span></a>
-								</li>
-								<li>
-									<a th:href="@{/task/addtoproject/{pid}(pid=${thisProject != null ? thisProject.id : 0})}"><span th:text="#{layout.page.addTask}">Add a Task</span></a>
-								</li>
-								<li role="separator" class="divider"></li>
-								<li>
-									<a th:href="@{/test/helper/project/createTree}"><span th:text="#{layout.page.createTestData}">Create Test Data</span></a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a th:href="@{/user/selfservice}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span th:text="#{layout.page.showUsers}">User</span>
-								( <span sec:property="principal.username"></span> )
-								<span class="badge" th:if="${numberOfNewIncomingMessages > 0}">${numberOfNewIncomingMessages}</span>
-							</a>
-						</li>
-						<li>
-							<a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span th:text="#{layout.page.logout}">Logout</span></a>
-						</li>
-					</ul>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle"
+						   data-toggle="dropdown"
+						   role="button" aria-haspopup="true"
+						   aria-expanded="false">
+							<span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>
+							<span th:text="#{layout.page.contexts}">"Area</span> ( <span th:text="${context}"/> )
+							<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li th:each="context : ${contexts}">
+								<a th:href="@{/context/choose/{id}(id=${context.id})}">
+									<span th:if="${locale eq 'de'}" th:text="${context.nameDe}"></span>
+									<span th:if="${locale ne 'de'}" th:text="${context.nameEn}"></span>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a th:href="@{/context/choose/0}">
+									<span th:if="${locale eq 'de'}">Alle</span>
+									<span th:if="${locale ne 'de'}">All</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle"
+						   data-toggle="dropdown"
+						   role="button" aria-haspopup="true"
+						   aria-expanded="false"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+							<span th:text="#{layout.page.newContent}">New Content</span><span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a th:href="@{/project/addchild/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
+									<span th:text="#{layout.page.addProject}">Add a Project</span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/task/addtoproject/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
+									<span th:text="#{layout.page.addTask}">Add a Task</span>
+								</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li>
+								<a th:href="@{/test/helper/project/createTree}">
+									<span th:text="#{layout.page.createTestData}">Create Test Data</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a th:href="@{/user/selfservice}">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+							<span th:text="#{layout.page.showUsers}">User</span>
+							( <span sec:authentication="name"></span> )
+							<span class="badge" th:if="${numberOfNewIncomingMessages gt 0}" th:text="${numberOfNewIncomingMessages}">numberOfNewIncomingMessages</span>
+						</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span th:text="#{layout.page.logout}">Logout</span></a>
+					</li>
+				</ul>
 				<ul class="nav navbar-nav" sec:authorize="isAnonymous()">
 					<li>
 						<a th:href="@{/register}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span th:text="#{layout.page.register}">Register as New User</span></a>
@@ -137,7 +149,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<div id="categoryNavigationWell" class="well sidebar-nav" sec:authorize="isAuthenticated()" th:if="${rootCategories != null and thisProject != null}">
+				<div id="categoryNavigationWell" class="well sidebar-nav" sec:authorize="isAuthenticated()">
 					<ul id="rootProject" class="nav nav-list">
 						<li><a id="focus_inbox" th:href="@{/tasks/inbox}"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <span th:text="#{layout.page.inbox}">Inbox</span></a></li>
 						<li><a id="focus_today" th:href="@{/tasks/today}"><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> <span th:text="#{layout.page.today}">Today</span></a></li>
