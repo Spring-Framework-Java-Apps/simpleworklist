@@ -37,7 +37,7 @@
 							<a href="#" class="dropdown-toggle"
 							   data-toggle="dropdown"
 							   role="button" aria-haspopup="true"
-							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <span th:text="${{layout.page.contexts}}}">"Area</span> ( <span th:text="${context}"/> )<span class="caret"></span></a>
+							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <span th:text="${{layout.page.contexts}}">"Area</span> ( <span th:text="${context}"/> )<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li th:each="context : ${contexts}">
 									<a th:href="@{/context/choose/{contextId}(contextId=${context.id})">
