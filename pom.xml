@@ -460,6 +460,21 @@
                 <artifactId>thymeleaf-spring4</artifactId>
                 <version>3.0.11.RELEASE</version>
             </dependency>
+			<dependency>
+				<groupId>org.thymeleaf.extras</groupId>
+				<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+				<version>3.0.4.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.thymeleaf.extras</groupId>
+				<artifactId>thymeleaf-extras-java8time</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>io.github.jpenren</groupId>
+				<artifactId>thymeleaf-spring-data-dialect</artifactId>
+				<version>3.4.0</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -771,6 +786,18 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring4</artifactId>
         </dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-java8time</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.github.jpenren</groupId>
+			<artifactId>thymeleaf-spring-data-dialect</artifactId>
+		</dependency>
     </dependencies>
 
 
