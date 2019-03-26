@@ -57,7 +57,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Inbox");
-        return "tasks/inbox";
+        return "t/tasks/inbox";
     }
 
     @RequestMapping(value = "/tasks/today", method = RequestMethod.GET)

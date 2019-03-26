@@ -1,102 +1,79 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<!-- Document Window -->
-<h1><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <spring:message code="tasks.inbox.h1" text="Inbox" /></h1>
-<a href='<c:url value="/task/addtoproject/0"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <spring:message code="tasks.inbox.addTask" text="Add Task" /></a><br />
-<c:if test="${! empty message}">
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <c:out value="${message}"></c:out>
-    </div>
-</c:if>
-<c:if test="${! empty dataList}">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
+<h1><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <span th:utext="#{tasks.inbox.h1}">Inbox</span></h1>
+<a th:href="@{/task/addtoproject/0}"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <span th:utext="#{tasks.inbox.addTask}">Add Task</span></a><br />
+<div class="alert alert-danger alert-dismissible" role="alert" th:if="${message != null}">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <span th:text="${message}"></span>
+</div>
+<div th:if="${dataList != null}">
     <div>
         <table class="table table-striped table-hover">
             <tr>
                 <th>&nbsp;</th>
-                <th><spring:message code="tasks.inbox.title" text="Title" /></th>
-                <th><spring:message code="tasks.inbox.text" text="Text" /></th>
-                <th><spring:message code="tasks.inbox.project" text="Project" /></th>
+                <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
+                <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
+                <th><span th:utext="#{tasks.inbox.project}">Project</span></th>
                 <th>&nbsp;</th>
             </tr>
-            <c:forEach items="${dataList}" var="task">
-                <tr>
-                    <td>
-                        <a alt="complete" href='<c:url value="/task/complete/${task.id}"/>'><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span></a>
-                        &nbsp;&nbsp;
-                        <c:if test="${task.focus}">
-                            <a alt="focus" href='<c:url value="/task/unsetfocus/${task.id}"/>'><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-                        </c:if>
-                        <c:if test="${! task.focus}">
-                            <a alt="focus" href='<c:url value="/task/setfocus/${task.id}"/>'><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
-                        </c:if>
-                    </td>
-                    <td>
-                        <a href='<c:url value="/task/detail/${task.id}"/>' class="dataDetailListTitle"
-                           id="dataDetail_${task.id}" ><c:out
-                                value="${task.title}" /></a>
-                    </td>
-                    <td>
-                        <c:out value="${task.textShortened}" />
-                    </td>
-                    <td>
-                        <c:if test="${task.project != null}">
-                            <a href='<c:url value="/project/${task.project.id}"/>'><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <c:out value="${task.project.name}" /></a>
-                        </c:if>
-                    </td>
-                    <td>
-                        <c:if test="${task.taskEnergy ne 'NONE'}">
-                            <span class="badge"><spring:message code="${task.taskEnergy.code}" /></span>
-                        </c:if>
-                        <c:if test="${task.taskTime ne 'NONE'}">
-                            <span class="badge"><spring:message code="${task.taskTime.code}" /></span>
-                        </c:if>
-                    </td>
-                </tr>
-            </c:forEach>
+            <tr th:each="task : ${dataList}">
+                <td>
+                    <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}">
+                        <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </a>
+                    <a th:if="${not task.focus}" alt="focus" th:href="@{/task/setfocus/{id}(id=${task.id})}">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/task/detail/{id}(id=${task.id})}" class="dataDetailListTitle"
+                       th:id="'dataDetail_' + ${task.id}" th:text="${task.title}"/>
+                    </a>
+                </td>
+                <td th:text="${task.textShortened}">
+                </td>
+                <td>
+                    <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project != null}">
+                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span th:text="${task.project.name}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span class="badge" th:utext="${task.taskEnergy.code}" th:if="${task.taskEnergy ne 'NONE'}"></span>
+                    <span class="badge" th:utext="${task.taskTime.code}" th:if="${task.taskTime ne 'NONE'}"></span>
+                </td>
+            </tr>
         </table>
     </div>
     <nav>
-        <c:url var="firstUrl" value="/tasks/inbox?page=1" />
-        <c:url var="lastUrl" value="/tasks/inbox?page=${totalPages}" />
-        <c:url var="prevUrl" value="/tasks/inbox?page=${currentIndex - 1}" />
-        <c:url var="nextUrl" value="/tasks/inbox?page=${currentIndex + 1}" />
         <div>
             <ul class="pagination">
-                <c:choose>
-                    <c:when test="${currentIndex == 1}">
-                        <li class="disabled"><a href="#">&lt;&lt;</a></li>
-                        <li class="disabled"><a href="#">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${firstUrl}">&lt;&lt;</a></li>
-                        <li><a href="${prevUrl}">&lt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-                <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/tasks/inbox?page=${i}" />
-                    <c:choose>
-                        <c:when test="${i == currentIndex}">
-                            <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                <c:choose>
-                    <c:when test="${currentIndex == totalPages}">
-                        <li class="disabled"><a href="#">&gt;</a></li>
-                        <li class="disabled"><a href="#">&gt;&gt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${nextUrl}">&gt;</a></li>
-                        <li><a href="${lastUrl}">&gt;&gt;</a></li>
-                    </c:otherwise>
-                </c:choose>
+                <li><a th:href="@{/tasks/inbox(page=1)}" th:class="${currentIndex == 1 ? 'disabled' : ''}">&lt;&lt;</a></li>
+                <li><a th:href="@{/tasks/inbox(page=${currentIndex - 1})}" th:class="${currentIndex == 1 ? 'disabled' : ''}">&lt;</a></li>
+                <li th:each="i : ${#numbers.sequence(beginIndex,endIndex)}">
+                    <a th:href="@{/tasks/inbox(page=${i})}" th:class="${i == currentIndex ? 'active' : ''}" th:text="${i}"></a>
+                </li>
+                <li><a th:href="@{/tasks/inbox(page=${currentIndex + 1})}" th:class="${currentIndex == totalPages ? 'disabled' : ''}">&gt;</a></li>
+                <li><a th:href="@{/tasks/inbox(page=${totalPages})}" th:class="${currentIndex == totalPages ? 'disabled' : ''}">&gt;&gt;</a></li>
             </ul>
         </div>
     </nav>
-</c:if>
-<c:if test="${empty dataList}">
-    <p><spring:message code="tasks.inbox.noTasks" text="You have no Tasks in Your Inbox" /></p>
-</c:if>
+</div>
+<div th:if="${dataList == null or dataList.size()==0}">
+    <p><span th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</span></p>
+</div>
+
+
+</div>
+</body>
+</html>

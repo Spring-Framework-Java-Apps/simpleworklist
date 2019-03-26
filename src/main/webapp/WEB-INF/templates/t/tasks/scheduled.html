@@ -1,5 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<!-- Document Window -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <h1><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <spring:message code="tasks.scheduled.h1" text="Scheduled" /></h1>
 <c:if test="${! empty message}">
     <div class="alert alert-danger alert-dismissible" role="alert">
@@ -103,3 +110,8 @@
 <c:if test="${empty dataList}">
     <p><spring:message code="tasks.scheduled.noTasks" text="You have no scheduled Tasks" /></p>
 </c:if>
+
+
+</div>
+</body>
+</html>

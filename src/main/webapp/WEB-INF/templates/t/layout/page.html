@@ -37,11 +37,11 @@
 							   aria-expanded="false"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> <span th:text="#{layout.page.contexts}">"Area</span> ( <span th:text="${context}"/> )<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li th:each="context : ${contexts}">
-									<a th:href="@{/context/choose/{contextId}(contextId=${context.id})">
+									<a th:href="@{/context/choose/{id}(id=${context.id})}">
 										<span th:if="${locale == 'de'}" th:text="${context.nameDe}"></span>
 										<span th:if="${locale != 'de'}" th:text="${context.nameEn}"></span>
 									</a>
-								</li>
+								</li>contextId
 								<li role="separator" class="divider"></li>
 								<li>
 									<a th:href="@{/context/choose/0}">

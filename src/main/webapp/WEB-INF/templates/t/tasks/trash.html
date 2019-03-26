@@ -1,5 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<!-- Document Window -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <h1><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="tasks.trash.h1" text="Trash" /></h1>
 <a href='<c:url value="/task/trash/empty"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="tasks.trash.empty" text="Empty Trash" /></a>
 <c:if test="${! empty message}">
@@ -91,3 +98,8 @@
 <c:if test="${empty dataList}">
     <p><spring:message code="tasks.trash.noTasks" text="You have no deleted Tasks in your Trash" /></p>
 </c:if>
+
+
+</div>
+</body>
+</html>

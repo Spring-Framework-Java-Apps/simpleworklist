@@ -1,5 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<!-- Document Window -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <h1><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <spring:message code="tasks.completed.h1" text="Completed Tasks" /></h1>
 <a href='<c:url value="/tasks/completed/deleteall"/>'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <spring:message code="tasks.completed.delete" text="Delete All Completed Tasks" /></a>
 <c:if test="${! empty message}">
@@ -100,3 +107,9 @@
 <c:if test="${empty dataList}">
     <p><spring:message code="tasks.completed.noTasks" text="You have no completed Tasks" /></p>
 </c:if>
+
+
+
+</div>
+</body>
+</html>

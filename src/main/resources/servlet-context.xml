@@ -70,6 +70,15 @@
 				<bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
 			</set>
 		</property>
+		<property name="messageResolvers">
+			<set>
+				<bean id="thymeleafMessageResolver" class="org.thymeleaf.messageresolver.StandardMessageResolver">
+				</bean>
+				<bean id="springMessageResolver" class="org.thymeleaf.spring4.messageresolver.SpringMessageResolver">
+					<property name="messageSource" ref="messageSource" />
+				</bean>
+			</set>
+		</property>
 	</bean>
 	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
