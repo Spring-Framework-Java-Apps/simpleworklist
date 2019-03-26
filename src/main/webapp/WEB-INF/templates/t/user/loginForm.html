@@ -13,9 +13,9 @@
 	<p><span th:text="#{user.loginForm.login}">Please login or</span> <a th:href="@{/register}"><span th:text="#{user.loginForm.register}">register as new user</span></a>.</p>
 </div>
 <div class="well">
-	<div class="alert alert-danger" role="alert" th:if="${login_error != null and SPRING_SECURITY_LAST_EXCEPTION != null}">
+	<div class="alert alert-danger" role="alert" th:if="${param.login_error != null}">
 		<span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span><br /><span th:text="#{user.loginForm.loginError.caused}">Caused:</span>
-		<span th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
+		<span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
 	</div>
 	<form id="formId" th:action="@{/j_spring_security_check}" method="post">
 		<input type="hidden"
