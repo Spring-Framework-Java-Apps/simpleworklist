@@ -65,6 +65,11 @@
 	</bean>
 	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
+		<property name="additionalDialects">
+			<set>
+				<bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
+			</set>
+		</property>
 	</bean>
 	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
