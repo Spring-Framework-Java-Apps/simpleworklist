@@ -8,12 +8,12 @@
 		<li th:switch="${thisProject.id}">
             <span th:case="0" id="categoryNode_0" class="categoryNode">
                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                <strong><span th:text="${{right.nav.projects}}">Projects</span></strong>
+                <strong><span th:text="#{right.nav.projects}">Projects</span></strong>
             </span>
 			<span th:case="*" id="categoryNode_0" class="categoryNode">
                 <a href='<c:url value="/project/0"/>'>
                     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                    <span th:text="${{right.nav.projects}}">Projects</span>
+                    <span th:text="#{right.nav.projects}">Projects</span>
                 </a>
             </span>
 			<ul class="nav nav-list" th:if="${rootCategories.size() > 0}">
