@@ -1,4 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <!-- New Project Form -->
 <h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; <spring:message code="project.add.h1" text="Add Project" /></h1>
 <div>
@@ -46,3 +54,7 @@
 </form:form>
 </div>
 <!-- Document Window End -->
+
+</div>
+</body>
+</html>

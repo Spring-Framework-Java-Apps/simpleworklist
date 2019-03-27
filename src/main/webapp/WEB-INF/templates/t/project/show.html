@@ -1,5 +1,13 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-				<!-- Document Window -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
+<!-- Document Window -->
 				<c:if test="${thisProject.id > 0}">
 					<h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; <c:out value="${thisProject.name}" /></h1>
 					<c:out value="${thisProject.description}" /><br /><br />
@@ -151,3 +159,8 @@
 				<c:if test="${empty dataList}">
 					<spring:message code="project.show.nothingToDo" text="There is nothing to do in this project." />
 				</c:if>
+
+
+</div>
+</body>
+</html>

@@ -1,6 +1,20 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <h1>Hello <i>${username}</i></h1>
 <h2>Welcome to your SimpleWorklist</h2>
+
+
+
+</div>
+</body>
+</html>
 
 
 

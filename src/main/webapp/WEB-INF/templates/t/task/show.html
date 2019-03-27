@@ -1,6 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskEnergy" %>
-<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskTime" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <!-- Document Window -->
 <h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp; <spring:message code="task.show.h1" text="Edit Task" /></h1>
 <div>
@@ -86,3 +92,8 @@
 	&nbsp;&nbsp;&nbsp;<a href="<c:url value="/task/transform/${task.id}"/>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <spring:message code="task.show.transform" text="Transform into Project" /></a>
 </form:form>
 </div>
+
+
+</div>
+</body>
+</html>

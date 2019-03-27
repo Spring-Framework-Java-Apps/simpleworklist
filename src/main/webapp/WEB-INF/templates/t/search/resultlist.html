@@ -1,4 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <h1><spring:message code="search.resultlist.h1" text="Search Result for searchterm" /> <i>${searchResult.searchterm}</i></h1>
 <c:if test="${empty searchResult.taskList}">
 <h2><spring:message code="search.resultlist.h2.noTasks" text="No Tasks found" /></h2>
@@ -86,3 +94,8 @@
     </c:forEach>
     </table>
 </c:if>
+
+
+</div>
+</body>
+</html>

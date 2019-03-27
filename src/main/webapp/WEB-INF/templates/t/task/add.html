@@ -1,6 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
-<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskEnergy" %>
-<%@ page import="org.woehlke.simpleworklist.entities.enumerations.TaskTime" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <!-- New Task Form -->
 <h1><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> &nbsp; <spring:message code="task.add.h1" text="Add Task" /></h1>
 <div>
@@ -89,5 +95,9 @@
 	<button id="createNewTask" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="task.add.button" text="Add Task" /></button>
 </form:form>
 </div>
-				
 
+
+
+</div>
+</body>
+</html>

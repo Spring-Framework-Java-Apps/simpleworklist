@@ -19,7 +19,7 @@
 				</span>
 			</span>
 			<ul class="nav nav-list" th:if="${rootCategories ne null and rootCategories.size() gt 0}">
-				<li th:include="t/layout/menuProjects :: tw-project-submenu(categories=${rootCategories})"></li>
+				<li th:include="this :: tw-project-submenu(categories=${rootCategories})"></li>
 			</ul>
 		</li>
 	</ul>
@@ -40,7 +40,7 @@
 			</a>
 		</span>
 	  	<ul class="nav nav-list" th:if="${project.children.size() gt 0}">
-			<li th:include="t/layout/menuProjects :: tw-project-submenu(categories=${project.children})"></li>
+			<li th:include="this :: tw-project-submenu(categories=${project.children})"></li>
       	</ul>
 	</li>
 </ul>

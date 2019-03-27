@@ -1,4 +1,12 @@
-<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="t/layout/page :: head">
+</head>
+<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<div th:fragment="mytwcontent">
+
 <!-- Document Window -->
 <h1><spring:message code="pages.userMessages.h1" text="Your Dialog with" /> ${otherUser.userFullname}</h1>
 <div class="row">
@@ -34,3 +42,9 @@
     <a href='<c:url value="/user/${otherUser.id}/messages/all"/>'><spring:message code="pages.userMessages.showAllText1" text="Zeige alle Nachrichten" /></a> <spring:message code="pages.userMessages.showAllText2" text="(hier werden nur die letzten 20 Angezeigt)" />
     </c:if>
 </div>
+
+
+
+</div>
+</body>
+</html>
