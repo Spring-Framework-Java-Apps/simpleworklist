@@ -83,7 +83,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Today");
-        return "tasks/today";
+        return "t/tasks/today";
     }
 
     @RequestMapping(value = "/tasks/next", method = RequestMethod.GET)
@@ -109,7 +109,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Next");
-        return "tasks/next";
+        return "t/tasks/next";
     }
 
     @RequestMapping(value = "/tasks/waiting", method = RequestMethod.GET)
@@ -135,7 +135,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Waiting");
-        return "tasks/waiting";
+        return "t/tasks/waiting";
     }
 
     @RequestMapping(value = "/tasks/scheduled", method = RequestMethod.GET)
@@ -161,7 +161,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Scheduled");
-        return "tasks/scheduled";
+        return "t/tasks/scheduled";
     }
 
     @RequestMapping(value = "/tasks/someday", method = RequestMethod.GET)
@@ -187,7 +187,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Someday");
-        return "tasks/someday";
+        return "t/tasks/someday";
     }
 
     @RequestMapping(value = "/tasks/completed", method = RequestMethod.GET)
@@ -213,7 +213,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Completed Tasks");
-        return "tasks/completed";
+        return "t/tasks/completed";
     }
 
     @RequestMapping(value = "/tasks/trash", method = RequestMethod.GET)
@@ -239,7 +239,7 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Trash");
-        return "tasks/trash";
+        return "t/tasks/trash";
     }
 
     @RequestMapping(value = "/tasks/move/{taskId}/to/inbox", method = RequestMethod.GET)
