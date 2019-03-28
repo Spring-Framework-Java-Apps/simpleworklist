@@ -371,6 +371,6 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("dataList", taskPage.getContent());
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Inbox");
-        return "tasks/focus";
+        return "t/tasks/focus";
     }
 }

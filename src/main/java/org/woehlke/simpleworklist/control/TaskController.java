@@ -439,7 +439,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("sort",sort);
         model.addAttribute("sortDir",sortDir);
-        return "tasks/all";
+        return "t/tasks/all";
     }
 
     @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)

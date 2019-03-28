@@ -18,8 +18,12 @@
                     <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
                     <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
                     <th th:if="${myTaskState eq 'SCHEDULED'}"><span th:utext="#{tasks.focus.dueDate}">Due Date</span></th>
+                    <th th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL'}"><span th:utext="#{tasks.focus.taskState}">Task State</span></th>
                     <th><span th:utext="#{tasks.inbox.project}">Project</span></th>
                     <th>&nbsp;</th>
+                    <th th:if="${myTaskState eq 'ALL'}">
+                        <span th:utext="#{tasks.all.context}">Context</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -54,14 +58,49 @@
                 <td th:if="${myTaskState eq 'SCHEDULED'}">
                     <span th:text="${task.dueDate}"></span>
                 </td>
+                <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL'}" th:switch="${task.taskState.name()}">
+                    <a th:case="'INBOX'" th:href="@{/tasks/inbox}">
+                        <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.inbox}">Inbox</span>
+                    </a>
+                    <a th:case="'TODAY'" th:href="@{/tasks/today}">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.today}">Today</span>
+                    </a>
+                    <a th:case="'NEXT'" th:href="@{/tasks/next}">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.next}">Next</span>
+                    </a>
+                    <a th:case="'WAITING'" th:href="@{/tasks/waiting}">
+                        <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.waiting}">Waiting</span>
+                    </a>
+                    <a th:case="'SCHEDULED'" th:href="@{/tasks/scheduled}">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.scheduled}">Scheduled</span>
+                    </a>
+                    <a th:case="'SOMEDAY'" th:href="@{/tasks/someday}">
+                        <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.someday}">Someday</span>
+                    </a>
+                    <a th:case="'TRASHED'" th:href="@{/tasks/trash}">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        <span th:utext="#{tasks.focus.trash}">Trash</span>
+                    </a>
+                </td>
                 <td>
                     <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
-                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span th:text="${task.project.name}"></span>
+                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                        <span th:text="${task.project.name}"></span>
                     </a>
                 </td>
                 <td>
                     <span class="badge" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
                     <span class="badge" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
+                </td>
+                <td th:if="${myTaskState eq 'ALL'}">
+                    <span th:if="${locale eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
+                    <span th:if="${locale ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
                 </td>
             </tr>
             </tbody>
