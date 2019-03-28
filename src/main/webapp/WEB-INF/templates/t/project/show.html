@@ -21,15 +21,15 @@
 		<div>
 			<a th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}" href="#">
 				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-				<span th:text="${project.show.edit}">Edit Project</span>
+				<span th:text="#{project.show.edit}">Edit Project</span>
 			</a> |
 			<a th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
 				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				<span th:text="${project.show.delete}">Delete Project</span>
+				<span th:text="#{project.show.delete}">Delete Project</span>
 			</a> |
 			<a th:href="@{/task/addtoproject/{thisProjectId}(thisProjectId=${thisProject.id})}" href="#">
 				<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-				<span th:text="${project.show.addTask}">Add Task</span>
+				<span th:text="#{project.show.addTask}">Add Task</span>
 			</a>
 		</div>
 		<br />
