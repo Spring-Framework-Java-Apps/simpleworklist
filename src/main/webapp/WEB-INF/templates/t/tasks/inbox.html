@@ -55,19 +55,8 @@
             </tr>
         </table>
     </div>
-    <nav th:if="${totalPages gt 1}">
-        <div>
-            <ul class="pagination">
-                <li><a th:href="@{/tasks/inbox(page=1)}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;&lt;</a></li>
-                <li><a th:href="@{/tasks/inbox(page=${currentIndex - 1})}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;</a></li>
-                <li th:each="i : ${#numbers.sequence(beginIndex,endIndex)}">
-                    <a th:href="@{/tasks/inbox(page=${i})}" th:class="${i eq currentIndex ? 'active' : ''}" th:text="${i}"></a>
-                </li>
-                <li><a th:href="@{/tasks/inbox(page=${currentIndex + 1})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;</a></li>
-                <li><a th:href="@{/tasks/inbox(page=${totalPages})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;&gt;</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div th:replace="t/layout/navigation :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/inbox')">
+    </div>
 </div>
 <div th:if="${dataList.size() eq 0}">
     <p><span th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</span></p>
