@@ -7,61 +7,36 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <span th:utext="#{tasks.inbox.h1}">Inbox</span></h1>
-<a th:href="@{/task/addtoproject/0}"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <span th:utext="#{tasks.inbox.addTask}">Add Task</span></a><br />
-<div class="alert alert-danger alert-dismissible" role="alert" th:if="${message != null}">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <span th:text="${message}"></span>
-</div>
-<div th:if="${dataList.size() gt 0}">
-    <div>
-        <table class="table table-striped table-hover">
-            <tr>
-                <th>&nbsp;</th>
-                <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
-                <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
-                <th><span th:utext="#{tasks.inbox.project}">Project</span></th>
-                <th>&nbsp;</th>
-            </tr>
-            <tr th:each="task : ${dataList}">
-                <td>
-                    <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}">
-                        <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
-                    </a>
-                    &nbsp;&nbsp;
-                    <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    </a>
-                    <a th:if="${not task.focus}" alt="focus" th:href="@{/task/setfocus/{id}(id=${task.id})}">
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                    </a>
-                </td>
-                <td>
-                    <a th:href="@{/task/detail/{id}(id=${task.id})}" class="dataDetailListTitle"
-                       th:id="'dataDetail_' + ${task.id}" th:text="${task.title}">
-                    </a>
-                </td>
-                <td th:text="${task.textShortened}">
-                </td>
-                <td>
-                    <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
-                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span th:text="${task.project.name}"></span>
-                    </a>
-                </td>
-                <td>
-                    <span class="badge" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
-                    <span class="badge" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
-                </td>
-            </tr>
-        </table>
+    <div id="tw-content-title">
+        <h1>
+            <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+            <span th:utext="#{tasks.inbox.h1}">Inbox</span>
+        </h1>
+        <div id="tw-content-title-actionbuttons">
+            <a th:href="@{/task/addtoproject/0}"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                <span th:utext="#{tasks.inbox.addTask}">Add Task</span>
+            </a>
+        </div>
     </div>
-    <div th:replace="t/layout/navigation :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/inbox')">
-    </div>
-</div>
-<div th:if="${dataList.size() eq 0}">
-    <p><span th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</span></p>
-</div>
 
+    <div th:replace="t/layout/tasks :: tw-tasks-message(message=${message})">
+    </div>
+
+    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${message != null}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span th:text="${message}"></span>
+    </div>
+
+    <div th:if="${dataList.size() gt 0}">
+        <div th:replace="t/layout/tasks :: tw-tasks-table(dataList=${dataList})">
+        </div>
+        <div th:replace="t/layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/inbox')">
+        </div>
+    </div>
+
+    <div th:if="${dataList.size() eq 0}">
+        <p><span th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</span></p>
+    </div>
 
 </div>
 </body>

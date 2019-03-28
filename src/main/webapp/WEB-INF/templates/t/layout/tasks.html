@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:fragment="tw-tasks-message(message)">
+        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${message != null}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span th:text="${message}"></span>
+        </div>
+    </div>
+
+    <div th:fragment="tw-tasks-table(dataList)">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>&nbsp;</th>
+                <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
+                <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
+                <th><span th:utext="#{tasks.inbox.project}">Project</span></th>
+                <th>&nbsp;</th>
+            </tr>
+            <tr th:each="task : ${dataList}">
+                <td>
+                    <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}">
+                        <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </a>
+                    <a th:if="${not task.focus}" alt="focus" th:href="@{/task/setfocus/{id}(id=${task.id})}">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/task/detail/{id}(id=${task.id})}" class="dataDetailListTitle"
+                       th:id="'dataDetail_' + ${task.id}" th:text="${task.title}">
+                    </a>
+                </td>
+                <td th:text="${task.textShortened}">
+                </td>
+                <td>
+                    <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
+                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span th:text="${task.project.name}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span class="badge" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
+                    <span class="badge" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:fragment="tw-tasks-pagination(currentIndex,beginIndex,endIndex,totalPages,url)">
+        <nav th:if="${totalPages gt 1}">
+            <div>
+                <ul class="pagination">
+                    <li><a th:href="@{/{url}(url=${url},page=1)}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;&lt;</a></li>
+                    <li><a th:href="@{/{url}(url=${url},page=${currentIndex - 1})}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;</a></li>
+                    <li th:each="i : ${#numbers.sequence(beginIndex,endIndex)}">
+                        <a th:href="@{/{url}(url=${url},page=${i})}" th:class="${i eq currentIndex ? 'active' : ''}" th:text="${i}"></a>
+                    </li>
+                    <li><a th:href="@{/{url}(url=${url},page=${currentIndex + 1})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;</a></li>
+                    <li><a th:href="@{/{url}(url=${url},page=${totalPages})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;&gt;</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+</html>

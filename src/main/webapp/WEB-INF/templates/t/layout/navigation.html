@@ -43,20 +43,4 @@
 	</li>
 </ul>
 
-<div th:fragment="tw-tasks-pagination(currentIndex,beginIndex,endIndex,totalPages,url)">
-    <nav th:if="${totalPages gt 1}">
-        <div>
-            <ul class="pagination">
-                <li><a th:href="@{/{url}(url=${url},page=1)}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;&lt;</a></li>
-                <li><a th:href="@{/{url}(url=${url},page=${currentIndex - 1})}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;</a></li>
-                <li th:each="i : ${#numbers.sequence(beginIndex,endIndex)}">
-                    <a th:href="@{/{url}(url=${url},page=${i})}" th:class="${i eq currentIndex ? 'active' : ''}" th:text="${i}"></a>
-                </li>
-                <li><a th:href="@{/{url}(url=${url},page=${currentIndex + 1})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;</a></li>
-                <li><a th:href="@{/{url}(url=${url},page=${totalPages})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;&gt;</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
-
 </html>

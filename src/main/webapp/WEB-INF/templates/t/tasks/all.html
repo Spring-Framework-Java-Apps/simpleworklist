@@ -7,13 +7,16 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <spring:message code="tasks.all.h1" text="All Tasks" /></h1>
-<c:if test="${! empty message}">
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <c:out value="${message}"></c:out>
+    <div id="tw-content-title">
+        <h1>
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            <span th:utext="#{tasks.all.h1}">All Tasks</span>
+        </h1>
     </div>
-</c:if>
+
+    <div th:replace="t/layout/tasks :: tw-tasks-message(message=${message})">
+    </div>
+
 <c:if test="${! empty dataList}">
     <div>
         <table class="table table-striped table-hover">
@@ -266,52 +269,13 @@
             </c:forEach>
         </table>
     </div>
-    <nav>
-        <c:url var="firstUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=1" />
-        <c:url var="lastUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${totalPages}" />
-        <c:url var="prevUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${currentIndex - 1}" />
-        <c:url var="nextUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${currentIndex + 1}" />
-        <div>
-            <ul class="pagination">
-                <c:choose>
-                    <c:when test="${currentIndex == 1}">
-                        <li class="disabled"><a href="#">&lt;&lt;</a></li>
-                        <li class="disabled"><a href="#">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${firstUrl}">&lt;&lt;</a></li>
-                        <li><a href="${prevUrl}">&lt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-                <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                    <c:url var="pageUrl" value="/tasks/all?sort=${sort}&sortDir=${sortDir}&page=${i}" />
-                    <c:choose>
-                        <c:when test="${i == currentIndex}">
-                            <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                <c:choose>
-                    <c:when test="${currentIndex == totalPages}">
-                        <li class="disabled"><a href="#">&gt;</a></li>
-                        <li class="disabled"><a href="#">&gt;&gt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${nextUrl}">&gt;</a></li>
-                        <li><a href="${lastUrl}">&gt;&gt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
-    </nav>
-</c:if>
-<c:if test="${empty dataList}">
-    <p><spring:message code="tasks.all.noTasks" text="You have no Tasks at all" /></p>
+    <div th:replace="t/layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/all')">
+    </div>
 </c:if>
 
+    <div th:if="${dataList.size() eq 0}">
+        <p><span th:text="#{tasks.all.noTasks}">You have no Tasks at all</span></p>
+    </div>
 
 </div>
 </body>
