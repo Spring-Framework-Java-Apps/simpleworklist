@@ -38,6 +38,7 @@ public class ProjectController extends AbstractController {
         return "redirect:/project/" + projectId + "/page/1";
     }
 
+    //TODO #37
     @RequestMapping(value = "/project/{projectId}/page/{pageNumber}", method = RequestMethod.GET)
     public final String showProject(
             @PathVariable long projectId,
@@ -86,7 +87,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("message",message);
             model.addAttribute("isDeleted",isDeleted);
         }
-        return "project/show";
+        return "t/project/show";
     }
 
     @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)

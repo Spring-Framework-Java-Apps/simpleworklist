@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    <!-- TODO #36 -->
     <div th:fragment="tw-tasks-table(dataList,myTaskState)">
         <table class="table table-striped table-hover">
             <thead>
@@ -17,9 +18,9 @@
                     <th>&nbsp;</th>
                     <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
                     <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
-                    <th th:if="${myTaskState eq 'SCHEDULED'}"><span th:utext="#{tasks.focus.dueDate}">Due Date</span></th>
-                    <th th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL'}"><span th:utext="#{tasks.focus.taskState}">Task State</span></th>
-                    <th><span th:utext="#{tasks.inbox.project}">Project</span></th>
+                    <th th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'PROJECT'}"><span th:utext="#{tasks.focus.dueDate}">Due Date</span></th>
+                    <th th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}"><span th:utext="#{tasks.focus.taskState}">Task State</span></th>
+                    <th th:if="${myTaskState ne 'PROJECT'}"><span th:utext="#{tasks.inbox.project}">Project</span></th>
                     <th>&nbsp;</th>
                     <th th:if="${myTaskState eq 'ALL'}">
                         <span th:utext="#{tasks.all.context}">Context</span>
@@ -55,10 +56,10 @@
                     <span th:text="${task.textShortened}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"></span>
                     <del th:text="${task.textShortened}" th:if="${task.taskState.name() eq 'COMPLETED' or task.taskState.name() eq 'TRASHED'}"></del>
                 </td>
-                <td th:if="${myTaskState eq 'SCHEDULED'}">
+                <td th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'PROJECT'}">
                     <span th:text="${task.dueDate}"></span>
                 </td>
-                <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL'}" th:switch="${task.taskState.name()}">
+                <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}" th:switch="${task.taskState.name()}">
                     <a th:case="'INBOX'" th:href="@{/tasks/inbox}">
                         <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
                         <span th:utext="#{tasks.focus.inbox}">Inbox</span>
@@ -88,7 +89,7 @@
                         <span th:utext="#{tasks.focus.trash}">Trash</span>
                     </a>
                 </td>
-                <td>
+                <td th:if="${myTaskState ne 'PROJECT'}">
                     <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
                         <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                         <span th:text="${task.project.name}"></span>
@@ -118,6 +119,22 @@
                     </li>
                     <li><a th:href="@{/{url}(url=${url},page=${currentIndex + 1})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;</a></li>
                     <li><a th:href="@{/{url}(url=${url},page=${totalPages})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;&gt;</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div th:fragment="tw-project-tasks-pagination(currentIndex,beginIndex,endIndex,totalPages,thisProjectId)">
+        <nav th:if="${totalPages gt 1}">
+            <div>
+                <ul class="pagination">
+                    <li><a th:href="@{/project/{thisProjectId}/page/{page}(thisProjectId=${thisProjectId},page=1)}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;&lt;</a></li>
+                    <li><a th:href="@{/project/{thisProjectId}/page/{page}(thisProjectId=${thisProjectId},page=${currentIndex - 1})}" th:class="${currentIndex eq 1 ? 'disabled' : ''}">&lt;</a></li>
+                    <li th:each="i : ${#numbers.sequence(beginIndex,endIndex)}">
+                        <a th:href="@{/project/{thisProjectId}/page/{page}(thisProjectId=${thisProjectId},page=${i})}" th:class="${i eq currentIndex ? 'active' : ''}" th:text="${i}"></a>
+                    </li>
+                    <li><a th:href="@{/project/{thisProjectId}/page/{page}(thisProjectId=${thisProjectId},page=${currentIndex + 1})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;</a></li>
+                    <li><a th:href="@{/project/{thisProjectId}/page/{page}(thisProjectId=${thisProjectId},page=${totalPages})}" th:class="${currentIndex eq totalPages ? 'disabled' : ''}">&gt;&gt;</a></li>
                 </ul>
             </div>
         </nav>

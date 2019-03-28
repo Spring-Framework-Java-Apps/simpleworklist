@@ -22,11 +22,6 @@
     <div th:replace="t/layout/tasks :: tw-tasks-message(message=${message})">
     </div>
 
-    <div class="alert alert-danger alert-dismissible" role="alert" th:if="${message != null}">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span th:text="${message}"></span>
-    </div>
-
     <div th:if="${dataList.size() gt 0}">
         <div th:replace="t/layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='INBOX')">
         </div>
