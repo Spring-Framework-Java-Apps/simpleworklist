@@ -17,7 +17,7 @@
                     <th>&nbsp;</th>
                     <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
                     <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
-                    <th><span th:utext="#{tasks.focus.dueDate}" th:if="${myTaskState eq 'SCHEDULED'}">Due Date</span></th>
+                    <th th:if="${myTaskState eq 'SCHEDULED'}"><span th:utext="#{tasks.focus.dueDate}">Due Date</span></th>
                     <th><span th:utext="#{tasks.inbox.project}">Project</span></th>
                     <th>&nbsp;</th>
                 </tr>
@@ -25,13 +25,13 @@
             <tbody>
             <tr th:each="task : ${dataList}">
                 <td>
-                    <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}" th:if="${task.taskState ne 'COMPLETED' and task.taskState ne 'TRASHED'}">
+                    <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
                         <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
                     </a>
-                    <a alt="complete" th:href="@{/task/incomplete/{id}(id=${task.id})}" th:if="${task.taskState eq 'COMPLETED'}">
+                    <a alt="complete" th:href="@{/task/incomplete/{id}(id=${task.id})}" th:if="${task.taskState.name() eq 'COMPLETED'}">
                         <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
                     </a>
-                    <span class="glyphicon glyphicon-check" aria-hidden="true" th:if="${task.taskState eq 'TRASHED'}"></span>
+                    <span class="glyphicon glyphicon-check" aria-hidden="true" th:if="${task.taskState.name() eq 'TRASHED'}"></span>
                     &nbsp;&nbsp;
                     <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -43,13 +43,13 @@
                 <td>
                     <a th:href="@{/task/detail/{id}(id=${task.id})}" class="dataDetailListTitle"
                        th:id="'dataDetail_' + ${task.id}">
-                        <span th:text="${task.title}" th:if="${task.taskState ne 'COMPLETED' and task.taskState ne 'TRASHED'}"></span>
-                        <del th:text="${task.title}" th:if="${task.taskState eq 'COMPLETED' or task.taskState eq 'TRASHED'}"></del>
+                        <span th:text="${task.title}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"></span>
+                        <del th:text="${task.title}" th:if="${task.taskState.name() eq 'COMPLETED' or task.taskState.name() eq 'TRASHED'}"></del>
                     </a>
                 </td>
                 <td>
-                    <span th:text="${task.textShortened}" th:if="${task.taskState ne 'COMPLETED' and task.taskState ne 'TRASHED'}"></span>
-                    <del th:text="${task.textShortened}" th:if="${task.taskState eq 'COMPLETED' or task.taskState eq 'TRASHED'}"></del>
+                    <span th:text="${task.textShortened}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"></span>
+                    <del th:text="${task.textShortened}" th:if="${task.taskState.name() eq 'COMPLETED' or task.taskState.name() eq 'TRASHED'}"></del>
                 </td>
                 <td th:if="${myTaskState eq 'SCHEDULED'}">
                     <span th:text="${task.dueDate}"></span>
