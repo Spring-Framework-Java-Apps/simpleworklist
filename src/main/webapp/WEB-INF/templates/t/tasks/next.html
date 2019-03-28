@@ -18,7 +18,7 @@
     </div>
 
     <div th:if="${dataList.size() gt 0}">
-        <div th:replace="t/layout/tasks :: tw-tasks-table(dataList=${dataList})">
+        <div th:replace="t/layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='NEXT')">
         </div>
         <div th:replace="t/layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/next')">
         </div>
