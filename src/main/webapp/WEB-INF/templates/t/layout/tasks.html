@@ -47,12 +47,12 @@
                         <del th:text="${task.title}" th:if="${task.taskState eq 'COMPLETED' or task.taskState eq 'TRASHED'}"></del>
                     </a>
                 </td>
-                <td th:if="${myTaskState eq 'SCHEDULED'}">
-                    <span th:text="${task.dueDate}"></span>
-                </td>
                 <td>
                     <span th:text="${task.textShortened}" th:if="${task.taskState ne 'COMPLETED' and task.taskState ne 'TRASHED'}"></span>
                     <del th:text="${task.textShortened}" th:if="${task.taskState eq 'COMPLETED' or task.taskState eq 'TRASHED'}"></del>
+                </td>
+                <td th:if="${myTaskState eq 'SCHEDULED'}">
+                    <span th:text="${task.dueDate}"></span>
                 </td>
                 <td>
                     <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
