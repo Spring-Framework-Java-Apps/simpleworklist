@@ -7,7 +7,6 @@
         <div class="container" sec:authorize="isAuthenticated()" th:if="${breadcrumb != null}">
             <ol class="breadcrumb" th:if="${breadcrumb.size() > 1}">
                 <li><a th:href="@{/project/0/page/1}">Home</a></li>
-                <li th:each="bc : ${breadcrumb}" >
                 <li th:each="bc,iterStat : ${breadcrumb}" th:class="${iterStat == breadcrumb.size()-1 ? 'active' : ''}">
                     <span th:if="${iterStat == breadcrumb.size()-1}" th:text="${bc.name}"></span>
                     <a th:if="${iterStat != breadcrumb.size()-1}" th:href="@{/project/{bcId}(bcId=${bc.id})}">
