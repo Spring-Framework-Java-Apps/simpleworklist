@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class UserAccountFormBeanTest extends AbstractTest {
 
 
-    @Inject
+    @Autowired
     private org.springframework.security.crypto.password.PasswordEncoder encoder;
 
     /**

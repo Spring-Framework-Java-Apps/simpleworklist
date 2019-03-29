@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.services.impl;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskServiceImpl.class);
 
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
     @Override

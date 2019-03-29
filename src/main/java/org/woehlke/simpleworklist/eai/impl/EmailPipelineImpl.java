@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.eai.impl;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +19,10 @@ public class EmailPipelineImpl implements EmailPipeline {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailPipelineImpl.class);
 
-    @Inject
+    @Autowired
     private JavaMailSender mailSender;
 
-    @Inject
+    @Autowired
     private RegistrationProcessService registrationProcessService;
 
     @Value("${org.woehlke.simpleworklist.registration.url.host}")

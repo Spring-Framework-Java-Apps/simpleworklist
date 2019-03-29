@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.entities.UserMessage;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserMessageService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class UserMessageServiceImpl implements UserMessageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserMessageServiceImpl.class);
 
-    @Inject
+    @Autowired
     private UserMessageRepository userMessageRepository;
 
     @Override

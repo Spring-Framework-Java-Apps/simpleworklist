@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.repository.ProjectRepository;
 import org.woehlke.simpleworklist.services.TestService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,13 +29,13 @@ public class TestServiceImpl implements TestService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestServiceImpl.class);
 
-    @Inject
+    @Autowired
     private ProjectRepository projectRepository;
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
-    @Inject
+    @Autowired
     private ContextRepository contextRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)

@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.services.impl;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.junit.Assert;
 
@@ -19,10 +19,10 @@ import org.woehlke.simpleworklist.services.UserService;
 
 public class UserServiceImplTest extends AbstractTest {
 
-    @Inject
+    @Autowired
     private RegistrationProcessService registrationService;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
     @Value("${worklist.registration.mail.from}")

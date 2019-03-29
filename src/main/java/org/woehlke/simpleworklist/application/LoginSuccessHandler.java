@@ -4,12 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.UserService;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,15 +19,15 @@ import java.util.Locale;
 /**
  * Created by tw on 19.02.16.
  */
-@Named("myLoginSuccessHandler")
+@Component("myLoginSuccessHandler")
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
-    @Inject
+    @Autowired
     protected UserService userService;
 
-    @Inject
+    @Autowired
     private LocaleResolver localeResolver;
 
     @Override

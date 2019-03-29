@@ -16,7 +16,7 @@ import org.woehlke.simpleworklist.services.ProjectService;
 import org.woehlke.simpleworklist.services.UserMessageService;
 import org.woehlke.simpleworklist.services.UserService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,16 +29,16 @@ public abstract class AbstractController {
     @Value("${org.woehlke.simpleworklist.mvc.controller.pageSize}")
     protected int pageSize;
 
-    @Inject
+    @Autowired
     protected ProjectService projectService;
 
-    @Inject
+    @Autowired
     protected UserService userService;
 
-    @Inject
+    @Autowired
     protected UserMessageService userMessageService;
 
-    @Inject
+    @Autowired
     protected ContextService contextService;
 
     @ModelAttribute("allCategories")

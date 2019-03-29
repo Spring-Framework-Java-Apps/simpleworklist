@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.model.SearchResult;
 import org.woehlke.simpleworklist.repository.SearchDao;
 import org.woehlke.simpleworklist.services.SearchService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 14.02.16.
@@ -21,7 +21,7 @@ public class SearchServiceImpl implements SearchService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
 
-    @Inject
+    @Autowired
     private SearchDao searchDao;
 
     @Override

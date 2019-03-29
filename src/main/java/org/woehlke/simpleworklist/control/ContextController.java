@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.ContextService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 13.03.16.
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 @Controller
 public class ContextController extends AbstractController {
 
-    @Inject
+    @Autowired
     private ContextService contextService;
 
     @RequestMapping(value = "/context/choose/{newContextId}", method = RequestMethod.GET)

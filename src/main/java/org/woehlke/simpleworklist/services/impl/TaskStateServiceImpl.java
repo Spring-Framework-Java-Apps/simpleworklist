@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.TaskStateService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskStateServiceImpl implements TaskStateService {
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
 

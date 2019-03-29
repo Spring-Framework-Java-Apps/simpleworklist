@@ -7,7 +7,7 @@ import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
 import org.woehlke.simpleworklist.services.SearchService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 14.02.16.
@@ -18,7 +18,7 @@ public class ApplicationStartUpListener implements
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationStartUpListener.class);
 
-    @Inject
+    @Autowired
     private SearchService searchService;
 
     @Override

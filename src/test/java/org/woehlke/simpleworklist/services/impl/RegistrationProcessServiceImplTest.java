@@ -8,7 +8,7 @@ import org.woehlke.simpleworklist.entities.RegistrationProcess;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 import org.woehlke.simpleworklist.services.UserService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 
 public class RegistrationProcessServiceImplTest extends AbstractTest {
@@ -19,10 +19,10 @@ public class RegistrationProcessServiceImplTest extends AbstractTest {
     @Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
     private long ttlEmailVerificationRequest;
 
-    @Inject
+    @Autowired
     private RegistrationProcessService registrationProcessService;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
     @Test

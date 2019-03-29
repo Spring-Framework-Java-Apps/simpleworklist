@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskStateService;
 import org.woehlke.simpleworklist.services.TaskService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 21.02.16.
@@ -28,10 +28,10 @@ public class TaskStateController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskStateController.class);
 
-    @Inject
+    @Autowired
     private TaskStateService taskStateService;
 
-    @Inject
+    @Autowired
     private TaskService taskService;
 
     @RequestMapping(value = "/tasks/inbox", method = RequestMethod.GET)

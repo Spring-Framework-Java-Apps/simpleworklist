@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +25,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
-    @Inject
+    @Autowired
     private ProjectRepository projectRepository;
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
     public List<Project> getBreadcrumb(Project thisProject, UserAccount user) {

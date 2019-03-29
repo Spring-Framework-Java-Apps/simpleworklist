@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 import org.woehlke.simpleworklist.services.UserService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
 @Controller
@@ -23,10 +23,10 @@ public class RegistrationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
 
-    @Inject
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
     private RegistrationProcessService registrationProcessService;
 
     /**

@@ -2,9 +2,8 @@ package org.woehlke.simpleworklist;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +17,6 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TestHelperService;
 import org.woehlke.simpleworklist.services.UserService;
 
-import javax.inject.Inject;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -28,15 +26,15 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ContextConfiguration("classpath:/test-context.xml")
 public abstract class AbstractTest {
 
-    @Inject
+    @Autowired
     protected WebApplicationContext wac;
 
     protected MockMvc mockMvc;
 
-    @Inject
+    @Autowired
     protected UserService userService;
 
-    @Inject
+    @Autowired
     protected TestHelperService testHelperService;
 
     protected static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class TaskController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
-    @Inject
+    @Autowired
     private TaskService taskService;
 
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)

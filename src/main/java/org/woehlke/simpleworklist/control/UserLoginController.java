@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.control;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -28,7 +28,7 @@ public class UserLoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
 
-    @Inject
+    @Autowired
     protected UserService userService;
 
     /**

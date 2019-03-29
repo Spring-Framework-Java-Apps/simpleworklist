@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class ProjectController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
 
-    @Inject
+    @Autowired
     private TaskService taskService;
 
     @RequestMapping(value = "/project/{projectId}", method = RequestMethod.GET)

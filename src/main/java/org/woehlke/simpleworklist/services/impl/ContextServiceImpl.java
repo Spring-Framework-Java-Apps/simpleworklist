@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.repository.ProjectRepository;
 import org.woehlke.simpleworklist.repository.TaskRepository;
 import org.woehlke.simpleworklist.services.ContextService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
@@ -21,13 +21,13 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ContextServiceImpl implements ContextService {
 
-    @Inject
+    @Autowired
     private ContextRepository contextRepository;
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
-    @Inject
+    @Autowired
     private ProjectRepository projectRepository;
 
     @Override

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,19 +39,19 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Inject
+    @Autowired
     private UserAccountRepository userAccountRepository;
 
-    @Inject
+    @Autowired
     private UserMessageRepository userMessageRepository;
 
-    @Inject
+    @Autowired
     private ContextRepository contextRepository;
 
-    @Inject
+    @Autowired
     private PasswordEncoder encoder;
 
-    @Inject
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     public boolean isEmailAvailable(String email) {

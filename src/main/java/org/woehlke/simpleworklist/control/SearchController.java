@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
 import org.woehlke.simpleworklist.services.SearchService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 14.02.16.
@@ -21,7 +21,7 @@ public class SearchController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
-    @Inject
+    @Autowired
     private SearchService searchService;
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)

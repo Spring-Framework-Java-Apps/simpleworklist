@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +35,13 @@ public class RegistrationProcessServiceImpl implements
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationProcessServiceImpl.class);
 
-    @Inject
+    @Autowired
     private RegistrationProcessRepository registrationProcessRepository;
 
-    @Inject
+    @Autowired
     private PollableChannel registrationProcessEmailSenderChannel;
 
-    @Inject
+    @Autowired
     private PollableChannel passwordResetEmailSenderChannel;
 
     private SecureRandom random = new SecureRandom();

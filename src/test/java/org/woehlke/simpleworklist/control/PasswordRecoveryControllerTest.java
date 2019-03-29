@@ -7,7 +7,7 @@ import org.woehlke.simpleworklist.entities.RegistrationProcess;
 import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessStatus;
 import org.woehlke.simpleworklist.services.RegistrationProcessService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class PasswordRecoveryControllerTest extends AbstractTest {
 
-    @Inject
+    @Autowired
     private RegistrationProcessService registrationProcessService;
 
     @Test

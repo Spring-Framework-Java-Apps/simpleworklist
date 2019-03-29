@@ -9,15 +9,15 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TestService;
 import org.woehlke.simpleworklist.services.UserService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
 public class TestController {
 
-    @Inject
+    @Autowired
     private TestService testService;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/test/helper/project/createTree", method = RequestMethod.GET)

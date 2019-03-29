@@ -9,23 +9,23 @@ import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
 import org.woehlke.simpleworklist.repository.*;
 import org.woehlke.simpleworklist.services.TestHelperService;
 
-import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TestHelperServiceImpl implements TestHelperService {
 
-    @Inject
+    @Autowired
     private ProjectRepository projectRepository;
 
-    @Inject
+    @Autowired
     private TaskRepository taskRepository;
 
-    @Inject
+    @Autowired
     private RegistrationProcessRepository registrationProcessRepository;
 
-    @Inject
+    @Autowired
     private UserAccountRepository userAccountRepository;
 
     @Override
