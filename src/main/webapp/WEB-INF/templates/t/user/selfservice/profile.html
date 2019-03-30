@@ -50,9 +50,9 @@
             </a>
         </li>
     </ul>
-    <div th:if="${not empty users}">
+    <div th:if="${users != null}">
         <h3>
-            <span th:utext="#{pages.users.h1}">List of registered Users</span>
+            <span th:text="#{pages.users.h1}">List of registered Users</span>
         </h3>
         <table class="table table-striped">
             <thead>
