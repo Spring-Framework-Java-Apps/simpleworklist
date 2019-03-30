@@ -7,7 +7,18 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><spring:message code="user.registerDone.h1" text="Register as new User" /></h1>
-<div class="well">
-<p><spring:message code="user.registerDone.text1" text="You are registered now." /> <a href="<c:url value="/login"/>"><spring:message code="user.registerDone.text2" text="Please log in here" /></a></p>
+    <h1>
+        <span th:utext="#{user.registerDone.h1}">Register as new User</span>
+    </h1>
+    <div class="well">
+        <p>
+            <span th:utext="#{user.registerDone.text1}">You are registered now.</span>
+            <a th:href="@{/login}">
+                <span th:utext="#{user.registerDone.text2}">Please log in here</span>
+            </a>
+        </p>
+    </div>
+
 </div>
+</body>
+</html>

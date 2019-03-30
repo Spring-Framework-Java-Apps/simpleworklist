@@ -7,11 +7,15 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><spring:message code="user.registerNotConfirmed.h1" text="Register as new User" /></h1>
-<div class="well">
-				<div>
-					<p>
-						<spring:message code="user.registerNotConfirmed.text" text="Sorry. There is no registration known for your Request." />
-					</p>
-				</div>
+	<h1>
+		<span th:utext="#{user.registerNotConfirmed.h1}">Register as new User</span>
+	</h1>
+	<div class="well">
+		<p>
+			<span th:utext="#{user.registerNotConfirmed.text}">Sorry. There is no registration known for your Request.</span>
+		</p>
+	</div>
+
 </div>
+</body>
+</html>

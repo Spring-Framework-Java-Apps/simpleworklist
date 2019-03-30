@@ -8,7 +8,10 @@
 <div th:fragment="mytwcontent">
 
 <!-- New Project Form -->
-<h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; <spring:message code="project.add.h1" text="Add Project" /></h1>
+<h1>
+	<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp;
+	<span th:utext="#{project.add.h1}">Add Project</span>
+</h1>
 <div>
 <form:form id="formId" commandName="project" method="post">
 	<div class="form-group">

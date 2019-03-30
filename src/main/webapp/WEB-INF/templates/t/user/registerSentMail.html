@@ -7,8 +7,16 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><spring:message code="user.registerSentMail.h1" text="Register as new User" /></h1>
-<div class="well">
-  <p><spring:message code="user.registerSentMail.text" text="Verification needed. Sent an email to the given address. Please check your Inbox." /></p>
+  <h1>
+    <span th:utext="#{user.registerSentMail.h1}">Register as new User</span>
+  </h1>
+  <div class="well">
+    <p>
+      <span th:utext="#{user.registerSentMail.text}">Verification needed. Sent an email to the given address. Please check your Inbox.</span>
+    </p>
+  </div>
+
 </div>
+</body>
+</html>
 				

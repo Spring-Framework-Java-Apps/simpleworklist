@@ -7,33 +7,45 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <spring:message code="user.selfservice.contexts.edit" text="Edit Area" /></h1>
-<h2><spring:message code="user.selfservice.forUser" text="for User:" /> <strong><sec:authentication property="principal.username" /></strong></h2>
-<div>
-    <form:form id="formId" commandName="editContext" method="post">
-        <td>
-            <div class="form-group">
-                <form:label path="nameEn"><spring:message code="enum.language.en" text="Englisch" /></form:label>
-                <form:input path="nameEn" class="form-control" />
-                <form:errors path="nameEn" delimiter=", " element="div" class="alert alert-danger"/>
-            </div>
-        </td>
-        <td>
-            <div class="form-group">
-                <form:label path="nameDe"><spring:message code="enum.language.de" text="Deutsch" /></form:label>
-                <form:input path="nameDe" class="form-control" />
-                <form:errors path="nameDe" delimiter=", " element="div" class="alert alert-danger"/>
-            </div>
-        </td>
-        <td>
-            <button id="createNewProject" type="submit" class="btn btn-default">
-                <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                <spring:message code="user.selfservice.contexts.edit.button" text="Edit Area" />
-            </button>
-        </td>
-        <td>&nbsp;</td>
-    </form:form>
-</div>
+    <h1>
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        <span th:utext="#{user.selfservice.contexts.edit}">Edit Area</span>
+    </h1>
+    <h2>
+        <span th:utext="#{user.selfservice.forUser}">for User:</span>
+        <strong>
+            <span sec:authentication="name"></span>
+        </strong>
+    </h2>
+    <div>
+        <form:form id="formId" commandName="editContext" method="post">
+            <td>
+                <div class="form-group">
+                    <form:label path="nameEn">
+                        <span th:utext="#{enum.language.en}">Englisch</span>
+                    </form:label>
+                    <form:input path="nameEn" class="form-control" />
+                    <form:errors path="nameEn" delimiter=", " element="div" class="alert alert-danger"/>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <form:label path="nameDe">
+                        <span th:utext="#{enum.language.de}">Deutsch</span>
+                    </form:label>
+                    <form:input path="nameDe" class="form-control" />
+                    <form:errors path="nameDe" delimiter=", " element="div" class="alert alert-danger"/>
+                </div>
+            </td>
+            <td>
+                <button id="createNewProject" type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+                    <span th:utext="#{user.selfservice.contexts.edit.button}">Edit Area</span>
+                </button>
+            </td>
+            <td>&nbsp;</td>
+        </form:form>
+    </div>
 
 </div>
 </body>

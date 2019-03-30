@@ -7,8 +7,12 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<!-- Document Window -->
-<h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp; <spring:message code="task.show.h1" text="Edit Task" /></h1>
+	<!-- Document Window -->
+	<h1>
+		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;
+		<span th:utext="#{task.show.h1}">Edit Task</span>
+	</h1>
+
 <div>
 <form:form id="formId" commandName="task" method="post">
 	<form:hidden path="taskState" />

@@ -7,37 +7,62 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<h1><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <spring:message code="user.selfservice.profile.changeContexts" text="Change Areas" /></h1>
-<h2><spring:message code="user.selfservice.forUser" text="for User:" /> <strong><sec:authentication property="principal.username" /></strong></h2>
+    <h1>
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        <span th:utext="#{user.selfservice.profile.changeContexts}">Change Areas</span>
+    </h1>
+    <h2>
+        <span th:utext="#{user.selfservice.forUser}">for User:</span>
+        <strong>
+            <span sec:authentication="name"></span>
+        </strong>
+    </h2>
     <div>
-        <a href='<c:url value="/user/selfservice/context/add"/>'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <spring:message code="user.selfservice.contexts.add.button" text="Add Area" /></a><br />
-    <!-- <h2>Tasks</h2> -->
-    <table class="table table-striped table-hover">
-    <tr>
-        <th><spring:message code="enum.language.en" text="Englisch" /></th>
-        <th><spring:message code="enum.language.de" text="Deutsch" /></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-    </tr>
-    <c:forEach items="${contexts}" var="context">
-        <tr>
-            <td><c:out value="${context.nameEn}"/></td>
-            <td><c:out value="${context.nameDe}"/></td>
-            <td>
-                <a href="<c:url value="/user/selfservice/context/edit/${context.id}"/>"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-            </td>
-            <td>
-                <a href="<c:url value="/user/selfservice/context/delete/${context.id}"/>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-            </td>
-        </tr>
-    </c:forEach>
-    </table>
+        <a th:href="@{/user/selfservice/context/add}">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            <span th:utext="#{user.selfservice.contexts.add.button}">Add Area</span>
+        </a>
+        <br />
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>
+                    <span th:utext="#{enum.language.en}">Englisch</span>
+                </th>
+                <th>
+                    <span th:utext="#{enum.language.de}">Deutsch</span>
+                </th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+            <c:forEach items="${contexts}" var="context">
+                <tr>
+                    <td>
+                        <span th:text="${context.nameEn}">context.nameEn</span>
+                    </td>
+                    <td>
+                        <span th:text="${context.nameDe}">context.nameDe</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/user/selfservice/context/edit/{id}(id=${context.id})}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/user/selfservice/context/delete/{id}(id=${context.id})}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
-<div>
+    <div>
     <form:form id="formId" commandName="thisUser" method="post">
         <div class="form-group">
             <form:hidden path="id"/>
-            <form:label path="defaultContext.id"><spring:message code="user.selfservice.context.default" text="Default Area" /></form:label>
+            <form:label path="defaultContext.id">
+                <span th:utext="#{user.selfservice.context.default}">Default Area</span>
+            </form:label>
             <form:select  path="defaultContext.id">
                 <c:forEach items="${contexts}" var="context">
                     <c:choose>
@@ -60,13 +85,16 @@
             </form:select>
             <form:errors path="defaultContext.id" delimiter=", " element="div" class="alert alert-danger"/>
         </div>
-        <button id="saveLanguageButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="user.selfservice.context.default.button" text="Save Default Area" /></button>
+        <button id="saveLanguageButton" type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            <span th:utext="#{user.selfservice.context.default.button}">Save Default Area</span>
+        </button>
     </form:form>
-</div>
-<br/>
-<a href="<c:url value="/user/selfservice"/>"><spring:message code="button.back" text="back" /></a>
-
-
+    </div>
+    <br/>
+    <a th:href="@{/user/selfservice}">
+        <span th:utext="#{button.back}">back</span>
+    </a>
 
 </div>
 </body>
