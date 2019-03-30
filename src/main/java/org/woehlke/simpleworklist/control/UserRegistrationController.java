@@ -9,10 +9,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
+import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.model.RegisterFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
-import org.woehlke.simpleworklist.services.RegistrationProcessService;
+import org.woehlke.simpleworklist.services.UserRegistrationService;
 import org.woehlke.simpleworklist.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class UserRegistrationController {
     private UserService userService;
 
     @Autowired
-    private RegistrationProcessService registrationProcessService;
+    private UserRegistrationService userRegistrationService;
 
     /**
      * Register as new user by entering the email-address which is
@@ -58,9 +58,9 @@ public class UserRegistrationController {
         if (result.hasErrors()) {
             return "t/user/registerForm";
         } else {
-            registrationProcessService.registrationCheckIfResponseIsInTime(registerFormBean.getEmail());
+            userRegistrationService.registrationCheckIfResponseIsInTime(registerFormBean.getEmail());
             if (userService.isEmailAvailable(registerFormBean.getEmail())) {
-                if (registrationProcessService.registrationIsRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
+                if (userRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
                     String objectName = "registerFormBean";
                     String field = "email";
                     String defaultMessage = "Maximum Number of Retries reached.";
@@ -68,7 +68,7 @@ public class UserRegistrationController {
                     result.addError(e);
                     return "t/user/registerForm";
                 } else {
-                    registrationProcessService.registrationSendEmailTo(registerFormBean.getEmail());
+                    userRegistrationService.registrationSendEmailTo(registerFormBean.getEmail());
                     return "t/user/registerSentMail";
                 }
             } else {
@@ -93,9 +93,9 @@ public class UserRegistrationController {
     public final String registerNewUserCheckResponseAndRegistrationForm(
             @PathVariable String confirmId, Model model) {
         LOGGER.info("GET /confirm/" + confirmId);
-        RegistrationProcess o = registrationProcessService.findByToken(confirmId);
+        UserRegistration o = userRegistrationService.findByToken(confirmId);
         if (o != null) {
-            registrationProcessService.registrationClickedInEmail(o);
+            userRegistrationService.registrationClickedInEmail(o);
             UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
             userAccountFormBean.setUserEmail(o.getEmail());
             model.addAttribute("userAccountFormBean", userAccountFormBean);
@@ -120,13 +120,13 @@ public class UserRegistrationController {
             @Valid UserAccountFormBean userAccountFormBean,
             BindingResult result, Model model) {
         LOGGER.info("POST /confirm/" + confirmId + " : " + userAccountFormBean.toString());
-        registrationProcessService.registrationCheckIfResponseIsInTime(userAccountFormBean.getUserEmail());
-        RegistrationProcess o = registrationProcessService.findByToken(confirmId);
+        userRegistrationService.registrationCheckIfResponseIsInTime(userAccountFormBean.getUserEmail());
+        UserRegistration o = userRegistrationService.findByToken(confirmId);
         if (o != null) {
             boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
             if (!result.hasErrors() && passwordsMatch) {
                 userService.createUser(userAccountFormBean);
-                registrationProcessService.registrationUserCreated(o);
+                userRegistrationService.registrationUserCreated(o);
                 return "t/user/registerDone";
             } else {
                 if (!passwordsMatch) {

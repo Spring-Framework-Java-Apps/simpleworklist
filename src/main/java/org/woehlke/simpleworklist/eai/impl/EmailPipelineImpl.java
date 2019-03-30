@@ -10,8 +10,10 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.woehlke.simpleworklist.eai.EmailPipeline;
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
-import org.woehlke.simpleworklist.services.RegistrationProcessService;
+import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.entities.UserRegistration;
+import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.services.UserRegistrationService;
 
 
 @MessageEndpoint(value = "emailPipeline")
@@ -23,7 +25,10 @@ public class EmailPipelineImpl implements EmailPipeline {
     private JavaMailSender mailSender;
 
     @Autowired
-    private RegistrationProcessService registrationProcessService;
+    private UserRegistrationService userRegistrationService;
+
+    @Autowired
+    private UserPasswordRecoveryService userPasswordRecoveryService;
 
     @Value("${org.woehlke.simpleworklist.registration.url.host}")
     private String urlHost;
@@ -32,7 +37,7 @@ public class EmailPipelineImpl implements EmailPipeline {
     private String mailFrom;
 
     @Override
-    public void sendEmailToRegisterNewUser(RegistrationProcess o) {
+    public void sendEmailToRegisterNewUser(UserRegistration o) {
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
@@ -50,13 +55,13 @@ public class EmailPipelineImpl implements EmailPipeline {
             success = false;
         }
         if (success) {
-            registrationProcessService.registrationSentEmail(o);
+            userRegistrationService.registrationSentEmail(o);
         }
         LOGGER.info("Sent MAIL: " + o.toString());
     }
 
     @Override
-    public void sendEmailForPasswordReset(RegistrationProcess o) {
+    public void sendEmailForPasswordReset(UserPasswordRecovery o) {
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
@@ -74,7 +79,7 @@ public class EmailPipelineImpl implements EmailPipeline {
             success = false;
         }
         if (success) {
-            registrationProcessService.passwordRecoverySentEmail(o);
+            userPasswordRecoveryService.passwordRecoverySentEmail(o);
         }
         LOGGER.info("Sent MAIL: " + o.toString());
     }

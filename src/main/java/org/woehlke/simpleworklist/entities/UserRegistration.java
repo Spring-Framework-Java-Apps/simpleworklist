@@ -1,20 +1,21 @@
 package org.woehlke.simpleworklist.entities;
 
 import org.hibernate.validator.constraints.Email;
-import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessStatus;
-import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
+import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "email","registrationProcessType"
-        })
+@Table(
+    uniqueConstraints = @UniqueConstraint(
+    columnNames = {
+        "email"
+    })
 )
-public class RegistrationProcess {
+public class UserRegistration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,14 +34,15 @@ public class RegistrationProcess {
 
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private RegistrationProcessStatus doubleOptInStatus;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private RegistrationProcessType registrationProcessType;
+    private UserRegistrationStatus doubleOptInStatus;
 
     @Column
     private int numberOfRetries = 0;
+
+    @Transient
+    public void increaseNumberOfRetries() {
+        this.numberOfRetries++;
+    }
 
     public Long getId() {
         return id;
@@ -66,11 +68,11 @@ public class RegistrationProcess {
         this.token = token;
     }
 
-    public RegistrationProcessStatus getDoubleOptInStatus() {
+    public UserRegistrationStatus getDoubleOptInStatus() {
         return doubleOptInStatus;
     }
 
-    public void setDoubleOptInStatus(RegistrationProcessStatus doubleOptInStatus) {
+    public void setDoubleOptInStatus(UserRegistrationStatus doubleOptInStatus) {
         this.doubleOptInStatus = doubleOptInStatus;
     }
 
@@ -90,48 +92,33 @@ public class RegistrationProcess {
         this.numberOfRetries = numberOfRetries;
     }
 
-    public RegistrationProcessType getRegistrationProcessType() {
-        return registrationProcessType;
-    }
-
-    public void setRegistrationProcessType(RegistrationProcessType registrationProcessType) {
-        this.registrationProcessType = registrationProcessType;
-    }
-
-    @Transient
-    public void increaseNumberOfRetries() {
-        this.numberOfRetries++;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RegistrationProcess)) return false;
-
-        RegistrationProcess that = (RegistrationProcess) o;
-
-        if (!email.equals(that.email)) return false;
-        if (registrationProcessType != that.registrationProcessType) return false;
-
-        return true;
+        if (!(o instanceof UserRegistration)) return false;
+        UserRegistration that = (UserRegistration) o;
+        return getNumberOfRetries() == that.getNumberOfRetries() &&
+                Objects.equals(getId(), that.getId()) &&
+                getEmail().equals(that.getEmail()) &&
+                getToken().equals(that.getToken()) &&
+                getCreatedTimestamp().equals(that.getCreatedTimestamp()) &&
+                getDoubleOptInStatus() == that.getDoubleOptInStatus();
     }
 
     @Override
     public int hashCode() {
-        int result = email.hashCode();
-        result = 31 * result + registrationProcessType.hashCode();
-        return result;
+        return Objects.hash(getId(), getEmail(), getToken(), getCreatedTimestamp(), getDoubleOptInStatus(), getNumberOfRetries());
     }
 
     @Override
     public String toString() {
-        return "RegistrationProcess{" +
+        return "UserRegistration{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", token='" + token + '\'' +
                 ", createdTimestamp=" + createdTimestamp +
                 ", doubleOptInStatus=" + doubleOptInStatus +
-                ", registrationProcessType=" + registrationProcessType +
                 ", numberOfRetries=" + numberOfRetries +
                 '}';
     }

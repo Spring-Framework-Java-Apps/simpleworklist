@@ -13,14 +13,18 @@ import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
-import org.woehlke.simpleworklist.services.RegistrationProcessService;
+import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.services.UserRegistrationService;
 import org.woehlke.simpleworklist.services.UserService;
 
 
 public class UserServiceImplTest extends AbstractTest {
 
     @Autowired
-    private RegistrationProcessService registrationService;
+    private UserRegistrationService registrationService;
+
+    @Autowired
+    private UserPasswordRecoveryService userPasswordRecoveryService;
 
     @Autowired
     private UserService userService;
@@ -64,19 +68,19 @@ public class UserServiceImplTest extends AbstractTest {
         Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         Assert.assertNotNull(emails[0]);
         Assert.assertFalse(userService.isEmailAvailable(emails[0]));
-        registrationService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(registrationService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         Assert.assertFalse(userService.isEmailAvailable(emails[0]));
-        registrationService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(registrationService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        registrationService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(registrationService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        registrationService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(registrationService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        registrationService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(registrationService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        registrationService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertTrue(registrationService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        Assert.assertTrue(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         int sixSeconds = 6000;
         Thread.sleep(sixSeconds);
         deleteAll();

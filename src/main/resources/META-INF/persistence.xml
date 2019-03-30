@@ -10,7 +10,8 @@
 		<class>org.woehlke.simpleworklist.entities.Task</class>
         <class>org.woehlke.simpleworklist.entities.Project</class>
         <class>org.woehlke.simpleworklist.entities.Context</class>
-        <class>org.woehlke.simpleworklist.entities.RegistrationProcess</class>
+        <class>org.woehlke.simpleworklist.entities.UserRegistration</class>
+        <class>org.woehlke.simpleworklist.entities.UserPasswordRecovery</class>
         <class>org.woehlke.simpleworklist.entities.UserAccount</class>
         <class>org.woehlke.simpleworklist.entities.UserMessage</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

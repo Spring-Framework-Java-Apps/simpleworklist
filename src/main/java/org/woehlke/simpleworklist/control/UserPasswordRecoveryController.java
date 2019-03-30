@@ -9,11 +9,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
+import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.RegisterFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
-import org.woehlke.simpleworklist.services.RegistrationProcessService;
+import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class UserPasswordRecoveryController {
     private UserService userService;
 
     @Autowired
-    private RegistrationProcessService registrationProcessService;
+    private UserPasswordRecoveryService userPasswordRecoveryService;
 
     /**
      * Visitor who might be Registered, but not yet logged in, clicks
@@ -74,7 +74,7 @@ public class UserPasswordRecoveryController {
                 result.addError(e);
                 return "t/user/resetPasswordForm";
             } else {
-                registrationProcessService.passwordRecoverySendEmailTo(registerFormBean.getEmail());
+                userPasswordRecoveryService.passwordRecoverySendEmailTo(registerFormBean.getEmail());
                 return "t/user/resetPasswordSentMail";
             }
 
@@ -90,9 +90,9 @@ public class UserPasswordRecoveryController {
      */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
     public final String enterNewPasswordFormular(@PathVariable String confirmId, Model model) {
-        RegistrationProcess o = registrationProcessService.findByToken(confirmId);
+        UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
         if (o != null) {
-            registrationProcessService.passwordRecoveryClickedInEmail(o);
+            userPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
             UserAccount ua = userService.findByUserEmail(o.getEmail());
             UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
             userAccountFormBean.setUserEmail(o.getEmail());
@@ -118,12 +118,12 @@ public class UserPasswordRecoveryController {
                                              BindingResult result,
                                              @PathVariable String confirmId,
                                              Model model) {
-        RegistrationProcess o = registrationProcessService.findByToken(confirmId);
+        UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
         boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
                 userService.changeUsersPassword(userAccountFormBean);
-                registrationProcessService.passwordRecoveryDone(o);
+                userPasswordRecoveryService.passwordRecoveryDone(o);
                 return "t/user/resetPasswordDone";
             } else {
                 if (!passwordsMatch) {

@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.Project;
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
-import org.woehlke.simpleworklist.entities.enumerations.RegistrationProcessType;
+import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.repository.*;
 import org.woehlke.simpleworklist.services.TestHelperService;
 
@@ -23,15 +23,18 @@ public class TestHelperServiceImpl implements TestHelperService {
     private TaskRepository taskRepository;
 
     @Autowired
-    private RegistrationProcessRepository registrationProcessRepository;
+    private UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    @Autowired
+    private UserPasswordRecoveryRepository userPasswordRecoveryRepository;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void deleteAllRegistrationProcess() {
-        registrationProcessRepository.deleteAll();
+        userRegistrationRepository.deleteAll();
 
     }
 
@@ -65,16 +68,16 @@ public class TestHelperServiceImpl implements TestHelperService {
 
     @Override
     public int getNumberOfAllRegistrations() {
-        return registrationProcessRepository.findAll().size();
+        return userRegistrationRepository.findAll().size();
     }
 
     @Override
-    public RegistrationProcess findByEmailRegistration(String email) {
-        return registrationProcessRepository.findByEmailAndRegistrationProcessType(email,RegistrationProcessType.REGISTRATION);
+    public UserRegistration findByEmailRegistration(String email) {
+        return userRegistrationRepository.findByEmail(email);
     }
 
     @Override
-    public RegistrationProcess findByEmailPasswordRecovery(String email) {
-        return registrationProcessRepository.findByEmailAndRegistrationProcessType(email, RegistrationProcessType.PASSWORD_RECOVERY);
+    public UserPasswordRecovery findByEmailPasswordRecovery(String email) {
+        return userPasswordRecoveryRepository.findByEmail(email);
     }
 }

@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.services;
 
-import org.woehlke.simpleworklist.entities.RegistrationProcess;
+import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.entities.UserRegistration;
 
 public interface TestHelperService {
 
@@ -14,7 +15,7 @@ public interface TestHelperService {
 
     int getNumberOfAllRegistrations();
 
-    RegistrationProcess findByEmailRegistration(String email);
+    UserRegistration findByEmailRegistration(String email);
 
-    RegistrationProcess findByEmailPasswordRecovery(String email);
+    UserPasswordRecovery findByEmailPasswordRecovery(String email);
 }
