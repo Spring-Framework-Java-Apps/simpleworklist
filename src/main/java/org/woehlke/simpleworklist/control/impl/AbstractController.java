@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.control;
+package org.woehlke.simpleworklist.control.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;

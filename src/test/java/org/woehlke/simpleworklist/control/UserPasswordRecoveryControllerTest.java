@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-public class PasswordRecoveryControllerTest extends AbstractTest {
+public class UserPasswordRecoveryControllerTest extends AbstractTest {
 
     @Autowired
     private RegistrationProcessService registrationProcessService;

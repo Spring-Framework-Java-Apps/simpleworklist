@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
 @Controller
-public class RegistrationController {
+public class UserRegistrationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationController.class);
 
     @Autowired
     private UserService userService;

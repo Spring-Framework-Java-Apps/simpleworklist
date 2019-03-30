@@ -20,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
 @Controller
-public class PasswordRecoveryController {
+public class UserPasswordRecoveryController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordRecoveryController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryController.class);
 
     @Autowired
     private UserService userService;
