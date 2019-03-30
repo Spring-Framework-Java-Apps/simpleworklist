@@ -130,27 +130,49 @@ public class TaskController extends AbstractController {
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
         Project thisProject = null;
+        Boolean mustChooseArea = false;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
             if(userSession.getContextId() == 0L){
-                model.addAttribute("mustChooseArea", true);
+                mustChooseArea = true;
                 task.setContext(userAccount.getDefaultContext());
+                thisProject.setContext(userAccount.getDefaultContext());
             } else {
                 Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
                 task.setContext(context);
+                thisProject.setContext(context);
             }
         } else {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             task.setProject(thisProject);
             task.setContext(thisProject.getContext());
         }
-        model.addAttribute("thisProject", thisProject);
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+        model.addAttribute("mustChooseArea", mustChooseArea);
+        model.addAttribute("thisProject", thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
         return "t/task/add";
+    }
+
+    private Project getProject(long projectId, UserAccount userAccount, UserSessionBean userSession){
+        Project thisProject = null;
+        if (projectId == 0) {
+            thisProject = new Project();
+            thisProject.setId(0L);
+            thisProject.setUserAccount(userAccount);
+            if(userSession.getContextId() == 0L){
+                thisProject.setContext(userAccount.getDefaultContext());
+            } else {
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                thisProject.setContext(context);
+            }
+        } else {
+            thisProject = projectService.findByProjectId(projectId, userAccount);
+        }
+        return thisProject;
     }
 
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
@@ -164,6 +186,24 @@ public class TaskController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
+            Project thisProject = this.getProject(projectId, userAccount, userSession);
+            Boolean mustChooseArea = false;
+            if (projectId == 0) {
+                if(userSession.getContextId() == 0L){
+                    mustChooseArea = true;
+                } else {
+                    Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                    task.setContext(context);
+                }
+            } else {
+                task.setProject(thisProject);
+                task.setContext(thisProject.getContext());
+            }
+            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+            model.addAttribute("mustChooseArea", mustChooseArea);
+            model.addAttribute("thisProject", thisProject);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("task", task);
             return "t/task/add";
         } else {
             if (projectId == 0) {

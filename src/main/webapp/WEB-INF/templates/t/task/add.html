@@ -13,7 +13,7 @@
 		<span th:utext="#{task.add.h1}">Add Task</span>
 	</h1>
 
-	<form id="formId" th:action="@{/task/addtoproject/{projectId}(projectId=${thisProject.id})}" commandName="task" method="post">
+	<form id="formId" th:action="@{/task/addtoproject/{projectId}(projectId=${thisProject.id})}" th:object="${task}" method="post">
 		<input type="hidden" th:field="*{taskState}" />
 		<input type="hidden" th:field="*{userAccount.id}" />
 		<input type="hidden" th:field="*{createdTimestamp.time}" />
