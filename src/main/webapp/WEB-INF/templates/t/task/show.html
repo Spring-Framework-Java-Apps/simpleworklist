@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label th:for="taskDueDate" class="control-label">
+				<label for="taskDueDate" class="control-label">
 					<span th:utext="#{task.show.dueDate}">Due Date</span>
 				</label>
 				<input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control" />
@@ -40,10 +40,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label th:for="${#ids.next('text')}" class="control-label">
-					<span th:utext="#{task.show.dueDate}">Due Date</span>
+				<label th:for="task-show-text" class="control-label">
+					<span th:utext="#{task.show.text}">Text</span>
 				</label>
-				<input type="textarea" rows="10" cols="50" th:field="*{text}" class="form-control" />
+				<textarea id="task-show-text" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
 				<div>
 					<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
 					</div>
