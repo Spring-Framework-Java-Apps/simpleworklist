@@ -40,7 +40,7 @@ public class RegistrationController {
     public final String registerNewUserRequestForm(Model model) {
         RegisterFormBean registerFormBean = new RegisterFormBean();
         model.addAttribute("registerFormBean", registerFormBean);
-        return "user/registerForm";
+        return "t/user/registerForm";
     }
 
     /**
@@ -56,7 +56,7 @@ public class RegistrationController {
             @Valid RegisterFormBean registerFormBean,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "user/registerForm";
+            return "t/user/registerForm";
         } else {
             registrationProcessService.registrationCheckIfResponseIsInTime(registerFormBean.getEmail());
             if (userService.isEmailAvailable(registerFormBean.getEmail())) {
@@ -66,10 +66,10 @@ public class RegistrationController {
                     String defaultMessage = "Maximum Number of Retries reached.";
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
-                    return "user/registerForm";
+                    return "t/user/registerForm";
                 } else {
                     registrationProcessService.registrationSendEmailTo(registerFormBean.getEmail());
-                    return "user/registerSentMail";
+                    return "t/user/registerSentMail";
                 }
             } else {
                 String objectName = "registerFormBean";
@@ -77,7 +77,7 @@ public class RegistrationController {
                 String defaultMessage = "Email is already in use.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
                 result.addError(e);
-                return "user/registerForm";
+                return "t/user/registerForm";
             }
         }
     }
@@ -99,9 +99,9 @@ public class RegistrationController {
             UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
             userAccountFormBean.setUserEmail(o.getEmail());
             model.addAttribute("userAccountFormBean", userAccountFormBean);
-            return "user/registerConfirmed";
+            return "t/user/registerConfirmed";
         } else {
-            return "user/registerNotConfirmed";
+            return "t/user/registerNotConfirmed";
         }
     }
 
@@ -127,7 +127,7 @@ public class RegistrationController {
             if (!result.hasErrors() && passwordsMatch) {
                 userService.createUser(userAccountFormBean);
                 registrationProcessService.registrationUserCreated(o);
-                return "user/registerDone";
+                return "t/user/registerDone";
             } else {
                 if (!passwordsMatch) {
                     String objectName = "userAccountFormBean";
@@ -136,10 +136,10 @@ public class RegistrationController {
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
                 }
-                return "user/registerConfirmed";
+                return "t/user/registerConfirmed";
             }
         } else {
-            return "user/registerNotConfirmed";
+            return "t/user/registerNotConfirmed";
         }
     }
 }

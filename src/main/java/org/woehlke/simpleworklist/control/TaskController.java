@@ -55,7 +55,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
-            return "task/show";
+            return "t/task/show";
         } else {
             return "redirect:/tasks/inbox";
         }
@@ -86,7 +86,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "task/show";
+            return "t/task/show";
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
@@ -149,7 +149,7 @@ public class TaskController extends AbstractController {
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "task/add";
+        return "t/task/add";
     }
 
     @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
@@ -163,7 +163,7 @@ public class TaskController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-            return "task/add";
+            return "t/task/add";
         } else {
             if (projectId == 0) {
                 task.setProject(null);

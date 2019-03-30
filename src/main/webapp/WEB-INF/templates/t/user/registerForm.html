@@ -11,16 +11,19 @@
 		<span th:utext="#{user.registerForm.h1}">Register as new User</span>
 	</h1>
 	<div class="well">
-		<form:form id="formId" commandName="registerFormBean" method="post">
+		<form id="formId" th:action="@{/register}" th:object="${registerFormBean}" method="post">
 			<div class="form-group">
-				<form:label path="email">Email</form:label>
-				<form:input path="email" class="form-control" placeholder="Email"/>
-				<form:errors path="email" delimiter=", " element="div" class="alert alert-danger"/>
+				<label th:for="${#ids.next('email')}" class="control-label">Email</label>
+				<input type="text" th:field="*{email}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('email')}" th:text="${err}" class="alert alert-danger" >
+					</div>
+				</div>
 			</div>
 			<button id="registerButton" type="submit" class="btn btn-default">
 				<span th:utext="#{user.registerForm.button}">Register</span>
 			</button>
-		</form:form>
+		</form>
 	</div>
 
 </div>

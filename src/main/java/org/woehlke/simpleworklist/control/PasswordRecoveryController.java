@@ -41,7 +41,7 @@ public class PasswordRecoveryController {
     public final String passwordForgottenForm(Model model) {
         RegisterFormBean registerFormBean = new RegisterFormBean();
         model.addAttribute("registerFormBean", registerFormBean);
-        return "user/resetPasswordForm";
+        return "t/user/resetPasswordForm";
     }
 
     /**
@@ -61,7 +61,7 @@ public class PasswordRecoveryController {
             LOGGER.info(result.toString());
             LOGGER.info(model.toString());
             LOGGER.info("----------------------");
-            return "user/resetPasswordForm";
+            return "t/user/resetPasswordForm";
         } else {
             LOGGER.info(registerFormBean.toString());
             LOGGER.info(result.toString());
@@ -72,10 +72,10 @@ public class PasswordRecoveryController {
                 String defaultMessage = "This Email is not registered.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
                 result.addError(e);
-                return "user/resetPasswordForm";
+                return "t/user/resetPasswordForm";
             } else {
                 registrationProcessService.passwordRecoverySendEmailTo(registerFormBean.getEmail());
-                return "user/resetPasswordSentMail";
+                return "t/user/resetPasswordSentMail";
             }
 
         }
@@ -98,9 +98,9 @@ public class PasswordRecoveryController {
             userAccountFormBean.setUserEmail(o.getEmail());
             userAccountFormBean.setUserFullname(ua.getUserFullname());
             model.addAttribute("userAccountFormBean", userAccountFormBean);
-            return "user/resetPasswordConfirmed";
+            return "t/user/resetPasswordConfirmed";
         } else {
-            return "user/resetPasswordNotConfirmed";
+            return "t/user/resetPasswordNotConfirmed";
         }
     }
 
@@ -124,7 +124,7 @@ public class PasswordRecoveryController {
             if (!result.hasErrors() && passwordsMatch) {
                 userService.changeUsersPassword(userAccountFormBean);
                 registrationProcessService.passwordRecoveryDone(o);
-                return "user/resetPasswordDone";
+                return "t/user/resetPasswordDone";
             } else {
                 if (!passwordsMatch) {
                     String objectName = "userAccountFormBean";
@@ -133,10 +133,10 @@ public class PasswordRecoveryController {
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
                 }
-                return "user/resetPasswordConfirmed";
+                return "t/user/resetPasswordConfirmed";
             }
         } else {
-            return "user/resetPasswordNotConfirmed";
+            return "t/user/resetPasswordNotConfirmed";
         }
     }
 }

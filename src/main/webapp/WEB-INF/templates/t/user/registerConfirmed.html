@@ -11,34 +11,42 @@
 		<span th:utext="#{user.registerConfirmed.h1}">Register as new User</span>
 	</h1>
 	<div class="well">
-		<form:form id="formId" commandName="userAccountFormBean" method="post">
+		<form id="formId" th:action="@{/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountFormBean}" method="post">
+			<input type="hidden" th:field="*{userEmail}" />
 			<div class="form-group">
-				<form:label path="userFullname">
+				<label th:for="${#ids.next('userFullname')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userFullname}">Full Name</span>
-				</form:label>
-				<form:input path="userFullname" class="form-control"/>
-				<br/>
-				<form:errors path="userFullname" delimiter=", " element="div" class="alert alert-danger"/>
+				</label>
+				<input type="text" th:field="*{userFullname}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('userFullname')}" th:text="${err}" class="alert alert-danger" >
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
-				<form:label path="userPassword">
+				<label th:for="${#ids.next('userPassword')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userPassword}">Password</span>
-				</form:label>
-				<form:password path="userPassword" class="form-control"/><br/>
-				<form:errors path="userPassword" delimiter=", " element="div" class="alert alert-danger"/>
+				</label>
+				<input type="text" th:field="*{userPassword}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('userPassword')}" th:text="${err}" class="alert alert-danger" >
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
-				<form:label path="userPasswordConfirmation">
+				<label th:for="${#ids.next('userPasswordConfirmation')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userPasswordConfirmation}">Password again</span>
-				</form:label>
-				<form:password path="userPasswordConfirmation" class="form-control"/><br/>
-				<form:errors path="userPasswordConfirmation" delimiter=", " element="div" class="alert alert-danger"/>
+				</label>
+				<input type="text" th:field="*{userPasswordConfirmation}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('userPasswordConfirmation')}" th:text="${err}" class="alert alert-danger" >
+					</div>
+				</div>
 			</div>
-			<form:hidden path="userEmail"/>
 			<button id="confirmRegistration" type="submit" class="btn btn-default">
 				<span th:utext="#{user.registerConfirmed.button}">Confirm Registration</span>
 			</button>
-		</form:form>
+		</form>
 	</div>
 
 </div>

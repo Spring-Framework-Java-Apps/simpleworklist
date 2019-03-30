@@ -13,121 +13,97 @@
 		<span th:utext="#{task.show.h1}">Edit Task</span>
 	</h1>
 
-<div>
-<form:form id="formId" commandName="task" method="post">
-	<form:hidden path="taskState" />
-	<form:hidden path="userAccount.id" />
-	<form:hidden path="createdTimestamp.time" />
- 	<div class="form-group">
-    	<form:label path="title">
-			<span th:utext="#{task.show.title}">Title</span>
-		</form:label>
-		<form:input path="title" class="form-control"/>
-		<form:errors path="title" delimiter=", " element="div" class="alert alert-danger"/>
-	</div>
-	<div class="form-group">
-		<form:label path="dueDate">
-			<span th:utext="#{task.show.dueDate}">Due Date</span>
-		</form:label>
-		<form:input id="taskDueDate" path="dueDate" class="form-control"/>
-		<form:errors path="dueDate" delimiter=", " element="div" class="alert alert-danger"/>
-	</div>
- 	<div class="form-group">
-		 <form:label path="text">
-			 <span th:utext="#{task.show.text}">Text</span>
-		 </form:label>
-		 <form:textarea path="text" rows="10" cols="50" class="form-control"/>
-		 <form:errors path="text" delimiter=", " element="div" class="alert alert-danger"/>
-    </div>
 	<div>
-	<span class="form-group">
-		<form:label path="taskEnergy">
-			<span th:utext="#{task.show.taskEnergy}">Energy</span>
-		</form:label>
-		<form:select  path="taskEnergy">
-			<c:forEach items="${listTaskEnergy}" var="taskEnergyItem">
-				<c:choose>
-					<c:when test="${taskEnergyItem.id == task.taskEnergy.id}">
-						<option value="${taskEnergyItem.value}" selected>
-							<span th:utext="#{taskEnergyItem.code}">taskEnergyItem.code</span>
-						</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${taskEnergyItem.value}">
-							<span th:utext="#{taskEnergyItem.code}">taskEnergyItem.code</span>
-						</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</form:select>
-		<form:errors path="taskEnergy" delimiter=", " element="div" class="alert alert-danger"/>
-	</span>&nbsp;
-	<span class="form-group">
-		<form:label path="taskTime">
-			<span th:utext="#{task.show.taskTime}">Time</span>
-		</form:label>
-		<form:select  path="taskTime">
-			<c:forEach items="${listTaskTime}" var="taskTimeItem">
-				<c:choose>
-					<c:when test="${taskTimeItem.id == task.taskTime.id}">
-						<option th:value="${taskTimeItem.value}" selected>
-							<span th:text="${#messages.msgOrNull(taskTimeItem.code)}">taskTimeItem.code</span>
-						</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${taskTimeItem.value}">
-							<span th:text="${#messages.msgOrNull(taskTimeItem.code)}">taskTimeItem.code</span>
-						</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</form:select>
-		<form:errors path="taskTime" delimiter=", " element="div" class="alert alert-danger"/>
-	</span>&nbsp;
-	<span class="form-group">
-		<form:hidden path="id"/>
-		<form:label path="context.id">
-			<span th:utext="#{task.show.context}">Area</span>
-		</form:label>
-		<form:select  path="context.id">
-			<c:forEach items="${contexts}" var="areaOption">
-				<c:choose>
-					<c:when test="${locale == 'de'}">
-						<c:set var="label" value="${areaOption.nameDe}"/>
-					</c:when>
-					<c:otherwise>
-						<c:set var="label" value="${areaOption.nameEn}"/>
-					</c:otherwise>
-				</c:choose>
-				<c:choose>
-					<c:when test="${areaOption.id == task.context.id}">
-						<option value="${areaOption.id}" selected>
-							<c:out value="${label}"/>
-						</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${areaOption.id}">
-							<c:out value="${label}"/>
-						</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</form:select>
-		<form:errors path="context.id" delimiter=", " element="div" class="alert alert-danger"/>
-	</span>
+		<form id="formId" th:action="@{/task/detail/{taskId}(taskId=${task.id})}" th:object="${task}" method="post">
+			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{taskState}" />
+			<input type="hidden" th:field="*{userAccount.id}" />
+			<input type="hidden" th:field="*{createdTimestamp.time}" />
+			<div class="form-group">
+				<label th:for="${#ids.next('title')}" class="control-label">
+					<span th:utext="#{task.show.title}">Title</span>
+				</label>
+				<input type="text" th:field="*{title}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('title')}" th:text="${err}" class="alert alert-danger" >
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label th:for="taskDueDate" class="control-label">
+					<span th:utext="#{task.show.dueDate}">Due Date</span>
+				</label>
+				<input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('dueDate')}" th:text="${err}" class="alert alert-danger">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label th:for="${#ids.next('text')}" class="control-label">
+					<span th:utext="#{task.show.dueDate}">Due Date</span>
+				</label>
+				<input type="textarea" rows="10" cols="50" th:field="*{text}" class="form-control" />
+				<div>
+					<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
+					</div>
+				</div>
+			</div>
+			<div>
+				<span class="form-group">
+					<label th:for="${#ids.next('taskEnergy')}" class="control-label">
+						<span th:utext="#{task.show.taskEnergy}">Energy</span>
+					</label>
+					<select th:field="*{taskEnergy}">
+						<option th:each="taskEnergyItem : ${listTaskEnergy}"
+								th:value="${taskEnergyItem.value}"
+								th:text="${#messages.msgOrNull(taskEnergyItem.code)}">Wireframe</option>
+					</select>
+					<div>
+						<div th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}" class="alert alert-danger">
+						</div>
+					</div>
+				</span>&nbsp;
+				<span class="form-group">
+					<label th:for="${#ids.next('taskTime')}" class="control-label">
+						<span th:utext="#{task.show.taskTime}">Time</span>
+					</label>
+					<select th:field="*{taskTime}">
+						<option th:each="taskTimeItem : ${listTaskTime}"
+								th:value="${taskTimeItem.value}"
+								th:text="${#messages.msgOrNull(taskTimeItem.code)}">Wireframe</option>
+					</select>
+					<div>
+						<div th:each="err : ${#fields.errors('taskTime')}" th:text="${err}" class="alert alert-danger">
+						</div>
+					</div>
+				</span>&nbsp;
+				<span class="form-group">
+					<label th:for="${#ids.next('context.id')}" class="control-label">
+						<span th:utext="#{task.show.context}">Area</span>
+					</label>
+					<select th:field="*{context.id}">
+						<option th:each="areaOption : ${contexts}"
+								th:value="${areaOption.id}"
+								th:text="${locale == 'de' ? areaOption.nameDe : areaOption.nameEn}">Wireframe</option>
+					</select>
+					<div>
+						<div th:each="err : ${#fields.errors('context.id')}" th:text="${err}" class="alert alert-danger">
+						</div>
+					</div>
+				</span>
+			</div>
+			<button id="editDataLeaf" type="submit" class="btn btn-default">
+				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+				<span th:utext="#{task.show.button}">Save Task</span>
+			</button>
+			&nbsp;&nbsp;&nbsp;
+			<a th:href="@{/task/transform/{id}(id=${task.id})}">
+				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+				<span th:utext="#{task.show.transform}">Transform into Project</span>
+			</a>
+		</form>
 	</div>
-	<button id="editDataLeaf" type="submit" class="btn btn-default">
-		<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-		<span th:utext="#{task.show.button}">Save Task</span>
-	</button>
-	&nbsp;&nbsp;&nbsp;
-	<a th:href="@{/task/transform/{id}(id=${task.id})}">
-		<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-		<span th:utext="#{task.show.transform}">Transform into Project</span>
-	</a>
-</form:form>
-</div>
-
 
 </div>
 </body>

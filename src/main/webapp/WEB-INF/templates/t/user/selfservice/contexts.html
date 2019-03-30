@@ -24,6 +24,7 @@
         </a>
         <br />
         <table class="table table-striped table-hover">
+            <thead>
             <tr>
                 <th>
                     <span th:utext="#{enum.language.en}">Englisch</span>
@@ -34,8 +35,9 @@
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
             </tr>
-            <c:forEach items="${contexts}" var="context">
-                <tr>
+            </thead>
+            <tbody>
+                <tr th:each="context : ${contexts}">
                     <td>
                         <span th:text="${context.nameEn}">context.nameEn</span>
                     </td>
@@ -53,43 +55,30 @@
                         </a>
                     </td>
                 </tr>
-            </c:forEach>
+            </tbody>
         </table>
     </div>
     <div>
-    <form:form id="formId" commandName="thisUser" method="post">
+    <form id="formId" th:action="@{/user/selfservice/contexts}" th:object="${thisUser}" method="post">
         <div class="form-group">
-            <form:hidden path="id"/>
-            <form:label path="defaultContext.id">
+            <label th:for="${#ids.next('defaultContext.id')}"  class="control-label">
                 <span th:utext="#{user.selfservice.context.default}">Default Area</span>
-            </form:label>
-            <form:select  path="defaultContext.id">
-                <c:forEach items="${contexts}" var="context">
-                    <c:choose>
-                        <c:when test="${locale == 'de'}">
-                            <c:set var="label" value="${context.nameDe}"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:set var="label" value="${context.nameEn}"/>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${context.id == thisUser.defaultContext.id}">
-                            <option value="${context.id}" selected><c:out value="${label}"/></option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${context.id}"><c:out value="${label}"/></option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </form:select>
-            <form:errors path="defaultContext.id" delimiter=", " element="div" class="alert alert-danger"/>
+            </label>
+            <select th:field="*{defaultContext.id}">
+                <option th:each="context : ${contexts}"
+                        th:value="${context.id}"
+                        th:text="${locale == 'de' ? context.nameDe : context.nameEn}">Wireframe</option>
+            </select>
+            <div>
+                <div th:each="err : ${#fields.errors('defaultContext.id')}" th:text="${err}" class="alert alert-danger" />
+            </div>
         </div>
+        <input type="hidden" th:field="*{id}" />
         <button id="saveLanguageButton" type="submit" class="btn btn-default">
             <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
             <span th:utext="#{user.selfservice.context.default.button}">Save Default Area</span>
         </button>
-    </form:form>
+    </form>
     </div>
     <br/>
     <a th:href="@{/user/selfservice}">

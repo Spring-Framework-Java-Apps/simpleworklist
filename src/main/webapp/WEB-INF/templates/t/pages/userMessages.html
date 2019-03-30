@@ -7,56 +7,54 @@
 <body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<!-- Document Window -->
-<h1>
-    <span th:utext="#{pages.userMessages.h1}">Your Dialog with</span>
-    <span th:text="${otherUser.userFullname}">otherUser.userFullname</span>
-</h1>
-<div class="row">
-<div class="well">
-<form:form id="formId" commandName="newUserMessage" method="post">
-    <div class="form-group">
-        <form:label path="messageText">
-            <span th:utext="#{pages.userMessages.newMessage}">New Message:</span>
-        </form:label>
-        <form:textarea path="messageText" rows="3" cols="50" class="form-control"/>
-        <form:errors path="messageText" delimiter=", " element="div" class="alert alert-danger"/>
+    <!-- Document Window -->
+    <h1>
+        <span th:utext="#{pages.userMessages.h1}">Your Dialog with</span>
+        <span th:text="${otherUser.userFullname}">otherUser.userFullname</span>
+    </h1>
+
+    <div class="row">
+        <div class="well">
+            <form id="formId" th:action="@{/user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUserMessage}" method="post">
+                <div class="form-group">
+                    <label th:for="${#ids.next('messageText')}" class="control-label">
+                        <span th:utext="#{pages.userMessages.newMessage}">New Message:</span>
+                    </label>
+                    <input type="textarea" rows="3" cols="50"  th:field="*{messageText}" class="form-control" />
+                    <div>
+                        <div th:each="err : ${#fields.errors('messageText')}" th:text="${err}" class="alert alert-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+            </div>
+            <button id="newUserMessageButton" type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                <span th:utext="#{pages.userMessages.newUserMessageButton}">Send Message</span>
+            </button>
+        </form>
+        </div>
     </div>
-    <form:button id="newUserMessageButton" type="submit" class="btn btn-default">
-        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-        <span th:utext="#{pages.userMessages.newUserMessageButton}">Send Message</span>
-    </form:button>
-</form:form>
-</div>
-<c:forEach var="m" items="${userMessageList}">
-<c:if test="${m.sender.id == otherUser.id}">
-<div class="alert alert-danger" role="alert" style="width: 66%; float:right">
-</c:if>
-<c:if test="${m.sender.id != otherUser.id}">
-<div class="alert alert-info" role="alert" style="width: 66%; float:left">
-</c:if>
-    <c:out value="${m.messageText}" />
-    <span style="float:right">
-    <small>
-    <span th:text="${#dates.format(m.createdTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
-    <c:if test="${m.readByReceiver}">
-        <span class="glyphicon glyphicon-ok" aria-hidden="true">
-    </c:if>
-    </small>
-    </span>
-</div>
-</c:forEach>
-</div>
-<div class="row">
-    <c:if test="${userMessageList.size() < 21}">
+
+    <div class="row">
+        <div th:each="m : ${userMessageList}">
+            <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
+                <span th:text="${m.messageText}" ></span>
+                <span style="float:right">
+                    <small>
+                        <span th:text="${#dates.format(m.createdTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
+                        <span th:if="${m.readByReceiver}" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </small>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" th:if="${userMessageList.size() lt 21}">
         <a th:href="@{/user/{id}/messages/all(id=${otherUser.id})}">
             <span th:utext="#{pages.userMessages.showAllText1}">Zeige alle Nachrichten</span>
         </a>
         <span th:utext="#{pages.userMessages.showAllText2}">(hier werden nur die letzten 20 Angezeigt)</span>
-    </c:if>
-</div>
-
-
+    </div>
 
 </div>
 </body>

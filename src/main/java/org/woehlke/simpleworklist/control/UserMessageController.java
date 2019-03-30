@@ -39,7 +39,7 @@ public class UserMessageController extends AbstractController {
         model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList",userMessageList);
         model.addAttribute("refreshMessages",true);
-        return "pages/userMessages";
+        return "t/pages/userMessages";
     }
 
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class UserMessageController extends AbstractController {
             List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(sender,receiver);
             model.addAttribute("otherUser",receiver);
             model.addAttribute("userMessageList",userMessageList);
-            return "pages/userMessages";
+            return "t/pages/userMessages";
         } else {
             userMessageService.sendNewUserMessage(sender,receiver,newUserMessage);
             return "redirect:/user/"+userId+"/messages/";
@@ -83,7 +83,7 @@ public class UserMessageController extends AbstractController {
         model.addAttribute("newUserMessage",newUserMessage);
         model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList",userMessageList);
-        return "pages/userMessages";
+        return "t/pages/userMessages";
     }
 
     @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.POST)
