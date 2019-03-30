@@ -8,16 +8,24 @@
 <div th:fragment="mytwcontent">
 
 <!-- Document Window -->
-<h1><spring:message code="pages.userMessages.h1" text="Your Dialog with" /> ${otherUser.userFullname}</h1>
+<h1>
+    <span th:utext="#{pages.userMessages.h1}">Your Dialog with</span>
+    <span th:text="${otherUser.userFullname}">otherUser.userFullname</span>
+</h1>
 <div class="row">
 <div class="well">
 <form:form id="formId" commandName="newUserMessage" method="post">
     <div class="form-group">
-        <form:label path="messageText"><spring:message code="pages.userMessages.newMessage" text="New Message:" /></form:label>
+        <form:label path="messageText">
+            <span th:utext="#{pages.userMessages.newMessage}">New Message:</span>
+        </form:label>
         <form:textarea path="messageText" rows="3" cols="50" class="form-control"/>
         <form:errors path="messageText" delimiter=", " element="div" class="alert alert-danger"/>
     </div>
-    <form:button id="newUserMessageButton" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <spring:message code="pages.userMessages.newUserMessageButton" text="Send Message" /></form:button>
+    <form:button id="newUserMessageButton" type="submit" class="btn btn-default">
+        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+        <span th:utext="#{pages.userMessages.newUserMessageButton}">Send Message</span>
+    </form:button>
 </form:form>
 </div>
 <c:forEach var="m" items="${userMessageList}">
@@ -30,8 +38,10 @@
     <c:out value="${m.messageText}" />
     <span style="float:right">
     <small>
-    <fmt:formatDate type="BOTH" timeZone="Europe/Berlin" value="${m.createdTimestamp}" />
-    <c:if test="${m.readByReceiver}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></c:if>
+    <span th:text="${#dates.format(m.createdTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
+    <c:if test="${m.readByReceiver}">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true">
+    </c:if>
     </small>
     </span>
 </div>
@@ -39,7 +49,10 @@
 </div>
 <div class="row">
     <c:if test="${userMessageList.size() < 21}">
-    <a href='<c:url value="/user/${otherUser.id}/messages/all"/>'><spring:message code="pages.userMessages.showAllText1" text="Zeige alle Nachrichten" /></a> <spring:message code="pages.userMessages.showAllText2" text="(hier werden nur die letzten 20 Angezeigt)" />
+        <a th:href="@{/user/{id}/messages/all(id=${otherUser.id})}">
+            <span th:utext="#{pages.userMessages.showAllText1}">Zeige alle Nachrichten</span>
+        </a>
+        <span th:utext="#{pages.userMessages.showAllText2}">(hier werden nur die letzten 20 Angezeigt)</span>
     </c:if>
 </div>
 

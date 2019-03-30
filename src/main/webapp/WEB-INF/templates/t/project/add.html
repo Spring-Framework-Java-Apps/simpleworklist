@@ -20,13 +20,17 @@
 		<form:errors path="name" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
 	<div class="form-group">
-		<form:label path="description" class="control-label"><spring:message code="project.add.description" text="Description" /></form:label>
+		<form:label path="description" class="control-label">
+			<span th:utext="#{project.add.description}">Description</span>
+		</form:label>
 		<form:input path="description" class="form-control" />
 		<form:errors path="description"  delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
 	<c:if test="${mustChooseArea}">
 		<div class="form-group">
-			<form:label path="context.id"><spring:message code="project.edit.context" text="Area" /></form:label>
+			<form:label path="context.id">
+				<span th:utext="#{project.edit.context}">Area</span>
+			</form:label>
 			<form:select  path="context.id">
 				<c:forEach items="${contexts}" var="areaOption">
 					<c:choose>
@@ -39,10 +43,14 @@
 					</c:choose>
 					<c:choose>
 						<c:when test="${areaOption.id == project.context.id}">
-							<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
+							<option value="${areaOption.id}" selected>
+								<c:out value="${label}"/>
+							</option>
 						</c:when>
 						<c:otherwise>
-							<option value="${areaOption.id}"><c:out value="${label}"/></option>
+							<option value="${areaOption.id}">
+								<c:out value="${label}"/>
+							</option>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -53,7 +61,10 @@
 	<c:if test="${! mustChooseArea}">
 		<form:hidden path="context.id"/>
 	</c:if>
-	<button id="createNewProject" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="project.add.button" text="Add Project" /></button>
+	<button id="createNewProject" type="submit" class="btn btn-default">
+		<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+		<span th:utext="#{project.add.button}">Add Project</span>
+	</button>
 </form:form>
 </div>
 <!-- Document Window End -->

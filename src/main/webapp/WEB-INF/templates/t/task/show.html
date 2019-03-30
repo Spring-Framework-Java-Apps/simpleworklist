@@ -19,31 +19,43 @@
 	<form:hidden path="userAccount.id" />
 	<form:hidden path="createdTimestamp.time" />
  	<div class="form-group">
-    	<form:label path="title"><spring:message code="task.show.title" text="Title" /></form:label>
+    	<form:label path="title">
+			<span th:utext="#{task.show.title}">Title</span>
+		</form:label>
 		<form:input path="title" class="form-control"/>
 		<form:errors path="title" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
 	<div class="form-group">
-		<form:label path="dueDate"><spring:message code="task.show.dueDate" text="Due Date" /></form:label>
+		<form:label path="dueDate">
+			<span th:utext="#{task.show.dueDate}">Due Date</span>
+		</form:label>
 		<form:input id="taskDueDate" path="dueDate" class="form-control"/>
 		<form:errors path="dueDate" delimiter=", " element="div" class="alert alert-danger"/>
 	</div>
  	<div class="form-group">
-		 <form:label path="text"><spring:message code="task.show.text" text="Text" /></form:label>
+		 <form:label path="text">
+			 <span th:utext="#{task.show.text}">Text</span>
+		 </form:label>
 		 <form:textarea path="text" rows="10" cols="50" class="form-control"/>
 		 <form:errors path="text" delimiter=", " element="div" class="alert alert-danger"/>
     </div>
 	<div>
 	<span class="form-group">
-		<form:label path="taskEnergy"><spring:message code="task.show.taskEnergy" text="Energy" /></form:label>
+		<form:label path="taskEnergy">
+			<span th:utext="#{task.show.taskEnergy}">Energy</span>
+		</form:label>
 		<form:select  path="taskEnergy">
 			<c:forEach items="${listTaskEnergy}" var="taskEnergyItem">
 				<c:choose>
 					<c:when test="${taskEnergyItem.id == task.taskEnergy.id}">
-						<option value="${taskEnergyItem.value}" selected><spring:message code="${taskEnergyItem.code}" /></option>
+						<option value="${taskEnergyItem.value}" selected>
+							<span th:utext="#{taskEnergyItem.code}">taskEnergyItem.code</span>
+						</option>
 					</c:when>
 					<c:otherwise>
-						<option value="${taskEnergyItem.value}"><spring:message code="${taskEnergyItem.code}" /></option>
+						<option value="${taskEnergyItem.value}">
+							<span th:utext="#{taskEnergyItem.code}">taskEnergyItem.code</span>
+						</option>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -51,15 +63,21 @@
 		<form:errors path="taskEnergy" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>&nbsp;
 	<span class="form-group">
-		<form:label path="taskTime"><spring:message code="task.show.taskTime" text="Time" /></form:label>
+		<form:label path="taskTime">
+			<span th:utext="#{task.show.taskTime}">Time</span>
+		</form:label>
 		<form:select  path="taskTime">
 			<c:forEach items="${listTaskTime}" var="taskTimeItem">
 				<c:choose>
 					<c:when test="${taskTimeItem.id == task.taskTime.id}">
-						<option value="${taskTimeItem.value}" selected><spring:message code="${taskTimeItem.code}" text="${taskTimeItem.value}" /></option>
+						<option th:value="${taskTimeItem.value}" selected>
+							<span th:text="${#messages.msgOrNull(taskTimeItem.code)}">taskTimeItem.code</span>
+						</option>
 					</c:when>
 					<c:otherwise>
-						<option value="${taskTimeItem.value}"><spring:message code="${taskTimeItem.code}" text="${taskTimeItem.value}" /></option>
+						<option value="${taskTimeItem.value}">
+							<span th:text="${#messages.msgOrNull(taskTimeItem.code)}">taskTimeItem.code</span>
+						</option>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -68,7 +86,9 @@
 	</span>&nbsp;
 	<span class="form-group">
 		<form:hidden path="id"/>
-		<form:label path="context.id"><spring:message code="task.show.context" text="Area" /></form:label>
+		<form:label path="context.id">
+			<span th:utext="#{task.show.context}">Area</span>
+		</form:label>
 		<form:select  path="context.id">
 			<c:forEach items="${contexts}" var="areaOption">
 				<c:choose>
@@ -81,10 +101,14 @@
 				</c:choose>
 				<c:choose>
 					<c:when test="${areaOption.id == task.context.id}">
-						<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
+						<option value="${areaOption.id}" selected>
+							<c:out value="${label}"/>
+						</option>
 					</c:when>
 					<c:otherwise>
-						<option value="${areaOption.id}"><c:out value="${label}"/></option>
+						<option value="${areaOption.id}">
+							<c:out value="${label}"/>
+						</option>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -92,8 +116,15 @@
 		<form:errors path="context.id" delimiter=", " element="div" class="alert alert-danger"/>
 	</span>
 	</div>
-	<button id="editDataLeaf" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <spring:message code="task.show.button" text="Save Task" /></button>
-	&nbsp;&nbsp;&nbsp;<a href="<c:url value="/task/transform/${task.id}"/>"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> <spring:message code="task.show.transform" text="Transform into Project" /></a>
+	<button id="editDataLeaf" type="submit" class="btn btn-default">
+		<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+		<span th:utext="#{task.show.button}">Save Task</span>
+	</button>
+	&nbsp;&nbsp;&nbsp;
+	<a th:href="@{/task/transform/{id}(id=${task.id})}">
+		<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+		<span th:utext="#{task.show.transform}">Transform into Project</span>
+	</a>
 </form:form>
 </div>
 

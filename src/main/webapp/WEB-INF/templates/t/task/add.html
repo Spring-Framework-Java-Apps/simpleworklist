@@ -71,12 +71,12 @@
 					<c:choose>
 						<c:when test="${taskTimeItem.id == task.taskTime.id}">
 							<option value="${taskTimeItem.value}" selected>
-								<spring:message code="${taskTimeItem.code}" text="${taskTimeItem.value}" />
+								<span th:utext="${#messages.msgOrNull(taskTimeItem.code)}">taskTimeItem.code</span>
 							</option>
 						</c:when>
 						<c:otherwise>
 							<option value="${taskTimeItem.value}">
-								<spring:message code="${taskTimeItem.code}" text="${taskTimeItem.value}" />
+								<span th:utext="${#messages.msgOrNull(taskTimeItem.code)}">taskTimeItem.code</span>
 							</option>
 						</c:otherwise>
 					</c:choose>

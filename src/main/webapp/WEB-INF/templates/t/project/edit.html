@@ -21,7 +21,7 @@
 	</div>
 	<div class="form-group">
 		<form:label path="description">
-			<spring:message code="project.edit.description" text="Description" />
+			<span th:utext="#{project.edit.description}">Description</span>
 		</form:label>
 		<form:input path="description" class="form-control" />
 		<form:errors path="description" delimiter=", " element="div" class="alert alert-danger"/>
@@ -29,7 +29,7 @@
 	<div class="form-group">
 		<form:hidden path="id"/>
 		<form:label path="context.id">
-			<spring:message code="project.edit.context" text="Area" />
+			<span th:utext="#{project.edit.context}">Area</span>
 		</form:label>
 		<form:select path="context.id">
 			<c:forEach items="${contexts}" var="areaOption">
@@ -43,10 +43,14 @@
 				</c:choose>
 				<c:choose>
 					<c:when test="${areaOption.id == project.context.id}">
-						<option value="${areaOption.id}" selected><c:out value="${label}"/></option>
+						<option value="${areaOption.id}" selected>
+							<c:out value="${label}"/>
+						</option>
 					</c:when>
 					<c:otherwise>
-						<option value="${areaOption.id}"><c:out value="${label}"/></option>
+						<option value="${areaOption.id}">
+							<c:out value="${label}"/>
+						</option>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -56,7 +60,7 @@
 	<form:hidden path="id"/>
 	<button id="saveEditedProject" type="submit" class="btn btn-default">
 		<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-		<spring:message code="project.edit.button" text="Save Project" />
+		<span th:utext="#{project.edit.button}">Save Project</span>
 	</button>
 </form:form>
 </div>

@@ -15,38 +15,38 @@
         <li>
             <span th:utext="#{user.selfservice.profile.userEmail}">User Email:</span>
             <strong>
-                <sec:authentication property="principal.username" />
+                <span sec:authentication="name"></span>
             </strong>
         </li>
         <li>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             <span th:utext="#{user.selfservice.profile.name}">Name:</span>
             <a th:href="@{/user/selfservice/name}">
                 <span th:text="${thisUser.userFullname}">thisUser.userFullname</span>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </a>
         </li>
         <li>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             <a th:href="@{/user/selfservice/password}">
                 <span th:utext="#{user.selfservice.profile.changePassword}">Change Password</span>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </a>
         </li>
         <li>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             <a th:href="@{/user/selfservice/contexts}">
                 <span th:utext="#{user.selfservice.profile.changeContexts}">Change Areas</span>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </a>
         </li>
         <li>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             <a th:href="@{/user/selfservice/language}">
                 <span th:utext="#{user.selfservice.profile.changeLanguage}">Set Default Language</span>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </a>
         </li>
         <li>
-            <a href="<c:url value="/tasks/all"/>">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            <a th:href="@{/tasks/all}">
                 <span th:utext="#{tasks.all.h1}">All Tasks</span>
-                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
             </a>
         </li>
     </ul>
@@ -86,10 +86,10 @@
                         <span th:text="#{user.userFullname}">user.userFullname</span>
                     </td>
                     <td>
-                        <fmt:formatDate value="${user.lastLoginTimestamp}" type="BOTH" timeZone="Europe/Berlin" />
+                        <span th:text="${#dates.format(user.lastLoginTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
                     </td>
                     <td>
-                        <fmt:formatDate value="${user.createdTimestamp}" type="BOTH" timeZone="Europe/Berlin" />
+                        <span th:text="${#dates.format(user.createdTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
                     </td>
                 </tr>
             </tbody>
