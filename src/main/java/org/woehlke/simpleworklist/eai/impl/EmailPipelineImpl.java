@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -34,14 +33,16 @@ public class EmailPipelineImpl implements EmailPipeline {
     @Autowired
     protected ApplicationProperties applicationProperties;
 
-    @Value("${org.woehlke.simpleworklist.registration.urlHost}")
-    private String urlHost;
+    //@Value("${org.woehlke.simpleworklist.registration.urlHost}")
+    //private String urlHost;
 
-    @Value("${org.woehlke.simpleworklist.registration.mailFrom}")
-    private String mailFrom;
+    //@Value("${org.woehlke.simpleworklist.registration.mailFrom}")
+    //private String mailFrom;
 
     @Override
     public void sendEmailToRegisterNewUser(UserRegistration o) {
+        String urlHost = applicationProperties.getRegistration().getUrlHost();
+        String mailFrom= applicationProperties.getRegistration().getMailFrom();
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
@@ -66,6 +67,8 @@ public class EmailPipelineImpl implements EmailPipeline {
 
     @Override
     public void sendEmailForPasswordReset(UserPasswordRecovery o) {
+        String urlHost = applicationProperties.getRegistration().getUrlHost();
+        String mailFrom= applicationProperties.getRegistration().getMailFrom();
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());

@@ -57,13 +57,29 @@ public class UserAccount {
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name="created_timestamp",nullable = false)
+    @Column(name="created_timestamp", nullable = false)
     private Date createdTimestamp;
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name="last_login_timestamp",nullable = false)
+    @Column(name="last_login_timestamp", nullable = false)
     private Date lastLoginTimestamp;
+
+    @NotNull
+    @Column(name="account_non_expired", nullable = false)
+    private Boolean accountNonExpired=true;
+
+    @NotNull
+    @Column(name="account_non_locked", nullable = false)
+    private Boolean accountNonLocked=true;
+
+    @NotNull
+    @Column(name="credentials_non_expired", nullable = false)
+    private Boolean credentialsNonExpired=true;
+
+    @NotNull
+    @Column(name="enabled", nullable = false)
+    private Boolean enabled=true;
 
     public Long getId() {
         return id;
@@ -127,6 +143,38 @@ public class UserAccount {
 
     public void setDefaultLanguage(Language defaultLanguage) {
         this.defaultLanguage = defaultLanguage;
+    }
+
+    public Boolean getAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(Boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public Boolean getAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(Boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public Boolean getCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

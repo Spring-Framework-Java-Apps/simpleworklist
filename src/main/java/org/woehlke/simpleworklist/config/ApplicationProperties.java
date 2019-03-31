@@ -21,6 +21,9 @@ public class ApplicationProperties {
     @Valid
     private Registration registration = new Registration();
 
+    @Valid
+    private User user = new User();
+
     @Validated
     public static class Mail {
 
@@ -36,9 +39,10 @@ public class ApplicationProperties {
         @NotNull
         private String password;
 
-        private static Smtp smtp = new Smtp();
+        @Valid
+        private Smtp smtp = new Smtp();
 
-        private static class Smtp {
+        public static class Smtp {
 
             @NotNull
             private Boolean auth;
@@ -189,6 +193,21 @@ public class ApplicationProperties {
         }
     }
 
+    @Validated
+    public static class User {
+
+        @NotNull
+        private Integer strengthBCryptPasswordEncoder;
+
+        public Integer getStrengthBCryptPasswordEncoder() {
+            return strengthBCryptPasswordEncoder;
+        }
+
+        public void setStrengthBCryptPasswordEncoder(Integer strengthBCryptPasswordEncoder) {
+            this.strengthBCryptPasswordEncoder = strengthBCryptPasswordEncoder;
+        }
+    }
+
     public Mail getMail() {
         return mail;
     }
@@ -211,5 +230,13 @@ public class ApplicationProperties {
 
     public void setRegistration(Registration registration) {
         this.registration = registration;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

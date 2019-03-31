@@ -14,17 +14,6 @@ public enum UserRegistrationStatus {
     REGISTRATION_CLICKED_IN_MAIL,
 
     @Enumerated
-    REGISTRATION_ACCOUNT_CREATED,
+    REGISTRATION_ACCOUNT_CREATED
 
-    @Enumerated
-    PASSWORD_RECOVERY_SAVED_EMAIL,
-
-    @Enumerated
-    PASSWORD_RECOVERY_SENT_EMAIL,
-
-    @Enumerated
-    PASSWORD_RECOVERY_CLICKED_IN_MAIL,
-
-    @Enumerated
-    PASSWORD_RECOVERY_STORED_CHANGED,
 }

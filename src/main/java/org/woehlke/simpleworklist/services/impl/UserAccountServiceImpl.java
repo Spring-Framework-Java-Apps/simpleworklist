@@ -31,13 +31,13 @@ import org.woehlke.simpleworklist.model.UserDetailsBean;
 import org.woehlke.simpleworklist.repository.ContextRepository;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
-@Service("twUserService")
+@Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserServiceImpl implements UserService {
+public class UserAccountServiceImpl implements UserAccountService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
     @Autowired
     private UserAccountRepository userAccountRepository;
@@ -69,6 +69,10 @@ public class UserServiceImpl implements UserService {
         Date now = new Date();
         u.setCreatedTimestamp(now);
         u.setLastLoginTimestamp(now);
+        u.setAccountNonExpired(true);
+        u.setAccountNonLocked(true);
+        u.setCredentialsNonExpired(true);
+        u.setEnabled(true);
         LOGGER.info("About to save " + u.toString());
         u = userAccountRepository.saveAndFlush(u);
         Context work = new Context("Arbeit","Work");
@@ -98,6 +102,7 @@ public class UserServiceImpl implements UserService {
         return new UserDetailsBean(account);
     }
 
+    @Override
     public String retrieveUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null) return " ";

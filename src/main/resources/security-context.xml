@@ -49,17 +49,13 @@
 				delete-cookies="JSESSIONID" />
   	</security:http>
 
-	<!-- https://www.dailycred.com/article/bcrypt-calculator -->
-	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-		<constructor-arg name="strength" value="10" />
-	</bean>
-
   	<security:authentication-manager alias="authenticationManager">
-    	<security:authentication-provider user-service-ref="twUserService">
+    	<security:authentication-provider user-service-ref="userAccountService">
               <security:password-encoder ref="encoder"/>
           </security:authentication-provider>
   	</security:authentication-manager>
-  	
+
+
   	<bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
   		<property name="authenticationManager" ref="authenticationManager"/>
   		<property name="filterProcessesUrl" value="/j_spring_security_check"/>

@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.RegisterFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
@@ -25,7 +25,7 @@ public class UserPasswordRecoveryController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryController.class);
 
     @Autowired
-    private UserService userService;
+    private UserAccountService userAccountService;
 
     @Autowired
     private UserPasswordRecoveryService userPasswordRecoveryService;
@@ -66,7 +66,7 @@ public class UserPasswordRecoveryController {
             LOGGER.info(registerFormBean.toString());
             LOGGER.info(result.toString());
             LOGGER.info(model.toString());
-            if (userService.findByUserEmail(registerFormBean.getEmail()) == null) {
+            if (userAccountService.findByUserEmail(registerFormBean.getEmail()) == null) {
                 String objectName = "registerFormBean";
                 String field = "email";
                 String defaultMessage = "This Email is not registered.";
@@ -93,7 +93,7 @@ public class UserPasswordRecoveryController {
         UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
         if (o != null) {
             userPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
-            UserAccount ua = userService.findByUserEmail(o.getEmail());
+            UserAccount ua = userAccountService.findByUserEmail(o.getEmail());
             UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
             userAccountFormBean.setUserEmail(o.getEmail());
             userAccountFormBean.setUserFullname(ua.getUserFullname());
@@ -122,7 +122,7 @@ public class UserPasswordRecoveryController {
         boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
-                userService.changeUsersPassword(userAccountFormBean);
+                userAccountService.changeUsersPassword(userAccountFormBean);
                 userPasswordRecoveryService.passwordRecoveryDone(o);
                 return "t/user/resetPasswordDone";
             } else {

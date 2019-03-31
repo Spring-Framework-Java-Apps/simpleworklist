@@ -1,10 +1,10 @@
-package org.woehlke.simpleworklist.application;
+package org.woehlke.simpleworklist.application.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
+import org.woehlke.simpleworklist.application.ContextStartedListener;
 import org.woehlke.simpleworklist.services.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by tw on 14.02.16.
  */
 @Component
-public class ApplicationStartUpListener implements
-        ApplicationListener<ContextStartedEvent>{
+public class ContextStartedListenerImpl implements ContextStartedListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationStartUpListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextStartedListenerImpl.class);
 
     @Autowired
     private SearchService searchService;
@@ -29,6 +28,5 @@ public class ApplicationStartUpListener implements
         searchService.resetSearchIndex();
         LOGGER.info("----------------------------------------------------");
     }
-
 
 }

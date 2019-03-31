@@ -39,7 +39,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
@@ -67,7 +67,7 @@ public class TaskController extends AbstractController {
             @PathVariable long taskId,
             @Valid Task task,
             BindingResult result, Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task persistentTask = taskService.findOne(taskId, userAccount);
         long projectId = 0;
         Project thisProject = null;
@@ -122,7 +122,7 @@ public class TaskController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result,
             Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
         task.setUserAccount(userAccount);
@@ -181,7 +181,7 @@ public class TaskController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Task task,
             BindingResult result, Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
@@ -233,7 +233,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/delete/{taskId}", method = RequestMethod.GET)
     public final String deleteTask(@PathVariable long taskId) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null){
             taskService.delete(task, userAccount);
@@ -243,7 +243,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
     public final String undeleteTask(@PathVariable long taskId) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
             taskService.undelete(task, userAccount);
@@ -256,7 +256,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/trash/empty", method = RequestMethod.GET)
     public final String emptyTrash(
             @ModelAttribute("userSession") UserSessionBean userSession,Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         taskService.emptyTrash(userAccount,context);
         return "redirect:/tasks/trash";
@@ -264,7 +264,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
     public final String moveTask(@PathVariable long taskId) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         long projectId = 0;
         if (task != null) {
@@ -278,7 +278,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/{taskId}/moveto/{projectId}", method = RequestMethod.GET)
     public final String moveTaskToAnotherProject(@PathVariable long taskId,
                                                  @PathVariable long projectId) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task!=null){
             Project project = projectService.findByProjectId(projectId, userAccount);
@@ -292,7 +292,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/transform/{taskId}", method = RequestMethod.GET)
     public final String transformTaskIntoProject(@PathVariable long taskId) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         long projectId = 0;
         if(task != null) {
@@ -317,7 +317,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/complete/{taskId}", method = RequestMethod.GET)
     public final String completeTask(@PathVariable long taskId, Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null){
             long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),userAccount);
@@ -329,7 +329,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/incomplete/{taskId}", method = RequestMethod.GET)
     public final String undoneTask(@PathVariable long taskId, Model model) {
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.incomplete(task, userAccount);
@@ -363,7 +363,7 @@ public class TaskController extends AbstractController {
     public final String setFocus(@PathVariable long taskId,
                                  @RequestParam(required=false) String back,
                                  Model model){
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.setFocus(task, userAccount);
@@ -399,7 +399,7 @@ public class TaskController extends AbstractController {
     public final String unsetFocus(@PathVariable long taskId,
                                    @RequestParam(required=false) String back,
                                    Model model){
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.unsetFocus(task, userAccount);
@@ -470,7 +470,7 @@ public class TaskController extends AbstractController {
             default:
                 break;
         }
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Page<Task> taskPage = taskService.findByUser(userAccount,request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -490,7 +490,7 @@ public class TaskController extends AbstractController {
             @PathVariable long sourceTaskId,
             @PathVariable long destinationTaskId,
             Model model){
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
         Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
         LOGGER.info("------------- changeTaskOrderId -------------");
@@ -514,7 +514,7 @@ public class TaskController extends AbstractController {
             @PathVariable long sourceTaskId,
             @PathVariable long destinationTaskId,
             Model model){
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
         Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
         LOGGER.info("--------- changeTaskOrderIdByProject  -------");

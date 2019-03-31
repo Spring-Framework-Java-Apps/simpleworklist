@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TestHelperService;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -32,7 +32,7 @@ public abstract class AbstractTest {
     protected MockMvc mockMvc;
 
     @Autowired
-    protected UserService userService;
+    protected UserAccountService userAccountService;
 
     @Autowired
     protected TestHelperService testHelperService;
@@ -57,7 +57,7 @@ public abstract class AbstractTest {
     }
 
     protected void makeActiveUser(String username) {
-        UserDetails ud = userService.loadUserByUsername(username);
+        UserDetails ud = userAccountService.loadUserByUsername(username);
         Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authRequest);
     }
@@ -73,9 +73,9 @@ public abstract class AbstractTest {
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(wac).build();
         for (UserAccount u : testUser) {
-            UserAccount a = userService.findByUserEmail(u.getUserEmail());
+            UserAccount a = userAccountService.findByUserEmail(u.getUserEmail());
             if (a == null) {
-                userService.saveAndFlush(u);
+                userAccountService.saveAndFlush(u);
             }
         }
     }

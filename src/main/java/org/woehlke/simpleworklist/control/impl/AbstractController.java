@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.control.impl;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +14,7 @@ import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.ContextService;
 import org.woehlke.simpleworklist.services.ProjectService;
 import org.woehlke.simpleworklist.services.UserMessageService;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -37,7 +36,7 @@ public abstract class AbstractController {
     protected ProjectService projectService;
 
     @Autowired
-    protected UserService userService;
+    protected UserAccountService userAccountService;
 
     @Autowired
     protected UserMessageService userMessageService;
@@ -48,7 +47,7 @@ public abstract class AbstractController {
     @ModelAttribute("allCategories")
     public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                 BindingResult result, Model model) {
-        UserAccount user = userService.retrieveCurrentUser();
+        UserAccount user = userAccountService.retrieveCurrentUser();
         if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
             return projectService.findAllProjectsByUserAccount(user);
         } else {
@@ -60,7 +59,7 @@ public abstract class AbstractController {
     @ModelAttribute("rootCategories")
     public final List<Project> getRootCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                  BindingResult result, Model model) {
-        UserAccount user = userService.retrieveCurrentUser();
+        UserAccount user = userAccountService.retrieveCurrentUser();
         if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
             return projectService.findRootProjectsByUserAccount(user);
         } else {
@@ -71,7 +70,7 @@ public abstract class AbstractController {
 
     @ModelAttribute("numberOfNewIncomingMessages")
     public final int getNumberOfNewIncomingMessages(){
-        UserAccount user = userService.retrieveCurrentUser();
+        UserAccount user = userAccountService.retrieveCurrentUser();
         return userMessageService.getNumberOfNewIncomingMessagesForUser(user);
     }
 
@@ -87,14 +86,14 @@ public abstract class AbstractController {
 
     @ModelAttribute("contexts")
     public final List<Context> getContexts(){
-        UserAccount user = userService.retrieveCurrentUser();
+        UserAccount user = userAccountService.retrieveCurrentUser();
         return contextService.getAllForUser(user);
     }
 
     @ModelAttribute("context")
     public final String getCurrentArea(@ModelAttribute("userSession") UserSessionBean userSession,
                                        BindingResult result, Locale locale, Model model){
-        UserAccount user = userService.retrieveCurrentUser();
+        UserAccount user = userAccountService.retrieveCurrentUser();
         String retVal = "All";
         if(locale.getLanguage().equalsIgnoreCase("de")){
             retVal = "Alle";

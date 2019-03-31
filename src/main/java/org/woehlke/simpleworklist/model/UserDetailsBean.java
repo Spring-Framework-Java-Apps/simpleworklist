@@ -15,11 +15,19 @@ public class UserDetailsBean implements UserDetails {
 
     private final String username;
     private final String password;
+    private final boolean accountNonExpired;
+    private final boolean accountNonLocked;
+    private final boolean credentialsNonExpired;
+    private final boolean enabled;
 
     public UserDetailsBean(UserAccount account) {
         super();
         this.username = account.getUserEmail();
         this.password = account.getUserPassword();
+        this.accountNonExpired = account.getAccountNonExpired();
+        this.accountNonLocked = account.getAccountNonLocked();
+        this.credentialsNonExpired = account.getCredentialsNonExpired();
+        this.enabled = account.getEnabled();
     }
 
     @Override
@@ -41,22 +49,22 @@ public class UserDetailsBean implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     @Override

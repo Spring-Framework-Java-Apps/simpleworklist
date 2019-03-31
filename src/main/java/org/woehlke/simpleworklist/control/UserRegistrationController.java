@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.model.RegisterFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.services.UserRegistrationService;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
@@ -24,7 +24,7 @@ public class UserRegistrationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationController.class);
 
     @Autowired
-    private UserService userService;
+    private UserAccountService userAccountService;
 
     @Autowired
     private UserRegistrationService userRegistrationService;
@@ -59,7 +59,7 @@ public class UserRegistrationController {
             return "t/user/registerForm";
         } else {
             userRegistrationService.registrationCheckIfResponseIsInTime(registerFormBean.getEmail());
-            if (userService.isEmailAvailable(registerFormBean.getEmail())) {
+            if (userAccountService.isEmailAvailable(registerFormBean.getEmail())) {
                 if (userRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(registerFormBean.getEmail())) {
                     String objectName = "registerFormBean";
                     String field = "email";
@@ -125,7 +125,7 @@ public class UserRegistrationController {
         if (o != null) {
             boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
             if (!result.hasErrors() && passwordsMatch) {
-                userService.createUser(userAccountFormBean);
+                userAccountService.createUser(userAccountFormBean);
                 userRegistrationService.registrationUserCreated(o);
                 return "t/user/registerDone";
             } else {

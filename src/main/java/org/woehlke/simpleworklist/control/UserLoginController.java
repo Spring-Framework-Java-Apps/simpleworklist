@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 import java.util.Locale;
 
@@ -29,7 +29,7 @@ public class UserLoginController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
 
     @Autowired
-    protected UserService userService;
+    protected UserAccountService userAccountService;
 
     /**
      * Login Formular. If User is not logged in, this page will be displayed for
@@ -57,10 +57,10 @@ public class UserLoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public final String loginPerform(@Valid LoginFormBean loginFormBean,
                                BindingResult result, Model model) {
-        boolean authorized = userService.authorize(loginFormBean);
+        boolean authorized = userAccountService.authorize(loginFormBean);
         if (!result.hasErrors() && authorized) {
-            UserAccount user = userService.retrieveCurrentUser();
-            userService.updateLastLoginTimestamp(user);
+            UserAccount user = userAccountService.retrieveCurrentUser();
+            userAccountService.updateLastLoginTimestamp(user);
             LOGGER.info("logged in");
             return "redirect:/";
         } else {

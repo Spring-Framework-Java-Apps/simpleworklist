@@ -27,8 +27,8 @@ public class UserMessageController extends AbstractController {
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         UserMessage newUserMessage = new UserMessage();
-        UserAccount receiver = userService.retrieveCurrentUser();
-        UserAccount sender = super.userService.findUserById(userId);
+        UserAccount receiver = userAccountService.retrieveCurrentUser();
+        UserAccount sender = super.userAccountService.findUserById(userId);
         List<UserMessage> userMessageList = userMessageService.getLast20MessagesBetweenCurrentAndOtherUser(receiver,sender);
         for(UserMessage userMessage:userMessageList){
             if((!userMessage.isReadByReceiver()) && (receiver.getId().longValue()==userMessage.getReceiver().getId().longValue())){
@@ -50,8 +50,8 @@ public class UserMessageController extends AbstractController {
             BindingResult result,
             @PathVariable long userId) {
         LOGGER.info("sendNewMessageToOtherUser");
-        UserAccount sender = userService.retrieveCurrentUser();
-        UserAccount receiver = super.userService.findUserById(userId);
+        UserAccount sender = userAccountService.retrieveCurrentUser();
+        UserAccount receiver = super.userAccountService.findUserById(userId);
         if(result.hasErrors()){
             /*
             for (ObjectError e : result.getAllErrors()) {
@@ -72,8 +72,8 @@ public class UserMessageController extends AbstractController {
     @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.GET)
     public final String getAllMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         UserMessage newUserMessage = new UserMessage();
-        UserAccount receiver = userService.retrieveCurrentUser();
-        UserAccount sender = super.userService.findUserById(userId);
+        UserAccount receiver = userAccountService.retrieveCurrentUser();
+        UserAccount sender = super.userAccountService.findUserById(userId);
         List<UserMessage> userMessageList = userMessageService.getAllMessagesBetweenCurrentAndOtherUser(receiver,sender);
         for(UserMessage userMessage:userMessageList){
             if((!userMessage.isReadByReceiver()) && (userMessage.getReceiver().getId() == receiver.getId())){

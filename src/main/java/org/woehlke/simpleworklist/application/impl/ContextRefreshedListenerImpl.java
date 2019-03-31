@@ -1,11 +1,11 @@
-package org.woehlke.simpleworklist.application;
+package org.woehlke.simpleworklist.application.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.woehlke.simpleworklist.application.ContextRefreshedListener;
 import org.woehlke.simpleworklist.services.SearchService;
 
 
@@ -13,9 +13,9 @@ import org.woehlke.simpleworklist.services.SearchService;
  * Created by tw on 14.02.16.
  */
 @Component
-public class ApplicationRefreshListener implements ApplicationListener<ContextRefreshedEvent> {
+public class ContextRefreshedListenerImpl implements ContextRefreshedListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationRefreshListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedListenerImpl.class);
 
     @Autowired
     private SearchService searchService;

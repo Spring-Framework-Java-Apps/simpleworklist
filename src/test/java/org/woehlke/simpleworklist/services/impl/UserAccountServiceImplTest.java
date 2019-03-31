@@ -15,10 +15,10 @@ import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.services.UserRegistrationService;
-import org.woehlke.simpleworklist.services.UserService;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 
-public class UserServiceImplTest extends AbstractTest {
+public class UserAccountServiceImplTest extends AbstractTest {
 
     @Autowired
     private UserRegistrationService registrationService;
@@ -27,7 +27,7 @@ public class UserServiceImplTest extends AbstractTest {
     private UserPasswordRecoveryService userPasswordRecoveryService;
 
     @Autowired
-    private UserService userService;
+    private UserAccountService userAccountService;
 
     @Value("${worklist.registration.mail.from}")
     private String email;
@@ -38,10 +38,10 @@ public class UserServiceImplTest extends AbstractTest {
         deleteAll();
         Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         Assert.assertNotNull(email);
-        Assert.assertTrue(userService.isEmailAvailable(email));
+        Assert.assertTrue(userAccountService.isEmailAvailable(email));
         registrationService.registrationSendEmailTo(email);
         Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
-        Assert.assertTrue(userService.isEmailAvailable(email));
+        Assert.assertTrue(userAccountService.isEmailAvailable(email));
         registrationService.registrationSendEmailTo(email);
         Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
@@ -62,15 +62,15 @@ public class UserServiceImplTest extends AbstractTest {
     public void testPasswordResetSendEmail() throws Exception {
         deleteAll();
         for(UserAccount userAccount:testUser){
-            userService.saveAndFlush(userAccount);
+            userAccountService.saveAndFlush(userAccount);
         }
         int zeroNumberOfAllRegistrations = 0;
         Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         Assert.assertNotNull(emails[0]);
-        Assert.assertFalse(userService.isEmailAvailable(emails[0]));
+        Assert.assertFalse(userAccountService.isEmailAvailable(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        Assert.assertFalse(userService.isEmailAvailable(emails[0]));
+        Assert.assertFalse(userAccountService.isEmailAvailable(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
@@ -91,13 +91,13 @@ public class UserServiceImplTest extends AbstractTest {
     public void testSaveAndFlush(){
         deleteAll();
         for(UserAccount userAccount:testUser){
-            userService.saveAndFlush(userAccount);
+            userAccountService.saveAndFlush(userAccount);
         }
         for(String email:emails){
-            UserAccount user = userService.findByUserEmail(email);
+            UserAccount user = userAccountService.findByUserEmail(email);
             Assert.assertTrue(user.getUserEmail().compareTo(email) == 0);
         }
-        for(UserAccount user:userService.findAll()){
+        for(UserAccount user: userAccountService.findAll()){
             Assert.assertNotNull(user.getId());
             Assert.assertNotNull(user.getUserEmail());
             Assert.assertNotNull(user.getUserPassword());
@@ -109,11 +109,11 @@ public class UserServiceImplTest extends AbstractTest {
     @Test
     public void testLoadUserByUsername(){
         for(String email:emails){
-            UserDetails userDetails = userService.loadUserByUsername(email);
+            UserDetails userDetails = userAccountService.loadUserByUsername(email);
             Assert.assertTrue(userDetails.getUsername().compareTo(email) == 0);
         }
         try {
-            UserDetails userDetails = userService.loadUserByUsername(username_email);
+            UserDetails userDetails = userAccountService.loadUserByUsername(username_email);
         } catch (UsernameNotFoundException e){
             Assert.assertNotNull(e.getMessage());
             Assert.assertTrue(username_email.compareTo(e.getMessage())==0);
@@ -125,17 +125,17 @@ public class UserServiceImplTest extends AbstractTest {
         LoginFormBean loginFormBean = new LoginFormBean();
         loginFormBean.setUserEmail(emails[0]);
         loginFormBean.setUserPassword(passwords[0]);
-        Assert.assertTrue(userService.authorize(loginFormBean));
+        Assert.assertTrue(userAccountService.authorize(loginFormBean));
         loginFormBean = new LoginFormBean();
         loginFormBean.setUserEmail(username_email);
         loginFormBean.setUserPassword(password);
-        Assert.assertFalse(userService.authorize(loginFormBean));
+        Assert.assertFalse(userAccountService.authorize(loginFormBean));
     }
 
     @Test
     public void testIsEmailAvailable() {
-        Assert.assertFalse(userService.isEmailAvailable(emails[0]));
-        Assert.assertTrue(userService.isEmailAvailable(username_email));
+        Assert.assertFalse(userAccountService.isEmailAvailable(emails[0]));
+        Assert.assertTrue(userAccountService.isEmailAvailable(username_email));
     }
 
     @Test
@@ -145,8 +145,8 @@ public class UserServiceImplTest extends AbstractTest {
         userAccount.setUserPassword(password);
         userAccount.setUserPasswordConfirmation(password);
         userAccount.setUserFullname(full_name);
-        userService.createUser(userAccount);
-        Assert.assertFalse(userService.isEmailAvailable(username_email));
+        userAccountService.createUser(userAccount);
+        Assert.assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
     @Test
@@ -156,19 +156,19 @@ public class UserServiceImplTest extends AbstractTest {
         userAccount.setUserPassword(password + "_NEU");
         userAccount.setUserPasswordConfirmation(password + "_NEU");
         userAccount.setUserFullname(fullnames[0]);
-        userService.changeUsersPassword(userAccount);
+        userAccountService.changeUsersPassword(userAccount);
     }
 
     @Test
     public void testRetrieveUsernameLoggedOut(){
-        String userName = userService.retrieveUsername();
+        String userName = userAccountService.retrieveUsername();
         Assert.assertTrue(userName.compareTo(" ")==0);
     }
 
     @Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
-        String userName = userService.retrieveUsername();
+        String userName = userAccountService.retrieveUsername();
         Assert.assertNotNull(userName);
         Assert.assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
@@ -176,13 +176,13 @@ public class UserServiceImplTest extends AbstractTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
-        userService.retrieveCurrentUser();
+        userAccountService.retrieveCurrentUser();
     }
 
     @Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
-        UserAccount userAccount = userService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountService.retrieveCurrentUser();
         Assert.assertNotNull(userAccount);
         Assert.assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
         SecurityContextHolder.clearContext();
