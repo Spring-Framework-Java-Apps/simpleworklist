@@ -5,26 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 import java.util.Properties;
 
 @Configuration
-@EnableJdbcHttpSession
 public class Config {
-
-    @Autowired
-    protected ApplicationProperties applicationProperties;
-
-
-    @Bean
-    public PasswordEncoder encoder(){
-        // @see https://www.dailycred.com/article/bcrypt-calculator
-        int strength = applicationProperties.getUser().getStrengthBCryptPasswordEncoder();
-        return new BCryptPasswordEncoder(strength);
-    }
 
     @Bean
     public JavaMailSender mailSender(){
@@ -53,4 +38,7 @@ public class Config {
         mailSender.setPassword(applicationProperties.getMail().getPassword());
         return mailSender;
     }
+
+    @Autowired
+    protected ApplicationProperties applicationProperties;
 }
