@@ -18,9 +18,11 @@
 	http://www.springframework.org/schema/integration/spring-integration.xsd
     http://www.springframework.org/schema/jee
     http://www.springframework.org/schema/jee/spring-jee.xsd">
-	
+
+
 	<context:property-placeholder location="classpath:/application.properties" />
-	
+	<!--
+
 	<jpa:repositories base-package="org.woehlke.simpleworklist" />
 
 	<jee:jndi-lookup jndi-name="java:jboss/datasources/ExampleDS" id="dataSource"
@@ -39,6 +41,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:component-scan base-package="org.woehlke.simpleworklist" />
 
+-->
 	<int:poller default="true" fixed-rate="500" />
 	<int:channel id="controlBusChannel" />
 	<int:control-bus id="controlBus" input-channel="controlBusChannel" />

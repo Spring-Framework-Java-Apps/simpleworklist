@@ -30,6 +30,7 @@
 		<mvc:resource-chain resource-cache="true"/>
 	</mvc:resources>
 
+	<!--
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 	  <property name="definitions">
 	    <list>
@@ -103,5 +104,6 @@
 			<property name="paramName" value="lang" />
 		</bean>
 	</mvc:interceptors>
+-->
 
 </beans>
