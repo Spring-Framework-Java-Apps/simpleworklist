@@ -14,7 +14,7 @@
 		<form id="formId" th:action="@{/register}" th:object="${registerFormBean}" method="post">
 			<div class="form-group">
 				<label th:for="${#ids.next('email')}" class="control-label">Email</label>
-				<input type="text" th:field="*{email}" class="form-control" />
+				<input type="email" th:field="*{email}" class="form-control" />
 				<div>
 					<div th:each="err : ${#fields.errors('email')}" th:text="${err}" class="alert alert-danger" >
 					</div>

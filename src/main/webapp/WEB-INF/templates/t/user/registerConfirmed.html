@@ -27,7 +27,7 @@
 				<label th:for="${#ids.next('userPassword')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userPassword}">Password</span>
 				</label>
-				<input type="text" th:field="*{userPassword}" class="form-control" />
+				<input type="password" th:field="*{userPassword}" class="form-control" />
 				<div>
 					<div th:each="err : ${#fields.errors('userPassword')}" th:text="${err}" class="alert alert-danger" >
 					</div>
@@ -37,7 +37,7 @@
 				<label th:for="${#ids.next('userPasswordConfirmation')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userPasswordConfirmation}">Password again</span>
 				</label>
-				<input type="text" th:field="*{userPasswordConfirmation}" class="form-control" />
+				<input type="password" th:field="*{userPasswordConfirmation}" class="form-control" />
 				<div>
 					<div th:each="err : ${#fields.errors('userPasswordConfirmation')}" th:text="${err}" class="alert alert-danger" >
 					</div>
