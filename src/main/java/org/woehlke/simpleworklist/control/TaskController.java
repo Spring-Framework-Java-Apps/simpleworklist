@@ -306,6 +306,7 @@ public class TaskController extends AbstractController {
             thisProject.setName(task.getTitle());
             thisProject.setDescription(task.getText());
             thisProject.setUuid(task.getUuid());
+            thisProject.setContext(task.getContext());
             thisProject = projectService.saveAndFlush(thisProject, userAccount);
             taskService.delete(task, userAccount);
             projectId = thisProject.getId();
