@@ -10,6 +10,7 @@
     <h1>
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;
         <span th:utext="#{user.selfservice.profile.h1}">User Profile</span>
+        <small><span sec:authentication="name"></span></small>
     </h1>
     <ul>
         <li>
@@ -76,14 +77,14 @@
                             <a th:href="@{/user/{id}/messages/(id=${user.id})}">
                                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                 <span th:utext="#{pages.users.messages}">Messages</span>
-                                <span class="badge" th:if="#{usersToNewMessages.get(user.id) gt 0}">
-                                    <span th:text="#{usersToNewMessages.get(user.id)}">Messages</span>
+                                <span class="badge" th:if="${usersToNewMessages.get(user.id) gt 0}">
+                                    <span th:text="${usersToNewMessages.get(user.id)}">Messages</span>
                                 </span>
                             </a>
                         </span>
                     </td>
                     <td>
-                        <span th:text="#{user.userFullname}">user.userFullname</span>
+                        <span th:text="${user.userFullname}">user.userFullname</span>
                     </td>
                     <td>
                         <span th:text="${#dates.format(user.lastLoginTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
