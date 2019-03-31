@@ -2,31 +2,30 @@ package org.woehlke.simpleworklist.application.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import org.woehlke.simpleworklist.application.ContextStartedListener;
 import org.woehlke.simpleworklist.services.SearchService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 14.02.16.
  */
 @Component
-public class ContextStartedListenerImpl implements ContextStartedListener {
+public class ContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextStartedListenerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedListener.class);
 
     @Autowired
     private SearchService searchService;
 
     @Override
-    public void onApplicationEvent(ContextStartedEvent event) {
+    public void onApplicationEvent(ContextRefreshedEvent event) {
         LOGGER.info("----------------------------------------------------");
-        LOGGER.info("onApplicationEvent and resetSearchIndex "+event.toString());
+        LOGGER.info("onApplicationEvent: "+event.toString());
         LOGGER.info("----------------------------------------------------");
         searchService.resetSearchIndex();
         LOGGER.info("----------------------------------------------------");
     }
-
 }

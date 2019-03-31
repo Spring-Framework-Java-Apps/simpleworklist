@@ -3,10 +3,10 @@ package org.woehlke.simpleworklist.application.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
-import org.woehlke.simpleworklist.application.LoginSuccessHandler;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
@@ -20,10 +20,10 @@ import java.util.Locale;
 /**
  * Created by tw on 19.02.16.
  */
-@Component("myLoginSuccessHandler")
-public class LoginSuccessHandlerImpl extends SavedRequestAwareAuthenticationSuccessHandler implements LoginSuccessHandler {
+@Component
+public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandlerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
     @Autowired
     protected UserAccountService userAccountService;

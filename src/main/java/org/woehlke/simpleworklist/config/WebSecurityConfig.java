@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.woehlke.simpleworklist.application.LoginSuccessHandler;
+import org.woehlke.simpleworklist.application.impl.LoginSuccessHandler;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
 @Configuration
@@ -70,16 +70,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userAccountService).passwordEncoder(encoder());
     }
 
-    private final LoginSuccessHandler loginSuccessHandler;
-
-    private final ApplicationProperties applicationProperties;
-
-    private final UserAccountService userAccountService;
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Autowired
-    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, ApplicationProperties applicationProperties, UserAccountService userAccountService) {
-        this.loginSuccessHandler = loginSuccessHandler;
-        this.applicationProperties = applicationProperties;
-        this.userAccountService = userAccountService;
-    }
+    private ApplicationProperties applicationProperties;
+
+    @Autowired
+    private UserAccountService userAccountService;
+
 }
