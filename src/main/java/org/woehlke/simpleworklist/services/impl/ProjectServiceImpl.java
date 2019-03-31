@@ -54,12 +54,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findByProjectId(long projectId, UserAccount user) {
-        Project p = projectRepository.findOne(projectId);
-        if( (p == null) || (p.getUserAccount().getId().longValue() != user.getId().longValue()) ){
-            return null;
-        } else {
-            return p;
+        if(projectRepository.existsById(projectId)){
+            Project p = projectRepository.getOne(projectId);
+            if(p.getUserAccount().getId().longValue() == user.getId().longValue()){
+                return p;
+            }
         }
+        return null;
     }
 
     @Override
@@ -80,7 +81,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Project thisProject, UserAccount user) {
-        if(thisProject.getUserAccount().getId().longValue() ==user.getId().longValue()){
+        if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue()){
             Project oldParent = thisProject.getParent();
             if (oldParent != null) {
                 oldParent.getChildren().remove(thisProject);

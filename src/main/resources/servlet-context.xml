@@ -57,30 +57,30 @@
 	</bean>
 	
 	<bean id="templateResolver"
-		  class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		  class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
 		<property name="prefix" value="/WEB-INF/templates/" />
 		<property name="suffix" value=".html" />
 		<property name="templateMode" value="HTML" />
 		<property name="cacheable" value="false" />
 	</bean>
-	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+	<bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 		<property name="additionalDialects">
 			<set>
-				<bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
+				<bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect"/>
 			</set>
 		</property>
 		<property name="messageResolvers">
 			<set>
 				<bean id="thymeleafMessageResolver" class="org.thymeleaf.messageresolver.StandardMessageResolver">
 				</bean>
-				<bean id="springMessageResolver" class="org.thymeleaf.spring4.messageresolver.SpringMessageResolver">
+				<bean id="springMessageResolver" class="org.thymeleaf.spring5.messageresolver.SpringMessageResolver">
 					<property name="messageSource" ref="messageSource" />
 				</bean>
 			</set>
 		</property>
 	</bean>
-	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="order" value="0" />
 		<property name="viewNames" value="t/*" />

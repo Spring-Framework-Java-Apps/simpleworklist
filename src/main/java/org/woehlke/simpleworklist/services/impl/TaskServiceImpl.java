@@ -49,12 +49,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task findOne(long dataId, UserAccount userAccount) {
-        Task t =  taskRepository.findOne(dataId);
-        if(t.getUserAccount().getId().longValue()==userAccount.getId().longValue()){
-            return t;
-        } else {
-            return null;
+        if(taskRepository.existsById(dataId)){
+            Task t =  taskRepository.getOne(dataId);
+            if(t.getUserAccount().getId().longValue()==userAccount.getId().longValue()){
+                return t;
+            }
         }
+        return null;
     }
 
     @Override

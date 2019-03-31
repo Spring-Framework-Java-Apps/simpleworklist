@@ -53,7 +53,7 @@ public class ContextServiceImpl implements ContextService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void updateContext(NewContextFormBean editContext, UserAccount user, long contextId) {
-        Context context = contextRepository.findOne(contextId);
+        Context context = contextRepository.getOne(contextId);
         if(context.getUserAccount().getId().longValue() == user.getId().longValue()){
             context.setNameEn(editContext.getNameEn());
             context.setNameDe(editContext.getNameDe());
@@ -66,8 +66,7 @@ public class ContextServiceImpl implements ContextService {
     public boolean delete(Context context) {
         long contextId = context.getId();
         contextRepository.delete(context);
-        Context contextFound = contextRepository.findOne(contextId);
-        return (contextFound == null);
+        return (!contextRepository.existsById(contextId));
     }
 
     @Override

@@ -18,17 +18,4 @@ public interface UserRegistrationService {
 
     void registrationUserCreated(UserRegistration o);
 
-/*
-    boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email);
-
-    void passwordRecoveryCheckIfResponseIsInTime(String email);
-
-    void passwordRecoverySendEmailTo(String email);
-
-    void passwordRecoverySentEmail(UserRegistration o);
-
-    void passwordRecoveryClickedInEmail(UserRegistration o);
-
-    void passwordRecoveryDone(UserRegistration o);
-*/
 }
