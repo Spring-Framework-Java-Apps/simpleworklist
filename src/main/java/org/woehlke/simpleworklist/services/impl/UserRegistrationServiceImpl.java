@@ -16,6 +16,7 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 import org.woehlke.simpleworklist.repository.UserRegistrationRepository;
@@ -27,11 +28,14 @@ import org.woehlke.simpleworklist.services.UserRegistrationService;
 public class UserRegistrationServiceImpl implements
         UserRegistrationService {
 
-    @Value("${org.woehlke.simpleworklist.registration.max.retries}")
-    private int maxRetries;
+    @Autowired
+    protected ApplicationProperties applicationProperties;
 
-    @Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
-    private long ttlEmailVerificationRequest;
+    //@Value("${org.woehlke.simpleworklist.registration.maxRetries}")
+    //private int maxRetries;
+
+    //@Value("${org.woehlke.simpleworklist.registration.ttlEmailVerificationRequest}")
+    //private long ttlEmailVerificationRequest;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationServiceImpl.class);
 
@@ -44,13 +48,10 @@ public class UserRegistrationServiceImpl implements
     @Autowired
     private TokenGeneratorService tokenGeneratorService;
 
-    //@Autowired
-    //private PollableChannel passwordResetEmailSenderChannel;
-
     @Override
     public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
-        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= maxRetries;
+        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= applicationProperties.getRegistration().getMaxRetries();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class UserRegistrationServiceImpl implements
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((ttlEmailVerificationRequest + earlierOptIn.getCreatedTimestamp().getTime()) < now.getTime()) {
+            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getCreatedTimestamp().getTime()) < now.getTime()) {
                 userRegistrationRepository.delete(earlierOptIn);
             }
         }

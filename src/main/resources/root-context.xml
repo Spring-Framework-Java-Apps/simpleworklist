@@ -5,7 +5,6 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:int="http://www.springframework.org/schema/integration"
-	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/tx 
@@ -15,16 +14,13 @@
 	http://www.springframework.org/schema/data/jpa
     http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 	http://www.springframework.org/schema/integration
-	http://www.springframework.org/schema/integration/spring-integration.xsd
-    http://www.springframework.org/schema/jee
-    http://www.springframework.org/schema/jee/spring-jee.xsd">
+	http://www.springframework.org/schema/integration/spring-integration.xsd">
 
 
 	<context:property-placeholder location="classpath:/application.properties" />
-	<!--
-
 	<jpa:repositories base-package="org.woehlke.simpleworklist" />
 
+	<!--
 	<jee:jndi-lookup jndi-name="java:jboss/datasources/ExampleDS" id="dataSource"
 					 expected-type="javax.sql.DataSource" />
 
@@ -32,8 +28,8 @@
 					 id="entityManager" expected-type="javax.persistence.EntityManager" />
 	<jee:jndi-lookup jndi-name="java:jboss/mySimpleWorkListEntityManagerFactory"
 					 id="entityManagerFactory" expected-type="javax.persistence.EntityManagerFactory" />
+	-->
 
--->
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
@@ -66,9 +62,9 @@
 	    <property name="javaMailProperties">
 	        <props>
 	            <prop key="mail.smtp.auth">${org.woehlke.simpleworklist.mail.smtp.auth}</prop>
-				<prop key="mail.smtp.ssl.enable">${org.woehlke.simpleworklist.mail.smtp.ssl.enable}</prop>
-				<prop key="mail.smtp.socketFactory.port">${org.woehlke.simpleworklist.mail.smtp.socketFactory.port}</prop>
-				<prop key="mail.smtp.socketFactory.class">${org.woehlke.simpleworklist.mail.smtp.socketFactory.class}</prop>
+				<prop key="mail.smtp.ssl.enable">${org.woehlke.simpleworklist.mail.smtp.sslEnable}</prop>
+				<prop key="mail.smtp.socketFactory.port">${org.woehlke.simpleworklist.mail.smtp.socketFactoryPort}</prop>
+				<prop key="mail.smtp.socketFactory.class">${org.woehlke.simpleworklist.mail.smtp.socketFactoryClass}</prop>
 	        </props>
 	    </property>
 	</bean>

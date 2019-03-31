@@ -53,7 +53,7 @@ public class ProjectController extends AbstractController {
         Project thisProject = null;
         Page<Task> taskPage = null;
         Pageable pageRequest =
-                new PageRequest(pageNumber - 1, pageSize, Sort.Direction.DESC, "orderIdProject");
+                new PageRequest(pageNumber - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdProject");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             if(userSession.getContextId() == null || userSession.getContextId() == 0) {
@@ -272,7 +272,7 @@ public class ProjectController extends AbstractController {
                     model.addAttribute("isDeleted",false);
                     List<Project> breadcrumb = projectService.getBreadcrumb(project, userAccount);
                     int pageNumber = 1;
-                    Pageable request = new PageRequest(pageNumber - 1, pageSize, Sort.Direction.ASC, "title");
+                    Pageable request = new PageRequest(pageNumber - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.ASC, "title");
                     Page<Task> dataLeafPage = taskService.findByProject(project, request, userAccount);
                     int current = dataLeafPage.getNumber() + 1;
                     int begin = Math.max(1, current - 5);

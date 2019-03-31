@@ -4,72 +4,74 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
+import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "uuid",
-                "parentId",
-                "userAccountId",
-                "contextId"
-        })
+@Table(
+    name="project",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "ux_project",
+            columnNames = {"uuid", "parent_id", "user_account_id", "context_id"}
+        )
+    }, indexes = {
+        @Index(name="ix_project_uuid", columnList = "uuid")
+    }
 )
 @Indexed
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "project_generator")
+    @SequenceGenerator(
+        name = "project_generator",
+        sequenceName = "project_sequence",
+        initialValue = 1000
+    )
     @DocumentId(name="id")
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "uuid", nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "parentId")
+    @JoinColumn(name = "parent_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project parent;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "userAccountId")
+    @JoinColumn(name = "user_account_id")
     @IndexedEmbedded(includeEmbeddedObjectId=true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserAccount userAccount;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "contextId")
+    @JoinColumn(name = "context_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    @SafeHtml(whitelistType=SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
-    @Column(nullable = false)
-    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @Column(name="name",nullable = false)
+    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String name;
 
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
+    @SafeHtml(whitelistType=SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=0,max=65535)
-    @Column(nullable = true, length = 65535, columnDefinition="text")
-    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @Column(name="description", nullable = true, length = 65535, columnDefinition="text")
+    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = { CascadeType.ALL })

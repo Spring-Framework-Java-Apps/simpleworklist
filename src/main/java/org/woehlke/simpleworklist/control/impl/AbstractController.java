@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -26,8 +27,11 @@ import java.util.Locale;
 @SessionAttributes("userSession")
 public abstract class AbstractController {
 
-    @Value("${org.woehlke.simpleworklist.mvc.controller.pageSize}")
-    protected int pageSize;
+    //@Value("${org.woehlke.simpleworklist.mvc.controllerPageSize}")
+    //protected int pageSize;
+
+    @Autowired
+    protected ApplicationProperties applicationProperties;
 
     @Autowired
     protected ProjectService projectService;

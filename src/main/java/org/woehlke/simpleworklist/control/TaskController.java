@@ -442,6 +442,7 @@ public class TaskController extends AbstractController {
         if(sortDir.compareTo("asc") == 0){
             sortDirection = Sort.Direction.ASC;
         }
+        int pageSize = applicationProperties.getMvc().getControllerPageSize();
         Pageable request = new PageRequest(page - 1, pageSize, sortDirection, "lastChangeTimestamp");
         switch (sort){
             case "title":

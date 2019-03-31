@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
+import javax.persistence.Index;
 
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.search.annotations.*;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -18,91 +20,115 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "uuid",
-                "userAccountId",
-                "contextId"
-        })
+@Table(
+    name="task",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name="ux_task",
+            columnNames = {"uuid", "context_id", "user_account_id"}
+        ),
+        @UniqueConstraint(
+            name="ux_task_order_id_project",
+            columnNames = {"order_id_project", "project_id", "context_id", "user_account_id"}
+        ),
+        @UniqueConstraint(
+            name="ux_task_order_id_task_state",
+            columnNames = {"order_id_task_state", "task_state", "context_id", "user_account_id"}
+        )
+    },
+    indexes = {
+        @Index(name="ix_task_uuid", columnList = "uuid"),
+        @Index(name="ix_task_title", columnList = "title")
+    }
 )
 @Indexed
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "task_generator")
+    @SequenceGenerator(
+            name = "task_generator",
+            sequenceName = "task_sequence",
+            initialValue = 1000
+    )
     @DocumentId(name="id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name="uuid", nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
     @ManyToOne(optional = true)
+    @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project project;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "contextId")
+    @JoinColumn(name = "context_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "userAccountId")
+    @JoinColumn(name = "user_account_id")
     @IndexedEmbedded(includeEmbeddedObjectId=true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserAccount userAccount;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
-    @Column(nullable = false)
-    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @Column(name = "title", nullable = false)
+    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String title;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=0,max=65535)
-    @Column(nullable = false, length = 65535, columnDefinition="text")
-    @Field(index= Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @Column(name = "description", nullable = false, length = 65535, columnDefinition="text")
+    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String text;
 
-    @Column(nullable = false)
+    @Column(name = "focus", nullable = false)
     private Boolean focus;
 
     /**
      * The current TaskState;
      */
-    @Column(nullable = false)
+    @Column(name = "task_state", nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskState taskState;
 
     /**
      * The TaskState before the current TaskState;
      */
+    @Column(name = "last_task_state", nullable = true)
     @Enumerated(EnumType.STRING)
     private TaskState lastTaskState;
 
-    @Column(nullable = false)
+    @Column(name = "task_energy", nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskEnergy taskEnergy;
 
-    @Column(nullable = false)
+    @Column(name = "task_time", nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskTime taskTime;
 
     @Temporal(value = TemporalType.DATE)
-    @Column(nullable = true)
+    @Column(name = "due_date", nullable = true)
     @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date dueDate;
 
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "created_timestamp",nullable = false)
     private Date createdTimestamp;
 
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "last_change_timestamp",nullable = false)
     private Date lastChangeTimestamp;
 
-    @Column(nullable = false)
+    @Column(name = "order_id_project",nullable = false)
     private long orderIdProject;
 
-    @Column(nullable = false)
+    @Column(name = "order_id_task_state",nullable = false)
     private long orderIdTaskState;
 
     @Transient

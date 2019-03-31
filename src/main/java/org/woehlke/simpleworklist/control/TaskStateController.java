@@ -41,7 +41,7 @@ public class TaskStateController extends AbstractController {
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId()==0){
             taskPage = taskStateService.getInbox(thisUser, request);
@@ -67,7 +67,7 @@ public class TaskStateController extends AbstractController {
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getToday(thisUser, request);
@@ -93,7 +93,7 @@ public class TaskStateController extends AbstractController {
                              BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getNext(thisUser, request);
@@ -119,7 +119,7 @@ public class TaskStateController extends AbstractController {
                                 BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getWaiting(thisUser, request);
@@ -145,7 +145,7 @@ public class TaskStateController extends AbstractController {
                                   BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getScheduled(thisUser, request);
@@ -171,7 +171,7 @@ public class TaskStateController extends AbstractController {
                                 BindingResult result,  Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getSomeday(thisUser, request);
@@ -197,7 +197,7 @@ public class TaskStateController extends AbstractController {
                                   BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getCompleted(thisUser, request);
@@ -223,7 +223,7 @@ public class TaskStateController extends AbstractController {
                               BindingResult result, Model model) {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
             taskPage = taskStateService.getTrash(thisUser, request);
@@ -361,7 +361,7 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Pageable request =
-                new PageRequest(page - 1, pageSize, Sort.Direction.DESC, "orderIdTaskState");
+                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = taskStateService.getFocus(context, thisUser, request);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);

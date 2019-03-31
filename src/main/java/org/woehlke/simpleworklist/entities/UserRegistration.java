@@ -4,40 +4,64 @@ import org.hibernate.validator.constraints.Email;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
 
 @Entity
 @Table(
-    uniqueConstraints = @UniqueConstraint(
-    columnNames = {
-        "email"
-    })
+    name="user_registration",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name="ux_user_registration_recovery",
+            columnNames = { "email" }
+        ),
+        @UniqueConstraint(
+            name="ux_user_registration_recovery_token",
+            columnNames = { "token" }
+        )
+    },
+    indexes = {
+        @Index(
+            name = "ix_user_registration_created_timestamp",
+            columnList = "created_timestamp"
+        )
+    }
 )
 public class UserRegistration {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "user_registration_generator")
+    @SequenceGenerator(
+        name = "user_registration_generator",
+        sequenceName = "user_registration_sequence",
+        initialValue = 1000
+    )
     private Long id;
 
+    @NotNull
     @Email
-    @Column(nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @NotNull
+    @Column(name = "token", nullable = false, unique = true)
     private String token;
 
+    @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "created_timestamp", nullable = false)
     private Date createdTimestamp = new Date();
 
-    @Column(nullable = false)
+    @NotNull
+    @Column(name = "double_optin_status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private UserRegistrationStatus doubleOptInStatus;
 
-    @Column
-    private int numberOfRetries = 0;
+    @NotNull
+    @Column(name = "number_of_retries")
+    private Integer numberOfRetries = 0;
 
     @Transient
     public void increaseNumberOfRetries() {
@@ -84,11 +108,11 @@ public class UserRegistration {
         this.createdTimestamp = createdTimestamp;
     }
 
-    public int getNumberOfRetries() {
+    public Integer getNumberOfRetries() {
         return numberOfRetries;
     }
 
-    public void setNumberOfRetries(int numberOfRetries) {
+    public void setNumberOfRetries(Integer numberOfRetries) {
         this.numberOfRetries = numberOfRetries;
     }
 

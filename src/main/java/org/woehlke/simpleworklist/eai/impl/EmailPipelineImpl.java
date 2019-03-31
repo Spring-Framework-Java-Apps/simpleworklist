@@ -9,6 +9,7 @@ import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.UserRegistration;
@@ -30,10 +31,13 @@ public class EmailPipelineImpl implements EmailPipeline {
     @Autowired
     private UserPasswordRecoveryService userPasswordRecoveryService;
 
-    @Value("${org.woehlke.simpleworklist.registration.url.host}")
+    @Autowired
+    protected ApplicationProperties applicationProperties;
+
+    @Value("${org.woehlke.simpleworklist.registration.urlHost}")
     private String urlHost;
 
-    @Value("${org.woehlke.simpleworklist.registration.mail.from}")
+    @Value("${org.woehlke.simpleworklist.registration.mailFrom}")
     private String mailFrom;
 
     @Override

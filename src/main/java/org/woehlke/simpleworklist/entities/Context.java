@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
+import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -13,40 +14,49 @@ import java.util.UUID;
  * Created by tw on 13.03.16.
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "uuid",
-                "userAccountId",
-                "nameEn",
-                "nameDe"
-        })
+@Table(
+    name="context",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name="ux_context",
+            columnNames = {"uuid", "user_account_id", "name_de", "name_en" }
+        )
+    },
+    indexes={
+        @Index(name="ix_context_uuid", columnList = "uuid")
+    }
 )
 public class Context {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "context_generator")
+    @SequenceGenerator(
+            name = "context_generator",
+            sequenceName = "context_sequence",
+            initialValue = 1000
+    )
     @DocumentId(name = "id")
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(name="uuid", nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "userAccountId")
+    @JoinColumn(name = "user_account_id")
     @IndexedEmbedded(includeEmbeddedObjectId = true)
     private UserAccount userAccount;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
-    @Column(nullable = false)
+    @Column(name = "name_de", nullable = false)
     private String nameDe;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
-    @Column(nullable = false)
+    @Column(name = "name_en", nullable = false)
     private String nameEn;
 
     public Context() {

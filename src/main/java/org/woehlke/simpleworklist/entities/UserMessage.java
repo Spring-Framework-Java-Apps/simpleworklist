@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,37 +13,55 @@ import java.util.UUID;
  * Created by Fert on 16.02.2016.
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "createdTimestamp", "sender_id", "receiver_id"
-        })
+@Table(
+    name="user_message",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name="ux_user_message",
+            columnNames = {"created_timestamp", "user_account_id_sender", "user_account_id_receiver"}
+        )
+    },
+    indexes = {
+        @Index(name="ix_user_message_uuid",columnList = "uuid")
+    }
 )
 public class UserMessage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "user_message_generator")
+    @SequenceGenerator(
+        name = "user_message_generator",
+        sequenceName = "user_message_sequence",
+        initialValue = 1000
+    )
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name="uuid", nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=1,max=65535)
-    @Column(nullable = false, length = 65535, columnDefinition="text")
+    @Column(name="message_text", nullable = false, length = 65535, columnDefinition="text")
     private String messageText;
 
-    @Column(columnDefinition = "boolean default false")
-    private boolean readByReceiver;
+    @NotNull
+    @Column(name="read_by_receiver", columnDefinition = "boolean default false")
+    private Boolean readByReceiver;
 
+    @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name="created_timestamp", nullable = false)
     private Date createdTimestamp = new Date();
 
+    @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_account_id_sender", nullable = false)
     private UserAccount sender;
 
+    @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_account_id_receiver", nullable = false)
     private UserAccount receiver;
 
     public Long getId() {

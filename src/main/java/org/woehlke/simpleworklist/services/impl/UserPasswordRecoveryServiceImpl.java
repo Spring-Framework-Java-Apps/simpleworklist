@@ -10,6 +10,7 @@ import org.springframework.messaging.PollableChannel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.repository.UserPasswordRecoveryRepository;
@@ -25,11 +26,14 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Autowired
     private UserPasswordRecoveryRepository userPasswordRecoveryRepository;
 
-    @Value("${org.woehlke.simpleworklist.registration.max.retries}")
-    private int maxRetries;
+    @Autowired
+    protected ApplicationProperties applicationProperties;
 
-    @Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
-    private long ttlEmailVerificationRequest;
+    //@Value("${org.woehlke.simpleworklist.registration.maxRetries}")
+    //private int maxRetries;
+
+    //@Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
+    //private long ttlEmailVerificationRequest;
 
     @Autowired
     private PollableChannel passwordResetEmailSenderChannel;
@@ -47,7 +51,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Override
     public boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email) {
         UserPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
-        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= maxRetries;
+        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= applicationProperties.getRegistration().getMaxRetries();
     }
 
     @Override
@@ -55,7 +59,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         UserPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((ttlEmailVerificationRequest + earlierOptIn.getCreatedTimestamp().getTime()) < now.getTime()) {
+            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getCreatedTimestamp().getTime()) < now.getTime()) {
                 userPasswordRecoveryRepository.delete(earlierOptIn);
             }
         }

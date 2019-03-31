@@ -8,48 +8,61 @@ import org.woehlke.simpleworklist.entities.enumerations.Language;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {
-                "userEmail"
-        })
+@Table(
+    name="user_account",
+    uniqueConstraints = {
+        @UniqueConstraint(name="ux_user_account", columnNames = {"user_email"})
+    },
+    indexes = {
+        @Index(name="ix_user_account_user_fullname",columnList = "user_fullname"),
+        @Index(name="ix_user_account_created_timestamp",columnList = "created_timestamp"),
+        @Index(name="ix_user_account_last_login_timestamp",columnList = "last_login_timestamp")
+    }
 )
 public class UserAccount {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "user_account_generator")
+    @SequenceGenerator(
+        name = "user_account_generator",
+        sequenceName = "user_account_sequence",
+        initialValue = 1000
+    )
     private Long id;
 
     @Email
-    @Column(nullable = false, unique = true)
+    @Column(name="user_email", nullable = false, unique = true)
     @Field
     private String userEmail;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
-    @Column(nullable = false)
+    @Column(name="user_password", nullable = false)
     private String userPassword;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
-    @Column(nullable = false)
+    @Column(name="user_fullname", nullable = false)
     private String userFullname;
 
-    @Column(nullable = false)
+    @Column(name="default_language", nullable = false)
     @Enumerated(EnumType.STRING)
     private Language defaultLanguage;
 
     @ManyToOne
+    @JoinColumn(name = "default_context_id")
     private Context defaultContext;
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name="created_timestamp",nullable = false)
     private Date createdTimestamp;
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name="last_login_timestamp",nullable = false)
     private Date lastLoginTimestamp;
 
     public Long getId() {
