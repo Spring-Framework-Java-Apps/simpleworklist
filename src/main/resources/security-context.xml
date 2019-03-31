@@ -55,7 +55,7 @@
 	</bean>
 
   	<security:authentication-manager alias="authenticationManager">
-    	<security:authentication-provider user-service-ref="userService">
+    	<security:authentication-provider user-service-ref="twUserService">
               <security:password-encoder ref="encoder"/>
           </security:authentication-provider>
   	</security:authentication-manager>

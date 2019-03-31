@@ -33,7 +33,7 @@ import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.repository.UserMessageRepository;
 import org.woehlke.simpleworklist.services.UserService;
 
-@Service("userService")
+@Service("twUserService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserServiceImpl implements UserService {
 

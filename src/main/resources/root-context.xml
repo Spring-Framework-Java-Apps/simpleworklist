@@ -33,6 +33,7 @@
 	<jee:jndi-lookup jndi-name="java:jboss/mySimpleWorkListEntityManagerFactory"
 					 id="entityManagerFactory" expected-type="javax.persistence.EntityManagerFactory" />
 
+-->
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
@@ -41,7 +42,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:component-scan base-package="org.woehlke.simpleworklist" />
 
--->
+
 	<int:poller default="true" fixed-rate="500" />
 	<int:channel id="controlBusChannel" />
 	<int:control-bus id="controlBus" input-channel="controlBusChannel" />
