@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.impl;
+package org.woehlke.simpleworklist.application;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
     @Autowired
-    protected UserAccountService userAccountService;
+    private UserAccountService userAccountService;
 
     @Autowired
     private LocaleResolver localeResolver;
@@ -46,5 +46,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         }
         localeResolver.setLocale(request,response,locale);
         LOGGER.info("successful logged in "+user.getUserEmail());
+    }
+
+    public UserAccountService getUserAccountService() {
+        return userAccountService;
     }
 }

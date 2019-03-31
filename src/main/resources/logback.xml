@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.woehlke.simpleworklist.repository.impl" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.services.impl" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.eai.impl" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.repository" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.services" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.eai" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.control" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.application.impl" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.application" level="DEBUG" />
     <logger name="org.apache.http" level="INFO" />
     <logger name="org.apache.tomcat" level="INFO" />
     <logger name="org.springframework.boot" level="WARN" />

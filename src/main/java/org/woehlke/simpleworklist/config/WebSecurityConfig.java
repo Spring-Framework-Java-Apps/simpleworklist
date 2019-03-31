@@ -11,8 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.woehlke.simpleworklist.application.impl.LoginSuccessHandler;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.application.LoginSuccessHandler;
 
 @Configuration
 @EnableSpringDataWebSupport
@@ -67,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userAccountService).passwordEncoder(encoder());
+        auth.userDetailsService(loginSuccessHandler.getUserAccountService()).passwordEncoder(encoder());
     }
 
     @Autowired
@@ -75,8 +74,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private ApplicationProperties applicationProperties;
-
-    @Autowired
-    private UserAccountService userAccountService;
 
 }

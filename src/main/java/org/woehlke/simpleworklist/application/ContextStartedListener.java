@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.impl;
+package org.woehlke.simpleworklist.application;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
