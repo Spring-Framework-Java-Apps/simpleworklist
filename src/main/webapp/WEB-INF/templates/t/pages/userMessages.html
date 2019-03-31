@@ -20,7 +20,7 @@
                     <label th:for="${#ids.next('messageText')}" class="control-label">
                         <span th:utext="#{pages.userMessages.newMessage}">New Message:</span>
                     </label>
-                    <input type="textarea" rows="3" cols="50"  th:field="*{messageText}" class="form-control" />
+                    <textarea rows="3" cols="50"  th:field="*{messageText}" class="form-control" />
                     <div>
                         <div th:each="err : ${#fields.errors('messageText')}" th:text="${err}" class="alert alert-danger" />
                     </div>
