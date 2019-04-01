@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TestService;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.services.UserAccountAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,11 +18,11 @@ public class TestController {
     private TestService testService;
 
     @Autowired
-    private UserAccountService userAccountService;
+    private UserAccountAccessService userAccountAccessService;
 
     @RequestMapping(value = "/test/helper/project/createTree", method = RequestMethod.GET)
     public final String createTestCategoryTree() {
-        UserAccount user = userAccountService.retrieveCurrentUser();
+        UserAccount user = userAccountAccessService.retrieveCurrentUser();
         Assert.notNull(user);
         testService.createTestCategoryTreeForUserAccount(user);
         return "redirect:/";

@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.services.UserAccountAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
     @Autowired
-    private UserAccountService userAccountService;
+    private UserAccountAccessService userAccountAccessService;
 
     @Autowired
     private LocaleResolver localeResolver;
@@ -37,8 +37,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
         super.onAuthenticationSuccess(request, response, authentication);
-        UserAccount user = userAccountService.retrieveCurrentUser();
-        userAccountService.updateLastLoginTimestamp(user);
+        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        userAccountAccessService.updateLastLoginTimestamp(user);
         Locale locale;
         switch(user.getDefaultLanguage()){
             case DE: locale = Locale.GERMAN; break;

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Assert;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,9 +12,7 @@ import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
-import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.services.UserRegistrationService;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.services.*;
 
 
 public class UserAccountServiceImplTest extends AbstractTest {
@@ -26,16 +23,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
     @Autowired
     private UserPasswordRecoveryService userPasswordRecoveryService;
 
-    @Autowired
-    private UserAccountService userAccountService;
-
-    @Value("${worklist.registration.mail.from}")
-    private String email;
-
     @Test
     public void testStartSecondOptIn() throws Exception {
         int zeroNumberOfAllRegistrations = 0;
         deleteAll();
+        String email = applicationProperties.getRegistration().getMailFrom();
         Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         Assert.assertNotNull(email);
         Assert.assertTrue(userAccountService.isEmailAvailable(email));
@@ -109,11 +101,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
     @Test
     public void testLoadUserByUsername(){
         for(String email:emails){
-            UserDetails userDetails = userAccountService.loadUserByUsername(email);
+            UserDetails userDetails = userAccountSecurityService.loadUserByUsername(email);
             Assert.assertTrue(userDetails.getUsername().compareTo(email) == 0);
         }
         try {
-            UserDetails userDetails = userAccountService.loadUserByUsername(username_email);
+            UserDetails userDetails = userAccountSecurityService.loadUserByUsername(username_email);
         } catch (UsernameNotFoundException e){
             Assert.assertNotNull(e.getMessage());
             Assert.assertTrue(username_email.compareTo(e.getMessage())==0);

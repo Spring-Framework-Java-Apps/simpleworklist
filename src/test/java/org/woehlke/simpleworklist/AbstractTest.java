@@ -13,8 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.services.TestHelperService;
+import org.woehlke.simpleworklist.services.UserAccountAccessService;
+import org.woehlke.simpleworklist.services.UserAccountSecurityService;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
 
@@ -23,7 +26,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/test-context.xml")
+@ContextConfiguration(classes={SimpleworklistApplication.class})
 public abstract class AbstractTest {
 
     @Autowired
@@ -32,10 +35,19 @@ public abstract class AbstractTest {
     protected MockMvc mockMvc;
 
     @Autowired
-    protected UserAccountService userAccountService;
+    protected ApplicationProperties applicationProperties;
 
     @Autowired
     protected TestHelperService testHelperService;
+
+    @Autowired
+    protected UserAccountService userAccountService;
+
+    @Autowired
+    protected UserAccountSecurityService userAccountSecurityService;
+
+    @Autowired
+    private UserAccountAccessService userAccountAccessService;
 
     protected static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};
     protected static String passwords[] = {"test01pwd", "test02pwd", "test03pwd"};
@@ -57,7 +69,7 @@ public abstract class AbstractTest {
     }
 
     protected void makeActiveUser(String username) {
-        UserDetails ud = userAccountService.loadUserByUsername(username);
+        UserDetails ud = userAccountSecurityService.loadUserByUsername(username);
         Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authRequest);
     }
