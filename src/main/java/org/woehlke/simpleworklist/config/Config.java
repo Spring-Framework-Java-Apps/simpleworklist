@@ -1,12 +1,13 @@
 package org.woehlke.simpleworklist.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
 import java.util.Properties;
 
 @Configuration
@@ -14,6 +15,13 @@ import java.util.Properties;
         "org.woehlke.simpleworklist.repository"
 })
 public class Config {
+
+    @Bean
+    public MessageSource messageSource(){
+        ResourceBundleMessageSource x =  new  ResourceBundleMessageSource();
+        x.setBasename("messages");
+        return x;
+    }
 
     @Bean
     public JavaMailSender mailSender(){
