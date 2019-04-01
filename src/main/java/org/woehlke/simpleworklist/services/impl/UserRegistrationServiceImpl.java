@@ -14,12 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 import org.woehlke.simpleworklist.repository.UserRegistrationRepository;
 import org.woehlke.simpleworklist.services.TokenGeneratorService;
-import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.services.UserRegistrationService;
 
 @Service
@@ -33,17 +31,14 @@ public class UserRegistrationServiceImpl implements
 
     private final UserRegistrationRepository userRegistrationRepository;
 
-    private final EmailPipeline emailPipeline;
-
     private final TokenGeneratorService tokenGeneratorService;
 
     private final JavaMailSender mailSender;
 
     @Autowired
-    public UserRegistrationServiceImpl(ApplicationProperties applicationProperties, UserRegistrationRepository userRegistrationRepository, EmailPipeline emailPipeline, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
+    public UserRegistrationServiceImpl(ApplicationProperties applicationProperties, UserRegistrationRepository userRegistrationRepository, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
         this.applicationProperties = applicationProperties;
         this.userRegistrationRepository = userRegistrationRepository;
-        this.emailPipeline = emailPipeline;
         this.tokenGeneratorService = tokenGeneratorService;
         this.mailSender = mailSender;
     }
