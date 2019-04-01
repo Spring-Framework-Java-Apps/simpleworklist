@@ -10,6 +10,7 @@ import org.woehlke.simpleworklist.services.TestService;
 import org.woehlke.simpleworklist.services.UserAccountAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.services.UserAccountLoginSuccessService;
 
 @Controller
 public class TestController {
@@ -18,15 +19,18 @@ public class TestController {
 
     private final UserAccountAccessService userAccountAccessService;
 
+    private final UserAccountLoginSuccessService userAccountLoginSuccessService;
+
     @Autowired
-    public TestController(TestService testService, UserAccountAccessService userAccountAccessService) {
+    public TestController(TestService testService, UserAccountAccessService userAccountAccessService, UserAccountLoginSuccessService userAccountLoginSuccessService) {
         this.testService = testService;
         this.userAccountAccessService = userAccountAccessService;
+        this.userAccountLoginSuccessService = userAccountLoginSuccessService;
     }
 
     @RequestMapping(value = "/test/helper/project/createTree", method = RequestMethod.GET)
     public String createTestCategoryTree() {
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         Assert.notNull(user);
         testService.createTestCategoryTreeForUserAccount(user);
         return "redirect:/";
