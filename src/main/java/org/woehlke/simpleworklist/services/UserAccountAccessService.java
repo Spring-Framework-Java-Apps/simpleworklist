@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.services;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
 
 public interface UserAccountAccessService {
@@ -15,4 +16,6 @@ public interface UserAccountAccessService {
     String retrieveUsername();
 
     UserAccount retrieveCurrentUser() throws UsernameNotFoundException;
+
+    boolean authorize(LoginFormBean loginFormBean);
 }

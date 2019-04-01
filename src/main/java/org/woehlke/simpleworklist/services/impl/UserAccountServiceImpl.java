@@ -78,12 +78,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public boolean authorize(LoginFormBean loginFormBean) {
-        UserAccount account = userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(), loginFormBean.getUserPassword());
-        return account != null;
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public UserAccount saveAndFlush(UserAccount u) {
         return userAccountRepository.saveAndFlush(u);

@@ -13,8 +13,6 @@ public interface UserAccountService {
 
     void createUser(UserAccountFormBean userAccount);
 
-    boolean authorize(LoginFormBean loginFormBean);
-
     UserAccount saveAndFlush(UserAccount u);
 
     UserAccount findByUserEmail(String userEmail);

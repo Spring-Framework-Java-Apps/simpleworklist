@@ -27,7 +27,7 @@ public class User2UserMessageController extends AbstractController {
     @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         User2UserMessage newUser2UserMessage = new User2UserMessage();
-        UserAccount receiver = userAccountService.retrieveCurrentUser();
+        UserAccount receiver = userAccountAccessService.retrieveCurrentUser();
         UserAccount sender = super.userAccountService.findUserById(userId);
         List<User2UserMessage> user2UserMessageList = user2UserMessageService.getLast20MessagesBetweenCurrentAndOtherUser(receiver,sender);
         for(User2UserMessage user2UserMessage : user2UserMessageList){
@@ -50,7 +50,7 @@ public class User2UserMessageController extends AbstractController {
             BindingResult result,
             @PathVariable long userId) {
         LOGGER.info("sendNewMessageToOtherUser");
-        UserAccount sender = userAccountService.retrieveCurrentUser();
+        UserAccount sender = userAccountAccessService.retrieveCurrentUser();
         UserAccount receiver = super.userAccountService.findUserById(userId);
         if(result.hasErrors()){
             /*
@@ -72,7 +72,7 @@ public class User2UserMessageController extends AbstractController {
     @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.GET)
     public final String getAllMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         User2UserMessage newUser2UserMessage = new User2UserMessage();
-        UserAccount receiver = userAccountService.retrieveCurrentUser();
+        UserAccount receiver = userAccountAccessService.retrieveCurrentUser();
         UserAccount sender = super.userAccountService.findUserById(userId);
         List<User2UserMessage> user2UserMessageList = user2UserMessageService.getAllMessagesBetweenCurrentAndOtherUser(receiver,sender);
         for(User2UserMessage user2UserMessage : user2UserMessageList){

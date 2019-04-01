@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.services.UserAccountAccessService;
@@ -82,5 +83,11 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
         UserAccount account = userAccountRepository.findByUserEmail(username);
         if (account == null) throw new UsernameNotFoundException(username);
         return account;
+    }
+
+    @Override
+    public boolean authorize(LoginFormBean loginFormBean) {
+        UserAccount account = userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(), loginFormBean.getUserPassword());
+        return account != null;
     }
 }
