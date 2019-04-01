@@ -18,9 +18,9 @@ import javax.validation.constraints.NotNull;
         @UniqueConstraint(name="ux_user_account", columnNames = {"user_email"})
     },
     indexes = {
-        @Index(name="ix_user_account_user_fullname",columnList = "user_fullname"),
-        @Index(name="ix_user_account_created_timestamp",columnList = "created_timestamp"),
-        @Index(name="ix_user_account_last_login_timestamp",columnList = "last_login_timestamp")
+        @Index(name="ix_user_account_user_fullname", columnList = "user_fullname"),
+        @Index(name="ix_user_account_created_timestamp", columnList = "created_timestamp"),
+        @Index(name="ix_user_account_last_login_timestamp", columnList = "last_login_timestamp")
     }
 )
 public class UserAccount {
@@ -35,7 +35,7 @@ public class UserAccount {
     private Long id;
 
     @Email
-    @Column(name="user_email", nullable = false, unique = true)
+    @Column(name="user_email", nullable = false)
     @Field
     private String userEmail;
 

@@ -22,7 +22,7 @@ import java.util.UUID;
         )
     },
     indexes = {
-        @Index(name="ix_user_message_uuid",columnList = "uuid")
+        @Index(name="ix_user_message_uuid", columnList = "uuid")
     }
 )
 public class UserMessage {

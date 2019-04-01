@@ -45,7 +45,7 @@ public class UserPasswordRecovery {
     private String email;
 
     @NotNull
-    @Column(name = "token", nullable = false, unique = true)
+    @Column(name = "token", nullable = false)
     private String token;
 
     @NotNull
