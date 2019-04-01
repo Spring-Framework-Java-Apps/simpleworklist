@@ -128,7 +128,7 @@ public class SearchDaoImpl implements SearchDao {
         for(Task task :findAllActionItems.getResultList()){
             fullTextEntityManager.index(task);
         }
-        fullTextEntityManager.flushToIndexes();
-        fullTextEntityManager.clear();
+        //fullTextEntityManager.flushToIndexes();
+        //fullTextEntityManager.clear();
     }
 }
