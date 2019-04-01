@@ -90,7 +90,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public boolean authorize(LoginFormBean loginFormBean) {
-        return userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(), loginFormBean.getUserPassword()) != null;
+        UserAccount account = userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(), loginFormBean.getUserPassword());
+        return account != null;
     }
 
 
