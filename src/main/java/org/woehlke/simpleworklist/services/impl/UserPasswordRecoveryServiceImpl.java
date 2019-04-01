@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.services.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.PollableChannel;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
+import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.repository.UserPasswordRecoveryRepository;
@@ -29,14 +29,8 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Autowired
     protected ApplicationProperties applicationProperties;
 
-    //@Value("${org.woehlke.simpleworklist.registration.maxRetries}")
-    //private int maxRetries;
-
-    //@Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
-    //private long ttlEmailVerificationRequest;
-
     @Autowired
-    private PollableChannel passwordResetEmailSenderChannel;
+    private EmailPipeline emailPipeline;
 
     @Autowired
     private TokenGeneratorService tokenGeneratorService;
@@ -81,8 +75,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         LOGGER.info("To be saved: " + o.toString());
         o = userPasswordRecoveryRepository.saveAndFlush(o);
         LOGGER.info("Saved: " + o.toString());
-        Message<UserPasswordRecovery> message = MessageBuilder.withPayload(o).build();
-        passwordResetEmailSenderChannel.send(message);
+        emailPipeline.sendEmailForPasswordReset(o);
     }
 
     @Override

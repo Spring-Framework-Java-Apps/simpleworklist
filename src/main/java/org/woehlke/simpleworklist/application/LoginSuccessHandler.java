@@ -48,7 +48,4 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         LOGGER.info("successful logged in "+user.getUserEmail());
     }
 
-    public UserAccountService getUserAccountService() {
-        return userAccountService;
-    }
 }

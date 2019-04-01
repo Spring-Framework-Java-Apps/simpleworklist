@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.control;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
 import org.woehlke.simpleworklist.model.*;
+import org.woehlke.simpleworklist.services.UserAccountAccessService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,6 +30,9 @@ import java.util.Map;
 public class UserSelfserviceController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSelfserviceController.class);
+
+    @Autowired
+    private UserAccountAccessService userAccountAccessService;
 
     @RequestMapping(value = "/user/selfservice", method = RequestMethod.GET)
     public String userProfileAndMenu(Model model){
@@ -101,7 +106,7 @@ public class UserSelfserviceController extends AbstractController {
                 }
                 return "user/selfservice/password";
             }
-            if(!userAccountService.confirmUserByLoginAndPassword(user.getUserEmail(), userChangePasswordFormBean.getOldUserPassword())){
+            if(!userAccountAccessService.confirmUserByLoginAndPassword(user.getUserEmail(), userChangePasswordFormBean.getOldUserPassword())){
                 LOGGER.info("old Password is wrong");
                 String objectName = "userChangePasswordFormBean";
                 String field = "oldUserPassword";
@@ -114,7 +119,7 @@ public class UserSelfserviceController extends AbstractController {
                 return "user/selfservice/password";
             }
             LOGGER.info("OK");
-            userAccountService.changeUsersPassword(userChangePasswordFormBean,user);
+            userAccountAccessService.changeUsersPassword(userChangePasswordFormBean,user);
             return "redirect:/user/selfservice";
         }
     }

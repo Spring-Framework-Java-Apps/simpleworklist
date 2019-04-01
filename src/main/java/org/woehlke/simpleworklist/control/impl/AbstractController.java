@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.ContextService;
 import org.woehlke.simpleworklist.services.ProjectService;
-import org.woehlke.simpleworklist.services.UserMessageService;
+import org.woehlke.simpleworklist.services.User2UserMessageService;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public abstract class AbstractController {
     protected UserAccountService userAccountService;
 
     @Autowired
-    protected UserMessageService userMessageService;
+    protected User2UserMessageService user2UserMessageService;
 
     @Autowired
     protected ContextService contextService;
@@ -71,7 +71,7 @@ public abstract class AbstractController {
     @ModelAttribute("numberOfNewIncomingMessages")
     public final int getNumberOfNewIncomingMessages(){
         UserAccount user = userAccountService.retrieveCurrentUser();
-        return userMessageService.getNumberOfNewIncomingMessagesForUser(user);
+        return user2UserMessageService.getNumberOfNewIncomingMessagesForUser(user);
     }
 
     @ModelAttribute("listTaskEnergy")

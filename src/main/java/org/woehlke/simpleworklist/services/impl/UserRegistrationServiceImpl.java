@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
+import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 import org.woehlke.simpleworklist.repository.UserRegistrationRepository;
@@ -31,19 +32,13 @@ public class UserRegistrationServiceImpl implements
     @Autowired
     protected ApplicationProperties applicationProperties;
 
-    //@Value("${org.woehlke.simpleworklist.registration.maxRetries}")
-    //private int maxRetries;
-
-    //@Value("${org.woehlke.simpleworklist.registration.ttlEmailVerificationRequest}")
-    //private long ttlEmailVerificationRequest;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationServiceImpl.class);
 
     @Autowired
     private UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    private PollableChannel registrationProcessEmailSenderChannel;
+    private EmailPipeline emailPipeline;
 
     @Autowired
     private TokenGeneratorService tokenGeneratorService;
@@ -51,7 +46,7 @@ public class UserRegistrationServiceImpl implements
     @Override
     public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
-        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= applicationProperties.getRegistration().getMaxRetries();
+        return earlierOptIn == null?false:(earlierOptIn.getNumberOfRetries() >= applicationProperties.getRegistration().getMaxRetries());
     }
 
     @Override
@@ -82,8 +77,7 @@ public class UserRegistrationServiceImpl implements
         LOGGER.info("To be saved: " + o.toString());
         o = userRegistrationRepository.saveAndFlush(o);
         LOGGER.info("Saved: " + o.toString());
-        Message<UserRegistration> message = MessageBuilder.withPayload(o).build();
-        registrationProcessEmailSenderChannel.send(message);
+        emailPipeline.sendEmailToRegisterNewUser(o);
     }
 
     @Override

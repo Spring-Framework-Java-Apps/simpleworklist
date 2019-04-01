@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.woehlke.simpleworklist.application.LoginSuccessHandler;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.services.UserAccountSecurityService;
 
 @Configuration
 @EnableWebSecurity
@@ -30,9 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/img/**","/img/*",
                     "/js/*","/js/**",
                     "/webjars/*","/webjars/**",
-                    "/resetPassword*",
-                    "/confirm/**","/confirm/*",
                     "/register*",
+                    "/confirm/**","/confirm/*",
+                    "/resetPassword*",
                     "/passwordResetConfirm/**","/passwordResetConfirm/*"
             )
             .permitAll()
@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        return auth.userDetailsService(userAccountService).passwordEncoder(encoder()).and().build();
+        return auth.userDetailsService(userAccountSecurityService).passwordEncoder(encoder()).and().build();
     }
 
     @Autowired
@@ -76,6 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private ApplicationProperties applicationProperties;
 
     @Autowired
-    private UserAccountService userAccountService;
+    private UserAccountSecurityService userAccountSecurityService;
 
 }

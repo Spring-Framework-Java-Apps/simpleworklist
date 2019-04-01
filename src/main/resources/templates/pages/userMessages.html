@@ -9,16 +9,16 @@
 
     <!-- Document Window -->
     <h1>
-        <span th:utext="#{pages.userMessages.h1}">Your Dialog with</span>
+        <span th:utext="#{pages.user2UserMessages.h1}">Your Dialog with</span>
         <span th:text="${otherUser.userFullname}">otherUser.userFullname</span>
     </h1>
 
     <div class="row">
         <div class="well">
-            <form id="formId" th:action="@{/user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUserMessage}" method="post">
+            <form id="formId" th:action="@{/user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUser2UserMessage}" method="post">
                 <div class="form-group">
                     <label th:for="${#ids.next('messageText')}" class="control-label">
-                        <span th:utext="#{pages.userMessages.newMessage}">New Message:</span>
+                        <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>
                     </label>
                     <textarea rows="3" cols="50"  th:field="*{messageText}" class="form-control" />
                     <div>
@@ -29,14 +29,14 @@
             </div>
             <button id="newUserMessageButton" type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                <span th:utext="#{pages.userMessages.newUserMessageButton}">Send Message</span>
+                <span th:utext="#{pages.user2UserMessages.newUserMessageButton}">Send Message</span>
             </button>
         </form>
         </div>
     </div>
 
     <div class="row">
-        <div th:each="m : ${userMessageList}">
+        <div th:each="m : ${user2UserMessageList}">
             <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
                 <span th:text="${m.messageText}" ></span>
                 <span style="float:right">
@@ -49,11 +49,11 @@
         </div>
     </div>
 
-    <div class="row" th:if="${userMessageList.size() lt 21}">
+    <div class="row" th:if="${user2UserMessageList.size() lt 21}">
         <a th:href="@{/user/{id}/messages/all(id=${otherUser.id})}">
-            <span th:utext="#{pages.userMessages.showAllText1}">Zeige alle Nachrichten</span>
+            <span th:utext="#{pages.user2UserMessages.showAllText1}">Zeige alle Nachrichten</span>
         </a>
-        <span th:utext="#{pages.userMessages.showAllText2}">(hier werden nur die letzten 20 Angezeigt)</span>
+        <span th:utext="#{pages.user2UserMessages.showAllText2}">(hier werden nur die letzten 20 Angezeigt)</span>
     </div>
 
 </div>

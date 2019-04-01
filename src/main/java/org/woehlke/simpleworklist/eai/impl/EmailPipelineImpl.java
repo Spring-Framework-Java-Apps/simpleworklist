@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
@@ -16,7 +17,7 @@ import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.services.UserRegistrationService;
 
 
-@MessageEndpoint(value = "emailPipeline")
+@Service
 public class EmailPipelineImpl implements EmailPipeline {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailPipelineImpl.class);
@@ -33,12 +34,7 @@ public class EmailPipelineImpl implements EmailPipeline {
     @Autowired
     protected ApplicationProperties applicationProperties;
 
-    //@Value("${org.woehlke.simpleworklist.registration.urlHost}")
-    //private String urlHost;
-
-    //@Value("${org.woehlke.simpleworklist.registration.mailFrom}")
-    //private String mailFrom;
-
+    @Async
     @Override
     public void sendEmailToRegisterNewUser(UserRegistration o) {
         String urlHost = applicationProperties.getRegistration().getUrlHost();
@@ -65,6 +61,7 @@ public class EmailPipelineImpl implements EmailPipeline {
         LOGGER.info("Sent MAIL: " + o.toString());
     }
 
+    @Async
     @Override
     public void sendEmailForPasswordReset(UserPasswordRecovery o) {
         String urlHost = applicationProperties.getRegistration().getUrlHost();

@@ -25,7 +25,7 @@ import java.util.UUID;
         @Index(name="ix_user_message_uuid", columnList = "uuid")
     }
 )
-public class UserMessage {
+public class User2UserMessage {
 
     @Id
     @GeneratedValue(generator = "user_message_generator")
@@ -123,9 +123,9 @@ public class UserMessage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserMessage)) return false;
+        if (!(o instanceof User2UserMessage)) return false;
 
-        UserMessage that = (UserMessage) o;
+        User2UserMessage that = (User2UserMessage) o;
 
         if (readByReceiver != that.readByReceiver) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
@@ -152,7 +152,7 @@ public class UserMessage {
 
     @Override
     public String toString() {
-        return "UserMessage{" +
+        return "User2UserMessage{" +
                 "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", messageText='" + messageText + '\'' +
