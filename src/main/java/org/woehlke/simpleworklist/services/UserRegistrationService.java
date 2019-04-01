@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.services;
 
+import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.UserRegistration;
 
 public interface UserRegistrationService {

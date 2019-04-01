@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +19,7 @@ import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 import org.woehlke.simpleworklist.repository.UserRegistrationRepository;
 import org.woehlke.simpleworklist.services.TokenGeneratorService;
+import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.services.UserRegistrationService;
 
 @Service
@@ -32,12 +37,15 @@ public class UserRegistrationServiceImpl implements
 
     private final TokenGeneratorService tokenGeneratorService;
 
+    private final JavaMailSender mailSender;
+
     @Autowired
-    public UserRegistrationServiceImpl(ApplicationProperties applicationProperties, UserRegistrationRepository userRegistrationRepository, EmailPipeline emailPipeline, TokenGeneratorService tokenGeneratorService) {
+    public UserRegistrationServiceImpl(ApplicationProperties applicationProperties, UserRegistrationRepository userRegistrationRepository, EmailPipeline emailPipeline, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
         this.applicationProperties = applicationProperties;
         this.userRegistrationRepository = userRegistrationRepository;
         this.emailPipeline = emailPipeline;
         this.tokenGeneratorService = tokenGeneratorService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -58,6 +66,7 @@ public class UserRegistrationServiceImpl implements
         }
     }
 
+    @Async
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void registrationSendEmailTo(String email) {
@@ -74,7 +83,7 @@ public class UserRegistrationServiceImpl implements
         LOGGER.info("To be saved: " + o.toString());
         o = userRegistrationRepository.saveAndFlush(o);
         LOGGER.info("Saved: " + o.toString());
-        emailPipeline.sendEmailToRegisterNewUser(o);
+        this.sendEmailToRegisterNewUser(o);
     }
 
     @Override
@@ -104,5 +113,31 @@ public class UserRegistrationServiceImpl implements
         o = userRegistrationRepository.saveAndFlush(o);
         userRegistrationRepository.delete(o);
     }
+
+    private void sendEmailToRegisterNewUser(UserRegistration o) {
+        String urlHost = applicationProperties.getRegistration().getUrlHost();
+        String mailFrom= applicationProperties.getRegistration().getMailFrom();
+        boolean success = true;
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(o.getEmail());
+        msg.setText(
+                "Dear new User, "
+                        + "thank you for registring at Simple Worklist. \n"
+                        + "Please validate your email and go to URL: \nhttp://" + urlHost + "/confirm/" + o.getToken()
+                        + "\n\nSincerely Yours, The Team");
+        msg.setSubject("Your Registration at Simple Worklist");
+        msg.setFrom(mailFrom);
+        try {
+            this.mailSender.send(msg);
+        } catch (MailException ex) {
+            LOGGER.warn(ex.getMessage() + " for " + o.toString());
+            success = false;
+        }
+        if (success) {
+            this.registrationSentEmail(o);
+        }
+        LOGGER.info("Sent MAIL: " + o.toString());
+    }
+
 
 }

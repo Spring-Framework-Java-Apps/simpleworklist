@@ -153,14 +153,14 @@ public class UserAccountServiceImplTest extends AbstractTest {
 
     @Test
     public void testRetrieveUsernameLoggedOut(){
-        String userName = userAccountAccessService.retrieveUsername();
+        String userName = userAccountLoginSuccessService.retrieveUsername();
         Assert.assertTrue(userName.compareTo(" ")==0);
     }
 
     @Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
-        String userName = userAccountAccessService.retrieveUsername();
+        String userName = userAccountLoginSuccessService.retrieveUsername();
         Assert.assertNotNull(userName);
         Assert.assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
@@ -168,13 +168,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
-        userAccountAccessService.retrieveCurrentUser();
+        userAccountLoginSuccessService.retrieveCurrentUser();
     }
 
     @Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Assert.assertNotNull(userAccount);
         Assert.assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
         SecurityContextHolder.clearContext();

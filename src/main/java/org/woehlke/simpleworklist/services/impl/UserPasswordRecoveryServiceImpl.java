@@ -3,11 +3,14 @@ package org.woehlke.simpleworklist.services.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.eai.EmailPipeline;
 import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.repository.UserPasswordRecoveryRepository;
@@ -24,18 +27,18 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
 
     private final ApplicationProperties applicationProperties;
 
-    private final EmailPipeline emailPipeline;
+    private final TokenGeneratorService tokenGeneratorService;
 
-    private TokenGeneratorService tokenGeneratorService;
+    private final JavaMailSender mailSender;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryServiceImpl.class);
 
     @Autowired
-    public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, ApplicationProperties applicationProperties, EmailPipeline emailPipeline, TokenGeneratorService tokenGeneratorService) {
+    public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, ApplicationProperties applicationProperties, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
         this.userPasswordRecoveryRepository = userPasswordRecoveryRepository;
         this.applicationProperties = applicationProperties;
-        this.emailPipeline = emailPipeline;
         this.tokenGeneratorService = tokenGeneratorService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -60,6 +63,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         }
     }
 
+    @Async
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySendEmailTo(String email) {
@@ -76,7 +80,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         LOGGER.info("To be saved: " + o.toString());
         o = userPasswordRecoveryRepository.saveAndFlush(o);
         LOGGER.info("Saved: " + o.toString());
-        emailPipeline.sendEmailForPasswordReset(o);
+        this.sendEmailForPasswordReset(o);
     }
 
     @Override
@@ -100,5 +104,30 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_STORED_CHANGED);
         o = userPasswordRecoveryRepository.saveAndFlush(o);
         userPasswordRecoveryRepository.delete(o);
+    }
+
+    private void sendEmailForPasswordReset(UserPasswordRecovery o) {
+        String urlHost = applicationProperties.getRegistration().getUrlHost();
+        String mailFrom= applicationProperties.getRegistration().getMailFrom();
+        boolean success = true;
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(o.getEmail());
+        msg.setText(
+                "Dear User, "
+                        + "for Password Reset at SimpleWorklist, "
+                        + "Please go to URL: \nhttp://" + urlHost + "/passwordResetConfirm/" + o.getToken()
+                        + "\n\nSincerely Yours, The Team");
+        msg.setSubject("Password Reset at Simple Worklist");
+        msg.setFrom(mailFrom);
+        try {
+            this.mailSender.send(msg);
+        } catch (MailException ex) {
+            LOGGER.warn(ex.getMessage() + " for " + o.toString());
+            success = false;
+        }
+        if (success) {
+            this.passwordRecoverySentEmail(o);
+        }
+        LOGGER.info("Sent MAIL: " + o.toString());
     }
 }

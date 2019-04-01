@@ -15,10 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.services.TestHelperService;
-import org.woehlke.simpleworklist.services.UserAccountAccessService;
-import org.woehlke.simpleworklist.services.UserAccountSecurityService;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.services.*;
 
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -48,6 +45,9 @@ public abstract class AbstractTest {
 
     @Autowired
     protected UserAccountAccessService userAccountAccessService;
+
+    @Autowired
+    protected UserAccountLoginSuccessService userAccountLoginSuccessService;
 
     protected static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};
     protected static String passwords[] = {"test01pwd", "test02pwd", "test03pwd"};
