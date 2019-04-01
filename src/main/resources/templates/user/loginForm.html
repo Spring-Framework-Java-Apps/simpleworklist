@@ -14,8 +14,7 @@
 </div>
 <div class="well">
 	<div class="alert alert-danger" role="alert" th:if="${param.login_error != null}">
-		<span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span><br /><span th:utext="#{user.loginForm.loginError.caused}">Caused:</span>
-		<span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
+		<span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span>
 	</div>
 	<form id="formId" th:action="@{/j_spring_security_check}" method="post">
 		<input type="hidden"
@@ -43,19 +42,21 @@
 <div>
 	<p>
 		<span th:text="#{user.loginForm.moreInformation}">For More Information please visit:</span>
-	<ul>
-		<li><span th:utext="#{user.loginForm.github}">Github:</span> <a href="https://github.com/phasenraum2010/simpleworklist" target="_blank">https://github.com/phasenraum2010/simpleworklist</a></li>
-		<li><span th:utext="#{user.loginForm.myBlog}">My Blog:</span> <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a></li>
-		<li><span th:utext="#{user.loginForm.projectPage}">The Project Page:</span> <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
-		<li>Getting Things Done&reg; @ Wikipedia:
-			<a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">https://de.wikipedia.org/wiki/Getting_Things_Done/</a>
-			<a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
-		</li>
-	</ul>
+		<ul>
+			<li><span th:utext="#{user.loginForm.github}">Github:</span> <a href="https://github.com/phasenraum2010/simpleworklist" target="_blank">https://github.com/phasenraum2010/simpleworklist</a></li>
+			<li><span th:utext="#{user.loginForm.myBlog}">My Blog:</span> <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a></li>
+			<li><span th:utext="#{user.loginForm.projectPage}">The Project Page:</span> <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
+			<li>Getting Things Done&reg; @ Wikipedia:
+				<a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">https://de.wikipedia.org/wiki/Getting_Things_Done/</a>
+				<a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
+			</li>
+		</ul>
 	</p>
 	<p>
-		<small><span th:utext="#{user.loginForm.gtd.copyright}">GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
-			not affiliated with or endorsed by the David Allen Company.</span></small>
+		<small>
+			<span th:utext="#{user.loginForm.gtd.copyright}">GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
+			not affiliated with or endorsed by the David Allen Company.</span>
+		</small>
 	</p>
 </div>
 
