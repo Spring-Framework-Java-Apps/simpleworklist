@@ -47,7 +47,7 @@ public abstract class AbstractTest {
     protected UserAccountSecurityService userAccountSecurityService;
 
     @Autowired
-    private UserAccountAccessService userAccountAccessService;
+    protected UserAccountAccessService userAccountAccessService;
 
     protected static String emails[] = {"test01@test.de", "test02@test.de", "test03@test.de"};
     protected static String passwords[] = {"test01pwd", "test02pwd", "test03pwd"};

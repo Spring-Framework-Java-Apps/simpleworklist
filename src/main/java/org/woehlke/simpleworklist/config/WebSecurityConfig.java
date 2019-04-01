@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -52,13 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder encoder(){
         // @see https://www.dailycred.com/article/bcrypt-calculator
-        int strength = applicationProperties.getUser().getStrengthBCryptPasswordEncoder();
+        int strength = 10;
         return new BCryptPasswordEncoder(strength);
     }
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        return auth.userDetailsService(userAccountSecurityService).passwordEncoder(encoder()).and().build();
+        UserDetailsService uds = (UserDetailsService) userAccountSecurityService;
+        return auth.userDetailsService(uds).passwordEncoder(encoder()).and().build();
     }
 
     @Bean
@@ -74,9 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
-
-    @Autowired
-    private ApplicationProperties applicationProperties;
 
     @Autowired
     private UserAccountSecurityService userAccountSecurityService;

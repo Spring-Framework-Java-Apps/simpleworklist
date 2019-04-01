@@ -117,11 +117,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
         LoginFormBean loginFormBean = new LoginFormBean();
         loginFormBean.setUserEmail(emails[0]);
         loginFormBean.setUserPassword(passwords[0]);
-        Assert.assertTrue(userAccountService.authorize(loginFormBean));
+        Assert.assertTrue(userAccountAccessService.authorize(loginFormBean));
         loginFormBean = new LoginFormBean();
         loginFormBean.setUserEmail(username_email);
         loginFormBean.setUserPassword(password);
-        Assert.assertFalse(userAccountService.authorize(loginFormBean));
+        Assert.assertFalse(userAccountAccessService.authorize(loginFormBean));
     }
 
     @Test
@@ -153,14 +153,14 @@ public class UserAccountServiceImplTest extends AbstractTest {
 
     @Test
     public void testRetrieveUsernameLoggedOut(){
-        String userName = userAccountService.retrieveUsername();
+        String userName = userAccountAccessService.retrieveUsername();
         Assert.assertTrue(userName.compareTo(" ")==0);
     }
 
     @Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
-        String userName = userAccountService.retrieveUsername();
+        String userName = userAccountAccessService.retrieveUsername();
         Assert.assertNotNull(userName);
         Assert.assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
@@ -168,13 +168,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
-        userAccountService.retrieveCurrentUser();
+        userAccountAccessService.retrieveCurrentUser();
     }
 
     @Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
-        UserAccount userAccount = userAccountService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
         Assert.assertNotNull(userAccount);
         Assert.assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
         SecurityContextHolder.clearContext();
