@@ -48,12 +48,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/*").addResourceLocations("/css/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-        registry.addResourceHandler("/img/*").addResourceLocations("/img/");
-        registry.addResourceHandler("/img/**").addResourceLocations("/img/");
-        registry.addResourceHandler("/js/*").addResourceLocations("/js/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+        registry.addResourceHandler("/css/*").addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/img/*").addResourceLocations("classpath:/static/img/");
+        registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
+        registry.addResourceHandler("/js/*").addResourceLocations("classpath:/static/js/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         registry.addResourceHandler("/webjars/*").addResourceLocations("/webjars/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }

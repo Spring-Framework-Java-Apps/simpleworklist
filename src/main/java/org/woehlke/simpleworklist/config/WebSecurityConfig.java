@@ -25,7 +25,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .headers().disable()
             .authorizeRequests()
-            .antMatchers("/css/*","/css/**","/img/**","/img/*","/js/*","/js/**","/webjars/*","/webjars/**","/resetPassword","/confirm/**","/register","/passwordResetConfirm/**")
+            .antMatchers(
+                    "/css/*","/css/**",
+                    "/img/**","/img/*",
+                    "/js/*","/js/**",
+                    "/webjars/*","/webjars/**",
+                    "/resetPassword*",
+                    "/confirm/**","/confirm/*",
+                    "/register*",
+                    "/passwordResetConfirm/**","/passwordResetConfirm/*"
+            )
             .permitAll()
             .anyRequest().authenticated()
             .and()
