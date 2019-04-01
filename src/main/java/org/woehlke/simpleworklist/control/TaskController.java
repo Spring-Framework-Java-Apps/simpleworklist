@@ -56,7 +56,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
-            return "t/task/show";
+            return "task/show";
         } else {
             return "redirect:/tasks/inbox";
         }
@@ -87,7 +87,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "t/task/show";
+            return "task/show";
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
@@ -154,7 +154,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "t/task/add";
+        return "task/add";
     }
 
     private Project getProject(long projectId, UserAccount userAccount, UserSessionBean userSession){
@@ -204,7 +204,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "t/task/add";
+            return "task/add";
         } else {
             if (projectId == 0) {
                 task.setProject(null);
@@ -482,7 +482,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("sort",sort);
         model.addAttribute("sortDir",sortDir);
-        return "t/tasks/all";
+        return "tasks/all";
     }
 
     @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)

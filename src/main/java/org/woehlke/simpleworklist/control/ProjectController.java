@@ -88,7 +88,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("message",message);
             model.addAttribute("isDeleted",isDeleted);
         }
-        return "t/project/show";
+        return "project/show";
     }
 
     @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)
@@ -124,7 +124,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
-        return "t/project/add";
+        return "project/add";
     }
 
     @RequestMapping(value = "/project/addchild/{projectId}",
@@ -149,7 +149,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
-            return "t/project/add";
+            return "project/add";
         } else {
             project.setUserAccount(userAccount);
             if (projectId == 0) {
@@ -200,7 +200,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", thisProject);
-            return "t/project/edit";
+            return "project/edit";
         } else {
             return "redirect:/category/0/page/1";
         }
@@ -219,7 +219,7 @@ public class ProjectController extends AbstractController {
             Project thisProject = projectService.findByProjectId(projectId, userAccount);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
             model.addAttribute("breadcrumb", breadcrumb);
-            return "t/project/edit";
+            return "project/edit";
         } else {
             Project thisProject = projectService.findByProjectId(project.getId(), userAccount);
             thisProject.setName(project.getName());
@@ -284,7 +284,7 @@ public class ProjectController extends AbstractController {
                     model.addAttribute("thisProject", project);
                     model.addAttribute("dataList", dataLeafPage.getContent());
                     model.addAttribute("totalPages", dataLeafPage.getTotalPages());
-                    return "t/project/show";
+                    return "project/show";
                 }
             }
         }

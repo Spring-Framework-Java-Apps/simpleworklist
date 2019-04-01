@@ -41,7 +41,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
         model.addAttribute("thisUser", user);
-        return "t/user/selfservice/profile";
+        return "user/selfservice/profile";
     }
 
     @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.GET)
@@ -50,7 +50,7 @@ public class UserSelfserviceController extends AbstractController {
         UserChangeNameFormBean bean = new UserChangeNameFormBean(user.getUserFullname());
         model.addAttribute("username", bean);
         model.addAttribute("thisUser", user);
-        return "t/user/selfservice/name";
+        return "user/selfservice/name";
     }
 
     @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.POST)
@@ -59,7 +59,7 @@ public class UserSelfserviceController extends AbstractController {
         if(result.hasErrors()) {
             model.addAttribute("username", username);
             model.addAttribute("thisUser", user);
-            return "t/user/selfservice/name";
+            return "user/selfservice/name";
         } else {
             user.setUserFullname(username.getUserFullname());
             userAccountService.saveAndFlush(user);
@@ -73,7 +73,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", user);
         UserChangePasswordFormBean userChangePasswordFormBean = new UserChangePasswordFormBean();
         model.addAttribute("userChangePasswordFormBean", userChangePasswordFormBean);
-        return "t/user/selfservice/password";
+        return "user/selfservice/password";
     }
 
     @RequestMapping(value = "/user/selfservice/password", method = RequestMethod.POST)
@@ -87,7 +87,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "t/user/selfservice/password";
+            return "user/selfservice/password";
         } else {
             if(! userChangePasswordFormBean.passwordsAreTheSame()){
                 LOGGER.info("passwords Are Not The Same");
@@ -99,7 +99,7 @@ public class UserSelfserviceController extends AbstractController {
                 for(ObjectError error : result.getAllErrors()){
                     LOGGER.info(error.toString());
                 }
-                return "t/user/selfservice/password";
+                return "user/selfservice/password";
             }
             if(!userAccountService.confirmUserByLoginAndPassword(user.getUserEmail(), userChangePasswordFormBean.getOldUserPassword())){
                 LOGGER.info("old Password is wrong");
@@ -111,7 +111,7 @@ public class UserSelfserviceController extends AbstractController {
                 for(ObjectError error : result.getAllErrors()){
                     LOGGER.info(error.toString());
                 }
-                return "t/user/selfservice/password";
+                return "user/selfservice/password";
             }
             LOGGER.info("OK");
             userAccountService.changeUsersPassword(userChangePasswordFormBean,user);
@@ -128,7 +128,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", bean);
         List<Context> contexts = contextService.getAllForUser(user);
         model.addAttribute("contexts", contexts);
-        return "t/user/selfservice/contexts";
+        return "user/selfservice/contexts";
     }
 
     @RequestMapping(value = "/user/selfservice/contexts", method = RequestMethod.POST)
@@ -139,7 +139,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "t/user/selfservice/contexts";
+            return "user/selfservice/contexts";
         } else {
             if(user.getId() == thisUser.getId()){
                 user.setDefaultContext(thisUser.getDefaultContext());
@@ -156,7 +156,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", user);
         NewContextFormBean newContext = new NewContextFormBean();
         model.addAttribute("newContext", newContext);
-        return "t/user/selfservice/contextAdd";
+        return "user/selfservice/contextAdd";
     }
 
     @RequestMapping(value = "/user/selfservice/context/add", method = RequestMethod.POST)
@@ -167,7 +167,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "t/user/selfservice/contextAdd";
+            return "user/selfservice/contextAdd";
         } else {
             contextService.createNewContext(newContext,user);
             return "redirect:/user/selfservice/contexts";
@@ -183,7 +183,7 @@ public class UserSelfserviceController extends AbstractController {
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
         model.addAttribute("editContext", editContext);
-        return "t/user/selfservice/contextEdit";
+        return "user/selfservice/contextEdit";
     }
 
     @RequestMapping(value = "/user/selfservice/context/edit/{contextId}", method = RequestMethod.POST)
@@ -194,7 +194,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "t/user/selfservice/contextEdit";
+            return "user/selfservice/contextEdit";
         } else {
             contextService.updateContext(editContext,user, contextId);
             return "redirect:/user/selfservice/contexts";
@@ -237,7 +237,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
         model.addAttribute("userChangeLanguageFormBean",new UserChangeLanguageFormBean(user.getDefaultLanguage()));
-        return "t/user/selfservice/language";
+        return "user/selfservice/language";
     }
 
     @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.POST)
@@ -249,7 +249,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "t/user/selfservice/language";
+            return "user/selfservice/language";
         } else {
             user.setDefaultLanguage(userChangeLanguageFormBean.getDefaultLanguage());
             userAccountService.saveAndFlush(user);

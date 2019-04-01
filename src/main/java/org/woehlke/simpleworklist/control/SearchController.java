@@ -32,6 +32,6 @@ public class SearchController extends AbstractController {
         SearchResult searchResult = searchService.search(searchterm, userAccount);
         LOGGER.info("found: "+searchResult.toString());
         model.addAttribute("searchResult",searchResult);
-        return "t/search/resultlist";
+        return "search/resultlist";
     }
 }

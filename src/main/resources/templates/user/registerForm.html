@@ -11,7 +11,7 @@
 		<span th:utext="#{user.registerForm.h1}">Register as new User</span>
 	</h1>
 	<div class="well">
-		<form id="formId" th:action="@{/register}" th:object="${registerFormBean}" method="post">
+		<form id="formId" th:action="@{/templates/user/register}" th:object="${registerFormBean}" method="post">
 			<div class="form-group">
 				<label th:for="${#ids.next('email')}" class="control-label">Email</label>
 				<input type="email" th:field="*{email}" class="form-control" />

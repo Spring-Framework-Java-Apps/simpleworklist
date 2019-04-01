@@ -32,6 +32,6 @@ public class TestController {
     public final String zhymeleafTest(Model model) {
         model.addAttribute("title","Hello, Thomas Woehlke");
         model.addAttribute("description","bla blupp blopp honk tonk");
-        return "t/tw";
+        return "tw";
     }
 }
