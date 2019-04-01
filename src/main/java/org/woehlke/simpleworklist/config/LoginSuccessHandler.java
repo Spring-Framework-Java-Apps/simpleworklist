@@ -8,9 +8,10 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.services.UserAccountAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.services.UserAccountLoginSuccessService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,14 +26,14 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
-    private final UserAccountAccessService userAccountAccessService;
+    private final UserAccountLoginSuccessService userAccountLoginSuccessService;
 
     private final LocaleResolver localeResolver;
 
     @Autowired
-    public LoginSuccessHandler(UserAccountAccessService userAccountAccessService, LocaleResolver localeResolver) {
+    public LoginSuccessHandler(UserAccountLoginSuccessService userAccountLoginSuccessService, LocaleResolver localeResolver) {
         super();
-        this.userAccountAccessService = userAccountAccessService;
+        this.userAccountLoginSuccessService = userAccountLoginSuccessService;
         this.localeResolver = localeResolver;
     }
 
@@ -42,8 +43,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
         super.onAuthenticationSuccess(request, response, authentication);
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
-        userAccountAccessService.updateLastLoginTimestamp(user);
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+        userAccountLoginSuccessService.updateLastLoginTimestamp(user);
         Locale locale;
         switch(user.getDefaultLanguage()){
             case DE: locale = Locale.GERMAN; break;

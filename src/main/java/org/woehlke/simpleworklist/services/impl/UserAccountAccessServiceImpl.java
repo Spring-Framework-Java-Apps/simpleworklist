@@ -66,33 +66,6 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void updateLastLoginTimestamp(UserAccount user) {
-        user.setLastLoginTimestamp(new Date());
-        userAccountRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public String retrieveUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null) return " ";
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
-        } else {
-            return principal.toString();
-        }
-    }
-
-    @Override
-    public UserAccount retrieveCurrentUser() throws UsernameNotFoundException {
-        String username = this.retrieveUsername();
-        UserAccount account = userAccountRepository.findByUserEmail(username);
-        if (account == null) throw new UsernameNotFoundException(username);
-        return account;
-    }
-
-    @Override
     public boolean authorize(LoginFormBean loginFormBean) {
         UserAccount account = userAccountRepository.findByUserEmailAndUserPassword(loginFormBean.getUserEmail(), loginFormBean.getUserPassword());
         return account != null;
