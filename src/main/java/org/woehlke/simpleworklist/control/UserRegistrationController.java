@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.control;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.services.UserRegistrationService;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
 @Controller
@@ -23,11 +23,15 @@ public class UserRegistrationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationController.class);
 
-    @Autowired
-    private UserAccountService userAccountService;
+    private final UserAccountService userAccountService;
+
+    private final UserRegistrationService userRegistrationService;
 
     @Autowired
-    private UserRegistrationService userRegistrationService;
+    public UserRegistrationController(UserAccountService userAccountService, UserRegistrationService userRegistrationService) {
+        this.userAccountService = userAccountService;
+        this.userRegistrationService = userRegistrationService;
+    }
 
     /**
      * Register as new user by entering the email-address which is

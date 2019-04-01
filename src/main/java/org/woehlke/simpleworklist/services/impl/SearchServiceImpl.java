@@ -21,8 +21,12 @@ public class SearchServiceImpl implements SearchService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
 
+    private final SearchDao searchDao;
+
     @Autowired
-    private SearchDao searchDao;
+    public SearchServiceImpl(SearchDao searchDao) {
+        this.searchDao = searchDao;
+    }
 
     @Override
     public SearchResult search(String searchterm, UserAccount userAccount) {

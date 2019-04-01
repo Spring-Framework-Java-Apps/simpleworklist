@@ -24,11 +24,15 @@ public class UserPasswordRecoveryController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryController.class);
 
-    @Autowired
-    private UserAccountService userAccountService;
+    private final UserAccountService userAccountService;
+
+    private final UserPasswordRecoveryService userPasswordRecoveryService;
 
     @Autowired
-    private UserPasswordRecoveryService userPasswordRecoveryService;
+    public UserPasswordRecoveryController(UserAccountService userAccountService, UserPasswordRecoveryService userPasswordRecoveryService) {
+        this.userAccountService = userAccountService;
+        this.userPasswordRecoveryService = userPasswordRecoveryService;
+    }
 
     /**
      * Visitor who might be Registered, but not yet logged in, clicks

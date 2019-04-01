@@ -14,14 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Controller
 public class TestController {
 
-    @Autowired
-    private TestService testService;
+    private final TestService testService;
+
+    private final UserAccountAccessService userAccountAccessService;
 
     @Autowired
-    private UserAccountAccessService userAccountAccessService;
+    public TestController(TestService testService, UserAccountAccessService userAccountAccessService) {
+        this.testService = testService;
+        this.userAccountAccessService = userAccountAccessService;
+    }
 
     @RequestMapping(value = "/test/helper/project/createTree", method = RequestMethod.GET)
-    public final String createTestCategoryTree() {
+    public String createTestCategoryTree() {
         UserAccount user = userAccountAccessService.retrieveCurrentUser();
         Assert.notNull(user);
         testService.createTestCategoryTreeForUserAccount(user);
@@ -29,7 +33,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/t/tw/thymeleaf", method = RequestMethod.GET)
-    public final String zhymeleafTest(Model model) {
+    public String zhymeleafTest(Model model) {
         model.addAttribute("title","Hello, Thomas Woehlke");
         model.addAttribute("description","bla blupp blopp honk tonk");
         return "tw";

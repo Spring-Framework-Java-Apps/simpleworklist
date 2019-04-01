@@ -19,8 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Controller
 public class ContextController extends AbstractController {
 
+    private final ContextService contextService;
+
     @Autowired
-    private ContextService contextService;
+    public ContextController(ContextService contextService) {
+       this.contextService = contextService;
+    }
 
     @RequestMapping(value = "/context/choose/{newContextId}", method = RequestMethod.GET)
     public String switchArea(@PathVariable long newContextId, Model model){

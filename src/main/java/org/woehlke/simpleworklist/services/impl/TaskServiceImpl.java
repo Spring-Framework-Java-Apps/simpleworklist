@@ -28,9 +28,12 @@ public class TaskServiceImpl implements TaskService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskServiceImpl.class);
 
+    private final TaskRepository taskRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
+    public TaskServiceImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @Override
     public Page<Task> findByProject(Project thisProject,

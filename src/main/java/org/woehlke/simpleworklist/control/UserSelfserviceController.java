@@ -31,8 +31,14 @@ public class UserSelfserviceController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSelfserviceController.class);
 
+
+    private final UserAccountAccessService userAccountAccessService;
+
     @Autowired
-    private UserAccountAccessService userAccountAccessService;
+    public UserSelfserviceController(UserAccountAccessService userAccountAccessService) {
+        this.userAccountAccessService = userAccountAccessService;
+    }
+
 
     @RequestMapping(value = "/user/selfservice", method = RequestMethod.GET)
     public String userProfileAndMenu(Model model){

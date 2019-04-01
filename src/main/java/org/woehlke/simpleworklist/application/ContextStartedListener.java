@@ -17,8 +17,12 @@ public class ContextStartedListener implements ApplicationListener<ContextStarte
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextStartedListener.class);
 
+    private final SearchService searchService;
+
     @Autowired
-    private SearchService searchService;
+    public ContextStartedListener(SearchService searchService) {
+        this.searchService = searchService;
+    }
 
     @Override
     public void onApplicationEvent(ContextStartedEvent event) {

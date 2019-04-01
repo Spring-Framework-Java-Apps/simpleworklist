@@ -21,14 +21,18 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ContextServiceImpl implements ContextService {
 
-    @Autowired
-    private ContextRepository contextRepository;
+    private final ContextRepository contextRepository;
+
+    private final TaskRepository taskRepository;
+
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private ProjectRepository projectRepository;
+    public ContextServiceImpl(ContextRepository contextRepository, TaskRepository taskRepository, ProjectRepository projectRepository) {
+        this.contextRepository = contextRepository;
+        this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
+    }
 
     @Override
     public List<Context> getAllForUser(UserAccount user) {

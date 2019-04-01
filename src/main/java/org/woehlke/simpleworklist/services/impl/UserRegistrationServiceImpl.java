@@ -1,18 +1,11 @@
 package org.woehlke.simpleworklist.services.impl;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Date;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.PollableChannel;
-import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,19 +22,23 @@ import org.woehlke.simpleworklist.services.UserRegistrationService;
 public class UserRegistrationServiceImpl implements
         UserRegistrationService {
 
-    @Autowired
-    protected ApplicationProperties applicationProperties;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationServiceImpl.class);
 
-    @Autowired
-    private UserRegistrationRepository userRegistrationRepository;
+    private final ApplicationProperties applicationProperties;
+
+    private final UserRegistrationRepository userRegistrationRepository;
+
+    private final EmailPipeline emailPipeline;
+
+    private final TokenGeneratorService tokenGeneratorService;
 
     @Autowired
-    private EmailPipeline emailPipeline;
-
-    @Autowired
-    private TokenGeneratorService tokenGeneratorService;
+    public UserRegistrationServiceImpl(ApplicationProperties applicationProperties, UserRegistrationRepository userRegistrationRepository, EmailPipeline emailPipeline, TokenGeneratorService tokenGeneratorService) {
+        this.applicationProperties = applicationProperties;
+        this.userRegistrationRepository = userRegistrationRepository;
+        this.emailPipeline = emailPipeline;
+        this.tokenGeneratorService = tokenGeneratorService;
+    }
 
     @Override
     public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {

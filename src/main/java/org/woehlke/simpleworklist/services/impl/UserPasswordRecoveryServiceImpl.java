@@ -3,9 +3,6 @@ package org.woehlke.simpleworklist.services.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.PollableChannel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,19 +20,23 @@ import java.util.Date;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {
 
-    @Autowired
-    private UserPasswordRecoveryRepository userPasswordRecoveryRepository;
+    private final UserPasswordRecoveryRepository userPasswordRecoveryRepository;
 
-    @Autowired
-    protected ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 
-    @Autowired
-    private EmailPipeline emailPipeline;
+    private final EmailPipeline emailPipeline;
 
-    @Autowired
     private TokenGeneratorService tokenGeneratorService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryServiceImpl.class);
+
+    @Autowired
+    public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, ApplicationProperties applicationProperties, EmailPipeline emailPipeline, TokenGeneratorService tokenGeneratorService) {
+        this.userPasswordRecoveryRepository = userPasswordRecoveryRepository;
+        this.applicationProperties = applicationProperties;
+        this.emailPipeline = emailPipeline;
+        this.tokenGeneratorService = tokenGeneratorService;
+    }
 
     @Override
     public UserPasswordRecovery findByToken(String token) {

@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,20 +22,26 @@ import org.woehlke.simpleworklist.services.UserAccountAccessService;
 
 import java.util.Date;
 
-@Service("userAccountAccessService")
+@Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountAccessServiceImpl implements UserAccountAccessService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountAccessServiceImpl.class);
 
-    @Autowired
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private PasswordEncoder encoder;
+    public UserAccountAccessServiceImpl(UserAccountRepository userAccountRepository, AuthenticationManager authenticationManager) {
+        this.userAccountRepository = userAccountRepository;
+        this.authenticationManager = authenticationManager;
+        int strength = 10;
+        this.encoder = new BCryptPasswordEncoder(strength);
+    }
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
@@ -43,7 +50,7 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
         Authentication authenticationResult = authenticationManager.authenticate(token);
         if(authenticationResult.isAuthenticated()){
             UserAccount ua = userAccountRepository.findByUserEmail(user.getUserEmail());
-            String pwEncoded = encoder.encode(userAccountFormBean.getUserPassword());
+            String pwEncoded = this.encoder.encode(userAccountFormBean.getUserPassword());
             ua.setUserPassword(pwEncoded);
             userAccountRepository.saveAndFlush(ua);
         }
@@ -53,7 +60,7 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
     public boolean confirmUserByLoginAndPassword(String userEmail, String oldUserPassword) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userEmail, oldUserPassword);
         Authentication authenticationResult = authenticationManager.authenticate(token);
-        String oldPwEncoded = encoder.encode(oldUserPassword);
+        String oldPwEncoded = this.encoder.encode(oldUserPassword);
         LOGGER.info(userEmail+", "+oldPwEncoded);
         return authenticationResult.isAuthenticated();
     }

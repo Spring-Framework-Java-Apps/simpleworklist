@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class TokenGeneratorServiceImpl implements TokenGeneratorService {
 
-    private SecureRandom random = new SecureRandom();
+    private final SecureRandom random = new SecureRandom();
 
     public String getToken() {
         int base = 130;

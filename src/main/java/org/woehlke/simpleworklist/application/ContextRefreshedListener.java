@@ -17,8 +17,12 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedListener.class);
 
+    private final SearchService searchService;
+
     @Autowired
-    private SearchService searchService;
+    public ContextRefreshedListener(SearchService searchService) {
+        this.searchService = searchService;
+    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {

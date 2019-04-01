@@ -29,11 +29,15 @@ public class TaskStateController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskStateController.class);
 
-    @Autowired
-    private TaskStateService taskStateService;
+    private final TaskStateService taskStateService;
+
+    private final TaskService taskService;
 
     @Autowired
-    private TaskService taskService;
+    public TaskStateController(TaskStateService taskStateService, TaskService taskService) {
+        this.taskStateService = taskStateService;
+        this.taskService = taskService;
+    }
 
     @RequestMapping(value = "/tasks/inbox", method = RequestMethod.GET)
     public final String inbox(@RequestParam(defaultValue = "1", required = false) int page,

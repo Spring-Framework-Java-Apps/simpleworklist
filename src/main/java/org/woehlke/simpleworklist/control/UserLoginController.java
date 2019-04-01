@@ -28,8 +28,12 @@ public class UserLoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
 
+    private final UserAccountAccessService userAccountAccessService;
+
     @Autowired
-    private UserAccountAccessService userAccountAccessService;
+    public UserLoginController(UserAccountAccessService userAccountAccessService) {
+        this.userAccountAccessService = userAccountAccessService;
+    }
 
     /**
      * Login Formular. If User is not logged in, this page will be displayed for

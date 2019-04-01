@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,7 +19,6 @@ import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.User2UserMessage;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
-import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.repository.ContextRepository;
 import org.woehlke.simpleworklist.repository.UserAccountRepository;
@@ -31,17 +31,22 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
-    @Autowired
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
+
+    private final User2UserMessageRepository userMessageRepository;
+
+    private final ContextRepository contextRepository;
+
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private User2UserMessageRepository userMessageRepository;
-
-    @Autowired
-    private ContextRepository contextRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, User2UserMessageRepository userMessageRepository, ContextRepository contextRepository) {
+        this.userAccountRepository = userAccountRepository;
+        this.userMessageRepository = userMessageRepository;
+        this.contextRepository = contextRepository;
+        int strength = 10;
+        this.encoder = new BCryptPasswordEncoder(strength);
+    }
 
     public boolean isEmailAvailable(String email) {
         return userAccountRepository.findByUserEmail(email) == null;

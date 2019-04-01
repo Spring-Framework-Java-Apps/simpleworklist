@@ -19,8 +19,12 @@ public class UserAccountSecurityServiceImpl implements UserAccountSecurityServic
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountSecurityServiceImpl.class);
 
+    private final UserAccountRepository userAccountRepository;
+
     @Autowired
-    private UserAccountRepository userAccountRepository;
+    public UserAccountSecurityServiceImpl(UserAccountRepository userAccountRepository) {
+        this.userAccountRepository = userAccountRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username)

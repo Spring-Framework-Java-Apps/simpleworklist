@@ -25,11 +25,16 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
-    @Autowired
-    private UserAccountAccessService userAccountAccessService;
+    private final UserAccountAccessService userAccountAccessService;
+
+    private final LocaleResolver localeResolver;
 
     @Autowired
-    private LocaleResolver localeResolver;
+    public LoginSuccessHandler(UserAccountAccessService userAccountAccessService, LocaleResolver localeResolver) {
+        super();
+        this.userAccountAccessService = userAccountAccessService;
+        this.localeResolver = localeResolver;
+    }
 
     @Override
     public void onAuthenticationSuccess(

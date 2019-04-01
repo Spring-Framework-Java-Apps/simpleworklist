@@ -1,9 +1,8 @@
 package org.woehlke.simpleworklist.eai.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,17 +21,21 @@ public class EmailPipelineImpl implements EmailPipeline {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailPipelineImpl.class);
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
+
+    private final UserRegistrationService userRegistrationService;
+
+    private final UserPasswordRecoveryService userPasswordRecoveryService;
+
+    private final ApplicationProperties applicationProperties;
 
     @Autowired
-    private UserRegistrationService userRegistrationService;
-
-    @Autowired
-    private UserPasswordRecoveryService userPasswordRecoveryService;
-
-    @Autowired
-    protected ApplicationProperties applicationProperties;
+    public EmailPipelineImpl(JavaMailSender mailSender, UserRegistrationService userRegistrationService, UserPasswordRecoveryService userPasswordRecoveryService, ApplicationProperties applicationProperties) {
+        this.mailSender = mailSender;
+        this.userRegistrationService = userRegistrationService;
+        this.userPasswordRecoveryService = userPasswordRecoveryService;
+        this.applicationProperties = applicationProperties;
+    }
 
     @Async
     @Override

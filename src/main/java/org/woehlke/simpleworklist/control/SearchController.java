@@ -22,8 +22,12 @@ public class SearchController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
+    private final SearchService searchService;
+
     @Autowired
-    private SearchService searchService;
+    public SearchController(SearchService searchService) {
+       this.searchService = searchService;
+    }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public final String loginForm(@RequestParam String searchterm, Model model) {

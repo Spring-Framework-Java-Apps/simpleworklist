@@ -24,8 +24,12 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskStateServiceImpl implements TaskStateService {
 
+    private final TaskRepository taskRepository;
+
     @Autowired
-    private TaskRepository taskRepository;
+    public TaskStateServiceImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
 
     @Override

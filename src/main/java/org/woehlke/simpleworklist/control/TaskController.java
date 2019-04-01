@@ -34,8 +34,12 @@ public class TaskController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
+    private final TaskService taskService;
+
     @Autowired
-    private TaskService taskService;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {

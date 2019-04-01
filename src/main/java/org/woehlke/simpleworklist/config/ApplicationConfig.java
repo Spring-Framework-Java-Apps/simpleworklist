@@ -15,6 +15,11 @@ import java.util.Properties;
 })
 public class ApplicationConfig {
 
+    @Autowired
+    public ApplicationConfig(ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
+    }
+
     @Bean
     public JavaMailSender mailSender(){
         Properties javaMailProperties = new Properties();
@@ -43,6 +48,5 @@ public class ApplicationConfig {
         return mailSender;
     }
 
-    @Autowired
-    protected ApplicationProperties applicationProperties;
+    protected final ApplicationProperties applicationProperties;
 }

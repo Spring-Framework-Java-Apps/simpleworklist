@@ -26,8 +26,12 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(User2UserMessageServiceImpl.class);
 
+    private final User2UserMessageRepository userMessageRepository;
+
     @Autowired
-    private User2UserMessageRepository userMessageRepository;
+    public User2UserMessageServiceImpl(User2UserMessageRepository userMessageRepository) {
+        this.userMessageRepository = userMessageRepository;
+    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)

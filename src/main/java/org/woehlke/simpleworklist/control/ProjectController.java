@@ -31,8 +31,12 @@ public class ProjectController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
 
+    private final TaskService taskService;
+
     @Autowired
-    private TaskService taskService;
+    public ProjectController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @RequestMapping(value = "/project/{projectId}", method = RequestMethod.GET)
     public final String showProject(@PathVariable long projectId) {

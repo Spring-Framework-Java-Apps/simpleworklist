@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.woehlke.simpleworklist.application.LoginSuccessHandler;
 import org.woehlke.simpleworklist.services.UserAccountSecurityService;
@@ -20,6 +21,13 @@ import org.woehlke.simpleworklist.services.UserAccountSecurityService;
 @EnableWebSecurity
 @EnableSpringDataWebSupport
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    public WebSecurityConfig(AuthenticationManagerBuilder auth, LoginSuccessHandler loginSuccessHandler, UserAccountSecurityService userAccountSecurityService) {
+        this.auth = auth;
+        this.loginSuccessHandler = loginSuccessHandler;
+        this.userAccountSecurityService = userAccountSecurityService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,16 +59,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder encoder(){
-        // @see https://www.dailycred.com/article/bcrypt-calculator
-        int strength = 10;
-        return new BCryptPasswordEncoder(strength);
-    }
-
-    @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        UserDetailsService uds = (UserDetailsService) userAccountSecurityService;
-        return auth.userDetailsService(uds).passwordEncoder(encoder()).and().build();
+        int strength = 10;
+        PasswordEncoder encoder = new BCryptPasswordEncoder(strength);
+        return auth.userDetailsService(userAccountSecurityService).passwordEncoder(encoder).and().build();
     }
 
     @Bean
@@ -71,13 +73,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    @Autowired
-    private AuthenticationManagerBuilder auth;
+    private final AuthenticationManagerBuilder auth;
 
-    @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private final AuthenticationSuccessHandler loginSuccessHandler;
 
-    @Autowired
-    private UserAccountSecurityService userAccountSecurityService;
+    private final UserDetailsService userAccountSecurityService;
 
 }

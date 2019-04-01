@@ -29,14 +29,18 @@ public class TestServiceImpl implements TestService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestServiceImpl.class);
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
+
+    private final TaskRepository taskRepository;
+
+    private final ContextRepository contextRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private ContextRepository contextRepository;
+    public TestServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ContextRepository contextRepository) {
+        this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
+        this.contextRepository = contextRepository;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {

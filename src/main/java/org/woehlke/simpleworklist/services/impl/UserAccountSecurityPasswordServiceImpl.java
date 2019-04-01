@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,14 +23,20 @@ public class UserAccountSecurityPasswordServiceImpl implements UserAccountSecuri
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountSecurityPasswordServiceImpl.class);
 
-    @Autowired
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
+
+    private final PasswordEncoder encoder;
+
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    private PasswordEncoder encoder;
+    public UserAccountSecurityPasswordServiceImpl(UserAccountRepository userAccountRepository, AuthenticationManager authenticationManager) {
+        this.userAccountRepository = userAccountRepository;
+        int strength = 10;
+        this.encoder = new BCryptPasswordEncoder(strength);
+        this.authenticationManager = authenticationManager;
+    }
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {

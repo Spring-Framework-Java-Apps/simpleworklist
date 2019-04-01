@@ -25,11 +25,15 @@ public class ProjectServiceImpl implements ProjectService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
+
+    private final TaskRepository taskRepository;
 
     @Autowired
-    private TaskRepository taskRepository;
+    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
+        this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
+    }
 
     public List<Project> getBreadcrumb(Project thisProject, UserAccount user) {
         List<Project> breadcrumb = new ArrayList<Project>();
