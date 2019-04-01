@@ -31,6 +31,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void resetSearchIndex() {
         LOGGER.info("resetSearchIndex");
         searchDao.resetSearchIndex();

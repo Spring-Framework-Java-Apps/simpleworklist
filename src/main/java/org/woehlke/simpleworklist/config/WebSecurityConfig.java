@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,7 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.LocaleContextResolver;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.woehlke.simpleworklist.application.LoginSuccessHandler;
+import org.woehlke.simpleworklist.services.UserAccountService;
 
 @Configuration
 @EnableSpringDataWebSupport
@@ -64,15 +69,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(strength);
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(loginSuccessHandler.getUserAccountService()).passwordEncoder(encoder());
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return auth.userDetailsService(userAccountService).userDetailsPasswordManager(userAccountService).passwordEncoder(encoder()).and().build();
     }
+
+    @Bean
+    public LocaleResolver localeResolver(){
+        return new SessionLocaleResolver();
+    }
+
+    @Autowired
+    private AuthenticationManagerBuilder auth;
 
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 
     @Autowired
     private ApplicationProperties applicationProperties;
+
+    @Autowired
+    private UserAccountService userAccountService;
 
 }

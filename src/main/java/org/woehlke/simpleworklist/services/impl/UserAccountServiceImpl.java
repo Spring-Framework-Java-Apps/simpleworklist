@@ -198,4 +198,19 @@ public class UserAccountServiceImpl implements UserAccountService {
         return authenticationResult.isAuthenticated();
     }
 
+    @Override
+    public UserDetails updatePassword(UserDetails user, String newPassword) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        Authentication authenticationResult = authenticationManager.authenticate(token);
+        if (authenticationResult.isAuthenticated()) {
+            UserAccount ua = userAccountRepository.findByUserEmail(user.getUsername());
+            String pwEncoded = encoder.encode(newPassword);
+            ua.setUserPassword(pwEncoded);
+            userAccountRepository.saveAndFlush(ua);
+            return new UserDetailsBean(ua);
+        } else {
+            return user;
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.services;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.entities.UserAccount;
@@ -10,7 +11,7 @@ import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.model.UserAccountFormBean;
 import org.woehlke.simpleworklist.model.UserChangePasswordFormBean;
 
-public interface UserAccountService extends UserDetailsService {
+public interface UserAccountService extends UserDetailsService, UserDetailsPasswordService {
 
     boolean isEmailAvailable(String email);
 
