@@ -24,10 +24,16 @@ public class UserDetailsBean implements UserDetails {
         super();
         this.username = account.getUserEmail();
         this.password = account.getUserPassword();
+        /*
         this.accountNonExpired = account.getAccountNonExpired();
         this.accountNonLocked = account.getAccountNonLocked();
         this.credentialsNonExpired = account.getCredentialsNonExpired();
         this.enabled = account.getEnabled();
+         */
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
     }
 
     @Override

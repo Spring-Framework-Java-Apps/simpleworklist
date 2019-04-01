@@ -21,12 +21,8 @@ import org.woehlke.simpleworklist.application.LoginSuccessHandler;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
 @Configuration
-@EnableWebMvc
 @EnableWebSecurity
 @EnableSpringDataWebSupport
-@EnableJpaRepositories({
-        "org.woehlke.simpleworklist.repository"
-})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -77,12 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        return auth.userDetailsService(userAccountService).userDetailsPasswordManager(userAccountService).passwordEncoder(encoder()).and().build();
-    }
-
-    @Bean
-    public LocaleResolver localeResolver(){
-        return new SessionLocaleResolver();
+        return auth.userDetailsService(userAccountService).passwordEncoder(encoder()).and().build();
     }
 
     @Autowired
