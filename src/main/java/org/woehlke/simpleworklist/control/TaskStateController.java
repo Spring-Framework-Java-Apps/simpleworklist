@@ -43,7 +43,7 @@ public class TaskStateController extends AbstractController {
     public final String inbox(@RequestParam(defaultValue = "1", required = false) int page,
                               @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -69,7 +69,7 @@ public class TaskStateController extends AbstractController {
     public final String today(@RequestParam(defaultValue = "1", required = false) int page,
                               @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -95,7 +95,7 @@ public class TaskStateController extends AbstractController {
     public final String next(@RequestParam(defaultValue = "1", required = false) int page,
                              @ModelAttribute("userSession") UserSessionBean userSession,
                              BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -121,7 +121,7 @@ public class TaskStateController extends AbstractController {
     public final String waiting(@RequestParam(defaultValue = "1", required = false) int page,
                                 @ModelAttribute("userSession") UserSessionBean userSession,
                                 BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -147,7 +147,7 @@ public class TaskStateController extends AbstractController {
     public final String scheduled(@RequestParam(defaultValue = "1", required = false) int page,
                                   @ModelAttribute("userSession") UserSessionBean userSession,
                                   BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -173,7 +173,7 @@ public class TaskStateController extends AbstractController {
     public final String someday(@RequestParam(defaultValue = "1", required = false) int page,
                                 @ModelAttribute("userSession") UserSessionBean userSession,
                                 BindingResult result,  Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -199,7 +199,7 @@ public class TaskStateController extends AbstractController {
     public final String completed(@RequestParam(defaultValue = "1", required = false) int page,
                                   @ModelAttribute("userSession") UserSessionBean userSession,
                                   BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -225,7 +225,7 @@ public class TaskStateController extends AbstractController {
     public final String trash(@RequestParam(defaultValue = "1", required = false) int page,
                               @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
@@ -250,7 +250,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to inbox");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId,thisUser);
         if(task!=null){
             long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.INBOX,task.getContext(),thisUser);
@@ -265,7 +265,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/today", method = RequestMethod.GET)
     public final String moveTaskToToday(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to today");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
             long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TODAY,task.getContext(),thisUser);
@@ -280,7 +280,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/next", method = RequestMethod.GET)
     public final String moveTaskToNext(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to next");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.NEXT,task.getContext(),thisUser);
         task.setOrderIdTaskState(++maxOrderId);
@@ -293,7 +293,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to waiting");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null){
             long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.WAITING,task.getContext(),thisUser);
@@ -308,7 +308,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to someday");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
             long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext(),thisUser);
@@ -323,7 +323,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to completed");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
             long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),thisUser);
@@ -338,7 +338,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/move/{taskId}/to/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@PathVariable long taskId, Model model) {
         LOGGER.info("dragged and dropped "+taskId+" to trash");
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
             long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TRASHED,task.getContext(),thisUser);
@@ -353,7 +353,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/completed/deleteall", method = RequestMethod.GET)
     public final String deleteallCompleted(
             @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         taskStateService.deleteAllCompleted(context,thisUser);
         return "redirect:/tasks/trash";
@@ -362,7 +362,7 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
     public final String focus(@RequestParam(defaultValue = "1", required = false) int page,
                               @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
-        UserAccount thisUser = userAccountAccessService.retrieveCurrentUser();
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Pageable request =
                 new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");

@@ -52,7 +52,7 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result,Model model) {
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         Project thisProject = null;
         Page<Task> taskPage = null;
@@ -105,7 +105,7 @@ public class ProjectController extends AbstractController {
     public final String addNewProjectForm(@PathVariable long projectId,
                                           @ModelAttribute("userSession") UserSessionBean userSession,
                                           Model model) {
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Project thisProject = null;
         Project project = null;
         if (projectId == 0) {
@@ -139,7 +139,7 @@ public class ProjectController extends AbstractController {
             @Valid Project project,
             BindingResult result,
             Model model) {
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
             Project thisProject = null;
             if (projectId == 0) {
@@ -182,7 +182,7 @@ public class ProjectController extends AbstractController {
     public final String moveProject(
             @PathVariable long projectId,
             @PathVariable long targetProjectId) {
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Project thisProject = null;
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
@@ -196,7 +196,7 @@ public class ProjectController extends AbstractController {
     public final String editProjectForm(
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
-            UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             Project thisProject = projectService.findByProjectId(projectId, userAccount);
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
@@ -215,7 +215,7 @@ public class ProjectController extends AbstractController {
             @PathVariable long projectId,
             @Valid Project project,
             BindingResult result, Model model) {
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
@@ -245,7 +245,7 @@ public class ProjectController extends AbstractController {
     public final String deleteProject(
             @PathVariable long projectId, Model model) {
         long newProjectId = projectId;
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         if (projectId > 0) {
             Project project = projectService.findByProjectId(projectId, userAccount);
             if(project != null){

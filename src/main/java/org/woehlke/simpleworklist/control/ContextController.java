@@ -29,7 +29,7 @@ public class ContextController extends AbstractController {
     @RequestMapping(value = "/context/choose/{newContextId}", method = RequestMethod.GET)
     public String switchArea(@PathVariable long newContextId, Model model){
         if(newContextId > 0) {
-            UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             Context foundContext = contextService.findByIdAndUserAccount(newContextId, userAccount);
             if (foundContext == null) {
                 return "redirect:/logout";

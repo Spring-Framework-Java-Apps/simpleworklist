@@ -39,12 +39,15 @@ public abstract class AbstractController {
     protected User2UserMessageService user2UserMessageService;
 
     @Autowired
+    protected UserAccountLoginSuccessService userAccountLoginSuccessService;
+
+    @Autowired
     protected ContextService contextService;
 
     @ModelAttribute("allCategories")
     public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                 BindingResult result, Model model) {
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
             return projectService.findAllProjectsByUserAccount(user);
         } else {
@@ -56,7 +59,7 @@ public abstract class AbstractController {
     @ModelAttribute("rootCategories")
     public final List<Project> getRootCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                  BindingResult result, Model model) {
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
             return projectService.findRootProjectsByUserAccount(user);
         } else {
@@ -67,7 +70,7 @@ public abstract class AbstractController {
 
     @ModelAttribute("numberOfNewIncomingMessages")
     public final int getNumberOfNewIncomingMessages(){
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         return user2UserMessageService.getNumberOfNewIncomingMessagesForUser(user);
     }
 
@@ -83,14 +86,14 @@ public abstract class AbstractController {
 
     @ModelAttribute("contexts")
     public final List<Context> getContexts(){
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         return contextService.getAllForUser(user);
     }
 
     @ModelAttribute("context")
     public final String getCurrentArea(@ModelAttribute("userSession") UserSessionBean userSession,
                                        BindingResult result, Locale locale, Model model){
-        UserAccount user = userAccountAccessService.retrieveCurrentUser();
+        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         String retVal = "All";
         if(locale.getLanguage().equalsIgnoreCase("de")){
             retVal = "Alle";

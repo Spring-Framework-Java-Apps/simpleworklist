@@ -31,7 +31,7 @@ public class SearchController extends AbstractController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public final String loginForm(@RequestParam String searchterm, Model model) {
-        UserAccount userAccount = userAccountAccessService.retrieveCurrentUser();
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         LOGGER.info("Search: "+searchterm);
         SearchResult searchResult = searchService.search(searchterm, userAccount);
         LOGGER.info("found: "+searchResult.toString());

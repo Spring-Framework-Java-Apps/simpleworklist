@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.services.UserAccountAccessService;
+import org.woehlke.simpleworklist.services.UserAccountLoginSuccessService;
 
 import java.util.Locale;
 
@@ -28,10 +29,13 @@ public class UserLoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
 
+    private final UserAccountLoginSuccessService userAccountLoginSuccessService;
+
     private final UserAccountAccessService userAccountAccessService;
 
     @Autowired
-    public UserLoginController(UserAccountAccessService userAccountAccessService) {
+    public UserLoginController(UserAccountLoginSuccessService userAccountLoginSuccessService, UserAccountAccessService userAccountAccessService) {
+        this.userAccountLoginSuccessService = userAccountLoginSuccessService;
         this.userAccountAccessService = userAccountAccessService;
     }
 
@@ -63,8 +67,8 @@ public class UserLoginController {
                                BindingResult result, Model model) {
         boolean authorized = userAccountAccessService.authorize(loginFormBean);
         if (!result.hasErrors() && authorized) {
-            UserAccount user = userAccountAccessService.retrieveCurrentUser();
-            userAccountAccessService.updateLastLoginTimestamp(user);
+            UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+            userAccountLoginSuccessService.updateLastLoginTimestamp(user);
             LOGGER.info("logged in");
             return "redirect:/";
         } else {
