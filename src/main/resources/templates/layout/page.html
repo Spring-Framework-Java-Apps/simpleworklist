@@ -17,11 +17,11 @@
 <body th:fragment="tw-page-body(twcontent)">
 
 	<!-- Navbar on Top -->
-	<header th:replace="t/layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
+	<header th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
 	</header>
 
 	<!-- Breadcrumb -->
-	<section th:replace="t/layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
+	<section th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
 	</section>
 
 	<!-- Menu on Left Column and Document Window on the Right Column -->
@@ -30,7 +30,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<!-- Menu on Left Column -->
-					<div th:replace="t/layout/navcolleft :: navcolleft(rootCategories=${rootCategories},thisProject=${thisProject})">
+					<div th:replace="layout/navcolleft :: navcolleft(rootCategories=${rootCategories},thisProject=${thisProject})">
 					</div>
 				</div>
 				<div class="col-md-9">

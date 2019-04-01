@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="t/layout/page :: head">
+<head th:replace="layout/page :: head">
 </head>
-<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
     <h1>
@@ -20,7 +20,7 @@
         <h2>
             <span th:utext="#{search.resultlist.h2.tasks}">Tasks</span>
         </h2>
-        <div th:replace="t/layout/tasks :: tw-tasks-table(dataList=${searchResult.taskList},myTaskState='ALL')">
+        <div th:replace="layout/tasks :: tw-tasks-table(dataList=${searchResult.taskList},myTaskState='ALL')">
         </div>
     </div>
 

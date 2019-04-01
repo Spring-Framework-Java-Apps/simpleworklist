@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="t/layout/page :: head">
+<head th:replace="layout/page :: head">
 </head>
-<body th:replace="t/layout/page :: tw-page-body(~{::mytwcontent})">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
     <div id="tw-content-title">
@@ -20,14 +20,14 @@
         </div>
     </div>
 
-    <div th:replace="t/layout/tasks :: tw-tasks-message(message=${message})">
+    <div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
     </div>
 
     <div th:if="${dataList.size() gt 0}">
         <!-- TODO: #34 -->
-        <div th:replace="t/layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='COMPLETED')">
+        <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='COMPLETED')">
         </div>
-        <div th:replace="t/layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/completed')">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/completed')">
         </div>
     </div>
 
