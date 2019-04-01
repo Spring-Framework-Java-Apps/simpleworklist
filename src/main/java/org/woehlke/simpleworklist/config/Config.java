@@ -3,12 +3,16 @@ package org.woehlke.simpleworklist.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 @Configuration
+@EnableJpaRepositories({
+        "org.woehlke.simpleworklist.repository"
+})
 public class Config {
 
     @Bean

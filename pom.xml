@@ -239,10 +239,12 @@
 			<artifactId>maven-scm-provider-jgit</artifactId>
 			<version>${maven.scm.version}</version>
 		</dependency>
+        <!--
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-jdbc</artifactId>
 		</dependency>
+		-->
         <dependency>
             <groupId>com.github.mxab.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-data-attribute</artifactId>
@@ -263,6 +265,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--
 			<dependency>
 			  <groupId>org.springframework.session</groupId>
 			  <artifactId>spring-session-bom</artifactId>
@@ -270,6 +273,7 @@
 			  <type>pom</type>
 			  <scope>import</scope>
 			</dependency>
+			-->
         </dependencies>
     </dependencyManagement>
 
