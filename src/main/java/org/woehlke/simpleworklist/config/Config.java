@@ -15,24 +15,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories({
-        "org.woehlke.simpleworklist.repository"
-})
 public class Config {
-
-    @Bean
-    public LocaleResolver localeResolver(){
-        SessionLocaleResolver x = new SessionLocaleResolver();
-        x.setDefaultLocale(Locale.GERMAN);
-        return x;
-    }
-
-    @Bean
-    public MessageSource messageSource(){
-        ResourceBundleMessageSource x =  new  ResourceBundleMessageSource();
-        x.setBasename("messages");
-        return x;
-    }
 
     @Bean
     public JavaMailSender mailSender(){

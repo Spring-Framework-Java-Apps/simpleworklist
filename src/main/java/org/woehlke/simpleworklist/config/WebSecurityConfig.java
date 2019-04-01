@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/js/**",
                     "/favicon.ico"
             )
-            .permitAll()
+            .anonymous()
             .anyRequest().authenticated()
             .and()
             .formLogin()
