@@ -8,6 +8,10 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import java.util.Locale;
 import java.util.Properties;
 
 @Configuration
@@ -15,6 +19,13 @@ import java.util.Properties;
         "org.woehlke.simpleworklist.repository"
 })
 public class Config {
+
+    @Bean
+    public LocaleResolver localeResolver(){
+        SessionLocaleResolver x = new SessionLocaleResolver();
+        x.setDefaultLocale(Locale.GERMAN);
+        return x;
+    }
 
     @Bean
     public MessageSource messageSource(){

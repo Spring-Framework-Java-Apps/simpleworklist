@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,13 +15,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.woehlke.simpleworklist.application.LoginSuccessHandler;
 import org.woehlke.simpleworklist.services.UserAccountService;
 
 @Configuration
-@EnableSpringDataWebSupport
+@EnableWebMvc
 @EnableWebSecurity
+@EnableSpringDataWebSupport
+@EnableJpaRepositories({
+        "org.woehlke.simpleworklist.repository"
+})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
