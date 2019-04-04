@@ -13,7 +13,7 @@
                 <li><a id="focus_scheduled" th:href="@{/tasks/scheduled}"><i class="fas fa-calendar-alt"></i> <span th:text="#{layout.page.scheduled}">Scheduled</span></a></li>
                 <li><a id="focus_someday" th:href="@{/tasks/someday}"><i class="fas fa-road"></i> <span th:text="#{layout.page.someday}">Someday</span></a></li>
                 <li><a id="star" th:href="@{/tasks/focus}"><i class="fas fa-star"></i> <span th:text="#{layout.page.focus}">Focus</span></a></li>
-                <li><a id="focus_completed" th:href="@{/tasks/completed}"><i class="far fa-check-square"></i> <span th:text="#{layout.page.completed}">Completed Tasks</span></a></li>
+                <li><a id="focus_completed" th:href="@{/tasks/completed}"><i class="fas fa-check-square"></i> <span th:text="#{layout.page.completed}">Completed Tasks</span></a></li>
                 <li><a id="focus_trash" th:href="@{/tasks/trash}"><i class="fas fa-trash-alt"></i> <span th:text="#{layout.page.trash}">Trash</span></a></li>
                 <li th:replace="this :: tw-project-menu-container(rootCategories=${rootCategories},thisProject=${thisProject})"></li>
             </ul>
