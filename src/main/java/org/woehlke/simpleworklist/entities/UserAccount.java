@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.entities;
 
 import org.hibernate.search.annotations.*;
-import org.hibernate.validator.constraints.Email;
+import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
 

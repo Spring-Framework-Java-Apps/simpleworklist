@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.entities;
 
-import org.hibernate.validator.constraints.Email;
+import javax.validation.constraints.Email;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 
 import javax.persistence.*;
