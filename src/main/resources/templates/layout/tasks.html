@@ -31,18 +31,17 @@
             <tr th:each="task : ${dataList}">
                 <td>
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
-                        <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+                        <i class="far fa-square"></i>
                     </a>
                     <a alt="complete" th:href="@{/task/incomplete/{id}(id=${task.id})}" th:if="${task.taskState.name() eq 'COMPLETED'}">
-                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        <i class="fas fa-check-square"></i>
                     </a>
-                    <span class="glyphicon glyphicon-check" aria-hidden="true" th:if="${task.taskState.name() eq 'TRASHED'}"></span>
-                    &nbsp;&nbsp;
+                    <i class="far fa-check-square" th:if="${task.taskState.name() eq 'TRASHED'}"></i>&nbsp;&nbsp;
                     <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <i class="fas fa-star"></i>
                     </a>
                     <a th:if="${not task.focus}" alt="focus" th:href="@{/task/setfocus/{id}(id=${task.id})}">
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <i class="far fa-star"></i>
                     </a>
                 </td>
                 <td>
@@ -61,37 +60,37 @@
                 </td>
                 <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}" th:switch="${task.taskState.name()}">
                     <a th:case="'INBOX'" th:href="@{/tasks/inbox}">
-                        <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                        <i class="fas fa-inbox"></i>
                         <span th:utext="#{tasks.focus.inbox}">Inbox</span>
                     </a>
                     <a th:case="'TODAY'" th:href="@{/tasks/today}">
-                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        <i class="far fa-clock"></i>
                         <span th:utext="#{tasks.focus.today}">Today</span>
                     </a>
                     <a th:case="'NEXT'" th:href="@{/tasks/next}">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        <i class="fas fa-cogs"></i>
                         <span th:utext="#{tasks.focus.next}">Next</span>
                     </a>
                     <a th:case="'WAITING'" th:href="@{/tasks/waiting}">
-                        <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                        <i class="fas fa-hourglass-half"></i>
                         <span th:utext="#{tasks.focus.waiting}">Waiting</span>
                     </a>
                     <a th:case="'SCHEDULED'" th:href="@{/tasks/scheduled}">
-                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                        <i class="fas fa-calendar-alt"></i>
                         <span th:utext="#{tasks.focus.scheduled}">Scheduled</span>
                     </a>
                     <a th:case="'SOMEDAY'" th:href="@{/tasks/someday}">
-                        <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+                        <i class="fas fa-road"></i>
                         <span th:utext="#{tasks.focus.someday}">Someday</span>
                     </a>
                     <a th:case="'TRASHED'" th:href="@{/tasks/trash}">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        <i class="fas fa-trash-alt"></i>
                         <span th:utext="#{tasks.focus.trash}">Trash</span>
                     </a>
                 </td>
                 <td th:if="${myTaskState ne 'PROJECT'}">
                     <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
-                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                        <i class="fas fa-folder-open"></i>
                         <span th:text="${task.project.name}"></span>
                     </a>
                 </td>

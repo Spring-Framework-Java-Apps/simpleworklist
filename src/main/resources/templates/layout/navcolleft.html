@@ -6,16 +6,16 @@
     <div th:fragment="navcolleft(rootCategories,thisProject)">
         <div id="categoryNavigationWell" class="well sidebar-nav" sec:authorize="isAuthenticated()">
             <ul id="rootProject" class="nav nav-list">
-                <li><a id="focus_inbox" th:href="@{/tasks/inbox}"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <span th:text="#{layout.page.inbox}">Inbox</span></a></li>
-                <li><a id="focus_today" th:href="@{/tasks/today}"><span class="glyphicon glyphicon glyphicon-time" aria-hidden="true"></span> <span th:text="#{layout.page.today}">Today</span></a></li>
-                <li><a id="focus_next" th:href="@{/tasks/next}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span th:text="#{layout.page.next}">Next</span></a></li>
-                <li><a id="focus_waiting" th:href="@{/tasks/waiting}"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> <span th:text="#{layout.page.waiting}">Waiting</span></a></li>
-                <li><a id="focus_scheduled" th:href="@{/tasks/scheduled}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <span th:text="#{layout.page.scheduled}">Scheduled</span></a></li>
-                <li><a id="focus_someday" th:href="@{/tasks/someday}"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> <span th:text="#{layout.page.someday}">Someday</span></a></li>
-                <li><a id="star" th:href="@{/tasks/focus}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span th:text="#{layout.page.focus}">Focus</span></a></li>
+                <li><a id="focus_inbox" th:href="@{/tasks/inbox}"><i class="fas fa-inbox"></i> <span th:text="#{layout.page.inbox}">Inbox</span></a></li>
+                <li><a id="focus_today" th:href="@{/tasks/today}"><i class="fas fa-clock"></i> <span th:text="#{layout.page.today}">Today</span></a></li>
+                <li><a id="focus_next" th:href="@{/tasks/next}"><i class="fas fa-cogs"></i> <span th:text="#{layout.page.next}">Next</span></a></li>
+                <li><a id="focus_waiting" th:href="@{/tasks/waiting}"><i class="fas fa-hourglass-half"></i> <span th:text="#{layout.page.waiting}">Waiting</span></a></li>
+                <li><a id="focus_scheduled" th:href="@{/tasks/scheduled}"><i class="fas fa-calendar-alt"></i> <span th:text="#{layout.page.scheduled}">Scheduled</span></a></li>
+                <li><a id="focus_someday" th:href="@{/tasks/someday}"><i class="fas fa-road"></i> <span th:text="#{layout.page.someday}">Someday</span></a></li>
+                <li><a id="star" th:href="@{/tasks/focus}"><i class="fas fa-star"></i> <span th:text="#{layout.page.focus}">Focus</span></a></li>
+                <li><a id="focus_completed" th:href="@{/tasks/completed}"><i class="far fa-check-square"></i> <span th:text="#{layout.page.completed}">Completed Tasks</span></a></li>
+                <li><a id="focus_trash" th:href="@{/tasks/trash}"><i class="fas fa-trash-alt"></i> <span th:text="#{layout.page.trash}">Trash</span></a></li>
                 <li th:replace="this :: tw-project-menu-container(rootCategories=${rootCategories},thisProject=${thisProject})"></li>
-                <li><a id="focus_completed" th:href="@{/tasks/completed}"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <span th:text="#{layout.page.completed}">Completed Tasks</span></a></li>
-                <li><a id="focus_trash" th:href="@{/tasks/trash}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <span th:text="#{layout.page.trash}">Trash</span></a></li>
             </ul>
         </div>
     </div>
@@ -24,12 +24,12 @@
         <ul id="menu" class="nav nav-list">
             <li>
                 <span id="categoryNode_0" class="categoryNode" th:if="${thisProject == null or thisProject.id != 0}">
-                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                    <i class="fas fa-folder-open"></i>
                     <strong><span th:text="#{right.nav.projects}">Projects</span></strong>
                 </span>
                 <span id="categoryNode_0" class="categoryNode" th:if="${thisProject != null and thisProject.id == 0}">
                     <a th:href="@{/project/0}">
-                        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                        <i class="fas fa-folder-open"></i>
                         <span th:text="#{right.nav.projects}">Projects</span>
                     </a>
                 </span>

@@ -9,7 +9,7 @@
 
 	<!-- Document Window -->
 	<h1>
-		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;
+		<i class="fas fa-edit"></i>&nbsp;
 		<span th:utext="#{task.show.h1}">Edit Task</span>
 	</h1>
 
@@ -94,12 +94,12 @@
 				</span>
 			</div>
 			<button id="editDataLeaf" type="submit" class="btn btn-default">
-				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+				<i class="fas fa-save"></i>
 				<span th:utext="#{task.show.button}">Save Task</span>
 			</button>
 			&nbsp;&nbsp;&nbsp;
 			<a th:href="@{/task/transform/{id}(id=${task.id})}">
-				<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+				<i class="fas fa-project-diagram"></i>
 				<span th:utext="#{task.show.transform}">Transform into Project</span>
 			</a>
 		</form>

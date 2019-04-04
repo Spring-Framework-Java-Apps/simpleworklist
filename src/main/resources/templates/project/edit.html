@@ -9,7 +9,7 @@
 
 	<!-- New Project Form -->
 	<h1>
-		<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+		<i class="fas fa-folder-open"></i>
 		<span th:utext="#{project.edit.h1}">Edit Project</span>
 	</h1>
 	<div>
@@ -49,7 +49,7 @@
 			</div>
 			<input type="hidden" th:field="*{id}" />
 			<button id="saveEditedProject" type="submit" class="btn btn-default">
-				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+				<i class="fas fa-save"></i>
 				<span th:utext="#{project.edit.button}">Save Project</span>
 			</button>
 		</form>

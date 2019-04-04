@@ -12,7 +12,7 @@
 
 	<div th:if="${thisProject.id gt 0}">
 		<h1>
-			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;
+			<i class="fas fa-folder-open"></i>&nbsp;
 			<span th:text="${thisProject.name}"></span>
 		</h1>
 		<div th:text="${thisProject.description}"></div>
@@ -20,15 +20,15 @@
 		<br />
 		<div>
 			<a th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}" href="#">
-				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+				<i class="fas fa-edit"></i>
 				<span th:text="#{project.show.edit}">Edit Project</span>
 			</a> |
 			<a th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
-				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				<i class="fas fa-trash-alt"></i>
 				<span th:text="#{project.show.delete}">Delete Project</span>
 			</a> |
 			<a th:href="@{/task/addtoproject/{thisProjectId}(thisProjectId=${thisProject.id})}" href="#">
-				<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+				<i class="fas fa-plus-square"></i>
 				<span th:text="#{project.show.addTask}">Add Task</span>
 			</a>
 		</div>

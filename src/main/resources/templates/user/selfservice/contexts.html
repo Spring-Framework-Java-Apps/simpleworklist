@@ -8,7 +8,7 @@
 <div th:fragment="mytwcontent">
 
     <h1>
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        <i class="fas fa-edit"></i>
         <span th:utext="#{user.selfservice.profile.changeContexts}">Change Areas</span>
     </h1>
     <h2>
@@ -19,7 +19,7 @@
     </h2>
     <div>
         <a th:href="@{/user/selfservice/context/add}">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            <i class="fas fa-plus-square"></i>
             <span th:utext="#{user.selfservice.contexts.add.button}">Add Area</span>
         </a>
         <br />
@@ -46,12 +46,12 @@
                     </td>
                     <td>
                         <a th:href="@{/user/selfservice/context/edit/{id}(id=${context.id})}">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <i class="fas fa-edit"></i>
                         </a>
                     </td>
                     <td>
                         <a th:href="@{/user/selfservice/context/delete/{id}(id=${context.id})}">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
                 </tr>
@@ -75,7 +75,7 @@
         </div>
         <input type="hidden" th:field="*{id}" />
         <button id="saveLanguageButton" type="submit" class="btn btn-default">
-            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            <i class="fas fa-save"></i>
             <span th:utext="#{user.selfservice.context.default.button}">Save Default Area</span>
         </button>
     </form>

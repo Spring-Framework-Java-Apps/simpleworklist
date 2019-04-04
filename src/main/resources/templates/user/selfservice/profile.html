@@ -8,7 +8,7 @@
 <div th:fragment="mytwcontent">
 
     <h1>
-        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;
+        <i class="fas fa-user"></i> &nbsp;
         <span th:utext="#{user.selfservice.profile.h1}">User Profile</span>
         <small><span sec:authentication="name"></span></small>
     </h1>
@@ -22,32 +22,32 @@
                 </strong>
             </li>
             <li>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <i class="fas fa-edit"></i>
                 <span th:utext="#{user.selfservice.profile.name}">Name:</span>
                 <a th:href="@{/user/selfservice/name}">
                     <span th:text="${thisUser.userFullname}">thisUser.userFullname</span>
                 </a>
             </li>
             <li>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <i class="fas fa-edit"></i>
                 <a th:href="@{/user/selfservice/password}">
                     <span th:utext="#{user.selfservice.profile.changePassword}">Change Password</span>
                 </a>
             </li>
             <li>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <i class="fas fa-edit"></i>
                 <a th:href="@{/user/selfservice/contexts}">
                     <span th:utext="#{user.selfservice.profile.changeContexts}">Change Areas</span>
                 </a>
             </li>
             <li>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <i class="fas fa-edit"></i>
                 <a th:href="@{/user/selfservice/language}">
                     <span th:utext="#{user.selfservice.profile.changeLanguage}">Set Default Language</span>
                 </a>
             </li>
             <li>
-                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <i class="fas fa-list-alt"></i>
                 <a th:href="@{/tasks/all}">
                     <span th:utext="#{tasks.all.h1}">All Tasks</span>
                 </a>
@@ -78,7 +78,7 @@
                     <td>
                         <span th:if="${user.id != thisUser.id}">
                             <a th:href="@{/user/{id}/messages/(id=${user.id})}">
-                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                <i class="fas fa-envelope"></i>
                                 <span th:utext="#{pages.users.messages}">Messages</span>
                                 <span class="badge" th:if="${usersToNewMessages.get(user.id) gt 0}">
                                     <span th:text="${usersToNewMessages.get(user.id)}">Messages</span>
