@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,15 +40,13 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/project/{projectId}", method = RequestMethod.GET)
-    public final String showProject(@PathVariable long projectId) {
-        return "redirect:/project/" + projectId + "/page/1";
-    }
-
-    //TODO #37
-    @RequestMapping(value = "/project/{projectId}/page/{pageNumber}", method = RequestMethod.GET)
     public final String showProject(
             @PathVariable long projectId,
-            @PathVariable int pageNumber,
+            @PageableDefault(
+                    value = 0,
+                    size = 20,
+                    sort = "orderIdProject"
+            ) Pageable pageable,
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -56,23 +55,21 @@ public class ProjectController extends AbstractController {
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         Project thisProject = null;
         Page<Task> taskPage = null;
-        Pageable pageRequest =
-                new PageRequest(pageNumber - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdProject");
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             if(userSession.getContextId() == null || userSession.getContextId() == 0) {
-                taskPage = taskService.findByProject(thisProject, pageRequest, userAccount);
+                taskPage = taskService.findByProject(thisProject, pageable, userAccount);
             } else {
-                taskPage = taskService.findByProject(thisProject, pageRequest, userAccount, context);
+                taskPage = taskService.findByProject(thisProject, pageable, userAccount, context);
             }
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
             if(userSession.getContextId() == null || userSession.getContextId() == 0) {
-                taskPage = taskService.findByRootProject(pageRequest, userAccount);
+                taskPage = taskService.findByRootProject(pageable, userAccount);
             } else {
-                taskPage = taskService.findByRootProject(pageRequest, userAccount, context);
+                taskPage = taskService.findByRootProject(pageable, userAccount, context);
             }
         }
         List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
@@ -174,7 +171,7 @@ public class ProjectController extends AbstractController {
                 LOGGER.info("project:     "+ project.toString());
                 LOGGER.info("thisProject: "+ thisProject.toString());
             }
-            return "redirect:/project/" + projectId + "/page/1";
+            return "redirect:/project/" + projectId;
         }
     }
 
@@ -189,7 +186,7 @@ public class ProjectController extends AbstractController {
             Project targetProject = projectService.findByProjectId(targetProjectId, userAccount);
             projectService.moveProjectToAnotherProject(thisProject, targetProject,userAccount );
         }
-        return "redirect:/project/" + projectId + "/page/1";
+        return "redirect:/project/" + projectId;
     }
 
     @RequestMapping(value = "/project/{projectId}/edit", method = RequestMethod.GET)
@@ -206,7 +203,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("project", thisProject);
             return "project/edit";
         } else {
-            return "redirect:/category/0/page/1";
+            return "redirect:/project/0/";
         }
     }
 
@@ -237,7 +234,7 @@ public class ProjectController extends AbstractController {
             } else {
                 projectService.saveAndFlush(thisProject, userAccount);
             }
-            return "redirect:/project/" + projectId + "/page/1";
+            return "redirect:/project/" + projectId;
         }
     }
 
@@ -292,6 +289,6 @@ public class ProjectController extends AbstractController {
                 }
             }
         }
-        return "redirect:/project/" + newProjectId + "/page/1";
+        return "redirect:/project/" + newProjectId;
     }
 }

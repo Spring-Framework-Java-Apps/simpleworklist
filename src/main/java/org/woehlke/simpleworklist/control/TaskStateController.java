@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,18 +41,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/inbox", method = RequestMethod.GET)
-    public final String inbox(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String inbox(@PageableDefault(
+                                      value = 0,
+                                      size = 20,
+                                      sort = "orderIdTaskState"
+                              ) Pageable pageable,
                               @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId()==0){
-            taskPage = taskStateService.getInbox(thisUser, request);
+            taskPage = taskStateService.getInbox(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getInbox(thisUser, context, request);
+            taskPage = taskStateService.getInbox(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -66,18 +69,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/today", method = RequestMethod.GET)
-    public final String today(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String today(@PageableDefault(
+                                        value = 0,
+                                        size = 20,
+                                        sort = "orderIdTaskState"
+                                ) Pageable pageable,
                               @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getToday(thisUser, request);
+            taskPage = taskStateService.getToday(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getToday(thisUser, context, request);
+            taskPage = taskStateService.getToday(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -92,18 +97,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/next", method = RequestMethod.GET)
-    public final String next(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String next(@PageableDefault(
+                                        value = 0,
+                                        size = 20,
+                                        sort = "orderIdTaskState"
+                                ) Pageable pageable,
                              @ModelAttribute("userSession") UserSessionBean userSession,
                              BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getNext(thisUser, request);
+            taskPage = taskStateService.getNext(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getNext(thisUser, context, request);
+            taskPage = taskStateService.getNext(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -118,18 +125,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/waiting", method = RequestMethod.GET)
-    public final String waiting(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String waiting(@PageableDefault(
+                                        value = 0,
+                                        size = 20,
+                                        sort = "orderIdTaskState"
+                                ) Pageable pageable,
                                 @ModelAttribute("userSession") UserSessionBean userSession,
                                 BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getWaiting(thisUser, request);
+            taskPage = taskStateService.getWaiting(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getWaiting(thisUser, context, request);
+            taskPage = taskStateService.getWaiting(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -144,18 +153,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/scheduled", method = RequestMethod.GET)
-    public final String scheduled(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String scheduled(@PageableDefault(
+                                            value = 0,
+                                            size = 20,
+                                            sort = "orderIdTaskState"
+                                    ) Pageable pageable,
                                   @ModelAttribute("userSession") UserSessionBean userSession,
                                   BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getScheduled(thisUser, request);
+            taskPage = taskStateService.getScheduled(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getScheduled(thisUser, context, request);
+            taskPage = taskStateService.getScheduled(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -170,18 +181,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/someday", method = RequestMethod.GET)
-    public final String someday(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String someday(@PageableDefault(
+                                        value = 0,
+                                        size = 20,
+                                        sort = "orderIdTaskState"
+                                ) Pageable pageable,
                                 @ModelAttribute("userSession") UserSessionBean userSession,
                                 BindingResult result,  Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getSomeday(thisUser, request);
+            taskPage = taskStateService.getSomeday(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getSomeday(thisUser, context, request);
+            taskPage = taskStateService.getSomeday(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -196,18 +209,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/completed", method = RequestMethod.GET)
-    public final String completed(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String completed(@PageableDefault(
+                                            value = 0,
+                                            size = 20,
+                                            sort = "orderIdTaskState"
+                                    ) Pageable pageable,
                                   @ModelAttribute("userSession") UserSessionBean userSession,
                                   BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getCompleted(thisUser, request);
+            taskPage = taskStateService.getCompleted(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getCompleted(thisUser, context, request);
+            taskPage = taskStateService.getCompleted(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -222,18 +237,20 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/trash", method = RequestMethod.GET)
-    public final String trash(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String trash(@PageableDefault(
+                                        value = 0,
+                                        size = 20,
+                                        sort = "orderIdTaskState"
+                                ) Pageable pageable,
                               @ModelAttribute("userSession") UserSessionBean userSession,
                               BindingResult result, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
         Page<Task> taskPage = null;
         if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getTrash(thisUser, request);
+            taskPage = taskStateService.getTrash(thisUser, pageable);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getTrash(thisUser, context, request);
+            taskPage = taskStateService.getTrash(thisUser, context, pageable);
         }
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -360,13 +377,15 @@ public class TaskStateController extends AbstractController {
     }
 
     @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
-    public final String focus(@RequestParam(defaultValue = "1", required = false) int page,
+    public final String focus(@PageableDefault(
+                                        value = 0,
+                                        size = 20,
+                                        sort = "orderIdTaskState"
+                                ) Pageable pageable,
                               @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        Pageable request =
-                new PageRequest(page - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.DESC, "orderIdTaskState");
-        Page<Task> taskPage = taskStateService.getFocus(context, thisUser, request);
+        Page<Task> taskPage = taskStateService.getFocus(context, thisUser, pageable);
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
