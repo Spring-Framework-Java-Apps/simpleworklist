@@ -1,0 +1,8 @@
+---
+applications:
+- name: simpleworklist
+  memory: 768M
+  instances: 1
+  random-route: true
+  buildpacks:
+  - https://github.com/cloudfoundry/java-buildpack.git
