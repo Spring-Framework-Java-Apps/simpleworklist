@@ -11,7 +11,7 @@
 <div>
 	<h1><span th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</span></h1>
 	<h2><span th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</span></h2>
-	<p><span th:utext="#{user.loginForm.login}">Please login or</span> <a th:href="@{//user/register}"><span th:utext="#{user.loginForm.register}">register as new user</span></a>.</p>
+	<p><span th:utext="#{user.loginForm.login}">Please login or</span> <a th:href="@{/register}"><span th:utext="#{user.loginForm.register}">register as new user</span></a>.</p>
 </div>
 <div class="well">
 	<div class="alert alert-danger" role="alert" th:if="${param.login_error != null}">
@@ -35,7 +35,7 @@
 		</button>
 	</form>
 	<br/>
-	<a th:href="@{//user/resetPassword}">
+	<a th:href="@{/resetPassword}">
 		<i class="fas fa-question-circle"></i>
 		<span th:utext="#{user.loginForm.passwordReset}">Password forgotten?</span>
 	</a>
