@@ -22,7 +22,7 @@
         <!-- TODO: #18 #33 Show Due Date for Task -->
         <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='SCHEDULED')">
         </div>
-        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/scheduled')">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/scheduled',page=${dataList})">
         </div>
     </div>
 
