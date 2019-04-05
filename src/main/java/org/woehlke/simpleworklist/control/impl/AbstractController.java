@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by tw on 14.02.16.
  */
-@SessionAttributes("userSession")
+@SessionAttributes({"userSession","locale"})
 public abstract class AbstractController {
 
     @Autowired
@@ -122,10 +122,10 @@ public abstract class AbstractController {
         return retVal;
     }
 
-    @ModelAttribute("locale")
-    public final String getCurrentLocale(Locale locale, Model model){
-        return locale.getLanguage().toLowerCase();
-    }
+    //@ModelAttribute("locale")
+    //public final Locale getCurrentLocale(Locale locale, Model model){
+    //    return locale;
+    //}
 
     @ModelAttribute("refreshMessages")
     public final boolean refreshMessagePage(){

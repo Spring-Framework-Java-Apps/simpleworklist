@@ -20,6 +20,8 @@ import org.woehlke.simpleworklist.services.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Locale;
+
 /**
  * Created by tw on 21.02.16.
  */
@@ -45,7 +47,7 @@ public class TaskStateController extends AbstractController {
                                       sort = "orderIdTaskState"
                               ) Pageable pageable,
                               @ModelAttribute("userSession") UserSessionBean userSession,
-                              BindingResult result, Model model) {
+                              BindingResult result, Locale locale, Model model) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Page<Task> taskPage = null;
         if(userSession.getContextId()==0){
@@ -56,6 +58,7 @@ public class TaskStateController extends AbstractController {
         }
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("focustype", "Inbox");
+        model.addAttribute("locale", locale);
         return "tasks/inbox";
     }
 
