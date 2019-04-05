@@ -48,8 +48,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("redirect:/tasks/inbox");
-        registry.addViewController("/home").setViewName("redirect:/tasks/inbox");
+        registry.addViewController("/").setViewName("redirect:/taskstate/inbox");
+        registry.addViewController("/home").setViewName("redirect:/taskstate/inbox");
     }
 
     @Override
