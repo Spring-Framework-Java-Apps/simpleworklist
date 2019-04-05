@@ -75,7 +75,7 @@ public class UserSelfserviceController extends AbstractController {
         } else {
             user.setUserFullname(username.getUserFullname());
             userAccountService.saveAndFlush(user);
-            return "redirect:/user/selfservice";
+            return "redirect:/user/selfservice/profile";
         }
     }
 
@@ -127,7 +127,7 @@ public class UserSelfserviceController extends AbstractController {
             }
             LOGGER.info("OK");
             userAccountAccessService.changeUsersPassword(userChangePasswordFormBean,user);
-            return "redirect:/user/selfservice";
+            return "redirect:/user/selfservice/profile";
         }
     }
 
@@ -267,8 +267,8 @@ public class UserSelfserviceController extends AbstractController {
             userAccountService.saveAndFlush(user);
             String returnUrl;
             switch (userChangeLanguageFormBean.getDefaultLanguage()){
-                case DE: returnUrl="redirect:/user/selfservice?lang=de"; break;
-                default: returnUrl="redirect:/user/selfservice?lang=en"; break;
+                case DE: returnUrl="redirect:/user/selfservice/profile?lang=de"; break;
+                default: returnUrl="redirect:/user/selfservice/profile?lang=en"; break;
             }
             return returnUrl;
         }
