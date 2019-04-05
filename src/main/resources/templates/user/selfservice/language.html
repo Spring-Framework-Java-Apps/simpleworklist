@@ -27,7 +27,7 @@
             <select th:field="*{defaultLanguage}">
                 <option th:each="language : ${languages}"
                         th:value="${language.value}"
-                        th:text="${language.code}">language.code</option>
+                        th:text="${#messages.msg(${language.code})}">language.code</option>
             </select>
             <div>
                 <div th:each="err : ${#fields.errors('defaultLanguage')}" th:text="${err}" class="alert alert-danger">
