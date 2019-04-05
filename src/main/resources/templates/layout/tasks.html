@@ -62,31 +62,31 @@
                     <span th:text="${task.dueDate}"></span>
                 </td>
                 <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}" th:switch="${task.taskState.name()}">
-                    <a th:case="'INBOX'" th:href="@{/tasks/inbox}">
+                    <a th:case="'INBOX'" th:href="@{/taskstate/inbox}">
                         <i class="fas fa-inbox"></i>
                         <span th:utext="#{tasks.focus.inbox}">Inbox</span>
                     </a>
-                    <a th:case="'TODAY'" th:href="@{/tasks/today}">
+                    <a th:case="'TODAY'" th:href="@{/taskstate/today}">
                         <i class="far fa-clock"></i>
                         <span th:utext="#{tasks.focus.today}">Today</span>
                     </a>
-                    <a th:case="'NEXT'" th:href="@{/tasks/next}">
+                    <a th:case="'NEXT'" th:href="@{/taskstate/next}">
                         <i class="fas fa-cogs"></i>
                         <span th:utext="#{tasks.focus.next}">Next</span>
                     </a>
-                    <a th:case="'WAITING'" th:href="@{/tasks/waiting}">
+                    <a th:case="'WAITING'" th:href="@{/taskstate/waiting}">
                         <i class="fas fa-hourglass-half"></i>
                         <span th:utext="#{tasks.focus.waiting}">Waiting</span>
                     </a>
-                    <a th:case="'SCHEDULED'" th:href="@{/tasks/scheduled}">
+                    <a th:case="'SCHEDULED'" th:href="@{/taskstate/scheduled}">
                         <i class="fas fa-calendar-alt"></i>
                         <span th:utext="#{tasks.focus.scheduled}">Scheduled</span>
                     </a>
-                    <a th:case="'SOMEDAY'" th:href="@{/tasks/someday}">
+                    <a th:case="'SOMEDAY'" th:href="@{/taskstate/someday}">
                         <i class="fas fa-road"></i>
                         <span th:utext="#{tasks.focus.someday}">Someday</span>
                     </a>
-                    <a th:case="'TRASHED'" th:href="@{/tasks/trash}">
+                    <a th:case="'TRASHED'" th:href="@{/taskstate/trash}">
                         <i class="fas fa-trash-alt"></i>
                         <span th:utext="#{tasks.focus.trash}">Trash</span>
                     </a>
