@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:sd="http://www.thymeleaf.org/spring-data">
 
     <div th:fragment="tw-tasks-message(message)">
         <div class="alert alert-danger alert-dismissible" role="alert" th:if="${message != null}">
@@ -107,7 +108,8 @@
         </table>
     </div>
 
-    <div th:fragment="tw-tasks-pagination(currentIndex,beginIndex,endIndex,totalPages,url)">
+    <div th:fragment="tw-tasks-pagination(currentIndex,beginIndex,endIndex,totalPages,url,page)">
+
         <nav th:if="${totalPages gt 1}">
             <div>
                 <ul class="pagination">
@@ -121,6 +123,60 @@
                 </ul>
             </div>
         </nav>
+
+        <p>Pagination summary:</p>
+        <div class="row">
+            <div class="col-sm-6">
+                <div sd:pagination-summary="">info</div>
+            </div>
+            <div class="col-sm-6">
+                <nav class="pull-right">
+                    <ul class="pagination" sd:pagination="full">
+                        <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <p>Pagination summary (compact):</p>
+        <div>
+            <span sd:pagination-summary="compact">info</span>
+            <div class="btn-group pager-compact" sd:pagination="compact-pager">
+                <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                <a href="#" class="btn btn-default disabled"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+
+        <p>Pager:</p>
+        <nav>
+            <ul class="pagination" sd:pagination="pager">
+                <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+            </ul>
+        </nav>
+
+        <p>Aligned links:</p>
+        <nav>
+            <ul class="pagination" sd:pagination="aligned-links">
+                <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+            </ul>
+        </nav>
+
+        <p>Page size selector (default, no action):</p>
+        Show <span sd:page-size-selector="default"></span> entries
+
+        <p>Page size selector (javascript):</p>
+        Show <span sd:page-size-selector="javascript"></span> entries
+
+        <p>Page size selector (dropdown):</p>
+        <div class="btn-group dropup" sd:page-size-selector="dropdown"></div>
+
     </div>
 
     <div th:fragment="tw-project-tasks-pagination(currentIndex,beginIndex,endIndex,totalPages,thisProjectId)">
