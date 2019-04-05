@@ -23,11 +23,10 @@
             <label th:for="${#ids.next('defaultLanguage')}" class="control-label">
                 <span th:utext="#{user.selfservice.language.defaultLanguage}">Language</span>
             </label>
-            <input type="text" th:field="*{defaultLanguage}" class="form-control" />
-            <select th:field="*{defaultLanguage}">
+            <select th:field="*{defaultLanguage}" class="form-control">
                 <option th:each="language : ${languages}"
                         th:value="${language.value}"
-                        th:text="${#messages.msg(${language.code})}">language.code</option>
+                        th:text="${#messages.msg(language.code)}">language.code</option>
             </select>
             <div>
                 <div th:each="err : ${#fields.errors('defaultLanguage')}" th:text="${err}" class="alert alert-danger">
