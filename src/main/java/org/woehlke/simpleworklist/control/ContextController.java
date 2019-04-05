@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by tw on 13.03.16.
  */
 @Controller
+@RequestMapping(value = "/context")
 public class ContextController extends AbstractController {
 
     private final ContextService contextService;
@@ -26,7 +27,7 @@ public class ContextController extends AbstractController {
        this.contextService = contextService;
     }
 
-    @RequestMapping(value = "/context/choose/{newContextId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/choose/{newContextId}", method = RequestMethod.GET)
     public String switchArea(@PathVariable long newContextId, Model model){
         if(newContextId > 0) {
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -39,6 +40,6 @@ public class ContextController extends AbstractController {
         } else {
             model.addAttribute("userSession",new UserSessionBean(newContextId));
         }
-        return "redirect:/tasks/inbox";
+        return "redirect:/taskstate/inbox";
     }
 }

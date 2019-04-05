@@ -2,17 +2,11 @@ package org.woehlke.simpleworklist.control;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +24,7 @@ import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
 @Controller
+@RequestMapping(value = "/task")
 public class TaskController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
@@ -41,7 +36,7 @@ public class TaskController extends AbstractController {
         this.taskService = taskService;
     }
 
-    @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/detail/{taskId}", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
@@ -66,7 +61,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/task/detail/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/detail/{taskId}", method = RequestMethod.POST)
     public final String editTaskStore(
             @PathVariable long taskId,
             @Valid Task task,
@@ -120,7 +115,7 @@ public class TaskController extends AbstractController {
 
     }
 
-    @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.GET)
     public final String addNewTaskToProjectForm(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -179,7 +174,7 @@ public class TaskController extends AbstractController {
         return thisProject;
     }
 
-    @RequestMapping(value = "/task/addtoproject/{projectId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.POST)
     public final String addNewTaskToProjectStore(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -235,14 +230,14 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/task/delete/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
     public final String deleteTask(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null){
             taskService.delete(task, userAccount);
         }
-        return "redirect:/tasks/trash";
+        return "redirect:/taskstate/trash";
     }
 
     @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
@@ -251,13 +246,13 @@ public class TaskController extends AbstractController {
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
             taskService.undelete(task, userAccount);
-            return "redirect:/tasks/completed";
+            return "redirect:/taskstate/completed";
         } else {
-            return "redirect:/tasks/trash";
+            return "redirect:/taskstate/trash";
         }
     }
 
-    @RequestMapping(value = "/task/trash/empty", method = RequestMethod.GET)
+    @RequestMapping(value = "/trash/empty", method = RequestMethod.GET)
     public final String emptyTrash(
             @ModelAttribute("userSession") UserSessionBean userSession,Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -279,7 +274,7 @@ public class TaskController extends AbstractController {
         return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/task/{taskId}/moveto/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{taskId}/moveto/{projectId}", method = RequestMethod.GET)
     public final String moveTaskToAnotherProject(@PathVariable long taskId,
                                                  @PathVariable long projectId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -294,7 +289,7 @@ public class TaskController extends AbstractController {
         return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/task/transform/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/transform/{taskId}", method = RequestMethod.GET)
     public final String transformTaskIntoProject(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
@@ -319,7 +314,7 @@ public class TaskController extends AbstractController {
         return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/task/complete/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/complete/{taskId}", method = RequestMethod.GET)
     public final String completeTask(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
@@ -331,8 +326,8 @@ public class TaskController extends AbstractController {
         return "redirect:/tasks/completed";
     }
 
-    @RequestMapping(value = "/task/incomplete/{taskId}", method = RequestMethod.GET)
-    public final String undoneTask(@PathVariable long taskId, Model model) {
+    @RequestMapping(value = "/incomplete/{taskId}", method = RequestMethod.GET)
+    public final String undoneTask(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
@@ -342,31 +337,30 @@ public class TaskController extends AbstractController {
             taskService.saveAndFlush(task,userAccount);
             switch (task.getTaskState()) {
                 case TODAY:
-                    return "redirect:/tasks/today";
+                    return "redirect:/taskstate/today";
                 case NEXT:
-                    return "redirect:/tasks/next";
+                    return "redirect:/taskstate/next";
                 case WAITING:
-                    return "redirect:/tasks/waiting";
+                    return "redirect:/taskstate/waiting";
                 case SCHEDULED:
-                    return "redirect:/tasks/scheduled";
+                    return "redirect:/taskstate/scheduled";
                 case SOMEDAY:
-                    return "redirect:/tasks/someday";
+                    return "redirect:/taskstate/someday";
                 case COMPLETED:
-                    return "redirect:/tasks/completed";
+                    return "redirect:/taskstate/completed";
                 case TRASHED:
-                    return "redirect:/tasks/trash";
+                    return "redirect:/taskstate/trash";
                 default:
-                    return "redirect:/tasks/inbox";
+                    return "redirect:/taskstate/inbox";
             }
         } else {
-            return "redirect:/tasks/inbox";
+            return "redirect:/taskstate/inbox";
         }
     }
 
-    @RequestMapping(value = "/task/setfocus/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/setfocus/{taskId}", method = RequestMethod.GET)
     public final String setFocus(@PathVariable long taskId,
-                                 @RequestParam(required=false) String back,
-                                 Model model){
+                                 @RequestParam(required=false) String back){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
@@ -380,29 +374,28 @@ public class TaskController extends AbstractController {
             }
             switch (task.getTaskState()) {
                 case TODAY:
-                    return "redirect:/tasks/today";
+                    return "redirect:/taskstate/today";
                 case NEXT:
-                    return "redirect:/tasks/next";
+                    return "redirect:/taskstate/next";
                 case WAITING:
-                    return "redirect:/tasks/waiting";
+                    return "redirect:/taskstate/waiting";
                 case SCHEDULED:
-                    return "redirect:/tasks/scheduled";
+                    return "redirect:/taskstate/scheduled";
                 case SOMEDAY:
-                    return "redirect:/tasks/someday";
+                    return "redirect:/taskstate/someday";
                 case COMPLETED:
-                    return "redirect:/tasks/completed";
+                    return "redirect:/taskstate/completed";
                 default:
-                    return "redirect:/tasks/inbox";
+                    return "redirect:/taskstate/inbox";
             }
         } else {
-            return "redirect:/tasks/inbox";
+            return "redirect:/taskstate/inbox";
         }
     }
 
-    @RequestMapping(value = "/task/unsetfocus/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/unsetfocus/{taskId}", method = RequestMethod.GET)
     public final String unsetFocus(@PathVariable long taskId,
-                                   @RequestParam(required=false) String back,
-                                   Model model){
+                                   @RequestParam(required=false) String back){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
@@ -416,81 +409,26 @@ public class TaskController extends AbstractController {
             }
             switch (task.getTaskState()) {
                 case TODAY:
-                    return "redirect:/tasks/today";
+                    return "redirect:/taskstate/today";
                 case NEXT:
-                    return "redirect:/tasks/next";
+                    return "redirect:/taskstate/next";
                 case WAITING:
-                    return "redirect:/tasks/waiting";
+                    return "redirect:/taskstate/waiting";
                 case SCHEDULED:
-                    return "redirect:/tasks/scheduled";
+                    return "redirect:/taskstate/scheduled";
                 case SOMEDAY:
-                    return "redirect:/tasks/someday";
+                    return "redirect:/taskstate/someday";
                 case COMPLETED:
-                    return "redirect:/tasks/completed";
+                    return "redirect:/taskstate/completed";
                 default:
-                    return "redirect:/tasks/inbox";
+                    return "redirect:/taskstate/inbox";
             }
         } else {
             return "redirect:/tasks/inbox";
         }
     }
 
-    @RequestMapping(value = "/tasks/all", method = RequestMethod.GET)
-    public String getAllTasksForUser(
-            @RequestParam(defaultValue = "changed", required = false) String sort,
-            @RequestParam(defaultValue = "desc", required = false) String sortDir,
-            @RequestParam(defaultValue = "1", required = false) int page,
-            Locale locale,
-            Model model){
-        Sort.Direction sortDirection = Sort.Direction.DESC;
-        if(sortDir.compareTo("asc") == 0){
-            sortDirection = Sort.Direction.ASC;
-        }
-        int pageSize = applicationProperties.getMvc().getControllerPageSize();
-        Pageable request = new PageRequest(page - 1, pageSize, sortDirection, "lastChangeTimestamp");
-        switch (sort){
-            case "title":
-                request = new PageRequest(page - 1, pageSize, sortDirection, "title", "lastChangeTimestamp");
-                break;
-            case "text":
-                request = new PageRequest(page - 1, pageSize, sortDirection, "text", "lastChangeTimestamp");
-                break;
-            case "duedate":
-                request = new PageRequest(page - 1, pageSize, sortDirection, "dueDate", "lastChangeTimestamp");
-                break;
-            case "state":
-                request = new PageRequest(page - 1, pageSize, sortDirection, "taskState", "lastChangeTimestamp");
-                break;
-            case "project":
-                request = new PageRequest(page - 1, pageSize, sortDirection, "project.name", "lastChangeTimestamp");
-                break;
-            case "context":
-                if(locale.getLanguage().toLowerCase().compareTo("de")==0){
-                    request = new PageRequest(page - 1, pageSize, sortDirection, "context.nameDe", "lastChangeTimestamp");
-                } else {
-                    request = new PageRequest(page - 1, pageSize, sortDirection, "context.nameEn", "lastChangeTimestamp");
-                }
-                break;
-            default:
-                break;
-        }
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = taskService.findByUser(userAccount,request);
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
-        model.addAttribute("sort",sort);
-        model.addAttribute("sortDir",sortDir);
-        return "tasks/all";
-    }
-
-    @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderId(
             @PathVariable long sourceTaskId,
             @PathVariable long destinationTaskId,
@@ -514,32 +452,4 @@ public class TaskController extends AbstractController {
         return returnUrl;
     }
 
-    @RequestMapping(value = "/project/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String changeTaskOrderIdByProject(
-            @PathVariable long sourceTaskId,
-            @PathVariable long destinationTaskId,
-            Model model){
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
-        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
-        LOGGER.info("--------- changeTaskOrderIdByProject  -------");
-        LOGGER.info("source Task:      "+sourceTask.toString());
-        LOGGER.info("---------------------------------------------");
-        LOGGER.info("destination Task: "+destinationTask.toString());
-        LOGGER.info("---------------------------------------------");
-        String returnUrl = "redirect:/tasks/inbox";
-        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
-            if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
-                taskService.moveOrderIdProject(sourceTask,destinationTask);
-                returnUrl = "redirect:/project/0";
-            } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
-                boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
-                if (sameProject) {
-                    taskService.moveOrderIdProject(sourceTask,destinationTask);
-                    returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
-                }
-            }
-        }
-        return returnUrl;
-    }
 }

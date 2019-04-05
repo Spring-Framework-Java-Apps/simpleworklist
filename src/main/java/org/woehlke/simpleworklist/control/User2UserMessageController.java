@@ -20,11 +20,12 @@ import java.util.List;
  * Created by Fert on 16.02.2016.
  */
 @Controller
+@RequestMapping(value = "/user2user/")
 public class User2UserMessageController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
-    @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         User2UserMessage newUser2UserMessage = new User2UserMessage();
         UserAccount receiver = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -40,10 +41,10 @@ public class User2UserMessageController extends AbstractController {
         model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList", user2UserMessageList);
         model.addAttribute("refreshMessages",true);
-        return "pages/userMessages";
+        return "user/messages/all";
     }
 
-    @RequestMapping(value = "/user/{userId}/messages/", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             Model model,
             @Valid @ModelAttribute("newUserMessage") User2UserMessage newUser2UserMessage,
@@ -62,14 +63,14 @@ public class User2UserMessageController extends AbstractController {
             List<User2UserMessage> user2UserMessageList = user2UserMessageService.getLast20MessagesBetweenCurrentAndOtherUser(sender,receiver);
             model.addAttribute("otherUser",receiver);
             model.addAttribute("userMessageList", user2UserMessageList);
-            return "pages/userMessages";
+            return "user/messages/all";
         } else {
             user2UserMessageService.sendNewUserMessage(sender,receiver, newUser2UserMessage);
-            return "redirect:/user/"+userId+"/messages/";
+            return "redirect:/user2user/"+userId+"/messages/";
         }
     }
 
-    @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/messages/all", method = RequestMethod.GET)
     public final String getAllMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
         User2UserMessage newUser2UserMessage = new User2UserMessage();
         UserAccount receiver = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -84,10 +85,10 @@ public class User2UserMessageController extends AbstractController {
         model.addAttribute("newUserMessage", newUser2UserMessage);
         model.addAttribute("otherUser",sender);
         model.addAttribute("userMessageList", user2UserMessageList);
-        return "pages/userMessages";
+        return "user/messages/all";
     }
 
-    @RequestMapping(value = "/user/{userId}/messages/all", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}/messages/all", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser2(
             Model model,
             @Valid @ModelAttribute("newUserMessage") User2UserMessage newUser2UserMessage,

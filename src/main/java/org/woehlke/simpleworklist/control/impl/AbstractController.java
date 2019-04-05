@@ -122,11 +122,6 @@ public abstract class AbstractController {
         return retVal;
     }
 
-    //@ModelAttribute("locale")
-    //public final Locale getCurrentLocale(Locale locale, Model model){
-    //    return locale;
-    //}
-
     @ModelAttribute("refreshMessages")
     public final boolean refreshMessagePage(){
         return false;

@@ -28,6 +28,7 @@ import java.util.List;
  * Created by tw on 14.02.16.
  */
 @Controller
+@RequestMapping(value = "/project")
 public class ProjectController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
@@ -39,7 +40,7 @@ public class ProjectController extends AbstractController {
         this.taskService = taskService;
     }
 
-    @RequestMapping(value = "/project/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public final String showProject(
             @PathVariable long projectId,
             @PageableDefault(
@@ -86,13 +87,13 @@ public class ProjectController extends AbstractController {
         return "project/show";
     }
 
-    @RequestMapping(value = "/project/addchild", method = RequestMethod.GET)
+    @RequestMapping(value = "/addchild", method = RequestMethod.GET)
     public final String addNewProjectForm(@ModelAttribute("userSession") UserSessionBean userSession,
                                           Model model){
         return addNewProjectForm(0, userSession,model);
     }
 
-    @RequestMapping(value = "/project/addchild/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/addchild/{projectId}", method = RequestMethod.GET)
     public final String addNewProjectForm(@PathVariable long projectId,
                                           @ModelAttribute("userSession") UserSessionBean userSession,
                                           Model model) {
@@ -122,7 +123,7 @@ public class ProjectController extends AbstractController {
         return "project/add";
     }
 
-    @RequestMapping(value = "/project/addchild/{projectId}",
+    @RequestMapping(value = "/addchild/{projectId}",
             method = RequestMethod.POST)
     public final String addNewProjectStore(
             @PathVariable long projectId,
@@ -169,7 +170,7 @@ public class ProjectController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/project/{projectId}/moveto/{targetProjectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/moveto/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
             @PathVariable long projectId,
             @PathVariable long targetProjectId) {
@@ -183,7 +184,7 @@ public class ProjectController extends AbstractController {
         return "redirect:/project/" + projectId;
     }
 
-    @RequestMapping(value = "/project/{projectId}/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.GET)
     public final String editProjectForm(
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
@@ -201,7 +202,7 @@ public class ProjectController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/project/{projectId}/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.POST)
     public final String editProjectStore(
             @PathVariable long projectId,
             @Valid Project project,
@@ -232,7 +233,7 @@ public class ProjectController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/project/{projectId}/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/delete", method = RequestMethod.GET)
     public final String deleteProject(
             @PathVariable long projectId, Model model) {
         long newProjectId = projectId;
@@ -277,5 +278,34 @@ public class ProjectController extends AbstractController {
             }
         }
         return "redirect:/project/" + newProjectId;
+    }
+
+    @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String changeTaskOrderIdByProject(
+            @PathVariable long sourceTaskId,
+            @PathVariable long destinationTaskId,
+            Model model){
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
+        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        LOGGER.info("--------- changeTaskOrderIdByProject  -------");
+        LOGGER.info("source Task:      "+sourceTask.toString());
+        LOGGER.info("---------------------------------------------");
+        LOGGER.info("destination Task: "+destinationTask.toString());
+        LOGGER.info("---------------------------------------------");
+        String returnUrl = "redirect:/tasks/inbox";
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
+            if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
+                taskService.moveOrderIdProject(sourceTask,destinationTask);
+                returnUrl = "redirect:/project/0";
+            } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
+                boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
+                if (sameProject) {
+                    taskService.moveOrderIdProject(sourceTask,destinationTask);
+                    returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
+                }
+            }
+        }
+        return returnUrl;
     }
 }

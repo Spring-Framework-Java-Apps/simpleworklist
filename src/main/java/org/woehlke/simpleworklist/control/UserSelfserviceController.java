@@ -27,6 +27,7 @@ import java.util.Map;
  * Created by Fert on 14.03.2016.
  */
 @Controller
+@RequestMapping(value = "/user/selfservice")
 public class UserSelfserviceController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSelfserviceController.class);
@@ -40,7 +41,7 @@ public class UserSelfserviceController extends AbstractController {
     }
 
 
-    @RequestMapping(value = "/user/selfservice", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String userProfileAndMenu(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         //TODO: change from List to Page
@@ -55,7 +56,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/profile";
     }
 
-    @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.GET)
+    @RequestMapping(value = "/name", method = RequestMethod.GET)
     public String userNameForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         UserChangeNameFormBean bean = new UserChangeNameFormBean(user.getUserFullname());
@@ -64,7 +65,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/name";
     }
 
-    @RequestMapping(value = "/user/selfservice/name", method = RequestMethod.POST)
+    @RequestMapping(value = "/name", method = RequestMethod.POST)
     public String userNameStore(@Valid UserChangeNameFormBean username, BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()) {
@@ -78,7 +79,7 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/password", method = RequestMethod.GET)
+    @RequestMapping(value = "/password", method = RequestMethod.GET)
     public String userPasswordForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
@@ -87,7 +88,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/password";
     }
 
-    @RequestMapping(value = "/user/selfservice/password", method = RequestMethod.POST)
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
     public String userPasswordStore(@Valid UserChangePasswordFormBean userChangePasswordFormBean,
                                    BindingResult result, Model model) {
         LOGGER.info("---------------------------------------------------------");
@@ -130,7 +131,7 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/contexts", method = RequestMethod.GET)
+    @RequestMapping(value = "/contexts", method = RequestMethod.GET)
     public String userAreasForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         UserChangeDefaultContextFormBean bean = new UserChangeDefaultContextFormBean();
@@ -139,10 +140,10 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", bean);
         List<Context> contexts = contextService.getAllForUser(user);
         model.addAttribute("contexts", contexts);
-        return "user/selfservice/contexts";
+        return "user/selfservice/context/all";
     }
 
-    @RequestMapping(value = "/user/selfservice/contexts", method = RequestMethod.POST)
+    @RequestMapping(value = "/contexts", method = RequestMethod.POST)
     public String userAreasSave(@Valid @ModelAttribute("thisUser") UserChangeDefaultContextFormBean thisUser, BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
@@ -150,7 +151,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "user/selfservice/contexts";
+            return "user/selfservice/context/all";
         } else {
             if(user.getId() == thisUser.getId()){
                 user.setDefaultContext(thisUser.getDefaultContext());
@@ -161,16 +162,16 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/context/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/context/add", method = RequestMethod.GET)
     public String userNewAreaForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         NewContextFormBean newContext = new NewContextFormBean();
         model.addAttribute("newContext", newContext);
-        return "user/selfservice/contextAdd";
+        return "user/selfservice/context/add";
     }
 
-    @RequestMapping(value = "/user/selfservice/context/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/context/add", method = RequestMethod.POST)
     public String userNewAreaStore(@Valid NewContextFormBean newContext, BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
@@ -178,14 +179,14 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "user/selfservice/contextAdd";
+            return "user/selfservice/context/add";
         } else {
             contextService.createNewContext(newContext,user);
             return "redirect:/user/selfservice/contexts";
         }
     }
 
-    @RequestMapping(value = "/user/selfservice/context/edit/{contextId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.GET)
     public String userEditAreaForm(@PathVariable long contextId, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
@@ -194,10 +195,10 @@ public class UserSelfserviceController extends AbstractController {
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
         model.addAttribute("editContext", editContext);
-        return "user/selfservice/contextEdit";
+        return "user/selfservice/context/edit";
     }
 
-    @RequestMapping(value = "/user/selfservice/context/edit/{contextId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.POST)
     public String userEditAreaStore(@Valid NewContextFormBean editContext, BindingResult result, Model model, @PathVariable long contextId){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
@@ -205,7 +206,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 LOGGER.info(error.toString());
             }
-            return "user/selfservice/contextEdit";
+            return "user/selfservice/context/edit";
         } else {
             contextService.updateContext(editContext,user, contextId);
             return "redirect:/user/selfservice/contexts";
@@ -214,7 +215,7 @@ public class UserSelfserviceController extends AbstractController {
 
     //TODO: is in session active? -> display message in frontend
     //TODO: has projects or tasks? -> display message in frontend
-    @RequestMapping(value = "/user/selfservice/context/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/context/delete/{id}", method = RequestMethod.GET)
     public String userDeleteArea(
             @PathVariable long id,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -242,7 +243,7 @@ public class UserSelfserviceController extends AbstractController {
         return "redirect:/user/selfservice/contexts";
     }
 
-    @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.GET)
+    @RequestMapping(value = "/language", method = RequestMethod.GET)
     public String userLanguageForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
@@ -251,7 +252,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/language";
     }
 
-    @RequestMapping(value = "/user/selfservice/language", method = RequestMethod.POST)
+    @RequestMapping(value = "/language", method = RequestMethod.POST)
     public String userLanguageStore(@Valid UserChangeLanguageFormBean userChangeLanguageFormBean,
                                     BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
