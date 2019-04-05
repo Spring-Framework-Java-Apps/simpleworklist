@@ -13,6 +13,8 @@
 
     <!-- TODO #36 -->
     <div th:fragment="tw-tasks-table(taskPage,myTaskState)">
+        <div th:replace="this :: tw-tasks-pagination(page=${taskPage})">
+        </div>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -112,9 +114,7 @@
 
     <div th:fragment="tw-tasks-pagination(page)">
         <div class="row">
-            <div class="col-sm-6">
-                <div sd:pagination-summary="">info</div>
-            </div>
+
             <div class="col-sm-6">
                 <nav class="pull-right">
                     <ul class="pagination" sd:pagination="full">
@@ -124,10 +124,10 @@
                     </ul>
                 </nav>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                Show <span sd:page-size-selector="javascript"></span> entries per page.
+            <div class="col-sm-6">
+                <div sd:pagination-summary="">info</div>
+                <div> | </div>
+                <div>Show <span sd:page-size-selector="javascript"></span> entries per page.</div>
             </div>
         </div>
     </div>
