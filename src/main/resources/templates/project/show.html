@@ -43,7 +43,7 @@
 		<!-- TODO: #34 -->
 		<div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='PROJECT')">
 		</div>
-		<div th:replace="layout/tasks :: tw-project-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},thisProjectId=${thisProject == null ? 0 : thisProject.id})">
+		<div th:replace="layout/tasks :: tw-tasks-pagination(page=${taskPage})">
 		</div>
 	</div>
 

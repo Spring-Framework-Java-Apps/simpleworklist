@@ -28,7 +28,7 @@
         <!-- TODO: #34 -->
         <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='TRASHED')">
         </div>
-        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/trash',page=${taskPage})">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${taskPage})">
         </div>
     </div>
 

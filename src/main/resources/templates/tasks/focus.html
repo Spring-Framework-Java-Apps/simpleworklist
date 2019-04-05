@@ -22,7 +22,7 @@
     <div th:if="${dataList.size() gt 0}">
         <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='FOCUS')">
         </div>
-        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/focus',page=${taskPage})">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${taskPage})">
         </div>
     </div>
 
