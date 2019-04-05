@@ -3,9 +3,7 @@ package org.woehlke.simpleworklist.control;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +57,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -88,7 +86,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -117,7 +115,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -146,7 +144,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -175,7 +173,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -204,7 +202,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -233,7 +231,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -262,7 +260,7 @@ public class TaskStateController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("page", taskPage);
+        model.addAttribute("taskPage", taskPage);
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
@@ -270,6 +268,31 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Trash");
         return "tasks/trash";
+    }
+
+    @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
+    public final String focus(
+            @PageableDefault(
+                    value = 0,
+                    size = 20,
+                    sort = "orderIdTaskState"
+            ) Pageable pageable,
+            @ModelAttribute("userSession") UserSessionBean userSession, Model model
+    ) {
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getFocus(context, thisUser, pageable);
+        int current = taskPage.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, taskPage.getTotalPages());
+        model.addAttribute("taskPage", taskPage);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        model.addAttribute("dataList", taskPage.getContent());
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute("focustype", "Inbox");
+        return "tasks/focus";
     }
 
     @RequestMapping(value = "/tasks/move/{taskId}/to/inbox", method = RequestMethod.GET)
@@ -384,25 +407,4 @@ public class TaskStateController extends AbstractController {
         return "redirect:/tasks/trash";
     }
 
-    @RequestMapping(value = "/tasks/focus", method = RequestMethod.GET)
-    public final String focus(@PageableDefault(
-                                        value = 0,
-                                        size = 20,
-                                        sort = "orderIdTaskState"
-                                ) Pageable pageable,
-                              @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        Page<Task> taskPage = taskStateService.getFocus(context, thisUser, pageable);
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
-        model.addAttribute("focustype", "Inbox");
-        return "tasks/focus";
-    }
 }

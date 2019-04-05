@@ -26,7 +26,7 @@
     <div th:if="${dataList.size() gt 0}">
         <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='INBOX')">
         </div>
-        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/inbox',page=${dataList})">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(currentIndex=${currentIndex},beginIndex=${beginIndex},endIndex=${endIndex},totalPages=${totalPages},url='tasks/inbox',page=${taskPage})">
         </div>
     </div>
 
