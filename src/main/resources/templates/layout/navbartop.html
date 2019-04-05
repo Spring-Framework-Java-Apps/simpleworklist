@@ -105,12 +105,12 @@
                             <i class="fas fa-globe"></i><b class="caret"></b></a>
                         <ul id="languageMenu" class="dropdown-menu">
                             <li class="active">
-                                <a th:href="@{/{pathinfo}(lang='de',pathinfo=${#request.getRequestURL()})}" class="lang-switcher-de">
+                                <a th:href="@{{url}(lang='de',url=${#request.getRequestURL()})}" class="lang-switcher-de">
                                     <img th:src="@{/img/de.png}">&nbsp; deutsch
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/{pathinfo}(lang='en',pathinfo=${#request.getRequestURL()})}" class="lang-switcher-en">
+                                <a th:href="@{{url}(lang='en',url=${#request.getRequestURL()})}" class="lang-switcher-en">
                                     <img th:src="@{/img/gb.png}">&nbsp; english
                                 </a>
                             </li>
