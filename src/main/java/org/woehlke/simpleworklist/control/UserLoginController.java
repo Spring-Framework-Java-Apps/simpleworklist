@@ -22,7 +22,6 @@ import org.woehlke.simpleworklist.model.LoginFormBean;
 import org.woehlke.simpleworklist.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.services.UserAccountLoginSuccessService;
 
-import java.util.Locale;
 
 @Controller
 public class UserLoginController {
@@ -47,11 +46,10 @@ public class UserLoginController {
      * @return Login Screen.
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public final String loginForm(Locale locale, Model model) {
+    public final String loginForm(Model model) {
         LoginFormBean loginFormBean = new LoginFormBean();
         model.addAttribute("loginFormBean", loginFormBean);
-        model.addAttribute("locale",locale.getLanguage().toLowerCase());
-        return "user/loginForm";
+        return "user/login/loginForm";
     }
 
     /**
@@ -78,7 +76,7 @@ public class UserLoginController {
             FieldError e = new FieldError(objectName, field, defaultMessage);
             result.addError(e);
             LOGGER.info("not logged in");
-            return "user/loginForm";
+            return "user/login/loginForm";
         }
     }
 
