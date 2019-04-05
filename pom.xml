@@ -480,7 +480,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
-                <finalName>jbosswildfly</finalName>
+                <finalName>simpleworklist</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
