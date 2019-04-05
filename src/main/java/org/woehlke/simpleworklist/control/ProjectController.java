@@ -76,16 +76,9 @@ public class ProjectController extends AbstractController {
         int current = taskPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, taskPage.getTotalPages());
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
-        if(taskPage != null){
-            model.addAttribute("dataList", taskPage.getContent());
-            model.addAttribute("totalPages", taskPage.getTotalPages());
-        }
         if(message != null){
             model.addAttribute("message",message);
             model.addAttribute("isDeleted",isDeleted);
@@ -275,17 +268,10 @@ public class ProjectController extends AbstractController {
                     List<Project> breadcrumb = projectService.getBreadcrumb(project, userAccount);
                     int pageNumber = 1;
                     Pageable request = new PageRequest(pageNumber - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.ASC, "title");
-                    Page<Task> dataLeafPage = taskService.findByProject(project, request, userAccount);
-                    int current = dataLeafPage.getNumber() + 1;
-                    int begin = Math.max(1, current - 5);
-                    int end = Math.min(begin + 10, dataLeafPage.getTotalPages());
-                    model.addAttribute("beginIndex", begin);
-                    model.addAttribute("endIndex", end);
-                    model.addAttribute("currentIndex", current);
+                    Page<Task> taskPage = taskService.findByProject(project, request, userAccount);
+                    model.addAttribute("taskPage", taskPage);
                     model.addAttribute("breadcrumb", breadcrumb);
                     model.addAttribute("thisProject", project);
-                    model.addAttribute("dataList", dataLeafPage.getContent());
-                    model.addAttribute("totalPages", dataLeafPage.getTotalPages());
                     return "project/show";
                 }
             }

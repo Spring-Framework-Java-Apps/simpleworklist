@@ -54,15 +54,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getInbox(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Inbox");
         return "tasks/inbox";
     }
@@ -83,15 +75,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getToday(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Today");
         return "tasks/today";
     }
@@ -112,15 +96,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getNext(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Next");
         return "tasks/next";
     }
@@ -141,15 +117,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getWaiting(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Waiting");
         return "tasks/waiting";
     }
@@ -170,15 +138,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getScheduled(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Scheduled");
         return "tasks/scheduled";
     }
@@ -199,15 +159,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getSomeday(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Someday");
         return "tasks/someday";
     }
@@ -228,15 +180,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getCompleted(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Completed Tasks");
         return "tasks/completed";
     }
@@ -257,15 +201,7 @@ public class TaskStateController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
             taskPage = taskStateService.getTrash(thisUser, context, pageable);
         }
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Trash");
         return "tasks/trash";
     }
@@ -282,15 +218,7 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getFocus(context, thisUser, pageable);
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("dataList", taskPage.getContent());
-        model.addAttribute("totalPages", taskPage.getTotalPages());
         model.addAttribute("focustype", "Inbox");
         return "tasks/focus";
     }

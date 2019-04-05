@@ -18,14 +18,12 @@
     <div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
     </div>
 
-    <div th:if="${dataList.size() gt 0}">
-        <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='NEXT')">
-        </div>
-        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${taskPage})">
+    <div th:if="${taskPage.getTotalElements() gt 0}">
+        <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='NEXT')">
         </div>
     </div>
 
-    <div th:if="${dataList.size() eq 0}">
+    <div th:if="${taskPage.getTotalElements() eq 0}">
         <p><span th:text="#{tasks.next.noTasks}">You have no Tasks to do Next</span></p>
     </div>
 

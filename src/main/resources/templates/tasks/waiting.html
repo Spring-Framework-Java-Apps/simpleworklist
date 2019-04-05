@@ -8,27 +8,24 @@
 <body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
 <div th:fragment="mytwcontent">
 
-<div id="tw-content-title">
-    <h1>
-        <i class="fas fa-hourglass-half"></i>
-        <span th:utext="#{tasks.waiting.h1}">Waiting</span>
-    </h1>
-</div>
-
-<div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
-</div>
-
-<div th:if="${dataList.size() gt 0}">
-    <div th:replace="layout/tasks :: tw-tasks-table(dataList=${dataList},myTaskState='WAITING')">
+    <div id="tw-content-title">
+        <h1>
+            <i class="fas fa-hourglass-half"></i>
+            <span th:utext="#{tasks.waiting.h1}">Waiting</span>
+        </h1>
     </div>
-    <div th:replace="layout/tasks :: tw-tasks-pagination(page=${taskPage})">
+
+    <div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
     </div>
-</div>
 
-<div th:if="${dataList.size() eq 0}">
-    <p><span th:text="#{tasks.waiting.noTasks}">You are not waiting for others</span></p>
-</div>
+    <div th:if="${taskPage.getTotalElements() gt 0}">
+        <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='WAITING')">
+        </div>
+    </div>
 
+    <div th:if="${taskPage.getTotalElements() eq 0}">
+        <p><span th:text="#{tasks.waiting.noTasks}">You are not waiting for others</span></p>
+    </div>
 
 </div>
 </body>
