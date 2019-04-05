@@ -187,10 +187,11 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String getAllTasksForUser(
-            @PageableDefault(sort = "changed") Pageable request, Model model){
+            @PageableDefault(sort = "lastChangeTimestamp") Pageable request, Model model){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Page<Task> taskPage = taskService.findByUser(userAccount,request);
         model.addAttribute("taskPage", taskPage);
+        model.addAttribute("focustype", "All");
         return "taskstate/all";
     }
 
@@ -317,6 +318,15 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         taskStateService.deleteAllCompleted(context,thisUser);
+        return "redirect:/taskstate/trash";
+    }
+
+    @RequestMapping(value = "/trash/empty", method = RequestMethod.GET)
+    public final String emptyTrash(
+            @ModelAttribute("userSession") UserSessionBean userSession,Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+        taskService.emptyTrash(userAccount,context);
         return "redirect:/taskstate/trash";
     }
 

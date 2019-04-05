@@ -252,15 +252,6 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/trash/empty", method = RequestMethod.GET)
-    public final String emptyTrash(
-            @ModelAttribute("userSession") UserSessionBean userSession,Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        taskService.emptyTrash(userAccount,context);
-        return "redirect:/tasks/trash";
-    }
-
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
     public final String moveTask(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();

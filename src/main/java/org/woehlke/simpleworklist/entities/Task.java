@@ -33,7 +33,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
         ),
         @UniqueConstraint(
             name="ux_task_order_id_task_state",
-            columnNames = {"order_id_task_state", "task_state", "context_id", "user_account_id"}
+            columnNames = {"order_id_task_state", "task_state", "project_id", "context_id", "user_account_id"}
         )
     },
     indexes = {
