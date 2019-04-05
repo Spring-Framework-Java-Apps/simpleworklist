@@ -81,6 +81,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("currentIndex", current);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
+        model.addAttribute("taskPage", taskPage);
         if(taskPage != null){
             model.addAttribute("dataList", taskPage.getContent());
             model.addAttribute("totalPages", taskPage.getTotalPages());
