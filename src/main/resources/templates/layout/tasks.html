@@ -114,7 +114,7 @@
 
     <div th:fragment="tw-tasks-pagination(page)">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-5">
                 <nav>
                     <ul class="pagination" sd:pagination="full">
                         <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
@@ -123,10 +123,9 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-sm-6">
-                <span sd:pagination-summary="">info</span>
-                <span> / </span>
-                <span>Show <span sd:page-size-selector="javascript"></span> entries per page.</span>
+            <div class="col-md-4">
+                <div sd:pagination-summary="">info</div>
+                <div>( Show <span sd:page-size-selector="javascript"></span> entries per page )</div>
             </div>
         </div>
     </div>
