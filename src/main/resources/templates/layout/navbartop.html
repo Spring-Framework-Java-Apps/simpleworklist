@@ -44,32 +44,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle"
-                           data-toggle="dropdown"
-                           role="button" aria-haspopup="true"
-                           aria-expanded="false"><i class="fas fa-plus-square"></i>
-                            <span th:text="#{layout.page.newContent}">New Content</span><span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a th:href="@{/project/addchild/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
-                                    <span th:text="#{layout.page.addProject}">Add a Project</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a th:href="@{/task/addtoproject/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
-                                    <span th:text="#{layout.page.addTask}">Add a Task</span>
-                                </a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a th:href="@{/test/helper/project/createTree}">
-                                    <span th:text="#{layout.page.createTestData}">Create Test Data</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li>
                         <a th:href="@{/user/selfservice/profile}">
                             <i class="fas fa-user"></i>

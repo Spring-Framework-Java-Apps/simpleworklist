@@ -49,6 +49,12 @@
             </li>
             <li>
                 <i class="fas fa-list-alt"></i>
+                <a th:href="@{/test/helper/project/createTree}">
+                    <span th:text="#{layout.page.createTestData}">Create Test Data</span>
+                </a>
+            </li>
+            <li>
+                <i class="fas fa-list-alt"></i>
                 <a th:href="@{/taskstate/all}">
                     <span th:utext="#{tasks.all.h1}">All Tasks</span>
                 </a>
