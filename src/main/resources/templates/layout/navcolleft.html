@@ -5,19 +5,29 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
     <div th:fragment="navcolleft(rootCategories,thisProject)">
-        <div id="categoryNavigationWell" class="well sidebar-nav" sec:authorize="isAuthenticated()">
-            <ul id="rootProject" class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" id="focus_inbox" th:href="@{/taskstate/inbox}"><i class="fas fa-inbox"></i> <span th:text="#{layout.page.inbox}">Inbox</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_today" th:href="@{/taskstate/today}"><i class="fas fa-clock"></i> <span th:text="#{layout.page.today}">Today</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_next" th:href="@{/taskstate/next}"><i class="fas fa-cogs"></i> <span th:text="#{layout.page.next}">Next</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_waiting" th:href="@{/taskstate/waiting}"><i class="fas fa-hourglass-half"></i> <span th:text="#{layout.page.waiting}">Waiting</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_scheduled" th:href="@{/taskstate/scheduled}"><i class="fas fa-calendar-alt"></i> <span th:text="#{layout.page.scheduled}">Scheduled</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_someday" th:href="@{/taskstate/someday}"><i class="fas fa-road"></i> <span th:text="#{layout.page.someday}">Someday</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="star" th:href="@{/taskstate/focus}"><i class="fas fa-star"></i> <span th:text="#{layout.page.focus}">Focus</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_completed" th:href="@{/taskstate/completed}"><i class="fas fa-check-square"></i> <span th:text="#{layout.page.completed}">Completed Tasks</span></a></li>
-                <li class="nav-item"><a class="nav-link" id="focus_trash" th:href="@{/taskstate/trash}"><i class="fas fa-trash-alt"></i> <span th:text="#{layout.page.trash}">Trash</span></a></li>
-                <li class="nav-item" th:replace="this :: tw-project-menu-container(rootCategories=${rootCategories},thisProject=${thisProject})"></li>
-            </ul>
+        <div id="categoryNavigationWell" sec:authorize="isAuthenticated()">
+            <div class="card">
+                <div class="card-body">
+                    <ul id="taskStateMenu" class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link" id="focus_inbox" th:href="@{/taskstate/inbox}"><i class="fas fa-inbox"></i> <span th:text="#{layout.page.inbox}">Inbox</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_today" th:href="@{/taskstate/today}"><i class="fas fa-clock"></i> <span th:text="#{layout.page.today}">Today</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_next" th:href="@{/taskstate/next}"><i class="fas fa-cogs"></i> <span th:text="#{layout.page.next}">Next</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_waiting" th:href="@{/taskstate/waiting}"><i class="fas fa-hourglass-half"></i> <span th:text="#{layout.page.waiting}">Waiting</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_scheduled" th:href="@{/taskstate/scheduled}"><i class="fas fa-calendar-alt"></i> <span th:text="#{layout.page.scheduled}">Scheduled</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_someday" th:href="@{/taskstate/someday}"><i class="fas fa-road"></i> <span th:text="#{layout.page.someday}">Someday</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="star" th:href="@{/taskstate/focus}"><i class="fas fa-star"></i> <span th:text="#{layout.page.focus}">Focus</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_completed" th:href="@{/taskstate/completed}"><i class="fas fa-check-square"></i> <span th:text="#{layout.page.completed}">Completed Tasks</span></a></li>
+                        <li class="nav-item"><a class="nav-link" id="focus_trash" th:href="@{/taskstate/trash}"><i class="fas fa-trash-alt"></i> <span th:text="#{layout.page.trash}">Trash</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <ul id="rootProject" class="nav flex-column">
+                        <li class="nav-item" th:replace="this :: tw-project-menu-container(rootCategories=${rootCategories},thisProject=${thisProject})"></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
