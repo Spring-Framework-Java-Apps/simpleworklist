@@ -292,7 +292,7 @@ public class ProjectController extends AbstractController {
         LOGGER.info("---------------------------------------------");
         LOGGER.info("destination Task: "+destinationTask.toString());
         LOGGER.info("---------------------------------------------");
-        String returnUrl = "redirect:/tasks/inbox";
+        String returnUrl = "redirect:/taskstate/inbox";
         if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
             if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
                 taskService.moveOrderIdProject(sourceTask,destinationTask);

@@ -57,7 +57,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("areas", contexts);
             return "task/show";
         } else {
-            return "redirect:/tasks/inbox";
+            return "redirect:/taskstate/inbox";
         }
     }
 
@@ -314,7 +314,7 @@ public class TaskController extends AbstractController {
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.complete(task, userAccount);
         }
-        return "redirect:/tasks/completed";
+        return "redirect:/taskstate/completed";
     }
 
     @RequestMapping(value = "/incomplete/{taskId}", method = RequestMethod.GET)
@@ -415,7 +415,7 @@ public class TaskController extends AbstractController {
                     return "redirect:/taskstate/inbox";
             }
         } else {
-            return "redirect:/tasks/inbox";
+            return "redirect:/taskstate/inbox";
         }
     }
 
@@ -432,12 +432,12 @@ public class TaskController extends AbstractController {
         LOGGER.info("---------------------------------------------");
         LOGGER.info("destination Task: "+destinationTask.toString());
         LOGGER.info("---------------------------------------------");
-        String returnUrl = "redirect:/tasks/inbox";
+        String returnUrl = "redirect:/taskstate/inbox";
         if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()) {
             boolean sameTaskType = (sourceTask.getTaskState().ordinal() == destinationTask.getTaskState().ordinal());
             if (sameTaskType) {
                 taskService.moveOrderIdTaskState(sourceTask, destinationTask);
-                returnUrl = "redirect:/tasks/" + sourceTask.getTaskState().name().toLowerCase();
+                returnUrl = "redirect:/taskstate/" + sourceTask.getTaskState().name().toLowerCase();
             }
         }
         return returnUrl;
