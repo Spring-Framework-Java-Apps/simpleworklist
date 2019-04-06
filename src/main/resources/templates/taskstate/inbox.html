@@ -29,7 +29,7 @@
     </div>
 
     <div th:if="${taskPage.getTotalElements() eq 0}">
-        <p><span th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</span></p>
+        <div th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</div>
     </div>
 
 </div>

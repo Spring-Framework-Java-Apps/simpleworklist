@@ -113,17 +113,15 @@
     </div>
 
     <div th:fragment="tw-tasks-pagination(page)">
-        <div class="row">
-            <nav>
-                <ul class="pagination" sd:pagination="full">
-                    <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
-                    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                </ul>
-            </nav>
-            <span sd:pagination-summary="">info</span>
-            <span> with <span sd:page-size-selector="javascript"></span> entries per page</span>
-            </div>
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm" sd:pagination="full">
+                <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+            </ul>
+        </nav>
+        <span sd:pagination-summary="">info</span>
+        <span sd:page-size-selector="javascript"></span>
         </div>
     </div>
 
