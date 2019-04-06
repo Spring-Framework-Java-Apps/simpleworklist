@@ -3,19 +3,30 @@ simpleworklist
 
 Your Todo List for Getting Things Done
 
-Software-Stack: Java EE, JPA, Spring Frameworks, Spring MVC, Twitter Bootstrap, jQuery, HTML5
+Software-Stack: Spring-Boot, JPA, Spring MVC, Thymeleaf, Twitter Bootstrap, jQuery, HTML5
 
 Setup local Test-System
 -----------------------
 
-1. Setup a MySQL-Database 
-2. Setup Wildfly10 as described in http://thomas-woehlke.blogspot.de/2016/02/mysql-datasource-for-wildfly10-like.html
+1. Setup a PostgreSQL 10-Database
 3. copy src/main/resources/worklist_sample.properties to _src/main/resources/worklist.properties
-4. build project with: mvn clean install 
-5. Deploy by cp deployment/ROOT.war ~/srv/wildfly-10.0.0.Final/standalone/deployments/
-6. start wildfly server: cd ~/srv/wildfly-10.0.0.Final/bin ; ./standalone.sh
+4. start project with: mvn clean spring-boot:run
 
 Getting Things Done
 -------------------
 GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. 
 SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
+
+Setup a PostgreSQL 10-Database
+------------------------------
+* https://www.postgresql.org/download/
+* Windows and macOS - Graphical installer by *BigSQL*: https://www.openscg.com/bigsql/postgresql/installers.jsp/
+* Windows: 
+    1. start cmd as admin
+    2. cd \PostgreSQL
+    3. pgc start
+    4. pgc pgadmin3
+
+Developer Reminder
+------------------
+* Create serialVersionUID for Classes with "implements Serializable": use the JDK tool “serialver“

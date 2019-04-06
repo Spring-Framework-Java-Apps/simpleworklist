@@ -5,11 +5,14 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 
 /**
  * Created by tw on 15.03.16.
  */
-public class NewContextFormBean {
+public class NewContextFormBean implements Serializable {
+
+    private static final long serialVersionUID = -8465934162293667335L;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank

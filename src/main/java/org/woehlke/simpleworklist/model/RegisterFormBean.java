@@ -4,8 +4,11 @@ import javax.validation.constraints.NotNull;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
-public class RegisterFormBean {
+public class RegisterFormBean implements Serializable {
+
+    private static final long serialVersionUID = 6759771756356742703L;
 
     @NotNull(message = "Email Address is compulsory")
     @NotBlank(message = "Email Address is compulsory")

@@ -5,11 +5,14 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Created by tw on 15.03.16.
  */
-public class UserChangePasswordFormBean {
+public class UserChangePasswordFormBean implements Serializable {
+
+    private static final long serialVersionUID = -2868974496767370L;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")

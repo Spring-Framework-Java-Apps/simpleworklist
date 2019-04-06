@@ -47,7 +47,6 @@ public class TestServiceImpl implements TestService {
         List<Context> contexts = contextRepository.findByUserAccount(userAccount);
         Iterator<Context> iterator = contexts.iterator();
         Context contextWork = iterator.next();
-        Assert.notNull(userAccount);
         LOGGER.info("----------------------------------------------");
         LOGGER.info("createTestCategoryTreeForUserAccount");
         LOGGER.info("----------------------------------------------");

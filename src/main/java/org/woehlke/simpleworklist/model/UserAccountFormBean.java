@@ -7,7 +7,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
-public class UserAccountFormBean {
+import java.io.Serializable;
+
+public class UserAccountFormBean implements Serializable {
+
+    private static final long serialVersionUID = 8904437385145868848L;
 
     @NotNull(message = "Email Address is compulsory")
     @NotBlank(message = "Email Address is compulsory")

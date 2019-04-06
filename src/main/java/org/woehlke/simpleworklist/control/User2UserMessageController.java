@@ -2,6 +2,10 @@ package org.woehlke.simpleworklist.control;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,20 +30,18 @@ public class User2UserMessageController extends AbstractController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.GET)
-    public final String getLastMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
+    public final String getLastMessagesBetweenCurrentAndOtherUser(
+            @PathVariable long userId,
+            @PageableDefault(sort = "createdTimestamp", direction = Sort.Direction.DESC) Pageable request,
+            Model model
+    ) {
         User2UserMessage newUser2UserMessage = new User2UserMessage();
-        UserAccount receiver = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserAccount sender = super.userAccountService.findUserById(userId);
-        List<User2UserMessage> user2UserMessageList = user2UserMessageService.getLast20MessagesBetweenCurrentAndOtherUser(receiver,sender);
-        for(User2UserMessage user2UserMessage : user2UserMessageList){
-            if((!user2UserMessage.isReadByReceiver()) && (receiver.getId().longValue()== user2UserMessage.getReceiver().getId().longValue())){
-                user2UserMessage.setReadByReceiver(true);
-                user2UserMessageService.update(user2UserMessage);
-            }
-        }
-        model.addAttribute("newUserMessage", newUser2UserMessage);
-        model.addAttribute("otherUser",sender);
-        model.addAttribute("userMessageList", user2UserMessageList);
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount otherUser = super.userAccountService.findUserById(userId);
+        Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
+        model.addAttribute("newUser2UserMessage", newUser2UserMessage);
+        model.addAttribute("otherUser", otherUser);
+        model.addAttribute("user2UserMessagePage", user2UserMessagePage);
         model.addAttribute("refreshMessages",true);
         return "user/messages/all";
     }
@@ -49,51 +51,21 @@ public class User2UserMessageController extends AbstractController {
             Model model,
             @Valid @ModelAttribute("newUserMessage") User2UserMessage newUser2UserMessage,
             BindingResult result,
-            @PathVariable long userId) {
+            @PathVariable long userId,
+            @PageableDefault(sort = "createdTimestamp", direction = Sort.Direction.DESC) Pageable request) {
         LOGGER.info("sendNewMessageToOtherUser");
-        UserAccount sender = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserAccount receiver = super.userAccountService.findUserById(userId);
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount otherUser = super.userAccountService.findUserById(userId);
         if(result.hasErrors()){
-            /*
-            for (ObjectError e : result.getAllErrors()) {
-                LOGGER.info(e.toString());
-            }
-            */
             LOGGER.info("result.hasErrors");
-            List<User2UserMessage> user2UserMessageList = user2UserMessageService.getLast20MessagesBetweenCurrentAndOtherUser(sender,receiver);
-            model.addAttribute("otherUser",receiver);
-            model.addAttribute("userMessageList", user2UserMessageList);
+            Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
+            model.addAttribute("otherUser", otherUser);
+            model.addAttribute("user2UserMessagePage", user2UserMessagePage);
             return "user/messages/all";
         } else {
-            user2UserMessageService.sendNewUserMessage(sender,receiver, newUser2UserMessage);
+            user2UserMessageService.sendNewUserMessage(thisUser, otherUser, newUser2UserMessage);
             return "redirect:/user2user/"+userId+"/messages/";
         }
     }
 
-    @RequestMapping(value = "/{userId}/messages/all", method = RequestMethod.GET)
-    public final String getAllMessagesBetweenCurrentAndOtherUser(@PathVariable long userId, Model model) {
-        User2UserMessage newUser2UserMessage = new User2UserMessage();
-        UserAccount receiver = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserAccount sender = super.userAccountService.findUserById(userId);
-        List<User2UserMessage> user2UserMessageList = user2UserMessageService.getAllMessagesBetweenCurrentAndOtherUser(receiver,sender);
-        for(User2UserMessage user2UserMessage : user2UserMessageList){
-            if((!user2UserMessage.isReadByReceiver()) && (user2UserMessage.getReceiver().getId() == receiver.getId())){
-                user2UserMessage.setReadByReceiver(true);
-                user2UserMessageService.update(user2UserMessage);
-            }
-        }
-        model.addAttribute("newUserMessage", newUser2UserMessage);
-        model.addAttribute("otherUser",sender);
-        model.addAttribute("userMessageList", user2UserMessageList);
-        return "user/messages/all";
-    }
-
-    @RequestMapping(value = "/{userId}/messages/all", method = RequestMethod.POST)
-    public final String sendNewMessageToOtherUser2(
-            Model model,
-            @Valid @ModelAttribute("newUserMessage") User2UserMessage newUser2UserMessage,
-            BindingResult result,
-            @PathVariable long userId) {
-        return this.sendNewMessageToOtherUser(model, newUser2UserMessage,result,userId);
-    }
 }

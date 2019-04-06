@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,9 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.woehlke.simpleworklist.entities.UserAccount;
 
-public class UserDetailsBean implements UserDetails {
+public class UserDetailsBean implements UserDetails, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
 
     private final String username;
     private final String password;
@@ -21,7 +22,6 @@ public class UserDetailsBean implements UserDetails {
     private final boolean enabled;
 
     public UserDetailsBean(UserAccount account) {
-        super();
         this.username = account.getUserEmail();
         this.password = account.getUserPassword();
         /*

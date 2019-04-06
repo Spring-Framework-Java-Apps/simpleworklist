@@ -27,7 +27,6 @@ public class TestController {
     @RequestMapping(value = "/helper/project/createTree", method = RequestMethod.GET)
     public String createTestCategoryTree() {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        Assert.notNull(user);
         testService.createTestCategoryTreeForUserAccount(user);
         return "redirect:/";
     }

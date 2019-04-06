@@ -3,11 +3,14 @@ package org.woehlke.simpleworklist.model;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Created by Fert on 15.03.2016.
  */
-public class UserChangeLanguageFormBean {
+public class UserChangeLanguageFormBean implements Serializable {
+
+    private static final long serialVersionUID = 3134287456153979676L;
 
     @NotNull
     private Language defaultLanguage;

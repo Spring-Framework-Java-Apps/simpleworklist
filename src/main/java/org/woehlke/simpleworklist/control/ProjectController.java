@@ -235,7 +235,8 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/{projectId}/delete", method = RequestMethod.GET)
     public final String deleteProject(
-            @PathVariable long projectId, Model model) {
+            @PathVariable long projectId,
+            @PageableDefault(sort = "title") Pageable request, Model model) {
         long newProjectId = projectId;
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         if (projectId > 0) {
@@ -267,8 +268,6 @@ public class ProjectController extends AbstractController {
                     model.addAttribute("message",s.toString());
                     model.addAttribute("isDeleted",false);
                     List<Project> breadcrumb = projectService.getBreadcrumb(project, userAccount);
-                    int pageNumber = 1;
-                    Pageable request = new PageRequest(pageNumber - 1, applicationProperties.getMvc().getControllerPageSize(), Sort.Direction.ASC, "title");
                     Page<Task> taskPage = taskService.findByProject(project, request, userAccount);
                     model.addAttribute("taskPage", taskPage);
                     model.addAttribute("breadcrumb", breadcrumb);

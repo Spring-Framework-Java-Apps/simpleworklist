@@ -44,30 +44,22 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
     }
 
     @Override
-    public List<User2UserMessage> getLast20MessagesBetweenCurrentAndOtherUser(UserAccount thisUser, UserAccount otherUser) {
-        LOGGER.info("getLast20MessagesBetweenCurrentAndOtherUser");
-        Pageable pageRequest = new PageRequest(0, 20);
-        Page<User2UserMessage> userMessageList =
-        userMessageRepository.findFirst20MessagesBetweenCurrentAndOtherUser(thisUser,otherUser,pageRequest);
-        return userMessageList.getContent();
-    }
-
-    @Override
-    public int getNumberOfNewIncomingMessagesForUser(UserAccount user) {
+    public int getNumberOfNewIncomingMessagesForUser(UserAccount receiver) {
+        boolean readByReceiver = false;
         List<User2UserMessage> user2UserMessageList =
-                userMessageRepository.findByReceiverAndReadByReceiver(user, false);
+                userMessageRepository.findByReceiverAndReadByReceiver(receiver, readByReceiver);
         return user2UserMessageList.size();
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void update(User2UserMessage user2UserMessage) {
-        userMessageRepository.saveAndFlush(user2UserMessage);
-    }
-
-    @Override
-    public List<User2UserMessage> getAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver, UserAccount sender) {
-        LOGGER.info("getAllMessagesBetweenCurrentAndOtherUser");
-        return userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver);
+    public Page<User2UserMessage> readAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver, UserAccount sender, Pageable request) {
+        Page<User2UserMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
+        for(User2UserMessage user2UserMessage : user2UserMessagePage){
+            if((!user2UserMessage.isReadByReceiver()) && (receiver.getId().longValue()== user2UserMessage.getReceiver().getId().longValue())){
+                user2UserMessage.setReadByReceiver(true);
+                userMessageRepository.saveAndFlush(user2UserMessage);
+            }
+        }
+        return userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
     }
 }

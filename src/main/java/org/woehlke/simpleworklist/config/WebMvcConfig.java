@@ -18,18 +18,13 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig /* extends WebMvcConfigurerAdapter implements WebMvcConfigurer */ {
 
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.GERMANY);
         return slr;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
     }
 
     @Bean
@@ -46,13 +41,25 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return x;
     }
 
-    @Override
+    @Bean
+    public SpringDataDialect springDataDialect() {
+        return new SpringDataDialect();
+    }
+
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+        return new MethodValidationPostProcessor();
+    }
+
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:/taskstate/inbox");
         registry.addViewController("/home").setViewName("redirect:/taskstate/inbox");
     }
 
-    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/*").addResourceLocations("classpath:/static/css/");
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
@@ -62,15 +69,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         registry.addResourceHandler("/webjars/*").addResourceLocations("/webjars/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
-    }
-
-    @Bean
-    public SpringDataDialect springDataDialect() {
-        return new SpringDataDialect();
-    }
-
-    @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor() {
-        return new MethodValidationPostProcessor();
     }
 }

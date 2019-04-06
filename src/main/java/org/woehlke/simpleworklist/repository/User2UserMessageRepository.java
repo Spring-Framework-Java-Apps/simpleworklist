@@ -17,15 +17,21 @@ import java.util.List;
 @Repository
 public interface User2UserMessageRepository extends JpaRepository<User2UserMessage, Long> {
 
-    String JQL = "select m from User2UserMessage m where (m.sender = :thisUser and m.receiver = :otherUser) or (m.sender = :otherUser and m.receiver = :thisUser) order by m.createdTimestamp desc";
+    String JQL = "select m from User2UserMessage m where (m.sender = :thisUser and m.receiver = :otherUser) or (m.sender = :otherUser and m.receiver = :thisUser)";
 
     @Query(JQL)
-    Page<User2UserMessage> findFirst20MessagesBetweenCurrentAndOtherUser(@Param("thisUser") UserAccount thisUser, @Param("otherUser") UserAccount otherUser, Pageable pageRequest);
+    Page<User2UserMessage> findAllMessagesBetweenCurrentAndOtherUser(
+            @Param("thisUser") UserAccount thisUser,
+            @Param("otherUser") UserAccount otherUser,
+            Pageable request
+    );
 
-    @Query(JQL)
-    List<User2UserMessage> findAllMessagesBetweenCurrentAndOtherUser(@Param("thisUser") UserAccount thisUser, @Param("otherUser") UserAccount otherUser);
+    List<User2UserMessage> findByReceiverAndReadByReceiver(
+            UserAccount receiver,
+            boolean readByReceiver
+    );
 
-    List<User2UserMessage> findByReceiverAndReadByReceiver(UserAccount receiver, boolean readByReceiver);
-
-    List<User2UserMessage> findBySenderAndReceiverAndReadByReceiver(UserAccount sender, UserAccount receiver, boolean readByReceiver);
+    List<User2UserMessage> findBySenderAndReceiverAndReadByReceiver(
+            UserAccount sender, UserAccount receiver, boolean readByReceiver
+    );
 }

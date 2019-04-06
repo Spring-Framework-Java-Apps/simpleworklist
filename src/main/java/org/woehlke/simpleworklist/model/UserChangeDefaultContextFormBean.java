@@ -3,11 +3,14 @@ package org.woehlke.simpleworklist.model;
 import org.woehlke.simpleworklist.entities.Context;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Created by Fert on 16.03.2016.
  */
-public class UserChangeDefaultContextFormBean {
+public class UserChangeDefaultContextFormBean implements Serializable {
+
+    private static final long serialVersionUID = 312962745980506820L;
 
     @NotNull
     private Long id;

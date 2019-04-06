@@ -3,13 +3,16 @@ package org.woehlke.simpleworklist.model;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.Project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by tw on 14.02.16.
  */
-public class SearchResult {
+public class SearchResult implements Serializable {
+
+    private static final long serialVersionUID = 1682809351146047764L;
 
     private String searchterm = "";
     private List<Task> taskList = new ArrayList<>();
