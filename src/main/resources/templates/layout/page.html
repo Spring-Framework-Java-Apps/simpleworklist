@@ -26,21 +26,17 @@
 	<section th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
 	</section>
 
+	<section th:replace="layout/navcolleft :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
+	</section>
+
 	<!-- Menu on Left Column and Document Window on the Right Column -->
 	<section id="tw-main-section">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-3">
-					<!-- Menu on Left Column -->
-					<div th:replace="layout/navcolleft :: navcolleft(rootCategories=${rootCategories},thisProject=${thisProject})">
-					</div>
-				</div>
-				<div class="col-md-9">
-					<!-- Menu on Left Column and Document Window on the Right Column -->
-					<th:block th:replace="${twcontent}" />
-				</div>
-			</div>
+			<th:block th:replace="${twcontent}" />
 		</div>
+	</section>
+
+	<section th:replace="layout/navcolleft :: navigation-projects(rootCategories=${rootCategories},thisProject=${thisProject})">
 	</section>
 
 	<!-- Footer -->

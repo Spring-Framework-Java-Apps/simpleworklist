@@ -14,7 +14,19 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 30px;
+    /* height: 30px; */
+}
+
+.navbar {
+    padding: .25rem .5rem; !important;
+}
+
+.navbar-text-footer {
+    display: inline-block;
+}
+
+.navbar-dark .navbar-text-footer {
+    color: rgba(255,255,255,.5);
 }
 
 .nav-list {
@@ -26,7 +38,8 @@ body {
 }
 
 #tw-main-section {
-    margin-bottom: 1rem;
+    padding-bottom: 1rem !important;
+    margin-bottom: 1rem !important;
 }
 
 #user-login-form {

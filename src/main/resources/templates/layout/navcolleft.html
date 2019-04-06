@@ -4,11 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
-    <div th:fragment="navcolleft(rootCategories,thisProject)">
-        <div id="categoryNavigationWell" sec:authorize="isAuthenticated()">
+    <section th:fragment="navigation-taskstates(rootCategories,thisProject)">
+        <div class="container" id="categoryNavigationWell" sec:authorize="isAuthenticated()">
             <div class="card">
                 <div class="card-body">
-                    <ul id="taskStateMenu" class="nav flex-column">
+                    <ul id="taskStateMenu" class="nav nav-tabs">
                         <li class="nav-item"><a class="nav-link" id="focus_inbox" th:href="@{/taskstate/inbox}"><i class="fas fa-inbox"></i> <span th:text="#{layout.page.inbox}">Inbox</span></a></li>
                         <li class="nav-item"><a class="nav-link" id="focus_today" th:href="@{/taskstate/today}"><i class="fas fa-clock"></i> <span th:text="#{layout.page.today}">Today</span></a></li>
                         <li class="nav-item"><a class="nav-link" id="focus_next" th:href="@{/taskstate/next}"><i class="fas fa-cogs"></i> <span th:text="#{layout.page.next}">Next</span></a></li>
@@ -21,6 +21,11 @@
                     </ul>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section th:fragment="navigation-projects(rootCategories,thisProject)">
+        <div class="container" id="projectNavigationWell" sec:authorize="isAuthenticated()">
             <div class="card">
                 <div class="card-body">
                     <ul id="rootProject" class="nav flex-column">
@@ -29,7 +34,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <li th:fragment="tw-project-menu-container(rootCategories,thisProject)">
         <ul id="menu" class="nav flex-column">
