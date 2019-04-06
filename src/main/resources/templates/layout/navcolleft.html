@@ -95,26 +95,24 @@
     </section>
 
     <ul class="nav flex-column" th:fragment="tw-project-submenu(projectList, thisProject)">
-        <li th:each="project : ${projectList}" th:class="${project.id == thisProject.id ? 'active' : ''}">
+        <li th:each="project : ${projectList}">
             <!-- http://jqueryui.com/droppable/ -->
-            <span th:if="${project.id == thisProject.id}">
+            <span th:if="${project == thisProject}">
                 <span th:id="'project_' + ${project.id}" class="projectDraggable projectDroppable">
                     <strong>
                         <span th:text="${project.name}" ></span>
                     </strong>
                 </span>
             </span>
-            <span th:if="${project.id != thisProject.id}">
+            <span th:if="${project != thisProject}">
                 <span th:id="'project_' + ${project.id}" class="projectDraggable projectDroppable">
                     <a th:href="@{/project/{id}(id=${project.id})}">
                         <span th:text="${project.name}"></span>
                     </a>
                 </span>
             </span>
-        </li>
-        <li th:if="${thisProject.children.size() gt 0}">
-            <ul>
-                <li th:include="this :: tw-project-submenu(projectList=${thisProject.children},thisProject=${thisProject})"></li>
+            <ul th:if="${project.children.size() gt 0}">
+                <li th:include="this :: tw-project-submenu(projectList=${project.children},thisProject=${thisProject})"></li>
             </ul>
         </li>
     </ul>
