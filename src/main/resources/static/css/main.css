@@ -28,9 +28,10 @@ body {
 
 
 #user-login-form {
-
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 #user-login-form-more-information {
-
+    margin-bottom: 1rem;
 }
