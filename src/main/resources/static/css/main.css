@@ -18,7 +18,11 @@ body {
 }
 
 .navbar {
-    padding: .25rem .5rem; !important;
+    padding: .25rem .5rem !important;
+}
+
+#taskStateNavigationContainer {
+    padding: 1rem 0rem;
 }
 
 .navbar-text-footer {

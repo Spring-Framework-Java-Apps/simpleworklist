@@ -5,8 +5,8 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
     <section th:fragment="navigation-taskstates(rootCategories,thisProject)">
-        <div class="container" id="categoryNavigationWell" sec:authorize="isAuthenticated()">
-            <ul id="taskStateMenu" class="nav nav-tabs">
+        <div class="container" id="taskStateNavigationContainer" sec:authorize="isAuthenticated()">
+            <ul id="taskStateNavigation" class="nav nav-tabs">
                 <li class="nav-item">
                     <a id="taskstate_inbox" th:href="@{/taskstate/inbox}" th:class="${taskstateType == null or taskstateType == 'inbox' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-inbox"></i>
