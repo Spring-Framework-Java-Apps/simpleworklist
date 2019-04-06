@@ -285,6 +285,11 @@
             <artifactId>jsoup</artifactId>
             <version>1.8.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.1.4.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -465,6 +470,37 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-dependencies</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>analyze-only</goal>
+                                    <goal>analyze-report</goal>
+                                    <goal>build-classpath</goal>
+                                </goals>
+                                <configuration>
+                                    <overWriteReleases>false</overWriteReleases>
+                                    <overWriteSnapshots>true</overWriteSnapshots>
+                                    <outputFile>${project.directory}/etc/classpath.txt</outputFile>
+                                    <failOnWarning>false</failOnWarning>
+                                    <ignoredDependencies>
+                                        <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
+                                    </ignoredDependencies>
+                                    <ignoredUsedUndeclaredDependencies>
+                                        <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
+                                    </ignoredUsedUndeclaredDependencies>
+                                    <ignoredUnusedDeclaredDependencies>
+                                        <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
+                                    </ignoredUnusedDeclaredDependencies>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -516,11 +552,15 @@
                                 <goals>
                                     <goal>analyze-only</goal>
                                     <goal>analyze-report</goal>
+                                    <!--
                                     <goal>unpack-dependencies</goal>
+                                    -->
                                     <goal>build-classpath</goal>
                                 </goals>
                                 <configuration>
+                                    <!--
                                     <includes>**/*.class,**/*.properties</includes>
+                                    -->
                                     <outputDirectory>${project.build.directory}/classes</outputDirectory>
                                     <overWriteReleases>false</overWriteReleases>
                                     <overWriteSnapshots>true</overWriteSnapshots>
