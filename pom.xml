@@ -482,7 +482,7 @@
                                 <configuration>
                                     <overWriteReleases>false</overWriteReleases>
                                     <overWriteSnapshots>true</overWriteSnapshots>
-                                    <outputFile>${project.directory}/etc/classpath.txt</outputFile>
+                                    <outputFile>${project.build.outputDirectory}/classpath.txt</outputFile>
                                     <failOnWarning>false</failOnWarning>
                                     <ignoredDependencies>
                                         <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>

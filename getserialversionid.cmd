@@ -25,7 +25,6 @@ serialver org.woehlke.simpleworklist.model.UserChangeLanguageFormBean  >> ..\..\
 serialver org.woehlke.simpleworklist.model.UserChangeNameFormBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.UserChangePasswordFormBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.UserSessionBean >> ..\..\etc\serialversions.txt
-@rem serialver org.springframework.security.core.userdetails.UserDetails >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.UserDetailsBean >> ..\..\etc\serialversions.txt
+@rem serialver org.woehlke.simpleworklist.model.UserDetailsBean >> ..\..\etc\serialversions.txt
 cd ..\..
 echo FINISHED
