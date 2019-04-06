@@ -88,7 +88,7 @@
         </div>
     </section>
 
-    <ul class="nav nav-list" th:fragment="tw-project-submenu(categories, thisProject)">
+    <ul class="nav flex-column" th:fragment="tw-project-submenu(categories, thisProject)">
         <li th:each="project : ${categories}" th:class="${project == thisProject ? 'nav-item active' : 'nav-item'}">
             <!-- http://jqueryui.com/droppable/ -->
             <span th:id="'category_' + ${project.id}" th:if="${project == thisProject}">
