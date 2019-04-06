@@ -26,6 +26,9 @@ body {
     padding-left: 0px !important;
 }
 
+#tw-main-section {
+    margin-bottom: 1rem;
+}
 
 #user-login-form {
     margin-top: 1rem;
@@ -33,5 +36,5 @@ body {
 }
 
 #user-login-form-more-information {
-    margin-bottom: 1rem;
+
 }
