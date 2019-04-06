@@ -13,8 +13,10 @@
 
     <!-- TODO #36 -->
     <div th:fragment="tw-tasks-table(taskPage,myTaskState)">
+        <div class="container">
         <div th:replace="this :: tw-tasks-pagination(page=${taskPage})">
         </div>
+        <div class="row">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -108,20 +110,25 @@
             </tr>
             </tbody>
         </table>
+        </div>
         <div th:replace="this :: tw-tasks-pagination(page=${taskPage})">
+        </div>
         </div>
     </div>
 
     <div th:fragment="tw-tasks-pagination(page)">
+        <div class="row">
         <nav aria-label="...">
-            <ul class="pagination pagination-sm" sd:pagination="full">
+            <ul class="pagination pagination-sm justify-content-center" sd:pagination="full">
                 <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
                 <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
                 <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
             </ul>
         </nav>
-        <span sd:pagination-summary="">info</span>
-        <span sd:page-size-selector="javascript"></span>
+        </div>
+        <div class="row">
+            <span sd:pagination-summary="">info</span>
+            <span sd:page-size-selector="javascript"></span>
         </div>
     </div>
 
