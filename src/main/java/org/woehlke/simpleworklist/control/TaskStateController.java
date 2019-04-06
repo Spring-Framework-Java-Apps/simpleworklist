@@ -54,7 +54,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getInbox(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Inbox");
+        model.addAttribute("taskstateType", "inbox");
         return "taskstate/inbox";
     }
 
@@ -72,7 +72,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getToday(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Today");
+        model.addAttribute("taskstateType", "today");
         return "taskstate/today";
     }
 
@@ -90,7 +90,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getNext(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Next");
+        model.addAttribute("taskstateType", "next");
         return "taskstate/next";
     }
 
@@ -109,7 +109,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getWaiting(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Waiting");
+        model.addAttribute("taskstateType", "waiting");
         return "taskstate/waiting";
     }
 
@@ -127,7 +127,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getScheduled(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Scheduled");
+        model.addAttribute("taskstateType", "scheduled");
         return "taskstate/scheduled";
     }
 
@@ -145,7 +145,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getSomeday(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Someday");
+        model.addAttribute("taskstateType", "someday");
         return "taskstate/someday";
     }
 
@@ -163,7 +163,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getCompleted(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Completed Tasks");
+        model.addAttribute("taskstateType", "completed");
         return "taskstate/completed";
     }
 
@@ -181,7 +181,7 @@ public class TaskStateController extends AbstractController {
             taskPage = taskStateService.getTrash(thisUser, context, pageable);
         }
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Trash");
+        model.addAttribute("taskstateType", "trash");
         return "taskstate/trash";
     }
 
@@ -191,7 +191,7 @@ public class TaskStateController extends AbstractController {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Page<Task> taskPage = taskService.findByUser(userAccount,request);
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "All");
+        model.addAttribute("taskstateType", "inbox");
         return "taskstate/all";
     }
 
@@ -204,7 +204,7 @@ public class TaskStateController extends AbstractController {
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getFocus(context, thisUser, pageable);
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("focustype", "Inbox");
+        model.addAttribute("taskstateType", "focus");
         return "taskstate/focus";
     }
 
