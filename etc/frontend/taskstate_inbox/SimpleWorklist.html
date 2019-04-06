@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://localhost:8080/taskstate/inbox -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Pragma" content="no-cache">
+	
+	
+	<title>SimpleWorklist</title>
+	<link href="./SimpleWorklist_files/jquery-ui.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/bootstrap.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/all.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/main.css" rel="stylesheet">
+</head>
+<body>
+
+	<!-- Navbar on Top -->
+	<header>
+        <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:8080/"><i class="fas fa-tasks"></i> SimpleWorklist</a>
+            </div>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="http://localhost:8080/taskstate/inbox#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cloud"></i>
+                            <span>Kontext</span> ( <span>Arbeit</span> )
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="http://localhost:8080/context/choose/1000">
+                                    
+                                    <span>Work</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://localhost:8080/context/choose/1001">
+                                    
+                                    <span>Private</span>
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="http://localhost:8080/context/choose/0">
+                                    
+                                    <span>All</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/user/selfservice/profile">
+                            <i class="fas fa-user"></i>
+                            <span>Benutzer</span>
+                            ( <span>thomas.woehlke@gmail.com</span> )
+                            
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/logout"><i class="fas fa-sign-out-alt"></i> <span>Abmelden</span></a>
+                    </li>
+                </ul>
+                
+                <form action="http://localhost:8080/search" class="navbar-form navbar-right" role="search" method="get">
+                    <div class="form-group">
+                        <input name="searchterm" type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="http://localhost:8080/taskstate/inbox#">
+                            <i class="fas fa-globe"></i><b class="caret"></b></a>
+                        <ul id="languageMenu" class="dropdown-menu">
+                            <li class="active">
+                                <a href="http://localhost:8080/taskstate/inbox?lang=de" class="lang-switcher-de">
+                                    <img src="./SimpleWorklist_files/de.png">&nbsp; deutsch
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://localhost:8080/taskstate/inbox?lang=en" class="lang-switcher-en">
+                                    <img src="./SimpleWorklist_files/gb.png">&nbsp; english
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+	<!-- Breadcrumb -->
+	<section>
+        
+    </section>
+
+	<!-- Menu on Left Column and Document Window on the Right Column -->
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<!-- Menu on Left Column -->
+					<div>
+        <div id="categoryNavigationWell" class="well sidebar-nav">
+            <ul id="rootProject" class="nav nav-list">
+                <li><a id="focus_inbox" href="http://localhost:8080/taskstate/inbox"><i class="fas fa-inbox"></i> <span>Eingang</span></a></li>
+                <li><a id="focus_today" href="http://localhost:8080/taskstate/today"><i class="fas fa-clock"></i> <span>Heute</span></a></li>
+                <li><a id="focus_next" href="http://localhost:8080/taskstate/next"><i class="fas fa-cogs"></i> <span>Als N&amp;auml;chstes</span></a></li>
+                <li><a id="focus_waiting" href="http://localhost:8080/taskstate/waiting"><i class="fas fa-hourglass-half"></i> <span>Warten</span></a></li>
+                <li><a id="focus_scheduled" href="http://localhost:8080/taskstate/scheduled"><i class="fas fa-calendar-alt"></i> <span>Eingeplant</span></a></li>
+                <li><a id="focus_someday" href="http://localhost:8080/taskstate/someday"><i class="fas fa-road"></i> <span>Sp&amp;auml;ter</span></a></li>
+                <li><a id="star" href="http://localhost:8080/taskstate/focus"><i class="fas fa-star"></i> <span>Fokus</span></a></li>
+                <li><a id="focus_completed" href="http://localhost:8080/taskstate/completed"><i class="fas fa-check-square"></i> <span>Erledigte Aufgaben</span></a></li>
+                <li><a id="focus_trash" href="http://localhost:8080/taskstate/trash"><i class="fas fa-trash-alt"></i> <span>Papierkorb</span></a></li>
+                <li>
+        <ul id="menu" class="nav nav-list">
+            <li>
+                <span id="categoryNode_0" class="categoryNode">
+                    <i class="fas fa-folder-open"></i>
+                    <strong><span>Projekte</span></strong>
+                </span>
+                
+                <ul class="nav nav-list">
+                    <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1000" class="categoryNode">
+                <a href="http://localhost:8080/project/1000">
+                    <span>test01_1554493984664</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1002" class="categoryNode">
+                <a href="http://localhost:8080/project/1002">
+                    <span>test0101_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1003" class="categoryNode">
+                <a href="http://localhost:8080/project/1003">
+                    <span>test0102_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+    
+            </ul>
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1001" class="categoryNode">
+                <a href="http://localhost:8080/project/1001">
+                    <span>test02_1554493984664</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1004" class="categoryNode">
+                <a href="http://localhost:8080/project/1004">
+                    <span>test0201_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1005" class="categoryNode">
+                <a href="http://localhost:8080/project/1005">
+                    <span>test0202_1554493984664</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1006" class="categoryNode">
+                <a href="http://localhost:8080/project/1006">
+                    <span>test020201_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1007" class="categoryNode">
+                <a href="http://localhost:8080/project/1007">
+                    <span>test020202_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1008" class="categoryNode">
+                <a href="http://localhost:8080/project/1008">
+                    <span>test020203_1554493984664</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1009" class="categoryNode">
+                <a href="http://localhost:8080/project/1009">
+                    <span>test02020301_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1010" class="categoryNode">
+                <a href="http://localhost:8080/project/1010">
+                    <span>test02020302_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1011" class="categoryNode">
+                <a href="http://localhost:8080/project/1011">
+                    <span>test02020303_1554493984664</span>
+                </a>
+            </span>
+            
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1051" class="categoryNode">
+                <a href="http://localhost:8080/project/1051">
+                    <span>test01_1554495716783</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1053" class="categoryNode">
+                <a href="http://localhost:8080/project/1053">
+                    <span>test0101_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1054" class="categoryNode">
+                <a href="http://localhost:8080/project/1054">
+                    <span>test0102_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+    
+            </ul>
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1052" class="categoryNode">
+                <a href="http://localhost:8080/project/1052">
+                    <span>test02_1554495716783</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1055" class="categoryNode">
+                <a href="http://localhost:8080/project/1055">
+                    <span>test0201_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1056" class="categoryNode">
+                <a href="http://localhost:8080/project/1056">
+                    <span>test0202_1554495716783</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1057" class="categoryNode">
+                <a href="http://localhost:8080/project/1057">
+                    <span>test020201_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1058" class="categoryNode">
+                <a href="http://localhost:8080/project/1058">
+                    <span>test020202_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1059" class="categoryNode">
+                <a href="http://localhost:8080/project/1059">
+                    <span>test020203_1554495716783</span>
+                </a>
+            </span>
+            <ul class="nav nav-list">
+                <li>
+        </li><li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1060" class="categoryNode">
+                <a href="http://localhost:8080/project/1060">
+                    <span>test02020301_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1061" class="categoryNode">
+                <a href="http://localhost:8080/project/1061">
+                    <span>test02020302_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+        <li>
+            <!-- http://jqueryui.com/droppable/ -->
+            
+            <span id="category_1062" class="categoryNode">
+                <a href="http://localhost:8080/project/1062">
+                    <span>test02020303_1554495716783</span>
+                </a>
+            </span>
+            
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+                </ul>
+            </li>
+        </ul>
+    </li>
+            </ul>
+        </div>
+    </div>
+				</div>
+				<div class="col-md-9">
+					<!-- Menu on Left Column and Document Window on the Right Column -->
+					<div>
+
+    <div id="tw-content-title">
+        <h1>
+            <i class="fas fa-inbox"></i>
+            <span>Eingang</span>
+        </h1>
+        <div id="tw-content-title-actionbuttons">
+            <a href="http://localhost:8080/task/addtoproject/0"><i class="fas fa-plus-square"></i>
+                <span>Neue Aufgabe</span>
+            </a>
+        </div>
+    </div>
+
+    <div>
+        
+    </div>
+
+    <div>
+        <div>
+        <div>
+        <div class="row">
+            <nav>
+                <ul class="pagination"><li class="disabled page-item"><span class="page-link"><span aria-hidden="true">«</span></span></li><li class="disabled page-item"><span class="page-link"><span aria-hidden="true">‹</span></span></li><li class="active"><span class="page-link">1<span class="sr-only">(strom)</span></span></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=1">2</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=2">3</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=3">4</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=4">5</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=5">6</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=6">7</a></li><li class="page-item"><a href="http://localhost:8080/taskstate/inbox?page=1" class="page-link" aria-label="Nächste Seite"><span aria-hidden="true">›</span></a></li><li class="page-item"><a href="http://localhost:8080/taskstate/inbox?page=24" class="page-link" aria-label="Letzte Seite"><span aria-hidden="true">»</span></a></li></ul>
+            </nav>
+            <span>Einträge 1 bis 10 von 242</span>
+            <span> with <span><select class="page-size-selector" onchange="javascript:window.location.href=this.options[this.selectedIndex].getAttribute(&#39;data-page-size-url&#39;);"><option value="10" selected="selected" class="selected">10</option><option value="20" data-page-size-url="/taskstate/inbox?size=20">20</option><option value="50" data-page-size-url="/taskstate/inbox?size=50">50</option><option value="100" data-page-size-url="/taskstate/inbox?size=100">100</option></select></span> entries per page</span>
+            </div>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th><span>Aufgabe</span></th>
+                    <th><span>Text</span></th>
+                    
+                    
+                    <th><span>Projekt</span></th>
+                    <th>&nbsp;</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1000">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1000">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1000" class="dataDetailListTitle" id="dataDetail_1000">
+                        <span>t_10</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_10 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1011">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554493984664</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1151">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1151">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1151" class="dataDetailListTitle" id="dataDetail_1151">
+                        <span>t_10</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_10 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1062">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554495716783</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1001">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1001">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1001" class="dataDetailListTitle" id="dataDetail_1001">
+                        <span>t_11</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_11 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1011">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554493984664</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1152">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1152">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1152" class="dataDetailListTitle" id="dataDetail_1152">
+                        <span>t_11</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_11 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1062">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554495716783</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1002">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1002">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1002" class="dataDetailListTitle" id="dataDetail_1002">
+                        <span>t_12</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_12 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1011">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554493984664</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1153">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1153">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1153" class="dataDetailListTitle" id="dataDetail_1153">
+                        <span>t_12</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_12 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1062">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554495716783</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1003">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1003">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1003" class="dataDetailListTitle" id="dataDetail_1003">
+                        <span>t_13</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_13 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1011">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554493984664</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1154">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1154">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1154" class="dataDetailListTitle" id="dataDetail_1154">
+                        <span>t_13</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_13 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1062">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554495716783</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1004">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1004">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1004" class="dataDetailListTitle" id="dataDetail_1004">
+                        <span>t_14</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_14 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1011">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554493984664</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <a alt="complete" href="http://localhost:8080/task/complete/1155">
+                        <i class="far fa-square"></i>
+                    </a>
+                    
+                    &nbsp;&nbsp;
+                    
+                    <a alt="focus" href="http://localhost:8080/task/setfocus/1155">
+                        <i class="far fa-star"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="http://localhost:8080/task/detail/1155" class="dataDetailListTitle" id="dataDetail_1155">
+                        <span>t_14</span>
+                        
+                    </a>
+                </td>
+                <td>
+                    <span>d_14 Lorem ipsum dolor sit amet, consetetur sadips...</span>
+                    
+                </td>
+                
+                
+                <td>
+                    <a href="http://localhost:8080/project/1062">
+                        <i class="fas fa-folder-open"></i>
+                        <span>test02020303_1554495716783</span>
+                    </a>
+                </td>
+                <td>
+                    
+                    
+                </td>
+                
+            </tr>
+            </tbody>
+        </table>
+        <div>
+        <div class="row">
+            <nav>
+                <ul class="pagination"><li class="disabled page-item"><span class="page-link"><span aria-hidden="true">«</span></span></li><li class="disabled page-item"><span class="page-link"><span aria-hidden="true">‹</span></span></li><li class="active"><span class="page-link">1<span class="sr-only">(strom)</span></span></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=1">2</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=2">3</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=3">4</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=4">5</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=5">6</a></li><li class="page-item"><a class="page-link" href="http://localhost:8080/taskstate/inbox?page=6">7</a></li><li class="page-item"><a href="http://localhost:8080/taskstate/inbox?page=1" class="page-link" aria-label="Nächste Seite"><span aria-hidden="true">›</span></a></li><li class="page-item"><a href="http://localhost:8080/taskstate/inbox?page=24" class="page-link" aria-label="Letzte Seite"><span aria-hidden="true">»</span></a></li></ul>
+            </nav>
+            <span>Einträge 1 bis 10 von 242</span>
+            <span> with <span><select class="page-size-selector" onchange="javascript:window.location.href=this.options[this.selectedIndex].getAttribute(&#39;data-page-size-url&#39;);"><option value="10" selected="selected" class="selected">10</option><option value="20" data-page-size-url="/taskstate/inbox?size=20">20</option><option value="50" data-page-size-url="/taskstate/inbox?size=50">50</option><option value="100" data-page-size-url="/taskstate/inbox?size=100">100</option></select></span> entries per page</span>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    
+
+</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">© 2016-2019 Thomas Wöhlke</p>
+		</div>
+	</footer>
+	<script async="" src="./SimpleWorklist_files/analytics.js.Download"></script><script src="./SimpleWorklist_files/google-analytics.js.Download"></script>
+	<script src="./SimpleWorklist_files/jquery.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/popper.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/bootstrap.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/jquery-ui.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/all.min.js.Download"></script>
+	<script>
+		$(window).load( function() {
+			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						rootUrl += '/task';
+					} else {
+						rootUrl += '/project';
+					}
+					//var html4move = '<a href="'+rootUrl+'/'+draggableId+'/moveto/'+selfId+'">move</a>';
+					//$( this ).html(html4move);
+					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$( ".dataDetailListTitle" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail") {
+						rootUrl = '/task';
+					} else if(draggableType == "dataDetailProject") {
+						rootUrl = '/project/task';
+					}
+					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$("#focus_inbox").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/inbox';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_today").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/today';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_next").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/next';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_waiting").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/waiting';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_someday").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/someday';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_completed").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/completed';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_trash").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/trash';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#taskDueDate ").datepicker({
+				dateFormat: 'mm/dd/yy',
+				constrainInput: false
+			});
+		});
+	</script>
+
+</body></html>

@@ -18,7 +18,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-public class WebMvcConfig /* extends WebMvcConfigurerAdapter implements WebMvcConfigurer */ {
+public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {

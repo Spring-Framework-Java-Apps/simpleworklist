@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://localhost:8080/login -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Pragma" content="no-cache">
+	
+	
+	<title>SimpleWorklist</title>
+	<link href="./SimpleWorklist_files/jquery-ui.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/bootstrap.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/all.min.css" rel="stylesheet">
+	<link href="./SimpleWorklist_files/main.css" rel="stylesheet">
+</head>
+<body>
+
+	<!-- Navbar on Top -->
+	<header>
+        <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:8080/"><i class="fas fa-tasks"></i> SimpleWorklist</a>
+            </div>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="http://localhost:8080/register"><i class="fas fa-user"></i> <span>Registration als neuer Benutzer</span></a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/login"><i class="fas fa-sign-in-alt"></i> <span>Anmelden</span></a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/resetPassword"><i class="fas fa-question-circle"></i> <span>Passwort vergessen?</span></a>
+                    </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="http://localhost:8080/login#">
+                            <i class="fas fa-globe"></i><b class="caret"></b></a>
+                        <ul id="languageMenu" class="dropdown-menu">
+                            <li class="active">
+                                <a href="http://localhost:8080/login?lang=de" class="lang-switcher-de">
+                                    <img src="./SimpleWorklist_files/de.png">&nbsp; deutsch
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://localhost:8080/login?lang=en" class="lang-switcher-en">
+                                    <img src="./SimpleWorklist_files/gb.png">&nbsp; english
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+	<!-- Breadcrumb -->
+	<section>
+        
+    </section>
+
+	<!-- Menu on Left Column and Document Window on the Right Column -->
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<!-- Menu on Left Column -->
+					<div>
+        
+    </div>
+				</div>
+				<div class="col-md-9">
+					<!-- Menu on Left Column and Document Window on the Right Column -->
+					<div>
+
+<div>
+	<h1><span>Willkommen bei SimpleWorklist</span></h1>
+	<h2><span>Ihre Todo-Liste für Getting Things Done®</span></h2>
+	<p><span>Bitte melden Sie sich hier an oder</span> <a href="http://localhost:8080/register"><span>registrieren Sie sich als neuer Benutzer</span></a>.</p>
+</div>
+<div class="well">
+	
+	<form id="formId" action="http://localhost:8080/j_spring_security_check" method="post"><input type="hidden" name="_csrf" value="8025c3f0-0b71-4f05-92da-e5afa9b0fe4c">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		<div class="form-group">
+			<label for="j_username">Email</label>
+			<input id="j_username" type="email" name="j_username" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="j_password">Passwort</label>
+			<input id="j_password" type="password" name="j_password" class="form-control">
+		</div>
+		<button id="loginButton" type="submit" class="btn btn-default">
+			<i class="fas fa-sign-in-alt"></i>
+			<span>Anmelden</span>
+		</button>
+	</form>
+	<br>
+	<a href="http://localhost:8080/resetPassword">
+		<i class="fas fa-question-circle"></i>
+		<span>Passwort vergessen?</span>
+	</a>
+</div>
+<div>
+	<p>
+		<span>F&amp;uuml;r weiter Informationen besuchen Sie diese Seiten:</span>
+		</p><ul>
+			<li><span>Quellcode bei Github:</span> <a href="https://github.com/phasenraum2010/simpleworklist" target="_blank">https://github.com/phasenraum2010/simpleworklist</a></li>
+			<li><span>Mein Blog:</span> <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a></li>
+			<li><span>Die Projekt Seite:</span> <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
+			<li>Getting Things Done® @ Wikipedia:
+				
+				<a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
+			</li>
+		</ul>
+	<p></p>
+	<p>
+		<small>
+			<span>GTD® und Getting Things Done® sind eingetragene Warenzeichen der David Allen Company. SimpleWorklist ist nicht verbunden mit oder empfohlen von der David Allen Company.</span>
+		</small>
+	</p>
+</div>
+
+</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">© 2016-2019 Thomas Wöhlke</p>
+		</div>
+	</footer>
+	<script async="" src="./SimpleWorklist_files/analytics.js.Download"></script><script src="./SimpleWorklist_files/google-analytics.js.Download"></script>
+	<script src="./SimpleWorklist_files/jquery.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/popper.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/bootstrap.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/jquery-ui.min.js.Download"></script>
+	<script src="./SimpleWorklist_files/all.min.js.Download"></script>
+	<script>
+		$(window).load( function() {
+			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".categoryNode" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						rootUrl += '/task';
+					} else {
+						rootUrl += '/project';
+					}
+					//var html4move = '<a href="'+rootUrl+'/'+draggableId+'/moveto/'+selfId+'">move</a>';
+					//$( this ).html(html4move);
+					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$( ".dataDetailListTitle" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail") {
+						rootUrl = '/task';
+					} else if(draggableType == "dataDetailProject") {
+						rootUrl = '/project/task';
+					}
+					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$("#focus_inbox").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/inbox';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_today").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/today';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_next").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/next';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_waiting").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/waiting';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_someday").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/someday';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_completed").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/completed';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#focus_trash").droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+						var html4move = '/taskstate/move/'+draggableId+'/to/trash';
+						window.location.replace(html4move);
+					}
+				}
+			});
+			$("#taskDueDate ").datepicker({
+				dateFormat: 'mm/dd/yy',
+				constrainInput: false
+			});
+		});
+	</script>
+
+</body></html>
