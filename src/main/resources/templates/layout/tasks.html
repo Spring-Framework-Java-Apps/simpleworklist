@@ -49,12 +49,17 @@
                         <i class="far fa-star"></i>
                     </a>
                 </td>
-                <td>
+                <td th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
                     <a th:href="@{/task/detail/{id}(id=${task.id})}" class="taskDraggable taskDroppable"
-                       th:id="'task_' + ${task.id}">
-                        <span th:text="${task.title}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"></span>
-                        <del th:text="${task.title}" th:if="${task.taskState.name() eq 'COMPLETED' or task.taskState.name() eq 'TRASHED'}"></del>
+                       th:id="'task_' + ${task.id}" th:text="${task.title}">
                     </a>
+                </td>
+                <td th:if="${task.taskState.name() eq 'COMPLETED' or task.taskState.name() eq 'TRASHED'}">
+                    <del>
+                        <a th:href="@{/task/detail/{id}(id=${task.id})}" class="taskDraggable taskDroppable"
+                           th:id="'task_' + ${task.id}" th:text="${task.title}" th:text="${task.title}">
+                        </a>
+                    </del>
                 </td>
                 <td>
                     <span th:text="${task.textShortened}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"></span>
