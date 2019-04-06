@@ -83,91 +83,75 @@
 					} else {
 						rootUrl += '[(@{/project})]';
 					}
-					//var html4move = '<a href="'+rootUrl+'/'+draggableId+'/moveto/'+selfId+'">move</a>';
-					//$( this ).html(html4move);
 					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
 					window.location.replace(html4move);
 				}
 			});
-			$("#focus_inbox").droppable({
+			$("#taskstate_inbox").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/inbox';
 						window.location.replace(html4move);
 					}
 				}
 			});
-			$("#focus_today").droppable({
+			$("#taskstate_today").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/today';
 						window.location.replace(html4move);
 					}
 				}
 			});
-			$("#focus_next").droppable({
+			$("#taskstate_next").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/next';
 						window.location.replace(html4move);
 					}
 				}
 			});
-			$("#focus_waiting").droppable({
+			$("#taskstate_waiting").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/waiting';
 						window.location.replace(html4move);
 					}
 				}
 			});
-			$("#focus_someday").droppable({
+			$("#taskstate_someday").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/someday';
 						window.location.replace(html4move);
 					}
 				}
 			});
-			$("#focus_completed").droppable({
+			$("#taskstate_completed").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/completed';
 						window.location.replace(html4move);
 					}
 				}
 			});
-			$("#focus_trash").droppable({
+			$("#taskstate_trash").droppable({
 				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task"){
 						var html4move = '/taskstate/move/'+draggableId+'/to/trash';
 						window.location.replace(html4move);
 					}
