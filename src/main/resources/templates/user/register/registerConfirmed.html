@@ -5,13 +5,16 @@
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
+<div th:fragment="mytwtitle">
 	<h1>
 		<span th:utext="#{user.registerConfirmed.h1}">Register as new User</span>
 	</h1>
-	<div class="well">
+</div>
+
+<div th:fragment="mytwcontent">
+	<div class="card card-body">
 		<form id="formId" th:action="@{/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountFormBean}" method="post">
 			<input type="hidden" th:field="*{userEmail}" />
 			<div class="form-group">
@@ -49,7 +52,7 @@
 			</button>
 		</form>
 	</div>
-
 </div>
+
 </body>
 </html>

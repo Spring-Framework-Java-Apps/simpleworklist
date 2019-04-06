@@ -5,9 +5,9 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
+<div th:fragment="mytwtitle">
     <h1>
         <i class="fas fa-edit"></i>
         <span th:utext="#{user.selfservice.contexts.add.button}">Add Area</span>
@@ -18,6 +18,9 @@
             <span sec:authentication="name"></span>
         </strong>
     </h2>
+</div>
+
+<div th:fragment="mytwcontent">
     <div>
         <form id="formId" th:action="@{/user/selfservice/context/add}" th:object="${newContext}" method="post">
             <td>
@@ -51,7 +54,7 @@
             <td>&nbsp;</td>
         </form>
     </div>
-
 </div>
+
 </body>
 </html>

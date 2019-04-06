@@ -5,28 +5,28 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
-    <div id="tw-content-title">
-        <h1>
-            <i class="fas fa-cogs"></i>
-            <span th:utext="#{tasks.next.h1}">Next</span>
-        </h1>
-    </div>
-
-    <div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
-    </div>
-
-    <div th:if="${taskPage.getTotalElements() gt 0}">
-        <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='NEXT')">
+    <div th:fragment="mytwtitle">
+        <div id="tw-content-title">
+            <h1>
+                <i class="fas fa-cogs"></i>
+                <span th:utext="#{tasks.next.h1}">Next</span>
+            </h1>
         </div>
     </div>
 
-    <div th:if="${taskPage.getTotalElements() eq 0}">
-        <p><span th:text="#{tasks.next.noTasks}">You have no Tasks to do Next</span></p>
+    <div th:fragment="mytwcontent">
+        <div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
+        </div>
+        <div th:if="${taskPage.getTotalElements() gt 0}">
+            <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='NEXT')">
+            </div>
+        </div>
+        <div th:if="${taskPage.getTotalElements() eq 0}">
+            <p><span th:text="#{tasks.next.noTasks}">You have no Tasks to do Next</span></p>
+        </div>
     </div>
 
-</div>
 </body>
 </html>

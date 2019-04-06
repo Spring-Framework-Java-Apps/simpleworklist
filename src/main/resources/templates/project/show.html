@@ -5,12 +5,9 @@
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
-<!-- TODO #37 -->
-<!-- Document Window -->
-
+<div th:fragment="mytwtitle">
 	<div id="tw-content-title">
 		<h1>
 			<i class="fas fa-folder-open"></i>
@@ -45,20 +42,21 @@
 		</div>
 		<br />
 	</div>
+</div>
 
+<div th:fragment="mytwcontent">
+	<!-- Document Window -->
 	<div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
 	</div>
-
 	<div th:if="${taskPage.getTotalElements() gt 0}">
 		<!-- TODO: #34 -->
 		<div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='PROJECT')">
 		</div>
 	</div>
-
 	<div th:if="${taskPage.getTotalElements() eq 0}">
 		<p><span th:text="#{project.show.nothingToDo}">There is nothing to do in this project.</span></p>
 	</div>
-
 </div>
+
 </body>
 </html>

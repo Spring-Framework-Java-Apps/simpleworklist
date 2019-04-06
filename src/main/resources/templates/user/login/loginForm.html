@@ -5,68 +5,69 @@
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
-<div>
-	<h1><span th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</span></h1>
-	<h2><span th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</span></h2>
-</div>
-<form id="user-login-form" th:action="@{/j_spring_security_check}" method="post">
-	<div class="card">
-		<div class="card-header">
-			<span th:utext="#{user.loginForm.login}">Please login or</span>
-			<a th:href="@{/register}">
-				<span th:utext="#{user.loginForm.register}">register as new user</span>
-			</a>.
-		</div>
-		<div class="card-body">
-			<div class="alert alert-danger" role="alert" th:if="${param.login_error != null}">
-				<span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span>
-			</div>
-			<input type="hidden"
-				   name="${_csrf.parameterName}"
-				   value="${_csrf.token}"/>
-			<div class="form-group">
-				<label for="j_username">Email</label>
-				<input id="j_username" type="email" name="j_username" class="form-control" placeholder="Enter email"/>
-			</div>
-			<div class="form-group">
-				<label for="j_password" th:text="#{user.loginForm.password}">Password</label>
-				<input id="j_password" type="password" name="j_password" class="form-control" placeholder="Password"/>
-			</div>
-			<button id="loginButton" type="submit" class="btn btn-primary">
-				<i class="fas fa-sign-in-alt"></i>
-				<span th:utext="#{user.loginForm.loginButton}"></span>
-			</button>
-			<a th:href="@{/resetPassword}" class="btn btn-secondary" role="button">
-				<i class="fas fa-question-circle"></i>
-				<span th:utext="#{user.loginForm.passwordReset}">Password forgotten?</span>
-			</a>
-		</div>
+	<div th:fragment="mytwtitle">
+		<h1><span th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</span></h1>
+		<h2><span th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</span></h2>
 	</div>
-</form>
-<div id="user-login-form-more-information">
-	<div>
-		<span th:text="#{user.loginForm.moreInformation}">For More Information please visit:</span>
-		<ul>
-			<li><span th:utext="#{user.loginForm.github}">Github:</span> <a href="https://github.com/phasenraum2010/simpleworklist" target="_blank">https://github.com/phasenraum2010/simpleworklist</a></li>
-			<li><span th:utext="#{user.loginForm.myBlog}">My Blog:</span> <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a></li>
-			<li><span th:utext="#{user.loginForm.projectPage}">The Project Page:</span> <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
-			<li>Getting Things Done&reg; @ Wikipedia:
-				<a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">https://de.wikipedia.org/wiki/Getting_Things_Done/</a>
-				<a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
-			</li>
-		</ul>
-	</div>
-	<div>
-		<small>
-			<span th:utext="#{user.loginForm.gtd.copyright}">GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
-			not affiliated with or endorsed by the David Allen Company.</span>
-		</small>
-	</div>
-</div>
 
-</div>
+	<div th:fragment="mytwcontent">
+		<form id="user-login-form" th:action="@{/j_spring_security_check}" method="post">
+			<div class="card">
+				<div class="card-header">
+					<span th:utext="#{user.loginForm.login}">Please login or</span>
+					<a th:href="@{/register}">
+						<span th:utext="#{user.loginForm.register}">register as new user</span>
+					</a>.
+				</div>
+				<div class="card-body">
+					<div class="alert alert-danger" role="alert" th:if="${param.login_error != null}">
+						<span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span>
+					</div>
+					<input type="hidden"
+						   name="${_csrf.parameterName}"
+						   value="${_csrf.token}"/>
+					<div class="form-group">
+						<label for="j_username">Email</label>
+						<input id="j_username" type="email" name="j_username" class="form-control" placeholder="Enter email"/>
+					</div>
+					<div class="form-group">
+						<label for="j_password" th:text="#{user.loginForm.password}">Password</label>
+						<input id="j_password" type="password" name="j_password" class="form-control" placeholder="Password"/>
+					</div>
+					<button id="loginButton" type="submit" class="btn btn-primary">
+						<i class="fas fa-sign-in-alt"></i>
+						<span th:utext="#{user.loginForm.loginButton}"></span>
+					</button>
+					<a th:href="@{/resetPassword}" class="btn btn-secondary" role="button">
+						<i class="fas fa-question-circle"></i>
+						<span th:utext="#{user.loginForm.passwordReset}">Password forgotten?</span>
+					</a>
+				</div>
+			</div>
+		</form>
+		<div id="user-login-form-more-information">
+			<div>
+				<span th:text="#{user.loginForm.moreInformation}">For More Information please visit:</span>
+				<ul>
+					<li><span th:utext="#{user.loginForm.github}">Github:</span> <a href="https://github.com/phasenraum2010/simpleworklist" target="_blank">https://github.com/phasenraum2010/simpleworklist</a></li>
+					<li><span th:utext="#{user.loginForm.myBlog}">My Blog:</span> <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a></li>
+					<li><span th:utext="#{user.loginForm.projectPage}">The Project Page:</span> <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
+					<li>Getting Things Done&reg; @ Wikipedia:
+						<a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">https://de.wikipedia.org/wiki/Getting_Things_Done/</a>
+						<a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<small>
+					<span th:utext="#{user.loginForm.gtd.copyright}">GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
+					not affiliated with or endorsed by the David Allen Company.</span>
+				</small>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

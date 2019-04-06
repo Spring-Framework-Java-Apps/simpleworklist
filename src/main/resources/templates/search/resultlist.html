@@ -5,18 +5,19 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
+<div th:fragment="mytwtitle">
     <h1>
         <span th:utext="#{search.resultlist.h1}">Search Result for searchterm</span>
         <i>${searchResult.searchterm}</i>
     </h1>
+</div>
 
+<div th:fragment="mytwcontent">
     <h2 th:if="${searchResult.taskList != null}">
         <span th:utext="#{search.resultlist.h2.noTasks}">No Tasks found</span>
     </h2>
-
     <div th:if="${searchResult.taskList != null}">
         <h2>
             <span th:utext="#{search.resultlist.h2.tasks}">Tasks</span>
@@ -24,11 +25,9 @@
         <div th:replace="layout/tasks :: tw-tasks-table(dataList=${searchResult.taskList},myTaskState='ALL')">
         </div>
     </div>
-
     <h2 th:if="${searchResult.projectList == null}">
         <span th:utext="#{search.resultlist.projects.h2.noProjects}">No Projects found</span>
     </h2>
-
     <div th:if="${searchResult.projectList != null}">
         <h2>
             <span th:utext="#{search.resultlist.projects.h2.projects}">Projects</span>
@@ -40,7 +39,7 @@
             </tr>
             <tr th:each="cat : ${searchResult.projectList}">
                 <td>
-                    <a th:href="@{/project/{id}(id=${cat.id})}" th:id="'categoryList_' + ${cat.id}">
+                    <a th:href="@{/project/{id}(id=${cat.id})}" th:id="'searchResultProject_' + ${cat.id}">
                         <span th:text="${cat.name}">name</span>
                     </a>
                 </td>
@@ -50,7 +49,7 @@
             </tr>
         </table>
     </div>
-
 </div>
+
 </body>
 </html>

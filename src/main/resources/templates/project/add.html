@@ -5,14 +5,17 @@
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
+<div th:fragment="mytwtitle">
 	<!-- New Project Form -->
 	<h1>
 		<i class="fas fa-folder-open"></i> &nbsp;
 		<span th:utext="#{project.add.h1}">Add Project</span>
 	</h1>
+</div>
+
+<div th:fragment="mytwcontent">
 	<div>
 	<form id="formId" th:action="@{/project/addchild/{id}(id=${thisProject.id})}" th:object="${project}" method="post">
 		<div class="form-group">

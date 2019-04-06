@@ -5,15 +5,17 @@
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
+<div th:fragment="mytwtitle">
 	<!-- Document Window -->
 	<h1>
 		<i class="fas fa-edit"></i>&nbsp;
 		<span th:utext="#{task.show.h1}">Edit Task</span>
 	</h1>
+</div>
 
+<div th:fragment="mytwcontent">
 	<div>
 		<form id="formId" th:action="@{/task/detail/{taskId}(taskId=${task.id})}" th:object="${task}" method="post">
 			<input type="hidden" th:field="*{id}" />
@@ -94,18 +96,17 @@
 					</div>
 				</span>
 			</div>
-			<button id="editDataLeaf" type="submit" class="btn btn-default">
+			<button id="editDataLeaf" type="submit" class="btn btn-primary">
 				<i class="fas fa-save"></i>
 				<span th:utext="#{task.show.button}">Save Task</span>
 			</button>
-			&nbsp;&nbsp;&nbsp;
-			<a th:href="@{/task/transform/{id}(id=${task.id})}">
+			<a th:href="@{/task/transform/{id}(id=${task.id})}" class="btn btn-secondary" role="button">
 				<i class="fas fa-project-diagram"></i>
 				<span th:utext="#{task.show.transform}">Transform into Project</span>
 			</a>
 		</form>
 	</div>
-
 </div>
+
 </body>
 </html>

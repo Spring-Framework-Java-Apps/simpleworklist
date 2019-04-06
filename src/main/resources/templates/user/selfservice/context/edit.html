@@ -5,53 +5,56 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
-    <h1>
-        <i class="fas fa-edit"></i>
-        <span th:utext="#{user.selfservice.contexts.edit}">Edit Area</span>
-    </h1>
-    <h2>
-        <span th:utext="#{user.selfservice.forUser}">for User:</span>
-        <strong>
-            <span sec:authentication="name"></span>
-        </strong>
-    </h2>
-    <div>
-        <form id="formId" th:action="@{/user/selfservice/context/edit/{id}(id=${contextId})}" th:object="${editContext}" method="post">
-            <td>
-                <div class="form-group">
-                    <label th:for="${#ids.next('nameEn')}" class="control-label">
-                        <span th:utext="#{enum.language.en}">Englisch</span>
-                    </label>
-                    <input type="text" th:field="*{nameEn}" class="form-control" />
-                    <div>
-                        <div th:each="err : ${#fields.errors('nameEn')}" th:text="${err}" class="alert alert-danger" />
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <label th:for="${#ids.next('nameDe')}" class="control-label">
-                        <span th:utext="#{enum.language.de}">Deutsch</span>
-                    </label>
-                    <input type="text" th:field="*{nameDe}" class="form-control" />
-                    <div>
-                        <div th:each="err : ${#fields.errors('nameDe')}" th:text="${err}" class="alert alert-danger" />
-                    </div>
-                </div>
-            </td>
-            <td>
-                <button id="editContextButton" type="submit" class="btn btn-default">
-                    <i class="fas fa-save"></i>
-                    <span th:utext="#{user.selfservice.contexts.edit.button}">Edit Area</span>
-                </button>
-            </td>
-            <td>&nbsp;</td>
-        </form>
+    <div th:fragment="mytwtitle">
+        <h1>
+            <i class="fas fa-edit"></i>
+            <span th:utext="#{user.selfservice.contexts.edit}">Edit Area</span>
+        </h1>
+        <h2>
+            <span th:utext="#{user.selfservice.forUser}">for User:</span>
+            <strong>
+                <span sec:authentication="name"></span>
+            </strong>
+        </h2>
     </div>
 
-</div>
+    <div th:fragment="mytwcontent">
+        <div>
+            <form id="formId" th:action="@{/user/selfservice/context/edit/{id}(id=${contextId})}" th:object="${editContext}" method="post">
+                <td>
+                    <div class="form-group">
+                        <label th:for="${#ids.next('nameEn')}" class="control-label">
+                            <span th:utext="#{enum.language.en}">Englisch</span>
+                        </label>
+                        <input type="text" th:field="*{nameEn}" class="form-control" />
+                        <div>
+                            <div th:each="err : ${#fields.errors('nameEn')}" th:text="${err}" class="alert alert-danger" />
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label th:for="${#ids.next('nameDe')}" class="control-label">
+                            <span th:utext="#{enum.language.de}">Deutsch</span>
+                        </label>
+                        <input type="text" th:field="*{nameDe}" class="form-control" />
+                        <div>
+                            <div th:each="err : ${#fields.errors('nameDe')}" th:text="${err}" class="alert alert-danger" />
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <button id="editContextButton" type="submit" class="btn btn-default">
+                        <i class="fas fa-save"></i>
+                        <span th:utext="#{user.selfservice.contexts.edit.button}">Edit Area</span>
+                    </button>
+                </td>
+                <td>&nbsp;</td>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -5,18 +5,21 @@
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: head">
 </head>
-<body th:replace="layout/page :: tw-page-body(~{::mytwcontent})">
-<div th:fragment="mytwcontent">
+<body th:replace="layout/page :: tw-page-body(~{::mytwcontent},~{::mytwtitle})">
 
-	<h1>
-		<span th:utext="#{user.registerNotConfirmed.h1}">Register as new User</span>
-	</h1>
-	<div class="well">
-		<p>
-			<span th:utext="#{user.registerNotConfirmed.text}">Sorry. There is no registration known for your Request.</span>
-		</p>
+	<div th:fragment="mytwtitle">
+		<h1>
+			<span th:utext="#{user.registerNotConfirmed.h1}">Register as new User</span>
+		</h1>
 	</div>
 
-</div>
+	<div th:fragment="mytwcontent">
+		<div class="card card-body">
+			<p>
+				<span th:utext="#{user.registerNotConfirmed.text}">Sorry. There is no registration known for your Request.</span>
+			</p>
+		</div>
+	</div>
+
 </body>
 </html>

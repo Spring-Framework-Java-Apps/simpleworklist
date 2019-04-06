@@ -16,7 +16,7 @@
 	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
 </head>
-<body th:fragment="tw-page-body(twcontent)">
+<body th:fragment="tw-page-body(twcontent,twtitle)">
 
 	<!-- Navbar on Top -->
 	<header th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
@@ -24,6 +24,13 @@
 
 	<!-- Breadcrumb -->
 	<section th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
+	</section>
+
+	<!-- Menu on Left Column and Document Window on the Right Column -->
+	<section id="tw-title-section">
+		<div class="container">
+			<th:block th:replace="${twtitle}" />
+		</div>
 	</section>
 
 	<section th:replace="layout/navcolleft :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
