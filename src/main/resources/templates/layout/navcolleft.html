@@ -87,15 +87,15 @@
                 </li>
                 <li th:if="${rootCategories != null and rootCategories.size() gt 0}">
                     <ul>
-                        <li th:include="this :: tw-project-submenu(categories=${rootCategories},thisProject=${thisProject})"></li>
+                        <li th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})"></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </section>
 
-    <ul class="nav flex-column" th:fragment="tw-project-submenu(categories, thisProject)">
-        <li th:each="project : ${categories}" th:class="${project.id == thisProject.id ? 'active' : ''}">
+    <ul class="nav flex-column" th:fragment="tw-project-submenu(projectList, thisProject)">
+        <li th:each="project : ${projectList}" th:class="${project.id == thisProject.id ? 'active' : ''}">
             <!-- http://jqueryui.com/droppable/ -->
             <span th:if="${project.id == thisProject.id}">
                 <span th:id="'project_' + ${project.id}" class="projectDraggable projectDroppable">
@@ -112,9 +112,9 @@
                 </span>
             </span>
         </li>
-        <li th:if="${project.children.size() gt 0}">
+        <li th:if="${thisProject.children.size() gt 0}">
             <ul>
-                <li th:include="this :: tw-project-submenu(categories=${project.children},thisProject=${thisProject})"></li>
+                <li th:include="this :: tw-project-submenu(projectList=${thisProject.children},thisProject=${thisProject})"></li>
             </ul>
         </li>
     </ul>
