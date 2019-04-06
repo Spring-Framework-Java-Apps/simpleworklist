@@ -11,28 +11,34 @@
 <!-- TODO #37 -->
 <!-- Document Window -->
 
-	<div th:if="${thisProject.id gt 0}">
+	<div id="tw-content-title">
 		<h1>
-			<i class="fas fa-folder-open"></i>&nbsp;
-			<span th:text="${thisProject.name}"></span>
+			<i class="fas fa-folder-open"></i>
+			<div th:text="#{project.show.h1}">Project</div>
+			<small th:if="${thisProject.id gt 0}">
+				<div th:text="${thisProject.name}"></div>
+			</small>
 		</h1>
-		<div th:text="${thisProject.description}"></div>
-		<br />
-		<br />
-		<div>
-			<a th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}" href="#">
+		<div class="collapse" id="collapseDescription">
+			<div class="card card-body" th:text="${thisProject.description}"></div>
+		</div>
+		<div id="tw-content-title-actionbuttons">
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseDescription" role="button" aria-expanded="false" aria-controls="collapseExample">
+				<div th:text="#{project.show.description}">Project Description</div>
+			</a>
+			<a class="btn btn-secondary" role="button" th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}" href="#">
 				<i class="fas fa-edit"></i>
 				<span th:text="#{project.show.edit}">Edit Project</span>
-			</a> |
-			<a th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
+			</a>
+			<a class="btn btn-danger" role="button" th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
 				<i class="fas fa-trash-alt"></i>
 				<span th:text="#{project.show.delete}">Delete Project</span>
-			</a> |
-			<a th:href="@{/project/addchild/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
+			</a>
+			<a class="btn btn-warning" role="button" th:href="@{/project/addchild/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
 				<i class="fas fa-plus-square"></i>
 				<span th:text="#{layout.page.addProject}">Add a Project</span>
-			</a> |
-			<a th:href="@{/task/addtoproject/{thisProjectId}(thisProjectId=${thisProject.id})}" href="#">
+			</a>
+			<a class="btn btn-success" role="button" th:href="@{/task/addtoproject/{thisProjectId}(thisProjectId=${thisProject.id})}" href="#">
 				<i class="fas fa-plus-square"></i>
 				<span th:text="#{project.show.addTask}">Add a Task</span>
 			</a>
