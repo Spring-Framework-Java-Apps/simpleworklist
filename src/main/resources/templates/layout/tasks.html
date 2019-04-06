@@ -57,7 +57,7 @@
                 <td th:if="${task.taskState.name() eq 'COMPLETED' or task.taskState.name() eq 'TRASHED'}">
                     <del>
                         <a th:href="@{/task/detail/{id}(id=${task.id})}" class="taskDraggable taskDroppable"
-                           th:id="'task_' + ${task.id}" th:text="${task.title}" th:text="${task.title}">
+                           th:id="'task_' + ${task.id}" th:text="${task.title}">
                         </a>
                     </del>
                 </td>
