@@ -6,18 +6,20 @@
 
     <section th:fragment="breadcrumb(breadcrumb)">
         <div class="container" sec:authorize="isAuthenticated()" th:if="${breadcrumb != null}">
-            <ol class="breadcrumb" th:if="${breadcrumb.size() > 1}">
-                <li><a th:href="@{/project/0}">Home</a></li>
-                <li th:each="bc,iterStat : ${breadcrumb}" th:class="${iterStat == breadcrumb.size()-1 ? 'active' : ''}">
-                    <span th:if="${iterStat == breadcrumb.size()-1}" th:text="${bc.name}"></span>
-                    <a th:if="${iterStat != breadcrumb.size()-1}" th:href="@{/project/{bcId}(bcId=${bc.id})}">
-                        <span th:text="${bc.name}"></span>
-                    </a>
-                </li>
-            </ol>
-            <ol class="breadcrumb" th:if="${breadcrumb.size() < 2}">
-                <li class="active">Home</li>
-            </ol>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" th:if="${breadcrumb.size() > 1}">
+                    <li class="breadcrumb-item"><a th:href="@{/project/0}">Home</a></li>
+                    <li th:each="bc,iterStat : ${breadcrumb}" th:class="${iterStat == breadcrumb.size()-1 ? 'breadcrumb-item  active' : 'breadcrumb-item'}">
+                        <span th:if="${iterStat == breadcrumb.size()-1}" th:text="${bc.name}"></span>
+                        <a th:if="${iterStat != breadcrumb.size()-1}" th:href="@{/project/{bcId}(bcId=${bc.id})}">
+                            <span th:text="${bc.name}"></span>
+                        </a>
+                    </li>
+                </ol>
+                <ol class="breadcrumb" th:if="${breadcrumb.size() < 2}">
+                    <li class="breadcrumb-item active">Home</li>
+                </ol>
+            </nav>
         </div>
     </section>
 
