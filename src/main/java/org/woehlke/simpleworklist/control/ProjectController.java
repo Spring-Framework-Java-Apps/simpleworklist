@@ -43,11 +43,7 @@ public class ProjectController extends AbstractController {
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public final String showProject(
             @PathVariable long projectId,
-            @PageableDefault(
-                    value = 0,
-                    size = 20,
-                    sort = "orderIdProject"
-            ) Pageable pageable,
+            @PageableDefault(sort = "orderIdProject") Pageable pageable,
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,

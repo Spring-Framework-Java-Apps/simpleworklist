@@ -197,7 +197,7 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/focus", method = RequestMethod.GET)
     public final String focus(
-        @PageableDefault( value = 0, size = 20, sort = "orderIdTaskState") Pageable pageable,
+        @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
