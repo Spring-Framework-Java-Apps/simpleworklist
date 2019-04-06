@@ -55,15 +55,30 @@
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
 	<script th:inline="javascript">
 		$(window).load( function() {
-			$( ".dataDetailListTitle").draggable({ cursor: "crosshair", revert: "invalid"  });
-			$( ".categoryNode" ).draggable({ cursor: "crosshair", revert: "invalid"  });
-			$( ".categoryNode" ).droppable({
+			$( ".taskDraggable").draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".taskDroppable" ).droppable({
 				drop: function( event, ui ) {
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					var rootUrl = "";
-					if(draggableType == "dataDetail" || draggableType == "dataDetailProject"){
+					if(draggableType == "task") {
+						rootUrl = '[(@{/task})]';
+					} else if(draggableType == "project") {
+						rootUrl = '[(@{/project/task})]';
+					}
+					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
+					window.location.replace(html4move);
+				}
+			});
+			$( ".projectDraggable" ).draggable({ cursor: "crosshair", revert: "invalid"  });
+			$( ".projectDroppable" ).droppable({
+				drop: function( event, ui ) {
+					var selfId = ("" + $( this ).attr("id")).split("_")[1];
+					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
+					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
+					var rootUrl = "";
+					if(draggableType == "task" || draggableType == "project"){
 						rootUrl += '[(@{/task})]';
 					} else {
 						rootUrl += '[(@{/project})]';
@@ -71,21 +86,6 @@
 					//var html4move = '<a href="'+rootUrl+'/'+draggableId+'/moveto/'+selfId+'">move</a>';
 					//$( this ).html(html4move);
 					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
-					window.location.replace(html4move);
-				}
-			});
-			$( ".dataDetailListTitle" ).droppable({
-				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "dataDetail") {
-						rootUrl = '[(@{/task})]';
-					} else if(draggableType == "dataDetailProject") {
-						rootUrl = '[(@{/project/task})]';
-					}
-					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
 					window.location.replace(html4move);
 				}
 			});

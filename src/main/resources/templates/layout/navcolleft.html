@@ -70,17 +70,19 @@
             <hr/>
             <ul id="rootProject" class="nav flex-column">
                 <li class="nav-item">
-                    <span id="categoryNode_0" class="categoryNode" th:if="${thisProject == null or thisProject.id != 0}">
+                    <span id="project_0" class="projectDraggable projectDroppable" th:if="${thisProject == null or thisProject.id != 0}">
                         <i class="fas fa-folder-open"></i>
                         <strong><span th:text="#{right.nav.projects}">Projects</span></strong>
                     </span>
-                    <span id="categoryNode_0" class="categoryNode" th:if="${thisProject != null and thisProject.id == 0}">
+                    <span id="project_0" class="projectDraggable projectDroppable" th:if="${thisProject != null and thisProject.id == 0}">
                         <a class="nav-link" th:href="@{/project/0}">
                             <i class="fas fa-folder-open"></i>
                             <span th:text="#{right.nav.projects}">Projects</span>
                         </a>
                     </span>
-                    <ul class="nav flex-column" th:if="${rootCategories != null and rootCategories.size() gt 0}">
+                </li>
+                <li class="nav-item" th:if="${rootCategories != null and rootCategories.size() gt 0}">
+                    <ul class="nav flex-column">
                         <li class="nav-item" th:include="this :: tw-project-submenu(categories=${rootCategories},thisProject=${thisProject})"></li>
                     </ul>
                 </li>
@@ -89,16 +91,16 @@
     </section>
 
     <ul class="nav flex-column" th:fragment="tw-project-submenu(categories, thisProject)">
-        <li th:each="project : ${categories}" th:class="${project == thisProject ? 'nav-item active' : 'nav-item'}">
+        <li th:each="project : ${categories}" th:class="${project.id == thisProject.id ? 'nav-item active' : 'nav-item'}">
             <!-- http://jqueryui.com/droppable/ -->
-            <span th:id="'category_' + ${project.id}" th:if="${project == thisProject}">
+            <span th:if="${project.id == thisProject.id}">
                 <strong>
-                    <span th:id="'categoryNode_' + ${project.id}" class="categoryNode" th:text="${project.name}">
+                    <span th:id="'project_' + ${project.id}" th:text="${project.name}" class="projectDraggable projectDroppable">
                     </span>
                 </strong>
             </span>
-            <span th:id="'category_' + ${project.id}" class="categoryNode" th:if="${project != thisProject}">
-                <a th:href="@{/project/{id}(id=${project.id})}">
+            <span th:if="${project.id != thisProject.id}">
+                <a th:id="'project_' + ${project.id}" th:href="@{/project/{id}(id=${project.id})}" class="projectDraggable projectDroppable">
                     <span th:text="${project.name}"></span>
                 </a>
             </span>
