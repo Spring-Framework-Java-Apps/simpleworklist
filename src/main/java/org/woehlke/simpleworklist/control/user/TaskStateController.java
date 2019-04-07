@@ -46,13 +46,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId()==0){
-            taskPage = taskStateService.getInbox(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getInbox(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getInbox(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("inbox");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -66,13 +61,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getToday(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getToday(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getToday(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("today");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -86,13 +76,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getNext(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getNext(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getNext(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("next");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -106,14 +91,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        //TODO: put if to service
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getWaiting(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getWaiting(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getWaiting(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("waiting");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -127,13 +106,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getScheduled(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getScheduled(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getScheduled(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("scheduled");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -147,13 +121,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getSomeday(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getSomeday(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getSomeday(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("someday");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -167,13 +136,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getCompleted(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getCompleted(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getCompleted(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("completed");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -187,13 +151,8 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = null;
-        if(userSession.getContextId() == 0){
-            taskPage = taskStateService.getTrash(thisUser, pageable);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-            taskPage = taskStateService.getTrash(thisUser, context, pageable);
-        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskStateService.getTrash(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("trash");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -203,9 +162,12 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String getAllTasksForUser(
-            @PageableDefault(sort = "lastChangeTimestamp") Pageable request, Model model){
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Page<Task> taskPage = taskService.findByUser(userAccount,request);
+            @PageableDefault(sort = "lastChangeTimestamp") Pageable request,
+            @ModelAttribute("userSession") UserSessionBean userSession, Model model
+    ){
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Page<Task> taskPage = taskService.findByUser(thisUser, context, request);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("all");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
@@ -220,12 +182,38 @@ public class TaskStateController extends AbstractController {
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        Page<Task> taskPage = taskStateService.getFocus(context, thisUser, pageable);
+        Page<Task> taskPage = taskStateService.getFocus(thisUser, context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("focus");
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "focus");
         return "taskstate/focus";
+    }
+
+    @RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String changeTaskOrderId(
+            @PathVariable long sourceTaskId,
+            @PathVariable long destinationTaskId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model){
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        Task sourceTask = taskService.findOne(sourceTaskId,thisUser);
+        Task destinationTask = taskService.findOne(destinationTaskId,thisUser);
+        LOGGER.info("------------- changeTaskOrderId -------------");
+        LOGGER.info("source Task:      "+sourceTask.toString());
+        LOGGER.info("---------------------------------------------");
+        LOGGER.info("destination Task: "+destinationTask.toString());
+        LOGGER.info("---------------------------------------------");
+        String returnUrl = "redirect:/taskstate/inbox";
+        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()) {
+            boolean sameTaskType = (sourceTask.getTaskState().ordinal() == destinationTask.getTaskState().ordinal());
+            if (sameTaskType) {
+                taskService.moveOrderIdTaskState(sourceTask.getTaskState(), sourceTask, destinationTask, context);
+                returnUrl = "redirect:/taskstate/" + sourceTask.getTaskState().name().toLowerCase();
+            }
+        }
+        return returnUrl;
     }
 
 }

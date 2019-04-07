@@ -363,28 +363,4 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String changeTaskOrderId(
-            @PathVariable long sourceTaskId,
-            @PathVariable long destinationTaskId,
-            Model model){
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
-        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
-        LOGGER.info("------------- changeTaskOrderId -------------");
-        LOGGER.info("source Task:      "+sourceTask.toString());
-        LOGGER.info("---------------------------------------------");
-        LOGGER.info("destination Task: "+destinationTask.toString());
-        LOGGER.info("---------------------------------------------");
-        String returnUrl = "redirect:/taskstate/inbox";
-        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()) {
-            boolean sameTaskType = (sourceTask.getTaskState().ordinal() == destinationTask.getTaskState().ordinal());
-            if (sameTaskType) {
-                taskService.moveOrderIdTaskState(sourceTask, destinationTask);
-                returnUrl = "redirect:/taskstate/" + sourceTask.getTaskState().name().toLowerCase();
-            }
-        }
-        return returnUrl;
-    }
-
 }

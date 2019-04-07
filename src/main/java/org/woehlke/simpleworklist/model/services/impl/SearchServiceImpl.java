@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by tw on 14.02.16.
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class SearchServiceImpl implements SearchService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
@@ -29,13 +29,13 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public SearchResult search(String searchterm, UserAccount userAccount) {
         SearchResult searchResult = searchDao.search(searchterm, userAccount);
         return searchResult;
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void resetSearchIndex() {
         LOGGER.info("resetSearchIndex");
         searchDao.resetSearchIndex();

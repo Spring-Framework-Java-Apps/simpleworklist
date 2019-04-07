@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.repository.ContextRepository;
 import org.woehlke.simpleworklist.entities.repository.ProjectRepository;
 import org.woehlke.simpleworklist.entities.repository.TaskRepository;
-import org.woehlke.simpleworklist.model.services.ContextService;
+import org.woehlke.simpleworklist.entities.services.ContextService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -41,6 +41,9 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public Context findByIdAndUserAccount(long newContextId, UserAccount userAccount) {
+        if(newContextId == 0){
+            newContextId =  userAccount.getDefaultContext().getId();
+        }
         return contextRepository.findByIdAndUserAccount(newContextId,userAccount);
     }
 

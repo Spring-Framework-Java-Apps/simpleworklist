@@ -17,7 +17,7 @@ import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.repository.ProjectRepository;
 import org.woehlke.simpleworklist.entities.repository.TaskRepository;
-import org.woehlke.simpleworklist.model.services.ProjectService;
+import org.woehlke.simpleworklist.entities.services.ProjectService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

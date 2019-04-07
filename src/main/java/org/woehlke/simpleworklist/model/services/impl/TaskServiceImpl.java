@@ -36,24 +36,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByProject(Project thisProject,
-                                    Pageable request, UserAccount userAccount) {
-        if(thisProject.getUserAccount().getId().longValue() == userAccount.getId().longValue()){
-            return taskRepository.findByProject(thisProject, request);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount) {
-        return taskRepository.findByProjectIsNullAndUserAccount(request, userAccount);
-    }
-
-    @Override
-    public Task findOne(long dataId, UserAccount userAccount) {
-        if(taskRepository.existsById(dataId)){
-            Task t =  taskRepository.getOne(dataId);
+    public Task findOne(long taskId, UserAccount userAccount) {
+        if(taskRepository.existsById(taskId)){
+            Task t =  taskRepository.getOne(taskId);
             if(t.getUserAccount().getId().longValue()==userAccount.getId().longValue()){
                 return t;
             }
@@ -98,15 +83,6 @@ public class TaskServiceImpl implements TaskService {
             task.switchToLastFocusType();
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
-        }
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void emptyTrash(UserAccount userAccount, Context context) {
-        List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.TRASHED,context);
-        for(Task task:taskList){
-            taskRepository.delete(task);
         }
     }
 
@@ -179,13 +155,15 @@ public class TaskServiceImpl implements TaskService {
         if(context.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
+            //TODO: FEHLER: fehlt User!
             return taskRepository.findByProjectIsNullAndContext(context,request);
         }
     }
 
     @Override
-    public Page<Task> findByUser(UserAccount userAccount, Pageable request) {
-        return taskRepository.findByUserAccount(userAccount,request);
+    public Page<Task> findByUser(UserAccount userAccount, Context context, Pageable request) {
+        //TODO: FEHLER: fehlt Context!
+        return taskRepository.findByUserAccountAndContext(userAccount, context, request);
     }
 
     @Override
@@ -210,52 +188,55 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdTaskState(Task sourceTask, Task destinationTask) {
-       long destinationTaskOrderIdTaskState = destinationTask.getOrderIdTaskState();
-       if(sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState()){
-           List<Task> tasks = taskRepository.getTasksToReorderByOrderIdTaskState(sourceTask.getOrderIdTaskState(),destinationTask.getOrderIdTaskState());
-           for(Task task:tasks){
-               task.setOrderIdTaskState(task.getOrderIdTaskState()-1);
-               taskRepository.saveAndFlush(task);
-           }
-           destinationTask.setOrderIdTaskState(destinationTask.getOrderIdTaskState()-1);
-           taskRepository.saveAndFlush(destinationTask);
-           sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState);
-           taskRepository.saveAndFlush(sourceTask);
-       } else {
-           List<Task> tasks = taskRepository.getTasksToReorderByOrderIdTaskState(destinationTask.getOrderIdTaskState(),sourceTask.getOrderIdTaskState());
-           for(Task task:tasks){
-               task.setOrderIdTaskState(task.getOrderIdTaskState()+1);
-               taskRepository.saveAndFlush(task);
-           }
-           sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState+1);
-           taskRepository.saveAndFlush(sourceTask);
-       }
+    public void moveOrderIdTaskState(TaskState taskState, Task sourceTask, Task destinationTask, Context context) {
+        long destinationTaskOrderIdTaskState = destinationTask.getOrderIdTaskState();
+        boolean down = sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState();
+        List<Task> tasks;
+        if(down){
+           tasks = taskRepository.getTasksToReorderByOrderIdTaskState(sourceTask.getOrderIdTaskState(), destinationTask.getOrderIdTaskState(), taskState, context);
+        } else {
+            tasks = taskRepository.getTasksToReorderByOrderIdTaskState(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), taskState, context);
+        }
+        this.reorder( down, destinationTaskOrderIdTaskState, tasks, sourceTask, destinationTask );
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdProject(Task sourceTask, Task destinationTask) {
+    public void moveOrderIdProject(Project project, Task sourceTask, Task destinationTask, Context context) {
         long destinationOrderIdProject = destinationTask.getOrderIdProject();
-        if(sourceTask.getOrderIdProject()<destinationTask.getOrderIdProject()){
-            List<Task> tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdProject(),destinationTask.getOrderIdProject());
-            for(Task task:tasks){
-                task.setOrderIdProject(task.getOrderIdProject()-1);
-                taskRepository.saveAndFlush(task);
-            }
-            destinationTask.setOrderIdProject(destinationTask.getOrderIdProject()-1);
-            taskRepository.saveAndFlush(destinationTask);
-            sourceTask.setOrderIdProject(destinationOrderIdProject);
-            taskRepository.saveAndFlush(sourceTask);
+        boolean down = sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState();
+        List<Task> tasks;
+        if(down){
+            tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdTaskState(), destinationTask.getOrderIdTaskState(), project, context);
         } else {
-            List<Task> tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdProject(),sourceTask.getOrderIdProject());
-            for(Task task:tasks){
-                task.setOrderIdProject(task.getOrderIdProject()+1);
-                taskRepository.saveAndFlush(task);
-            }
-            sourceTask.setOrderIdProject(destinationOrderIdProject+1);
-            taskRepository.saveAndFlush(sourceTask);
+            tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), project, context);
         }
+        this.reorder( down, destinationOrderIdProject, tasks, sourceTask, destinationTask );
     }
+
+    private void reorder(boolean down, long destinationOrderId, List<Task> tasks, Task sourceTask, Task destinationTask){
+        for(Task task:tasks){
+            long orderId = task.getOrderIdTaskState();
+            if(down){
+                orderId--;
+            } else {
+                orderId++;
+            }
+            task.setOrderIdTaskState(orderId);
+            taskRepository.saveAndFlush(task);
+        }
+        long orderId = destinationTask.getOrderIdTaskState();
+        if(down){
+            orderId--;
+        } else {
+            orderId++;
+            destinationOrderId++;
+        }
+        destinationTask.setOrderIdTaskState(orderId);
+        taskRepository.saveAndFlush(destinationTask);
+        sourceTask.setOrderIdTaskState(destinationOrderId);
+        taskRepository.saveAndFlush(sourceTask);
+    }
+
 
 }

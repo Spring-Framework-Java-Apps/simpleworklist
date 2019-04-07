@@ -11,7 +11,9 @@ public class UserSessionBean implements Serializable {
 
     private Long contextId;
 
-    public UserSessionBean(){}
+    public UserSessionBean(){
+        contextId=0L;
+    }
 
     public UserSessionBean(long contextId){
         this.contextId = contextId;

@@ -52,8 +52,8 @@ public class UserAccount implements Serializable {
     @Enumerated(EnumType.STRING)
     private Language defaultLanguage;
 
-    @ManyToOne
-    @JoinColumn(name = "default_context_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "default_context_id", nullable=false)
     private Context defaultContext;
 
     @NotNull

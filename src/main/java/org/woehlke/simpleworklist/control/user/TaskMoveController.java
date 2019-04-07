@@ -16,6 +16,7 @@ import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.UserSessionBean;
+import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.model.services.TaskService;
 import org.woehlke.simpleworklist.model.services.TaskStateService;
 
@@ -25,13 +26,13 @@ public class TaskMoveController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskMoveController.class);
 
-    private final TaskStateService taskStateService;
+    private final TaskMoveService taskMoveService;
 
     private final TaskService taskService;
 
     @Autowired
-    public TaskMoveController(TaskStateService taskStateService, TaskService taskService) {
-        this.taskStateService = taskStateService;
+    public TaskMoveController(TaskMoveService taskMoveService, TaskService taskService) {
+        this.taskMoveService = taskMoveService;
         this.taskService = taskService;
     }
 
@@ -159,7 +160,7 @@ public class TaskMoveController extends AbstractController {
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        taskStateService.deleteAllCompleted(context,thisUser);
+        taskMoveService.deleteAllCompleted(context,thisUser);
         return "redirect:/taskstate/trash";
     }
 
@@ -168,7 +169,7 @@ public class TaskMoveController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        taskService.emptyTrash(userAccount,context);
+        taskMoveService.emptyTrash(userAccount,context);
         return "redirect:/taskstate/trash";
     }
 }
