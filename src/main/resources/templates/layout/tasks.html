@@ -69,9 +69,9 @@
                     <span th:text="${task.dueDate}"></span>
                 </td>
                 <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
-                    <a th:href="@{{url}(url=${myTaskState.getUrl()})}">
-                        <i th:class="${myTaskState.getIcon()}"></i>
-                        <span th:utext="${#messages.msgOrNull(myTaskState.code)}">Inbox</span>
+                    <a th:href="@{{url}(url=${task.taskState.getUrl()})}">
+                        <i th:class="${task.taskState.getIcon()}"></i>
+                        <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
                     </a>
                 </td>
                 <td th:if="${myTaskState ne 'PROJECT'}">
