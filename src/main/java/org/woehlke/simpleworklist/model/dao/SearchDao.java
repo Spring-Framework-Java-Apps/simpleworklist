@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities.repository;
+package org.woehlke.simpleworklist.model.dao;
 
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;

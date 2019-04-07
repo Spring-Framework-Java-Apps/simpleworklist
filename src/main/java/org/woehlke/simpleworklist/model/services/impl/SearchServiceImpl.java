@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
-import org.woehlke.simpleworklist.entities.repository.SearchDao;
+import org.woehlke.simpleworklist.model.dao.SearchDao;
 import org.woehlke.simpleworklist.model.services.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;

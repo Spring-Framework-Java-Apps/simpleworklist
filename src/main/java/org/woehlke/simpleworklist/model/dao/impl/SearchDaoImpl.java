@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities.repository.impl;
+package org.woehlke.simpleworklist.model.dao.impl;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
-import org.woehlke.simpleworklist.entities.repository.SearchDao;
+import org.woehlke.simpleworklist.model.dao.SearchDao;
 
 import javax.persistence.*;
 import java.util.ArrayList;
