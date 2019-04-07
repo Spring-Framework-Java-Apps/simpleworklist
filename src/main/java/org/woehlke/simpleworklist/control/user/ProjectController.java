@@ -15,14 +15,16 @@ import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
+import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.model.Breadcrumb;
-import org.woehlke.simpleworklist.model.BreadcrumbItem;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,102 +86,25 @@ public class ProjectController extends AbstractController {
     @RequestMapping(value = "/addchild", method = RequestMethod.GET)
     public final String addNewProjectForm(@ModelAttribute("userSession") UserSessionBean userSession,
                                           Model model){
-        return addNewProjectForm(0, userSession,model);
+        return addNewProjectGet(0, userSession,model);
     }
 
-    @RequestMapping(value = "/addchild/{projectId}", method = RequestMethod.GET)
-    public final String addNewProjectForm(@PathVariable long projectId,
-                                          @ModelAttribute("userSession") UserSessionBean userSession,
-                                          Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Project thisProject = null;
-        Project project = null;
-        if (projectId == 0) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
-            project = Project.newRootProjectFactory(userAccount);
-            if(userSession.getContextId() == 0L){
-                model.addAttribute("mustChooseArea", true);
-                project.setContext(userAccount.getDefaultContext());
-            } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-                project.setContext(context);
-            }
-        } else {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
-            project = Project.newProjectFactory(thisProject);
-        }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("project", project);
-        return "project/add";
-    }
-
-    @RequestMapping(value = "/addchild/{projectId}",
-            method = RequestMethod.POST)
-    public final String addNewProjectStore(
-            @PathVariable long projectId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            @Valid Project project,
-            BindingResult result,
-            Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        if(result.hasErrors()){
-            Project thisProject = null;
-            if (projectId == 0) {
-                thisProject = new Project();
-                thisProject.setId(0L);
-                thisProject.setUserAccount(userAccount);
-            } else {
-                thisProject = projectService.findByProjectId(projectId, userAccount);
-            }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject);
-            model.addAttribute("project", project);
-            return "project/add";
-        } else {
-            project.setUserAccount(userAccount);
-            if (projectId == 0) {
-                if(userSession.getContextId()>0) {
-                    Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-                    project.setContext(context);
-                }
-                project = projectService.saveAndFlush(project, userAccount);
-                projectId = project.getId();
-            } else {
-                Project thisProject = projectService.findByProjectId(projectId, userAccount);
-                List<Project> children = thisProject.getChildren();
-                children.add(project);
-                thisProject.setChildren(children);
-                project.setParent(thisProject);
-                project = projectService.saveAndFlush(project, userAccount);
-                projectId = project.getId();
-                LOGGER.info("project:     "+ project.toString());
-                LOGGER.info("thisProject: "+ thisProject.toString());
-            }
-            return "redirect:/project/" + projectId;
-        }
-    }
-
-    @RequestMapping(value = "/{projectId}/moveto/{targetProjectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
-            @PathVariable long projectId,
+            @PathVariable long thisProjectId,
             @PathVariable long targetProjectId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Project thisProject = null;
-        if (projectId != 0) {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
+        if (thisProjectId != 0) {
+            thisProject = projectService.findByProjectId(thisProjectId, userAccount);
             Project targetProject = projectService.findByProjectId(targetProjectId, userAccount);
             projectService.moveProjectToAnotherProject(thisProject, targetProject,userAccount );
         }
-        return "redirect:/project/" + projectId;
+        return "redirect:/project/" + thisProjectId;
     }
 
     @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.GET)
-    public final String editProjectForm(
+    public final String editProjectGet(
             @PathVariable long projectId, Model model) {
         if (projectId > 0) {
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -197,7 +122,7 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.POST)
-    public final String editProjectStore(
+    public final String editProjectPost(
             @PathVariable long projectId,
             @Valid Project project,
             BindingResult result, Model model) {
@@ -273,8 +198,128 @@ public class ProjectController extends AbstractController {
         return "redirect:/project/" + newProjectId;
     }
 
+
+    @RequestMapping(value = "/{projectId}//add/new/project", method = RequestMethod.GET)
+    public final String addNewProjectGet(@PathVariable long projectId,
+                                          @ModelAttribute("userSession") UserSessionBean userSession,
+                                          Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Project thisProject = null;
+        Project project = null;
+        if (projectId == 0) {
+            thisProject = new Project();
+            thisProject.setId(0L);
+            thisProject.setUserAccount(userAccount);
+            project = Project.newRootProjectFactory(userAccount);
+            if(userSession.getContextId() == 0L){
+                model.addAttribute("mustChooseArea", true);
+                project.setContext(userAccount.getDefaultContext());
+            } else {
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                project.setContext(context);
+            }
+        } else {
+            thisProject = projectService.findByProjectId(projectId, userAccount);
+            project = Project.newProjectFactory(thisProject);
+        }
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("project", project);
+        return "project/add";
+    }
+
+    @RequestMapping(value = "/{projectId}/add/new/project",
+            method = RequestMethod.POST)
+    public final String addNewProjectPost(
+            @PathVariable long projectId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            @Valid Project project,
+            BindingResult result,
+            Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        if(result.hasErrors()){
+            Project thisProject = null;
+            if (projectId == 0) {
+                thisProject = new Project();
+                thisProject.setId(0L);
+                thisProject.setUserAccount(userAccount);
+            } else {
+                thisProject = projectService.findByProjectId(projectId, userAccount);
+            }
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("thisProject", thisProject);
+            model.addAttribute("project", project);
+            return "project/add";
+        } else {
+            project.setUserAccount(userAccount);
+            if (projectId == 0) {
+                if(userSession.getContextId()>0) {
+                    Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                    project.setContext(context);
+                }
+                project = projectService.saveAndFlush(project, userAccount);
+                projectId = project.getId();
+            } else {
+                Project thisProject = projectService.findByProjectId(projectId, userAccount);
+                List<Project> children = thisProject.getChildren();
+                children.add(project);
+                thisProject.setChildren(children);
+                project.setParent(thisProject);
+                project = projectService.saveAndFlush(project, userAccount);
+                projectId = project.getId();
+                LOGGER.info("project:     "+ project.toString());
+                LOGGER.info("thisProject: "+ thisProject.toString());
+            }
+            return "redirect:/project/" + projectId;
+        }
+    }
+
+    @RequestMapping(value = "/{projectId}/add/new/task", method = RequestMethod.GET)
+    public final String addNewTaskToProjectForm(
+            @PathVariable long projectId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            BindingResult result,
+            Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Task task = new Task();
+        task.setTaskState(TaskState.INBOX);
+        task.setUserAccount(userAccount);
+        task.setCreatedTimestamp(new Date());
+        task.setTaskEnergy(TaskEnergy.NONE);
+        task.setTaskTime(TaskTime.NONE);
+        Project thisProject = null;
+        Boolean mustChooseArea = false;
+        if (projectId == 0) {
+            thisProject = new Project();
+            thisProject.setId(0L);
+            thisProject.setUserAccount(userAccount);
+            if(userSession.getContextId() == 0L){
+                mustChooseArea = true;
+                task.setContext(userAccount.getDefaultContext());
+                thisProject.setContext(userAccount.getDefaultContext());
+            } else {
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                task.setContext(context);
+                thisProject.setContext(context);
+            }
+        } else {
+            thisProject = projectService.findByProjectId(projectId, userAccount);
+            task.setProject(thisProject);
+            task.setContext(thisProject.getContext());
+        }
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("mustChooseArea", mustChooseArea);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("task", task);
+        return "task/add";
+    }
+
     @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String changeTaskOrderIdByProject(
+    public String changeTaskOrderIdWithinAProject(
             @PathVariable long sourceTaskId,
             @PathVariable long destinationTaskId,
             Model model){

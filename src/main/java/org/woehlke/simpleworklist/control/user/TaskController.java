@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
@@ -36,7 +34,7 @@ public class TaskController extends AbstractController {
         this.taskService = taskService;
     }
 
-    @RequestMapping(value = "/detail/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.GET)
     public final String editTaskForm(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
@@ -55,13 +53,13 @@ public class TaskController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
-            return "task/show";
+            return "task/edit";
         } else {
             return "redirect:/taskstate/inbox";
         }
     }
 
-    @RequestMapping(value = "/detail/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.POST)
     public final String editTaskStore(
             @PathVariable long taskId,
             @Valid Task task,
@@ -86,7 +84,7 @@ public class TaskController extends AbstractController {
             List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "task/show";
+            return "task/edit";
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
@@ -113,47 +111,6 @@ public class TaskController extends AbstractController {
             return "redirect:/project/" + projectId + "/";
         }
 
-    }
-
-    @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.GET)
-    public final String addNewTaskToProjectForm(
-            @PathVariable long projectId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            BindingResult result,
-            Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = new Task();
-        task.setTaskState(TaskState.INBOX);
-        task.setUserAccount(userAccount);
-        task.setCreatedTimestamp(new Date());
-        task.setTaskEnergy(TaskEnergy.NONE);
-        task.setTaskTime(TaskTime.NONE);
-        Project thisProject = null;
-        Boolean mustChooseArea = false;
-        if (projectId == 0) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
-            if(userSession.getContextId() == 0L){
-                mustChooseArea = true;
-                task.setContext(userAccount.getDefaultContext());
-                thisProject.setContext(userAccount.getDefaultContext());
-            } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-                task.setContext(context);
-                thisProject.setContext(context);
-            }
-        } else {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
-            task.setProject(thisProject);
-            task.setContext(thisProject.getContext());
-        }
-        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
-        model.addAttribute("mustChooseArea", mustChooseArea);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("task", task);
-        return "task/add";
     }
 
     private Project getProject(long projectId, UserAccount userAccount, UserSessionBean userSession){
