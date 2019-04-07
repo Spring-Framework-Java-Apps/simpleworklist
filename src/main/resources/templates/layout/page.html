@@ -19,17 +19,15 @@
 <body th:fragment="tw-page-body(twcontent,twtitle)">
 
 	<!-- Navbar on Top -->
-	<header th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
-	</header>
-
-	<!-- Main jumbotron for a primary marketing message or call to action -->
-	<section id="tw-title-section">
-	<div class="jumbotron">
-		<div class="container">
-			<th:block th:replace="${twtitle}" />
+	<header>
+		<div th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
 		</div>
-	</div>
-	</section>
+		<div class="jumbotron" id="tw-title-section">
+			<div class="container">
+				<th:block th:replace="${twtitle}" />
+			</div>
+		</div>
+	</header>
 
 	<section th:replace="layout/navcolleft :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
 	</section>
