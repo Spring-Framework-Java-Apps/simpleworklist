@@ -1,7 +1,6 @@
-package org.woehlke.simpleworklist.control.impl;
+package org.woehlke.simpleworklist.control.common;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.entities.UserAccount;

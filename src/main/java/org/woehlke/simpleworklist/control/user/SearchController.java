@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.control;
+package org.woehlke.simpleworklist.control.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.woehlke.simpleworklist.control.impl.AbstractController;
+import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
 import org.woehlke.simpleworklist.services.SearchService;

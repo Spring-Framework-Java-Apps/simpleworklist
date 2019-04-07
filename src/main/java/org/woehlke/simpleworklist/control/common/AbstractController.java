@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.control.impl;
+package org.woehlke.simpleworklist.control.common;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +43,9 @@ public abstract class AbstractController {
 
     @Autowired
     protected ContextService contextService;
+
+    @Autowired
+    protected BreadcrumbService breadcrumbService;
 
     @ModelAttribute("allCategories")
     public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.control;
+package org.woehlke.simpleworklist.control.anonymous;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;

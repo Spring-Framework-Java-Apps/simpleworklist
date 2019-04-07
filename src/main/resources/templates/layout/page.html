@@ -84,14 +84,15 @@
 					var selfId = ("" + $( this ).attr("id")).split("_")[1];
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "task" || draggableType == "project"){
-						rootUrl += '[(@{/task})]';
-					} else {
-						rootUrl += '[(@{/project})]';
+					var url = "";
+					if(draggableType == "task"){
+						url += '[(@{/task/move})]';
 					}
-					var html4move = rootUrl+'/'+draggableId+'/moveto/'+selfId;
-					window.location.replace(html4move);
+					if (draggableType == "project"){
+						url += '[(@{/project/move})]';
+					}
+					url += draggableId + '/to/project/'+selfId;
+					window.location.replace(url);
 				}
 			});
 			$("#taskstate_inbox").droppable({
@@ -99,7 +100,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/inbox';
+						var html4move = '/task/move/'+draggableId+'/to/inbox';
 						window.location.replace(html4move);
 					}
 				}
@@ -109,7 +110,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/today';
+						var html4move = '/task/move/'+draggableId+'/to/today';
 						window.location.replace(html4move);
 					}
 				}
@@ -119,7 +120,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/next';
+						var html4move = '/task/move/'+draggableId+'/to/next';
 						window.location.replace(html4move);
 					}
 				}
@@ -129,7 +130,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/waiting';
+						var html4move = '/task/move/'+draggableId+'/to/waiting';
 						window.location.replace(html4move);
 					}
 				}
@@ -139,7 +140,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/someday';
+						var html4move = '/task/move/'+draggableId+'/to/someday';
 						window.location.replace(html4move);
 					}
 				}
@@ -149,7 +150,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/completed';
+						var html4move = '/task/move/'+draggableId+'/to/completed';
 						window.location.replace(html4move);
 					}
 				}
@@ -159,7 +160,7 @@
 					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
 					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
 					if(draggableType == "task"){
-						var html4move = '/taskstate/move/'+draggableId+'/to/trash';
+						var html4move = '/task/move/'+draggableId+'/to/trash';
 						window.location.replace(html4move);
 					}
 				}

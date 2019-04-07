@@ -1,27 +1,28 @@
-package org.woehlke.simpleworklist.control;
+package org.woehlke.simpleworklist.control.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.control.impl.AbstractController;
+import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Project;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.Breadcrumb;
+import org.woehlke.simpleworklist.model.BreadcrumbItem;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.services.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,10 +70,7 @@ public class ProjectController extends AbstractController {
                 taskPage = taskService.findByRootProject(pageable, userAccount, context);
             }
         }
-        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
-        int current = taskPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, taskPage.getTotalPages());
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
@@ -112,7 +110,7 @@ public class ProjectController extends AbstractController {
             thisProject = projectService.findByProjectId(projectId, userAccount);
             project = Project.newProjectFactory(thisProject);
         }
-        List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
@@ -137,7 +135,7 @@ public class ProjectController extends AbstractController {
             } else {
                 thisProject = projectService.findByProjectId(projectId, userAccount);
             }
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
@@ -187,7 +185,7 @@ public class ProjectController extends AbstractController {
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             Project thisProject = projectService.findByProjectId(projectId, userAccount);
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("areas", contexts);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
@@ -209,7 +207,7 @@ public class ProjectController extends AbstractController {
                 LOGGER.info(e.toString());
             }
             Project thisProject = projectService.findByProjectId(projectId, userAccount);
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject,userAccount );
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             return "project/edit";
         } else {
@@ -263,7 +261,7 @@ public class ProjectController extends AbstractController {
                     }
                     model.addAttribute("message",s.toString());
                     model.addAttribute("isDeleted",false);
-                    List<Project> breadcrumb = projectService.getBreadcrumb(project, userAccount);
+                    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project, userAccount);
                     Page<Task> taskPage = taskService.findByProject(project, request, userAccount);
                     model.addAttribute("taskPage", taskPage);
                     model.addAttribute("breadcrumb", breadcrumb);

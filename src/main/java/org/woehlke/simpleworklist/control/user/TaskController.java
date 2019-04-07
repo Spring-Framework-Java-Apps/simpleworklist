@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.control;
+package org.woehlke.simpleworklist.control.user;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.control.impl.AbstractController;
+import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
@@ -252,6 +252,8 @@ public class TaskController extends AbstractController {
         }
     }
 
+
+    //TODO: what is this for?
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
     public final String moveTask(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -261,21 +263,6 @@ public class TaskController extends AbstractController {
             if (task.getProject() != null) {
                 projectId = task.getProject().getId();
             }
-        }
-        return "redirect:/project/" + projectId + "/";
-    }
-
-    @RequestMapping(value = "/{taskId}/moveto/{projectId}", method = RequestMethod.GET)
-    public final String moveTaskToAnotherProject(@PathVariable long taskId,
-                                                 @PathVariable long projectId) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
-        if(task!=null){
-            Project project = projectService.findByProjectId(projectId, userAccount);
-            task.setProject(project);
-            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),task.getContext(),userAccount);
-            task.setOrderIdProject(++maxOrderIdProject);
-            taskService.saveAndFlush(task, userAccount);
         }
         return "redirect:/project/" + projectId + "/";
     }

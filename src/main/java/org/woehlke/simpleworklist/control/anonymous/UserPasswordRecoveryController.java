@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.control;
+package org.woehlke.simpleworklist.control.anonymous;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
