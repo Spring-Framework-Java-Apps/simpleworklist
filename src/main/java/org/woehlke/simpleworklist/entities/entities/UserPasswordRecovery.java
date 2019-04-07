@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities;
+package org.woehlke.simpleworklist.entities.entities;
 
 import javax.validation.constraints.Email;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;

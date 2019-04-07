@@ -1,8 +1,8 @@
 package org.woehlke.simpleworklist.entities.services;
 
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.NewContextForm;
+import org.woehlke.simpleworklist.entities.entities.Context;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.model.beans.NewContextForm;
 
 import java.util.List;
 

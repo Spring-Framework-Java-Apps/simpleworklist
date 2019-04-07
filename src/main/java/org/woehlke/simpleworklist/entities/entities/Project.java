@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities;
+package org.woehlke.simpleworklist.entities.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;

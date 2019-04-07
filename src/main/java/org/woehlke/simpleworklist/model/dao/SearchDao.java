@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.model.dao;
 
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.SearchResult;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.model.beans.SearchResult;
 
 /**
  * Created by tw on 14.02.16.

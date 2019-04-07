@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.entities.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.woehlke.simpleworklist.entities.UserRegistration;
+import org.woehlke.simpleworklist.entities.entities.UserRegistration;
 
 @Repository
 public interface UserRegistrationRepository extends JpaRepository<UserRegistration, Long> {

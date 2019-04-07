@@ -2,9 +2,9 @@ package org.woehlke.simpleworklist.model.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.Context;
+import org.woehlke.simpleworklist.entities.entities.Task;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 
 /**
  * Created by tw on 21.02.16.

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model;
+package org.woehlke.simpleworklist.model.beans;
 
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;

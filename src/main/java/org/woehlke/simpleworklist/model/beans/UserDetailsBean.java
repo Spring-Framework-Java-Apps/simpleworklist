@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model;
+package org.woehlke.simpleworklist.model.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 
 public class UserDetailsBean implements UserDetails, Serializable {
 

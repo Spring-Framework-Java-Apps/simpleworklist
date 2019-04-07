@@ -2,8 +2,8 @@ package org.woehlke.simpleworklist.entities.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.Context;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 
 import java.util.List;
 

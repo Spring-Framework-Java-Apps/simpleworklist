@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.entities;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
+import org.woehlke.simpleworklist.entities.entities.Task;
 
 public class IsSameObjectOfActionItem extends TypeSafeMatcher<Task> {
 

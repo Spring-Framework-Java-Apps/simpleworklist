@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities;
+package org.woehlke.simpleworklist.entities.entities;
 
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;

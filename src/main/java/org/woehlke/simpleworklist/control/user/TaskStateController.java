@@ -9,12 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.Context;
+import org.woehlke.simpleworklist.entities.entities.Task;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
-import org.woehlke.simpleworklist.model.Breadcrumb;
-import org.woehlke.simpleworklist.model.UserSessionBean;
+import org.woehlke.simpleworklist.model.beans.Breadcrumb;
+import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskStateService;
 import org.woehlke.simpleworklist.entities.services.TaskService;
 

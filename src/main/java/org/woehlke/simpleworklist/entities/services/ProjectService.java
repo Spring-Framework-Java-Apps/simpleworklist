@@ -2,9 +2,9 @@ package org.woehlke.simpleworklist.entities.services;
 
 import java.util.List;
 
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.Project;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.Context;
+import org.woehlke.simpleworklist.entities.entities.Project;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 
 public interface ProjectService {
 

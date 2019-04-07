@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.entities.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.entities.repository.UserPasswordRecoveryRepository;
 import org.woehlke.simpleworklist.model.services.TokenGeneratorService;

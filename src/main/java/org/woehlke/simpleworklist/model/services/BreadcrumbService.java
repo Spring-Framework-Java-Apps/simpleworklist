@@ -1,10 +1,10 @@
 package org.woehlke.simpleworklist.model.services;
 
-import org.woehlke.simpleworklist.entities.Project;
-import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.Project;
+import org.woehlke.simpleworklist.entities.entities.Task;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
-import org.woehlke.simpleworklist.model.Breadcrumb;
+import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 
 import java.util.Locale;
 

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.model.beans.UserAccountForm;
 
 
 public class UserAccountFormTest extends AbstractTest {

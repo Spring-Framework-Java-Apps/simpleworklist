@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.UserDetailsBean;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.model.beans.UserDetailsBean;
 import org.woehlke.simpleworklist.entities.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.model.services.UserAccountSecurityService;
 

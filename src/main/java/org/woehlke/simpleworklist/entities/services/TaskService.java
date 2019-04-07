@@ -2,10 +2,10 @@ package org.woehlke.simpleworklist.entities.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.Project;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.Context;
+import org.woehlke.simpleworklist.entities.entities.Task;
+import org.woehlke.simpleworklist.entities.entities.Project;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 
 public interface TaskService {

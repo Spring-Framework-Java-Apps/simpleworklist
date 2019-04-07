@@ -3,8 +3,8 @@ package org.woehlke.simpleworklist.entities.services;
 import java.util.List;
 import java.util.Map;
 
-import org.woehlke.simpleworklist.model.UserAccountForm;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.beans.UserAccountForm;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 
 public interface UserAccountService {
 

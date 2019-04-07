@@ -2,6 +2,8 @@ package org.woehlke.simpleworklist.entities;
 
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
+import org.woehlke.simpleworklist.entities.entities.Project;
+import org.woehlke.simpleworklist.entities.entities.Task;
 
 public class Matchers {
 

@@ -2,8 +2,8 @@ package org.woehlke.simpleworklist.entities.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.entities.User2UserMessage;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.entities.User2UserMessage;
+import org.woehlke.simpleworklist.entities.entities.UserAccount;
 
 /**
  * Created by tw on 16.02.2016.

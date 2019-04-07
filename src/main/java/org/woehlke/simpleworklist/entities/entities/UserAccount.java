@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.entities;
+package org.woehlke.simpleworklist.entities.entities;
 
 import org.hibernate.search.annotations.*;
 import javax.validation.constraints.Email;

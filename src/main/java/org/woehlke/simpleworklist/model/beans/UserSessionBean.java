@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model;
+package org.woehlke.simpleworklist.model.beans;
 
 import java.io.Serializable;
 
