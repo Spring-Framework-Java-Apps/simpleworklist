@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class UserChangePasswordForm implements Serializable {
 
-    private static final long serialVersionUID = -2868974496767370L;
+    //private static final long serialVersionUID = -2868974496767370L;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")

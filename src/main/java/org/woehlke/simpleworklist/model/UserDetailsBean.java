@@ -12,7 +12,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 
 public class UserDetailsBean implements UserDetails, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
 
     private final String username;
     private final String password;

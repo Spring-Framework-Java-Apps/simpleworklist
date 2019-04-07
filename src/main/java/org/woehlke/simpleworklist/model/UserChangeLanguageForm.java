@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class UserChangeLanguageForm implements Serializable {
 
-    private static final long serialVersionUID = 3134287456153979676L;
+    //private static final long serialVersionUID = 3134287456153979676L;
 
     @NotNull
     private Language defaultLanguage;

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class UserSessionBean implements Serializable {
 
-    private static final long serialVersionUID = -6649686058228455825L;
+    //private static final long serialVersionUID = -6649686058228455825L;
 
     private Long contextId;
 

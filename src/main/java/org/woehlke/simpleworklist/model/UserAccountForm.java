@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class UserAccountForm implements Serializable {
 
-    private static final long serialVersionUID = 8904437385145868848L;
+    //private static final long serialVersionUID = 8904437385145868848L;
 
     @NotNull(message = "Email Address is compulsory")
     @NotBlank(message = "Email Address is compulsory")

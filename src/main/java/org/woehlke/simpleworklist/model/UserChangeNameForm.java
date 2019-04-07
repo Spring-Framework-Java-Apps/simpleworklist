@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class UserChangeNameForm implements Serializable {
 
-    private static final long serialVersionUID = 7661066338674425576L;
+    //private static final long serialVersionUID = 7661066338674425576L;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Fullname is compulsory")

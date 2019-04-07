@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class LoginForm implements Serializable {
 
-    private static final long serialVersionUID = 8988333529813029610L;
+    //private static final long serialVersionUID = 8988333529813029610L;
 
     @NotNull(message = "Email Address is compulsory")
     @NotBlank(message = "Email Address is compulsory")

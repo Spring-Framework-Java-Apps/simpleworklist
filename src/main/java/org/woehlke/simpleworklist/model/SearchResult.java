@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class SearchResult implements Serializable {
 
-    private static final long serialVersionUID = 1682809351146047764L;
+    //private static final long serialVersionUID = 1682809351146047764L;
 
     private String searchterm = "";
     private List<Task> taskList = new ArrayList<>();

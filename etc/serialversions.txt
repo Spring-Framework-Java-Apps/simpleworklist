@@ -1,11 +1,3 @@
-org.woehlke.simpleworklist.model.LoginFormBean:    private static final long serialVersionUID = 8988333529813029610L;
-org.woehlke.simpleworklist.model.NewContextFormBean:    private static final long serialVersionUID = -8465934162293667335L;
-org.woehlke.simpleworklist.model.RegisterFormBean:    private static final long serialVersionUID = 6759771756356742703L;
 org.woehlke.simpleworklist.model.SearchResult:    private static final long serialVersionUID = 1682809351146047764L;
-org.woehlke.simpleworklist.model.UserAccountFormBean:    private static final long serialVersionUID = 8904437385145868848L;
-org.woehlke.simpleworklist.model.UserChangeDefaultContextFormBean:    private static final long serialVersionUID = 312962745980506820L;
-org.woehlke.simpleworklist.model.UserChangeLanguageFormBean:    private static final long serialVersionUID = 3134287456153979676L;
-org.woehlke.simpleworklist.model.UserChangeNameFormBean:    private static final long serialVersionUID = 7661066338674425576L;
-org.woehlke.simpleworklist.model.UserChangePasswordFormBean:    private static final long serialVersionUID = -2868974496767370L;
 org.woehlke.simpleworklist.model.UserSessionBean:    private static final long serialVersionUID = -6649686058228455825L;
 org.woehlke.simpleworklist.model.BreadcrumbItem:    private static final long serialVersionUID = 1L;
