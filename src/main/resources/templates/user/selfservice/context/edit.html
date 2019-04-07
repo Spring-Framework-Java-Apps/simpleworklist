@@ -11,13 +11,13 @@
         <h1>
             <i class="fas fa-edit"></i>
             <span th:utext="#{user.selfservice.contexts.edit}">Edit Area</span>
-        </h1>
-        <h2>
+            <small>
             <span th:utext="#{user.selfservice.forUser}">for User:</span>
             <strong>
                 <span sec:authentication="name"></span>
             </strong>
-        </h2>
+            </small>
+        </h1>
     </div>
 
     <div th:fragment="mytwcontent">

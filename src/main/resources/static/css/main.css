@@ -12,6 +12,14 @@ body {
     border-radius: 0 !important;
 }
 
+div#tw-content-title-actionbuttons {
+    margin-top: 1rem;
+}
+
+div#collapseDescription {
+    margin-top: 1.5rem;
+}
+
 @media (min-width: 576px){
     .jumbotron {
         padding: 2rem 1rem !important;
