@@ -24,15 +24,15 @@
 				<i class="fas fa-edit"></i>
 				<span th:text="#{project.show.edit}">Edit Project</span>
 			</a>
-			<a class="btn btn-danger" role="button" th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
+			<a class="btn btn-secondary" role="button" th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
 				<i class="fas fa-trash-alt"></i>
 				<span th:text="#{project.show.delete}">Delete Project</span>
 			</a>
-			<a class="btn btn-warning" role="button" th:href="@{/project/addchild/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
+			<a class="btn btn-secondary" role="button" th:href="@{/project/addchild/{pid}(pid=${thisProject ne null ? thisProject.id : 0})}">
 				<i class="fas fa-plus-square"></i>
 				<span th:text="#{layout.page.addProject}">Add a Project</span>
 			</a>
-			<a class="btn btn-success" role="button" th:href="@{/task/addtoproject/{thisProjectId}(thisProjectId=${thisProject.id})}" href="#">
+			<a class="btn btn-secondary" role="button" th:href="@{/task/addtoproject/{thisProjectId}(thisProjectId=${thisProject.id})}" href="#">
 				<i class="fas fa-plus-square"></i>
 				<span th:text="#{project.show.addTask}">Add a Task</span>
 			</a>
