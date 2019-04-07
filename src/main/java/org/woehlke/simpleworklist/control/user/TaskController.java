@@ -18,6 +18,7 @@ import org.woehlke.simpleworklist.entities.entities.Task;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.entities.Project;
 import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.entities.services.TaskService;
 
@@ -49,7 +50,7 @@ public class TaskController extends AbstractController {
                 thisProject = task.getProject();
             }
             model.addAttribute("thisProject", thisProject);
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
@@ -81,7 +82,7 @@ public class TaskController extends AbstractController {
                 LOGGER.info(e.toString());
             }
             model.addAttribute("thisProject", thisProject);
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             return "task/edit";
@@ -155,7 +156,7 @@ public class TaskController extends AbstractController {
                 task.setProject(thisProject);
                 task.setContext(thisProject.getContext());
             }
-            List<Project> breadcrumb = projectService.getBreadcrumb(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
