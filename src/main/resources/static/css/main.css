@@ -4,9 +4,18 @@ html {
 }
 
 body {
-    /* Margin bottom by footer height */
-    margin-bottom: 30px;
-    margin-top: 60px;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.jumbotron {
+    border-radius: 0 !important;
+}
+
+@media (min-width: 576px){
+    .jumbotron {
+        padding: 2rem 1rem !important;
+    }
 }
 
 .footer {
@@ -17,9 +26,11 @@ body {
     /* height: 30px; */
 }
 
+/*
 .navbar {
     padding: .25rem .5rem !important;
 }
+ */
 
 #taskStateNavigationContainer {
     padding-top: 1rem;
