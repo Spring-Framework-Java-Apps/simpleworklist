@@ -283,7 +283,7 @@ public class TaskController extends AbstractController {
                     return "redirect:/taskstate/someday";
                 case COMPLETED:
                     return "redirect:/taskstate/completed";
-                case TRASHED:
+                case TRASH:
                     return "redirect:/taskstate/trash";
                 default:
                     return "redirect:/taskstate/inbox";

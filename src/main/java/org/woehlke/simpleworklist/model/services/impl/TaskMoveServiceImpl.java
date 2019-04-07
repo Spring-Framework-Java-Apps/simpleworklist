@@ -31,12 +31,12 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         }
         if (thisUser.getId().longValue() == context.getUserAccount().getId().longValue()) {
             List<Task> taskList = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskState(TaskState.COMPLETED, context);
-            Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState.TRASHED, context);
+            Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState.TRASH, context);
             long maxOrderIdTaskState = (task == null) ? 0 : task.getOrderIdTaskState();
             for (Task mytask : taskList) {
                 maxOrderIdTaskState++;
                 mytask.setOrderIdTaskState(maxOrderIdTaskState);
-                mytask.setTaskState(TaskState.TRASHED);
+                mytask.setTaskState(TaskState.TRASH);
                 taskRepository.save(mytask);
             }
         }
@@ -44,7 +44,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
 
     @Override
     public void emptyTrash(UserAccount userAccount, Context context) {
-        List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.TRASHED,context);
+        List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.TRASH,context);
         for(Task task:taskList){
             taskRepository.delete(task);
         }

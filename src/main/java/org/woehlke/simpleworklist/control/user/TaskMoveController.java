@@ -144,9 +144,9 @@ public class TaskMoveController extends AbstractController {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, thisUser);
         if(task!=null) {
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TRASHED,task.getContext(),thisUser);
+            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TRASH,task.getContext(),thisUser);
             task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.TRASHED);
+            task.setTaskState(TaskState.TRASH);
             task = taskService.saveAndFlush(task, thisUser);
             LOGGER.info("dragged and dropped " + taskId + " to trash: " + task.toString());
         }

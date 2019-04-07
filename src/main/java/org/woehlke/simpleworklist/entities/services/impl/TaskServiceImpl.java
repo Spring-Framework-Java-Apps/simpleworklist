@@ -61,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.setTaskState(TaskState.TRASHED);
+            task.setTaskState(TaskState.TRASH);
             task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }

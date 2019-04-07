@@ -155,7 +155,7 @@ public class TaskStateController extends AbstractController {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getTrash(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.TRASHED,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.TRASH,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "trash");

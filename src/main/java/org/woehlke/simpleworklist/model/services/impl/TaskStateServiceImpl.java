@@ -132,7 +132,7 @@ public class TaskStateServiceImpl implements TaskStateService {
         if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
             return Page.empty(request);
         } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.TRASHED, context, request);
+            return taskRepository.findByTaskStateAndContext(TaskState.TRASH, context, request);
         }
     }
 
