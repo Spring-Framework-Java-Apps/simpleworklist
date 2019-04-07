@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.model.UserAccountForm;
-import org.woehlke.simpleworklist.model.entities.Context;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
-import org.woehlke.simpleworklist.model.entities.User2UserMessage;
-import org.woehlke.simpleworklist.model.enumerations.Language;
-import org.woehlke.simpleworklist.model.repository.ContextRepository;
-import org.woehlke.simpleworklist.model.repository.UserAccountRepository;
-import org.woehlke.simpleworklist.model.repository.User2UserMessageRepository;
+import org.woehlke.simpleworklist.entities.Context;
+import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.User2UserMessage;
+import org.woehlke.simpleworklist.entities.enumerations.Language;
+import org.woehlke.simpleworklist.entities.repository.ContextRepository;
+import org.woehlke.simpleworklist.entities.repository.UserAccountRepository;
+import org.woehlke.simpleworklist.entities.repository.User2UserMessageRepository;
 import org.woehlke.simpleworklist.model.services.UserAccountService;
 
 @Service("userAccountService")

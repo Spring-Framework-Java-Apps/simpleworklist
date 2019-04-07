@@ -14,7 +14,7 @@ import java.util.Properties;
 @Configuration
 @EnableAsync
 @EnableJpaRepositories({
-        "org.woehlke.simpleworklist.model.repository"
+        "org.woehlke.simpleworklist.entities.repository"
 })
 @EnableConfigurationProperties({
     ApplicationProperties.class

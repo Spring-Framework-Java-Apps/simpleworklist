@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.model;
 
-import org.woehlke.simpleworklist.model.entities.Context;
+import org.woehlke.simpleworklist.entities.Context;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

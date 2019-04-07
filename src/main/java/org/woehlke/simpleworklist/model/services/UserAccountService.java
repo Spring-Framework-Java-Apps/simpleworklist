@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.woehlke.simpleworklist.model.UserAccountForm;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.UserAccount;
 
 public interface UserAccountService {
 

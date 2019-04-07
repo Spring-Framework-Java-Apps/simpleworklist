@@ -3,9 +3,9 @@ package org.woehlke.simpleworklist.model.services.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.model.entities.Project;
-import org.woehlke.simpleworklist.model.entities.Task;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.Project;
+import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.Breadcrumb;
 import org.woehlke.simpleworklist.model.services.BreadcrumbService;
 

@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.model.LoginForm;
 import org.woehlke.simpleworklist.model.UserAccountForm;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.services.*;
 
 

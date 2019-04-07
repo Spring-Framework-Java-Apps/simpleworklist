@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.model.services;
 
-import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.UserAccount;
 
 public interface TestService {
 

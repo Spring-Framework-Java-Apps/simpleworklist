@@ -10,12 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.model.entities.Context;
-import org.woehlke.simpleworklist.model.entities.Project;
-import org.woehlke.simpleworklist.model.entities.Task;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
-import org.woehlke.simpleworklist.model.enumerations.TaskState;
-import org.woehlke.simpleworklist.model.repository.TaskRepository;
+import org.woehlke.simpleworklist.entities.Context;
+import org.woehlke.simpleworklist.entities.Project;
+import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
+import org.woehlke.simpleworklist.entities.repository.TaskRepository;
 import org.woehlke.simpleworklist.model.services.TaskService;
 
 import java.util.ArrayList;

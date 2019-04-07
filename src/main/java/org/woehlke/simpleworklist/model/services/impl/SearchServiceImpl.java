@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.SearchResult;
-import org.woehlke.simpleworklist.model.repository.SearchDao;
+import org.woehlke.simpleworklist.entities.repository.SearchDao;
 import org.woehlke.simpleworklist.model.services.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;

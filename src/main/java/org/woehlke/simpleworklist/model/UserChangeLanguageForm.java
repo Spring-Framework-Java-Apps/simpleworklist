@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.model;
 
-import org.woehlke.simpleworklist.model.enumerations.Language;
+import org.woehlke.simpleworklist.entities.enumerations.Language;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

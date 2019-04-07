@@ -1,8 +1,8 @@
 package org.woehlke.simpleworklist.model.services;
 
-import org.woehlke.simpleworklist.model.entities.Project;
-import org.woehlke.simpleworklist.model.entities.Task;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.Project;
+import org.woehlke.simpleworklist.entities.Task;
+import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.model.Breadcrumb;
 
 public interface BreadcrumbService {

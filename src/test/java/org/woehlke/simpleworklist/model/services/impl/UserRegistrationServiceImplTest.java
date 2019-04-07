@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.AbstractTest;
-import org.woehlke.simpleworklist.model.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.model.entities.UserRegistration;
+import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.model.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.model.services.UserRegistrationService;
 

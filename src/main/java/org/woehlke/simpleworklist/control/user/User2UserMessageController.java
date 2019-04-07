@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
-import org.woehlke.simpleworklist.model.entities.User2UserMessage;
+import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.User2UserMessage;
 
 import javax.validation.Valid;
 

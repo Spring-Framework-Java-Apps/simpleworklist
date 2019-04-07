@@ -5,11 +5,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.model.entities.Context;
-import org.woehlke.simpleworklist.model.entities.Project;
-import org.woehlke.simpleworklist.model.entities.UserAccount;
-import org.woehlke.simpleworklist.model.enumerations.TaskEnergy;
-import org.woehlke.simpleworklist.model.enumerations.TaskTime;
+import org.woehlke.simpleworklist.entities.Context;
+import org.woehlke.simpleworklist.entities.Project;
+import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
+import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.*;
 
