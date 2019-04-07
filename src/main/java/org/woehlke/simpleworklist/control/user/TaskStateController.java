@@ -12,6 +12,7 @@ import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.entities.Context;
 import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.Breadcrumb;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskStateService;
@@ -19,6 +20,7 @@ import org.woehlke.simpleworklist.model.services.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Locale;
 
 
 /**
@@ -42,13 +44,13 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/inbox", method = RequestMethod.GET)
     public final String inbox(
-        @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+            @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getInbox(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("inbox");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "inbox");
@@ -58,12 +60,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/today", method = RequestMethod.GET)
     public final String today(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getToday(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("today");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.TODAY,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "today");
@@ -73,12 +75,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/next", method = RequestMethod.GET)
     public final String next(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getNext(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("next");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.NEXT,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "next");
@@ -88,12 +90,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/waiting", method = RequestMethod.GET)
     public final String waiting(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getWaiting(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("waiting");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.WAITING,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "waiting");
@@ -103,12 +105,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/scheduled", method = RequestMethod.GET)
     public final String scheduled(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getScheduled(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("scheduled");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.SCHEDULED,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "scheduled");
@@ -118,12 +120,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/someday", method = RequestMethod.GET)
     public final String someday(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getSomeday(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("someday");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.SOMEDAY,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "someday");
@@ -133,12 +135,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/completed", method = RequestMethod.GET)
     public final String completed(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getCompleted(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("completed");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.COMPLETED,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "completed");
@@ -148,12 +150,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/trash", method = RequestMethod.GET)
     public final String trash(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getTrash(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("trash");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.TRASHED,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "trash");
@@ -163,12 +165,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String getAllTasksForUser(
             @PageableDefault(sort = "lastChangeTimestamp") Pageable request,
-            @ModelAttribute("userSession") UserSessionBean userSession, Model model
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ){
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskService.findByUser(thisUser, context, request);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("all");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstateAll(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "inbox");
@@ -178,12 +180,12 @@ public class TaskStateController extends AbstractController {
     @RequestMapping(value = "/focus", method = RequestMethod.GET)
     public final String focus(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
         Page<Task> taskPage = taskStateService.getFocus(thisUser, context, pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate("focus");
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.FOCUS,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "focus");

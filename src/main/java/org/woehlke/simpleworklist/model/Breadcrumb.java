@@ -52,4 +52,14 @@ public class Breadcrumb implements Serializable {
         BreadcrumbItem breadcrumbItemTaskstate = new BreadcrumbItem(taskStateView,urlTaskstate);
         breadcrumb.add(breadcrumbItemTaskstate);
     }
+
+    public void addTaskstate(String taskStateView, String urlTaskstate){
+        BreadcrumbItem breadcrumbItemTaskstate = new BreadcrumbItem(taskStateView,urlTaskstate);
+        breadcrumb.add(breadcrumbItemTaskstate);
+    }
+
+    public void addPage(String name, String url) {
+        BreadcrumbItem breadcrumbItemTaskstate = new BreadcrumbItem(name,url);
+        breadcrumb.add(breadcrumbItemTaskstate);
+    }
 }
