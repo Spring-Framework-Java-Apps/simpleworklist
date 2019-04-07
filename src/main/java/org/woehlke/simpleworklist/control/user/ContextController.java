@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.entities.Context;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
 import org.woehlke.simpleworklist.model.UserSessionBean;
-import org.woehlke.simpleworklist.services.ContextService;
+import org.woehlke.simpleworklist.model.services.ContextService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -9,12 +9,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.RegisterFormBean;
-import org.woehlke.simpleworklist.model.UserAccountFormBean;
-import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.services.UserAccountService;
+import org.woehlke.simpleworklist.model.UserAccountForm;
+import org.woehlke.simpleworklist.model.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.model.UserRegistrationForm;
+import org.woehlke.simpleworklist.model.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.model.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
@@ -43,42 +43,42 @@ public class UserPasswordRecoveryController {
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
-        RegisterFormBean registerFormBean = new RegisterFormBean();
-        model.addAttribute("registerFormBean", registerFormBean);
+        UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
+        model.addAttribute("registerFormBean", userRegistrationForm);
         return "user/resetPassword/resetPasswordForm";
     }
 
     /**
      * If email-address exists, send email with Link for password-Reset.
      *
-     * @param registerFormBean
+     * @param userRegistrationForm
      * @param result
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public final String passwordForgottenPost(@Valid RegisterFormBean registerFormBean,
+    public final String passwordForgottenPost(@Valid UserRegistrationForm userRegistrationForm,
                                               BindingResult result, Model model) {
         if (result.hasErrors()) {
             LOGGER.info("----------------------");
-            LOGGER.info(registerFormBean.toString());
+            LOGGER.info(userRegistrationForm.toString());
             LOGGER.info(result.toString());
             LOGGER.info(model.toString());
             LOGGER.info("----------------------");
             return "user/resetPassword/resetPasswordForm";
         } else {
-            LOGGER.info(registerFormBean.toString());
+            LOGGER.info(userRegistrationForm.toString());
             LOGGER.info(result.toString());
             LOGGER.info(model.toString());
-            if (userAccountService.findByUserEmail(registerFormBean.getEmail()) == null) {
-                String objectName = "registerFormBean";
+            if (userAccountService.findByUserEmail(userRegistrationForm.getEmail()) == null) {
+                String objectName = "userRegistrationForm";
                 String field = "email";
                 String defaultMessage = "This Email is not registered.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
                 result.addError(e);
                 return "user/resetPassword/resetPasswordForm";
             } else {
-                userPasswordRecoveryService.passwordRecoverySendEmailTo(registerFormBean.getEmail());
+                userPasswordRecoveryService.passwordRecoverySendEmailTo(userRegistrationForm.getEmail());
                 return "user/resetPassword/resetPasswordSentMail";
             }
 
@@ -98,10 +98,10 @@ public class UserPasswordRecoveryController {
         if (o != null) {
             userPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
             UserAccount ua = userAccountService.findByUserEmail(o.getEmail());
-            UserAccountFormBean userAccountFormBean = new UserAccountFormBean();
-            userAccountFormBean.setUserEmail(o.getEmail());
-            userAccountFormBean.setUserFullname(ua.getUserFullname());
-            model.addAttribute("userAccountFormBean", userAccountFormBean);
+            UserAccountForm userAccountForm = new UserAccountForm();
+            userAccountForm.setUserEmail(o.getEmail());
+            userAccountForm.setUserFullname(ua.getUserFullname());
+            model.addAttribute("userAccountFormBean", userAccountForm);
             return "user/resetPassword/resetPasswordConfirmed";
         } else {
             return "user/resetPassword/resetPasswordNotConfirmed";
@@ -111,27 +111,27 @@ public class UserPasswordRecoveryController {
     /**
      * Save new Password.
      *
-     * @param userAccountFormBean
+     * @param userAccountForm
      * @param result
      * @param confirmId
      * @param model
      * @return Info Page for success or back to formular with error messages.
      */
     @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
-    public final String enterNewPasswordPost(@Valid UserAccountFormBean userAccountFormBean,
+    public final String enterNewPasswordPost(@Valid UserAccountForm userAccountForm,
                                              BindingResult result,
                                              @PathVariable String confirmId,
                                              Model model) {
         UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
-        boolean passwordsMatch = userAccountFormBean.passwordsAreTheSame();
+        boolean passwordsMatch = userAccountForm.passwordsAreTheSame();
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
-                userAccountService.changeUsersPassword(userAccountFormBean);
+                userAccountService.changeUsersPassword(userAccountForm);
                 userPasswordRecoveryService.passwordRecoveryDone(o);
                 return "user/resetPassword/resetPasswordDone";
             } else {
                 if (!passwordsMatch) {
-                    String objectName = "userAccountFormBean";
+                    String objectName = "userAccountForm";
                     String field = "userPassword";
                     String defaultMessage = "Passwords aren't the same.";
                     FieldError e = new FieldError(objectName, field, defaultMessage);

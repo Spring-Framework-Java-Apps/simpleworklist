@@ -6,8 +6,8 @@
 /.settings
 /SimpleWorklist.mdzip.bak
 /mvn.log
-/org.woehlke.simpleworklist.entities.Project
-/org.woehlke.simpleworklist.entities.Task
+/org.woehlke.simpleworklist.model.entities.Project
+/org.woehlke.simpleworklist.model.entities.Task
 /simpleworklist
 /simpleworklistsearch
 /simpleworklistsearch2

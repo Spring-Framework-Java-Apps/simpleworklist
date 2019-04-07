@@ -3,11 +3,9 @@ package org.woehlke.simpleworklist.control;
 import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
-import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.entities.UserRegistration;
-import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
-import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
-import org.woehlke.simpleworklist.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.model.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.model.enumerations.UserPasswordRecoveryStatus;
+import org.woehlke.simpleworklist.model.services.UserPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

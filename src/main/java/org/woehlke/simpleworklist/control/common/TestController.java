@@ -3,11 +3,11 @@ package org.woehlke.simpleworklist.control.common;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.services.TestService;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.model.services.TestService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.services.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.model.services.UserAccountLoginSuccessService;
 
 @Controller
 @RequestMapping(value = "/test")

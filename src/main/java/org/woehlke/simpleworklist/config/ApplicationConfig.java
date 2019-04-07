@@ -14,7 +14,7 @@ import java.util.Properties;
 @Configuration
 @EnableAsync
 @EnableJpaRepositories({
-    "org.woehlke.simpleworklist.repository"
+        "org.woehlke.simpleworklist.model.repository"
 })
 @EnableConfigurationProperties({
     ApplicationProperties.class
@@ -54,5 +54,5 @@ public class ApplicationConfig {
         return mailSender;
     }
 
-    protected final ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 }

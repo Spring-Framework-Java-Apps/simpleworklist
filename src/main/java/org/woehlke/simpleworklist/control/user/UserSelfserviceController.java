@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.entities.enumerations.Language;
+import org.woehlke.simpleworklist.model.entities.Context;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.model.enumerations.Language;
 import org.woehlke.simpleworklist.model.*;
-import org.woehlke.simpleworklist.services.UserAccountAccessService;
+import org.woehlke.simpleworklist.model.services.UserAccountAccessService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -59,14 +59,14 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/name", method = RequestMethod.GET)
     public String userNameForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserChangeNameFormBean bean = new UserChangeNameFormBean(user.getUserFullname());
+        UserChangeNameForm bean = new UserChangeNameForm(user.getUserFullname());
         model.addAttribute("username", bean);
         model.addAttribute("thisUser", user);
         return "user/selfservice/name";
     }
 
     @RequestMapping(value = "/name", method = RequestMethod.POST)
-    public String userNameStore(@Valid UserChangeNameFormBean username, BindingResult result, Model model){
+    public String userNameStore(@Valid UserChangeNameForm username, BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()) {
             model.addAttribute("username", username);
@@ -83,13 +83,13 @@ public class UserSelfserviceController extends AbstractController {
     public String userPasswordForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        UserChangePasswordFormBean userChangePasswordFormBean = new UserChangePasswordFormBean();
-        model.addAttribute("userChangePasswordFormBean", userChangePasswordFormBean);
+        UserChangePasswordForm userChangePasswordForm = new UserChangePasswordForm();
+        model.addAttribute("userChangePasswordFormBean", userChangePasswordForm);
         return "user/selfservice/password";
     }
 
     @RequestMapping(value = "/password", method = RequestMethod.POST)
-    public String userPasswordStore(@Valid UserChangePasswordFormBean userChangePasswordFormBean,
+    public String userPasswordStore(@Valid UserChangePasswordForm userChangePasswordForm,
                                    BindingResult result, Model model) {
         LOGGER.info("---------------------------------------------------------");
         LOGGER.info("userPasswordStore");
@@ -101,9 +101,9 @@ public class UserSelfserviceController extends AbstractController {
             }
             return "user/selfservice/password";
         } else {
-            if(! userChangePasswordFormBean.passwordsAreTheSame()){
+            if(! userChangePasswordForm.passwordsAreTheSame()){
                 LOGGER.info("passwords Are Not The Same");
-                String objectName = "userChangePasswordFormBean";
+                String objectName = "userChangePasswordForm";
                 String field = "userPassword";
                 String defaultMessage = "Passwords aren't the same.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
@@ -113,9 +113,9 @@ public class UserSelfserviceController extends AbstractController {
                 }
                 return "user/selfservice/password";
             }
-            if(!userAccountAccessService.confirmUserByLoginAndPassword(user.getUserEmail(), userChangePasswordFormBean.getOldUserPassword())){
+            if(!userAccountAccessService.confirmUserByLoginAndPassword(user.getUserEmail(), userChangePasswordForm.getOldUserPassword())){
                 LOGGER.info("old Password is wrong");
-                String objectName = "userChangePasswordFormBean";
+                String objectName = "userChangePasswordForm";
                 String field = "oldUserPassword";
                 String defaultMessage = "Password is incorrect";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
@@ -126,7 +126,7 @@ public class UserSelfserviceController extends AbstractController {
                 return "user/selfservice/password";
             }
             LOGGER.info("OK");
-            userAccountAccessService.changeUsersPassword(userChangePasswordFormBean,user);
+            userAccountAccessService.changeUsersPassword(userChangePasswordForm,user);
             return "redirect:/user/selfservice/profile";
         }
     }
@@ -134,7 +134,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/contexts", method = RequestMethod.GET)
     public String userAreasForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserChangeDefaultContextFormBean bean = new UserChangeDefaultContextFormBean();
+        UserChangeDefaultContextForm bean = new UserChangeDefaultContextForm();
         bean.setId(user.getId());
         bean.setDefaultContext(user.getDefaultContext());
         model.addAttribute("thisUser", bean);
@@ -144,7 +144,7 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/contexts", method = RequestMethod.POST)
-    public String userAreasSave(@Valid @ModelAttribute("thisUser") UserChangeDefaultContextFormBean thisUser, BindingResult result, Model model){
+    public String userAreasSave(@Valid @ModelAttribute("thisUser") UserChangeDefaultContextForm thisUser, BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
             LOGGER.info("userAreasSave: result has Errors");
@@ -166,13 +166,13 @@ public class UserSelfserviceController extends AbstractController {
     public String userNewAreaForm(Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        NewContextFormBean newContext = new NewContextFormBean();
+        NewContextForm newContext = new NewContextForm();
         model.addAttribute("newContext", newContext);
         return "user/selfservice/context/add";
     }
 
     @RequestMapping(value = "/context/add", method = RequestMethod.POST)
-    public String userNewAreaStore(@Valid NewContextFormBean newContext, BindingResult result, Model model){
+    public String userNewAreaStore(@Valid NewContextForm newContext, BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
             LOGGER.info("userNewAreaStore: result has Errors");
@@ -191,7 +191,7 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         Context context = contextService.findByIdAndUserAccount(contextId,user);
-        NewContextFormBean editContext = new NewContextFormBean();
+        NewContextForm editContext = new NewContextForm();
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
         model.addAttribute("editContext", editContext);
@@ -199,7 +199,7 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.POST)
-    public String userEditAreaStore(@Valid NewContextFormBean editContext, BindingResult result, Model model, @PathVariable long contextId){
+    public String userEditAreaStore(@Valid NewContextForm editContext, BindingResult result, Model model, @PathVariable long contextId){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
             LOGGER.info("userEditAreaStore: result has Errors");
@@ -248,12 +248,12 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
-        model.addAttribute("userChangeLanguageFormBean",new UserChangeLanguageFormBean(user.getDefaultLanguage()));
+        model.addAttribute("userChangeLanguageFormBean",new UserChangeLanguageForm(user.getDefaultLanguage()));
         return "user/selfservice/language";
     }
 
     @RequestMapping(value = "/language", method = RequestMethod.POST)
-    public String userLanguageStore(@Valid UserChangeLanguageFormBean userChangeLanguageFormBean,
+    public String userLanguageStore(@Valid UserChangeLanguageForm userChangeLanguageForm,
                                     BindingResult result, Model model){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         if(result.hasErrors()){
@@ -263,10 +263,10 @@ public class UserSelfserviceController extends AbstractController {
             }
             return "user/selfservice/language";
         } else {
-            user.setDefaultLanguage(userChangeLanguageFormBean.getDefaultLanguage());
+            user.setDefaultLanguage(userChangeLanguageForm.getDefaultLanguage());
             userAccountService.saveAndFlush(user);
             String returnUrl;
-            switch (userChangeLanguageFormBean.getDefaultLanguage()){
+            switch (userChangeLanguageForm.getDefaultLanguage()){
                 case DE: returnUrl="redirect:/user/selfservice/profile?lang=de"; break;
                 default: returnUrl="redirect:/user/selfservice/profile?lang=en"; break;
             }

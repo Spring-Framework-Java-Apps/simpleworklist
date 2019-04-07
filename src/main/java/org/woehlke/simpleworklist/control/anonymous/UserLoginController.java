@@ -17,10 +17,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.LoginFormBean;
-import org.woehlke.simpleworklist.services.UserAccountAccessService;
-import org.woehlke.simpleworklist.services.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.model.LoginForm;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.model.services.UserAccountAccessService;
+import org.woehlke.simpleworklist.model.services.UserAccountLoginSuccessService;
 
 
 @Controller
@@ -47,30 +47,30 @@ public class UserLoginController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public final String loginForm(Model model) {
-        LoginFormBean loginFormBean = new LoginFormBean();
-        model.addAttribute("loginFormBean", loginFormBean);
+        LoginForm loginForm = new LoginForm();
+        model.addAttribute("loginFormBean", loginForm);
         return "user/login/loginForm";
     }
 
     /**
      * Perform login.
      *
-     * @param loginFormBean
+     * @param loginForm
      * @param result
      * @param model
      * @return Shows Root Project after successful login or login form with error messages.
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public final String loginPerform(@Valid LoginFormBean loginFormBean,
+    public final String loginPerform(@Valid LoginForm loginForm,
                                BindingResult result, Model model) {
-        boolean authorized = userAccountAccessService.authorize(loginFormBean);
+        boolean authorized = userAccountAccessService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
             userAccountLoginSuccessService.updateLastLoginTimestamp(user);
             LOGGER.info("logged in");
             return "redirect:/";
         } else {
-            String objectName = "loginFormBean";
+            String objectName = "loginForm";
             String field = "userEmail";
             String defaultMessage = "Email or Password wrong.";
             FieldError e = new FieldError(objectName, field, defaultMessage);

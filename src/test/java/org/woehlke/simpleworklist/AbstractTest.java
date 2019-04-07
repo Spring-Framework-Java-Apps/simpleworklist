@@ -14,8 +14,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.services.*;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
+import org.woehlke.simpleworklist.model.services.*;
 
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;

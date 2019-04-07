@@ -13,13 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.entities.Context;
-import org.woehlke.simpleworklist.entities.Task;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
-import org.woehlke.simpleworklist.entities.Project;
-import org.woehlke.simpleworklist.entities.UserAccount;
+import org.woehlke.simpleworklist.model.entities.Context;
+import org.woehlke.simpleworklist.model.entities.Task;
+import org.woehlke.simpleworklist.model.enumerations.TaskState;
+import org.woehlke.simpleworklist.model.entities.Project;
+import org.woehlke.simpleworklist.model.entities.UserAccount;
 import org.woehlke.simpleworklist.model.UserSessionBean;
-import org.woehlke.simpleworklist.services.TaskService;
+import org.woehlke.simpleworklist.model.services.TaskService;
 
 @Controller
 @RequestMapping(value = "/task")
