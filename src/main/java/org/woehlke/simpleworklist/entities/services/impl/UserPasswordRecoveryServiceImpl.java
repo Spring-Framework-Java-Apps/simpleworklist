@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services.impl;
+package org.woehlke.simpleworklist.entities.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.entities.repository.UserPasswordRecoveryRepository;
 import org.woehlke.simpleworklist.model.services.TokenGeneratorService;
-import org.woehlke.simpleworklist.model.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.entities.services.UserPasswordRecoveryService;
 
 import java.util.Date;
 

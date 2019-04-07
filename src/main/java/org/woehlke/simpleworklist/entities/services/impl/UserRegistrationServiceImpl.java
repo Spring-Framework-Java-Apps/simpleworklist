@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services.impl;
+package org.woehlke.simpleworklist.entities.services.impl;
 
 import java.util.Date;
 
@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.entities.UserRegistration;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 import org.woehlke.simpleworklist.entities.repository.UserRegistrationRepository;
 import org.woehlke.simpleworklist.model.services.TokenGeneratorService;
-import org.woehlke.simpleworklist.model.services.UserRegistrationService;
+import org.woehlke.simpleworklist.entities.services.UserRegistrationService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

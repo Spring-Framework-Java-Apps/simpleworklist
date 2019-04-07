@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services;
+package org.woehlke.simpleworklist.entities.services;
 
 import org.woehlke.simpleworklist.entities.UserRegistration;
 

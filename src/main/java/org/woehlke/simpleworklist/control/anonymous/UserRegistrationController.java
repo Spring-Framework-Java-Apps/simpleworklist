@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.model.UserAccountForm;
 import org.woehlke.simpleworklist.model.UserRegistrationForm;
 import org.woehlke.simpleworklist.entities.UserRegistration;
-import org.woehlke.simpleworklist.model.services.UserRegistrationService;
-import org.woehlke.simpleworklist.model.services.UserAccountService;
+import org.woehlke.simpleworklist.entities.services.UserRegistrationService;
+import org.woehlke.simpleworklist.entities.services.UserAccountService;
 
 import javax.validation.Valid;
 

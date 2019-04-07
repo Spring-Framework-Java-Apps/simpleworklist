@@ -20,7 +20,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.model.Breadcrumb;
 import org.woehlke.simpleworklist.model.UserSessionBean;
-import org.woehlke.simpleworklist.model.services.TaskService;
+import org.woehlke.simpleworklist.entities.services.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;

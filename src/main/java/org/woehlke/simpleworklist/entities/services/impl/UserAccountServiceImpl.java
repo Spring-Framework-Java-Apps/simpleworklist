@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services.impl;
+package org.woehlke.simpleworklist.entities.services.impl;
 
 
 import java.util.Date;
@@ -23,7 +23,7 @@ import org.woehlke.simpleworklist.entities.enumerations.Language;
 import org.woehlke.simpleworklist.entities.repository.ContextRepository;
 import org.woehlke.simpleworklist.entities.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.entities.repository.User2UserMessageRepository;
-import org.woehlke.simpleworklist.model.services.UserAccountService;
+import org.woehlke.simpleworklist.entities.services.UserAccountService;
 
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

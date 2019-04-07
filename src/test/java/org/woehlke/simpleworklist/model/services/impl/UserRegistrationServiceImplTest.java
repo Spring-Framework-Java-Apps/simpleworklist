@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.entities.UserRegistration;
-import org.woehlke.simpleworklist.model.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.model.services.UserRegistrationService;
+import org.woehlke.simpleworklist.entities.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.entities.services.UserRegistrationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;

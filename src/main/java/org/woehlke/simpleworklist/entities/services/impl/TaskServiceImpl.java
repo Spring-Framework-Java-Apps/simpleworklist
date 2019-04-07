@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services.impl;
+package org.woehlke.simpleworklist.entities.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +16,7 @@ import org.woehlke.simpleworklist.entities.Task;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.repository.TaskRepository;
-import org.woehlke.simpleworklist.model.services.TaskService;
+import org.woehlke.simpleworklist.entities.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.Date;

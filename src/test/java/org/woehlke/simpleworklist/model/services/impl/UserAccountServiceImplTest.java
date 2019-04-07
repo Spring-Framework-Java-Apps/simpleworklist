@@ -9,10 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.AbstractTest;
+import org.woehlke.simpleworklist.entities.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.entities.services.UserRegistrationService;
 import org.woehlke.simpleworklist.model.LoginForm;
 import org.woehlke.simpleworklist.model.UserAccountForm;
 import org.woehlke.simpleworklist.entities.UserAccount;
-import org.woehlke.simpleworklist.model.services.*;
 
 
 public class UserAccountServiceImplTest extends AbstractTest {

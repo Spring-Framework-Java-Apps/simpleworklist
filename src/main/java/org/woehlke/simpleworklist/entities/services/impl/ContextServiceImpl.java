@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services.impl;
+package org.woehlke.simpleworklist.entities.services.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

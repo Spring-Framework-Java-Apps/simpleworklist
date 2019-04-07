@@ -12,6 +12,8 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 import org.woehlke.simpleworklist.entities.services.ContextService;
 import org.woehlke.simpleworklist.entities.services.ProjectService;
+import org.woehlke.simpleworklist.entities.services.User2UserMessageService;
+import org.woehlke.simpleworklist.entities.services.UserAccountService;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.*;
 

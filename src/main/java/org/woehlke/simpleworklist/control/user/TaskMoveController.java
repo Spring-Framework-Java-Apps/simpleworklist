@@ -17,8 +17,7 @@ import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskMoveService;
-import org.woehlke.simpleworklist.model.services.TaskService;
-import org.woehlke.simpleworklist.model.services.TaskStateService;
+import org.woehlke.simpleworklist.entities.services.TaskService;
 
 @Controller
 @RequestMapping(value = "/task/move")

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services;
+package org.woehlke.simpleworklist.entities.services;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.services.impl;
+package org.woehlke.simpleworklist.entities.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.entities.User2UserMessage;
 import org.woehlke.simpleworklist.entities.UserAccount;
 import org.woehlke.simpleworklist.entities.repository.User2UserMessageRepository;
-import org.woehlke.simpleworklist.model.services.User2UserMessageService;
+import org.woehlke.simpleworklist.entities.services.User2UserMessageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
