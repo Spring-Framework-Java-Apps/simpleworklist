@@ -31,11 +31,11 @@
 	</div>
 	</section>
 
-	<!-- Breadcrumb -->
-	<section th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
+	<section th:replace="layout/navcolleft :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
 	</section>
 
-	<section th:replace="layout/navcolleft :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
+	<!-- Breadcrumb -->
+	<section th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
 	</section>
 
 	<!-- Menu on Left Column and Document Window on the Right Column -->
