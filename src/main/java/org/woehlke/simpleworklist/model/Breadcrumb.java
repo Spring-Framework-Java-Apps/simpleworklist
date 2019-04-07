@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Breadcrumb implements Serializable {
 
+    private static final long serialVersionUID = 7932703111140692689L;
+
     private List<BreadcrumbItem> breadcrumb;
 
     public Breadcrumb() {

@@ -29,6 +29,8 @@ import java.util.UUID;
 )
 public class Context implements Serializable {
 
+    private static final long serialVersionUID = -5035732370606951871L;
+
     @Id
     @GeneratedValue(generator = "context_generator")
     @SequenceGenerator(

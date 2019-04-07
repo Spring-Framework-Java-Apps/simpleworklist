@@ -9,5 +9,7 @@ public enum UserRole implements Serializable {
     ROLE_USER,
 
     @Enumerated
-    ROLE_ADMIN
+    ROLE_ADMIN;
+
+    private static final long serialVersionUID = 0L;
 }

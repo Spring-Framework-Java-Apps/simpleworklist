@@ -37,4 +37,6 @@ public enum TaskEnergy implements Serializable {
     public static List<TaskEnergy> list() {
         return Arrays.asList(values());
     }
+
+    private static final long serialVersionUID = 0L;
 }

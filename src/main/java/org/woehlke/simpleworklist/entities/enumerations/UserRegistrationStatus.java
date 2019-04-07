@@ -15,6 +15,8 @@ public enum UserRegistrationStatus implements Serializable {
     REGISTRATION_CLICKED_IN_MAIL,
 
     @Enumerated
-    REGISTRATION_ACCOUNT_CREATED
+    REGISTRATION_ACCOUNT_CREATED;
+
+    private static final long serialVersionUID = 0L;
 
 }

@@ -31,6 +31,8 @@ import java.util.Objects;
 )
 public class UserPasswordRecovery implements Serializable {
 
+    private static final long serialVersionUID = 6860716425733119940L;
+
     @Id
     @GeneratedValue(generator = "user_password_recovery_generator")
     @SequenceGenerator(

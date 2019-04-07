@@ -30,4 +30,6 @@ public enum TaskStateView implements Serializable {
 
     private String urlPart;
     private String messageCode;
+
+    private static final long serialVersionUID = 0L;
 }

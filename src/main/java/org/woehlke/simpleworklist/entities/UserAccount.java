@@ -26,6 +26,8 @@ import javax.validation.constraints.NotNull;
 )
 public class UserAccount implements Serializable {
 
+    private static final long serialVersionUID = 7860692526488291439L;
+
     @Id
     @GeneratedValue(generator = "user_account_generator")
     @SequenceGenerator(

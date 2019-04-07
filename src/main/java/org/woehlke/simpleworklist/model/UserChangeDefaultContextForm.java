@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class UserChangeDefaultContextForm implements Serializable {
 
-    //private static final long serialVersionUID = 312962745980506820L;
+    private static final long serialVersionUID = -8592295563275083292L;
 
     @NotNull
     private Long id;

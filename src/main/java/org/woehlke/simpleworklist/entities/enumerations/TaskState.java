@@ -30,5 +30,7 @@ public enum TaskState implements Serializable {
     COMPLETED,
 
     @Enumerated
-    TRASHED
+    TRASHED;
+
+    private static final long serialVersionUID = 0L;
 }

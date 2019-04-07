@@ -15,5 +15,7 @@ public enum UserPasswordRecoveryStatus implements Serializable {
     PASSWORD_RECOVERY_CLICKED_IN_MAIL,
 
     @Enumerated
-    PASSWORD_RECOVERY_STORED_CHANGED
+    PASSWORD_RECOVERY_STORED_CHANGED;
+
+    private static final long serialVersionUID = 0L;
 }

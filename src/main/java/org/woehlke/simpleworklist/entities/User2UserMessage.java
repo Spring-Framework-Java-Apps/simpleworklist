@@ -28,6 +28,8 @@ import java.util.UUID;
 )
 public class User2UserMessage implements Serializable {
 
+    private static final long serialVersionUID = 4263078228257938175L;
+
     @Id
     @GeneratedValue(generator = "user_message_generator")
     @SequenceGenerator(

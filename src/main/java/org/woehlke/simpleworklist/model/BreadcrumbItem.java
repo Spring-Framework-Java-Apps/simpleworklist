@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class BreadcrumbItem implements Serializable {
 
-    //private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8276819198016077167L;
 
     @NotNull
     private String name;

@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class NewContextForm implements Serializable {
 
-    //private static final long serialVersionUID = -8465934162293667335L;
+    private static final long serialVersionUID = -937143305653156981L;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank

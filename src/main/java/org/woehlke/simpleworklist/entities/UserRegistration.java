@@ -32,6 +32,8 @@ import java.util.Objects;
 )
 public class UserRegistration implements Serializable {
 
+    private static final long serialVersionUID = -1955967514018161878L;
+
     @Id
     @GeneratedValue(generator = "user_registration_generator")
     @SequenceGenerator(

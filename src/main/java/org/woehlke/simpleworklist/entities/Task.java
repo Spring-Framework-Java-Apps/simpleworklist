@@ -45,6 +45,8 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
 @Indexed
 public class Task implements Serializable {
 
+    private static final long serialVersionUID = 5247710652586269801L;
+
     @Id
     @GeneratedValue(generator = "task_generator")
     @SequenceGenerator(

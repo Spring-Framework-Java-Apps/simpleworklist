@@ -31,6 +31,8 @@ import org.hibernate.validator.constraints.SafeHtml;
 @Indexed
 public class Project implements Serializable {
 
+    private static final long serialVersionUID = 4566653175832872422L;
+
     @Id
     @GeneratedValue(generator = "project_generator")
     @SequenceGenerator(
