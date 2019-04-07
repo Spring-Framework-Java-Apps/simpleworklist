@@ -50,27 +50,20 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            BindingResult result,Model model) {
+            Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         Project thisProject = null;
         Page<Task> taskPage = null;
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId, userAccount);
-            if(userSession.getContextId() == null || userSession.getContextId() == 0) {
-                taskPage = taskService.findByProject(thisProject, pageable, userAccount);
-            } else {
-                taskPage = taskService.findByProject(thisProject, pageable, userAccount, context);
-            }
+            taskPage = taskService.findByProject(thisProject, pageable, userAccount, context);
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
             thisProject.setUserAccount(userAccount);
-            if(userSession.getContextId() == null || userSession.getContextId() == 0) {
-                taskPage = taskService.findByRootProject(pageable, userAccount);
-            } else {
-                taskPage = taskService.findByRootProject(pageable, userAccount, context);
-            }
+            thisProject.setContext(context);
+            taskPage = taskService.findByRootProject(pageable, userAccount, context);
         }
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
         model.addAttribute("breadcrumb", breadcrumb);
@@ -84,15 +77,19 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/addchild", method = RequestMethod.GET)
-    public final String addNewProjectForm(@ModelAttribute("userSession") UserSessionBean userSession,
-                                          Model model){
+    public final String addNewProjectForm(
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model
+    ){
         return addNewProjectGet(0, userSession,model);
     }
 
     @RequestMapping(value = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
             @PathVariable long thisProjectId,
-            @PathVariable long targetProjectId) {
+            @PathVariable long targetProjectId,
+            @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Project thisProject = null;
         if (thisProjectId != 0) {
@@ -105,7 +102,10 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.GET)
     public final String editProjectGet(
-            @PathVariable long projectId, Model model) {
+            @PathVariable long projectId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model
+    ) {
         if (projectId > 0) {
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
@@ -125,7 +125,10 @@ public class ProjectController extends AbstractController {
     public final String editProjectPost(
             @PathVariable long projectId,
             @Valid Project project,
-            BindingResult result, Model model) {
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model
+    ) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
@@ -155,9 +158,12 @@ public class ProjectController extends AbstractController {
     @RequestMapping(value = "/{projectId}/delete", method = RequestMethod.GET)
     public final String deleteProject(
             @PathVariable long projectId,
-            @PageableDefault(sort = "title") Pageable request, Model model) {
+            @PageableDefault(sort = "title") Pageable request,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model) {
         long newProjectId = projectId;
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         if (projectId > 0) {
             Project project = projectService.findByProjectId(projectId, userAccount);
             if(project != null){
@@ -187,7 +193,7 @@ public class ProjectController extends AbstractController {
                     model.addAttribute("message",s.toString());
                     model.addAttribute("isDeleted",false);
                     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project, userAccount);
-                    Page<Task> taskPage = taskService.findByProject(project, request, userAccount);
+                    Page<Task> taskPage = taskService.findByProject(project, request, userAccount, context);
                     model.addAttribute("taskPage", taskPage);
                     model.addAttribute("breadcrumb", breadcrumb);
                     model.addAttribute("thisProject", project);
@@ -200,9 +206,11 @@ public class ProjectController extends AbstractController {
 
 
     @RequestMapping(value = "/{projectId}//add/new/project", method = RequestMethod.GET)
-    public final String addNewProjectGet(@PathVariable long projectId,
-                                          @ModelAttribute("userSession") UserSessionBean userSession,
-                                          Model model) {
+    public final String addNewProjectGet(
+            @PathVariable long projectId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model
+    ) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Project thisProject = null;
         Project project = null;
@@ -322,24 +330,29 @@ public class ProjectController extends AbstractController {
     public String changeTaskOrderIdWithinAProject(
             @PathVariable long sourceTaskId,
             @PathVariable long destinationTaskId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             Model model){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
         Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
         Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
-        LOGGER.info("--------- changeTaskOrderIdByProject  -------");
-        LOGGER.info("source Task:      "+sourceTask.toString());
-        LOGGER.info("---------------------------------------------");
-        LOGGER.info("destination Task: "+destinationTask.toString());
-        LOGGER.info("---------------------------------------------");
+        LOGGER.info("-------------------------------------------------");
+        LOGGER.info("  changeTaskOrderIdWithinAProject");
+        LOGGER.info("-------------------------------------------------");
+        LOGGER.info("  source Task:      "+sourceTask.toString());
+        LOGGER.info("-------------------------------------------------");
+        LOGGER.info("  destination Task: "+destinationTask.toString());
+        LOGGER.info("-------------------------------------------------");
         String returnUrl = "redirect:/taskstate/inbox";
+        Project project = sourceTask.getProject();
         if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
             if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
-                taskService.moveOrderIdProject(sourceTask,destinationTask);
+                taskService.moveOrderIdProject(project, sourceTask,destinationTask, context);
                 returnUrl = "redirect:/project/0";
             } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
                 boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
                 if (sameProject) {
-                    taskService.moveOrderIdProject(sourceTask,destinationTask);
+                    taskService.moveOrderIdProject(project, sourceTask,destinationTask, context);
                     returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
                 }
             }
