@@ -50,7 +50,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task saveAndFlush(Task entity, UserAccount userAccount) {
         if(entity.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            entity.setLastChangeTimestamp(new Date());
             entity = taskRepository.saveAndFlush(entity);
             LOGGER.info("saved: " + entity.toString());
         }
@@ -62,7 +61,6 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setTaskState(TaskState.TRASH);
-            task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
     }
@@ -81,7 +79,6 @@ public class TaskServiceImpl implements TaskService {
     public void undelete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.switchToLastFocusType();
-            task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
     }
@@ -91,7 +88,6 @@ public class TaskServiceImpl implements TaskService {
     public void complete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setTaskState(TaskState.COMPLETED);
-            task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
     }
@@ -101,7 +97,6 @@ public class TaskServiceImpl implements TaskService {
     public void incomplete(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.switchToLastFocusType();
-            task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
     }
@@ -111,7 +106,6 @@ public class TaskServiceImpl implements TaskService {
     public void setFocus(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setFocus(true);
-            task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
     }
@@ -121,7 +115,6 @@ public class TaskServiceImpl implements TaskService {
     public void unsetFocus(Task task, UserAccount userAccount) {
         if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             task.setFocus(false);
-            task.setLastChangeTimestamp(new Date());
             taskRepository.saveAndFlush(task);
         }
     }

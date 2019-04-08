@@ -55,7 +55,7 @@ public class UserRegistrationServiceImpl implements
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getCreatedTimestamp().getTime()) < now.getTime()) {
+            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
                 userRegistrationRepository.delete(earlierOptIn);
             }
         }

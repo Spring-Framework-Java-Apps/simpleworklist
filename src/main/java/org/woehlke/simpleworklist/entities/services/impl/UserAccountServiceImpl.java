@@ -61,7 +61,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
         u.setDefaultLanguage(Language.EN);
         Date now = new Date();
-        u.setCreatedTimestamp(now);
         u.setLastLoginTimestamp(now);
         u.setAccountNonExpired(true);
         u.setAccountNonLocked(true);

@@ -13,7 +13,6 @@ import org.woehlke.simpleworklist.entities.repository.User2UserMessageRepository
 import org.woehlke.simpleworklist.entities.services.User2UserMessageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,7 +35,6 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void sendNewUserMessage(UserAccount thisUser,UserAccount otherUser, User2UserMessage newUser2UserMessage) {
         LOGGER.info("sendNewUserMessage");
-        newUser2UserMessage.setCreatedTimestamp(new Date());
         newUser2UserMessage.setSender(thisUser);
         newUser2UserMessage.setReceiver(otherUser);
         userMessageRepository.saveAndFlush(newUser2UserMessage);

@@ -57,7 +57,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         UserPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getCreatedTimestamp().getTime()) < now.getTime()) {
+            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
                 userPasswordRecoveryRepository.delete(earlierOptIn);
             }
         }
