@@ -42,7 +42,13 @@ public class Context extends AuditModel implements Serializable {
     @DocumentId(name = "id")
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
     @JoinColumn(name = "user_account_id")
     @IndexedEmbedded(includeEmbeddedObjectId = true)
     private UserAccount userAccount;

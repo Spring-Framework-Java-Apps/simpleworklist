@@ -11,10 +11,13 @@ import org.woehlke.simpleworklist.entities.entities.UserAccount;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
+    @Deprecated
     List<Project> findByParentIsNull();
 
+    @Deprecated
     List<Project> findByParentIsNullAndUserAccount(UserAccount userAccount);
 
+    @Deprecated
     List<Project> findByUserAccount(UserAccount userAccount);
 
     List<Project> findByContext(Context context);

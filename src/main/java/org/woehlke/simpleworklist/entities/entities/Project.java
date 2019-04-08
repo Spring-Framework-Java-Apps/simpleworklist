@@ -44,18 +44,40 @@ public class Project extends AuditModel implements Serializable {
     @DocumentId(name="id")
     private Long id;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = true,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "parent_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project parent;
 
-    @ManyToOne(optional = false)
+    @Deprecated
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "user_account_id")
     @IndexedEmbedded(includeEmbeddedObjectId=true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserAccount userAccount;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
@@ -74,8 +96,8 @@ public class Project extends AuditModel implements Serializable {
     @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = { CascadeType.ALL })
-    private List<Project> children = new ArrayList<Project>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = { CascadeType.ALL })
+    private List<Project> children = new ArrayList<>();
 
     @Transient
     public boolean hasNoChildren() {
@@ -150,10 +172,12 @@ public class Project extends AuditModel implements Serializable {
         this.children = children;
     }
 
+    @Deprecated
     public UserAccount getUserAccount() {
         return userAccount;
     }
 
+    @Deprecated
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
     }

@@ -17,6 +17,7 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
+    @Deprecated
     List<Task> findByProject(Project thisProject);
 
     Page<Task> findByProject(Project thisProject, Pageable pageable);
@@ -25,18 +26,22 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByProjectIsNullAndContext(Context context, Pageable request);
 
+    @Deprecated
     List<Task> findByContext(Context context);
 
+    @Deprecated
     Page<Task> findByUserAccountAndContext(UserAccount userAccount, Context context, Pageable request);
 
     Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState inbox, Context context);
 
     Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context);
 
-    Page<Task> findByTaskStateAndContext(TaskState inbox, Context context, Pageable request);
+    Page<Task> findByTaskStateAndContext(TaskState taskState, Context context, Pageable request);
 
-    List<Task> findByTaskStateAndContext(TaskState trashed, Context context);
+    @Deprecated
+    List<Task> findByTaskStateAndContext(TaskState taskState, Context context);
 
+    @Deprecated
     List<Task> findByTaskStateAndContextOrderByOrderIdTaskState(TaskState taskState, Context context);
 
     @Query("select t from Task t where t.orderIdTaskState > :lowerTask and t.orderIdTaskState < :higherTask"

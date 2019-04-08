@@ -60,17 +60,39 @@ public class Task extends AuditModel implements Serializable {
     @DocumentId(name="id")
     private Long id;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = true,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "project_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project project;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
-    @ManyToOne(optional = false)
+    @Deprecated
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "user_account_id")
     @IndexedEmbedded(includeEmbeddedObjectId=true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -172,10 +194,12 @@ public class Task extends AuditModel implements Serializable {
         this.project = project;
     }
 
+    @Deprecated
     public UserAccount getUserAccount() {
         return userAccount;
     }
 
+    @Deprecated
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
     }

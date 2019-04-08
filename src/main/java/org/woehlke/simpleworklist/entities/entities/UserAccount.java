@@ -57,7 +57,14 @@ public class UserAccount extends AuditModel implements Serializable {
     @Enumerated(EnumType.STRING)
     private Language defaultLanguage;
 
-    @ManyToOne(optional = false)
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
     @JoinColumn(name = "default_context_id")
     private Context defaultContext;
 
