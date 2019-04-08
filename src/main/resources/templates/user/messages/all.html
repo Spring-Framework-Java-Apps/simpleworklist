@@ -43,7 +43,7 @@
                     <span th:text="${m.messageText}" ></span>
                     <span style="float:right">
                         <small>
-                            <span th:text="${#dates.format(m.createdTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
+                            <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
                             <span th:if="${m.readByReceiver}" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         </small>
                     </span>
