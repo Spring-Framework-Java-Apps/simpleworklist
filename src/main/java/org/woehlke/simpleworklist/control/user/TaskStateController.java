@@ -164,7 +164,7 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String getAllTasksForUser(
-            @PageableDefault(sort = "lastChangeTimestamp") Pageable request,
+            @PageableDefault(sort = "rowCreatedAt") Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ){
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
