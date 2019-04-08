@@ -84,7 +84,7 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         UserChangePasswordForm userChangePasswordForm = new UserChangePasswordForm();
-        model.addAttribute("userChangePasswordFormBean", userChangePasswordForm);
+        model.addAttribute("userChangePasswordForm", userChangePasswordForm);
         return "user/selfservice/password";
     }
 
@@ -248,7 +248,7 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
-        model.addAttribute("userChangeLanguageFormBean",new UserChangeLanguageForm(user.getDefaultLanguage()));
+        model.addAttribute("userChangeLanguageForm",new UserChangeLanguageForm(user.getDefaultLanguage()));
         return "user/selfservice/language";
     }
 

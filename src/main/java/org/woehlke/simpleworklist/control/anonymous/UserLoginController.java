@@ -48,7 +48,7 @@ public class UserLoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public final String loginForm(Model model) {
         LoginForm loginForm = new LoginForm();
-        model.addAttribute("loginFormBean", loginForm);
+        model.addAttribute("loginForm", loginForm);
         return "user/login/loginForm";
     }
 

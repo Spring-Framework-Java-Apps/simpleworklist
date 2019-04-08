@@ -43,7 +43,7 @@ public class UserRegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public final String registerNewUserRequestForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-        model.addAttribute("registerFormBean", userRegistrationForm);
+        model.addAttribute("registerForm", userRegistrationForm);
         return "user/register/registerForm";
     }
 
@@ -102,7 +102,7 @@ public class UserRegistrationController {
             userRegistrationService.registrationClickedInEmail(o);
             UserAccountForm userAccountForm = new UserAccountForm();
             userAccountForm.setUserEmail(o.getEmail());
-            model.addAttribute("userAccountFormBean", userAccountForm);
+            model.addAttribute("userAccountForm", userAccountForm);
             return "user/register/registerConfirmed";
         } else {
             return "user/register/registerNotConfirmed";

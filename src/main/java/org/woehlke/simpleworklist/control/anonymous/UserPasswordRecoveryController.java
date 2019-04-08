@@ -44,7 +44,7 @@ public class UserPasswordRecoveryController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-        model.addAttribute("registerFormBean", userRegistrationForm);
+        model.addAttribute("registerForm", userRegistrationForm);
         return "user/resetPassword/resetPasswordForm";
     }
 
@@ -101,7 +101,7 @@ public class UserPasswordRecoveryController {
             UserAccountForm userAccountForm = new UserAccountForm();
             userAccountForm.setUserEmail(o.getEmail());
             userAccountForm.setUserFullname(ua.getUserFullname());
-            model.addAttribute("userAccountFormBean", userAccountForm);
+            model.addAttribute("userAccountForm", userAccountForm);
             return "user/resetPassword/resetPasswordConfirmed";
         } else {
             return "user/resetPassword/resetPasswordNotConfirmed";
