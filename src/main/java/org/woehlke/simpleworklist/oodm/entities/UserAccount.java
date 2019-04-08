@@ -59,13 +59,13 @@ public class UserAccount extends AuditModel implements Serializable {
 
     @OneToOne(
             fetch = FetchType.LAZY,
-            optional = false,
+            optional = true,
             cascade = {
                     CascadeType.MERGE,
                     CascadeType.REFRESH
             }
     )
-    @JoinColumn(name = "default_context_id")
+    @JoinColumn(name = "default_context_id",nullable=true)
     private Context defaultContext;
 
     @NotNull
