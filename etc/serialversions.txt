@@ -3,5 +3,6 @@ org.woehlke.simpleworklist.entities.enumerations.Language:    private static fin
 org.woehlke.simpleworklist.entities.enumerations.TaskEnergy:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.entities.enumerations.TaskState:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.entities.enumerations.TaskTime:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.entities.enumerations.UserRole:    private static final long serialVersionUID = 0L;

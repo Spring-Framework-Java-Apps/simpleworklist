@@ -51,7 +51,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
         userRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
         UserRegistration o = testHelperService.findByEmailRegistration(emails[0]);
         Assert.assertNotNull(o);
-        o.setCreatedTimestamp(new Date(o.getCreatedTimestamp().getTime() - ttlEmailVerificationRequest));
+        o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
         o.setNumberOfRetries(0);
         userRegistrationService.registrationClickedInEmail(o);
         userRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
@@ -70,7 +70,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
         userPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);
         UserPasswordRecovery o = testHelperService.findByEmailPasswordRecovery(emails[0]);
         Assert.assertNotNull(o);
-        o.setCreatedTimestamp(new Date(o.getCreatedTimestamp().getTime() - ttlEmailVerificationRequest));
+        o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
         o.setNumberOfRetries(0);
         userPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
         userPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);

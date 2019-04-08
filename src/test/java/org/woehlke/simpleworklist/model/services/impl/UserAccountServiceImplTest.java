@@ -95,7 +95,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
             Assert.assertNotNull(user.getUserEmail());
             Assert.assertNotNull(user.getUserPassword());
             Assert.assertNotNull(user.getUserFullname());
-            Assert.assertNotNull(user.getCreatedTimestamp());
+            Assert.assertNotNull(user.getRowCreatedAt());
         }
     }
 
