@@ -170,7 +170,7 @@ public class ProjectController extends AbstractController {
                 boolean hasNoData = taskService.projectHasNoTasks(project, userAccount);
                 boolean hasNoChildren = project.hasNoChildren();
                 if (hasNoData && hasNoChildren) {
-                    if (!project.isRootCategory()) {
+                    if (!project.isRootProject()) {
                         newProjectId = project.getParent().getId();
                     } else {
                         newProjectId = 0;
@@ -294,7 +294,6 @@ public class ProjectController extends AbstractController {
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
         task.setUserAccount(userAccount);
-        task.setCreatedTimestamp(new Date());
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
         Project thisProject = null;

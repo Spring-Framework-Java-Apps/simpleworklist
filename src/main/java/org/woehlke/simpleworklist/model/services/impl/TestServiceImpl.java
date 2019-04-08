@@ -128,8 +128,6 @@ public class TestServiceImpl implements TestService {
             d.setText(text);
             d.setTitle(title);
             d.setProject(c02020303);
-            d.setCreatedTimestamp(new Date());
-            d.setLastChangeTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setTaskState(TaskState.INBOX);
             d.setFocus(false);
@@ -147,8 +145,6 @@ public class TestServiceImpl implements TestService {
             Task d = new Task();
             d.setText(text);
             d.setTitle(title);
-            d.setCreatedTimestamp(new Date());
-            d.setLastChangeTimestamp(new Date());
             d.setUserAccount(userAccount);
             d.setTaskState(TaskState.INBOX);
             d.setFocus(false);

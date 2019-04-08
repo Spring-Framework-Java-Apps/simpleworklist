@@ -100,7 +100,6 @@ public class TaskController extends AbstractController {
             }
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
-            persistentTask.setLastChangeTimestamp(new Date());
             boolean contextChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
             if(contextChanged){
                 persistentTask.setContext(task.getContext());
