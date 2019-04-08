@@ -102,13 +102,12 @@
                             <span th:text="${#dates.format(user.lastLoginTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
                         </td>
                         <td>
-                            <span th:text="${#dates.format(user.createdTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
+                            <span th:text="${#dates.format(user.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
 </body>
 </html>
