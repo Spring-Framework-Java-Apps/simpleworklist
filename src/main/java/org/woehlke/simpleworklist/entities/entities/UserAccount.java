@@ -202,7 +202,6 @@ public class UserAccount extends AuditModel implements Serializable {
                 ", userPassword='" + userPassword + '\'' +
                 ", userFullname='" + userFullname + '\'' +
                 ", defaultLanguage=" + defaultLanguage +
-                ", defaultContext=" + defaultContext +
                 ", lastLoginTimestamp=" + lastLoginTimestamp +
                 ", accountNonExpired=" + accountNonExpired +
                 ", accountNonLocked=" + accountNonLocked +

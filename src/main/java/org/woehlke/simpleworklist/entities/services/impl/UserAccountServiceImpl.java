@@ -67,17 +67,17 @@ public class UserAccountServiceImpl implements UserAccountService {
         u.setCredentialsNonExpired(true);
         u.setEnabled(true);
         LOGGER.info("About to save " + u.toString());
-        u = userAccountRepository.saveAndFlush(u);
-        Context work = new Context("Arbeit","Work");
-        Context priv = new Context("Privat","Private");
-        work.setUserAccount(u);
-        priv.setUserAccount(u);
-        LOGGER.info("About to save " + work.toString());
-        contextRepository.saveAndFlush(work);
-        LOGGER.info("About to save " + priv.toString());
-        contextRepository.saveAndFlush(priv);
-        u.setDefaultContext(work);
-        u = userAccountRepository.saveAndFlush(u);
+        u = userAccountRepository.save(u);
+        Context workContext = new Context("Arbeit","Work");
+        Context privContext = new Context("Privat","Private");
+        workContext.setUserAccount(u);
+        privContext.setUserAccount(u);
+        LOGGER.info("About to save " + workContext.toString());
+        contextRepository.save(workContext);
+        LOGGER.info("About to save " + privContext.toString());
+        contextRepository.save(privContext);
+        u.setDefaultContext(workContext);
+        u = userAccountRepository.save(u);
         LOGGER.info("Saved " + u.toString());
     }
 
