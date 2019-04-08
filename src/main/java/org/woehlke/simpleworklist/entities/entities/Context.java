@@ -4,11 +4,13 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 
 import javax.persistence.*;
 import javax.persistence.Index;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -24,10 +26,11 @@ import java.util.UUID;
         )
     },
     indexes={
-        @Index(name="ix_context_uuid", columnList = "uuid")
+        @Index(name = "ix_context_uuid", columnList = "uuid"),
+        @Index(name = "ix_context_row_created_at", columnList = "row_created_at")
     }
 )
-public class Context implements Serializable {
+public class Context extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = -5035732370606951871L;
 
@@ -40,10 +43,6 @@ public class Context implements Serializable {
     )
     @DocumentId(name = "id")
     private Long id;
-
-    @NotNull
-    @Column(name="uuid", nullable = false)
-    private String uuid = UUID.randomUUID().toString();
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_account_id")
@@ -78,14 +77,6 @@ public class Context implements Serializable {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public UserAccount getUserAccount() {
         return userAccount;
     }
@@ -113,36 +104,30 @@ public class Context implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Context)) return false;
+        if (!super.equals(o)) return false;
         Context context = (Context) o;
-
-        if (id != null ? !id.equals(context.id) : context.id != null) return false;
-        if (uuid != null ? !uuid.equals(context.uuid) : context.uuid != null) return false;
-        if (userAccount != null ? !userAccount.equals(context.userAccount) : context.userAccount != null) return false;
-        if (nameDe != null ? !nameDe.equals(context.nameDe) : context.nameDe != null) return false;
-        return nameEn != null ? nameEn.equals(context.nameEn) : context.nameEn == null;
-
+        return Objects.equals(getId(), context.getId()) &&
+                getUserAccount().equals(context.getUserAccount()) &&
+                getNameDe().equals(context.getNameDe()) &&
+                getNameEn().equals(context.getNameEn());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
-        result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
-        result = 31 * result + (nameDe != null ? nameDe.hashCode() : 0);
-        result = 31 * result + (nameEn != null ? nameEn.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), getId(), getUserAccount(), getNameDe(), getNameEn());
     }
 
     @Override
     public String toString() {
         return "Context{" +
                 "id=" + id +
-                ", uuid='" + uuid + '\'' +
                 ", userAccount=" + userAccount +
                 ", nameDe='" + nameDe + '\'' +
                 ", nameEn='" + nameEn + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", rowCreatedAt=" + rowCreatedAt +
+                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
 }

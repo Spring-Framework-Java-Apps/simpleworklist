@@ -1,12 +1,13 @@
 package org.woehlke.simpleworklist.entities.entities;
 
 import javax.validation.constraints.Email;
+
+import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.entities.enumerations.UserPasswordRecoveryStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -23,13 +24,11 @@ import java.util.Objects;
         )
     },
     indexes = {
-        @Index(
-            name = "ix_user_password_recovery_created_timestamp",
-            columnList = "created_timestamp"
-        )
+        @Index(name = "ix_user_password_recovery_uuid", columnList = "uuid"),
+        @Index(name = "ix_user_password_recovery_row_created_at", columnList = "row_created_at")
     }
 )
-public class UserPasswordRecovery implements Serializable {
+public class UserPasswordRecovery extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 6860716425733119940L;
 
@@ -50,11 +49,6 @@ public class UserPasswordRecovery implements Serializable {
     @NotNull
     @Column(name = "token", nullable = false)
     private String token;
-
-    @NotNull
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "created_timestamp", nullable = false)
-    private Date createdTimestamp = new Date();
 
     @NotNull
     @Column(name = "double_optin_status", nullable = false)
@@ -94,14 +88,6 @@ public class UserPasswordRecovery implements Serializable {
         this.token = token;
     }
 
-    public Date getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Date createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
-    }
-
     public UserPasswordRecoveryStatus getDoubleOptInStatus() {
         return doubleOptInStatus;
     }
@@ -122,18 +108,18 @@ public class UserPasswordRecovery implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserPasswordRecovery)) return false;
+        if (!super.equals(o)) return false;
         UserPasswordRecovery that = (UserPasswordRecovery) o;
-        return getNumberOfRetries() == that.getNumberOfRetries() &&
-                Objects.equals(getId(), that.getId()) &&
+        return Objects.equals(getId(), that.getId()) &&
                 getEmail().equals(that.getEmail()) &&
                 getToken().equals(that.getToken()) &&
-                getCreatedTimestamp().equals(that.getCreatedTimestamp()) &&
-                getDoubleOptInStatus() == that.getDoubleOptInStatus();
+                getDoubleOptInStatus() == that.getDoubleOptInStatus() &&
+                getNumberOfRetries().equals(that.getNumberOfRetries());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getToken(), getCreatedTimestamp(), getDoubleOptInStatus(), getNumberOfRetries());
+        return Objects.hash(super.hashCode(), getId(), getEmail(), getToken(), getDoubleOptInStatus(), getNumberOfRetries());
     }
 
     @Override
@@ -142,9 +128,11 @@ public class UserPasswordRecovery implements Serializable {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", token='" + token + '\'' +
-                ", createdTimestamp=" + createdTimestamp +
                 ", doubleOptInStatus=" + doubleOptInStatus +
                 ", numberOfRetries=" + numberOfRetries +
+                ", uuid='" + uuid + '\'' +
+                ", rowCreatedAt=" + rowCreatedAt +
+                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
 }

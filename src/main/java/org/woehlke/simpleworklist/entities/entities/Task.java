@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.entities.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.entities.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.entities.enumerations.TaskState;
 import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
@@ -38,12 +40,13 @@ import org.woehlke.simpleworklist.entities.enumerations.TaskTime;
         )
     },
     indexes = {
-        @Index(name="ix_task_uuid", columnList = "uuid"),
-        @Index(name="ix_task_title", columnList = "title")
+        @Index(name = "ix_task_uuid", columnList = "uuid"),
+        @Index(name = "ix_task_row_created_at", columnList = "row_created_at"),
+        @Index(name = "ix_task_title", columnList = "title")
     }
 )
 @Indexed
-public class Task implements Serializable {
+public class Task extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 5247710652586269801L;
 
@@ -56,9 +59,6 @@ public class Task implements Serializable {
     )
     @DocumentId(name="id")
     private Long id;
-
-    @Column(name="uuid", nullable = false)
-    private String uuid = UUID.randomUUID().toString();
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "project_id")
@@ -120,14 +120,6 @@ public class Task implements Serializable {
     @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date dueDate;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "created_timestamp",nullable = false)
-    private Date createdTimestamp;
-
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "last_change_timestamp",nullable = false)
-    private Date lastChangeTimestamp;
-
     @Column(name = "order_id_project",nullable = false)
     private long orderIdProject;
 
@@ -145,20 +137,31 @@ public class Task implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * performs 'history back' for taskState
+     */
+    @Transient
+    public void switchToLastFocusType() {
+        TaskState old = this.taskState;
+        this.taskState = this.lastTaskState;
+        this.lastTaskState = old;
+    }
+
+    /**
+     * Sets also 'history back' for taskState
+     */
+    public void setTaskState(TaskState taskState) {
+        this.lastTaskState = this.taskState;
+        this.taskState = taskState;
+    }
+
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public Project getProject() {
@@ -205,36 +208,12 @@ public class Task implements Serializable {
         this.focus = focus;
     }
 
-    /**
-     * Sets also 'history back' for taskState
-     */
-    public void setTaskState(TaskState taskState) {
-        this.lastTaskState = this.taskState;
-        this.taskState = taskState;
-    }
-
     public Date getDueDate() {
         return dueDate;
     }
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public Date getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Date createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
-    }
-
-    public Date getLastChangeTimestamp() {
-        return lastChangeTimestamp;
-    }
-
-    public void setLastChangeTimestamp(Date lastChangeTimestamp) {
-        this.lastChangeTimestamp = lastChangeTimestamp;
     }
 
     public TaskState getLastTaskState() {
@@ -288,55 +267,37 @@ public class Task implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Task)) return false;
+        if (!super.equals(o)) return false;
         Task task = (Task) o;
-
-        if (id != null ? !id.equals(task.id) : task.id != null) return false;
-        if (uuid != null ? !uuid.equals(task.uuid) : task.uuid != null) return false;
-        if (project != null ? !project.equals(task.project) : task.project != null) return false;
-        if (context != null ? !context.equals(task.context) : task.context != null) return false;
-        if (userAccount != null ? !userAccount.equals(task.userAccount) : task.userAccount != null) return false;
-        if (title != null ? !title.equals(task.title) : task.title != null) return false;
-        if (text != null ? !text.equals(task.text) : task.text != null) return false;
-        if (focus != null ? !focus.equals(task.focus) : task.focus != null) return false;
-        if (taskState != task.taskState) return false;
-        if (lastTaskState != task.lastTaskState) return false;
-        if (taskEnergy != task.taskEnergy) return false;
-        if (taskTime != task.taskTime) return false;
-        if (dueDate != null ? !dueDate.equals(task.dueDate) : task.dueDate != null) return false;
-        if (createdTimestamp != null ? !createdTimestamp.equals(task.createdTimestamp) : task.createdTimestamp != null)
-            return false;
-        return lastChangeTimestamp != null ? lastChangeTimestamp.equals(task.lastChangeTimestamp) : task.lastChangeTimestamp == null;
-
+        return getOrderIdProject() == task.getOrderIdProject() &&
+                getOrderIdTaskState() == task.getOrderIdTaskState() &&
+                Objects.equals(getId(), task.getId()) &&
+                getProject().equals(task.getProject()) &&
+                getContext().equals(task.getContext()) &&
+                getUserAccount().equals(task.getUserAccount()) &&
+                getTitle().equals(task.getTitle()) &&
+                getText().equals(task.getText()) &&
+                getFocus().equals(task.getFocus()) &&
+                getTaskState() == task.getTaskState() &&
+                getLastTaskState() == task.getLastTaskState() &&
+                getTaskEnergy() == task.getTaskEnergy() &&
+                getTaskTime() == task.getTaskTime() &&
+                Objects.equals(getDueDate(), task.getDueDate());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
-        result = 31 * result + (project != null ? project.hashCode() : 0);
-        result = 31 * result + (context != null ? context.hashCode() : 0);
-        result = 31 * result + (userAccount != null ? userAccount.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (focus != null ? focus.hashCode() : 0);
-        result = 31 * result + (taskState != null ? taskState.hashCode() : 0);
-        result = 31 * result + (lastTaskState != null ? lastTaskState.hashCode() : 0);
-        result = 31 * result + (taskEnergy != null ? taskEnergy.hashCode() : 0);
-        result = 31 * result + (taskTime != null ? taskTime.hashCode() : 0);
-        result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
-        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
-        result = 31 * result + (lastChangeTimestamp != null ? lastChangeTimestamp.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), getId(), getProject(), getContext(), getUserAccount(), getTitle(), getText(), getFocus(), getTaskState(), getLastTaskState(), getTaskEnergy(), getTaskTime(), getDueDate(), getOrderIdProject(), getOrderIdTaskState());
     }
 
     @Override
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", uuid='" + uuid + '\'' +
                 ", project=" + project +
+                ", context=" + context +
+                ", userAccount=" + userAccount +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", focus=" + focus +
@@ -345,19 +306,11 @@ public class Task implements Serializable {
                 ", taskEnergy=" + taskEnergy +
                 ", taskTime=" + taskTime +
                 ", dueDate=" + dueDate +
-                ", createdTimestamp=" + createdTimestamp +
-                ", lastChangeTimestamp=" + lastChangeTimestamp +
+                ", orderIdProject=" + orderIdProject +
+                ", orderIdTaskState=" + orderIdTaskState +
+                ", uuid='" + uuid + '\'' +
+                ", rowCreatedAt=" + rowCreatedAt +
+                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
-
-    /**
-     * performs 'history back' for taskState
-     */
-    @Transient
-    public void switchToLastFocusType() {
-        TaskState old = this.taskState;
-        this.taskState = this.lastTaskState;
-        this.lastTaskState = old;
-    }
-
 }

@@ -3,12 +3,12 @@ package org.woehlke.simpleworklist.entities.entities;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
+import java.util.Objects;
 
 /**
  * Created by Fert on 16.02.2016.
@@ -19,14 +19,15 @@ import java.util.UUID;
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_user_message",
-            columnNames = {"created_timestamp", "user_account_id_sender", "user_account_id_receiver"}
+            columnNames = {"row_created_at", "user_account_id_sender", "user_account_id_receiver"}
         )
     },
     indexes = {
-        @Index(name="ix_user_message_uuid", columnList = "uuid")
+        @Index(name = "ix_user_message_uuid", columnList = "uuid"),
+        @Index(name = "ix_user_message_row_created_at", columnList = "row_created_at")
     }
 )
-public class User2UserMessage implements Serializable {
+public class User2UserMessage extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 4263078228257938175L;
 
@@ -39,9 +40,6 @@ public class User2UserMessage implements Serializable {
     )
     private Long id;
 
-    @Column(name="uuid", nullable = false)
-    private String uuid = UUID.randomUUID().toString();
-
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=1,max=65535)
@@ -51,11 +49,6 @@ public class User2UserMessage implements Serializable {
     @NotNull
     @Column(name="read_by_receiver", columnDefinition = "boolean default false")
     private Boolean readByReceiver;
-
-    @NotNull
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name="created_timestamp", nullable = false)
-    private Date createdTimestamp = new Date();
 
     @NotNull
     @ManyToOne
@@ -75,14 +68,6 @@ public class User2UserMessage implements Serializable {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public String getMessageText() {
         return messageText;
     }
@@ -91,12 +76,12 @@ public class User2UserMessage implements Serializable {
         this.messageText = messageText;
     }
 
-    public boolean isReadByReceiver() {
+    public Boolean isReadByReceiver() {
         return readByReceiver;
     }
 
-    public void setReadByReceiver(boolean read) {
-        this.readByReceiver = read;
+    public void setReadByReceiver(Boolean readByReceiver) {
+        this.readByReceiver = readByReceiver;
     }
 
     public UserAccount getSender() {
@@ -115,54 +100,35 @@ public class User2UserMessage implements Serializable {
         this.receiver = receiver;
     }
 
-    public Date getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Date createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User2UserMessage)) return false;
-
+        if (!super.equals(o)) return false;
         User2UserMessage that = (User2UserMessage) o;
-
-        if (readByReceiver != that.readByReceiver) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
-        if (messageText != null ? !messageText.equals(that.messageText) : that.messageText != null) return false;
-        if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
-            return false;
-        if (sender != null ? !sender.equals(that.sender) : that.sender != null) return false;
-        return receiver != null ? receiver.equals(that.receiver) : that.receiver == null;
-
+        return Objects.equals(getId(), that.getId()) &&
+                getMessageText().equals(that.getMessageText()) &&
+                isReadByReceiver().equals(that.isReadByReceiver()) &&
+                getSender().equals(that.getSender()) &&
+                getReceiver().equals(that.getReceiver());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
-        result = 31 * result + (messageText != null ? messageText.hashCode() : 0);
-        result = 31 * result + (readByReceiver ? 1 : 0);
-        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
-        result = 31 * result + (sender != null ? sender.hashCode() : 0);
-        result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), getId(), getMessageText(), isReadByReceiver(), getSender(), getReceiver());
     }
 
     @Override
     public String toString() {
         return "User2UserMessage{" +
                 "id=" + id +
-                ", uuid='" + uuid + '\'' +
                 ", messageText='" + messageText + '\'' +
                 ", readByReceiver=" + readByReceiver +
-                ", createdTimestamp=" + createdTimestamp +
                 ", sender=" + sender +
                 ", receiver=" + receiver +
+                ", uuid='" + uuid + '\'' +
+                ", rowCreatedAt=" + rowCreatedAt +
+                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
 }

@@ -3,10 +3,12 @@ package org.woehlke.simpleworklist.entities.entities;
 import org.hibernate.search.annotations.*;
 import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.entities.enumerations.Language;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.persistence.Index;
@@ -19,12 +21,13 @@ import javax.validation.constraints.NotNull;
         @UniqueConstraint(name="ux_user_account", columnNames = {"user_email"})
     },
     indexes = {
+        @Index(name="ix_user_account_uuid", columnList = "uuid"),
+        @Index(name="ix_user_account_row_created_at", columnList = "row_created_at"),
         @Index(name="ix_user_account_user_fullname", columnList = "user_fullname"),
-        @Index(name="ix_user_account_created_timestamp", columnList = "created_timestamp"),
         @Index(name="ix_user_account_last_login_timestamp", columnList = "last_login_timestamp")
     }
 )
-public class UserAccount implements Serializable {
+public class UserAccount extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 7860692526488291439L;
 
@@ -57,11 +60,6 @@ public class UserAccount implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "default_context_id", nullable=false)
     private Context defaultContext;
-
-    @NotNull
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name="created_timestamp", nullable = false)
-    private Date createdTimestamp;
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -114,14 +112,6 @@ public class UserAccount implements Serializable {
 
     public void setUserFullname(String userFullname) {
         this.userFullname = userFullname;
-    }
-
-    public Date getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Date createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
     }
 
     public Date getLastLoginTimestamp() {
@@ -184,30 +174,24 @@ public class UserAccount implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserAccount)) return false;
-
+        if (!super.equals(o)) return false;
         UserAccount that = (UserAccount) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) return false;
-        if (userPassword != null ? !userPassword.equals(that.userPassword) : that.userPassword != null) return false;
-        if (userFullname != null ? !userFullname.equals(that.userFullname) : that.userFullname != null) return false;
-        if (defaultLanguage != that.defaultLanguage) return false;
-        if (createdTimestamp != null ? !createdTimestamp.equals(that.createdTimestamp) : that.createdTimestamp != null)
-            return false;
-        return lastLoginTimestamp != null ? lastLoginTimestamp.equals(that.lastLoginTimestamp) : that.lastLoginTimestamp == null;
-
+        return Objects.equals(getId(), that.getId()) &&
+                getUserEmail().equals(that.getUserEmail()) &&
+                getUserPassword().equals(that.getUserPassword()) &&
+                getUserFullname().equals(that.getUserFullname()) &&
+                getDefaultLanguage() == that.getDefaultLanguage() &&
+                getDefaultContext().equals(that.getDefaultContext()) &&
+                Objects.equals(getLastLoginTimestamp(), that.getLastLoginTimestamp()) &&
+                getAccountNonExpired().equals(that.getAccountNonExpired()) &&
+                getAccountNonLocked().equals(that.getAccountNonLocked()) &&
+                getCredentialsNonExpired().equals(that.getCredentialsNonExpired()) &&
+                getEnabled().equals(that.getEnabled());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
-        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
-        result = 31 * result + (userFullname != null ? userFullname.hashCode() : 0);
-        result = 31 * result + (defaultLanguage != null ? defaultLanguage.hashCode() : 0);
-        result = 31 * result + (createdTimestamp != null ? createdTimestamp.hashCode() : 0);
-        result = 31 * result + (lastLoginTimestamp != null ? lastLoginTimestamp.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), getId(), getUserEmail(), getUserPassword(), getUserFullname(), getDefaultLanguage(), getDefaultContext(), getLastLoginTimestamp(), getAccountNonExpired(), getAccountNonLocked(), getCredentialsNonExpired(), getEnabled());
     }
 
     @Override
@@ -217,8 +201,16 @@ public class UserAccount implements Serializable {
                 ", userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userFullname='" + userFullname + '\'' +
-                ", createdTimestamp=" + createdTimestamp +
+                ", defaultLanguage=" + defaultLanguage +
+                ", defaultContext=" + defaultContext +
                 ", lastLoginTimestamp=" + lastLoginTimestamp +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", enabled=" + enabled +
+                ", uuid='" + uuid + '\'' +
+                ", rowCreatedAt=" + rowCreatedAt +
+                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
 }

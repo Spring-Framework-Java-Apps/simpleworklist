@@ -1,12 +1,13 @@
 package org.woehlke.simpleworklist.entities.entities;
 
 import javax.validation.constraints.Email;
+
+import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.entities.enumerations.UserRegistrationStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -24,13 +25,11 @@ import java.util.Objects;
         )
     },
     indexes = {
-        @Index(
-            name = "ix_user_registration_created_timestamp",
-            columnList = "created_timestamp"
-        )
+        @Index(name = "ix_user_registration_uuid", columnList = "uuid"),
+        @Index(name = "ix_user_registration_row_created_at", columnList = "row_created_at")
     }
 )
-public class UserRegistration implements Serializable {
+public class UserRegistration extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = -1955967514018161878L;
 
@@ -51,11 +50,6 @@ public class UserRegistration implements Serializable {
     @NotNull
     @Column(name = "token", nullable = false)
     private String token;
-
-    @NotNull
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "created_timestamp", nullable = false)
-    private Date createdTimestamp = new Date();
 
     @NotNull
     @Column(name = "double_optin_status", nullable = false)
@@ -103,14 +97,6 @@ public class UserRegistration implements Serializable {
         this.doubleOptInStatus = doubleOptInStatus;
     }
 
-    public Date getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Date createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
-    }
-
     public Integer getNumberOfRetries() {
         return numberOfRetries;
     }
@@ -119,23 +105,22 @@ public class UserRegistration implements Serializable {
         this.numberOfRetries = numberOfRetries;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserRegistration)) return false;
+        if (!super.equals(o)) return false;
         UserRegistration that = (UserRegistration) o;
-        return getNumberOfRetries() == that.getNumberOfRetries() &&
-                Objects.equals(getId(), that.getId()) &&
+        return Objects.equals(getId(), that.getId()) &&
                 getEmail().equals(that.getEmail()) &&
                 getToken().equals(that.getToken()) &&
-                getCreatedTimestamp().equals(that.getCreatedTimestamp()) &&
-                getDoubleOptInStatus() == that.getDoubleOptInStatus();
+                getDoubleOptInStatus() == that.getDoubleOptInStatus() &&
+                getNumberOfRetries().equals(that.getNumberOfRetries());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getToken(), getCreatedTimestamp(), getDoubleOptInStatus(), getNumberOfRetries());
+        return Objects.hash(super.hashCode(), getId(), getEmail(), getToken(), getDoubleOptInStatus(), getNumberOfRetries());
     }
 
     @Override
@@ -144,9 +129,11 @@ public class UserRegistration implements Serializable {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", token='" + token + '\'' +
-                ", createdTimestamp=" + createdTimestamp +
                 ", doubleOptInStatus=" + doubleOptInStatus +
                 ", numberOfRetries=" + numberOfRetries +
+                ", uuid='" + uuid + '\'' +
+                ", rowCreatedAt=" + rowCreatedAt +
+                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
 }
