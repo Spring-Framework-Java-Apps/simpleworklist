@@ -218,8 +218,7 @@ public class Project extends AuditModel implements Serializable {
                 ", userAccount=" + userAccount +
                 ", context=" + context +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", children=" + children +
+                ", description='" + description + '\''
                 ", uuid='" + uuid + '\'' +
                 ", rowCreatedAt=" + rowCreatedAt +
                 ", rowUpdatedAt=" + rowUpdatedAt +
