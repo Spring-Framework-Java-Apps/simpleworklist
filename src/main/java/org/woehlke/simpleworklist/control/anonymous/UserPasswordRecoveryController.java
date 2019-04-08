@@ -44,7 +44,7 @@ public class UserPasswordRecoveryController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-        model.addAttribute("registerForm", userRegistrationForm);
+        model.addAttribute("userRegistrationForm", userRegistrationForm);
         return "user/resetPassword/resetPasswordForm";
     }
 

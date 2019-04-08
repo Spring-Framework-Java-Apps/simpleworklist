@@ -43,7 +43,7 @@ public class UserRegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public final String registerNewUserRequestForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-        model.addAttribute("registerForm", userRegistrationForm);
+        model.addAttribute("userRegistrationForm", userRegistrationForm);
         return "user/register/registerForm";
     }
 
