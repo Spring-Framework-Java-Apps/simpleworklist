@@ -8,10 +8,8 @@ import org.woehlke.simpleworklist.entities.entities.impl.AuditModel;
 
 import javax.persistence.*;
 import javax.persistence.Index;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Created by tw on 13.03.16.

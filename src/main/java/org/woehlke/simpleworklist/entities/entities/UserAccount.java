@@ -58,7 +58,7 @@ public class UserAccount extends AuditModel implements Serializable {
     private Language defaultLanguage;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "default_context_id", nullable=false)
+    @JoinColumn(name = "default_context_id")
     private Context defaultContext;
 
     @NotNull
