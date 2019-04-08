@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.simpleworklist.model.beans.LoginForm;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.model.services.UserAccountLoginSuccessService;
 

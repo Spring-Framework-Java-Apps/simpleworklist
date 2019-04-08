@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.SearchResult;
 import org.woehlke.simpleworklist.model.services.SearchService;
 

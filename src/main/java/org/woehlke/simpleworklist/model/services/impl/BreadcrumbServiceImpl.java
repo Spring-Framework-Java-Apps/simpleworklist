@@ -5,10 +5,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.entities.Project;
-import org.woehlke.simpleworklist.entities.entities.Task;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
+import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.services.BreadcrumbService;
 

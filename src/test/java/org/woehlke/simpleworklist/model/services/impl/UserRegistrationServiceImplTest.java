@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.AbstractTest;
-import org.woehlke.simpleworklist.entities.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.entities.entities.UserRegistration;
-import org.woehlke.simpleworklist.entities.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.entities.services.UserRegistrationService;
+import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
+import org.woehlke.simpleworklist.oodm.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.oodm.services.UserRegistrationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;

@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.model.beans;
 
-import org.woehlke.simpleworklist.entities.entities.Task;
-import org.woehlke.simpleworklist.entities.entities.Project;
+import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.oodm.entities.Project;
 
 import java.io.Serializable;
 import java.util.ArrayList;

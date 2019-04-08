@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.control.user;
 
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
@@ -13,14 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
-import org.woehlke.simpleworklist.entities.entities.Context;
-import org.woehlke.simpleworklist.entities.entities.Task;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
-import org.woehlke.simpleworklist.entities.entities.Project;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
+import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
-import org.woehlke.simpleworklist.entities.services.TaskService;
+import org.woehlke.simpleworklist.oodm.services.TaskService;
 
 @Controller
 @RequestMapping(value = "/task")

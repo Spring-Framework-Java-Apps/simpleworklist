@@ -5,11 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.entities.Context;
-import org.woehlke.simpleworklist.entities.entities.Task;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
-import org.woehlke.simpleworklist.entities.enumerations.TaskState;
-import org.woehlke.simpleworklist.entities.repository.TaskRepository;
+import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
+import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
 import org.woehlke.simpleworklist.model.services.TaskStateService;
 
 import org.springframework.beans.factory.annotation.Autowired;

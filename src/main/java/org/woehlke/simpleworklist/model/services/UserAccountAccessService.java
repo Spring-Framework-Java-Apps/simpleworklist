@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.model.services;
 
 import org.woehlke.simpleworklist.model.beans.UserChangePasswordForm;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.LoginForm;
 
 public interface UserAccountAccessService {

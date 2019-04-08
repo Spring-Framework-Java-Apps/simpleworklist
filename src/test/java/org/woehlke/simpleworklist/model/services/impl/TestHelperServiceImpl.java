@@ -3,10 +3,10 @@ package org.woehlke.simpleworklist.model.services.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.entities.entities.Project;
-import org.woehlke.simpleworklist.entities.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.entities.entities.UserRegistration;
-import org.woehlke.simpleworklist.entities.repository.*;
+import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
+import org.woehlke.simpleworklist.oodm.repository.*;
 import org.woehlke.simpleworklist.model.services.TestHelperService;
 
 import org.springframework.beans.factory.annotation.Autowired;

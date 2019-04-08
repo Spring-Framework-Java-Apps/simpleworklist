@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.model.services;
 
-import org.woehlke.simpleworklist.entities.entities.Context;
-import org.woehlke.simpleworklist.entities.entities.UserAccount;
+import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
 public interface TaskMoveService {
 
