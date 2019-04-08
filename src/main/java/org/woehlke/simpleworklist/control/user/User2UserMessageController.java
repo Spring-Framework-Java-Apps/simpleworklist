@@ -31,7 +31,7 @@ public class User2UserMessageController extends AbstractController {
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable long userId,
-            @PageableDefault(sort = "createdTimestamp", direction = Sort.Direction.DESC) Pageable request,
+            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
             Model model
     ) {
         User2UserMessage newUser2UserMessage = new User2UserMessage();
@@ -51,7 +51,7 @@ public class User2UserMessageController extends AbstractController {
             @Valid @ModelAttribute("newUserMessage") User2UserMessage newUser2UserMessage,
             BindingResult result,
             @PathVariable long userId,
-            @PageableDefault(sort = "createdTimestamp", direction = Sort.Direction.DESC) Pageable request) {
+            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request) {
         LOGGER.info("sendNewMessageToOtherUser");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         UserAccount otherUser = super.userAccountService.findUserById(userId);
