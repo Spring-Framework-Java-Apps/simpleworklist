@@ -15,8 +15,8 @@ set MY_CLASSPATH_APP=%JAVA_HOME%\jre\lib\rt.jar;%CD%\target\classes
 set CLASSPATH=%MY_CLASSPATH_APP%;%MY_CLASSPATH_DEPS%
 echo %CLASSPATH%
 cd target\classes
-
-serialver org.woehlke.simpleworklist.entities.enumerations.Language > ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.entities.entities.impl.AuditModel > ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.entities.enumerations.Language >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.entities.enumerations.TaskEnergy >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.entities.enumerations.TaskState >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.entities.enumerations.TaskStateView >> ..\..\etc\serialversions.txt
