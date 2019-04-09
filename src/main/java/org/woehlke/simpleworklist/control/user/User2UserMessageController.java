@@ -48,7 +48,7 @@ public class User2UserMessageController extends AbstractController {
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             Model model,
-            @Valid @ModelAttribute("newUserMessage") User2UserMessage newUser2UserMessage,
+            @Valid @ModelAttribute("newUser2UserMessage") User2UserMessage newUser2UserMessage,
             BindingResult result,
             @PathVariable long userId,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request) {
