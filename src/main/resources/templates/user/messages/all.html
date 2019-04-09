@@ -16,42 +16,48 @@
 
     <div th:fragment="mytwcontent">
         <!-- Document Window -->
-        <div class="row">
-            <div class="card card-body">
-                <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUser2UserMessage}" method="post">
-                    <div class="form-group">
-                        <label th:for="${#ids.next('messageText')}" class="control-label">
-                            <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>
-                        </label>
-                        <textarea rows="3" cols="50"  th:field="*{messageText}" class="form-control" />
-                        <div>
-                            <div th:each="err : ${#fields.errors('messageText')}" th:text="${err}" class="alert alert-danger" />
+        <div class="row" id="newUser2UserMessageForm">
+            <div class="col">
+                <div class="card card-body">
+                    <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUser2UserMessage}" method="post">
+                        <div class="form-group">
+                            <label th:for="${#ids.next('messageText')}" class="control-label">
+                                <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>
+                            </label>
+                            <textarea rows="3" cols="50"  th:field="*{messageText}" class="form-control" />
+                            <div>
+                                <div th:each="err : ${#fields.errors('messageText')}" th:text="${err}" class="alert alert-danger" />
+                            </div>
                         </div>
+                        <div class="form-group">
                     </div>
-                    <div class="form-group">
+                    <button id="newUserMessageButton" type="submit" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        <span th:utext="#{pages.user2UserMessages.newUserMessageButton}">Send Message</span>
+                    </button>
+                </form>
                 </div>
-                <button id="newUserMessageButton" type="submit" class="btn btn-primary">
-                    <i class="fas fa-envelope"></i>
-                    <span th:utext="#{pages.user2UserMessages.newUserMessageButton}">Send Message</span>
-                </button>
-            </form>
             </div>
         </div>
         <div th:each="m : ${user2UserMessagePage}">
             <div class="row">
-                <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
-                    <span th:text="${m.messageText}" ></span>
-                    <span style="float:right">
-                        <small>
-                            <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
-                            <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
-                        </small>
-                    </span>
+                <div class="col">
+                    <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
+                        <span th:text="${m.messageText}" ></span>
+                        <span style="float:right">
+                            <small>
+                                <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
+                                <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
+                            </small>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage})">
+            <div class="col">
+                <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage})">
+            </div>
         </div>
     </div>
 
