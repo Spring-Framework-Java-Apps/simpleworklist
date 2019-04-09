@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.model.beans.NewUser2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;
@@ -33,11 +34,14 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void sendNewUserMessage(UserAccount thisUser,UserAccount otherUser, User2UserMessage newUser2UserMessage) {
+    public void sendNewUserMessage(UserAccount thisUser, UserAccount otherUser, NewUser2UserMessage newUser2UserMessage) {
         LOGGER.info("sendNewUserMessage");
-        newUser2UserMessage.setSender(thisUser);
-        newUser2UserMessage.setReceiver(otherUser);
-        userMessageRepository.saveAndFlush(newUser2UserMessage);
+        User2UserMessage m = new User2UserMessage();
+        m.setSender(thisUser);
+        m.setReceiver(otherUser);
+        m.setReadByReceiver(false);
+        m.setMessageText(newUser2UserMessage.getMessageText());
+        userMessageRepository.saveAndFlush(m);
     }
 
     @Override

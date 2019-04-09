@@ -9,11 +9,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
+import org.woehlke.simpleworklist.model.beans.NewUser2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 
@@ -34,7 +36,7 @@ public class User2UserMessageController extends AbstractController {
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
             Model model
     ) {
-        User2UserMessage newUser2UserMessage = new User2UserMessage();
+        NewUser2UserMessage newUser2UserMessage = new NewUser2UserMessage();
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         UserAccount otherUser = super.userAccountService.findUserById(userId);
         Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
@@ -48,7 +50,7 @@ public class User2UserMessageController extends AbstractController {
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             @PathVariable long userId,
-            @Valid @ModelAttribute("newUser2UserMessage") User2UserMessage newUser2UserMessage,
+            @Valid @ModelAttribute("newUser2UserMessage") NewUser2UserMessage newUser2UserMessage,
             BindingResult result,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request, Model model) {
         LOGGER.info("sendNewMessageToOtherUser");
@@ -56,6 +58,9 @@ public class User2UserMessageController extends AbstractController {
         UserAccount otherUser = super.userAccountService.findUserById(userId);
         if(result.hasErrors()){
             LOGGER.info("result.hasErrors");
+            for(ObjectError objectError:result.getAllErrors()){
+                LOGGER.info("result.hasErrors: "+objectError.toString());
+            }
             Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
             model.addAttribute("otherUser", otherUser);
             model.addAttribute("user2UserMessagePage", user2UserMessagePage);
