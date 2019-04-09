@@ -20,6 +20,8 @@ import java.util.UUID;
 )
 public class AuditModel implements Serializable {
 
+    private static final long serialVersionUID = 4399373914714726911L;
+
     @NotNull
     @Column(name="uuid", nullable = false)
     protected String uuid = UUID.randomUUID().toString();

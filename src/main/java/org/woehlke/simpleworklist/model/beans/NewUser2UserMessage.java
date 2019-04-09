@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class NewUser2UserMessage implements Serializable {
 
+    private static final long serialVersionUID = 1576610181966480168L;
+
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=1,max=65535)
