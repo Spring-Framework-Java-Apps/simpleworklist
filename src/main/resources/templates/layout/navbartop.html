@@ -36,7 +36,7 @@
                                 <i class="fas fa-user"></i>
                                 <span th:text="#{layout.page.showUsers}">User</span>
                                 ( <span sec:authentication="name"></span> )
-                                <span class="badge" th:if="${numberOfNewIncomingMessages gt 0}" th:text="${numberOfNewIncomingMessages}">numberOfNewIncomingMessages</span>
+                                <span class="badge badge-pill badge-dark" th:if="${numberOfNewIncomingMessages gt 0}" th:text="${numberOfNewIncomingMessages}">numberOfNewIncomingMessages</span>
                             </a>
                         </li>
                         <li class="nav-item">
