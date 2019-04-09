@@ -81,8 +81,8 @@
                     </a>
                 </td>
                 <td>
-                    <span class="badge" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
-                    <span class="badge" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
+                    <span class="badge badge-pill badge-dark" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
+                    <span class="badge badge-pill badge-dark" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
                 </td>
                 <td th:if="${myTaskState eq 'ALL'}">
                     <span th:if="${locale eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>

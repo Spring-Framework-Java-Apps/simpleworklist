@@ -37,8 +37,8 @@
             </form>
             </div>
         </div>
-        <div class="row">
-            <div th:each="m : ${user2UserMessagePage}">
+        <div th:each="m : ${user2UserMessagePage}">
+            <div class="row">
                 <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
                     <span th:text="${m.messageText}" ></span>
                     <span style="float:right">
