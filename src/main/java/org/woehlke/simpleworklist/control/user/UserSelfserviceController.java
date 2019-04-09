@@ -221,7 +221,7 @@ public class UserSelfserviceController extends AbstractController {
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
         model.addAttribute("editContext", editContext);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale,context);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context);
         model.addAttribute("breadcrumb", breadcrumb);
         return "user/selfservice/context/edit";
     }
@@ -229,7 +229,8 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.POST)
     public String userEditAreaStore(@Valid NewContextForm editContext, BindingResult result, Locale locale, Model model, @PathVariable long contextId){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale);
+        Context context = contextService.findByIdAndUserAccount(contextId,user);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
             LOGGER.info("userEditAreaStore: result has Errors");
@@ -238,7 +239,7 @@ public class UserSelfserviceController extends AbstractController {
             }
             return "user/selfservice/context/edit";
         } else {
-            contextService.updateContext(editContext,user, contextId);
+            contextService.updateContext(editContext, user, contextId);
             return "redirect:/user/selfservice/contexts";
         }
     }
@@ -253,9 +254,9 @@ public class UserSelfserviceController extends AbstractController {
     ){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale);
-        model.addAttribute("breadcrumb", breadcrumb);
         Context context = contextService.findByIdAndUserAccount(id,user);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale,context);
+        model.addAttribute("breadcrumb", breadcrumb);
         if(userSession.getContextId() == context.getId()){
             LOGGER.info("context is active in session: "+ context);
         } else {

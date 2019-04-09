@@ -33,7 +33,7 @@ public interface BreadcrumbService {
 
     Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context);
 
-    Breadcrumb getBreadcrumbForUserContextDelete(Locale locale);
+    Breadcrumb getBreadcrumbForUserContextDelete(Locale locale, Context context);
 
     Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale);
 
