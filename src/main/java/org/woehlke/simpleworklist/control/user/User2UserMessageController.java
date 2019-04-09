@@ -47,11 +47,10 @@ public class User2UserMessageController extends AbstractController {
 
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
-            Model model,
+            @PathVariable long userId,
             @Valid @ModelAttribute("newUser2UserMessage") User2UserMessage newUser2UserMessage,
             BindingResult result,
-            @PathVariable long userId,
-            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request) {
+            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request, Model model) {
         LOGGER.info("sendNewMessageToOtherUser");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         UserAccount otherUser = super.userAccountService.findUserById(userId);
