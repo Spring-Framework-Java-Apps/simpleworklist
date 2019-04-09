@@ -221,7 +221,7 @@ public class UserSelfserviceController extends AbstractController {
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
         model.addAttribute("editContext", editContext);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale,context);
         model.addAttribute("breadcrumb", breadcrumb);
         return "user/selfservice/context/edit";
     }

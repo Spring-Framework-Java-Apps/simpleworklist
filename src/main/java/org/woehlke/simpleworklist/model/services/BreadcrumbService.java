@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.model.services;
 
+import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
@@ -30,7 +31,7 @@ public interface BreadcrumbService {
 
     Breadcrumb getBreadcrumbForUserContextAdd(Locale locale);
 
-    Breadcrumb getBreadcrumbForUserContextEdit(Locale locale);
+    Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context);
 
     Breadcrumb getBreadcrumbForUserContextDelete(Locale locale);
 

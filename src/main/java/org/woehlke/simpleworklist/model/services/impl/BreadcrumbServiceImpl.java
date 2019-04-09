@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
@@ -84,41 +85,95 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     @Override
     public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale) {
         Breadcrumb breadcrumb = new Breadcrumb();
-        String code="layout.page.all";
+        String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
-        String url="/taskstate/all";
+        String url="/user/selfservice/profile";
         breadcrumb.addPage(name,url);
         return breadcrumb;
     }
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangeName(Locale locale) {
-        return null;
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="pages.user.profile";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        code="pages.user.profile.change.name";
+        name= messageSource.getMessage(code,null,locale);
+        url="/user/selfservice/name";
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
     }
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangePassword(Locale locale) {
-        return null;
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="pages.user.profile";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        code="pages.user.profile.change.password";
+        name= messageSource.getMessage(code,null,locale);
+        url="/user/selfservice/password";
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
     }
 
     @Override
     public Breadcrumb getBreadcrumbForUserContexts(Locale locale) {
-        return null;
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="pages.user.profile";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        code="pages.user.profile.change.contexs";
+        name= messageSource.getMessage(code,null,locale);
+        url="/user/selfservice/contexts";
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
     }
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextAdd(Locale locale) {
-        return null;
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="pages.user.profile";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        code="pages.user.profile.add.context";
+        name= messageSource.getMessage(code,null,locale);
+        url="/user/selfservice/context/add";
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale) {
-        return null;
+    public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context) {
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="pages.user.profile";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        code="pages.user.profile.edit.context";
+        name= messageSource.getMessage(code,null,locale);
+        url="/user/selfservice/context/edit/"+context.getId();
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
     }
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextDelete(Locale locale) {
-        return null;
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="pages.user.profile";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        code="pages.user.profile.change.context";
+        name= messageSource.getMessage(code,null,locale);
+        url="/user/selfservice/profile";
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
     }
 
     @Override
