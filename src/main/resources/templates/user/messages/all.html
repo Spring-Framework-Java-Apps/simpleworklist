@@ -38,20 +38,20 @@
             </div>
         </div>
         <div class="row">
-            <div th:each="m : ${user2UserMessageList}">
+            <div th:each="m : ${user2UserMessagePage}">
                 <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
                     <span th:text="${m.messageText}" ></span>
                     <span style="float:right">
                         <small>
                             <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
-                            <span th:if="${m.readByReceiver}" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
                         </small>
                     </span>
                 </div>
             </div>
         </div>
         <div class="row">
-        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessageList})">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage})">
         </div>
     </div>
 
