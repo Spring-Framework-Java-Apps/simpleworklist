@@ -16,6 +16,22 @@
 
     <div th:fragment="mytwcontent">
         <!-- Document Window -->
+
+        <div th:each="m : ${user2UserMessagePage}">
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
+                        <span th:text="${m.messageText}" ></span>
+                        <span style="float:right">
+                            <small>
+                                <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
+                                <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row" id="newUser2UserMessageForm">
             <div class="col">
                 <div class="card card-body">
@@ -30,27 +46,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                    </div>
-                    <button id="newUserMessageButton" type="submit" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i>
-                        <span th:utext="#{pages.user2UserMessages.newUserMessageButton}">Send Message</span>
-                    </button>
-                </form>
-                </div>
-            </div>
-        </div>
-        <div th:each="m : ${user2UserMessagePage}">
-            <div class="row">
-                <div class="col">
-                    <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
-                        <span th:text="${m.messageText}" ></span>
-                        <span style="float:right">
-                            <small>
-                                <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
-                                <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
-                            </small>
-                        </span>
-                    </div>
+                        </div>
+                        <button id="newUserMessageButton" type="submit" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i>
+                            <span th:utext="#{pages.user2UserMessages.newUserMessageButton}">Send Message</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
