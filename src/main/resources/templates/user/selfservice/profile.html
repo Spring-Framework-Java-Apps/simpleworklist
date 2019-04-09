@@ -16,6 +16,51 @@
     </div>
 
     <div th:fragment="mytwcontent">
+        <div th:if="${users != null}">
+            <h5>
+                <span th:text="#{pages.users.h1}">List of registered Users</span>
+            </h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <span th:utext="#{pages.users.messages}">Messages</span>
+                        </th>
+                        <th>Name</th>
+                        <th>
+                            <span th:utext="#{pages.users.lastLogin}">Last Login</span>
+                        </th>
+                        <th>
+                            <span th:utext="#{pages.users.dateOfRegistration}">Date of registration</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td>
+                            <span th:if="${user.id != thisUser.id}">
+                                <a th:href="@{/user2user/{id}/messages/(id=${user.id})}">
+                                    <i class="fas fa-envelope"></i>
+                                    <span th:utext="#{pages.users.messages}">Messages</span>
+                                    <span class="badge badge-pill badge-dark" th:if="${usersToNewMessages.get(user.id) gt 0}">
+                                        <span th:text="${usersToNewMessages.get(user.id)}">Messages</span>
+                                    </span>
+                                </a>
+                            </span>
+                        </td>
+                        <td>
+                            <span th:text="${user.userFullname}">user.userFullname</span>
+                        </td>
+                        <td>
+                            <span th:text="${#dates.format(user.lastLoginTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${#dates.format(user.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="card card-body">
             <ul>
                 <li>
@@ -62,51 +107,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
-        <div th:if="${users != null}">
-            <h5>
-                <span th:text="#{pages.users.h1}">List of registered Users</span>
-            </h5>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            <span th:utext="#{pages.users.messages}">Messages</span>
-                        </th>
-                        <th>Name</th>
-                        <th>
-                            <span th:utext="#{pages.users.lastLogin}">Last Login</span>
-                        </th>
-                        <th>
-                            <span th:utext="#{pages.users.dateOfRegistration}">Date of registration</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="user : ${users}">
-                        <td>
-                            <span th:if="${user.id != thisUser.id}">
-                                <a th:href="@{/user2user/{id}/messages/(id=${user.id})}">
-                                    <i class="fas fa-envelope"></i>
-                                    <span th:utext="#{pages.users.messages}">Messages</span>
-                                    <span class="badge badge-pill badge-dark" th:if="${usersToNewMessages.get(user.id) gt 0}">
-                                        <span th:text="${usersToNewMessages.get(user.id)}">Messages</span>
-                                    </span>
-                                </a>
-                            </span>
-                        </td>
-                        <td>
-                            <span th:text="${user.userFullname}">user.userFullname</span>
-                        </td>
-                        <td>
-                            <span th:text="${#dates.format(user.lastLoginTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
-                        </td>
-                        <td>
-                            <span th:text="${#dates.format(user.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </body>
