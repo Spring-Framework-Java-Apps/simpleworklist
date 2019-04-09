@@ -86,7 +86,7 @@
                     <tr th:each="user : ${users}">
                         <td>
                             <span th:if="${user.id != thisUser.id}">
-                                <a th:href="@{/user/{id}/messages/(id=${user.id})}">
+                                <a th:href="@{/user2user/{id}/messages/(id=${user.id})}">
                                     <i class="fas fa-envelope"></i>
                                     <span th:utext="#{pages.users.messages}">Messages</span>
                                     <span class="badge" th:if="${usersToNewMessages.get(user.id) gt 0}">

@@ -18,7 +18,7 @@
         <!-- Document Window -->
         <div class="row">
             <div class="card card-body">
-                <form id="formId" th:action="@{/user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUser2UserMessage}" method="post">
+                <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUser2UserMessage}" method="post">
                     <div class="form-group">
                         <label th:for="${#ids.next('messageText')}" class="control-label">
                             <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>
@@ -50,11 +50,8 @@
                 </div>
             </div>
         </div>
-        <div class="row" th:if="${user2UserMessageList.size() lt 21}">
-            <a th:href="@{/user/{id}/messages/all(id=${otherUser.id})}">
-                <span th:utext="#{pages.user2UserMessages.showAllText1}">Zeige alle Nachrichten</span>
-            </a>
-            <span th:utext="#{pages.user2UserMessages.showAllText2}">(hier werden nur die letzten 20 Angezeigt)</span>
+        <div class="row">
+        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessageList})">
         </div>
     </div>
 
