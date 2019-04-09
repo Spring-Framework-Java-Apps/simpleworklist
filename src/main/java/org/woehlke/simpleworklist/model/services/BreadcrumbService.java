@@ -20,4 +20,24 @@ public interface BreadcrumbService {
 
     Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task);
 
+    Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserChangeName(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserChangePassword(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserContexts(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserContextAdd(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserContextEdit(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserContextDelete(Locale locale);
+
+    Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale);
+
+    Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale);
+
+    Breadcrumb getBreadcrumbForSearchResults(Locale locale);
+
 }

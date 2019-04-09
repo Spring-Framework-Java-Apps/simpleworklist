@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.woehlke.simpleworklist.control.common.AbstractController;
+import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.SearchResult;
 import org.woehlke.simpleworklist.model.services.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Locale;
 
 /**
  * Created by tw on 14.02.16.
@@ -30,12 +33,14 @@ public class SearchController extends AbstractController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public final String loginForm(@RequestParam String searchterm, Model model) {
+    public final String searchResults(@RequestParam String searchterm, Locale locale, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         LOGGER.info("Search: "+searchterm);
         SearchResult searchResult = searchService.search(searchterm, userAccount);
         LOGGER.info("found: "+searchResult.toString());
         model.addAttribute("searchResult",searchResult);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale);
+        model.addAttribute("breadcrumb",breadcrumb);
         return "search/resultlist";
     }
 }

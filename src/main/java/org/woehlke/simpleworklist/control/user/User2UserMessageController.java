@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
+import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.NewUser2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
 /**
  * Created by Fert on 16.02.2016.
@@ -34,7 +36,7 @@ public class User2UserMessageController extends AbstractController {
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable long userId,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
-            Model model
+            Locale locale, Model model
     ) {
         NewUser2UserMessage newUser2UserMessage = new NewUser2UserMessage();
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -44,6 +46,8 @@ public class User2UserMessageController extends AbstractController {
         model.addAttribute("otherUser", otherUser);
         model.addAttribute("user2UserMessagePage", user2UserMessagePage);
         model.addAttribute("refreshMessages",true);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
+        model.addAttribute("breadcrumb",breadcrumb);
         return "user/messages/all";
     }
 
@@ -52,10 +56,13 @@ public class User2UserMessageController extends AbstractController {
             @PathVariable long userId,
             @Valid @ModelAttribute("newUser2UserMessage") NewUser2UserMessage newUser2UserMessage,
             BindingResult result,
-            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request, Model model) {
+            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
+            Locale locale, Model model) {
         LOGGER.info("sendNewMessageToOtherUser");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         UserAccount otherUser = super.userAccountService.findUserById(userId);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
+        model.addAttribute("breadcrumb",breadcrumb);
         if(result.hasErrors()){
             LOGGER.info("result.hasErrors");
             for(ObjectError objectError:result.getAllErrors()){

@@ -80,4 +80,61 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
         breadcrumb.addTask(task);
         return breadcrumb;
     }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale) {
+        Breadcrumb breadcrumb = new Breadcrumb();
+        String code="layout.page.all";
+        String name= messageSource.getMessage(code,null,locale);
+        String url="/taskstate/all";
+        breadcrumb.addPage(name,url);
+        return breadcrumb;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserChangeName(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserChangePassword(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserContexts(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserContextAdd(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserContextDelete(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale) {
+        return null;
+    }
+
+    @Override
+    public Breadcrumb getBreadcrumbForSearchResults(Locale locale) {
+        return null;
+    }
+
+
 }
