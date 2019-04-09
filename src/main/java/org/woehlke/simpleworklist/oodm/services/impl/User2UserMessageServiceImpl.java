@@ -53,6 +53,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Page<User2UserMessage> readAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver, UserAccount sender, Pageable request) {
         Page<User2UserMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
         for(User2UserMessage user2UserMessage : user2UserMessagePage){
