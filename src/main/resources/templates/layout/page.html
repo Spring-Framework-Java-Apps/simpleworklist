@@ -14,6 +14,7 @@
 	<link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/tinymce/4.7.9/skins/lightgray/skin.min.css}" rel="stylesheet"/>
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
 </head>
 <body th:fragment="tw-page-body(twcontent,twtitle)">
@@ -60,6 +61,9 @@
 	<script th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
+	<script th:src="@{/webjars/tinymce/4.7.9/tinymce.min.js}"></script>
+	<script th:src="@{/webjars/tinymce/4.7.9/jquery.tinymce.min.js}"></script>
+	<script th:src="@{/webjars/tinymce/4.7.9/themes/modern/theme.min.js}"></script>
 	<script th:inline="javascript">
 		$(window).load( function() {
 			$( ".taskDraggable").draggable({ cursor: "crosshair", revert: "invalid"  });
@@ -168,6 +172,9 @@
 			$("#taskDueDate ").datepicker({
 				dateFormat: 'mm/dd/yy',
 				constrainInput: false
+			});
+			tinymce.init({
+				selector: '#task-show-text'
 			});
 		});
 	</script>
