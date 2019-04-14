@@ -71,17 +71,11 @@
             <nav>
                 <ul id="rootProject">
                     <li>
-                        <span th:if="${thisProject == null or thisProject.id != 0}">
-                            <span id="project_0" class="projectDraggable projectDroppable">
+                        <span>
+                            <a th:href="@{/project/0}" id="project_0" class="projectDraggable projectDroppable">
                                 <i class="fas fa-folder-open"></i>
-                                <strong th:text="#{right.nav.projects}">Projects</strong>
-                            </span>
-                        </span>
-                        <span th:if="${thisProject != null and thisProject.id == 0}">
-                                <a th:href="@{/project/0}" id="project_0" class="projectDraggable projectDroppable">
-                                    <i class="fas fa-folder-open"></i>
-                                    <span th:text="#{right.nav.projects}">Projects</span>
-                                </a>
+                                <span th:text="#{right.nav.projects}">Projects</span>
+                            </a>
                         </span>
                         <span th:if="${rootCategories != null and rootCategories.size() gt 0}">
                             <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})"></ul>
