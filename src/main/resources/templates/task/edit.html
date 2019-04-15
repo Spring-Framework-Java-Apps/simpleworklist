@@ -43,10 +43,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label th:for="task-show-text" class="control-label">
+				<label th:for="taskFormTextfield" class="control-label">
 					<span th:utext="#{task.show.text}">Text</span>
 				</label>
-				<textarea id="task-show-text" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
+				<textarea id="taskFormTextfield" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
 				<div>
 					<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
 					</div>
