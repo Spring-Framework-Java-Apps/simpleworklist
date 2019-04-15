@@ -204,7 +204,7 @@ public class ProjectController extends AbstractController {
     }
 
 
-    @RequestMapping(value = "/{projectId}//add/new/project", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/add/new/project", method = RequestMethod.GET)
     public final String addNewProjectGet(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -281,47 +281,6 @@ public class ProjectController extends AbstractController {
             }
             return "redirect:/project/" + projectId;
         }
-    }
-
-    @RequestMapping(value = "/{projectId}/add/new/task", method = RequestMethod.GET)
-    public final String addNewTaskToProjectForm(
-            @PathVariable long projectId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            BindingResult result,
-            Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = new Task();
-        task.setTaskState(TaskState.INBOX);
-        task.setUserAccount(userAccount);
-        task.setTaskEnergy(TaskEnergy.NONE);
-        task.setTaskTime(TaskTime.NONE);
-        Project thisProject = null;
-        Boolean mustChooseArea = false;
-        if (projectId == 0) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
-            if(userSession.getContextId() == 0L){
-                mustChooseArea = true;
-                task.setContext(userAccount.getDefaultContext());
-                thisProject.setContext(userAccount.getDefaultContext());
-            } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-                task.setContext(context);
-                thisProject.setContext(context);
-            }
-        } else {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
-            task.setProject(thisProject);
-            task.setContext(thisProject.getContext());
-        }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("mustChooseArea", mustChooseArea);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("task", task);
-        return "task/add";
     }
 
     @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)

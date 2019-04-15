@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
+import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
 import org.woehlke.simpleworklist.oodm.services.TaskService;
 
 @Controller
@@ -35,7 +37,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.GET)
-    public final String editTaskForm(@PathVariable long taskId, Model model) {
+    public final String editTaskGet(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Task task = taskService.findOne(taskId, userAccount);
@@ -60,7 +62,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.POST)
-    public final String editTaskStore(
+    public final String editTaskPost(
             @PathVariable long taskId,
             @Valid Task task,
             BindingResult result, Model model) {
@@ -130,8 +132,49 @@ public class TaskController extends AbstractController {
         return thisProject;
     }
 
+    @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.GET)
+    public final String addNewTaskToProjectGet(
+            @PathVariable long projectId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            BindingResult result,
+            Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Task task = new Task();
+        task.setTaskState(TaskState.INBOX);
+        task.setUserAccount(userAccount);
+        task.setTaskEnergy(TaskEnergy.NONE);
+        task.setTaskTime(TaskTime.NONE);
+        Project thisProject = null;
+        Boolean mustChooseArea = false;
+        if (projectId == 0) {
+            thisProject = new Project();
+            thisProject.setId(0L);
+            thisProject.setUserAccount(userAccount);
+            if(userSession.getContextId() == 0L){
+                mustChooseArea = true;
+                task.setContext(userAccount.getDefaultContext());
+                thisProject.setContext(userAccount.getDefaultContext());
+            } else {
+                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                task.setContext(context);
+                thisProject.setContext(context);
+            }
+        } else {
+            thisProject = projectService.findByProjectId(projectId, userAccount);
+            task.setProject(thisProject);
+            task.setContext(thisProject.getContext());
+        }
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("mustChooseArea", mustChooseArea);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("task", task);
+        return "task/add";
+    }
+
     @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.POST)
-    public final String addNewTaskToProjectStore(
+    public final String addNewTaskToProjectPost(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Task task,
@@ -187,7 +230,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
-    public final String deleteTask(@PathVariable long taskId) {
+    public final String deleteTaskGet(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null){
@@ -197,7 +240,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
-    public final String undeleteTask(@PathVariable long taskId) {
+    public final String undeleteTaskGet(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
@@ -211,7 +254,7 @@ public class TaskController extends AbstractController {
 
     //TODO: what is this for?
     @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
-    public final String moveTask(@PathVariable long taskId) {
+    public final String moveTaskGet(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         long projectId = 0;
@@ -224,7 +267,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/transform/{taskId}", method = RequestMethod.GET)
-    public final String transformTaskIntoProject(@PathVariable long taskId) {
+    public final String transformTaskIntoProjectGet(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         long projectId = 0;
@@ -249,7 +292,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/complete/{taskId}", method = RequestMethod.GET)
-    public final String completeTask(@PathVariable long taskId, Model model) {
+    public final String completeTaskGet(@PathVariable long taskId, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task != null){
@@ -261,7 +304,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/incomplete/{taskId}", method = RequestMethod.GET)
-    public final String undoneTask(@PathVariable long taskId) {
+    public final String undoneTaskGet(@PathVariable long taskId) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
@@ -293,7 +336,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/setfocus/{taskId}", method = RequestMethod.GET)
-    public final String setFocus(@PathVariable long taskId,
+    public final String setFocusGet(@PathVariable long taskId,
                                  @RequestParam(required=false) String back){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
@@ -328,7 +371,7 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/unsetfocus/{taskId}", method = RequestMethod.GET)
-    public final String unsetFocus(@PathVariable long taskId,
+    public final String unsetFocusGet(@PathVariable long taskId,
                                    @RequestParam(required=false) String back){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = taskService.findOne(taskId, userAccount);
