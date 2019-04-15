@@ -89,7 +89,7 @@ public class Project extends AuditModel implements Serializable {
     @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String name;
 
-    @SafeHtml(whitelistType=SafeHtml.WhiteListType.SIMPLE_TEXT)
+    @SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
     @NotBlank
     @Length(min=0,max=65535)
     @Column(name="description", nullable = true, length = 65535, columnDefinition="text")
