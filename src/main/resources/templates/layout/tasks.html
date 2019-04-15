@@ -62,7 +62,7 @@
                     </del>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModalScrollable" th:text="${#task.show.text}">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModalScrollable" th:text="#{task.show.text}">
                     Launch Task Modal
                     </button>
                     <!-- Modal -->
@@ -131,7 +131,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                     <a th:href="@{/task/{id}/edit(id=${task.id})}" class="btn btn-secondary"
-                                       th:id="'task_' + ${task.id}" th:text="${#task.show.h1}">
+                                       th:id="'task_' + ${task.id}" th:text="#{task.show.h1}">
                                     </a>
                                 </div>
                             </div>
