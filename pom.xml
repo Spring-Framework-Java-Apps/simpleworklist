@@ -200,24 +200,9 @@
             <version>4.7.9</version>
         </dependency>
         <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>github-com-Shopify-draggable</artifactId>
-            <version>1.0.0-beta.8</version>
-        </dependency>
-        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>ckeditor</artifactId>
             <version>11.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jstree</artifactId>
-            <version>3.3.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>bootstrap-material-design</artifactId>
-            <version>4.1.1</version>
         </dependency>
 
         <dependency>

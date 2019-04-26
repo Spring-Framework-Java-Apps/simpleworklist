@@ -11,7 +11,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="refresh" content="25" th:if="${refreshMessages}">
 	<title>SimpleWorklist</title>
+	<!--
 	<link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}" rel="stylesheet"/>
+	-->
 	<link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/tinymce/4.7.9/skins/lightgray/skin.min.css}" rel="stylesheet"/>
@@ -69,8 +71,79 @@
 	<script th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
-	<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap-material-design/4.1.1/js/bootstrapMaterialDesign.js}"></script>
+	<script th:inline="javascript">
+		function allowDropOfTask(ev) {
+			ev.preventDefault();
+		}
+
+		function dragTask(ev) {
+			ev.dataTransfer.setData("task", ev.target.id.split("_")[1]);
+		}
+
+		function drop2inbox(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/inbox';
+			window.location.replace(myUrl);
+		}
+
+		function drop2today(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/today';
+			window.location.replace(myUrl);
+		}
+
+		function drop2next(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/next';
+			window.location.replace(myUrl);
+		}
+
+		function drop2waiting(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/waiting';
+			window.location.replace(myUrl);
+		}
+
+		function drop2someday(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/someday';
+			window.location.replace(myUrl);
+		}
+
+		function drop2scheduled(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/scheduled';
+			window.location.replace(myUrl);
+		}
+
+		function drop2focus(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/focus';
+			window.location.replace(myUrl);
+		}
+
+		function drop2completed(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/completed';
+			window.location.replace(myUrl);
+		}
+
+		function drop2trash(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task");
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/trash';
+			window.location.replace(myUrl);
+		}
+	</script>
+	<!--
 	<script th:inline="javascript">
 		// Prevent jQuery UI dialog from blocking focusin
 		$(document).on('focusin', function(e) {
@@ -188,5 +261,6 @@
 			});
 		});
 	</script>
+	-->
 </body>
 </html>

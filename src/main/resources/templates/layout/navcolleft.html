@@ -7,55 +7,55 @@
     <section th:fragment="navigation-taskstates(rootCategories,thisProject)">
         <div class="container" id="taskStateNavigationContainer" sec:authorize="isAuthenticated()">
             <ul id="taskStateNavigation" class="nav nav-tabs">
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2inbox(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_inbox" th:href="@{/taskstate/inbox}" th:class="${taskstateType == null or taskstateType == 'inbox' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-inbox"></i>
                         <span th:text="#{layout.page.inbox}">Inbox</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2today(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_today" th:href="@{/taskstate/today}" th:class="${taskstateType == 'today' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-clock"></i>
                         <span th:text="#{layout.page.today}">Today</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2next(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_next" th:href="@{/taskstate/next}" th:class="${taskstateType == 'next' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-cogs"></i>
                         <span th:text="#{layout.page.next}">Next</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2waiting(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_waiting" th:href="@{/taskstate/waiting}" th:class="${taskstateType == 'waiting' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-hourglass-half"></i>
                         <span th:text="#{layout.page.waiting}">Waiting</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2scheduled(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_scheduled" th:href="@{/taskstate/scheduled}" th:class="${taskstateType == 'scheduled' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-calendar-alt"></i>
                         <span th:text="#{layout.page.scheduled}">Scheduled</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2someday(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_someday" th:href="@{/taskstate/someday}" th:class="${taskstateType == 'someday' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-road"></i>
                         <span th:text="#{layout.page.someday}">Someday</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2focus(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_focus" th:href="@{/taskstate/focus}" th:class="${taskstateType == 'focus' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-star"></i>
                         <span th:text="#{layout.page.focus}">Focus</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2completed(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_completed" th:href="@{/taskstate/completed}" th:class="${taskstateType == 'completed' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-check-square"></i>
                         <span th:text="#{layout.page.completed}">Completed Tasks</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2trash(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_trash" th:href="@{/taskstate/trash}" th:class="${taskstateType == 'trash' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-trash-alt"></i>
                         <span th:text="#{layout.page.trash}">Trash</span>

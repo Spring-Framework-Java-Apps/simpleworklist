@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-            <tr th:each="task : ${taskPage}">
+            <tr id="${'task_' + task.id}" th:each="task : ${taskPage}" draggable="true" ondragstart="dragTask(event)">
                 <td>
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
                         <i class="far fa-square"></i>

@@ -34,6 +34,7 @@ Developer Reminder
 
 Drag and Drop
 -------------
+* https://jqueryhouse.com/jquery-drag-and-drop-plugins/
 * https://mdbootstrap.com/plugins/jquery/draggable/#introduction
 * https://github.com/Shopify/draggable/tree/master/examples/src/content/Droppable/UniqueDropzone
 * https://github.com/Shopify/draggable#documentation
