@@ -30,3 +30,14 @@ Setup a PostgreSQL 10-Database
 Developer Reminder
 ------------------
 * Create serialVersionUID for Classes with "implements Serializable": use the JDK tool “serialver“
+
+
+Drag and Drop
+-------------
+* https://mdbootstrap.com/plugins/jquery/draggable/#introduction
+* https://github.com/Shopify/draggable/tree/master/examples/src/content/Droppable/UniqueDropzone
+* https://github.com/Shopify/draggable#documentation
+* https://jqueryhouse.com/jquery-drag-and-drop-plugins/
+* https://shopify.github.io/draggable/examples/simple-list.html
+* https://www.elated.com/drag-and-drop-with-jquery-your-essential-guide/
+* https://medium.com/@okandavut/using-jquery-ui-drag-drop-64a24e75e805
