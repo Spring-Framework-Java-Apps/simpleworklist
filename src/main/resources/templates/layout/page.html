@@ -73,7 +73,10 @@
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
 	<script th:inline="javascript">
 		function allowDropOfTask(ev) {
-			ev.preventDefault();
+			var taskType = ev.dataTransfer.getData("task").split("_")[0];
+			if(taskType == 'task'){
+				ev.preventDefault();
+			}
 		}
 
 		function dragTask(ev) {
@@ -145,11 +148,20 @@
 
 		function drop2project(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var projectIdInfo = ev.target.id;
-			var projectId = projectIdInfo.split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/project/' + projectId;
-			window.location.replace(myUrl);
+			var taskType = ev.dataTransfer.getData("task").split("_")[0];
+			if(taskType == 'task') {
+				var taskId = ev.dataTransfer.getData("task").split("_")[1];
+				var projectIdInfo = ev.target.id;
+				var projectId = projectIdInfo.split("_")[1];
+				var myUrl = '[(@{/task/move/})]' + taskId + '/to/project/' + projectId;
+				window.location.replace(myUrl);
+			} else if(taskType == 'project') {
+				var thisProjectId = ev.dataTransfer.getData("task").split("_")[1];
+				var targetProjectIdInfo = ev.target.id;
+				var targetProjectId = targetProjectIdInfo.split("_")[1];
+				var myUrl = '[(@{/project/})]' + thisProjectId + '/move/to/' + targetProjectId;
+				window.location.replace(myUrl);
+			}
 		}
 
 		function allowDrop2Project(ev){
@@ -157,7 +169,7 @@
 		}
 
 		function dragProject(ev) {
-			ev.dataTransfer.setData("project", ev.target.id);
+			ev.dataTransfer.setData("task", ev.target.id);
 		}
 	</script>
 	<!--

@@ -89,10 +89,10 @@
     <ul th:fragment="tw-project-submenu(projectList, thisProject)">
         <li th:each="project : ${projectList}">
             <span th:if="${project == thisProject}">
-                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)"></strong>
+                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true"></strong>
             </span>
             <span th:if="${project != thisProject}">
-                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
+                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true">
                 </a>
             </span>
             <span th:if="${project.children.size() gt 0}">
