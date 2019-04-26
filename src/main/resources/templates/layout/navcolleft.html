@@ -72,13 +72,13 @@
                 <ul id="rootProject">
                     <li>
                         <span>
-                            <a th:href="@{/project/0}" id="project_0" class="projectDraggable projectDroppable" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
+                            <a th:href="@{/project/0}" id="project_0" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
                                 <i class="fas fa-folder-open"></i>
                                 <span th:text="#{right.nav.projects}">Projects</span>
                             </a>
                         </span>
                         <span th:if="${rootCategories != null and rootCategories.size() gt 0}">
-                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})"></ul>
+                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})" draggable="true"></ul>
                         </span>
                     </li>
                 </ul>
