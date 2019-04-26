@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-            <tr id="${'task_' + task.id}" th:each="task : ${taskPage}" draggable="true" ondragstart="dragTask(event)">
+            <tr th:id="'task_' + ${task.id}" th:each="task : ${taskPage}" draggable="true" ondragstart="dragTask(event)">
                 <td>
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
                         <i class="far fa-square"></i>
@@ -62,7 +62,7 @@
                     </del>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModalScrollable" th:text="#{task.show.text}">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taskModalScrollable" th:text="#{task.show.text}">
                     Launch Task Modal
                     </button>
                     <!-- Modal -->

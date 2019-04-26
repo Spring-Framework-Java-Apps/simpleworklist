@@ -77,68 +77,68 @@
 		}
 
 		function dragTask(ev) {
-			ev.dataTransfer.setData("task", ev.target.id.split("_")[1]);
+			ev.dataTransfer.setData("task", ev.target.id);
 		}
 
 		function drop2inbox(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/inbox';
 			window.location.replace(myUrl);
 		}
 
 		function drop2today(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/today';
 			window.location.replace(myUrl);
 		}
 
 		function drop2next(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/next';
 			window.location.replace(myUrl);
 		}
 
 		function drop2waiting(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/waiting';
 			window.location.replace(myUrl);
 		}
 
 		function drop2someday(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/someday';
 			window.location.replace(myUrl);
 		}
 
 		function drop2scheduled(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/scheduled';
 			window.location.replace(myUrl);
 		}
 
 		function drop2focus(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/focus';
 			window.location.replace(myUrl);
 		}
 
 		function drop2completed(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/completed';
 			window.location.replace(myUrl);
 		}
 
 		function drop2trash(ev) {
 			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task");
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/trash';
 			window.location.replace(myUrl);
 		}
