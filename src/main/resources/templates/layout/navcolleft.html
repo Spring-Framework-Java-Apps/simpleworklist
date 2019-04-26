@@ -72,7 +72,7 @@
                 <ul id="rootProject">
                     <li>
                         <span>
-                            <a th:href="@{/project/0}" id="project_0" class="projectDraggable projectDroppable">
+                            <a th:href="@{/project/0}" id="project_0" class="projectDraggable projectDroppable" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
                                 <i class="fas fa-folder-open"></i>
                                 <span th:text="#{right.nav.projects}">Projects</span>
                             </a>
@@ -89,10 +89,10 @@
     <ul th:fragment="tw-project-submenu(projectList, thisProject)">
         <li th:each="project : ${projectList}">
             <span th:if="${project == thisProject}">
-                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" class="projectDraggable projectDroppable"></strong>
+                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)"></strong>
             </span>
             <span th:if="${project != thisProject}">
-                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" class="projectDraggable projectDroppable">
+                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
                 </a>
             </span>
             <span th:if="${project.children.size() gt 0}">

@@ -14,8 +14,6 @@
     <!-- TODO #36 -->
     <div th:fragment="tw-tasks-table(taskPage,myTaskState)">
         <div class="container">
-        <div th:replace="this :: tw-tasks-pagination(page=${taskPage})">
-        </div>
         <div class="row">
         <table class="table table-striped table-hover">
             <thead>

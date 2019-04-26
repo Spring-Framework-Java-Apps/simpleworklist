@@ -142,6 +142,23 @@
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/trash';
 			window.location.replace(myUrl);
 		}
+
+		function drop2project(ev) {
+			ev.preventDefault();
+			var taskId = ev.dataTransfer.getData("task").split("_")[1];
+			var projectIdInfo = ev.target.id;
+			var projectId = projectIdInfo.split("_")[1];
+			var myUrl = '[(@{/task/move/})]'+taskId+'/to/project/' + projectId;
+			window.location.replace(myUrl);
+		}
+
+		function allowDrop2Project(ev){
+			ev.preventDefault();
+		}
+
+		function dragProject(ev) {
+			ev.dataTransfer.setData("project", ev.target.id);
+		}
 	</script>
 	<!--
 	<script th:inline="javascript">
