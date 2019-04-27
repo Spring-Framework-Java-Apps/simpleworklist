@@ -19,11 +19,21 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
-                    <th><span th:utext="#{tasks.inbox.title}">Title</span></th>
-                    <th><span th:utext="#{tasks.inbox.text}">Text</span></th>
-                    <th th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'PROJECT'}"><span th:utext="#{tasks.focus.dueDate}">Due Date</span></th>
-                    <th th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}"><span th:utext="#{tasks.focus.taskState}">Task State</span></th>
-                    <th th:if="${myTaskState ne 'PROJECT'}"><span th:utext="#{tasks.inbox.project}">Project</span></th>
+                    <th>
+                        <span th:utext="#{tasks.inbox.title}">Title</span>
+                    </th>
+                    <th>
+                        <span th:utext="#{tasks.inbox.text}">Text</span>
+                    </th>
+                    <th th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
+                        <span th:utext="#{tasks.focus.dueDate}">Due Date</span>
+                    </th>
+                    <th th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
+                        <span th:utext="#{tasks.focus.taskState}">Task State</span>
+                    </th>
+                    <th th:if="${myTaskState ne 'PROJECT'}">
+                        <span th:utext="#{tasks.inbox.project}">Project</span>
+                    </th>
                     <th>&nbsp;</th>
                     <th th:if="${myTaskState eq 'ALL'}">
                         <span th:utext="#{tasks.all.context}">Context</span>
