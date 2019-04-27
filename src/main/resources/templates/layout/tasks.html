@@ -108,10 +108,10 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                     <a th:href="@{/task/{id}/edit(id=${task.id})}" class="btn btn-secondary" role="button"
                                        th:id="'task_' + ${task.id}" th:text="#{task.show.h1}">
                                     </a>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"th:text="#{task.show.button.close}">Close</button>
                                 </div>
                             </div>
                         </div>
