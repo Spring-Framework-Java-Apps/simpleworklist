@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:lang=”${#locale.language}” xmlns="http://www.w3.org/1999/xhtml"
+<html th:lang="${#locale.language}" xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
@@ -41,7 +41,7 @@
 		</div>
 	</header>
 
-	<section th:replace="layout/navcolleft :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
+	<section th:replace="layout/taskstates :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
 	</section>
 
 	<!-- Breadcrumb -->
@@ -55,7 +55,7 @@
 		</div>
 	</section>
 
-	<section th:replace="layout/navcolleft :: navigation-projects(rootCategories=${rootCategories},thisProject=${thisProject})">
+	<section th:replace="layout/projects :: navigation-projects(rootCategories=${rootCategories},thisProject=${thisProject})">
 	</section>
 
 	<!-- Footer -->
@@ -158,6 +158,10 @@
 		function dragProject(ev) {
 			ev.dataTransfer.setData("task", ev.target.id);
 		}
+
+		$(window).load( function() {
+			$('[data-tooltip="true"]').tooltip();
+		});
 	</script>
 </body>
 </html>

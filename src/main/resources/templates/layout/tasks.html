@@ -21,12 +21,13 @@
             <thead>
                 <tr>
                     <th class="task_col task_col_info_icons">&nbsp;</th>
-                    <th class="task_col task_col_title">
-                        <span th:text="#{tasks.inbox.title}">Title</span>
+                    <th class="task_col task_col_title" th:text="#{tasks.inbox.title}">
+                        Title
                     </th>
                     <th class="task_col task_col_due_date"
-                         th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
-                        <span th:text="#{tasks.focus.dueDate}">Due Date</span>
+                         th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}"
+                         th:text="#{tasks.focus.dueDate}">
+                        Due Date
                     </th>
                     <th class="task_col task_col_taskstate"
                          th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
@@ -54,7 +55,7 @@
                        th:if="${task.taskState.name() eq 'COMPLETED'}">
                         <i class="fas fa-check-square"></i>
                     </a>
-                    <i class="far fa-check-square" th:if="${task.taskState.name() eq 'TRASHED'}"></i>&nbsp;&nbsp;
+                    <i class="far fa-check-square" th:if="${task.taskState.name() eq 'TRASHED'}"></i>
                     <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
                         <i class="fas fa-star"></i>
                     </a>
@@ -63,7 +64,9 @@
                     </a>
                 </td>
                 <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="data-target='#taskModalScrollable_'+${task.id}" th:text="${task.title}">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-tooltip="true"
+                            th:attr="data-target='#taskModalScrollable_'+${task.id}" th:text="${task.title}"
+                            data-placement="bottom" title="Tooltip on bottom">
                     Launch Task Modal
                     </button>
                     <!-- Modal -->
@@ -121,10 +124,10 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" th:utext="#{button.back}">Close</button>
                                     <a th:href="@{/task/{id}/edit(id=${task.id})}" class="btn btn-secondary" role="button"
                                        th:id="'task_' + ${task.id}" th:utext="#{task.show.button.edit}">
                                     </a>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal"th:utext="#{button.back}">Close</button>
                                 </div>
                             </div>
                         </div>

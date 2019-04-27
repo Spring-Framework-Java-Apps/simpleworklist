@@ -65,40 +65,4 @@
         </div>
     </section>
 
-    <section th:fragment="navigation-projects(rootCategories,thisProject)">
-        <div class="container" id="projectNavigationWell" sec:authorize="isAuthenticated()">
-            <hr/>
-            <nav>
-                <ul id="rootProject">
-                    <li>
-                        <span>
-                            <i class="fas fa-folder-open"></i>
-                            <a th:href="@{/project/root}" id="project_0" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" th:text="#{right.nav.projects}">
-                                Projects
-                            </a>
-                        </span>
-                        <span th:if="${rootCategories != null and rootCategories.size() gt 0}">
-                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})"></ul>
-                        </span>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </section>
-
-    <ul th:fragment="tw-project-submenu(projectList, thisProject)">
-        <li th:each="project : ${projectList}">
-            <span th:if="${project == thisProject}">
-                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true" ondragstart="dragProject(event)"></strong>
-            </span>
-            <span th:if="${project != thisProject}">
-                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true" ondragstart="dragProject(event)">
-                </a>
-            </span>
-            <span th:if="${project.children.size() gt 0}">
-                <ul th:include="this :: tw-project-submenu(projectList=${project.children},thisProject=${thisProject})"></ul>
-            </span>
-        </li>
-    </ul>
-
 </html>
