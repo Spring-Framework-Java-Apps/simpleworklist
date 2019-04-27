@@ -78,7 +78,7 @@
                             </a>
                         </span>
                         <span th:if="${rootCategories != null and rootCategories.size() gt 0}">
-                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})" draggable="true"></ul>
+                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})" draggable="true" ondragstart="dragProject(event)"></ul>
                         </span>
                     </li>
                 </ul>
@@ -89,10 +89,10 @@
     <ul th:fragment="tw-project-submenu(projectList, thisProject)">
         <li th:each="project : ${projectList}">
             <span th:if="${project == thisProject}">
-                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true"></strong>
+                <strong th:text="${project.name}" th:id="'project_' + ${project.id}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true" ondragstart="dragProject(event)"></strong>
             </span>
             <span th:if="${project != thisProject}">
-                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true">
+                <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id}" th:text="${project.name}" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" draggable="true" ondragstart="dragProject(event)">
                 </a>
             </span>
             <span th:if="${project.children.size() gt 0}">

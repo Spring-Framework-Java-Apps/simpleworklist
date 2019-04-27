@@ -148,18 +148,15 @@
 
 		function drop2project(ev) {
 			ev.preventDefault();
-			var taskType = ev.dataTransfer.getData("task").split("_")[0];
-			if(taskType == 'task') {
-				var taskId = ev.dataTransfer.getData("task").split("_")[1];
-				var projectIdInfo = ev.target.id;
-				var projectId = projectIdInfo.split("_")[1];
-				var myUrl = '[(@{/task/move/})]' + taskId + '/to/project/' + projectId;
+			var srcType = ev.dataTransfer.getData("task").split("_")[0];
+			var srcId = ev.dataTransfer.getData("task").split("_")[1];
+			var targetProjectIdInfo = ev.target.id;
+			var targetProjectId = targetProjectIdInfo.split("_")[1];
+			if(srcType == 'task') {
+				var myUrl = '[(@{/task/move/})]' + srcId + '/to/project/' + targetProjectId;
 				window.location.replace(myUrl);
-			} else if(taskType == 'project') {
-				var thisProjectId = ev.dataTransfer.getData("task").split("_")[1];
-				var targetProjectIdInfo = ev.target.id;
-				var targetProjectId = targetProjectIdInfo.split("_")[1];
-				var myUrl = '[(@{/project/})]' + thisProjectId + '/move/to/' + targetProjectId;
+			} else if(srcType == 'project') {
+				var myUrl = '[(@{/project/})]' + srcId + '/move/to/' + targetProjectId;
 				window.location.replace(myUrl);
 			}
 		}
@@ -172,124 +169,5 @@
 			ev.dataTransfer.setData("task", ev.target.id);
 		}
 	</script>
-	<!--
-	<script th:inline="javascript">
-		// Prevent jQuery UI dialog from blocking focusin
-		$(document).on('focusin', function(e) {
-			if ($(e.target).closest(".mce-window, .moxman-window").length) {
-				e.stopImmediatePropagation();
-			}
-		});
-		$(window).load( function() {
-			$( ".taskDraggable").draggable({ cursor: "crosshair", revert: "invalid"  });
-			$( ".taskDroppable" ).droppable({
-				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var rootUrl = "";
-					if(draggableType == "task") {
-						rootUrl = '[(@{/task})]';
-					} else if(draggableType == "project") {
-						rootUrl = '[(@{/project/task})]';
-					}
-					var html4move = rootUrl + '/' + draggableId + '/changeorderto/' + selfId;
-					window.location.replace(html4move);
-				}
-			});
-			$( ".projectDraggable" ).draggable({ cursor: "crosshair", revert: "invalid"  });
-			$( ".projectDroppable" ).droppable({
-				drop: function( event, ui ) {
-					var selfId = ("" + $( this ).attr("id")).split("_")[1];
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					var url = "";
-					if(draggableType == "task"){
-						url += '[(@{/task/move})]';
-					}
-					if (draggableType == "project"){
-						url += '[(@{/project/move})]';
-					}
-					url += draggableId + '/to/project/'+selfId;
-					window.location.replace(url);
-				}
-			});
-			$("#taskstate_inbox").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/inbox';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskstate_today").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/today';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskstate_next").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/next';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskstate_waiting").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/waiting';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskstate_someday").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/someday';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskstate_completed").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/completed';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskstate_trash").droppable({
-				drop: function( event, ui ) {
-					var draggableId = "" +ui.draggable.attr("id").split("_")[1];
-					var draggableType = ""+ui.draggable.attr("id").split("_")[0];
-					if(draggableType == "task"){
-						var html4move = '/task/move/'+draggableId+'/to/trash';
-						window.location.replace(html4move);
-					}
-				}
-			});
-			$("#taskDueDate ").datepicker({
-				dateFormat: 'mm/dd/yy',
-				constrainInput: false
-			});
-		});
-	</script>
-	-->
 </body>
 </html>
