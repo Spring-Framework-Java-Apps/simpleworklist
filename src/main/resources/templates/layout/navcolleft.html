@@ -31,7 +31,7 @@
                         <span th:text="#{layout.page.waiting}">Waiting</span>
                     </a>
                 </li>
-                <li class="nav-item" ondrop="drop2scheduled(event)" ondragover="allowDropOfTask(event)">
+                <li class="nav-item">
                     <a id="taskstate_scheduled" th:href="@{/taskstate/scheduled}" th:class="${taskstateType == 'scheduled' ? 'nav-link active' : 'nav-link'}">
                         <i class="fas fa-calendar-alt"></i>
                         <span th:text="#{layout.page.scheduled}">Scheduled</span>
@@ -72,13 +72,13 @@
                 <ul id="rootProject">
                     <li>
                         <span>
-                            <a th:href="@{/project/0}" id="project_0" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
-                                <i class="fas fa-folder-open"></i>
-                                <span th:text="#{right.nav.projects}">Projects</span>
+                            <i class="fas fa-folder-open"></i>
+                            <a th:href="@{/project/0}" id="project_0" ondrop="drop2project(event)" ondragover="allowDrop2Project(event)" th:text="#{right.nav.projects}">
+                                Projects
                             </a>
                         </span>
                         <span th:if="${rootCategories != null and rootCategories.size() gt 0}">
-                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})" draggable="true" ondragstart="dragProject(event)"></ul>
+                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})"></ul>
                         </span>
                     </li>
                 </ul>

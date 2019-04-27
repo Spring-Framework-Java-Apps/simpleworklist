@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.control.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,18 +29,23 @@ public class ContextController extends AbstractController {
     }
 
     @RequestMapping(value = "/choose/{newContextId}", method = RequestMethod.GET)
-    public String switchArea(@PathVariable long newContextId, Model model){
-        if(newContextId > 0) {
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-            Context foundContext = contextService.findByIdAndUserAccount(newContextId, userAccount);
-            if (foundContext == null) {
-                return "redirect:/logout";
-            } else {
-                model.addAttribute("userSession", new UserSessionBean(foundContext.getId()));
-            }
-        } else {
-            model.addAttribute("userSession",new UserSessionBean(newContextId));
+    public String switchContxt(@PathVariable("newContextId") Context setContext,
+                               @ModelAttribute("userSession") UserSessionBean userSession, Model model){
+        super.verifyInput(setContext,userSession);
+        if(userSession == null){
+            userSession.setContextId(setContext.getId());
         }
+        //if(newContextId > 0) {
+        //Context foundContext = contextService.findByIdAndUserAccount(newContextId, userAccount);
+        if (setContext == null) {
+            return "redirect:/logout";
+        } else {
+            userSession.setContextId(setContext.getId());
+            model.addAttribute("userSession", new UserSessionBean(setContext.getId()));
+        }
+        //} else {
+        //    model.addAttribute("userSession",new UserSessionBean(newContextId));
+        //}
         return "redirect:/taskstate/inbox";
     }
 }

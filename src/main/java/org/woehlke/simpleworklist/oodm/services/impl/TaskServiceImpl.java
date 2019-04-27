@@ -19,7 +19,6 @@ import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
 import org.woehlke.simpleworklist.oodm.services.TaskService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -157,78 +156,5 @@ public class TaskServiceImpl implements TaskService {
         //TODO: FEHLER: fehlt Context!
         return taskRepository.findByUserAccountAndContext(userAccount, context, request);
     }
-
-    @Override
-    public long getMaxOrderIdTaskState(TaskState inbox, Context context, UserAccount thisUser) {
-        long maxOrderIdTaskState = 0;
-        if(context.getUserAccount().getId().longValue()==thisUser.getId().longValue()) {
-            Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(inbox, context);
-            maxOrderIdTaskState = (task==null) ? 0 : task.getOrderIdTaskState();
-        }
-        return maxOrderIdTaskState;
-    }
-
-    @Override
-    public long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount) {
-        long maxOrderIdProject = 0;
-        if(context.getUserAccount().getId().longValue()==userAccount.getId().longValue()) {
-            Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(project, context);
-            maxOrderIdProject = (task==null) ? 0 : task.getOrderIdProject();
-        }
-        return maxOrderIdProject;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdTaskState(TaskState taskState, Task sourceTask, Task destinationTask, Context context) {
-        long destinationTaskOrderIdTaskState = destinationTask.getOrderIdTaskState();
-        boolean down = sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState();
-        List<Task> tasks;
-        if(down){
-           tasks = taskRepository.getTasksToReorderByOrderIdTaskState(sourceTask.getOrderIdTaskState(), destinationTask.getOrderIdTaskState(), taskState, context);
-        } else {
-            tasks = taskRepository.getTasksToReorderByOrderIdTaskState(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), taskState, context);
-        }
-        this.reorder( down, destinationTaskOrderIdTaskState, tasks, sourceTask, destinationTask );
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdProject(Project project, Task sourceTask, Task destinationTask, Context context) {
-        long destinationOrderIdProject = destinationTask.getOrderIdProject();
-        boolean down = sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState();
-        List<Task> tasks;
-        if(down){
-            tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdTaskState(), destinationTask.getOrderIdTaskState(), project, context);
-        } else {
-            tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), project, context);
-        }
-        this.reorder( down, destinationOrderIdProject, tasks, sourceTask, destinationTask );
-    }
-
-    private void reorder(boolean down, long destinationOrderId, List<Task> tasks, Task sourceTask, Task destinationTask){
-        for(Task task:tasks){
-            long orderId = task.getOrderIdTaskState();
-            if(down){
-                orderId--;
-            } else {
-                orderId++;
-            }
-            task.setOrderIdTaskState(orderId);
-            taskRepository.saveAndFlush(task);
-        }
-        long orderId = destinationTask.getOrderIdTaskState();
-        if(down){
-            orderId--;
-        } else {
-            orderId++;
-            destinationOrderId++;
-        }
-        destinationTask.setOrderIdTaskState(orderId);
-        taskRepository.saveAndFlush(destinationTask);
-        sourceTask.setOrderIdTaskState(destinationOrderId);
-        taskRepository.saveAndFlush(sourceTask);
-    }
-
 
 }

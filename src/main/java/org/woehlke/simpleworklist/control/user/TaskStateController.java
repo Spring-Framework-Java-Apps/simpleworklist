@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
+import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
@@ -36,10 +37,13 @@ public class TaskStateController extends AbstractController {
 
     private final TaskService taskService;
 
+    private final TaskMoveService taskMoveService;
+
     @Autowired
-    public TaskStateController(TaskStateService taskStateService, TaskService taskService) {
+    public TaskStateController(TaskStateService taskStateService, TaskService taskService, TaskMoveService taskMoveService) {
         this.taskStateService = taskStateService;
         this.taskService = taskService;
+        this.taskMoveService = taskMoveService;
     }
 
     @RequestMapping(value = "/inbox", method = RequestMethod.GET)
@@ -194,14 +198,14 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderId(
-            @PathVariable long sourceTaskId,
-            @PathVariable long destinationTaskId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model){
+            @PathVariable("sourceTaskId") Task sourceTask,
+            @PathVariable("destinationTaskId") Task destinationTask,
+            @ModelAttribute("userSession") UserSessionBean userSession
+    ){
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        Task sourceTask = taskService.findOne(sourceTaskId,thisUser);
-        Task destinationTask = taskService.findOne(destinationTaskId,thisUser);
+        //Task sourceTask = taskService.findOne(sourceTaskId,thisUser);
+        //Task destinationTask = taskService.findOne(destinationTaskId,thisUser);
         LOGGER.info("------------- changeTaskOrderId -------------");
         LOGGER.info("source Task:      "+sourceTask.toString());
         LOGGER.info("---------------------------------------------");
@@ -211,7 +215,7 @@ public class TaskStateController extends AbstractController {
         if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()) {
             boolean sameTaskType = (sourceTask.getTaskState().ordinal() == destinationTask.getTaskState().ordinal());
             if (sameTaskType) {
-                taskService.moveOrderIdTaskState(sourceTask.getTaskState(), sourceTask, destinationTask, context);
+                taskMoveService.moveOrderIdTaskState(sourceTask.getTaskState(), sourceTask, destinationTask, context);
                 returnUrl = "redirect:/taskstate/" + sourceTask.getTaskState().name().toLowerCase();
             }
         }

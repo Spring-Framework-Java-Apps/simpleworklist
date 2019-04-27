@@ -134,4 +134,14 @@ public abstract class AbstractController {
         return false;
     }
 
+    protected void verifyInput(Context setContext, UserSessionBean userSession) {
+        boolean ok = true;
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        if(setContext.getUserAccount().getId() != userAccount.getId()){
+            ok = false;
+        }
+        if(userSession.getContextId()!=setContext.getId()){
+            ok = false;
+        }
+    }
 }

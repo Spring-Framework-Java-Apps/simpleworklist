@@ -34,12 +34,4 @@ public interface TaskService {
 
     Page<Task> findByUser(UserAccount userAccount, Context context, Pageable request);
 
-    long getMaxOrderIdTaskState(TaskState taskState, Context context, UserAccount thisUser);
-
-    long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount);
-
-    void moveOrderIdTaskState(TaskState taskState, Task sourceTask, Task destinationTask, Context context);
-
-    void moveOrderIdProject(Project project, Task sourceTask, Task destinationTask, Context context);
-
 }

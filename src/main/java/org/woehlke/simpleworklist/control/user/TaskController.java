@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
+import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy;
@@ -31,16 +32,19 @@ public class TaskController extends AbstractController {
 
     private final TaskService taskService;
 
+    private final TaskMoveService taskMoveService;
+
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskMoveService taskMoveService) {
         this.taskService = taskService;
+        this.taskMoveService = taskMoveService;
     }
 
     @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.GET)
-    public final String editTaskGet(@PathVariable long taskId, Model model) {
+    public final String editTaskGet(@PathVariable("taskId") Task task, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
             Project thisProject = null;
             if (task.getProject() == null) {
@@ -135,7 +139,6 @@ public class TaskController extends AbstractController {
     public final String addNewTaskToProjectGet(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            BindingResult result,
             Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = new Task();
@@ -218,9 +221,9 @@ public class TaskController extends AbstractController {
             task.setFocus(false);
             Context context = contextService.findByIdAndUserAccount(task.getContext().getId(), userAccount);
             task.setContext(context);
-            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),context,userAccount);
+            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context,userAccount);
             task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.saveAndFlush(task, userAccount);
             LOGGER.info(task.toString());
@@ -229,9 +232,9 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
-    public final String deleteTaskGet(@PathVariable long taskId) {
+    public final String deleteTaskGet(@PathVariable("taskId") Task task) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task!= null){
             taskService.delete(task, userAccount);
         }
@@ -239,9 +242,9 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
-    public final String undeleteTaskGet(@PathVariable long taskId) {
+    public final String undeleteTaskGet(@PathVariable("taskId") Task task) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
             taskService.undelete(task, userAccount);
             return "redirect:/taskstate/completed";
@@ -250,25 +253,10 @@ public class TaskController extends AbstractController {
         }
     }
 
-
-    //TODO: what is this for?
-    @RequestMapping(value = "/task/move/{taskId}", method = RequestMethod.GET)
-    public final String moveTaskGet(@PathVariable long taskId) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
-        long projectId = 0;
-        if (task != null) {
-            if (task.getProject() != null) {
-                projectId = task.getProject().getId();
-            }
-        }
-        return "redirect:/project/" + projectId + "/";
-    }
-
     @RequestMapping(value = "/transform/{taskId}", method = RequestMethod.GET)
-    public final String transformTaskIntoProjectGet(@PathVariable long taskId) {
+    public final String transformTaskIntoProjectGet(@PathVariable("taskId") Task task) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         long projectId = 0;
         if(task != null) {
             if (task.getProject() != null) {
@@ -285,17 +273,17 @@ public class TaskController extends AbstractController {
             thisProject = projectService.saveAndFlush(thisProject, userAccount);
             taskService.delete(task, userAccount);
             projectId = thisProject.getId();
-            LOGGER.info("tried to transform Task " + taskId + " to new Project " + projectId);
+            LOGGER.info("tried to transform Task " + task.getId() + " to new Project " + projectId);
         }
         return "redirect:/project/" + projectId + "/";
     }
 
     @RequestMapping(value = "/complete/{taskId}", method = RequestMethod.GET)
-    public final String completeTaskGet(@PathVariable long taskId, Model model) {
+    public final String completeTaskGet(@PathVariable("taskId") Task task) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task != null){
-            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),userAccount);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),userAccount);
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.complete(task, userAccount);
         }
@@ -303,12 +291,12 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/incomplete/{taskId}", method = RequestMethod.GET)
-    public final String undoneTaskGet(@PathVariable long taskId) {
+    public final String undoneTaskGet(@PathVariable("taskId") Task task) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.incomplete(task, userAccount);
-            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             taskService.saveAndFlush(task,userAccount);
             switch (task.getTaskState()) {
@@ -335,10 +323,10 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/setfocus/{taskId}", method = RequestMethod.GET)
-    public final String setFocusGet(@PathVariable long taskId,
+    public final String setFocusGet(@PathVariable("taskId") Task task,
                                  @RequestParam(required=false) String back){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.setFocus(task, userAccount);
             if(back != null && back.contentEquals("project")){
@@ -370,10 +358,10 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/unsetfocus/{taskId}", method = RequestMethod.GET)
-    public final String unsetFocusGet(@PathVariable long taskId,
+    public final String unsetFocusGet(@PathVariable("taskId") Task task,
                                    @RequestParam(required=false) String back){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
+        //Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
             taskService.unsetFocus(task, userAccount);
             if(back != null && back.contentEquals("project")){

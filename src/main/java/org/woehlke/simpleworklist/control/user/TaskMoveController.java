@@ -14,7 +14,6 @@ import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.services.TaskService;
@@ -36,120 +35,88 @@ public class TaskMoveController extends AbstractController {
     }
 
     @RequestMapping(value = "/{taskId}/to/project/{projectId}", method = RequestMethod.GET)
-    public final String moveTaskToAnotherProject(@PathVariable long taskId,
+    public final String moveTaskToAnotherProject(@PathVariable("taskId") Task task,
                                                  @PathVariable long projectId) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, userAccount);
-        if(task!=null){
-            Project project = projectService.findByProjectId(projectId, userAccount);
-            task.setProject(project);
-            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),task.getContext(),userAccount);
-            task.setOrderIdProject(++maxOrderIdProject);
-            taskService.saveAndFlush(task, userAccount);
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        //Task task = taskService.findOne(taskId, userAccount);
+        if(projectId == 0) {
+            task = taskMoveService.moveTaskToRootProject(task);
+        } else {
+            Project project = projectService.findByProjectId(projectId, thisUser);
+            task = taskMoveService.moveTaskToAnotherProject(task,project);
         }
         return "redirect:/project/" + projectId + "/";
     }
 
     @RequestMapping(value = "/{taskId}/to/inbox", method = RequestMethod.GET)
-    public final String moveTaskToInbox(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to inbox");
+    public final String moveTaskToInbox(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to inbox");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId,thisUser);
-        if(task!=null){
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.INBOX,task.getContext(),thisUser);
-            task.setTaskState(TaskState.INBOX);
-            task.setOrderIdTaskState(++maxOrderId);
-            task=taskService.saveAndFlush(task, thisUser);
-            LOGGER.info("dragged and dropped "+taskId+" to inbox: "+task.toString());
-        }
+        //Task task = taskService.findOne(taskId,thisUser);
+        task = taskMoveService.moveTaskToInbox(task);
         return "redirect:/taskstate/inbox";
     }
 
     @RequestMapping(value = "/{taskId}/to/today", method = RequestMethod.GET)
-    public final String moveTaskToToday(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to today");
+    public final String moveTaskToToday(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to today");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, thisUser);
-        if(task!=null) {
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TODAY,task.getContext(),thisUser);
-            task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.TODAY);
-            task = taskService.saveAndFlush(task, thisUser);
-            LOGGER.info("dragged and dropped " + taskId + " to today: " + task.toString());
-        }
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToToday(task);
         return "redirect:/taskstate/today";
     }
 
     @RequestMapping(value = "/{taskId}/to/next", method = RequestMethod.GET)
-    public final String moveTaskToNext(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to next");
+    public final String moveTaskToNext(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to next");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, thisUser);
-        long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.NEXT,task.getContext(),thisUser);
-        task.setOrderIdTaskState(++maxOrderId);
-        task.setTaskState(TaskState.NEXT);
-        task=taskService.saveAndFlush(task, thisUser);
-        LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToNext(task);
         return "redirect:/taskstate/next";
     }
 
     @RequestMapping(value = "/{taskId}/to/waiting", method = RequestMethod.GET)
-    public final String moveTaskToWaiting(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to waiting");
+    public final String moveTaskToWaiting(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to waiting");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, thisUser);
-        if(task!=null){
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.WAITING,task.getContext(),thisUser);
-            task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.WAITING);
-            task=taskService.saveAndFlush(task, thisUser);
-            LOGGER.info("dragged and dropped "+taskId+" to next: "+task.toString());
-        }
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToWaiting(task);
         return "redirect:/taskstate/waiting";
     }
 
     @RequestMapping(value = "/{taskId}/to/someday", method = RequestMethod.GET)
-    public final String moveTaskToSomeday(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to someday");
+    public final String moveTaskToSomeday(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to someday");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, thisUser);
-        if(task!=null) {
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext(),thisUser);
-            task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.SOMEDAY);
-            task = taskService.saveAndFlush(task, thisUser);
-            LOGGER.info("dragged and dropped " + taskId + " to someday: " + task.toString());
-        }
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToSomeday(task);
         return "redirect:/taskstate/someday";
     }
 
-    @RequestMapping(value = "/{taskId}/to/completed", method = RequestMethod.GET)
-    public final String moveTaskToCompleted(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to completed");
+    @RequestMapping(value = "/{taskId}/to/focus", method = RequestMethod.GET)
+    public final String moveTaskToFocus(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to focus");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, thisUser);
-        if(task!=null) {
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),thisUser);
-            task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.COMPLETED);
-            task = taskService.saveAndFlush(task, thisUser);
-            LOGGER.info("dragged and dropped " + taskId + " to completed: " + task.toString());
-        }
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToFocus(task);
+        return "redirect:/taskstate/focus";
+    }
+
+    @RequestMapping(value = "/{taskId}/to/completed", method = RequestMethod.GET)
+    public final String moveTaskToCompleted(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to completed");
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToCompleted(task);
         return "redirect:/taskstate/completed";
     }
 
     @RequestMapping(value = "/{taskId}/to/trash", method = RequestMethod.GET)
-    public final String moveTaskToTrash(@PathVariable long taskId) {
-        LOGGER.info("dragged and dropped "+taskId+" to trash");
+    public final String moveTaskToTrash(@PathVariable("taskId") Task task) {
+        LOGGER.info("dragged and dropped "+task.getId()+" to trash");
         UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task task = taskService.findOne(taskId, thisUser);
-        if(task!=null) {
-            long maxOrderId = taskService.getMaxOrderIdTaskState(TaskState.TRASH,task.getContext(),thisUser);
-            task.setOrderIdTaskState(++maxOrderId);
-            task.setTaskState(TaskState.TRASH);
-            task = taskService.saveAndFlush(task, thisUser);
-            LOGGER.info("dragged and dropped " + taskId + " to trash: " + task.toString());
-        }
+        //Task task = taskService.findOne(taskId, thisUser);
+        task = taskMoveService.moveTaskToTrash(task);
         return "redirect:/taskstate/trash";
     }
 
@@ -165,10 +132,11 @@ public class TaskMoveController extends AbstractController {
 
     @RequestMapping(value = "/trash/to/void", method = RequestMethod.GET)
     public final String emptyTrash(
-            @ModelAttribute("userSession") UserSessionBean userSession, Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        taskMoveService.emptyTrash(userAccount,context);
+            @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
+        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
+        taskMoveService.emptyTrash(thisUser,context);
         return "redirect:/taskstate/trash";
     }
 }

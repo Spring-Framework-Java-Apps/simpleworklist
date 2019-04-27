@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.control.common.AbstractController;
+import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
@@ -34,9 +35,12 @@ public class ProjectController extends AbstractController {
 
     private final TaskService taskService;
 
+    private final TaskMoveService taskMoveService;
+
     @Autowired
-    public ProjectController(TaskService taskService) {
+    public ProjectController(TaskService taskService, TaskMoveService taskMoveService) {
         this.taskService = taskService;
+        this.taskMoveService = taskMoveService;
     }
 
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
@@ -82,39 +86,39 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
-            @PathVariable long thisProjectId,
+            @PathVariable("thisProjectId") Project thisProject,
             @PathVariable long targetProjectId,
             @ModelAttribute("userSession") UserSessionBean userSession
     ) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Project thisProject = null;
-        if (thisProjectId != 0) {
-            thisProject = projectService.findByProjectId(thisProjectId, userAccount);
+        //Project thisProject = null;
+        //if (thisProjectId != 0) {
+            //thisProject = projectService.findByProjectId(thisProjectId, userAccount);
             Project targetProject = projectService.findByProjectId(targetProjectId, userAccount);
-            projectService.moveProjectToAnotherProject(thisProject, targetProject,userAccount );
-        }
-        return "redirect:/project/" + thisProjectId;
+            projectService.moveProjectToAnotherProject(thisProject, targetProject, userAccount );
+        //}
+        return "redirect:/project/" + thisProject.getId();
     }
 
     @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.GET)
     public final String editProjectGet(
-            @PathVariable long projectId,
+            @PathVariable("projectId") Project thisProject,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model
     ) {
-        if (projectId > 0) {
+        //if (projectId > 0) {
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
-            Project thisProject = projectService.findByProjectId(projectId, userAccount);
+            //Project thisProject = projectService.findByProjectId(projectId, userAccount);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
             model.addAttribute("areas", contexts);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", thisProject);
             return "project/edit";
-        } else {
-            return "redirect:/project/0/";
-        }
+        //} else {
+          //  return "redirect:/project/0/";
+        //}
     }
 
     @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.POST)
@@ -153,15 +157,15 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/{projectId}/delete", method = RequestMethod.GET)
     public final String deleteProject(
-            @PathVariable long projectId,
+            @PathVariable("projectId") Project project,
             @PageableDefault(sort = "title") Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model) {
-        long newProjectId = projectId;
+        long newProjectId = project.getId();
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        if (projectId > 0) {
-            Project project = projectService.findByProjectId(projectId, userAccount);
+        //if (projectId > 0) {
+            //Project project = projectService.findByProjectId(projectId, userAccount);
             if(project != null){
                 boolean hasNoData = taskService.projectHasNoTasks(project, userAccount);
                 boolean hasNoChildren = project.hasNoChildren();
@@ -196,7 +200,7 @@ public class ProjectController extends AbstractController {
                     return "project/show";
                 }
             }
-        }
+        //}
         return "redirect:/project/" + newProjectId;
     }
 
@@ -282,14 +286,13 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderIdWithinAProject(
-            @PathVariable long sourceTaskId,
-            @PathVariable long destinationTaskId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model){
+            @PathVariable("sourceTaskId") Task sourceTask,
+            @PathVariable("destinationTaskId") Task destinationTask,
+            @ModelAttribute("userSession") UserSessionBean userSession){
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
-        Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        //Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
+        //Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
         LOGGER.info("-------------------------------------------------");
         LOGGER.info("  changeTaskOrderIdWithinAProject");
         LOGGER.info("-------------------------------------------------");
@@ -301,12 +304,12 @@ public class ProjectController extends AbstractController {
         Project project = sourceTask.getProject();
         if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
             if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
-                taskService.moveOrderIdProject(project, sourceTask,destinationTask, context);
+                taskMoveService.moveOrderIdProject(project, sourceTask,destinationTask, context);
                 returnUrl = "redirect:/project/0";
             } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
                 boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
                 if (sameProject) {
-                    taskService.moveOrderIdProject(project, sourceTask,destinationTask, context);
+                    taskMoveService.moveOrderIdProject(project, sourceTask,destinationTask, context);
                     returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
                 }
             }

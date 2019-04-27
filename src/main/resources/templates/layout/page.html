@@ -73,10 +73,7 @@
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
 	<script th:inline="javascript">
 		function allowDropOfTask(ev) {
-			var taskType = ev.dataTransfer.getData("task").split("_")[0];
-			if(taskType == 'task'){
-				ev.preventDefault();
-			}
+			ev.preventDefault();
 		}
 
 		function dragTask(ev) {
@@ -115,13 +112,6 @@
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/task/move/})]'+taskId+'/to/someday';
-			window.location.replace(myUrl);
-		}
-
-		function drop2scheduled(ev) {
-			ev.preventDefault();
-			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/scheduled';
 			window.location.replace(myUrl);
 		}
 
