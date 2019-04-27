@@ -20,20 +20,20 @@
                 <tr>
                     <th>&nbsp;</th>
                     <th>
-                        <span th:utext="#{tasks.inbox.title}">Title</span>
+                        <span th:text="#{tasks.inbox.title}">Title</span>
                     </th>
                     <th th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
-                        <span th:utext="#{tasks.focus.dueDate}">Due Date</span>
+                        <span th:text="#{tasks.focus.dueDate}">Due Date</span>
                     </th>
                     <th th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
-                        <span th:utext="#{tasks.focus.taskState}">Task State</span>
+                        <span th:text="#{tasks.focus.taskState}">Task State</span>
                     </th>
                     <th th:if="${myTaskState ne 'PROJECT'}">
-                        <span th:utext="#{tasks.inbox.project}">Project</span>
+                        <span th:text="#{tasks.inbox.project}">Project</span>
                     </th>
                     <th>&nbsp;</th>
                     <th th:if="${myTaskState eq 'ALL'}">
-                        <span th:utext="#{tasks.all.context}">Context</span>
+                        <span th:text="#{tasks.all.context}">Context</span>
                     </th>
                 </tr>
             </thead>
@@ -88,21 +88,25 @@
                                 <div class="modal-body">
                                     <div th:utext="${task.text}"></div>
                                     <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
+                                        <b th:utext="#{tasks.focus.dueDate}">Due Date</b>
                                         <span th:text="${task.dueDate}"></span>
                                     </div>
                                     <div th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
+                                        <b th:utext="#{tasks.focus.taskState}">Task State</b>
                                         <a th:href="@{{url}(url=${task.taskState.getUrl()})}">
                                             <i th:class="${task.taskState.getIcon()}"></i>
                                             <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
                                         </a>
                                     </div>
                                     <div th:if="${myTaskState ne 'PROJECT'}">
+                                        <b th:text="#{tasks.inbox.project}">Project</b>
                                         <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
                                             <i class="fas fa-folder-open"></i>
                                             <span th:text="${task.project.name}"></span>
                                         </a>
                                     </div>
                                     <div th:if="${myTaskState eq 'ALL'}">
+                                        <b th:text="#{tasks.all.context}">tasks.all.context</b>
                                         <span th:if="${locale eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
                                         <span th:if="${locale ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
                                     </div>
