@@ -207,24 +207,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         } else {
             tasks = taskRepository.getTasksToReorderByOrderIdTaskState(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), taskState, context);
         }
-        this.reorder( down, destinationTaskOrderIdTaskState, tasks, sourceTask, destinationTask );
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdProject(Project project, Task sourceTask, Task destinationTask, Context context) {
-        long destinationOrderIdProject = destinationTask.getOrderIdProject();
-        boolean down = sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState();
-        List<Task> tasks;
-        if(down){
-            tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdTaskState(), destinationTask.getOrderIdTaskState(), project, context);
-        } else {
-            tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), project, context);
-        }
-        this.reorder( down, destinationOrderIdProject, tasks, sourceTask, destinationTask );
-    }
-
-    private void reorder(boolean down, long destinationOrderId, List<Task> tasks, Task sourceTask, Task destinationTask){
         for(Task task:tasks){
             long orderId = task.getOrderIdTaskState();
             if(down){
@@ -240,11 +222,46 @@ public class TaskMoveServiceImpl implements TaskMoveService {
             orderId--;
         } else {
             orderId++;
-            destinationOrderId++;
+            destinationTaskOrderIdTaskState++;
         }
         destinationTask.setOrderIdTaskState(orderId);
         taskRepository.saveAndFlush(destinationTask);
-        sourceTask.setOrderIdTaskState(destinationOrderId);
+        sourceTask.setOrderIdTaskState(destinationTaskOrderIdTaskState);
         taskRepository.saveAndFlush(sourceTask);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveOrderIdProject(Project project, Task sourceTask, Task destinationTask, Context context) {
+        long destinationOrderIdProject = destinationTask.getOrderIdProject();
+        boolean down = sourceTask.getOrderIdTaskState()<destinationTask.getOrderIdTaskState();
+        List<Task> tasks;
+        if(down){
+            tasks = taskRepository.getTasksToReorderByOrderIdProject(sourceTask.getOrderIdTaskState(), destinationTask.getOrderIdTaskState(), project, context);
+        } else {
+            tasks = taskRepository.getTasksToReorderByOrderIdProject(destinationTask.getOrderIdTaskState(), sourceTask.getOrderIdTaskState(), project, context);
+        }
+        for(Task task:tasks){
+            long orderId = task.getOrderIdProject();
+            if(down){
+                orderId--;
+            } else {
+                orderId++;
+            }
+            task.setOrderIdProject(orderId);
+            taskRepository.saveAndFlush(task);
+        }
+        long orderId = destinationTask.getOrderIdProject();
+        if(down){
+            orderId--;
+        } else {
+            orderId++;
+            destinationOrderIdProject++;
+        }
+        destinationTask.setOrderIdProject(orderId);
+        taskRepository.saveAndFlush(destinationTask);
+        sourceTask.setOrderIdProject(destinationOrderIdProject);
+        taskRepository.saveAndFlush(sourceTask);
+    }
+
 }

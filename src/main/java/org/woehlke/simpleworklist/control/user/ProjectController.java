@@ -333,16 +333,19 @@ public class ProjectController extends AbstractController {
         Project project = sourceTask.getProject();
         if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
             if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
-                taskMoveService.moveOrderIdProject(project, sourceTask,destinationTask, context);
+                taskMoveService.moveOrderIdProject(project, sourceTask, destinationTask, context);
+                LOGGER.info("  DONE: taskMoveService.moveOrderIdProject (1)");
                 returnUrl = "redirect:/project/0";
             } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
                 boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
                 if (sameProject) {
-                    taskMoveService.moveOrderIdProject(project, sourceTask,destinationTask, context);
+                    taskMoveService.moveOrderIdProject(project, sourceTask, destinationTask, context);
+                    LOGGER.info("  DONE: taskMoveService.moveOrderIdProject (2)");
                     returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
                 }
             }
         }
+        LOGGER.info("-------------------------------------------------");
         return returnUrl;
     }
 }
