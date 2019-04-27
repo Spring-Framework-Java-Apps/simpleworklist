@@ -132,7 +132,6 @@
                 </td>
                 <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date"
                     th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
-                    <span th:text="${#locale.language}"></span>
                     <span th:if="${#locale.language eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
                     <span th:if="${#locale.language eq 'en'}" th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}"></span>
                 </td>

@@ -12,11 +12,13 @@ public class LoginForm implements Serializable {
 
     private static final long serialVersionUID = 5936886560348238355L;
 
+    //TODO: Messages i18n
     @NotNull(message = "Email Address is compulsory")
     @NotBlank(message = "Email Address is compulsory")
     @Email(message = "Email Address is not a valid format")
     private String userEmail;
 
+    //TODO: Messages i18n
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")

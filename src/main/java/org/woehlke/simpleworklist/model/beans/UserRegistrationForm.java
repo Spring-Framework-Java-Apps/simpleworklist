@@ -10,6 +10,7 @@ public class UserRegistrationForm implements Serializable {
 
     private static final long serialVersionUID = 6864871862706880939L;
 
+    //TODO: Messages i18n
     @NotNull(message = "Email Address is compulsory")
     @NotBlank(message = "Email Address is compulsory")
     @Email(message = "Email Address is not a valid format")

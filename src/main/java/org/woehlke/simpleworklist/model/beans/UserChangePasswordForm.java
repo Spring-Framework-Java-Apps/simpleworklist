@@ -14,16 +14,19 @@ public class UserChangePasswordForm implements Serializable {
 
     private static final long serialVersionUID = 9149342594823222054L;
 
+    //TODO: Messages i18n
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")
     private String oldUserPassword;
 
+    //TODO: Messages i18n
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")
     private String userPassword;
 
+    //TODO: Messages i18n
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")

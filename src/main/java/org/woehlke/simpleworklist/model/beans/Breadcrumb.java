@@ -15,6 +15,7 @@ public class Breadcrumb implements Serializable {
 
     public Breadcrumb() {
         List<BreadcrumbItem> breadcrumb = new ArrayList<>();
+        //TODO: i18n
         BreadcrumbItem home = new BreadcrumbItem("Home","/");
         breadcrumb.add(home);
         this.breadcrumb = breadcrumb;
@@ -30,6 +31,7 @@ public class Breadcrumb implements Serializable {
 
     public void addProjectRoot(){
         String urlProject = "/project/0";
+        //TODO: i18n
         String name = "Projects";
         BreadcrumbItem breadcrumbItemProject = new BreadcrumbItem(name,urlProject);
         breadcrumb.add(breadcrumbItemProject);

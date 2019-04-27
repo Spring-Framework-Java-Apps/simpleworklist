@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 
 /**
@@ -17,13 +16,11 @@ public class NewContextForm implements Serializable {
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
-    @Column(nullable = false)
     private String nameDe;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
-    @Column(nullable = false)
     private String nameEn;
 
     public String getNameDe() {
