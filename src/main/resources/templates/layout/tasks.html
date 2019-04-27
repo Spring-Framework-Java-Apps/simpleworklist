@@ -67,10 +67,9 @@
                         <i class="far fa-star"></i>
                     </a>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
-                    <button type="button" class="btn btn-primary btn-sm twtooltip" data-toggle="modal"
-                            th:attr="data-target='#taskModalScrollable_'+${task.id}" th:text="${task.title}"
-                            data-placement="bottom" title="task Tooltip on bottom">
+                <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title twtooltip" data-placement="bottom" title="task Tooltip on bottom">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                            th:attr="data-target='#taskModalScrollable_'+${task.id}" th:text="${task.title}">
                     Launch Task Modal
                     </button>
                     <!-- Modal -->
@@ -108,10 +107,6 @@
                                             <span th:text="${task.project.name}"></span>
                                         </a>
                                     </div>
-                                    <div>
-                                        <b th:utext="#{task.show.text}">task.show.text</b>
-                                        <span th:utext="${task.text}"></span>
-                                    </div>
                                     <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                                         <b th:utext="#{tasks.focus.dueDate}">Due Date</b>
                                         <span th:if="${#locale.language eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
@@ -128,6 +123,10 @@
                                         <b th:text="#{tasks.all.context}">tasks.all.context</b>
                                         <span th:if="${#locale.language eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
                                         <span th:if="${#locale.language ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
+                                    </div>
+                                    <div>
+                                        <b th:utext="#{task.show.text}">task.show.text</b>
+                                        <span th:utext="${task.text}"></span>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
