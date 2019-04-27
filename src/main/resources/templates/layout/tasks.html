@@ -48,25 +48,29 @@
             <tr th:id="'task_' + ${task.id}" th:each="task : ${taskPage}" draggable="true" ondragstart="dragTask(event)">
                 <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}"
-                       th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
+                       th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
+                       class="twtooltip" data-placement="bottom" title="complete Task Tooltip on bottom">>
                         <i class="far fa-square"></i>
                     </a>
-                    <a alt="complete" th:href="@{/task/incomplete/{id}(id=${task.id})}"
-                       th:if="${task.taskState.name() eq 'COMPLETED'}">
+                    <a alt="incomplete" th:href="@{/task/incomplete/{id}(id=${task.id})}"
+                       th:if="${task.taskState.name() eq 'COMPLETED'}"
+                       class="twtooltip" data-placement="bottom" title="incomplete Task Tooltip on bottom">
                         <i class="fas fa-check-square"></i>
                     </a>
                     <i class="far fa-check-square" th:if="${task.taskState.name() eq 'TRASHED'}"></i>
-                    <a th:if="${task.focus}" alt="focus" th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
+                    <a th:if="${task.focus}" th:href="@{/task/unsetfocus/{id}(id=${task.id})}"
+                       alt="focus" class="twtooltip" data-placement="bottom" title="focus Tooltip on bottom">
                         <i class="fas fa-star"></i>
                     </a>
-                    <a th:if="${not task.focus}" alt="focus" th:href="@{/task/setfocus/{id}(id=${task.id})}">
+                    <a th:if="${not task.focus}" th:href="@{/task/setfocus/{id}(id=${task.id})}"
+                        alt="focus" class="twtooltip" data-placement="bottom" title="focus Tooltip on bottom">
                         <i class="far fa-star"></i>
                     </a>
                 </td>
                 <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-tooltip="true"
+                    <button type="button" class="btn btn-primary btn-sm twtooltip" data-toggle="modal"
                             th:attr="data-target='#taskModalScrollable_'+${task.id}" th:text="${task.title}"
-                            data-placement="bottom" title="Tooltip on bottom">
+                            data-placement="bottom" title="task Tooltip on bottom">
                     Launch Task Modal
                     </button>
                     <!-- Modal -->

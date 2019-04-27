@@ -11,22 +11,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="refresh" content="25" th:if="${refreshMessages}">
 	<title>SimpleWorklist</title>
-	<!--
-	<link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}" rel="stylesheet"/>
-	-->
 	<link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>
-	<link th:href="@{/webjars/tinymce/4.7.9/skins/lightgray/skin.min.css}" rel="stylesheet"/>
-	<link th:href="@{/webjars/bootstrap-material-design/4.1.1/scss/bootstrap-material-design.scss}" rel="stylesheet"/>
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
-	<script th:src="@{/webjars/tinymce/4.7.9/tinymce.min.js}"></script>
-	<script th:src="@{/webjars/tinymce/4.7.9/jquery.tinymce.min.js}"></script>
-	<script th:src="@{/webjars/tinymce/4.7.9/themes/modern/theme.min.js}"></script>
-	<script type="text/javascript">
-		tinymce.init({
-			selector: '#taskFormTextfield'
-		});
-	</script>
 </head>
 <body th:fragment="tw-page-body(twcontent,twtitle)">
 
@@ -71,6 +58,8 @@
 	<script th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
+	<script th:src="@{/webjars/ckeditor/4.11.3/full/ckeditor.js}"></script>
+
 	<script th:inline="javascript">
 		function allowDropOfTask(ev) {
 			ev.preventDefault();
@@ -159,8 +148,10 @@
 			ev.dataTransfer.setData("task", ev.target.id);
 		}
 
+		CKEDITOR.replace( 'textEditor' );
+
 		$(window).load( function() {
-			$('[data-tooltip="true"]').tooltip();
+			$('.twtooltip').tooltip();
 		});
 	</script>
 </body>

@@ -47,4 +47,4 @@ Shortcuts
 ---------
 * https://fontawesome.com/icons?d=gallery&m=free
 * https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
-* 
+* https://ckeditor.com/docs/ckeditor4/latest/guide/dev_installation.html

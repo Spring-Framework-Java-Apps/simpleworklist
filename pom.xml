@@ -176,11 +176,6 @@
         </dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>jquery-ui</artifactId>
-			<version>1.12.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.0.0</version>
 		</dependency>
@@ -196,13 +191,8 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>tinymce</artifactId>
-            <version>4.7.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>ckeditor</artifactId>
-            <version>11.2.0</version>
+            <version>4.11.3</version>
         </dependency>
 
         <dependency>
