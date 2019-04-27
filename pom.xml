@@ -9,7 +9,7 @@
     </parent>
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.2.1-SNAPSHOT</version>
+    <version>2.2.1</version>
     <name>simpleworklist</name>
     <description>Demo project for Spring Boot</description>
     <url>http://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/p/simpleworklist</url>
@@ -22,7 +22,7 @@
         <url>https://ThomasWoehlke@bitbucket.org/ThomasWoehlke/simpleworklist.git</url>
         <connection>scm:git:https://ThomasWoehlke@bitbucket.org/ThomasWoehlke/simpleworklist.git</connection>
         <developerConnection>scm:git:https://ThomasWoehlke@bitbucket.org/ThomasWoehlke/simpleworklist.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>simpleworklist-2.2.1</tag>
     </scm>
     <issueManagement>
         <system>bitbucket</system>
