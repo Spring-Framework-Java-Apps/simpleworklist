@@ -43,6 +43,34 @@ public class ProjectController extends AbstractController {
         this.taskMoveService = taskMoveService;
     }
 
+    @RequestMapping(value = "/root", method = RequestMethod.GET)
+    public final String showRootProject(
+            @PageableDefault(sort = "orderIdProject") Pageable pageable,
+            @RequestParam(required = false) String message,
+            @RequestParam(required = false) boolean isDeleted,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+
+        //Project thisProject = new Project();
+        //thisProject.setId(0L);
+        //thisProject.setUserAccount(userAccount);
+        //thisProject.setContext(context);
+        Page<Task> taskPage = taskService.findByRootProject(pageable, userAccount, context);
+
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(userAccount);
+        model.addAttribute("breadcrumb", breadcrumb);
+        //model.addAttribute("thisProject", thisProject);
+        model.addAttribute("taskPage", taskPage);
+        if(message != null){
+            model.addAttribute("message",message);
+            model.addAttribute("isDeleted",isDeleted);
+            model.addAttribute("myTaskState","PROJECT");
+        }
+        return "project/root";
+    }
+
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     public final String showProject(
             @PathVariable long projectId,
@@ -69,6 +97,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
+        model.addAttribute("myTaskState","PROJECT");
         if(message != null){
             model.addAttribute("message",message);
             model.addAttribute("isDeleted",isDeleted);
@@ -76,12 +105,12 @@ public class ProjectController extends AbstractController {
         return "project/show";
     }
 
-    @RequestMapping(value = "/addchild", method = RequestMethod.GET)
+    @RequestMapping(value = "/add/new/project", method = RequestMethod.GET)
     public final String addNewProjectForm(
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model
     ){
-        return addNewProjectGet(0, userSession,model);
+        return addNewProjectGet(0L, userSession,model);
     }
 
     @RequestMapping(value = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)

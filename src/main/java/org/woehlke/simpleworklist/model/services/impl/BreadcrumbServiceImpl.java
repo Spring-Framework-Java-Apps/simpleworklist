@@ -28,6 +28,13 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
+    public Breadcrumb getBreadcrumbForShowRootProject(UserAccount userAccount) {
+        Breadcrumb breadcrumb = new Breadcrumb();
+        breadcrumb.addProjectRoot();
+        return breadcrumb;
+    }
+
+    @Override
     public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, UserAccount userAccount) {
         Breadcrumb breadcrumb = new Breadcrumb();
         breadcrumb.addProjectRoot();

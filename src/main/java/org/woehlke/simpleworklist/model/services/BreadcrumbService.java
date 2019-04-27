@@ -11,6 +11,8 @@ import java.util.Locale;
 
 public interface BreadcrumbService {
 
+    Breadcrumb getBreadcrumbForShowRootProject(UserAccount userAccount);
+
     Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, UserAccount userAccount);
 
     Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale);

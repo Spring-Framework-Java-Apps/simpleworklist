@@ -135,6 +135,33 @@ public class TaskController extends AbstractController {
         return thisProject;
     }
 
+    @RequestMapping(value = "/addtorootproject/", method = RequestMethod.GET)
+    public final String addNewTaskToProjectGet(
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Model model) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Task task = new Task();
+        task.setTaskState(TaskState.INBOX);
+        task.setUserAccount(userAccount);
+        task.setTaskEnergy(TaskEnergy.NONE);
+        task.setTaskTime(TaskTime.NONE);
+        Boolean mustChooseArea = false;
+        if(userSession.getContextId() == 0L){
+            mustChooseArea = true;
+            task.setContext(userAccount.getDefaultContext());
+        } else {
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+            task.setContext(context);
+        }
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(userAccount);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("mustChooseArea", mustChooseArea);
+        model.addAttribute("thisProjectId", 0L);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("task", task);
+        return "task/add";
+    }
+
     @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
             @PathVariable long projectId,
@@ -170,6 +197,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProject", thisProject);
+        model.addAttribute("thisProjectId", thisProject.getId());
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
         return "task/add";

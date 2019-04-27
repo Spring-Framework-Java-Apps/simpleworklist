@@ -1,6 +1,9 @@
 package org.woehlke.simpleworklist.oodm.enumerations;
 
+import io.micrometer.core.instrument.search.RequiredSearch;
+
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
@@ -35,7 +38,7 @@ public enum TaskState implements Serializable {
     @Enumerated
     TRASH("fas fa-trash-alt");
 
-    TaskState(String icon) {
+    TaskState(final String icon) {
         this.icon=icon;
     }
 

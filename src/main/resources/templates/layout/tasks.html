@@ -136,7 +136,7 @@
                         </div>
                     </div>
                 </td>
-                <td th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'PROJECT'}">
+                <td th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                     <span th:text="${task.dueDate}"></span>
                 </td>
                 <td th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
