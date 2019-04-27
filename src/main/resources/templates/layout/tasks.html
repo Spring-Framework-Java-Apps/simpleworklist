@@ -20,24 +20,24 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th class="task_col_info_icons">&nbsp;</th>
-                    <th class="task_col_title">
+                    <th class="task_col task_col_info_icons">&nbsp;</th>
+                    <th class="task_col task_col_title">
                         <span th:text="#{tasks.inbox.title}">Title</span>
                     </th>
-                    <th class="task_col_due_date"
+                    <th class="task_col task_col_due_date"
                          th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                         <span th:text="#{tasks.focus.dueDate}">Due Date</span>
                     </th>
-                    <th class="task_col_taskstate"
+                    <th class="task_col task_col_taskstate"
                          th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
                         <span th:text="#{tasks.focus.taskState}">Task State</span>
                     </th>
-                    <th class="task_col_project"
+                    <th class="task_col task_col_project"
                             th:if="${myTaskState ne 'PROJECT'}">
                         <span th:text="#{tasks.inbox.project}">Project</span>
                     </th>
-                    <th class="task_col_energy_and_time">&nbsp;</th>
-                    <th class="task_col_context"
+                    <th class="task_col task_col_energy_and_time">&nbsp;</th>
+                    <th class="task_col task_col_context"
                          th:if="${myTaskState eq 'ALL'}">
                         <span th:text="#{tasks.all.context}">Context</span>
                     </th>
@@ -45,7 +45,7 @@
             </thead>
             <tbody>
             <tr th:id="'task_' + ${task.id}" th:each="task : ${taskPage}" draggable="true" ondragstart="dragTask(event)">
-                <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col_info_icons">
+                <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}"
                        th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
                         <i class="far fa-square"></i>
@@ -62,7 +62,7 @@
                         <i class="far fa-star"></i>
                     </a>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col_title">
+                <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" th:attr="data-target='#taskModalScrollable_'+${task.id}" th:text="${task.title}">
                     Launch Task Modal
                     </button>
@@ -97,8 +97,8 @@
                                     <div th:utext="${task.text}"></div>
                                     <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                                         <b th:utext="#{tasks.focus.dueDate}">Due Date</b>
-                                        <span th:if="${locale eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
-                                        <span th:if="${locale eq 'en'}" th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}"></span>
+                                        <span th:if="${#locale.language eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
+                                        <span th:if="${#locale.language eq 'en'}" th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}"></span>
                                     </div>
                                     <div th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
                                         <b th:utext="#{tasks.focus.taskState}">Task State</b>
@@ -116,8 +116,8 @@
                                     </div>
                                     <div th:if="${myTaskState eq 'ALL'}">
                                         <b th:text="#{tasks.all.context}">tasks.all.context</b>
-                                        <span th:if="${locale eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
-                                        <span th:if="${locale ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
+                                        <span th:if="${#locale.language eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
+                                        <span th:if="${#locale.language ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -130,33 +130,34 @@
                         </div>
                     </div>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col_due_date"
+                <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date"
                     th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
-                    <span th:if="${locale eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
-                    <span th:if="${locale eq 'en'}" th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}"></span>
+                    <span th:text="${#locale.language}"></span>
+                    <span th:if="${#locale.language eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
+                    <span th:if="${#locale.language eq 'en'}" th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}"></span>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col_taskstate"
+                <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col task_col_taskstate"
                     th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
                     <a th:href="@{{url}(url=${task.taskState.getUrl()})}">
                         <i th:class="${task.taskState.getIcon()}"></i>
                         <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
                     </a>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_project'" class="task_col_project"
+                <td th:id="'task_' + ${task.id} + '_col_project'" class="task_col task_col_project"
                     th:if="${myTaskState ne 'PROJECT'}">
                     <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
                         <i class="fas fa-folder-open"></i>
                         <span th:text="${task.project.name}"></span>
                     </a>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col_energy_and_time">
+                <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col task_col_energy_and_time">
                     <span class="badge badge-pill badge-dark" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
                     <span class="badge badge-pill badge-dark" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_context'" class="task_col_context"
+                <td th:id="'task_' + ${task.id} + '_col_context'" class="task_col task_col_context"
                         th:if="${myTaskState eq 'ALL'}">
-                    <span th:if="${locale eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
-                    <span th:if="${locale ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
+                    <span th:if="${#locale.language eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
+                    <span th:if="${#locale.language ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
                 </td>
             </tr>
             </tbody>
