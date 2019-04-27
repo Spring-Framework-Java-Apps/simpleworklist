@@ -3,19 +3,21 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
-<head>
+<head th:fragment="tw-page-head(headtitle,links,refreshMessages)">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="refresh" content="25" th:if="${refreshMessages}">
-	<title>SimpleWorklist</title>
+	<title th:replace="${headtitle}">SimpleWorklist</title>
 	<link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
+	<!--/* Per-page placeholder for additional links */-->
+	<th:block th:replace="${links}" />
 </head>
-<body th:fragment="tw-page-body(twcontent,twtitle)">
+<body th:fragment="tw-page-body(twcontent,twtitle,scripts)">
 
 	<!-- Navbar on Top -->
 	<header>
@@ -58,7 +60,8 @@
 	<script th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
-	<script th:src="@{/webjars/ckeditor/4.11.3/full/ckeditor.js}"></script>
+	<!--/* Per-page placeholder for additional links */-->
+	<th:block th:replace="${scripts}" />
 
 	<script th:inline="javascript">
 		function allowDropOfTask(ev) {
@@ -147,8 +150,6 @@
 		function dragProject(ev) {
 			ev.dataTransfer.setData("task", ev.target.id);
 		}
-
-		CKEDITOR.replace( 'textEditor' );
 
 		$(document).ready( function() {
 			$('.twtooltip').tooltip();
