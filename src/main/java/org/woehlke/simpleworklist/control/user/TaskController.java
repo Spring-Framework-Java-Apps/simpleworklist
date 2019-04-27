@@ -111,7 +111,6 @@ public class TaskController extends AbstractController {
             taskService.saveAndFlush(persistentTask, userAccount);
             return "redirect:/project/" + projectId + "/";
         }
-
     }
 
     private Project getProject(long projectId, UserAccount userAccount, UserSessionBean userSession){
