@@ -69,6 +69,7 @@ public class TaskController extends AbstractController {
     public final String editTaskPost(
             @PathVariable long taskId,
             @Valid Task task,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task persistentTask = taskService.findOne(taskId, userAccount);
@@ -108,8 +109,13 @@ public class TaskController extends AbstractController {
             boolean contextChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
             if(contextChanged){
                 persistentTask.setContext(task.getContext());
-                persistentTask.setProject(null);
-                model.addAttribute("userSession", new UserSessionBean(task.getContext().getId()));
+                if(thisProject.getId()==0L) {
+                    persistentTask.setProject(null);
+                } else if(thisProject.getContext().getId()==task.getContext().getId()){
+                    persistentTask.setProject(thisProject);
+                }
+                userSession.setContextId(task.getContext().getId());
+                model.addAttribute("userSession", userSession);
                 return "redirect:/project/0/";
             }
             taskService.saveAndFlush(persistentTask, userAccount);

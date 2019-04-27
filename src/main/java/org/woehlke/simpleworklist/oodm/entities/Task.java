@@ -28,7 +28,7 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
         @UniqueConstraint(
             name="ux_task",
             columnNames = {"uuid", "context_id", "user_account_id"}
-        ),
+        )/*,
         @UniqueConstraint(
             name="ux_task_order_id_project",
             columnNames = {"order_id_project", "project_id", "context_id", "user_account_id"}
@@ -36,7 +36,7 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
         @UniqueConstraint(
             name="ux_task_order_id_task_state",
             columnNames = {"order_id_task_state", "task_state", "project_id", "context_id", "user_account_id"}
-        )
+        )*/
     },
     indexes = {
         @Index(name = "ix_task_uuid", columnList = "uuid"),

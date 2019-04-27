@@ -45,7 +45,9 @@
                 </tr>
             </thead>
             <tbody>
-            <tr th:id="'task_' + ${task.id}" th:each="task : ${taskPage}" draggable="true" ondragstart="dragTask(event)">
+            <tr th:id="'task_' + ${task.id}" th:each="task : ${taskPage}"
+                draggable="true" ondragstart="dragTask(event)"
+                ondrop="dropTask2Task(event)" ondragover="allowDropOfTask(event)">
                 <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}"
                        th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
