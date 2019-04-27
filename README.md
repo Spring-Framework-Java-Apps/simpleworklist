@@ -42,3 +42,9 @@ Drag and Drop
 * https://shopify.github.io/draggable/examples/simple-list.html
 * https://www.elated.com/drag-and-drop-with-jquery-your-essential-guide/
 * https://medium.com/@okandavut/using-jquery-ui-drag-drop-64a24e75e805
+
+Shortcuts
+---------
+* https://fontawesome.com/icons?d=gallery&m=free
+* https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
+* 
