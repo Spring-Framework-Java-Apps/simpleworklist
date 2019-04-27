@@ -49,7 +49,7 @@
                 <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
                     <a alt="complete" th:href="@{/task/complete/{id}(id=${task.id})}"
                        th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
-                       class="twtooltip" data-placement="bottom" title="complete Task Tooltip on bottom">>
+                       class="twtooltip" data-placement="bottom" title="complete Task Tooltip on bottom">
                         <i class="far fa-square"></i>
                     </a>
                     <a alt="incomplete" th:href="@{/task/incomplete/{id}(id=${task.id})}"
@@ -101,7 +101,17 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div th:utext="${task.text}"></div>
+                                    <div th:if="${myTaskState ne 'PROJECT'}">
+                                        <b th:text="#{tasks.inbox.project}">Project</b>
+                                        <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
+                                            <i class="fas fa-folder-open"></i>
+                                            <span th:text="${task.project.name}"></span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <b th:utext="#{task.show.text}">task.show.text</b>
+                                        <span th:utext="${task.text}"></span>
+                                    </div>
                                     <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                                         <b th:utext="#{tasks.focus.dueDate}">Due Date</b>
                                         <span th:if="${#locale.language eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
@@ -112,13 +122,6 @@
                                         <a th:href="@{{url}(url=${task.taskState.getUrl()})}">
                                             <i th:class="${task.taskState.getIcon()}"></i>
                                             <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
-                                        </a>
-                                    </div>
-                                    <div th:if="${myTaskState ne 'PROJECT'}">
-                                        <b th:text="#{tasks.inbox.project}">Project</b>
-                                        <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
-                                            <i class="fas fa-folder-open"></i>
-                                            <span th:text="${task.project.name}"></span>
                                         </a>
                                     </div>
                                     <div th:if="${myTaskState eq 'ALL'}">
