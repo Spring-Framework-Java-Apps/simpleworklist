@@ -2,9 +2,10 @@ package org.woehlke.simpleworklist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class SimpleworklistApplication {
+public class SimpleworklistApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(SimpleworklistApplication.class, args);
