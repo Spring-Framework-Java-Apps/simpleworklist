@@ -73,14 +73,14 @@
                         <i class="fas fa-star"></i>
                     </a>
                     <a th:if="${not task.focus}" th:href="@{/task/setfocus/{id}(id=${task.id})}"
-                       data-placement="bottom"  class="task_col_content task_col_content_setfocus twtooltip"
+                        class="task_col_content task_col_content_setfocus twtooltip"
                        th:alt-title="#{task.col.twtooltip.infoicons.setfocus}"
                        th:id="'task_' + ${task.id} + '_col_setfocus'" draggable="true" ondragstart="dragTask(event)">
                         <i class="far fa-star"></i>
                     </a>
                 </td>
-                <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title twtooltip"
-                    data-placement="bottom" th:alt-title="#{task.col.twtooltip.show.details}">
+                <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title"
+                    th:alt-title="#{task.col.twtooltip.show.details}">
                     <button type="button" data-toggle="modal"
                             class="btn btn-primary btn-sm task_col_content task_col_content_task_details twtooltip"
                             th:attr="data-target='#taskModalScrollable_'+${task.id}"
@@ -96,22 +96,32 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="taskModalScrollableTitle">
-                                        <a alt="not completed" th:href="@{/task/complete/{id}(id=${task.id})}" th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}">
+                                        <a th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
+                                           th:href="@{/task/complete/{id}(id=${task.id})}">
                                             <i class="far fa-square"></i>
                                         </a>
-                                        <a alt="completed" th:href="@{/task/incomplete/{id}(id=${task.id})}" th:if="${task.taskState.name() eq 'COMPLETED'}">
+                                        <a th:if="${task.taskState.name() eq 'COMPLETED'}"
+                                           th:href="@{/task/incomplete/{id}(id=${task.id})}" >
                                             <i class="fas fa-check-square"></i>
                                         </a>
-                                        <i class="fas fa-trash-alt" th:if="${task.taskState.name() eq 'TRASHED'}"></i>&nbsp;&nbsp;
-                                        <a alt="focus" th:if="${task.focus}"th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
+                                        <i class="fas fa-trash-alt" th:if="${task.taskState.name() eq 'TRASHED'}"></i>
+                                        <a th:if="${task.focus}"
+                                           th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
                                             <i class="fas fa-star"></i>
                                         </a>
-                                        <a th:if="${not task.focus}" alt="focus" th:href="@{/task/setfocus/{id}(id=${task.id})}">
+                                        <a th:if="${not task.focus}"
+                                           th:href="@{/task/setfocus/{id}(id=${task.id})}">
                                             <i class="far fa-star"></i>
                                         </a>
                                         <span th:text="${task.title}">Modal title</span>
-                                        <span class="badge badge-pill badge-dark" th:text="${#messages.msgOrNull(task.taskEnergy.code)}" th:if="${task.taskEnergy.value ne 'NONE'}"></span>
-                                        <span class="badge badge-pill badge-dark" th:text="${#messages.msgOrNull(task.taskTime.code)}" th:if="${task.taskTime.value ne 'NONE'}"></span>
+                                        <span class="badge badge-pill badge-dark"
+                                              th:text="${#messages.msgOrNull(task.taskEnergy.code)}"
+                                              th:if="${task.taskEnergy.value ne 'NONE'}">
+                                        </span>
+                                        <span class="badge badge-pill badge-dark"
+                                              th:text="${#messages.msgOrNull(task.taskTime.code)}"
+                                              th:if="${task.taskTime.value ne 'NONE'}">
+                                        </span>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -120,15 +130,21 @@
                                 <div class="modal-body">
                                     <div th:if="${myTaskState ne 'PROJECT'}">
                                         <b th:text="#{tasks.inbox.project}">Project</b>
-                                        <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}">
+                                        <a th:href="@{/project/{id}(id=${task.project.id})}"
+                                           th:if="${task.project ne null}">
                                             <i class="fas fa-folder-open"></i>
-                                            <span th:text="${task.project.name}"></span>
+                                            <span th:text="${task.project.name}">
+                                            </span>
                                         </a>
                                     </div>
                                     <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                                         <b th:utext="#{tasks.focus.dueDate}">Due Date</b>
-                                        <span th:if="${#locale.language eq 'de'}" th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}"></span>
-                                        <span th:if="${#locale.language eq 'en'}" th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}"></span>
+                                        <span th:if="${#locale.language eq 'de'}"
+                                              th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
+                                        </span>
+                                        <span th:if="${#locale.language eq 'en'}"
+                                              th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}">
+                                        </span>
                                     </div>
                                     <div th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
                                         <b th:utext="#{tasks.focus.taskState}">Task State</b>
@@ -139,8 +155,12 @@
                                     </div>
                                     <div th:if="${myTaskState eq 'ALL'}">
                                         <b th:text="#{tasks.all.context}">tasks.all.context</b>
-                                        <span th:if="${#locale.language eq 'de'}" th:text="${task.context.nameDe}">task.context.nameDe</span>
-                                        <span th:if="${#locale.language ne 'de'}" th:text="${task.context.nameEn}">task.context.nameEn</span>
+                                        <span th:if="${#locale.language eq 'de'}" th:text="${task.context.nameDe}">
+                                            task.context.nameDe
+                                        </span>
+                                        <span th:if="${#locale.language ne 'de'}" th:text="${task.context.nameEn}">
+                                            task.context.nameEn
+                                        </span>
                                     </div>
                                     <div>
                                         <b th:utext="#{task.show.text}">task.show.text</b>
@@ -148,9 +168,10 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" th:utext="#{button.back}">Close</button>
-                                    <a th:href="@{/task/{id}/edit(id=${task.id})}" class="btn btn-secondary" role="button"
-                                       th:id="'task_' + ${task.id}" th:utext="#{task.show.button.edit}">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            th:utext="#{button.back}">Close</button>
+                                    <a th:href="@{/task/{id}/edit(id=${task.id})}" class="btn btn-secondary"
+                                       role="button" th:id="'task_' + ${task.id}" th:utext="#{task.show.button.edit}">
                                     </a>
                                 </div>
                             </div>

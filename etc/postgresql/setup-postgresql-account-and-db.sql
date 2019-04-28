@@ -20,7 +20,17 @@ CREATE DATABASE simpleworklist
     WITH OWNER = simpleworklist
     ENCODING = 'UTF8'
     TABLESPACE = pg_default
-    LC_COLLATE = 'German_Germany.1252'
-    LC_CTYPE = 'German_Germany.1252'
+    CONNECTION LIMIT = -1;
+
+CREATE DATABASE simpleworklist_test
+    WITH OWNER = simpleworklist
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+CREATE DATABASE simpleworklist_prod
+    WITH OWNER = simpleworklist
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 

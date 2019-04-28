@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpleworklist
+    jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
+    username: simpleworklist
+    password: simpleworklistpwd
+    driverClassName: org.postgresql.Driver
+#spring.jpa.hibernate.ddl-auto: create-drop
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        search:
+          default:
+            directory_provider : filesystem
+            indexBase : ${user.dir}\\simpleworklistsearch
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: ALWAYS
+      cleanup-cron: 0 * * * *simpleworklist *
+      schema: classpath:org/springframework/session/jdbc/schema-postgresql.sql
+      table-name: SPRING_SESSION
+  thymeleaf:
+    cache: false
+  main:
+    allow-bean-definition-overriding: true
+org:
+  woehlke:
+    simpleworklist:
+      user:
+        strengthBCryptPasswordEncoder: 10
+      mail:
+        host: sslout.df.eu
+        port: 465
+        username: news@thomas-woehlke.de
+        password: #avbzp3shanE
+        smtp:
+          auth: true
+          sslEnable: true
+          socketFactoryPort: 465
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+      mvc:
+        controllerPageSize: 10
+      registration:
+        maxRetries: 5
+        ttlEmailVerificationRequest: 86400000
+        urlHost: localhost:8080
+        mailFrom: news@thomas-woehlke.de
+
