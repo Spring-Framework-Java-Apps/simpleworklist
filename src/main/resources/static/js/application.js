@@ -1,0 +1,1 @@
+/* application.js  - (c) 2019 Thomas Woehlke */

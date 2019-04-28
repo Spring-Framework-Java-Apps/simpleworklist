@@ -56,6 +56,7 @@
         <maven-surefire-report-plugin.version>2.22.1</maven-surefire-report-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <start-class>org.woehlke.simpleworklist.SimpleworklistApplication</start-class>
     </properties>
 
     <dependencies>
@@ -465,6 +466,7 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <addResources>true</addResources>
                             <profiles>
                                 <profile>default</profile>
                             </profiles>
@@ -527,6 +529,20 @@
                                 <profile>testing</profile>
                             </profiles>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -712,10 +728,19 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>${start-class}</mainClass>
+                    <layout>WAR</layout>
                     <profiles>
                         <profile>testing</profile>
                     </profiles>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
