@@ -85,7 +85,7 @@ spring:
 spring:
   profiles: travis
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/simpleworklist_travis?user=simpleworklist&password=simpleworklistpwd'
+    url: jdbc:postgresql://localhost:5432/simpleworklist_travis
     continue-on-error: true
   jpa:
     show-sql: false
@@ -99,8 +99,7 @@ server:
 spring:
   profiles: testing
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/simpleworklist_test?user=simpleworklist&password=simpleworklistpwd'
-    continue-on-error: true
+    url: jdbc:postgresql://localhost:5432/simpleworklist_test
   jpa:
     show-sql: false
     hibernate:
@@ -136,7 +135,7 @@ logging:
 spring:
   profiles: qa
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/simpleworklist_qa?user=simpleworklist&password=simpleworklistpwd'
+    url: jdbc:postgresql://localhost:5432/simpleworklist_qa
     continue-on-error: true
   jpa:
     show-sql: false
@@ -173,7 +172,7 @@ logging:
 spring:
   profiles: prod
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/simpleworklist_prod?user=simpleworklist&password=simpleworklistpwd'
+    url: jdbc:postgresql://localhost:5432/simpleworklist_prod
     continue-on-error: true
   jpa:
     show-sql: false
