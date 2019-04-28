@@ -544,7 +544,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>testing</spring.profiles.active>
+                                <spring.profiles.active>qa</spring.profiles.active>
                             </systemPropertyVariables>
                             <skipTests>false</skipTests>
                         </configuration>
@@ -602,6 +602,9 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <systemPropertyVariables>
+                                <spring.profiles.active>developing</spring.profiles.active>
+                            </systemPropertyVariables>
                             <skipTests>true</skipTests>
                         </configuration>
                     </plugin>
@@ -634,6 +637,9 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <systemPropertyVariables>
+                                <spring.profiles.active>prod</spring.profiles.active>
+                            </systemPropertyVariables>
                             <skipTests>true</skipTests>
                         </configuration>
                     </plugin>
