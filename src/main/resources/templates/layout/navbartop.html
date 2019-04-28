@@ -7,20 +7,27 @@
     <div th:fragment="navbartop(contexts,locale,thisProject,numberOfNewIncomingMessages,ctx)" >
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" th:href="@{/}"><i class="fas fa-list-alt"></i> SimpleWorklist</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fas fa-list-alt"></i>
+                    <span th:text="#{navbar.brand.name}">SimpleWorklist</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar"
+                        aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="mynavbar">
+                <div id="mynavbar" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="contextMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" id="contextMenu" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
                                 <i class="fas fa-cloud"></i>
-                                <span th:text="#{layout.page.contexts}">"Context</span> ( <span th:text="${context}"/> )
+                                <span th:text="#{layout.page.contexts}">"Context</span>
+                                ( <span th:text="${context}"/> )
                                 <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="contextMenu">
-                                <a class="dropdown-item" th:href="@{/context/choose/{id}(id=${context.id})}" th:each="context : ${contexts}">
+                                <a class="dropdown-item" th:each="context : ${contexts}"
+                                   th:href="@{/context/choose/{id}(id=${context.id})}">
                                     <span th:if="${locale eq 'de'}" th:text="${context.nameDe}"></span>
                                     <span th:if="${locale ne 'de'}" th:text="${context.nameEn}"></span>
                                 </a>
@@ -36,22 +43,38 @@
                                 <i class="fas fa-user"></i>
                                 <span th:text="#{layout.page.showUsers}">User</span>
                                 ( <span sec:authentication="name"></span> )
-                                <span class="badge badge-pill badge-light" th:if="${numberOfNewIncomingMessages gt 0}" th:text="${numberOfNewIncomingMessages}">numberOfNewIncomingMessages</span>
+                                <span class="badge badge-pill badge-light"
+                                      th:if="${numberOfNewIncomingMessages gt 0}"
+                                      th:text="${numberOfNewIncomingMessages}">
+                                    numberOfNewIncomingMessages
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> <span th:text="#{layout.page.logout}">Logout</span></a>
+                            <a class="nav-link" th:href="@{/logout}">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span th:text="#{layout.page.logout}">Logout</span>
+                            </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav mr-auto" sec:authorize="isAnonymous()">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/register}"><i class="fas fa-user"></i> <span th:text="#{layout.page.register}">Register as New User</span></a>
+                            <a class="nav-link" th:href="@{/register}">
+                                <i class="fas fa-user"></i>
+                                <span th:text="#{layout.page.register}">Register as New User</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> <span th:text="#{layout.page.login}">Login</span></a>
+                            <a class="nav-link" th:href="@{/login}">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span th:text="#{layout.page.login}">Login</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/resetPassword}"><i class="fas fa-question-circle"></i> <span th:text="#{layout.page.passwordForgotten}">Password forgotten?</span></a>
+                            <a class="nav-link" th:href="@{/resetPassword}">
+                                <i class="fas fa-question-circle"></i>
+                                <span th:text="#{layout.page.passwordForgotten}">Password forgotten?</span>
+                            </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav mr-auto">
