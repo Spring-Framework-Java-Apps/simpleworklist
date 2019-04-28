@@ -53,40 +53,40 @@
                     <a th:href="@{/task/complete/{id}(id=${task.id})}"
                        th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
                        class="task_col_content task_col_content_finish twtooltip" data-placement="bottom"
-                       th:alt-title="${task.col.twtooltip.infoicons.finish.task}">
+                       th:alt-title="#{task.col.twtooltip.infoicons.finish.task}">
                         <i class="far fa-square"></i>
                     </a>
                     <a th:href="@{/task/incomplete/{id}(id=${task.id})}"
                        th:if="${task.taskState.name() eq 'COMPLETED'}"
                        class="task_col_content task_col_content_unfinish twtooltip" data-placement="bottom"
-                       th:alt-title="${task.col.twtooltip.infoicons.unfinish.task}">
+                       th:alt-title="#{task.col.twtooltip.infoicons.unfinish.task}">
                         <i class="fas fa-check-square"></i>
                     </a>
                     <i class="far fa-check-square task_col_content task_col_content_trash twtooltip"
                        th:if="${task.taskState.name() eq 'TRASHED'}"
-                       th:alt-title="${task.col.twtooltip.infoicons.trash}"
+                       th:alt-title="#{task.col.twtooltip.infoicons.trash}"
                        draggable="true" ondragstart="dragTask(event)" data-placement="bottom"></i>
                     <a th:if="${task.focus}" th:href="@{/task/unsetfocus/{id}(id=${task.id})}"
                        class="task_col_content task_col_content_unsetfocus twtooltip" data-placement="bottom"
-                       th:alt-title="${task.col.twtooltip.infoicons.unsetfocus}"
+                       th:alt-title="#{task.col.twtooltip.infoicons.unsetfocus}"
                        th:id="'task_' + ${task.id} + '_col_unsetfocus'" draggable="true" ondragstart="dragTask(event)">
                         <i class="fas fa-star"></i>
                     </a>
                     <a th:if="${not task.focus}" th:href="@{/task/setfocus/{id}(id=${task.id})}"
                        data-placement="bottom"  class="task_col_content task_col_content_setfocus twtooltip"
-                       th:alt-title="${task.col.twtooltip.infoicons.setfocus}"
+                       th:alt-title="#{task.col.twtooltip.infoicons.setfocus}"
                        th:id="'task_' + ${task.id} + '_col_setfocus'" draggable="true" ondragstart="dragTask(event)">
                         <i class="far fa-star"></i>
                     </a>
                 </td>
                 <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title twtooltip"
-                    data-placement="bottom" th:alt-title="${task.col.twtooltip.show.details}">
+                    data-placement="bottom" th:alt-title="#{task.col.twtooltip.show.details}">
                     <button type="button" data-toggle="modal"
                             class="btn btn-primary btn-sm task_col_content task_col_content_task_details twtooltip"
                             th:attr="data-target='#taskModalScrollable_'+${task.id}"
                             th:id="'task_' + ${task.id} + '_col_button_modal'"
                             draggable="true" ondragstart="dragTask(event)"
-                            th:alt-title="${task.col.twtooltip.show.details}" th:text="${task.title}">
+                            th:alt-title="#{task.col.twtooltip.show.details}" th:text="${task.title}">
                     Launch Task Modal
                     </button>
                     <!-- Modal -->
@@ -162,14 +162,14 @@
                     <span th:if="${#locale.language eq 'de'}"
                           th:id="'task_' + ${task.id} + '_col_due_date'"
                           draggable="true" ondragstart="dragTask(event)"
-                          th:alt-title="${task.col.twtooltip.duedate}"
+                          th:alt-title="#{task.col.twtooltip.duedate}"
                           class="task_col_content task_col_content_duedate twtooltip"
                           th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
                     </span>
                     <span th:if="${#locale.language eq 'en'}"
                           th:id="'task_' + ${task.id} + '_col_due_date'"
                           draggable="true" ondragstart="dragTask(event)"
-                          th:alt-title="${task.col.twtooltip.duedate}"
+                          th:alt-title="#{task.col.twtooltip.duedate}"
                           class="task_col_content task_col_content_duedate twtooltip"
                           th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}">
                     </span>
@@ -177,7 +177,7 @@
                 <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col task_col_taskstate"
                     th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
                     <a th:href="@{{url}(url=${task.taskState.getUrl()})}" class="twtooltip"
-                       th:alt-title="${task.col.twtooltip.taskstate}">
+                       th:alt-title="#{task.col.twtooltip.taskstate}">
                         <i th:class="${task.taskState.getIcon()}"></i>
                         <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
                     </a>
@@ -188,7 +188,7 @@
                        th:id="'task_' + ${task.id} + '_col_project'"
                        draggable="true" ondragstart="dragTask(event)"
                        class="task_col_content task_col_content_project twtooltip"
-                       th:alt-title="${task.col.twtooltip.project}">
+                       th:alt-title="#{task.col.twtooltip.project}">
                         <i class="fas fa-folder-open"></i>
                         <span th:text="${task.project.name}"></span>
                     </a>
@@ -198,14 +198,14 @@
                           th:if="${task.taskEnergy.value ne 'NONE'}"
                           th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
                           draggable="true" ondragstart="dragTask(event)"
-                          th:alt-title="${task.col.twtooltip.badge.taskEnergy}"
+                          th:alt-title="#{task.col.twtooltip.badge.taskEnergy}"
                           th:text="${#messages.msgOrNull(task.taskEnergy.code)}">
                     </span>
                     <span class="badge badge-pill badge-dark task_col_content task_col_content_tasktime twtooltip"
                           th:text="${#messages.msgOrNull(task.taskTime.code)}"
                           th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
                           draggable="true" ondragstart="dragTask(event)"
-                          th:alt-title="${task.col.twtooltip.badge.taskTime}"
+                          th:alt-title="#{task.col.twtooltip.badge.taskTime}"
                           th:if="${task.taskTime.value ne 'NONE'}">
                     </span>
                 </td>
@@ -215,13 +215,13 @@
                           th:id="'task_' + ${task.id} + '_col_context_txt'"
                           draggable="true" ondragstart="dragTask(event)"
                           class="task_col_content task_col_content_context twtooltip"
-                          th:alt-title="${task.col.twtooltip.context}"
+                          th:alt-title="#{task.col.twtooltip.context}"
                           th:text="${task.context.nameDe}">task.context.nameDe</span>
                     <span th:if="${#locale.language ne 'de'}"
                           th:id="'task_' + ${task.id} + '_col_context_txt'"
                           draggable="true" ondragstart="dragTask(event)"
                           class="task_col_content task_col_content_context twtooltip"
-                          th:alt-title="${task.col.twtooltip.context}"
+                          th:alt-title="#{task.col.twtooltip.context}"
                           th:text="${task.context.nameEn}">task.context.nameEn</span>
                 </td>
             </tr>
