@@ -467,6 +467,7 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <addResources>true</addResources>
+                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>default</profile>
                             </profiles>
@@ -525,6 +526,8 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <addResources>true</addResources>
+                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>testing</profile>
                             </profiles>
@@ -569,10 +572,26 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <addResources>true</addResources>
+                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>qa</profile>
                             </profiles>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -599,6 +618,8 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <addResources>true</addResources>
+                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>developing</profile>
                             </profiles>
@@ -667,10 +688,25 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>travis</profile>
                             </profiles>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -694,6 +730,7 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
+                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>prod</profile>
                             </profiles>
@@ -734,13 +771,6 @@
                         <profile>testing</profile>
                     </profiles>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
