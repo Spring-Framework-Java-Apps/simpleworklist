@@ -1,18 +1,41 @@
+server:
+  error:
+    path: /fehler
+  compression:
+    enabled: true
+    min-response-size: 2048
+info:
+  application:
+    artifactId: @project.artifactId@
+    description: @project.description@
+    groupId: @project.groupId@
+    name: @project.name@
+    version: @project.version@
 spring:
+  devtools:
+    livereload:
+      enabled: true
+  application:
+    admin:
+      enabled: true
+    name: @project.name@
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
-    jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
+    #jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
-#spring.jpa.hibernate.ddl-auto: create-drop
+    platform: POSTGRESQL
   jpa:
     show-sql: true
+    open-in-view: true
+    generate-ddl: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+      #ddl-auto: create-drop
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
         temp:
           use_jdbc_metadata_defaults: false
         search:
@@ -52,4 +75,132 @@ org:
         ttlEmailVerificationRequest: 86400000
         urlHost: localhost:8080
         mailFrom: news@thomas-woehlke.de
-
+---
+spring:
+  profiles: default
+---
+spring:
+  profiles: developing
+---
+spring:
+  profiles: travis
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/simpleworklist_travis?user=simpleworklist&password=simpleworklistpwd'
+    continue-on-error: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+      #ddl-auto: create-drop
+server:
+  compression:
+    enabled: false
+---
+spring:
+  profiles: testing
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/simpleworklist_test?user=simpleworklist&password=simpleworklistpwd'
+    continue-on-error: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+      #ddl-auto: create-drop
+server:
+  compression:
+    enabled: false
+logging:
+  config: classpath:logback.xml
+  file: logging-test.log
+  level:
+    org:
+      woehlke:
+          simpleworklist: DEBUG
+          application: DEBUG
+          config: DEBUG
+          control:
+            admin: DEBUG
+            anonymous: DEBUG
+            common: DEBUG
+            user: DEBUG
+          model:
+            beans: DEBUG
+            dao: DEBUG
+            services: DEBUG
+          oodm:
+            entities: DEBUG
+            repository: DEBUG
+            services:
+              impl: DEBUG
+---
+spring:
+  profiles: qa
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/simpleworklist_qa?user=simpleworklist&password=simpleworklistpwd'
+    continue-on-error: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+      #ddl-auto: create-drop
+server:
+  compression:
+    enabled: false
+logging:
+  config: classpath:logback.xml
+  file: logging-qa.log
+  level:
+    org:
+      woehlke:
+        simpleworklist: DEBUG
+        application: DEBUG
+        config: DEBUG
+        control:
+          admin: DEBUG
+          anonymous: DEBUG
+          common: DEBUG
+          user: DEBUG
+        model:
+          beans: DEBUG
+          dao: DEBUG
+          services: DEBUG
+        oodm:
+          entities: DEBUG
+          repository: DEBUG
+          services:
+            impl: DEBUG
+---
+spring:
+  profiles: prod
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/simpleworklist_prod?user=simpleworklist&password=simpleworklistpwd'
+    continue-on-error: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    cache: true
+  devtools:
+    livereload:
+      enabled: false
+  application:
+    admin:
+      enabled: false
+server:
+  compression:
+    enabled: true
+logging:
+  config: classpath:logback.xml
+  #file: logging-prod.log
+  level:
+    org:
+      woehlke:
+        simpleworklist: WARN
+      apache: WARN
+      springframework: WARN
+      thymeleaf: WARN
+      hibernate: WARN
+      hibernate.SQL: WARN
+    ch:
+      qos: WARN

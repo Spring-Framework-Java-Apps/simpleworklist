@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.woehlke.simpleworklist.oodm.repository" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.model.services" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.eai" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.control" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.application" level="DEBUG" />
-    <logger name="org.apache.http" level="INFO" />
-    <logger name="org.apache.tomcat" level="INFO" />
+    <logger name="org.woehlke.simpleworklist.config" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.control.admin" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.control.anonymous" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.control.common" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.control.user" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.model.beans" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.model.dao" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.model.services" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.oodm.entities" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.oodm.repository" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.oodm.services" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist" level="INFO" />
+    <logger name="org.apache.http" level="WARN" />
+    <logger name="org.apache.tomcat" level="WARN" />
     <logger name="org.springframework.boot" level="INFO" />
     <logger name="org.springframework.test" level="DEBUG" />
-    <logger name="org.springframework.security" level="DEBUG" />
+    <logger name="org.springframework.security" level="INFO" />
     <logger name="org.springframework.web" level="DEBUG" />
     <logger name="org.thymeleaf" level="INFO" />
     <logger name="org.hibernate" level="INFO" />
-    <logger name="ch.qos.logback" level="INFO" />
     <logger name="org.hibernate.SQL" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist" level="DEBUG" />
+    <logger name="ch.qos.logback" level="INFO" />
     <root level="INFO"></root>
 </configuration>

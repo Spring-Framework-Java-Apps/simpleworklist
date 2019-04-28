@@ -28,6 +28,18 @@ CREATE DATABASE simpleworklist_test
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
+CREATE DATABASE simpleworklist_qa
+    WITH OWNER = simpleworklist
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+CREATE DATABASE simpleworklist_travis
+    WITH OWNER = simpleworklist
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
 CREATE DATABASE simpleworklist_prod
     WITH OWNER = simpleworklist
     ENCODING = 'UTF8'
