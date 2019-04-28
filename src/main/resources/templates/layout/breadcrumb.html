@@ -8,9 +8,12 @@
         <div class="container" sec:authorize="isAuthenticated()" th:if="${breadcrumb != null}">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li th:each="bc,iterStat : ${breadcrumb.getBreadcrumb()}" th:class="${iterStat == breadcrumb.size()-1 ? 'breadcrumb-item active' : 'breadcrumb-item'}">
+                    <li th:each="bc,iterStat : ${breadcrumb.getBreadcrumb()}"
+                        th:class="${iterStat == breadcrumb.size()-1 ? 'breadcrumb-item active' : 'breadcrumb-item'}">
                         <span th:if="${iterStat == breadcrumb.size()-1}" th:text="${bc.name}"></span>
-                        <a th:if="${iterStat != breadcrumb.size()-1}" th:href="@{{url}(url=${bc.url})}" th:text="${bc.name}">
+                        <a th:if="${iterStat != breadcrumb.size()-1}"
+                           th:href="@{{url}(url=${bc.url})}"
+                           th:text="${bc.name}">
                         </a>
                     </li>
                 </ol>

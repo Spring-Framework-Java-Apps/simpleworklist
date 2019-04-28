@@ -79,22 +79,29 @@
                     </ul>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="languageMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a id="languageMenu" class="nav-link dropdown-toggle"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
                                 <i class="fas fa-globe"></i><b class="caret"></b>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="contextMenu">
-                                <a th:href="@{{url}(lang='de',url=${#request.getRequestURL()})}" class="dropdown-item lang-switcher-de" >
+                                <a th:href="@{{url}(lang='de',url=${#request.getRequestURL()})}"
+                                   class="dropdown-item lang-switcher-de" >
                                     <img class="lang-switcher-img" th:src="@{/img/de.png}"/>deutsch
                                 </a>
-                                <a th:href="@{{url}(lang='en',url=${#request.getRequestURL()})}" class="dropdown-item lang-switcher-en">
+                                <a th:href="@{{url}(lang='en',url=${#request.getRequestURL()})}"
+                                   class="dropdown-item lang-switcher-en">
                                     <img class="lang-switcher-img" th:src="@{/img/gb.png}"/>english
                                 </a>
                             </div>
                         </li>
                     </ul>
-                    <form th:action="@{/search}" class="form-inline my-2 my-lg-0" role="search" method="get" sec:authorize="isAuthenticated()">
-                        <input class="form-control mr-sm-2" type="search" name="searchterm" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                    <form th:action="@{/search}" class="form-inline my-2 my-lg-0" role="search" method="get"
+                          sec:authorize="isAuthenticated()">
+                        <input class="form-control mr-sm-2" type="search" name="searchterm" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-outline-secondary btn-sm my-2 my-sm-0" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </form>
                 </div>
             </div>

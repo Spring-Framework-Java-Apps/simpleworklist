@@ -14,7 +14,7 @@
     </div>
 
     <!-- TODO #36 -->
-    <div th:fragment="tw-tasks-table(taskPage,myTaskState)">
+    <div th:fragment="tw-tasks-table(taskPage,myTaskState)" sec:authorize="isAuthenticated()">
         <div class="container">
         <div class="row">
         <table class="table table-striped table-hover">
