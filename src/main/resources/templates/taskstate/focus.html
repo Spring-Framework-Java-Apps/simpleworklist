@@ -19,13 +19,13 @@
     </div>
 
     <div th:fragment="mytwcontent">
-        <div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
+        <div th:replace="layout/tasks :: tw-tasks-message(message=${message})" th:if="${message} != null" id="mytwcontent-message">
         </div>
-        <div th:if="${taskPage.getTotalElements() gt 0}">
+        <div th:if="${taskPage.getTotalElements() gt 0}" id="mytwcontent-taskpage">
             <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='FOCUS')">
             </div>
         </div>
-        <div th:if="${taskPage.getTotalElements() eq 0}">
+        <div th:if="${taskPage.getTotalElements() eq 0}" id="mytwcontent-no-taskpage">
             <p><span th:text="#{tasks.focus.noTasks}">You have no Tasks in Focus</span></p>
         </div>
     </div>
