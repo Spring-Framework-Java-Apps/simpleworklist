@@ -70,9 +70,13 @@ org:
 ---
 spring:
   profiles: default
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpleworklist_default
 ---
 spring:
   profiles: developing
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpleworklist_developing
 ---
 spring:
   profiles: travis
@@ -91,7 +95,7 @@ server:
 spring:
   profiles: testing
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_test
+    url: jdbc:postgresql://localhost:5432/simpleworklist_testing
   jpa:
     show-sql: false
     hibernate:
@@ -164,7 +168,7 @@ logging:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_prod
+    url: jdbc:postgresql://localhost:5432/simpleworklist
     continue-on-error: true
   jpa:
     show-sql: false

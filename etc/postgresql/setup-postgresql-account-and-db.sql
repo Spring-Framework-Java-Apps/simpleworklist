@@ -11,10 +11,10 @@ GRANT pg_read_all_stats TO simpleworklist;
 GRANT pg_signal_backend TO simpleworklist;
 GRANT pg_stat_scan_tables TO simpleworklist;
 
-
 -- Database: simpleworklist
 
 -- DROP DATABASE simpleworklist;
+    CONNECTION LIMIT = -1;
 
 CREATE DATABASE simpleworklist
     WITH OWNER = simpleworklist
@@ -22,7 +22,19 @@ CREATE DATABASE simpleworklist
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
-CREATE DATABASE simpleworklist_test
+CREATE DATABASE simpleworklist_default
+    WITH OWNER = simpleworklist
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+CREATE DATABASE simpleworklist_developing
+    WITH OWNER = simpleworklist
+    ENCODING = 'UTF8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+CREATE DATABASE simpleworklist_testing
     WITH OWNER = simpleworklist
     ENCODING = 'UTF8'
     TABLESPACE = pg_default
@@ -40,9 +52,4 @@ CREATE DATABASE simpleworklist_travis
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
-CREATE DATABASE simpleworklist_prod
-    WITH OWNER = simpleworklist
-    ENCODING = 'UTF8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
 
