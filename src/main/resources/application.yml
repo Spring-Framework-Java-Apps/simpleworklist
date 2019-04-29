@@ -54,7 +54,7 @@ org:
         host: sslout.df.eu
         port: 465
         username: news@thomas-woehlke.de
-        password: #avbzp3shanE
+        password: gecgy.gKC8u3
         smtp:
           auth: true
           sslEnable: true
