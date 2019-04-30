@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 
 @Repository
@@ -57,5 +56,4 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("context") Context context
     );
 
-    Page<Task> findByUserAccount(UserAccount userAccount, Pageable request);
 }

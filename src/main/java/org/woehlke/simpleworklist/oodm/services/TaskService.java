@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.entities.Project;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
 public interface TaskService {
 
@@ -28,8 +27,6 @@ public interface TaskService {
     Page<Task> findByProject(Project thisProject, Context context, Pageable request);
 
     Page<Task> findByRootProject(Context context,Pageable request);
-
-    Page<Task> findByUser(UserAccount thisUserAccount, Pageable request);
 
     Task findOne(long taskId);
 }

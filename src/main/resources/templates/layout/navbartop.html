@@ -31,11 +31,6 @@
                                     <span th:if="${locale eq 'de'}" th:text="${context.nameDe}"></span>
                                     <span th:if="${locale ne 'de'}" th:text="${context.nameEn}"></span>
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:href="@{/context/choose/0}">
-                                    <span th:if="${locale eq 'de'}">Alle</span>
-                                    <span th:if="${locale ne 'de'}">All</span>
-                                </a>
                             </div>
                         </li>
                         <li class="nav-item">

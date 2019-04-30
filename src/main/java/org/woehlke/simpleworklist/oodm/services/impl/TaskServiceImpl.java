@@ -114,11 +114,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByUser(UserAccount userAccount, Pageable request) {
-        return taskRepository.findByUserAccount(userAccount, request);
-    }
-
-    @Override
     public Task findOne(long taskId) {
         if(taskRepository.existsById(taskId)) {
             return taskRepository.getOne(taskId);

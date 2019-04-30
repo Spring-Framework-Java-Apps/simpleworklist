@@ -13,7 +13,6 @@ import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
@@ -36,14 +35,11 @@ public class TaskStateController extends AbstractController {
 
     private final TaskStateService taskStateService;
 
-    private final TaskService taskService;
-
     private final TaskMoveService taskMoveService;
 
     @Autowired
-    public TaskStateController(TaskStateService taskStateService, TaskService taskService, TaskMoveService taskMoveService) {
+    public TaskStateController(TaskStateService taskStateService, TaskMoveService taskMoveService) {
         this.taskStateService = taskStateService;
-        this.taskService = taskService;
         this.taskMoveService = taskMoveService;
     }
 
@@ -157,20 +153,6 @@ public class TaskStateController extends AbstractController {
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "trash");
         return "taskstate/trash";
-    }
-
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public String getAllTasksForUser(
-            @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
-            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
-    ){
-        UserAccount user = super.getUser();
-        Page<Task> taskPage = taskService.findByUser(user, request);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstateAll(locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("taskPage", taskPage);
-        model.addAttribute("taskstateType", "inbox");
-        return "taskstate/all";
     }
 
     @RequestMapping(value = "/focus", method = RequestMethod.GET)
