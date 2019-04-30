@@ -6,19 +6,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    @Deprecated
     List<Project> findByParentIsNull();
 
-    @Deprecated
-    List<Project> findByParentIsNullAndUserAccount(UserAccount userAccount);
+    //@Deprecated
+    //List<Project> findByParentIsNullAndUserAccount(UserAccount userAccount);
 
-    @Deprecated
-    List<Project> findByUserAccount(UserAccount userAccount);
+    //@Deprecated
+    //List<Project> findByUserAccount(UserAccount userAccount);
 
     List<Project> findByContext(Context context);
 

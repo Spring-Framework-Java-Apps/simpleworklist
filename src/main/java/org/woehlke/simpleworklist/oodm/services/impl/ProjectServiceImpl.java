@@ -2,7 +2,6 @@ package org.woehlke.simpleworklist.oodm.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,29 +34,19 @@ public class ProjectServiceImpl implements ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Project> getBreadcrumb(Project thisProject) {
-        List<Project> breadcrumb = new ArrayList<Project>();
-        Stack<Project> stack = new Stack<Project>();
-        Project breadcrumbProject = thisProject;
-        while (breadcrumbProject != null) {
-            stack.push(breadcrumbProject);
-            breadcrumbProject = breadcrumbProject.getParent();
-        }
-        while (!stack.empty()) {
-            breadcrumb.add(stack.pop());
-        }
-        return breadcrumb;
-    }
-
+    /*
+    @Deprecated
     @Override
     public List<Project> findRootProjectsByUserAccount(UserAccount userAccount) {
         return projectRepository.findByParentIsNullAndUserAccount(userAccount);
     }
 
+    @Deprecated
     @Override
     public List<Project> findAllProjectsByUserAccount(UserAccount userAccount) {
         return projectRepository.findByUserAccount(userAccount);
     }
+     */
 
     @Override
     public List<Project> findRootProjectsByContext(Context context) {
@@ -93,16 +82,6 @@ public class ProjectServiceImpl implements ProjectService {
             projectRepository.saveAndFlush(oldParent);
         }
         projectRepository.delete(thisProject);
-    }
-
-    @Override
-    public List<Project> findAllProjectsByUserAccountAndContext(Context context) {
-        return projectRepository.findByContext(context);
-    }
-
-    @Override
-    public List<Project> findRootProjectsByUserAccountAndContext(Context context) {
-        return projectRepository.findByParentIsNullAndContext(context);
     }
 
     @Override

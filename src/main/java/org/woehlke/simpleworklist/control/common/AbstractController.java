@@ -54,13 +54,8 @@ public abstract class AbstractController {
     @ModelAttribute("allCategories")
     public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,
                                                 BindingResult result, Model model) {
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
-            return projectService.findAllProjectsByUserAccount(user);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
-            return projectService.findAllProjectsByUserAccountAndContext(context);
-        }
+        Context context = this.getContext(userSession);
+        return projectService.findAllProjectsByContext(context);
     }
 
     @ModelAttribute("rootCategories")
