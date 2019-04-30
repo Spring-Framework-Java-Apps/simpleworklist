@@ -59,20 +59,17 @@ public abstract class AbstractController {
             return projectService.findAllProjectsByUserAccount(user);
         } else {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
-            return projectService.findAllProjectsByUserAccountAndContext(user, context);
+            return projectService.findAllProjectsByUserAccountAndContext(context);
         }
     }
 
     @ModelAttribute("rootCategories")
-    public final List<Project> getRootCategories(@ModelAttribute("userSession") UserSessionBean userSession,
-                                                 BindingResult result, Model model) {
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        if ((userSession.getContextId() == null)||(userSession.getContextId() == 0)) {
-            return projectService.findRootProjectsByUserAccount(user);
-        } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
-            return projectService.findRootProjectsByUserAccountAndContext(user, context);
-        }
+    public final List<Project> getRootCategories(
+            @ModelAttribute("userSession") UserSessionBean userSession,
+             BindingResult result, Model model
+    ) {
+        Context context = this.getContext(userSession);
+        return projectService.findRootProjectsByContext(context);
     }
 
     @ModelAttribute("numberOfNewIncomingMessages")
@@ -144,4 +141,18 @@ public abstract class AbstractController {
             ok = false;
         }
     }
+
+    protected UserAccount getUser(){
+        return this.userAccountLoginSuccessService.retrieveCurrentUser();
+    }
+
+    protected Context getContext(UserSessionBean userSession){
+        UserAccount thisUser = this.getUser();
+        long contextId = userSession.getContextId();
+        if(contextId == 0){
+            contextId =   thisUser.getDefaultContext().getId();
+        }
+        return contextService.findByIdAndUserAccount(contextId, thisUser);
+    }
+
 }

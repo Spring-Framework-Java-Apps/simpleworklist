@@ -13,7 +13,6 @@ import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.services.TaskService;
@@ -37,12 +36,10 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/project/{projectId}", method = RequestMethod.GET)
     public final String moveTaskToAnotherProject(@PathVariable("taskId") Task task,
                                                  @PathVariable long projectId) {
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(projectId == 0) {
             task = taskMoveService.moveTaskToRootProject(task);
         } else {
-            Project project = projectService.findByProjectId(projectId, thisUser);
+            Project project = projectService.findByProjectId(projectId);
             task = taskMoveService.moveTaskToAnotherProject(task,project);
         }
         return "redirect:/project/" + projectId + "/";
@@ -51,8 +48,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to inbox");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId,thisUser);
         task = taskMoveService.moveTaskToInbox(task);
         return "redirect:/taskstate/inbox";
     }
@@ -60,8 +55,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/today", method = RequestMethod.GET)
     public final String moveTaskToToday(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to today");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToToday(task);
         return "redirect:/taskstate/today";
     }
@@ -69,8 +62,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/next", method = RequestMethod.GET)
     public final String moveTaskToNext(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to next");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToNext(task);
         return "redirect:/taskstate/next";
     }
@@ -78,8 +69,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to waiting");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToWaiting(task);
         return "redirect:/taskstate/waiting";
     }
@@ -87,8 +76,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to someday");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToSomeday(task);
         return "redirect:/taskstate/someday";
     }
@@ -96,8 +83,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/focus", method = RequestMethod.GET)
     public final String moveTaskToFocus(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to focus");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToFocus(task);
         return "redirect:/taskstate/focus";
     }
@@ -105,8 +90,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to completed");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToCompleted(task);
         return "redirect:/taskstate/completed";
     }
@@ -114,8 +97,6 @@ public class TaskMoveController extends AbstractController {
     @RequestMapping(value = "/{taskId}/to/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@PathVariable("taskId") Task task) {
         LOGGER.info("dragged and dropped "+task.getId()+" to trash");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, thisUser);
         task = taskMoveService.moveTaskToTrash(task);
         return "redirect:/taskstate/trash";
     }
@@ -124,9 +105,8 @@ public class TaskMoveController extends AbstractController {
     public final String deleteallCompleted(
             @ModelAttribute("userSession") UserSessionBean userSession
     ) {
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        taskMoveService.deleteAllCompleted(context,thisUser);
+        Context context = super.getContext(userSession);
+        taskMoveService.deleteAllCompleted(context);
         return "redirect:/taskstate/trash";
     }
 
@@ -134,9 +114,8 @@ public class TaskMoveController extends AbstractController {
     public final String emptyTrash(
             @ModelAttribute("userSession") UserSessionBean userSession
     ) {
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), thisUser);
-        taskMoveService.emptyTrash(thisUser,context);
+        Context context = super.getContext(userSession);
+        taskMoveService.emptyTrash(context);
         return "redirect:/taskstate/trash";
     }
 }

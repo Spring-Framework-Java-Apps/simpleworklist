@@ -34,107 +34,74 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findOne(long taskId, UserAccount userAccount) {
-        if(taskRepository.existsById(taskId)){
-            Task t =  taskRepository.getOne(taskId);
-            if(t.getUserAccount().getId().longValue()==userAccount.getId().longValue()){
-                return t;
-            }
-        }
-        return null;
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task saveAndFlush(Task entity, UserAccount userAccount) {
-        if(entity.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            entity = taskRepository.saveAndFlush(entity);
-            LOGGER.info("saved: " + entity.toString());
-        }
+    public Task saveAndFlush(Task entity) {
+        entity = taskRepository.saveAndFlush(entity);
+        LOGGER.info("saved: " + entity.toString());
         return entity;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void delete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.setTaskState(TaskState.TRASH);
-            taskRepository.saveAndFlush(task);
-        }
+    public void delete(Task task) {
+        task.setTaskState(TaskState.TRASH);
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
-    public boolean projectHasNoTasks(Project project, UserAccount userAccount) {
-        if(project.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            return taskRepository.findByProject(project).isEmpty();
-        } else {
-            return true;
-        }
+    public boolean projectHasNoTasks(Project project) {
+        return taskRepository.findByProject(project).isEmpty();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void undelete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.switchToLastFocusType();
-            taskRepository.saveAndFlush(task);
-        }
+    public void undelete(Task task) {
+        task.switchToLastFocusType();
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void complete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.setTaskState(TaskState.COMPLETED);
-            taskRepository.saveAndFlush(task);
-        }
+    public void complete(Task task) {
+        task.setTaskState(TaskState.COMPLETED);
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void incomplete(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.switchToLastFocusType();
-            taskRepository.saveAndFlush(task);
-        }
+    public void incomplete(Task task) {
+        task.switchToLastFocusType();
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void setFocus(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.setFocus(true);
-            taskRepository.saveAndFlush(task);
-        }
+    public void setFocus(Task task) {
+        task.setFocus(true);
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void unsetFocus(Task task, UserAccount userAccount) {
-        if(task.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
-            task.setFocus(false);
-            taskRepository.saveAndFlush(task);
-        }
+    public void unsetFocus(Task task) {
+        task.setFocus(false);
+        taskRepository.saveAndFlush(task);
     }
 
     @Override
-    public Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Context context) {
+    public Page<Task> findByProject(Project thisProject, Context context, Pageable request) {
         LOGGER.info("findByProject: ");
         LOGGER.info("---------------------------------");
         LOGGER.info("thisProject: "+thisProject);
         LOGGER.info("---------------------------------");
-        LOGGER.info("userAccount: "+userAccount);
+        LOGGER.info("context:      "+ context);
         LOGGER.info("---------------------------------");
-        LOGGER.info("context:        "+ context);
-        LOGGER.info("---------------------------------");
-        long contextUid = context.getUserAccount().getId().longValue();
-        long uid = userAccount.getId().longValue();
         long projectContextId = 0;
         if (thisProject.getContext() != null){
             projectContextId = thisProject.getContext().getId().longValue();
         }
         long contextId = context.getId().longValue();
-        if((thisProject == null)||(context ==null)||(contextUid != uid)||(projectContextId!=contextId)){
+        if((thisProject == null)||(context ==null)||(projectContextId!=contextId)){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProject(thisProject,request);
@@ -142,19 +109,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context) {
-        if(context.getUserAccount().getId().longValue() != userAccount.getId().longValue()){
-            return new PageImpl<Task>(new ArrayList<Task>());
-        } else {
-            //TODO: FEHLER: fehlt User!
+    public Page<Task> findByRootProject(Context context, Pageable request) {
             return taskRepository.findByProjectIsNullAndContext(context,request);
-        }
     }
 
     @Override
-    public Page<Task> findByUser(UserAccount userAccount, Context context, Pageable request) {
-        //TODO: FEHLER: fehlt Context!
-        return taskRepository.findByUserAccountAndContext(userAccount, context, request);
+    public Page<Task> findByUser(UserAccount userAccount, Pageable request) {
+        return taskRepository.findByUserAccount(userAccount, request);
+    }
+
+    @Override
+    public Task findOne(long taskId) {
+        if(taskRepository.existsById(taskId)) {
+            return taskRepository.getOne(taskId);
+        } else {
+            return null;
+        }
     }
 
 }

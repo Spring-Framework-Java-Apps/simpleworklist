@@ -28,17 +28,16 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowRootProject(UserAccount userAccount) {
+    public Breadcrumb getBreadcrumbForShowRootProject() {
         Breadcrumb breadcrumb = new Breadcrumb();
         breadcrumb.addProjectRoot();
         return breadcrumb;
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, UserAccount userAccount) {
+    public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject) {
         Breadcrumb breadcrumb = new Breadcrumb();
         breadcrumb.addProjectRoot();
-        if(thisProject.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
             if (thisProject.getId() > 0) {
                 Stack<Project> stack = new Stack<>();
                 Project breadcrumbProject = thisProject;
@@ -50,7 +49,6 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
                     breadcrumb.addProject(stack.pop());
                 }
             }
-        }
         return breadcrumb;
     }
 

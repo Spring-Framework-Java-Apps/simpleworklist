@@ -6,32 +6,30 @@ import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 
 public interface TaskService {
 
-    Task findOne(long dataId, UserAccount userAccount);
+    Task saveAndFlush(Task persistentTask);
 
-    Task saveAndFlush(Task persistentTask, UserAccount userAccount);
+    void delete(Task task);
 
-    void delete(Task task, UserAccount userAccount);
+    boolean projectHasNoTasks(Project project);
 
-    boolean projectHasNoTasks(Project project, UserAccount userAccount);
+    void undelete(Task task);
 
-    void undelete(Task task, UserAccount userAccount);
+    void complete(Task task);
 
-    void complete(Task task, UserAccount userAccount);
+    void incomplete(Task task);
 
-    void incomplete(Task task, UserAccount userAccount);
+    void setFocus(Task task);
 
-    void setFocus(Task task, UserAccount userAccount);
+    void unsetFocus(Task task);
 
-    void unsetFocus(Task task, UserAccount userAccount);
+    Page<Task> findByProject(Project thisProject, Context context, Pageable request);
 
-    Page<Task> findByProject(Project thisProject, Pageable request, UserAccount userAccount, Context context);
+    Page<Task> findByRootProject(Context context,Pageable request);
 
-    Page<Task> findByRootProject(Pageable request, UserAccount userAccount, Context context);
+    Page<Task> findByUser(UserAccount thisUserAccount, Pageable request);
 
-    Page<Task> findByUser(UserAccount userAccount, Context context, Pageable request);
-
+    Task findOne(long taskId);
 }

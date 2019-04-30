@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Task;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
 import org.woehlke.simpleworklist.model.services.TaskStateService;
@@ -29,111 +28,48 @@ public class TaskStateServiceImpl implements TaskStateService {
     }
 
     @Override
-    public Page<Task> getFocus(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByFocusAndContext(true, context, request);
-        }
+    public Page<Task> getFocus(Context context, Pageable request) {
+        return taskRepository.findByFocusAndContext(true, context, request);
     }
 
     @Override
-    public Page<Task> getInbox(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.INBOX, context, request);
-        }
+    public Page<Task> getInbox(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.INBOX, context, request);
     }
 
     @Override
-    public Page<Task> getToday(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.TODAY, context, request);
-        }
+    public Page<Task> getToday(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.TODAY, context, request);
     }
 
     @Override
-    public Page<Task> getNext(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.NEXT, context, request);
-        }
+    public Page<Task> getNext(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.NEXT, context, request);
     }
 
     @Override
-    public Page<Task> getWaiting(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.WAITING, context, request);
-        }
+    public Page<Task> getWaiting(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.WAITING, context, request);
     }
 
     @Override
-    public Page<Task> getScheduled(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.SCHEDULED, context, request);
-        }
+    public Page<Task> getScheduled(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.SCHEDULED, context, request);
     }
 
     @Override
-    public Page<Task> getSomeday(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.SOMEDAY, context, request);
-        }
+    public Page<Task> getSomeday(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.SOMEDAY, context, request);
     }
 
     @Override
-    public Page<Task> getCompleted(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context, request);
-        }
+    public Page<Task> getCompleted(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context, request);
     }
 
     @Override
-    public Page<Task> getTrash(UserAccount thisUser, Context context, Pageable request) {
-        if(context == null){
-            context = thisUser.getDefaultContext();
-        }
-        if(thisUser.getId().longValue() != context.getUserAccount().getId().longValue()){
-            return Page.empty(request);
-        } else {
-            return taskRepository.findByTaskStateAndContext(TaskState.TRASH, context, request);
-        }
+    public Page<Task> getTrash( Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.TRASH, context, request);
     }
 
 }

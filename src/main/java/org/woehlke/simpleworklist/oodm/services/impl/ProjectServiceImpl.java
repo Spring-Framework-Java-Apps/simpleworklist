@@ -35,18 +35,16 @@ public class ProjectServiceImpl implements ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Project> getBreadcrumb(Project thisProject, UserAccount user) {
+    public List<Project> getBreadcrumb(Project thisProject) {
         List<Project> breadcrumb = new ArrayList<Project>();
-        if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue() ) {
-            Stack<Project> stack = new Stack<Project>();
-            Project breadcrumbProject = thisProject;
-            while (breadcrumbProject != null) {
-                stack.push(breadcrumbProject);
-                breadcrumbProject = breadcrumbProject.getParent();
-            }
-            while (!stack.empty()) {
-                breadcrumb.add(stack.pop());
-            }
+        Stack<Project> stack = new Stack<Project>();
+        Project breadcrumbProject = thisProject;
+        while (breadcrumbProject != null) {
+            stack.push(breadcrumbProject);
+            breadcrumbProject = breadcrumbProject.getParent();
+        }
+        while (!stack.empty()) {
+            breadcrumb.add(stack.pop());
         }
         return breadcrumb;
     }
@@ -57,66 +55,59 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project findByProjectId(long projectId, UserAccount user) {
-        if(projectRepository.existsById(projectId)){
-            Project p = projectRepository.getOne(projectId);
-            if(p.getUserAccount().getId().longValue() == user.getId().longValue()){
-                return p;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project saveAndFlush(Project entity, UserAccount user) {
-        if(entity.getUserAccount().getId()==user.getId()){
-            return projectRepository.saveAndFlush(entity);
-        } else {
-            return entity;
-        }
-    }
-
-    @Override
     public List<Project> findAllProjectsByUserAccount(UserAccount userAccount) {
         return projectRepository.findByUserAccount(userAccount);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void delete(Project thisProject, UserAccount user) {
-        if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue()){
-            Project oldParent = thisProject.getParent();
-            if (oldParent != null) {
-                oldParent.getChildren().remove(thisProject);
-                projectRepository.saveAndFlush(oldParent);
-            }
-            projectRepository.delete(thisProject);
-        }
+    public List<Project> findRootProjectsByContext(Context context) {
+        return projectRepository.findByParentIsNullAndContext(context);
     }
 
     @Override
-    public List<Project> findAllProjectsByUserAccountAndContext(UserAccount user, Context context) {
-        if(user.getId().longValue() == context.getUserAccount().getId().longValue()){
-            return projectRepository.findByContext(context);
-        } else {
-            return new ArrayList<Project>();
-        }
+    public List<Project> findAllProjectsByContext(Context context) {
+        return projectRepository.findByContext(context);
     }
 
     @Override
-    public List<Project> findRootProjectsByUserAccountAndContext(UserAccount user, Context context) {
-        if(user.getId().longValue() == context.getUserAccount().getId().longValue()){
-            return projectRepository.findByParentIsNullAndContext(context);
+    public Project findByProjectId(long projectId) {
+        if(projectRepository.existsById(projectId)){
+            return projectRepository.getOne(projectId);
         } else {
-            return new ArrayList<Project>();
+            return null;
         }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveProjectToAnotherContext(Project thisProject, Context newContext, UserAccount userAccount) {
-        if(thisProject.getUserAccount().getId().longValue() == userAccount.getId().longValue()) {
+    public Project saveAndFlush(Project entity) {
+        return projectRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void delete(Project thisProject) {
+        Project oldParent = thisProject.getParent();
+        if (oldParent != null) {
+            oldParent.getChildren().remove(thisProject);
+            projectRepository.saveAndFlush(oldParent);
+        }
+        projectRepository.delete(thisProject);
+    }
+
+    @Override
+    public List<Project> findAllProjectsByUserAccountAndContext(Context context) {
+        return projectRepository.findByContext(context);
+    }
+
+    @Override
+    public List<Project> findRootProjectsByUserAccountAndContext(Context context) {
+        return projectRepository.findByParentIsNullAndContext(context);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveProjectToAnotherContext(Project thisProject, Context newContext) {
             LOGGER.info("----------------------------------------------------");
             LOGGER.info("moveProjectToAnotherContext: Project: "+thisProject.toString());
             LOGGER.info("----------------------------------------------------");
@@ -129,12 +120,11 @@ public class ProjectServiceImpl implements ProjectService {
                 List<Task> tasks = taskRepository.findByProject(p);
                 for(Task t:tasks){
                     t.setContext(newContext);
-                    taskRepository.saveAndFlush(t);
                 }
+                taskRepository.saveAll(tasks);
                 p.setContext(newContext);
                 projectRepository.saveAndFlush(p);
             }
-        }
     }
 
     private List<Project> getAllChildrenOfProject(Project thisProject) {
@@ -150,15 +140,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveProjectToAnotherProject(Project thisProject,
-                                            Project targetProject, UserAccount user) {
-        if(thisProject.getUserAccount().getId().longValue() == user.getId().longValue()) {
-            Project oldParent = thisProject.getParent();
-            if (oldParent != null) {
-                oldParent.getChildren().remove(thisProject);
-                projectRepository.saveAndFlush(oldParent);
-            }
-            thisProject.setParent(targetProject);
-            projectRepository.saveAndFlush(thisProject);
+                                            Project targetProject) {
+        Project oldParent = thisProject.getParent();
+        if (oldParent != null) {
+            oldParent.getChildren().remove(thisProject);
+            projectRepository.saveAndFlush(oldParent);
         }
+        thisProject.setParent(targetProject);
+        projectRepository.saveAndFlush(thisProject);
     }
 }

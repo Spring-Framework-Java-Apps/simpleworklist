@@ -78,7 +78,7 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public boolean contextHasItems(Context context) {
-        int numberOfTasks = taskRepository.findByContext(context).size();
+        long numberOfTasks = taskRepository.findByContext(context).getTotalElements();
         int numberOfProjects = projectRepository.findByContext(context).size();
         return ((numberOfTasks + numberOfProjects) > 0);
     }

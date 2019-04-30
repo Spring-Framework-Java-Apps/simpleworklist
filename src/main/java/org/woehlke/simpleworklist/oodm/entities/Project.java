@@ -15,6 +15,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
+import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
 
 @Entity
 @Table(
@@ -22,7 +23,7 @@ import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
     uniqueConstraints = {
         @UniqueConstraint(
             name = "ux_project",
-            columnNames = {"uuid", "parent_id", "user_account_id", "context_id"}
+            columnNames = {"uuid", "parent_id", "context_id"}
         )
     }, indexes = {
         @Index(name = "ix_project_uuid", columnList = "uuid"),
@@ -30,7 +31,7 @@ import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
     }
 )
 @Indexed
-public class Project extends AuditModel implements Serializable {
+public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
 
@@ -55,20 +56,6 @@ public class Project extends AuditModel implements Serializable {
     @JoinColumn(name = "parent_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project parent;
-
-    @Deprecated
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = false,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
-    )
-    @JoinColumn(name = "user_account_id")
-    @IndexedEmbedded(includeEmbeddedObjectId=true)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private UserAccount userAccount;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -109,10 +96,40 @@ public class Project extends AuditModel implements Serializable {
         return this.parent == null;
     }
 
+    @Transient
+    public boolean hasUser(UserAccount thisUser) {
+        return (this.getContext().hasThisUser(thisUser));
+    }
+
+    @Transient
+    @Override
+    public boolean equalsById(Project otherObject) {
+        return (this.getId().longValue() == otherObject.getId().longValue());
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUniqueConstraint(Project otherObject) {
+        boolean okParent;
+        if(this.isRootProject()){
+            okParent = (otherObject.isRootProject());
+        } else {
+            okParent = this.getParent().equalsByUniqueConstraint(otherObject.getParent());
+        }
+        boolean okContext = this.getContext().equalsByUniqueConstraint(otherObject.getContext());
+        boolean okUuid = this.equalsByUuid(otherObject);
+        return okParent && okContext && okUuid;
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUuid(Project otherObject) {
+        return super.equalsByMyUuid(otherObject);
+    }
+
     public static Project newProjectFactory(Project parent) {
         Project n = new Project();
         n.setParent(parent);
-        n.setUserAccount(parent.getUserAccount());
         n.setContext(parent.getContext());
         return n;
     }
@@ -120,14 +137,12 @@ public class Project extends AuditModel implements Serializable {
     public static Project newRootProjectFactory(UserAccount userAccount) {
         Project n = new Project();
         n.setParent(null);
-        n.setUserAccount(userAccount);
         return n;
     }
 
     public static Project newRootProjectFactory(UserAccount userAccount,Context context) {
         Project n = new Project();
         n.setParent(null);
-        n.setUserAccount(userAccount);
         n.setContext(context);
         return n;
     }
@@ -172,16 +187,6 @@ public class Project extends AuditModel implements Serializable {
         this.children = children;
     }
 
-    @Deprecated
-    public UserAccount getUserAccount() {
-        return userAccount;
-    }
-
-    @Deprecated
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
-    }
-
     public Context getContext() {
         return context;
     }
@@ -198,7 +203,6 @@ public class Project extends AuditModel implements Serializable {
         Project project = (Project) o;
         return Objects.equals(getId(), project.getId()) &&
                 Objects.equals(getParent(), project.getParent()) &&
-                getUserAccount().equals(project.getUserAccount()) &&
                 getContext().equals(project.getContext()) &&
                 getName().equals(project.getName()) &&
                 getDescription().equals(project.getDescription()) &&
@@ -207,7 +211,7 @@ public class Project extends AuditModel implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getParent(), getUserAccount(), getContext(), getName(), getDescription(), getChildren());
+        return Objects.hash(super.hashCode(), getId(), getParent(), getContext(), getName(), getDescription(), getChildren());
     }
 
     @Override
@@ -215,7 +219,6 @@ public class Project extends AuditModel implements Serializable {
         return "Project{" +
                 "id=" + id +
                 ", parent=" + parent +
-                ", userAccount=" + userAccount +
                 ", context=" + context +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -224,4 +227,5 @@ public class Project extends AuditModel implements Serializable {
                 ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
+
 }

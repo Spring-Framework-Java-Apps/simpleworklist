@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
+import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
 
 import javax.persistence.*;
 import javax.persistence.Index;
@@ -28,7 +29,7 @@ import java.util.Objects;
         @Index(name = "ix_context_row_created_at", columnList = "row_created_at")
     }
 )
-public class Context extends AuditModel implements Serializable {
+public class Context extends AuditModel implements Serializable, ComparableById<Context> {
 
     private static final long serialVersionUID = -5035732370606951871L;
 
@@ -71,6 +72,33 @@ public class Context extends AuditModel implements Serializable {
     public Context(String nameDe, String nameEn) {
         this.nameDe = nameDe;
         this.nameEn = nameEn;
+    }
+
+    @Transient
+    public boolean hasThisUser(UserAccount userAccount){
+        return (this.getUserAccount().getId().longValue()==userAccount.getId().longValue());
+    }
+
+    @Transient
+    @Override
+    public boolean equalsById(Context otherObject) {
+        return (this.getId().longValue() == otherObject.getId().longValue());
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUniqueConstraint(Context otherObject) {
+        boolean okUuid = super.equalsByMyUuid(otherObject);
+        boolean okUser = (this.getUserAccount().equalsByUniqueConstraint(otherObject.getUserAccount()));
+        boolean okNameDe = (this.getNameDe().compareTo(otherObject.getNameDe())==0);
+        boolean okNameEn = (this.getNameEn().compareTo(otherObject.getNameEn())==0);
+        return okUuid && okUser && okNameDe && okNameEn;
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUuid(Context otherObject) {
+        return super.equalsByMyUuid(otherObject);
     }
 
     public Long getId() {
@@ -134,4 +162,5 @@ public class Context extends AuditModel implements Serializable {
                 ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
+
 }

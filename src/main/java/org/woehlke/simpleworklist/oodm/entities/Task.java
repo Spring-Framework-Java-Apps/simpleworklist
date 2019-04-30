@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
+import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
@@ -27,7 +28,7 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_task",
-            columnNames = {"uuid", "context_id", "user_account_id"}
+            columnNames = {"uuid", "context_id" }
         )/*,
         @UniqueConstraint(
             name="ux_task_order_id_project",
@@ -45,7 +46,7 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
     }
 )
 @Indexed
-public class Task extends AuditModel implements Serializable {
+public class Task extends AuditModel implements Serializable, ComparableById<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
 
@@ -84,18 +85,6 @@ public class Task extends AuditModel implements Serializable {
     private Context context;
 
     @Deprecated
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = false,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
-    )
-    @JoinColumn(name = "user_account_id")
-    @IndexedEmbedded(includeEmbeddedObjectId=true)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private UserAccount userAccount;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
@@ -168,6 +157,117 @@ public class Task extends AuditModel implements Serializable {
         this.lastTaskState = old;
     }
 
+    @Transient
+    public boolean hasSameContextAs(Task otherTask){
+        return (this.getContext().equalsById( otherTask.getContext()));
+    }
+
+    @Transient
+    public boolean hasSameTaskTypetAs(Task otherTask){
+        return (this.getTaskState().ordinal() == otherTask.getTaskState().ordinal());
+    }
+
+    @Transient
+    public boolean isBelowByTaskState(Task otherTask){
+        return (this.getOrderIdTaskState() < otherTask.getOrderIdTaskState());
+    }
+
+    @Transient
+    public void moveUpByTaskState(){
+        this.orderIdTaskState++;
+    }
+
+    @Transient
+    public void moveDownByTaskState(){
+        this.orderIdTaskState--;
+    }
+
+    @Transient
+    public boolean isBelowByProject(Task otherTask){
+        return ( this.getOrderIdProject() < otherTask.getOrderIdProject() );
+    }
+
+    @Transient
+    public boolean hasSameProjectAs(Task destinationTask) {
+        if(this.isInRootProject() && destinationTask.isInRootProject()){
+            return true;
+        } else {
+            return ( this.getProject().equalsById(destinationTask.getProject()));
+        }
+    }
+
+    @Transient
+    public boolean hasProject(Project project) {
+        return this.getProject().equalsById(project);
+    }
+
+    @Transient
+    public void moveUpByProject(){
+        this.orderIdProject++;
+    }
+
+    @Transient
+    public void moveDownByProject(){
+        this.orderIdProject--;
+    }
+
+    @Transient
+    public boolean isInRootProject(){
+        return (this.getProject() == null);
+    }
+
+    @Transient
+    public boolean hasUser(UserAccount thisUser) {
+        boolean viaContextOk = (this.getContext().hasThisUser(thisUser));
+        boolean viaProjectOk = true;
+        if(!this.isInRootProject()){
+            viaProjectOk = (this.getProject().getContext().hasThisUser(thisUser));
+        }
+        return viaContextOk && viaProjectOk;
+    }
+
+    @Transient
+    public void setRootProject() {
+        this.setProject(null);
+    }
+
+    @Transient
+    public boolean hasSameContextAs(Project project) {
+        return (this.getContext().getId().longValue() == project.getContext().getId().longValue());
+    }
+
+    @Transient
+    @Override
+    public boolean equalsById(Task otherObject) {
+        return (this.getId().longValue() == otherObject.getId().longValue());
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUniqueConstraint(Task otherObject) {
+        boolean okUuid = this.equalsByUuid(otherObject);
+        boolean contextId = this.getContext().equalsByUniqueConstraint(otherObject.getContext());
+        return okUuid && contextId;
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUuid(Task otherObject) {
+        return super.equalsByMyUuid(otherObject);
+    }
+
+    public boolean hasContext(Context context) {
+        return (this.getContext().getId().longValue() == context.getId().longValue());
+    }
+
+    public void setOrderIdTaskState(Task destinationTask) {
+        this.orderIdTaskState = destinationTask.getOrderIdTaskState();
+    }
+
+    public void setOrderIdProject(Task otherTask) {
+        this.orderIdProject = otherTask.getOrderIdProject();
+    }
+
     /**
      * Sets also 'history back' for taskState
      */
@@ -191,16 +291,6 @@ public class Task extends AuditModel implements Serializable {
 
     public void setProject(Project project) {
         this.project = project;
-    }
-
-    @Deprecated
-    public UserAccount getUserAccount() {
-        return userAccount;
-    }
-
-    @Deprecated
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
     }
 
     public String getTitle() {
@@ -298,7 +388,6 @@ public class Task extends AuditModel implements Serializable {
                 Objects.equals(getId(), task.getId()) &&
                 getProject().equals(task.getProject()) &&
                 getContext().equals(task.getContext()) &&
-                getUserAccount().equals(task.getUserAccount()) &&
                 getTitle().equals(task.getTitle()) &&
                 getText().equals(task.getText()) &&
                 getFocus().equals(task.getFocus()) &&
@@ -311,7 +400,7 @@ public class Task extends AuditModel implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getProject(), getContext(), getUserAccount(), getTitle(), getText(), getFocus(), getTaskState(), getLastTaskState(), getTaskEnergy(), getTaskTime(), getDueDate(), getOrderIdProject(), getOrderIdTaskState());
+        return Objects.hash(super.hashCode(), getId(), getProject(), getContext(), getTitle(), getText(), getFocus(), getTaskState(), getLastTaskState(), getTaskEnergy(), getTaskTime(), getDueDate(), getOrderIdProject(), getOrderIdTaskState());
     }
 
     @Override
@@ -320,7 +409,6 @@ public class Task extends AuditModel implements Serializable {
                 "id=" + id +
                 ", project=" + project +
                 ", context=" + context +
-                ", userAccount=" + userAccount +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", focus=" + focus +

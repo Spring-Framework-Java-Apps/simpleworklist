@@ -50,18 +50,10 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-
-        //Project thisProject = new Project();
-        //thisProject.setId(0L);
-        //thisProject.setUserAccount(userAccount);
-        //thisProject.setContext(context);
-        Page<Task> taskPage = taskService.findByRootProject(pageable, userAccount, context);
-
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(userAccount);
+        Context context = super.getContext(userSession);
+        Page<Task> taskPage = taskService.findByRootProject(context,pageable);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject();
         model.addAttribute("breadcrumb", breadcrumb);
-        //model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
         if(message != null){
             model.addAttribute("message",message);
@@ -79,21 +71,19 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+        Context context = super.getContext(userSession);
         Project thisProject = null;
         Page<Task> taskPage = null;
         if (projectId != 0) {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
-            taskPage = taskService.findByProject(thisProject, pageable, userAccount, context);
+            thisProject = projectService.findByProjectId(projectId);
+            taskPage = taskService.findByProject(thisProject, context, pageable);
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
             thisProject.setContext(context);
-            taskPage = taskService.findByRootProject(pageable, userAccount, context);
+            taskPage = taskService.findByRootProject(context, pageable);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
@@ -119,13 +109,9 @@ public class ProjectController extends AbstractController {
             @PathVariable long targetProjectId,
             @ModelAttribute("userSession") UserSessionBean userSession
     ) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Project thisProject = null;
-        //if (thisProjectId != 0) {
-            //thisProject = projectService.findByProjectId(thisProjectId, userAccount);
-            Project targetProject = projectService.findByProjectId(targetProjectId, userAccount);
-            projectService.moveProjectToAnotherProject(thisProject, targetProject, userAccount );
-        //}
+        Context context = super.getContext(userSession);
+        Project targetProject = projectService.findByProjectId(targetProjectId);
+        projectService.moveProjectToAnotherProject(thisProject, targetProject );
         return "redirect:/project/" + thisProject.getId();
     }
 
@@ -135,19 +121,15 @@ public class ProjectController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model
     ) {
-        //if (projectId > 0) {
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-            List<Context> contexts = contextService.getAllForUser(userAccount);
-            //Project thisProject = projectService.findByProjectId(projectId, userAccount);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
-            model.addAttribute("areas", contexts);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject);
-            model.addAttribute("project", thisProject);
-            return "project/edit";
-        //} else {
-          //  return "redirect:/project/0/";
-        //}
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
+        List<Context> contexts = contextService.getAllForUser(userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+        model.addAttribute("areas", contexts);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("project", thisProject);
+        return "project/edit";
     }
 
     @RequestMapping(value = "/{projectId}/edit", method = RequestMethod.POST)
@@ -163,22 +145,22 @@ public class ProjectController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
-            Project thisProject = projectService.findByProjectId(projectId, userAccount);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+            Project thisProject = projectService.findByProjectId(projectId);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             return "project/edit";
         } else {
-            Project thisProject = projectService.findByProjectId(project.getId(), userAccount);
+            Project thisProject = projectService.findByProjectId(project.getId());
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
             Context newContext = project.getContext();
             boolean areaChanged = (newContext.getId().longValue() != thisProject.getContext().getId().longValue());
             if(areaChanged){
                 newContext = contextService.findByIdAndUserAccount(newContext.getId().longValue(), userAccount);
-                projectService.moveProjectToAnotherContext(thisProject, newContext, userAccount);
+                projectService.moveProjectToAnotherContext(thisProject, newContext);
                 model.addAttribute("userSession", new UserSessionBean(newContext.getId().longValue()));
             } else {
-                projectService.saveAndFlush(thisProject, userAccount);
+                projectService.saveAndFlush(thisProject);
             }
             return "redirect:/project/" + projectId;
         }
@@ -191,12 +173,10 @@ public class ProjectController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model) {
         long newProjectId = project.getId();
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        //if (projectId > 0) {
-            //Project project = projectService.findByProjectId(projectId, userAccount);
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
             if(project != null){
-                boolean hasNoData = taskService.projectHasNoTasks(project, userAccount);
+                boolean hasNoData = taskService.projectHasNoTasks(project);
                 boolean hasNoChildren = project.hasNoChildren();
                 if (hasNoData && hasNoChildren) {
                     if (!project.isRootProject()) {
@@ -204,7 +184,7 @@ public class ProjectController extends AbstractController {
                     } else {
                         newProjectId = 0;
                     }
-                    projectService.delete(project, userAccount);
+                    projectService.delete(project);
                     String message = "Project is deleted. You see its parent project now.";
                     model.addAttribute("message",message);
                     model.addAttribute("isDeleted",true);
@@ -221,15 +201,14 @@ public class ProjectController extends AbstractController {
                     }
                     model.addAttribute("message",s.toString());
                     model.addAttribute("isDeleted",false);
-                    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project, userAccount);
-                    Page<Task> taskPage = taskService.findByProject(project, request, userAccount, context);
+                    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project);
+                    Page<Task> taskPage = taskService.findByProject(project, context, request);
                     model.addAttribute("taskPage", taskPage);
                     model.addAttribute("breadcrumb", breadcrumb);
                     model.addAttribute("thisProject", project);
                     return "project/show";
                 }
             }
-        //}
         return "redirect:/project/" + newProjectId;
     }
 
@@ -240,26 +219,25 @@ public class ProjectController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model
     ) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
         Project thisProject = null;
         Project project = null;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
             project = Project.newRootProjectFactory(userAccount);
             if(userSession.getContextId() == 0L){
                 model.addAttribute("mustChooseArea", true);
                 project.setContext(userAccount.getDefaultContext());
             } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
                 project.setContext(context);
             }
         } else {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
+            thisProject = projectService.findByProjectId(projectId);
             project = Project.newProjectFactory(thisProject);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
@@ -274,37 +252,35 @@ public class ProjectController extends AbstractController {
             @Valid Project project,
             BindingResult result,
             Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
         if(result.hasErrors()){
             Project thisProject = null;
             if (projectId == 0) {
                 thisProject = new Project();
                 thisProject.setId(0L);
-                thisProject.setUserAccount(userAccount);
             } else {
-                thisProject = projectService.findByProjectId(projectId, userAccount);
+                thisProject = projectService.findByProjectId(projectId);
             }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
             return "project/add";
         } else {
-            project.setUserAccount(userAccount);
             if (projectId == 0) {
                 if(userSession.getContextId()>0) {
-                    Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
                     project.setContext(context);
                 }
-                project = projectService.saveAndFlush(project, userAccount);
+                project = projectService.saveAndFlush(project);
                 projectId = project.getId();
             } else {
-                Project thisProject = projectService.findByProjectId(projectId, userAccount);
+                Project thisProject = projectService.findByProjectId(projectId);
                 List<Project> children = thisProject.getChildren();
                 children.add(project);
                 thisProject.setChildren(children);
                 project.setParent(thisProject);
-                project = projectService.saveAndFlush(project, userAccount);
+                project = projectService.saveAndFlush(project);
                 projectId = project.getId();
                 LOGGER.info("project:     "+ project.toString());
                 LOGGER.info("thisProject: "+ thisProject.toString());
@@ -318,10 +294,7 @@ public class ProjectController extends AbstractController {
             @PathVariable("sourceTaskId") Task sourceTask,
             @PathVariable("destinationTaskId") Task destinationTask,
             @ModelAttribute("userSession") UserSessionBean userSession){
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-        //Task sourceTask = taskService.findOne(sourceTaskId,userAccount);
-        //Task destinationTask = taskService.findOne(destinationTaskId,userAccount);
+        Context context = super.getContext(userSession);
         LOGGER.info("-------------------------------------------------");
         LOGGER.info("  changeTaskOrderIdWithinAProject");
         LOGGER.info("-------------------------------------------------");
@@ -330,20 +303,14 @@ public class ProjectController extends AbstractController {
         LOGGER.info("  destination Task: "+destinationTask.toString());
         LOGGER.info("-------------------------------------------------");
         String returnUrl = "redirect:/taskstate/inbox";
-        Project project = sourceTask.getProject();
-        if(sourceTask.getUserAccount().getId().longValue()==destinationTask.getUserAccount().getId().longValue()){
-            if(sourceTask.getProject() == null && destinationTask.getProject() == null) {
-                taskMoveService.moveOrderIdProject(project, sourceTask, destinationTask, context);
-                LOGGER.info("  DONE: taskMoveService.moveOrderIdProject (1)");
-                returnUrl = "redirect:/project/0";
-            } else if (sourceTask.getProject() != null && destinationTask.getProject() != null) {
-                boolean sameProject = (sourceTask.getProject().getId().longValue() == destinationTask.getProject().getId().longValue());
-                if (sameProject) {
-                    taskMoveService.moveOrderIdProject(project, sourceTask, destinationTask, context);
-                    LOGGER.info("  DONE: taskMoveService.moveOrderIdProject (2)");
-                    returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
-                }
-            }
+        boolean rootProject = sourceTask.isInRootProject();
+        returnUrl = "redirect:/project/0";
+        if(rootProject){
+            taskMoveService.moveOrderIdRootProject(sourceTask, destinationTask);
+        } else {
+            taskMoveService.moveOrderIdProject(sourceTask, destinationTask);
+            LOGGER.info("  DONE: taskMoveService.moveOrderIdProject (2)");
+            returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
         }
         LOGGER.info("-------------------------------------------------");
         return returnUrl;

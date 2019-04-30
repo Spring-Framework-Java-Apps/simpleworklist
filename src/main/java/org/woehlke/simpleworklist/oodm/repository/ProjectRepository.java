@@ -23,4 +23,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByContext(Context context);
 
     List<Project> findByParentIsNullAndContext(Context context);
+
 }

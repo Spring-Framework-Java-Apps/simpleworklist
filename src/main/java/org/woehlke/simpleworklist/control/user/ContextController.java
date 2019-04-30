@@ -35,17 +35,12 @@ public class ContextController extends AbstractController {
         if(userSession == null){
             userSession.setContextId(setContext.getId());
         }
-        //if(newContextId > 0) {
-        //Context foundContext = contextService.findByIdAndUserAccount(newContextId, userAccount);
         if (setContext == null) {
             return "redirect:/logout";
         } else {
             userSession.setContextId(setContext.getId());
             model.addAttribute("userSession", new UserSessionBean(setContext.getId()));
         }
-        //} else {
-        //    model.addAttribute("userSession",new UserSessionBean(newContextId));
-        //}
         return "redirect:/taskstate/inbox";
     }
 }

@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.model.services;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 
 public interface TaskMoveService {
@@ -28,15 +27,17 @@ public interface TaskMoveService {
 
     Task moveTaskToTrash(Task task);
 
-    void deleteAllCompleted(Context context, UserAccount thisUser);
+    void deleteAllCompleted(Context context);
 
-    void emptyTrash(UserAccount userAccount, Context context);
+    void emptyTrash(Context context);
 
-    long getMaxOrderIdTaskState(TaskState taskState, Context context, UserAccount thisUser);
+    long getMaxOrderIdTaskState(TaskState taskState, Context context);
 
-    long getMaxOrderIdProject(Project project, Context context, UserAccount userAccount);
+    long getMaxOrderIdProject(Project project, Context context);
 
-    void moveOrderIdTaskState(TaskState taskState, Task sourceTask, Task destinationTask, Context context);
+    void moveOrderIdTaskState(Task sourceTask, Task destinationTask);
 
-    void moveOrderIdProject(Project project, Task sourceTask, Task destinationTask, Context context);
+    void moveOrderIdProject(Task sourceTask, Task destinationTask);
+
+    void moveOrderIdRootProject(Task sourceTask, Task destinationTask);
 }

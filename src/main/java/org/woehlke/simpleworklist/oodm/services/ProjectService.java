@@ -8,24 +8,26 @@ import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
 public interface ProjectService {
 
-    List<Project> getBreadcrumb(Project thisProject, UserAccount user);
+    List<Project> findRootProjectsByContext(Context context);
+
+    List<Project> findAllProjectsByContext(Context context);
 
     List<Project> findRootProjectsByUserAccount(UserAccount userAccount);
 
     List<Project> findAllProjectsByUserAccount(UserAccount user);
 
-    void moveProjectToAnotherProject(Project thisProject, Project targetProject, UserAccount user);
+    void moveProjectToAnotherProject(Project thisProject, Project targetProject);
 
-    Project findByProjectId(long categoryId, UserAccount user);
+    Project findByProjectId(long categoryId);
 
-    Project saveAndFlush(Project project, UserAccount user);
+    Project saveAndFlush(Project project);
 
-    void delete(Project project, UserAccount user);
+    void delete(Project project);
 
-    List<Project> findAllProjectsByUserAccountAndContext(UserAccount user, Context context);
+    List<Project> findAllProjectsByUserAccountAndContext(Context context);
 
-    List<Project> findRootProjectsByUserAccountAndContext(UserAccount user, Context context);
+    List<Project> findRootProjectsByUserAccountAndContext(Context context);
 
-    void moveProjectToAnotherContext(Project thisProject, Context newContext, UserAccount userAccount);
+    void moveProjectToAnotherContext(Project thisProject, Context newContext);
 
 }

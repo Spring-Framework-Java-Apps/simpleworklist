@@ -4,6 +4,7 @@ import org.hibernate.search.annotations.*;
 import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
+import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
 import org.woehlke.simpleworklist.oodm.enumerations.Language;
 
 import java.io.Serializable;
@@ -27,7 +28,7 @@ import javax.validation.constraints.NotNull;
         @Index(name="ix_user_account_last_login_timestamp", columnList = "last_login_timestamp")
     }
 )
-public class UserAccount extends AuditModel implements Serializable {
+public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount> {
 
     private static final long serialVersionUID = 7860692526488291439L;
 
@@ -88,6 +89,24 @@ public class UserAccount extends AuditModel implements Serializable {
     @NotNull
     @Column(name="enabled", nullable = false)
     private Boolean enabled=true;
+
+    @Transient
+    @Override
+    public boolean equalsById(UserAccount otherObject) {
+        return (this.getId().longValue() == otherObject.getId().longValue());
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUniqueConstraint(UserAccount otherObject) {
+        return (this.getUserEmail().compareTo(otherObject.getUserEmail())==0);
+    }
+
+    @Transient
+    @Override
+    public boolean equalsByUuid(UserAccount otherObject) {
+        return super.equalsByMyUuid(otherObject);
+    }
 
     public Long getId() {
         return id;
@@ -219,4 +238,5 @@ public class UserAccount extends AuditModel implements Serializable {
                 ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
+
 }

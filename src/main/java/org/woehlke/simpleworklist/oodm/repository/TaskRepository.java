@@ -17,7 +17,6 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Deprecated
     List<Task> findByProject(Project thisProject);
 
     Page<Task> findByProject(Project thisProject, Pageable pageable);
@@ -26,11 +25,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByProjectIsNullAndContext(Context context, Pageable request);
 
-    @Deprecated
-    List<Task> findByContext(Context context);
-
-    @Deprecated
-    Page<Task> findByUserAccountAndContext(UserAccount userAccount, Context context, Pageable request);
+    Page<Task> findByContext(Context context);
 
     Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState inbox, Context context);
 
@@ -38,28 +33,29 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByTaskStateAndContext(TaskState taskState, Context context, Pageable request);
 
-    @Deprecated
     List<Task> findByTaskStateAndContext(TaskState taskState, Context context);
 
-    @Deprecated
-    List<Task> findByTaskStateAndContextOrderByOrderIdTaskState(TaskState taskState, Context context);
+    List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context);
 
-    @Query("select t from Task t where t.orderIdTaskState > :lowerTask and t.orderIdTaskState < :higherTask"
-                + " and t.taskState = :taskState and t.context = :context")
-    List<Task> getTasksToReorderByOrderIdTaskState(
-        @Param("lowerTask") long lowerTaskId,
-        @Param("higherTask") long higherTaskId,
+    @Query("select t from Task t"
+            + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
+            + " and t.taskState = :taskState and t.context = :context")
+    List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
+        @Param("lowerOrderIdTaskState") long lowerOrderIdTaskState,
+        @Param("higherOrderIdTaskState") long higherOrderIdTaskState,
         @Param("taskState") TaskState taskState,
         @Param("context") Context context
     );
 
-    @Query("select t from Task t where t.orderIdProject > :lowerTask and t.orderIdProject < :higherTask"
+    @Query("select t from Task t"
+            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
             + " and t.project = :project and t.context = :context ")
-    List<Task> getTasksToReorderByOrderIdProject(
-        @Param("lowerTask") long lowerTaskId,
-        @Param("higherTask") long higherTaskId,
+    List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
+        @Param("lowerOrderIdProject") long lowerOrderIdProject,
+        @Param("higherOrderIdProject") long higherOrderIdProject,
         @Param("project") Project project,
         @Param("context") Context context
     );
 
+    Page<Task> findByUserAccount(UserAccount userAccount, Pageable request);
 }

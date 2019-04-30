@@ -44,18 +44,16 @@ public class TaskController extends AbstractController {
     public final String editTaskGet(@PathVariable("taskId") Task task, Model model) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task != null) {
             Project thisProject = null;
             if (task.getProject() == null) {
                 thisProject = new Project();
                 thisProject.setId(0L);
-                thisProject.setUserAccount(userAccount);
             } else {
                 thisProject = task.getProject();
             }
             model.addAttribute("thisProject", thisProject);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
@@ -71,14 +69,12 @@ public class TaskController extends AbstractController {
             @Valid Task task,
             @ModelAttribute("userSession") UserSessionBean userSession,
             BindingResult result, Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Task persistentTask = taskService.findOne(taskId, userAccount);
+        Task persistentTask = taskService.findOne(taskId);
         long projectId = 0;
-        Project thisProject = null;
+        Project thisProject;
         if (persistentTask.getProject() == null) {
             thisProject = new Project();
             thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
         } else {
             thisProject = persistentTask.getProject();
             projectId = thisProject.getId();
@@ -88,7 +84,7 @@ public class TaskController extends AbstractController {
                 LOGGER.info(e.toString());
             }
             model.addAttribute("thisProject", thisProject);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             return "task/edit";
@@ -106,29 +102,28 @@ public class TaskController extends AbstractController {
             }
             persistentTask.setTaskTime(task.getTaskTime());
             persistentTask.setTaskEnergy(task.getTaskEnergy());
-            boolean contextChanged =  persistentTask.getContext().getId().longValue() != task.getContext().getId().longValue();
+            boolean contextChanged =  persistentTask.getContext().equalsById(task.getContext());
             if(contextChanged){
                 persistentTask.setContext(task.getContext());
                 if(thisProject.getId()==0L) {
-                    persistentTask.setProject(null);
-                } else if(thisProject.getContext().getId()==task.getContext().getId()){
+                    persistentTask.setRootProject();
+                } else if(thisProject.getContext().equalsById(task.getContext())){
                     persistentTask.setProject(thisProject);
                 }
                 userSession.setContextId(task.getContext().getId());
                 model.addAttribute("userSession", userSession);
                 return "redirect:/project/0/";
             }
-            taskService.saveAndFlush(persistentTask, userAccount);
+            taskService.saveAndFlush(persistentTask);
             return "redirect:/project/" + projectId + "/";
         }
     }
 
     private Project getProject(long projectId, UserAccount userAccount, UserSessionBean userSession){
-        Project thisProject = null;
+        Project thisProject;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
             if(userSession.getContextId() == 0L){
                 thisProject.setContext(userAccount.getDefaultContext());
             } else {
@@ -136,7 +131,7 @@ public class TaskController extends AbstractController {
                 thisProject.setContext(context);
             }
         } else {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
+            thisProject = projectService.findByProjectId(projectId);
         }
         return thisProject;
     }
@@ -148,7 +143,6 @@ public class TaskController extends AbstractController {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
-        task.setUserAccount(userAccount);
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
         Boolean mustChooseArea = false;
@@ -159,7 +153,7 @@ public class TaskController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
             task.setContext(context);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject();
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProjectId", 0L);
@@ -173,33 +167,31 @@ public class TaskController extends AbstractController {
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
-        task.setUserAccount(userAccount);
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
-        Project thisProject = null;
+        Project thisProject;
         Boolean mustChooseArea = false;
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
-            thisProject.setUserAccount(userAccount);
             if(userSession.getContextId() == 0L){
                 mustChooseArea = true;
                 task.setContext(userAccount.getDefaultContext());
                 thisProject.setContext(userAccount.getDefaultContext());
             } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
                 task.setContext(context);
                 thisProject.setContext(context);
             }
         } else {
-            thisProject = projectService.findByProjectId(projectId, userAccount);
+            thisProject = projectService.findByProjectId(projectId);
             task.setProject(thisProject);
             task.setContext(thisProject.getContext());
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProject", thisProject);
@@ -215,7 +207,8 @@ public class TaskController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Task task,
             BindingResult result, Model model) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
@@ -223,17 +216,12 @@ public class TaskController extends AbstractController {
             Project thisProject = this.getProject(projectId, userAccount, userSession);
             Boolean mustChooseArea = false;
             if (projectId == 0) {
-                if(userSession.getContextId() == 0L){
-                    mustChooseArea = true;
-                } else {
-                    Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
-                    task.setContext(context);
-                }
+                task.setContext(context);
             } else {
                 task.setProject(thisProject);
                 task.setContext(thisProject.getContext());
             }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject, userAccount);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
@@ -243,7 +231,7 @@ public class TaskController extends AbstractController {
             if (projectId == 0) {
                 task.setProject(null);
             } else {
-                Project thisProject = projectService.findByProjectId(projectId, userAccount);
+                Project thisProject = projectService.findByProjectId(projectId);
                 task.setProject(thisProject);
                 task.setContext(thisProject.getContext());
             }
@@ -253,13 +241,12 @@ public class TaskController extends AbstractController {
                 task.setTaskState(TaskState.SCHEDULED);
             }
             task.setFocus(false);
-            Context context = contextService.findByIdAndUserAccount(task.getContext().getId(), userAccount);
             task.setContext(context);
-            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context,userAccount);
+            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
             task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            task = taskService.saveAndFlush(task, userAccount);
+            task = taskService.saveAndFlush(task);
             LOGGER.info(task.toString());
             return "redirect:/project/" + projectId + "/";
         }
@@ -267,20 +254,16 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
     public final String deleteTaskGet(@PathVariable("taskId") Task task) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task!= null){
-            taskService.delete(task, userAccount);
+            taskService.delete(task);
         }
         return "redirect:/taskstate/trash";
     }
 
     @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
     public final String undeleteTaskGet(@PathVariable("taskId") Task task) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task!= null) {
-            taskService.undelete(task, userAccount);
+            taskService.undelete(task);
             return "redirect:/taskstate/completed";
         } else {
             return "redirect:/taskstate/trash";
@@ -289,23 +272,20 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/transform/{taskId}", method = RequestMethod.GET)
     public final String transformTaskIntoProjectGet(@PathVariable("taskId") Task task) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         long projectId = 0;
         if(task != null) {
             if (task.getProject() != null) {
                 projectId = task.getProject().getId();
             }
-            Project parentProject = projectService.findByProjectId(projectId, userAccount);
+            Project parentProject = projectService.findByProjectId(projectId);
             Project thisProject = new Project();
             thisProject.setParent(parentProject);
-            thisProject.setUserAccount(userAccount);
             thisProject.setName(task.getTitle());
             thisProject.setDescription(task.getText());
             thisProject.setUuid(task.getUuid());
             thisProject.setContext(task.getContext());
-            thisProject = projectService.saveAndFlush(thisProject, userAccount);
-            taskService.delete(task, userAccount);
+            thisProject = projectService.saveAndFlush(thisProject);
+            taskService.delete(task);
             projectId = thisProject.getId();
             LOGGER.info("tried to transform Task " + task.getId() + " to new Project " + projectId);
         }
@@ -314,25 +294,21 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/complete/{taskId}", method = RequestMethod.GET)
     public final String completeTaskGet(@PathVariable("taskId") Task task) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task != null){
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext(),userAccount);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            taskService.complete(task, userAccount);
+            taskService.complete(task);
         }
         return "redirect:/taskstate/completed";
     }
 
     @RequestMapping(value = "/incomplete/{taskId}", method = RequestMethod.GET)
     public final String undoneTaskGet(@PathVariable("taskId") Task task) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
-            taskService.incomplete(task, userAccount);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext(),userAccount);
+            taskService.incomplete(task);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            taskService.saveAndFlush(task,userAccount);
+            taskService.saveAndFlush(task);
             switch (task.getTaskState()) {
                 case TODAY:
                     return "redirect:/taskstate/today";
@@ -356,36 +332,38 @@ public class TaskController extends AbstractController {
         }
     }
 
+    private String getView(Task task,String back){
+        if(back != null && back.contentEquals("project")){
+            if(task.getProject() != null) {
+                return "redirect:/project/" + task.getProject().getId();
+            } else {
+                return "redirect:/project/0";
+            }
+        }
+        switch (task.getTaskState()) {
+            case TODAY:
+                return "redirect:/taskstate/today";
+            case NEXT:
+                return "redirect:/taskstate/next";
+            case WAITING:
+                return "redirect:/taskstate/waiting";
+            case SCHEDULED:
+                return "redirect:/taskstate/scheduled";
+            case SOMEDAY:
+                return "redirect:/taskstate/someday";
+            case COMPLETED:
+                return "redirect:/taskstate/completed";
+            default:
+                return "redirect:/taskstate/inbox";
+        }
+    }
+
     @RequestMapping(value = "/setfocus/{taskId}", method = RequestMethod.GET)
     public final String setFocusGet(@PathVariable("taskId") Task task,
                                  @RequestParam(required=false) String back){
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
-            taskService.setFocus(task, userAccount);
-            if(back != null && back.contentEquals("project")){
-                if(task.getProject() != null) {
-                    return "redirect:/project/" + task.getProject().getId();
-                } else {
-                    return "redirect:/project/0";
-                }
-            }
-            switch (task.getTaskState()) {
-                case TODAY:
-                    return "redirect:/taskstate/today";
-                case NEXT:
-                    return "redirect:/taskstate/next";
-                case WAITING:
-                    return "redirect:/taskstate/waiting";
-                case SCHEDULED:
-                    return "redirect:/taskstate/scheduled";
-                case SOMEDAY:
-                    return "redirect:/taskstate/someday";
-                case COMPLETED:
-                    return "redirect:/taskstate/completed";
-                default:
-                    return "redirect:/taskstate/inbox";
-            }
+            taskService.setFocus(task);
+            return getView(task,back);
         } else {
             return "redirect:/taskstate/inbox";
         }
@@ -394,33 +372,9 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/unsetfocus/{taskId}", method = RequestMethod.GET)
     public final String unsetFocusGet(@PathVariable("taskId") Task task,
                                    @RequestParam(required=false) String back){
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        //Task task = taskService.findOne(taskId, userAccount);
         if(task !=null) {
-            taskService.unsetFocus(task, userAccount);
-            if(back != null && back.contentEquals("project")){
-                if(task.getProject() != null) {
-                    return "redirect:/project/" + task.getProject().getId();
-                } else {
-                    return "redirect:/project/0";
-                }
-            }
-            switch (task.getTaskState()) {
-                case TODAY:
-                    return "redirect:/taskstate/today";
-                case NEXT:
-                    return "redirect:/taskstate/next";
-                case WAITING:
-                    return "redirect:/taskstate/waiting";
-                case SCHEDULED:
-                    return "redirect:/taskstate/scheduled";
-                case SOMEDAY:
-                    return "redirect:/taskstate/someday";
-                case COMPLETED:
-                    return "redirect:/taskstate/completed";
-                default:
-                    return "redirect:/taskstate/inbox";
-            }
+            taskService.unsetFocus(task);
+            return getView(task,back);
         } else {
             return "redirect:/taskstate/inbox";
         }
