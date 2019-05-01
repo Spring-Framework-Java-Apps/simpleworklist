@@ -205,6 +205,11 @@ spring:
 server:
   compression:
     enabled: true
+org:
+  woehlke:
+    simpleworklist:
+      registration:
+        urlHost: https://simpleworklist.herokuapp.com
 logging:
   config: classpath:logback.xml
   #file: logging-prod.log
