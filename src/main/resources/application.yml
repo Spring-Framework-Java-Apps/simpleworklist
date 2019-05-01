@@ -12,11 +12,13 @@ spring:
     admin:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
+    url: jdbc:pgsql://localhost:5432/simpleworklist
+    #url: jdbc:postgresql://localhost:5432/simpleworklist
     #jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
-    driverClassName: org.postgresql.Driver
+    #driverClassName: org.postgresql.Driver
+    driverClassName: com.impossibl.postgres.jdbc.PGDriver
     platform: POSTGRESQL
   jpa:
     show-sql: true
@@ -71,17 +73,17 @@ org:
 spring:
   profiles: default
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_default
+    url: jdbc:pgsql://localhost:5432/simpleworklist_default
 ---
 spring:
   profiles: developing
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_developing
+    url: jdbc:pgsql://localhost:5432/simpleworklist_developing
 ---
 spring:
   profiles: travis
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_travis
+    url: jdbc:pgsql://localhost:5432/simpleworklist_travis
     continue-on-error: true
   jpa:
     show-sql: false
@@ -95,7 +97,7 @@ server:
 spring:
   profiles: testing
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_testing
+    url: jdbc:pgsql://localhost:5432/simpleworklist_testing
   jpa:
     show-sql: false
     hibernate:
@@ -131,7 +133,7 @@ logging:
 spring:
   profiles: qa
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_qa
+    url: jdbc:pgsql://localhost:5432/simpleworklist_qa
     continue-on-error: true
   jpa:
     show-sql: false
@@ -168,7 +170,7 @@ logging:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
+    url: jdbc:pgsql://localhost:5432/simpleworklist
     continue-on-error: true
   jpa:
     show-sql: false

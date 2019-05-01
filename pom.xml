@@ -196,61 +196,72 @@
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-providers-git</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-providers-standard</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-providers</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-managers</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 			<type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-provider-local</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-provider-git-commons</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-provider-gitexe</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-scm-plugin</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-client</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm-provider-jgit</artifactId>
 			<version>${maven.scm.version}</version>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
@@ -292,6 +303,11 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>com.impossibl.pgjdbc-ng</groupId>
+			<artifactId>pgjdbc-ng</artifactId>
+			<version>0.8.2</version>
+		</dependency>
     </dependencies>
 
     <dependencyManagement>

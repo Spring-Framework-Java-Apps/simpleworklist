@@ -48,6 +48,9 @@ Shortcuts
 * https://fontawesome.com/icons?d=gallery&m=free
 * https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
 * https://ckeditor.com/docs/ckeditor4/latest/guide/dev_installation.html
+* http://impossibl.github.io/pgjdbc-ng/docs/current/user-guide/#drivers
+* https://devcenter.heroku.com/articles/getting-started-with-java
+* https://devcenter.heroku.com/articles/java-support#specifying-a-java-version
 
 # java-getting-started
 
