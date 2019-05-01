@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.oodm.services;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
