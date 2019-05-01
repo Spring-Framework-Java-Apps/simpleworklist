@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Assert;
 
 import org.junit.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -90,7 +92,8 @@ public class UserAccountServiceImplTest extends AbstractTest {
             UserAccount user = userAccountService.findByUserEmail(email);
             Assert.assertTrue(user.getUserEmail().compareTo(email) == 0);
         }
-        for(UserAccount user: userAccountService.findAll()){
+        Pageable request = new PageRequest(0,10);
+        for(UserAccount user: userAccountService.findAll(request)){
             Assert.assertNotNull(user.getId());
             Assert.assertNotNull(user.getUserEmail());
             Assert.assertNotNull(user.getUserPassword());

@@ -96,12 +96,7 @@ public class TaskServiceImpl implements TaskService {
         LOGGER.info("---------------------------------");
         LOGGER.info("context:      "+ context);
         LOGGER.info("---------------------------------");
-        long projectContextId = 0;
-        if (thisProject.getContext() != null){
-            projectContextId = thisProject.getContext().getId().longValue();
-        }
-        long contextId = context.getId().longValue();
-        if((thisProject == null)||(context ==null)||(projectContextId!=contextId)){
+        if((thisProject == null)||(context ==null)){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
             return taskRepository.findByProject(thisProject,request);
