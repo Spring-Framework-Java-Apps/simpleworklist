@@ -40,11 +40,16 @@
 	<!-- Menu on Left Column and Document Window on the Right Column -->
 	<section id="tw-main-section">
 		<div class="container">
-			<th:block th:replace="${twcontent}" />
+			<div class="row">
+				<div class="col-8">
+					<th:block th:replace="${twcontent}" />
+				</div>
+				<div class="col-4">
+					<div th:replace="layout/projects :: navigation-projects(rootCategories=${rootCategories},thisProject=${thisProject})">
+					</div>
+				</div>
+			</div>
 		</div>
-	</section>
-
-	<section th:replace="layout/projects :: navigation-projects(rootCategories=${rootCategories},thisProject=${thisProject})">
 	</section>
 
 	<!-- Footer -->

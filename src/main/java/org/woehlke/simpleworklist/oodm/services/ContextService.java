@@ -17,7 +17,7 @@ public interface ContextService {
 
     void createNewContext(NewContextForm newContext, UserAccount user);
 
-    void updateContext(NewContextForm editContext, UserAccount user, long contextId);
+    void updateContext(Context context);
 
     boolean delete(Context context);
 

@@ -23,6 +23,7 @@ import org.woehlke.simpleworklist.oodm.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by tw on 14.02.16.
@@ -49,10 +50,12 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model) {
+            Locale locale, Model model) {
         Context context = super.getContext(userSession);
+        userSession.setLastProjectId(0L);
+        model.addAttribute("userSession",userSession);
         Page<Task> taskPage = taskService.findByRootProject(context,pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject();
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         if(message != null){
@@ -70,8 +73,10 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model) {
+            Locale locale, Model model) {
         Context context = super.getContext(userSession);
+        userSession.setLastProjectId(projectId);
+        model.addAttribute("userSession",userSession);
         Project thisProject = null;
         Page<Task> taskPage = null;
         if (projectId != 0) {
@@ -83,7 +88,7 @@ public class ProjectController extends AbstractController {
             thisProject.setContext(context);
             taskPage = taskService.findByRootProject(context, pageable);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
@@ -98,18 +103,21 @@ public class ProjectController extends AbstractController {
     @RequestMapping(value = "/add/new/project", method = RequestMethod.GET)
     public final String addNewProjectForm(
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model
+            Locale locale, Model model
     ){
-        return addNewProjectGet(0L, userSession,model);
+        return addNewProjectGet(0L, userSession,locale, model);
     }
 
     @RequestMapping(value = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
             @PathVariable("thisProjectId") Project thisProject,
             @PathVariable long targetProjectId,
-            @ModelAttribute("userSession") UserSessionBean userSession
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastProjectId(thisProject.getId());
+        model.addAttribute("userSession",userSession);
         Project targetProject = projectService.findByProjectId(targetProjectId);
         projectService.moveProjectToAnotherProject(thisProject, targetProject );
         return "redirect:/project/" + thisProject.getId();
@@ -119,12 +127,14 @@ public class ProjectController extends AbstractController {
     public final String editProjectGet(
             @PathVariable("projectId") Project thisProject,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model
+            Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
+        userSession.setLastProjectId(thisProject.getId());
+        model.addAttribute("userSession",userSession);
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("areas", contexts);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
@@ -138,15 +148,18 @@ public class ProjectController extends AbstractController {
             @Valid Project project,
             BindingResult result,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model
+            Locale locale, Model model
     ) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Context context = super.getContext(userSession);
+        UserAccount thisUser = context.getUserAccount();
+        userSession.setLastProjectId(projectId);
+        model.addAttribute("userSession",userSession);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 LOGGER.info(e.toString());
             }
             Project thisProject = projectService.findByProjectId(projectId);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             return "project/edit";
         } else {
@@ -156,7 +169,7 @@ public class ProjectController extends AbstractController {
             Context newContext = project.getContext();
             boolean areaChanged = (newContext.getId().longValue() != thisProject.getContext().getId().longValue());
             if(areaChanged){
-                newContext = contextService.findByIdAndUserAccount(newContext.getId().longValue(), userAccount);
+                newContext = contextService.findByIdAndUserAccount(newContext.getId().longValue(), thisUser);
                 projectService.moveProjectToAnotherContext(thisProject, newContext);
                 model.addAttribute("userSession", new UserSessionBean(newContext.getId().longValue()));
             } else {
@@ -171,9 +184,11 @@ public class ProjectController extends AbstractController {
             @PathVariable("projectId") Project project,
             @PageableDefault(sort = "title") Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model) {
+            Locale locale, Model model) {
         long newProjectId = project.getId();
         Context context = super.getContext(userSession);
+        userSession.setLastProjectId(project.getId());
+        model.addAttribute("userSession",userSession);
         UserAccount userAccount = context.getUserAccount();
             if(project != null){
                 boolean hasNoData = taskService.projectHasNoTasks(project);
@@ -201,7 +216,7 @@ public class ProjectController extends AbstractController {
                     }
                     model.addAttribute("message",s.toString());
                     model.addAttribute("isDeleted",false);
-                    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project);
+                    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
                     Page<Task> taskPage = taskService.findByProject(project, context, request);
                     model.addAttribute("taskPage", taskPage);
                     model.addAttribute("breadcrumb", breadcrumb);
@@ -217,10 +232,12 @@ public class ProjectController extends AbstractController {
     public final String addNewProjectGet(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model
+            Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
+        userSession.setLastProjectId(projectId);
+        model.addAttribute("userSession",userSession);
         Project thisProject = null;
         Project project = null;
         if (projectId == 0) {
@@ -237,7 +254,7 @@ public class ProjectController extends AbstractController {
             thisProject = projectService.findByProjectId(projectId);
             project = Project.newProjectFactory(thisProject);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
@@ -251,9 +268,11 @@ public class ProjectController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Project project,
             BindingResult result,
-            Model model) {
+            Locale locale, Model model) {
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
+        userSession.setLastProjectId(projectId);
+        model.addAttribute("userSession",userSession);
         if(result.hasErrors()){
             Project thisProject = null;
             if (projectId == 0) {
@@ -262,7 +281,7 @@ public class ProjectController extends AbstractController {
             } else {
                 thisProject = projectService.findByProjectId(projectId);
             }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
@@ -293,8 +312,14 @@ public class ProjectController extends AbstractController {
     public String changeTaskOrderIdWithinAProject(
             @PathVariable("sourceTaskId") Task sourceTask,
             @PathVariable("destinationTaskId") Task destinationTask,
-            @ModelAttribute("userSession") UserSessionBean userSession){
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ){
         Context context = super.getContext(userSession);
+        if(!sourceTask.isInRootProject()){
+            userSession.setLastProjectId(sourceTask.getProject().getId());
+        }
+        model.addAttribute("userSession",userSession);
         LOGGER.info("-------------------------------------------------");
         LOGGER.info("  changeTaskOrderIdWithinAProject");
         LOGGER.info("-------------------------------------------------");

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.NewUser2UserMessage;
+import org.woehlke.simpleworklist.model.beans.UserSessionBean;
+import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 
@@ -24,7 +26,8 @@ import javax.validation.Valid;
 import java.util.Locale;
 
 /**
- * Created by Fert on 16.02.2016.
+ * Created by
+ * on 16.02.2016.
  */
 @Controller
 @RequestMapping(value = "/user2user/")
@@ -34,13 +37,15 @@ public class User2UserMessageController extends AbstractController {
 
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
-            @PathVariable long userId,
+            @PathVariable("userId") UserAccount otherUser,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
+            @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
+        Context context = super.getContext(userSession);
+        UserAccount thisUser = context.getUserAccount();
+        model.addAttribute("userSession",userSession);
         NewUser2UserMessage newUser2UserMessage = new NewUser2UserMessage();
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserAccount otherUser = super.userAccountService.findUserById(userId);
         Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
         model.addAttribute("newUser2UserMessage", newUser2UserMessage);
         model.addAttribute("otherUser", otherUser);
@@ -53,14 +58,17 @@ public class User2UserMessageController extends AbstractController {
 
     @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
-            @PathVariable long userId,
+            @PathVariable("userId") UserAccount otherUser,
             @Valid @ModelAttribute("newUser2UserMessage") NewUser2UserMessage newUser2UserMessage,
             BindingResult result,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
-            Locale locale, Model model) {
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ) {
         LOGGER.info("sendNewMessageToOtherUser");
-        UserAccount thisUser = userAccountLoginSuccessService.retrieveCurrentUser();
-        UserAccount otherUser = super.userAccountService.findUserById(userId);
+        Context context = super.getContext(userSession);
+        UserAccount thisUser = context.getUserAccount();
+        model.addAttribute("userSession",userSession);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
         model.addAttribute("breadcrumb",breadcrumb);
         if(result.hasErrors()){
@@ -74,7 +82,7 @@ public class User2UserMessageController extends AbstractController {
             return "user/messages/all";
         } else {
             user2UserMessageService.sendNewUserMessage(thisUser, otherUser, newUser2UserMessage);
-            return "redirect:/user2user/"+userId+"/messages/";
+            return "redirect:/user2user/"+otherUser.getId()+"/messages/";
         }
     }
 

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.control.common.AbstractController;
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.oodm.services.ContextService;
 
@@ -31,16 +30,11 @@ public class ContextController extends AbstractController {
     @RequestMapping(value = "/choose/{newContextId}", method = RequestMethod.GET)
     public String switchContxt(@PathVariable("newContextId") Context setContext,
                                @ModelAttribute("userSession") UserSessionBean userSession, Model model){
-        super.verifyInput(setContext,userSession);
-        if(userSession == null){
+        Context isContext = super.getContext(userSession);
+        if (setContext != null) {
             userSession.setContextId(setContext.getId());
         }
-        if (setContext == null) {
-            return "redirect:/logout";
-        } else {
-            userSession.setContextId(setContext.getId());
-            model.addAttribute("userSession", new UserSessionBean(setContext.getId()));
-        }
+        model.addAttribute("userSession",userSession);
         return "redirect:/taskstate/inbox";
     }
 }

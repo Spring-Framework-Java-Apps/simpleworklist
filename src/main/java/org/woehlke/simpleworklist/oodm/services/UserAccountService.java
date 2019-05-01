@@ -3,6 +3,8 @@ package org.woehlke.simpleworklist.oodm.services;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.model.beans.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
@@ -16,7 +18,7 @@ public interface UserAccountService {
 
     UserAccount findByUserEmail(String userEmail);
 
-    List<UserAccount> findAll();
+    Page<UserAccount> findAll(Pageable request);
 
     void changeUsersPassword(UserAccountForm userAccount);
 

@@ -6,6 +6,7 @@ import org.woehlke.simpleworklist.oodm.entities.Task;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Breadcrumb implements Serializable {
 
@@ -13,10 +14,18 @@ public class Breadcrumb implements Serializable {
 
     private List<BreadcrumbItem> breadcrumb;
 
-    public Breadcrumb() {
+    private final Locale locale;
+
+    public Breadcrumb(Locale locale) {
+        this.locale = locale;
         List<BreadcrumbItem> breadcrumb = new ArrayList<>();
-        //TODO: i18n
-        BreadcrumbItem home = new BreadcrumbItem("Home","/");
+        String homeString;
+        if(locale == Locale.GERMAN){
+            homeString =  "Start";
+        } else {
+            homeString =  "Home";
+        }
+        BreadcrumbItem home = new BreadcrumbItem(homeString,"/");
         breadcrumb.add(home);
         this.breadcrumb = breadcrumb;
     }
@@ -31,8 +40,12 @@ public class Breadcrumb implements Serializable {
 
     public void addProjectRoot(){
         String urlProject = "/project/0";
-        //TODO: i18n
-        String name = "Projects";
+        String name;
+        if(this.locale == Locale.GERMAN){
+            name = "Projekte";
+        } else {
+            name = "Projects";
+        }
         BreadcrumbItem breadcrumbItemProject = new BreadcrumbItem(name,urlProject);
         breadcrumb.add(breadcrumbItemProject);
     }

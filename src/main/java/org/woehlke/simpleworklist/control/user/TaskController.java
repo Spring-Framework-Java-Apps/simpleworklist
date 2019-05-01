@@ -1,6 +1,8 @@
 package org.woehlke.simpleworklist.control.user;
 
 import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
@@ -41,7 +43,11 @@ public class TaskController extends AbstractController {
     }
 
     @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.GET)
-    public final String editTaskGet(@PathVariable("taskId") Task task, Model model) {
+    public final String editTaskGet(
+            @PathVariable("taskId") Task task,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         if(task != null) {
@@ -53,7 +59,7 @@ public class TaskController extends AbstractController {
                 thisProject = task.getProject();
             }
             model.addAttribute("thisProject", thisProject);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
@@ -68,7 +74,7 @@ public class TaskController extends AbstractController {
             @PathVariable long taskId,
             @Valid Task task,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            BindingResult result, Model model) {
+            BindingResult result, Locale locale, Model model) {
         Task persistentTask = taskService.findOne(taskId);
         long projectId = 0;
         Project thisProject;
@@ -84,7 +90,7 @@ public class TaskController extends AbstractController {
                 LOGGER.info(e.toString());
             }
             model.addAttribute("thisProject", thisProject);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             return "task/edit";
@@ -139,7 +145,8 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/addtorootproject/", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model) {
+            Locale locale, Model model
+    ) {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
@@ -153,7 +160,7 @@ public class TaskController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
             task.setContext(context);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject();
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProjectId", 0L);
@@ -166,7 +173,8 @@ public class TaskController extends AbstractController {
     public final String addNewTaskToProjectGet(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Model model) {
+            Locale locale, Model model
+    ) {
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
         Task task = new Task();
@@ -191,7 +199,7 @@ public class TaskController extends AbstractController {
             task.setProject(thisProject);
             task.setContext(thisProject.getContext());
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProject", thisProject);
@@ -206,7 +214,7 @@ public class TaskController extends AbstractController {
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
             @Valid Task task,
-            BindingResult result, Model model) {
+            BindingResult result, Locale locale, Model model) {
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
         if (result.hasErrors()) {
@@ -221,7 +229,7 @@ public class TaskController extends AbstractController {
                 task.setProject(thisProject);
                 task.setContext(thisProject.getContext());
             }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);

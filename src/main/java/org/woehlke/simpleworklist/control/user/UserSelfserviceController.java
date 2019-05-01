@@ -3,6 +3,10 @@ package org.woehlke.simpleworklist.control.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,12 +45,14 @@ public class UserSelfserviceController extends AbstractController {
         this.userAccountAccessService = userAccountAccessService;
     }
 
-
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String userProfileAndMenu(Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        //TODO: change from List to Page
-        List<UserAccount> users = userAccountService.findAll();
+    public String userProfileAndMenu(
+            @PageableDefault(sort = "userFullname", direction = Sort.Direction.DESC) Pageable request,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
+        Page<UserAccount> users = userAccountService.findAll(request);
         for(UserAccount u:users){
             LOGGER.info(u.getUserFullname()+": "+u.getUserEmail());
         }
@@ -60,8 +66,12 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/name", method = RequestMethod.GET)
-    public String userNameForm(Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+    public String userNameForm(
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         UserChangeNameForm bean = new UserChangeNameForm(user.getUserFullname());
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeName(locale);
         model.addAttribute("breadcrumb", breadcrumb);
@@ -71,8 +81,13 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/name", method = RequestMethod.POST)
-    public String userNameStore(@Valid UserChangeNameForm username, BindingResult result,Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+    public String userNameStore(
+            @Valid UserChangeNameForm username,
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         if(result.hasErrors()) {
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeName(locale);
             model.addAttribute("breadcrumb", breadcrumb);
@@ -87,22 +102,29 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/password", method = RequestMethod.GET)
-    public String userPasswordForm(Locale locale, Model model){
+    public String userPasswordForm(
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
+        UserChangePasswordForm userChangePasswordForm = new UserChangePasswordForm();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale);
         model.addAttribute("breadcrumb", breadcrumb);
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
-        UserChangePasswordForm userChangePasswordForm = new UserChangePasswordForm();
         model.addAttribute("userChangePasswordForm", userChangePasswordForm);
         return "user/selfservice/password";
     }
 
     @RequestMapping(value = "/password", method = RequestMethod.POST)
-    public String userPasswordStore(@Valid UserChangePasswordForm userChangePasswordForm,
-                                   BindingResult result, Locale locale, Model model) {
+    public String userPasswordStore(
+            @Valid UserChangePasswordForm userChangePasswordForm,
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ) {
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         LOGGER.info("---------------------------------------------------------");
         LOGGER.info("userPasswordStore");
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
@@ -145,8 +167,9 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/contexts", method = RequestMethod.GET)
-    public String userAreasForm(Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+    public String userAreasForm(@ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         UserChangeDefaultContextForm bean = new UserChangeDefaultContextForm();
         bean.setId(user.getId());
         bean.setDefaultContext(user.getDefaultContext());
@@ -161,8 +184,11 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(value = "/contexts", method = RequestMethod.POST)
     public String userAreasSave(
             @Valid @ModelAttribute("thisUser") UserChangeDefaultContextForm thisUser,
-            BindingResult result,Locale locale,  Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         List<Context> contexts = contextService.getAllForUser(user);
         model.addAttribute("contexts", contexts);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale);
@@ -184,8 +210,9 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/context/add", method = RequestMethod.GET)
-    public String userNewAreaForm(Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+    public String userNewAreaForm(@ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         model.addAttribute("thisUser", user);
         NewContextForm newContext = new NewContextForm();
         model.addAttribute("newContext", newContext);
@@ -195,8 +222,13 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/context/add", method = RequestMethod.POST)
-    public String userNewAreaStore(@Valid NewContextForm newContext, BindingResult result, Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+    public String userNewAreaStore(
+            @Valid NewContextForm newContext,
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
+        Context context = super.getContext(userSession);
+        UserAccount user = context.getUserAccount();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
@@ -213,10 +245,13 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.GET)
-    public String userEditAreaForm(@PathVariable long contextId, Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+    public String userEditAreaForm(
+            @PathVariable("contextId") Context context,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
+        Context contextFromSession = super.getContext(userSession);
+        UserAccount user = contextFromSession.getUserAccount();
         model.addAttribute("thisUser", user);
-        Context context = contextService.findByIdAndUserAccount(contextId,user);
         NewContextForm editContext = new NewContextForm();
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
@@ -227,9 +262,12 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.POST)
-    public String userEditAreaStore(@Valid NewContextForm editContext, BindingResult result, Locale locale, Model model, @PathVariable long contextId){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        Context context = contextService.findByIdAndUserAccount(contextId,user);
+    public String userEditAreaStore(
+            @Valid NewContextForm editContext,
+            @PathVariable("contextId") Context context,
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
+    ){
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
@@ -239,7 +277,9 @@ public class UserSelfserviceController extends AbstractController {
             }
             return "user/selfservice/context/edit";
         } else {
-            contextService.updateContext(editContext, user, contextId);
+            context.setNameDe(editContext.getNameDe());
+            context.setNameEn(editContext.getNameEn());
+            contextService.updateContext(context);
             return "redirect:/user/selfservice/contexts";
         }
     }
@@ -248,19 +288,19 @@ public class UserSelfserviceController extends AbstractController {
     //TODO: has projects or tasks? -> display message in frontend
     @RequestMapping(value = "/context/delete/{id}", method = RequestMethod.GET)
     public String userDeleteArea(
-            @PathVariable long id,
+            @PathVariable("id") Context context,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        model.addAttribute("thisUser", user);
-        Context context = contextService.findByIdAndUserAccount(id,user);
+        UserAccount thisUser = context.getUserAccount();
+        model.addAttribute("userSession",userSession);
+        model.addAttribute("thisUser", thisUser);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale,context);
         model.addAttribute("breadcrumb", breadcrumb);
         if(userSession.getContextId() == context.getId()){
             LOGGER.info("context is active in session: "+ context);
         } else {
-            if(user.getDefaultContext().getId() == context.getId()){
+            if(thisUser.getDefaultContext().getId() == context.getId()){
                 LOGGER.info("context is default context of this user: "+ context);
             } else {
                 if(contextService.contextHasItems(context)){
@@ -277,7 +317,10 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/language", method = RequestMethod.GET)
-    public String userLanguageForm(Locale locale, Model model){
+    public String userLanguageForm(
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
@@ -288,8 +331,12 @@ public class UserSelfserviceController extends AbstractController {
     }
 
     @RequestMapping(value = "/language", method = RequestMethod.POST)
-    public String userLanguageStore(@Valid UserChangeLanguageForm userChangeLanguageForm,
-                                    BindingResult result, Locale locale, Model model){
+    public String userLanguageStore(
+            @Valid UserChangeLanguageForm userChangeLanguageForm,
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ){
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale);
         model.addAttribute("breadcrumb", breadcrumb);

@@ -10,17 +10,17 @@ import java.util.Locale;
 
 public interface BreadcrumbService {
 
-    Breadcrumb getBreadcrumbForShowRootProject();
+    Breadcrumb getBreadcrumbForShowRootProject(Locale locale);
 
-    Breadcrumb getBreadcrumbForShowOneProject(Project thisProject);
+    Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale);
 
     Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale);
 
     Breadcrumb getBreadcrumbForTaskstateAll(Locale locale);
 
-    Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task);
+    Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale);
 
-    Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task);
+    Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale locale);
 
     Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale);
 

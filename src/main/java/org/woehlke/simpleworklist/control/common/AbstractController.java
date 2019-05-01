@@ -69,7 +69,7 @@ public abstract class AbstractController {
 
     @ModelAttribute("numberOfNewIncomingMessages")
     public final int getNumberOfNewIncomingMessages(){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount user = this.getUser();
         return user2UserMessageService.getNumberOfNewIncomingMessagesForUser(user);
     }
 
@@ -85,56 +85,24 @@ public abstract class AbstractController {
 
     @ModelAttribute("contexts")
     public final List<Context> getContexts(){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount user = this.getUser();
         return contextService.getAllForUser(user);
     }
 
     @ModelAttribute("context")
     public final String getCurrentArea(@ModelAttribute("userSession") UserSessionBean userSession,
-                                       BindingResult result, Locale locale, Model model){
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        String retVal = "All";
-        if(locale.getLanguage().equalsIgnoreCase("de")){
-            retVal = "Alle";
-        }
-        if (userSession.getContextId() == null) {
-            model.addAttribute("userSession", new UserSessionBean(user.getDefaultContext().getId()));
-            if (locale.getLanguage().equalsIgnoreCase("de")) {
-                retVal = user.getDefaultContext().getNameDe();
-            } else {
-                retVal = user.getDefaultContext().getNameEn();
-            }
+                                       Locale locale){
+        Context context = this.getContext(userSession);
+        if(locale == Locale.GERMAN){
+            return context.getNameDe();
         } else {
-            if(!result.hasErrors()){
-                if (userSession.getContextId() > 0) {
-                    Context found = contextService.findByIdAndUserAccount(userSession.getContextId(), user);
-                    if(found != null){
-                        if(locale.getLanguage().equalsIgnoreCase("de")){
-                            retVal = found.getNameDe();
-                        } else {
-                            retVal = found.getNameEn();
-                        }
-                    }
-                }
-            }
+            return context.getNameEn();
         }
-        return retVal;
     }
 
     @ModelAttribute("refreshMessages")
     public final boolean refreshMessagePage(){
         return false;
-    }
-
-    protected void verifyInput(Context setContext, UserSessionBean userSession) {
-        boolean ok = true;
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        if(setContext.getUserAccount().getId() != userAccount.getId()){
-            ok = false;
-        }
-        if(userSession.getContextId()!=setContext.getId()){
-            ok = false;
-        }
     }
 
     protected UserAccount getUser(){
@@ -143,9 +111,13 @@ public abstract class AbstractController {
 
     protected Context getContext(UserSessionBean userSession){
         UserAccount thisUser = this.getUser();
+        long defaultContextId = thisUser.getDefaultContext().getId();
+        if(userSession == null){
+            userSession = new UserSessionBean(defaultContextId);
+        }
         long contextId = userSession.getContextId();
         if(contextId == 0){
-            contextId =   thisUser.getDefaultContext().getId();
+            userSession.setContextId(defaultContextId);
         }
         return contextService.findByIdAndUserAccount(contextId, thisUser);
     }

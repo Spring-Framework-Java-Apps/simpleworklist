@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.Task;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskMoveService;
-import org.woehlke.simpleworklist.oodm.services.TaskService;
 
 @Controller
 @RequestMapping(value = "/task/move")
@@ -25,12 +23,9 @@ public class TaskMoveController extends AbstractController {
 
     private final TaskMoveService taskMoveService;
 
-    private final TaskService taskService;
-
     @Autowired
-    public TaskMoveController(TaskMoveService taskMoveService, TaskService taskService) {
+    public TaskMoveController(TaskMoveService taskMoveService) {
         this.taskMoveService = taskMoveService;
-        this.taskService = taskService;
     }
 
     @RequestMapping(value = "/{taskId}/to/project/{projectId}", method = RequestMethod.GET)

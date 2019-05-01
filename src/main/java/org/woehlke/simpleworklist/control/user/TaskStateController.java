@@ -17,7 +17,6 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.model.services.TaskStateService;
-import org.woehlke.simpleworklist.oodm.services.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,11 +48,13 @@ public class TaskStateController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.INBOX);
         Page<Task> taskPage = taskStateService.getInbox(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "inbox");
+        model.addAttribute("userSession", userSession);
         return "taskstate/inbox";
     }
 
@@ -63,11 +64,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.TODAY);
         Page<Task> taskPage = taskStateService.getToday(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.TODAY,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "today");
+        model.addAttribute("userSession", userSession);
         return "taskstate/today";
     }
 
@@ -77,11 +80,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.NEXT);
         Page<Task> taskPage = taskStateService.getNext(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.NEXT,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "next");
+        model.addAttribute("userSession", userSession);
         return "taskstate/next";
     }
 
@@ -91,11 +96,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.WAITING);
         Page<Task> taskPage = taskStateService.getWaiting(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.WAITING,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "waiting");
+        model.addAttribute("userSession", userSession);
         return "taskstate/waiting";
     }
 
@@ -105,11 +112,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.SCHEDULED);
         Page<Task> taskPage = taskStateService.getScheduled(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.SCHEDULED,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "scheduled");
+        model.addAttribute("userSession", userSession);
         return "taskstate/scheduled";
     }
 
@@ -119,11 +128,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.SOMEDAY);
         Page<Task> taskPage = taskStateService.getSomeday(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.SOMEDAY,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "someday");
+        model.addAttribute("userSession", userSession);
         return "taskstate/someday";
     }
 
@@ -133,11 +144,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.COMPLETED);
         Page<Task> taskPage = taskStateService.getCompleted(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.COMPLETED,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "completed");
+        model.addAttribute("userSession", userSession);
         return "taskstate/completed";
     }
 
@@ -147,11 +160,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.TRASH);
         Page<Task> taskPage = taskStateService.getTrash(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.TRASH,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "trash");
+        model.addAttribute("userSession", userSession);
         return "taskstate/trash";
     }
 
@@ -161,11 +176,13 @@ public class TaskStateController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ) {
         Context context = super.getContext(userSession);
+        userSession.setLastTaskState(TaskState.FOCUS);
         Page<Task> taskPage = taskStateService.getFocus(context, pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.FOCUS,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", "focus");
+        model.addAttribute("userSession", userSession);
         return "taskstate/focus";
     }
 
@@ -173,8 +190,11 @@ public class TaskStateController extends AbstractController {
     public String changeTaskOrderId(
             @PathVariable("sourceTaskId") Task sourceTask,
             @PathVariable("destinationTaskId") Task destinationTask,
-            @ModelAttribute("userSession") UserSessionBean userSession
+            @ModelAttribute("userSession") UserSessionBean userSession, Model model
     ){
+        Context context = super.getContext(userSession);
+        userSession.setLastTaskState(sourceTask.getTaskState());
+        model.addAttribute("userSession", userSession);
         LOGGER.info("------------- changeTaskOrderId -------------");
         LOGGER.info("source Task:      "+sourceTask.toString());
         LOGGER.info("---------------------------------------------");

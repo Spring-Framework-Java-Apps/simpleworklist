@@ -59,13 +59,8 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void updateContext(NewContextForm editContext, UserAccount user, long contextId) {
-        Context context = contextRepository.getOne(contextId);
-        if(context.getUserAccount().getId().longValue() == user.getId().longValue()){
-            context.setNameEn(editContext.getNameEn());
-            context.setNameDe(editContext.getNameDe());
-            contextRepository.saveAndFlush(context);
-        }
+    public void updateContext(Context context) {
+        contextRepository.saveAndFlush(context);
     }
 
     @Override
