@@ -522,10 +522,18 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
+						<execution>
+                    <phase>package</phase>
+                    <goals</goals>
+                    <configuration>
+                        
+                    </configuration>
+                </execution>
                             <execution>
                                 <id>unpack-dependencies</id>
                                 <phase>package</phase>
                                 <goals>
+									<goal>copy</goal>
                                     <goal>analyze-only</goal>
                                     <goal>analyze-report</goal>
                                     <goal>build-classpath</goal>
@@ -549,6 +557,14 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
+									<artifactItems>
+										<artifactItem>
+											<groupId>com.github.jsimone</groupId>
+											<artifactId>webapp-runner</artifactId>
+											<version>9.0.19.0</version>
+											<destFileName>webapp-runner.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
                                 </configuration>
                             </execution>
                         </executions>
