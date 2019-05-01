@@ -182,6 +182,11 @@ spring:
     hibernate:
       #ddl-auto: update
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        search:
+          default:
+            indexBase : /tmp/simpleworklistsearch    
   thymeleaf:
     cache: true
   devtools:
