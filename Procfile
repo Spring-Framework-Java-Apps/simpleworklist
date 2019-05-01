@@ -1,1 +1,1 @@
-web: java -jar target/simpleworklist.war --spring.profiles.active=prod
+web: java -jar target/simpleworklist.war -Dserver.port=$PORT --spring.profiles.active=prod
