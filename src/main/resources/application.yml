@@ -19,7 +19,6 @@ spring:
     admin:
       enabled: true
   datasource:
-    #url: jdbc:pgsql://localhost:5432/simpleworklist
     url: jdbc:postgresql://localhost:5432/simpleworklist
     #jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
     username: simpleworklist
@@ -209,7 +208,7 @@ org:
   woehlke:
     simpleworklist:
       registration:
-        urlHost: https://simpleworklist.herokuapp.com
+        urlHost: simpleworklist.herokuapp.com
 logging:
   config: classpath:logback.xml
   #file: logging-prod.log
