@@ -178,10 +178,9 @@ logging:
             impl: DEBUG
 ---
 spring:
-  profiles: prod
+  profiles: heroku
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
-    #url: jdbc:pgsql://localhost:5432/simpleworklist
     continue-on-error: true
   jpa:
     show-sql: false
@@ -211,7 +210,6 @@ org:
         urlHost: simpleworklist.herokuapp.com
 logging:
   config: classpath:logback.xml
-  #file: logging-prod.log
   level:
     org:
       woehlke:

@@ -817,7 +817,7 @@
             </build>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>heroku</id>
             <build>
                 <plugins>
                     <plugin>
@@ -827,7 +827,7 @@
                             <layout>WAR</layout>
                             <mainClass>${start-class}</mainClass>
                             <profiles>
-                                <profile>prod</profile>
+                                <profile>heroku</profile>
                             </profiles>
                         </configuration>
                         <executions>
@@ -847,7 +847,6 @@
                             </execution>
                         </executions>
                     </plugin>
-					
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
@@ -871,16 +870,9 @@
                                 <phase>package</phase>
                                 <goals>
                                     <goal>analyze-only</goal>
-									<!--
-                                    <goal>analyze-report</goal>
-                                    <goal>unpack-dependencies</goal>
-                                    -->
                                     <goal>build-classpath</goal>
                                 </goals>
                                 <configuration>
-                                    <!--
-                                    <includes>**/*.class,**/*.properties</includes>
-                                    -->
                                     <outputDirectory>${project.build.directory}/classes</outputDirectory>
                                     <overWriteReleases>false</overWriteReleases>
                                     <overWriteSnapshots>true</overWriteSnapshots>
@@ -909,7 +901,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>prod</spring.profiles.active>
+                                <spring.profiles.active>heroku</spring.profiles.active>
                             </systemPropertyVariables>
                             <skipTests>true</skipTests>
                         </configuration>
