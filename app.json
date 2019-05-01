@@ -1,0 +1,5 @@
+{
+  "name": "SimpleWorklist",
+  "description": "Your Todo-List for Getting Things Done.",
+  "addons": [ "heroku-postgresql" ]
+}

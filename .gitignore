@@ -17,4 +17,14 @@
 /etc/mavenlog1.txt
 /etc/mavenlog2.txt
 /etc/mavenlog3.txt
+target/
+.env
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+docs/tmp/
+docs/java-getting-started/
+docs/deploying-spring-boot-apps/
 
