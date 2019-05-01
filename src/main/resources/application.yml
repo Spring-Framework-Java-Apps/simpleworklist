@@ -1,4 +1,11 @@
+endpoints:
+  health:
+    sensitive: false
+  endpoints:
+    shutdown:
+      enabled: false
 server:
+  port: ${PORT}
   error:
     path: /fehler
   compression:
