@@ -12,13 +12,13 @@ spring:
     admin:
       enabled: true
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist
-    #url: jdbc:postgresql://localhost:5432/simpleworklist
+    #url: jdbc:pgsql://localhost:5432/simpleworklist
+    url: jdbc:postgresql://localhost:5432/simpleworklist
     #jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
-    #driverClassName: org.postgresql.Driver
-    driverClassName: com.impossibl.postgres.jdbc.PGDriver
+    driverClassName: org.postgresql.Driver
+    #driverClassName: com.impossibl.postgres.jdbc.PGDriver
     platform: POSTGRESQL
   jpa:
     show-sql: true
@@ -174,7 +174,8 @@ logging:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist
+    url: jdbc:postgresql://localhost:5432/simpleworklist
+    #url: jdbc:pgsql://localhost:5432/simpleworklist
     continue-on-error: true
   jpa:
     show-sql: false
