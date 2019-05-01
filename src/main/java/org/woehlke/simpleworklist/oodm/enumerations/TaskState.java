@@ -1,7 +1,5 @@
 package org.woehlke.simpleworklist.oodm.enumerations;
 
-import io.micrometer.core.instrument.search.RequiredSearch;
-
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import java.io.Serializable;

@@ -61,6 +61,7 @@
     </properties>
 
     <dependencies>
+		<!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
@@ -69,10 +70,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+		-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+		<!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-integration</artifactId>
@@ -81,6 +84,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jersey</artifactId>
         </dependency>
+		-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
@@ -101,10 +105,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+		<!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+		-->
         <!--
         <dependency>
             <groupId>de.codecentric</groupId>
@@ -120,11 +126,13 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
+		<!--
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+		-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -303,11 +311,13 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
+		<!--
 		<dependency>
 			<groupId>com.impossibl.pgjdbc-ng</groupId>
 			<artifactId>pgjdbc-ng</artifactId>
 			<version>0.8.2</version>
 		</dependency>
+		-->
     </dependencies>
 
     <dependencyManagement>
@@ -708,13 +718,9 @@
                                     <goal>build-classpath</goal>
                                 </goals>
                                 <configuration>
-                                    <!--
-                                    <includes>**/*.class,**/*.properties</includes>
-                                    -->
-                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
                                     <overWriteReleases>false</overWriteReleases>
                                     <overWriteSnapshots>true</overWriteSnapshots>
-                                    <outputFile>${project.build.directory}/classpath.txt</outputFile>
+                                    <outputFile>${project.build.outputDirectory}/classpath.txt</outputFile>
                                     <failOnWarning>false</failOnWarning>
                                     <ignoredDependencies>
                                         <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
@@ -730,6 +736,14 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
+									<artifactItems>
+										<artifactItem>
+											<groupId>com.github.jsimone</groupId>
+											<artifactId>webapp-runner</artifactId>
+											<version>9.0.19.0</version>
+											<destFileName>webapp-runner.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
                                 </configuration>
                             </execution>
                         </executions>
@@ -816,6 +830,65 @@
                                 <profile>prod</profile>
                             </profiles>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+									<goal>repackage</goal>
+                                    <goal>build-info</goal>
+                                </goals>
+                                <configuration>
+                                    <additionalProperties>
+                                        <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                        <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                        <java.source>${maven.compiler.source}</java.source>
+                                        <java.target>${maven.compiler.target}</java.target>
+                                    </additionalProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+					
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-dependencies</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>analyze-only</goal>
+									<!--
+                                    <goal>analyze-report</goal>
+                                    <goal>unpack-dependencies</goal>
+                                    -->
+                                    <goal>build-classpath</goal>
+                                </goals>
+                                <configuration>
+                                    <!--
+                                    <includes>**/*.class,**/*.properties</includes>
+                                    -->
+                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                    <overWriteReleases>false</overWriteReleases>
+                                    <overWriteSnapshots>true</overWriteSnapshots>
+                                    <outputFile>${project.build.directory}/classpath.txt</outputFile>
+                                    <failOnWarning>false</failOnWarning>
+                                    <ignoredDependencies>
+                                        <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
+                                        <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
+                                    </ignoredDependencies>
+                                    <ignoredUsedUndeclaredDependencies>
+                                        <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
+                                    </ignoredUsedUndeclaredDependencies>
+                                    <ignoredUnusedDeclaredDependencies>
+                                        <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
+                                    </ignoredUnusedDeclaredDependencies>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
