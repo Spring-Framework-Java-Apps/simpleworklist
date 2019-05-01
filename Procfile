@@ -1,1 +1,1 @@
-web: java -jar target/simpleworklist.war
+web: java -jar target/simpleworklist.war --spring.profiles.active=prod

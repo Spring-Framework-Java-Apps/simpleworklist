@@ -25,8 +25,8 @@ spring:
     open-in-view: true
     generate-ddl: true
     hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
+      #ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
@@ -79,6 +79,10 @@ spring:
   profiles: developing
   datasource:
     url: jdbc:pgsql://localhost:5432/simpleworklist_developing
+  jpa:
+    hibernate:
+      ddl-auto: update
+      #ddl-auto: create-drop
 ---
 spring:
   profiles: travis
@@ -175,7 +179,8 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: update
+      #ddl-auto: update
+      ddl-auto: create-drop
   thymeleaf:
     cache: true
   devtools:
