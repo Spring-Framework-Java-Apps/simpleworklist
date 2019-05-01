@@ -20,11 +20,9 @@ spring:
       enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
-    #jdbcUrl: jdbc:postgresql://localhost:5432/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
-    #driverClassName: com.impossibl.postgres.jdbc.PGDriver
     platform: POSTGRESQL
   jpa:
     show-sql: true
@@ -59,10 +57,10 @@ org:
       user:
         strengthBCryptPasswordEncoder: 10
       mail:
-        host: sslout.df.eu
-        port: 465
-        username: news@thomas-woehlke.de
-        password: gecgy.gKC8u3
+        host: ${MAIL_HOST}
+        port: ${MAIL_PORT}
+        username: ${MAIL_USERNAME}
+        password: ${MAIL_PASSWORD}
         smtp:
           auth: true
           sslEnable: true
@@ -74,17 +72,17 @@ org:
         maxRetries: 5
         ttlEmailVerificationRequest: 86400000
         urlHost: localhost:8080
-        mailFrom: news@thomas-woehlke.de
+        mailFrom: ${MAIL_FROM}
 ---
 spring:
   profiles: default
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist_default
+    url: jdbc:postgresql://localhost:5432/simpleworklist_default
 ---
 spring:
   profiles: developing
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist_developing
+    url: jdbc:postgresql://localhost:5432/simpleworklist_developing
   jpa:
     hibernate:
       ddl-auto: update
@@ -93,7 +91,7 @@ spring:
 spring:
   profiles: travis
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist_travis
+    url: jdbc:postgresql://localhost:5432/simpleworklist_travis
     continue-on-error: true
   jpa:
     show-sql: false
@@ -107,7 +105,7 @@ server:
 spring:
   profiles: testing
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist_testing
+    url: jdbc:postgresql://localhost:5432/simpleworklist_testing
   jpa:
     show-sql: false
     hibernate:
@@ -143,7 +141,7 @@ logging:
 spring:
   profiles: qa
   datasource:
-    url: jdbc:pgsql://localhost:5432/simpleworklist_qa
+    url: jdbc:postgresql://localhost:5432/simpleworklist_qa
     continue-on-error: true
   jpa:
     show-sql: false
