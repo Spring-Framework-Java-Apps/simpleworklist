@@ -179,7 +179,7 @@
        <dependency>
            <groupId>org.apache.lucene</groupId>
            <artifactId>lucene-core</artifactId>
-           <version>7.1.0</version>
+           <version>5.5.5</version>
 		</dependency>
 
         <dependency>
@@ -340,7 +340,7 @@
 			<dependency>
 			  <groupId>org.springframework.session</groupId>
 			  <artifactId>spring-session-bom</artifactId>
-			  <version>Bean-SR3</version>
+			  <version>Bean-RELEASE</version>
 			  <type>pom</type>
 			  <scope>import</scope>
 			</dependency>
