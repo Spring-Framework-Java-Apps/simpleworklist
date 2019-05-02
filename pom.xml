@@ -168,12 +168,14 @@
 			<artifactId>hibernate-search-engine</artifactId>
 			<version>${hibernate-search.version}</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search-testing</artifactId>
 			<version>${hibernate-search.version}</version>
 			<scope>test</scope>
 		</dependency>
+		-->
        <dependency>
            <groupId>org.apache.lucene</groupId>
            <artifactId>lucene-core</artifactId>
