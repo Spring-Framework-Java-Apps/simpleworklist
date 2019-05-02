@@ -10,6 +10,31 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="refresh" content="25" th:if="${refreshMessages}">
+	<meta name="author" content="Thomas Woehlke">
+	<meta name="description" content="Your Todo-List for Getting Things Done.">
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+	<script>
+	  window.addEventListener("load", function(){
+		window.cookieconsent.initialise({
+		  "palette": {
+			"popup": {
+			  "background": "#000000"
+			},
+			"button": {
+			  "background": "transparent",
+			  "border": "#ffffff",
+			  "text": "#ffffff"
+			}
+		  },
+		  "content": {
+			"link": "Read the Privacy Policy",
+			"href": "/privacy"
+		  }
+		})});
+	</script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<title th:replace="${headtitle}">SimpleWorklist</title>
 	<link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>

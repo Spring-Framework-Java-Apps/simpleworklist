@@ -168,10 +168,16 @@
 			<artifactId>hibernate-search-engine</artifactId>
 			<version>${hibernate-search.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-testing</artifactId>
+			<version>${hibernate-search.version}</version>
+			<scope>test</scope>
+		</dependency>
        <dependency>
            <groupId>org.apache.lucene</groupId>
            <artifactId>lucene-core</artifactId>
-           <version>5.5.5</version>
+           <version>7.1.0</version>
 		</dependency>
 
         <dependency>
@@ -304,7 +310,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>5.1.4.RELEASE</version>
+			<version>5.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
