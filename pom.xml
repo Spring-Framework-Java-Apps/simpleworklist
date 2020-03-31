@@ -11,23 +11,33 @@
         <version>2.1.3.RELEASE</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
+
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
     <url>http://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/p/simpleworklist</url>
-    <organization>
-        <name>Thomas Woehlke</name>
-        <url>http://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/</url>
-    </organization>
     <inceptionYear>2012</inceptionYear>
+
+    <organization>
+        <name>Spring-Framework-Java-Apps</name>
+        <url>https://github.com/Spring-Framework-Java-Apps/</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Thomas Wöhlke</name>
+            <email>github@woehlke.org</email>
+            <url>https://github.com/thomaswoehlke/</url>
+        </developer>
+    </developers>
+
     <scm>
-        <url>https://ThomasWoehlke@bitbucket.org/ThomasWoehlke/simpleworklist.git</url>
-        <connection>scm:git:https://ThomasWoehlke@bitbucket.org/ThomasWoehlke/simpleworklist.git</connection>
-        <developerConnection>scm:git:https://ThomasWoehlke@bitbucket.org/ThomasWoehlke/simpleworklist.git</developerConnection>
+        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist.git</url>
+        <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
+        <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
-        <system>bitbucket</system>
-        <url>https://bitbucket.org/ThomasWoehlke/simpleworklist/issues</url>
+        <system>Github</system>
+        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/issues</url>
     </issueManagement>
     <distributionManagement>
         <site>
@@ -35,13 +45,7 @@
             <url>file://C:/xampp/x64-7.1.26-0-VC14/htdocs/p/simpleworklist</url>
         </site>
     </distributionManagement>
-    <developers>
-        <developer>
-            <name>Thomas Wöhlke</name>
-            <email>thomas.woehlke@rub.de</email>
-            <url>http://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/</url>
-        </developer>
-    </developers>
+
 
     <properties>
         <java.version>1.8</java.version>
@@ -59,6 +63,25 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <start-class>org.woehlke.simpleworklist.SimpleworklistApplication</start-class>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-bom</artifactId>
+                <version>Bean-RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 		<!--
@@ -279,6 +302,7 @@
 			<version>${maven.scm.version}</version>
             <scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-jdbc</artifactId>
@@ -328,24 +352,7 @@
 		-->
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-dependencies</artifactId>
-                <version>${spring-boot-admin.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-			<dependency>
-			  <groupId>org.springframework.session</groupId>
-			  <artifactId>spring-session-bom</artifactId>
-			  <version>Bean-RELEASE</version>
-			  <type>pom</type>
-			  <scope>import</scope>
-			</dependency>
-        </dependencies>
-    </dependencyManagement>
+
 
 
     <build>
@@ -514,6 +521,9 @@
             <build>
                 <finalName>simpleworklist</finalName>
                 <defaultGoal>clean spring-boot:run</defaultGoal>
+                <pluginManagement>
+                    <plugins></plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
@@ -595,9 +605,13 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>testing</id>
             <build>
+                <pluginManagement>
+                    <plugins></plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
@@ -641,9 +655,13 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>qa</id>
             <build>
+                <pluginManagement>
+                    <plugins></plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
@@ -700,6 +718,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>developing</id>
             <build>
@@ -774,9 +793,14 @@
                 </plugins>
             </build>
         </profile>
+
+
         <profile>
             <id>travis</id>
             <build>
+                <pluginManagement>
+                    <plugins></plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
@@ -829,6 +853,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>heroku</id>
             <build>
