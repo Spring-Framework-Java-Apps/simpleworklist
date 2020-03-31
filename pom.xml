@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.3.5-SNAPSHOT</version>
+    <version>2.3.6-SNAPSHOT</version>
 	<packaging>war</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -506,9 +506,14 @@
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>default</value>
+                </property>
             </activation>
             <build>
                 <finalName>simpleworklist</finalName>
+                <defaultGoal>clean spring-boot:run</defaultGoal>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>

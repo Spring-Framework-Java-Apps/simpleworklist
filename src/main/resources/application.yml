@@ -1,15 +1,16 @@
 endpoints:
   health:
-    sensitive: false
-  endpoints:
-    shutdown:
-      enabled: false
+    enabled: true
+    sensitive: true
+  shutdown:
+    enabled: true
+    sensitive: true
 server:
-  port: ${PORT}
+  port: 8080
   error:
     path: /fehler
   compression:
-    enabled: true
+    enabled: false
     min-response-size: 2048
 spring:
   devtools:
@@ -19,7 +20,7 @@ spring:
     admin:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
+    url: jdbc:postgresql://localhost:5433/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
@@ -39,7 +40,7 @@ spring:
         search:
           default:
             directory_provider : filesystem
-            indexBase : ${user.dir}\\simpleworklistsearch
+            indexBase : ${user.dir}/simpleworklistsearch
   session:
     store-type: jdbc
     jdbc:
@@ -57,10 +58,10 @@ org:
       user:
         strengthBCryptPasswordEncoder: 10
       mail:
-        host: ${MAIL_HOST}
-        port: ${MAIL_PORT}
-        username: ${MAIL_USERNAME}
-        password: ${MAIL_PASSWORD}
+        host: ${MAIL_SMTP_HOST}
+        port: ${MAIL_SMTP_PORT}
+        username: ${MAIL_SMTP_USERNAME}
+        password: ${MAIL_SMTP_PASSWORD}
         smtp:
           auth: true
           sslEnable: true
@@ -71,18 +72,18 @@ org:
       registration:
         maxRetries: 5
         ttlEmailVerificationRequest: 86400000
-        urlHost: localhost:8080
+        urlHost: ${MAIL_URL_APP_HOST}
         mailFrom: ${MAIL_FROM}
 ---
 spring:
   profiles: default
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_default
+    url: jdbc:postgresql://localhost:5433/simpleworklist_default
 ---
 spring:
   profiles: developing
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_developing
+    url: jdbc:postgresql://localhost:5433/simpleworklist_developing
   jpa:
     hibernate:
       ddl-auto: update
@@ -91,7 +92,7 @@ spring:
 spring:
   profiles: travis
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_travis
+    url: jdbc:postgresql://localhost:5433/simpleworklist_travis
     continue-on-error: true
   jpa:
     show-sql: false
@@ -105,7 +106,7 @@ server:
 spring:
   profiles: testing
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_testing
+    url: jdbc:postgresql://localhost:5433/simpleworklist_testing
   jpa:
     show-sql: false
     hibernate:
@@ -141,7 +142,7 @@ logging:
 spring:
   profiles: qa
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_qa
+    url: jdbc:postgresql://localhost:5433/simpleworklist_qa
     continue-on-error: true
   jpa:
     show-sql: false
@@ -178,7 +179,7 @@ logging:
 spring:
   profiles: heroku
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
+    url: jdbc:postgresql://localhost:5433/simpleworklist_heroku
     continue-on-error: true
   jpa:
     show-sql: false
@@ -189,7 +190,7 @@ spring:
       hibernate:
         search:
           default:
-            indexBase : /tmp/simpleworklistsearch    
+            indexBase : /tmp/simpleworklistsearch
   thymeleaf:
     cache: true
   devtools:
