@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;

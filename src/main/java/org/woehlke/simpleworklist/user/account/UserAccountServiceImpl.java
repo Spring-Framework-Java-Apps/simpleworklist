@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.messages.User2UserMessage;
 import org.woehlke.simpleworklist.language.Language;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;

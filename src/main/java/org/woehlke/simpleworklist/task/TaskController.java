@@ -15,7 +15,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.taskstate.TaskMoveService;
-import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;

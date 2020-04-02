@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.context;
 
-import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import java.util.List;

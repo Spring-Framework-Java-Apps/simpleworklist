@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.user.account;
 
 import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
 import org.woehlke.simpleworklist.language.Language;

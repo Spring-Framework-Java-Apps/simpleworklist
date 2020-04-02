@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.taskstate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 
 /**

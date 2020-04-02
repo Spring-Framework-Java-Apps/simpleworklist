@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.common.AbstractController;
-import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
