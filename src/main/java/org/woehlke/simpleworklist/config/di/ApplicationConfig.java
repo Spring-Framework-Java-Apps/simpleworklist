@@ -17,7 +17,6 @@ import java.util.Properties;
 @Configuration
 @EnableAsync
 @EnableJpaAuditing
-@EnableJdbcHttpSession
 @EnableJpaRepositories({
     "org.woehlke.simpleworklist"
 })

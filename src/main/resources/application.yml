@@ -37,17 +37,13 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         temp:
           use_jdbc_metadata_defaults: false
-        search:
-          default:
-            directory_provider : filesystem
-            indexBase : ${user.dir}/simpleworklistsearch
   session:
     store-type: jdbc
     jdbc:
       initialize-schema: ALWAYS
-      cleanup-cron: 0 * * * *simpleworklist *
-      schema: classpath:org/springframework/session/jdbc/schema-postgresql.sql
-      table-name: SPRING_SESSION
+      #cleanup-cron: 0 * * * *simpleworklist *
+      #schema: classpath:org/springframework/session/jdbc/schema-postgresql.sql
+      #table-name: SPRING_SESSION
   thymeleaf:
     cache: false
   main:

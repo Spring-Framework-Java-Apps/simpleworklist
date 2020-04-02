@@ -68,7 +68,7 @@
             <dependency>
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-bom</artifactId>
-                <version>Bean-RELEASE</version>
+                <version>Corn-SR2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -198,6 +198,11 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>ckeditor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-core</artifactId>
+            <scope>compile</scope>
         </dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>

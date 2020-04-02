@@ -1,23 +1,38 @@
 package org.woehlke.simpleworklist.config.di;
 
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
 
 import java.util.Locale;
 
 
 @Configuration
+@EnableAsync
+@EnableJpaAuditing
 @EnableWebMvc
 @EnableSpringDataWebSupport
+@EnableJdbcHttpSession
+@ImportAutoConfiguration({
+    ApplicationConfig.class
+})
+@EnableConfigurationProperties({
+    ApplicationProperties.class
+})
 public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {
 
     @Bean
