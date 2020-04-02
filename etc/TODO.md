@@ -10,3 +10,5 @@
 Fixed #32, Fixed #36,  Fixed #89, Fixed #83, Fixed #84, Fixed #85, Fixed #88, Fixed #90, Fixed #91, Fixed #99
 
 
+# 2.3.8
+Fixed #79, Fixed #80
