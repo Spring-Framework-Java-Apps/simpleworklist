@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.user.UserDetailsBean;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountSecurityServiceImpl implements UserAccountSecurityService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountSecurityServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(UserAccountSecurityServiceImpl.class);
 
     private final UserAccountRepository userAccountRepository;
 
