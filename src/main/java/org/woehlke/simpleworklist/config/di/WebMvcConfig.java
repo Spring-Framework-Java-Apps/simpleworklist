@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.config.di;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
@@ -7,7 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
@@ -19,6 +23,7 @@ import org.thymeleaf.dialect.springdata.SpringDataDialect;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 
 import java.util.Locale;
+import java.util.Properties;
 
 
 @Configuration
@@ -27,13 +32,48 @@ import java.util.Locale;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableJdbcHttpSession
-@ImportAutoConfiguration({
-    ApplicationConfig.class
+@EnableJpaRepositories({
+    "org.woehlke.simpleworklist"
 })
 @EnableConfigurationProperties({
     ApplicationProperties.class
 })
 public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {
+
+    private final ApplicationProperties applicationProperties;
+
+    @Autowired
+    public WebMvcConfig(ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
+    }
+
+    @Bean
+    public JavaMailSender mailSender(){
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.setProperty(
+            "mail.smtp.auth",
+            applicationProperties.getMail().getAuth().toString()
+        );
+        javaMailProperties.setProperty(
+            "mail.smtp.ssl.enable",
+            applicationProperties.getMail().getSslEnable().toString()
+        );
+        javaMailProperties.setProperty(
+            "mail.smtp.socketFactory.port",
+            applicationProperties.getMail().getSocketFactoryPort()
+        );
+        javaMailProperties.setProperty(
+            "mail.smtp.socketFactory.class",
+            applicationProperties.getMail().getSocketFactoryClass()
+        );
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setJavaMailProperties(javaMailProperties);
+        mailSender.setHost(applicationProperties.getMail().getHost());
+        mailSender.setPort(applicationProperties.getMail().getPort());
+        mailSender.setUsername(applicationProperties.getMail().getUsername());
+        mailSender.setPassword(applicationProperties.getMail().getPassword());
+        return mailSender;
+    }
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -51,9 +91,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
 
     @Bean
     public MessageSource messageSource(){
-        ResourceBundleMessageSource x =  new  ResourceBundleMessageSource();
-        x.setBasename("messages");
-        return x;
+        ResourceBundleMessageSource messageSource =  new  ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
     }
 
     @Bean
@@ -76,13 +116,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/*").addResourceLocations("classpath:/static/css/");
-        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-        registry.addResourceHandler("/img/*").addResourceLocations("classpath:/static/img/");
-        registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
-        registry.addResourceHandler("/js/*").addResourceLocations("classpath:/static/js/");
-        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
-        registry.addResourceHandler("/webjars/*").addResourceLocations("/webjars/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
+        for(String h :applicationProperties.getWebMvc().getStaticResourceHandler()){
+            String location = "classpath:/static"+h+"/";
+            registry.addResourceHandler(h+"/*").addResourceLocations(location);
+            registry.addResourceHandler(h+"/**").addResourceLocations(location);
+        }
+        for(String h :applicationProperties.getWebMvc().getDynaicResourceHandler()){
+            String location = h+"/";
+            registry.addResourceHandler(h+"/*").addResourceLocations(location);
+            registry.addResourceHandler(h+"/**").addResourceLocations(location);
+        }
     }
 }

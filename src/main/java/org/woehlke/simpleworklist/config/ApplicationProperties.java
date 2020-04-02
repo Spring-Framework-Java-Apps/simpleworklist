@@ -84,6 +84,12 @@ public class ApplicationProperties {
 
         @NotNull
         private Integer controllerPageSize;
+
+        @NotNull
+        private String[] staticResourceHandler;
+
+        @NotNull
+        private String[] dynaicResourceHandler;
     }
 
     @Getter

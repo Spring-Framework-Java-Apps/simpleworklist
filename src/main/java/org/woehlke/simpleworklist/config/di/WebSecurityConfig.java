@@ -33,7 +33,6 @@ import org.woehlke.simpleworklist.user.account.UserAccountSecurityService;
 @EnableJdbcHttpSession
 @EnableWebSecurity
 @ImportAutoConfiguration({
-    ApplicationConfig.class,
     WebMvcConfig.class
 })
 @EnableConfigurationProperties({

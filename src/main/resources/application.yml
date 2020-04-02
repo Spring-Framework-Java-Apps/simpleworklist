@@ -54,6 +54,12 @@ org:
         mailFrom: ${MAIL_FROM}
       webMvc:
         controllerPageSize: 10
+        staticResourceHandler:
+          - "/css"
+          - "/img"
+          - "/js"
+        dynaicResourceHandler:
+          - "/webjars"
       webSecurity:
         loginProcessingUrl: "/j_spring_security_check"
         logoutUrl: "/logout"
