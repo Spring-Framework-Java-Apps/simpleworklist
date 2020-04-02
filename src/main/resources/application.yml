@@ -1,10 +1,3 @@
-endpoints:
-  health:
-    enabled: true
-    sensitive: true
-  shutdown:
-    enabled: true
-    sensitive: true
 server:
   port: 8080
   error:
@@ -13,18 +6,12 @@ server:
     enabled: false
     min-response-size: 2048
 spring:
-  devtools:
-    livereload:
-      enabled: true
-  application:
-    admin:
-      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5433/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
-    platform: POSTGRESQL
+    platform: postgresql
   jpa:
     show-sql: true
     open-in-view: true
@@ -42,8 +29,8 @@ spring:
     jdbc:
       initialize-schema: ALWAYS
       #cleanup-cron: 0 * * * *simpleworklist *
-      #schema: classpath:org/springframework/session/jdbc/schema-postgresql.sql
-      #table-name: SPRING_SESSION
+      schema: classpath:org/springframework/session/jdbc/schema-postgresql.sql
+      table-name: SPRING_SESSION
   thymeleaf:
     cache: false
   main:
