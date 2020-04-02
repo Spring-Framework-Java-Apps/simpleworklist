@@ -35,7 +35,7 @@ public class MyErrorController implements ErrorController {
                     log.warn("##################################################");
                     log.warn("            UNAUTHORIZED");
                     log.warn("##################################################");
-                    return "redirect:/";
+                    return "redirect:/login?login_error=1";
             }
         }
         Throwable exception = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
