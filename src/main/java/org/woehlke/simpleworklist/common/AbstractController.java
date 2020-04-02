@@ -16,9 +16,11 @@ import org.woehlke.simpleworklist.oodm.services.ProjectService;
 import org.woehlke.simpleworklist.oodm.services.User2UserMessageService;
 import org.woehlke.simpleworklist.oodm.services.UserAccountService;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
-import org.woehlke.simpleworklist.model.services.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.user.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
+
 import java.util.List;
 import java.util.Locale;
 

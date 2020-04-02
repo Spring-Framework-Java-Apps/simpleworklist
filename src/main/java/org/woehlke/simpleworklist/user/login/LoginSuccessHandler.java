@@ -10,7 +10,6 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.model.services.UserAccountLoginSuccessService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -17,6 +17,9 @@ import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.services.UserAccountService;
 import org.woehlke.simpleworklist.model.services.*;
+import org.woehlke.simpleworklist.user.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.UserAccountSecurityService;
+import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;

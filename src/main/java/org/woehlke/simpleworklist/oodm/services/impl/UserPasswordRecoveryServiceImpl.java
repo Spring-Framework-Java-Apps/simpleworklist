@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.oodm.repository.UserPasswordRecoveryRepository;
-import org.woehlke.simpleworklist.model.services.TokenGeneratorService;
+import org.woehlke.simpleworklist.user.token.TokenGeneratorService;
 import org.woehlke.simpleworklist.oodm.services.UserPasswordRecoveryService;
 
 import java.util.Date;
