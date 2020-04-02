@@ -19,7 +19,7 @@ import java.util.Properties;
 @EnableJpaAuditing
 @EnableJdbcHttpSession
 @EnableJpaRepositories({
-        "org.woehlke.simpleworklist.oodm.repository"
+    "org.woehlke.simpleworklist"
 })
 @EnableConfigurationProperties({
     ApplicationProperties.class
