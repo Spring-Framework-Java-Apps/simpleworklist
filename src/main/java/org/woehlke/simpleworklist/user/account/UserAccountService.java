@@ -1,10 +1,11 @@
-package org.woehlke.simpleworklist.user;
+package org.woehlke.simpleworklist.user.account;
 
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccountForm;
 
 public interface UserAccountService {
 

@@ -15,10 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.UserAccountService;
+import org.woehlke.simpleworklist.user.account.UserAccountService;
 import org.woehlke.simpleworklist.model.services.*;
-import org.woehlke.simpleworklist.user.UserAccountAccessService;
-import org.woehlke.simpleworklist.user.UserAccountSecurityService;
+import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.account.UserAccountSecurityService;
 import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
 

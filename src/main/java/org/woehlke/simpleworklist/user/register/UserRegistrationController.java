@@ -10,9 +10,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.user.UserAccountForm;
+import org.woehlke.simpleworklist.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
-import org.woehlke.simpleworklist.user.UserAccountService;
+import org.woehlke.simpleworklist.user.account.UserAccountService;
 
 import javax.validation.Valid;
 

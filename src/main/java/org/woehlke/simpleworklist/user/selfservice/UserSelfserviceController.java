@@ -24,7 +24,7 @@ import org.woehlke.simpleworklist.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.language.Language;
-import org.woehlke.simpleworklist.user.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import javax.validation.Valid;

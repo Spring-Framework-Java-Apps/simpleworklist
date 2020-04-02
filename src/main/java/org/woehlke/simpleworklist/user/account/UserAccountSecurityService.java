@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user;
+package org.woehlke.simpleworklist.user.account;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

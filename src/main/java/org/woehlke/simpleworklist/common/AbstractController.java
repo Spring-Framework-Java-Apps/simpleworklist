@@ -14,11 +14,11 @@ import org.woehlke.simpleworklist.task.TaskTime;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.project.ProjectService;
 import org.woehlke.simpleworklist.user.messages.User2UserMessageService;
-import org.woehlke.simpleworklist.user.UserAccountService;
+import org.woehlke.simpleworklist.user.account.UserAccountService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
 import java.util.List;

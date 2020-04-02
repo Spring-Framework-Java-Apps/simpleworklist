@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.user.register.UserRegistrationService;
 import org.woehlke.simpleworklist.user.login.LoginForm;
-import org.woehlke.simpleworklist.user.UserAccountForm;
+import org.woehlke.simpleworklist.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user;
+package org.woehlke.simpleworklist.user.account;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserAccountRepository;
+import org.woehlke.simpleworklist.user.UserDetailsBean;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

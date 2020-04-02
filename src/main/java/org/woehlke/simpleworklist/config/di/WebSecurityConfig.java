@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.woehlke.simpleworklist.user.login.LoginSuccessHandler;
-import org.woehlke.simpleworklist.user.UserAccountSecurityService;
+import org.woehlke.simpleworklist.user.account.UserAccountSecurityService;
 
 @Configuration
 @EnableWebSecurity
