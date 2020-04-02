@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.common.AbstractController;
+import org.woehlke.simpleworklist.context.NewContextForm;
 import org.woehlke.simpleworklist.context.UserChangeDefaultContextForm;
 import org.woehlke.simpleworklist.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.Language;
-import org.woehlke.simpleworklist.model.beans.*;
 import org.woehlke.simpleworklist.user.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 

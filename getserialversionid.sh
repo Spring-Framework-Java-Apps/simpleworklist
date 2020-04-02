@@ -45,7 +45,7 @@ serialver org.woehlke.simpleworklist.oodm.entities.UserRegistration  >> $SERIALV
 serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.model.beans.NewContextForm >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.context.NewContextForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.messages.NewUser2UserMessage >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.search.SearchResult >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.UserAccountForm  >> $SERIALVERSIONS_FILE

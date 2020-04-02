@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.oodm.services;
 
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.model.beans.NewContextForm;
+import org.woehlke.simpleworklist.context.NewContextForm;
 
 import java.util.List;
 
