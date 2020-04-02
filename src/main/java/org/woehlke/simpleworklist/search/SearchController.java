@@ -14,7 +14,6 @@ import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.model.beans.SearchResult;
-import org.woehlke.simpleworklist.model.services.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
