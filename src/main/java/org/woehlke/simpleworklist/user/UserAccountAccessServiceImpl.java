@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.user.login.LoginForm;
-import org.woehlke.simpleworklist.model.beans.UserChangePasswordForm;
+import org.woehlke.simpleworklist.user.resetpassword.UserChangePasswordForm;
 import org.woehlke.simpleworklist.oodm.repository.UserAccountRepository;
 
 @Service

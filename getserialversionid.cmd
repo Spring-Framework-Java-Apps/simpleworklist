@@ -40,7 +40,7 @@ serialver org.woehlke.simpleworklist.model.beans.UserAccountForm  >> ..\..\etc\s
 serialver org.woehlke.simpleworklist.model.beans.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserChangeNameForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.UserChangePasswordForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.resetpassword.UserChangePasswordForm >> ..\..\etc\serialversions.txt
 @rem serialver org.woehlke.simpleworklist.model.beans.UserDetailsBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserSessionBean >> ..\..\etc\serialversions.txt

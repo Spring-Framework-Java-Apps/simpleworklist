@@ -23,6 +23,7 @@ import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.Language;
 import org.woehlke.simpleworklist.model.beans.*;
 import org.woehlke.simpleworklist.user.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.resetpassword.UserChangePasswordForm;
 
 import javax.validation.Valid;
 import java.util.List;

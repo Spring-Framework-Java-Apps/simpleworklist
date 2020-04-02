@@ -52,7 +52,7 @@ serialver org.woehlke.simpleworklist.model.beans.UserAccountForm  >> $SERIALVERS
 serialver org.woehlke.simpleworklist.model.beans.UserChangeDefaultContextForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.UserChangeLanguageForm  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.UserChangeNameForm >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.model.beans.UserChangePasswordForm >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.resetpassword.UserChangePasswordForm >> $SERIALVERSIONS_FILE
 #serialver org.woehlke.simpleworklist.model.beans.UserDetailsBean >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.UserSessionBean >> $SERIALVERSIONS_FILE
