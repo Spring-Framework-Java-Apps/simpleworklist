@@ -4,7 +4,6 @@ import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskState;
-import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 
 import java.util.Locale;
 

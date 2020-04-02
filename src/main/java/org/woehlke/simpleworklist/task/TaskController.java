@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.taskstate.TaskMoveService;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.model.beans.Breadcrumb;
+import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 
 @Controller
