@@ -38,25 +38,47 @@ spring:
 org:
   woehlke:
     simpleworklist:
-      user:
-        strengthBCryptPasswordEncoder: 10
       mail:
         host: ${MAIL_SMTP_HOST}
         port: ${MAIL_SMTP_PORT}
         username: ${MAIL_SMTP_USERNAME}
         password: ${MAIL_SMTP_PASSWORD}
-        smtp:
-          auth: true
-          sslEnable: true
-          socketFactoryPort: 465
-          socketFactoryClass: javax.net.ssl.SSLSocketFactory
-      mvc:
-        controllerPageSize: 10
+        auth: true
+        sslEnable: true
+        socketFactoryPort: 465
+        socketFactoryClass: javax.net.ssl.SSLSocketFactory
       registration:
         maxRetries: 5
         ttlEmailVerificationRequest: 86400000
         urlHost: ${MAIL_URL_APP_HOST}
         mailFrom: ${MAIL_FROM}
+      webMvc:
+        controllerPageSize: 10
+      webSecurity:
+        loginProcessingUrl: "/j_spring_security_check"
+        logoutUrl: "/logout"
+        cookieNamesToClear:
+          - "JSESSIONID"
+        invalidateHttpSession: true
+        defaultSuccessUrl: "/"
+        failureForwardUrl: "/login?login_error=1"
+        usernameParameter: "j_username"
+        passwordParameter: "j_password"
+        loginPage: "/login"
+        antPatternsPublic:
+          - "/webjars/**"
+          - "/css/**"
+          - "/img/**"
+          - "/js/**"
+          - "/favicon.ico"
+          - "/test*/**"
+          - "/login*"
+          - "/register*"
+          - "/confirm*/**"
+          - "/resetPassword*"
+          - "/passwordResetConfirm*/**"
+          - "/error*"
+        strengthBCryptPasswordEncoder: 10
 ---
 spring:
   profiles: default

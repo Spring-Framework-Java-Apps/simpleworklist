@@ -41,9 +41,17 @@ import org.woehlke.simpleworklist.user.account.UserAccountSecurityService;
 })
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final AuthenticationSuccessHandler loginSuccessHandler;
+    private final UserAccountSecurityService userAccountSecurityService;
+
     @Autowired
-    public WebSecurityConfig(AuthenticationManagerBuilder auth, LoginSuccessHandler loginSuccessHandler, UserAccountSecurityService userAccountSecurityService) {
-        this.auth = auth;
+    public WebSecurityConfig(
+        AuthenticationManagerBuilder authenticationManagerBuilder,
+        LoginSuccessHandler loginSuccessHandler,
+        UserAccountSecurityService userAccountSecurityService
+    ) {
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.loginSuccessHandler = loginSuccessHandler;
         this.userAccountSecurityService = userAccountSecurityService;
     }
@@ -53,51 +61,66 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .headers().disable()
             .authorizeRequests()
-            .antMatchers(
-                    "/webjars/**", "/css/**", "/img/**", "/js/**", "/favicon.ico",
-                    "/test*/**", "/login*", "/register*", "/confirm*/**",
-                    "/resetPassword*", "/passwordResetConfirm*/**", "/error*"
-            )
+            .antMatchers(antPatternsPublic)
             .permitAll()
-            //.and()
-            //.authorizeRequests()
-            .anyRequest().fullyAuthenticated().and()
-            //.authenticated().antMatcher("/**").fullyAuthenticated()
+            .anyRequest()
+            .fullyAuthenticated()
+            .and()
             .formLogin()
-            .loginPage("/login")
-            .usernameParameter("j_username").passwordParameter("j_password")
-            .loginProcessingUrl("/j_spring_security_check")
-            .failureForwardUrl("/login?login_error=1")
-            .defaultSuccessUrl("/")
+            .loginPage(loginPage)
+            .usernameParameter(usernameParameter).passwordParameter(passwordParameter)
+            .loginProcessingUrl(loginProcessingUrl)
+            .failureForwardUrl(failureForwardUrl)
+            .defaultSuccessUrl(defaultSuccessUrl)
             .successHandler(loginSuccessHandler)
             .permitAll()
             .and()
             .logout()
-            .logoutUrl("/logout")
-            .deleteCookies("JSESSIONID")
-            .invalidateHttpSession(true)
+            .logoutUrl(logoutUrl)
+            .deleteCookies(cookieNamesToClear)
+            .invalidateHttpSession(invalidateHttpSession)
             .permitAll();
+    }
+
+    private final static String loginProcessingUrl =  "/j_spring_security_check";
+    private final static String logoutUrl = "/logout";
+    private final static String[] cookieNamesToClear = {"JSESSIONID"};
+    private final static boolean invalidateHttpSession = true;
+    private final static String defaultSuccessUrl = "/";
+    private final static String failureForwardUrl = "/login?login_error=1";
+    private final static String usernameParameter = "j_username";
+    private final static String passwordParameter = "j_password";
+    private final static String loginPage = "/login";
+    private final static String[] antPatternsPublic = {
+        "/webjars/**", "/css/**", "/img/**", "/js/**", "/favicon.ico",
+        "/test*/**", "/login*", "/register*", "/confirm*/**",
+        "/resetPassword*", "/passwordResetConfirm*/**", "/error*"
+    };
+    private final static int strengthBCryptPasswordEncoder = 10;
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return this.userAccountSecurityService;
+    }
+
+    @Bean
+    public PasswordEncoder encoder(){
+        int strength = strengthBCryptPasswordEncoder;
+        return new BCryptPasswordEncoder(strength);
     }
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        int strength = 10;
-        PasswordEncoder encoder = new BCryptPasswordEncoder(strength);
-        return auth.userDetailsService(userAccountSecurityService).passwordEncoder(encoder).and().build();
+        return authenticationManagerBuilder
+            .userDetailsService(userDetailsService())
+            .passwordEncoder(encoder()).and().build();
     }
 
     @Bean
     public UsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {
         UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
-        filter.setFilterProcessesUrl("/j_spring_security_check");
+        filter.setFilterProcessesUrl(loginProcessingUrl);
         return filter;
     }
-
-    private final AuthenticationManagerBuilder auth;
-
-    private final AuthenticationSuccessHandler loginSuccessHandler;
-
-    private final UserDetailsService userAccountSecurityService;
-
 }
