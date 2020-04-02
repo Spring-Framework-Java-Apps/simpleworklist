@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services;
+package org.woehlke.simpleworklist.context;
 
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;

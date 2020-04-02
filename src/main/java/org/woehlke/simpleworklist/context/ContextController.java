@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.user.UserSessionBean;
-import org.woehlke.simpleworklist.oodm.services.ContextService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

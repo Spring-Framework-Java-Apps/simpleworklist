@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.user.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
-import org.woehlke.simpleworklist.oodm.services.UserRegistrationService;
-import org.woehlke.simpleworklist.oodm.services.UserAccountService;
+import org.woehlke.simpleworklist.user.UserAccountService;
 
 import javax.validation.Valid;
 

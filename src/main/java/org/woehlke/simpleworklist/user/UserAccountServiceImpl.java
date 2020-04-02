@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.user;
 
 
 import java.util.Date;
@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
@@ -25,7 +24,6 @@ import org.woehlke.simpleworklist.language.Language;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
 import org.woehlke.simpleworklist.oodm.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;
-import org.woehlke.simpleworklist.oodm.services.UserAccountService;
 
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

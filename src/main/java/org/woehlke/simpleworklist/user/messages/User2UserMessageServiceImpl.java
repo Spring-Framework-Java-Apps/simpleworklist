@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.user.messages;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,11 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.messages.NewUser2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;
-import org.woehlke.simpleworklist.oodm.services.User2UserMessageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;

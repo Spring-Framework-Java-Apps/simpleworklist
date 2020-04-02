@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services;
+package org.woehlke.simpleworklist.user;
 
 import java.util.Map;
 

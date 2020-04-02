@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.context;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;
-import org.woehlke.simpleworklist.oodm.services.ContextService;
+import org.woehlke.simpleworklist.context.ContextService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;

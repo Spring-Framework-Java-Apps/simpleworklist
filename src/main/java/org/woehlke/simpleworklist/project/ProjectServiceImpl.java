@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;
-import org.woehlke.simpleworklist.oodm.services.ProjectService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

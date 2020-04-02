@@ -11,10 +11,10 @@ import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskTime;
-import org.woehlke.simpleworklist.oodm.services.ContextService;
-import org.woehlke.simpleworklist.oodm.services.ProjectService;
-import org.woehlke.simpleworklist.oodm.services.User2UserMessageService;
-import org.woehlke.simpleworklist.oodm.services.UserAccountService;
+import org.woehlke.simpleworklist.context.ContextService;
+import org.woehlke.simpleworklist.project.ProjectService;
+import org.woehlke.simpleworklist.user.messages.User2UserMessageService;
+import org.woehlke.simpleworklist.user.UserAccountService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;

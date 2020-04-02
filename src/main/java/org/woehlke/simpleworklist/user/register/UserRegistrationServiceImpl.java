@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.user.register;
 
 import java.util.Date;
 
@@ -15,10 +15,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
-import org.woehlke.simpleworklist.user.register.UserRegistrationStatus;
 import org.woehlke.simpleworklist.oodm.repository.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.token.TokenGeneratorService;
-import org.woehlke.simpleworklist.oodm.services.UserRegistrationService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

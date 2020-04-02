@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.user.resetpassword;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.oodm.repository.UserPasswordRecoveryRepository;
 import org.woehlke.simpleworklist.user.token.TokenGeneratorService;
-import org.woehlke.simpleworklist.oodm.services.UserPasswordRecoveryService;
 
 import java.util.Date;
 
