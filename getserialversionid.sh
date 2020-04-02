@@ -38,7 +38,7 @@ serialver org.woehlke.simpleworklist.oodm.entities.impl.AuditModel >> $SERIALVER
 serialver org.woehlke.simpleworklist.oodm.entities.Context  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.Project  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.Task  >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.entities.User2UserMessage  >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.messages.User2UserMessage  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.account.UserAccount  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.UserRegistration  >> $SERIALVERSIONS_FILE
