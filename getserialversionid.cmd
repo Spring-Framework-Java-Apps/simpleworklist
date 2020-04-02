@@ -30,7 +30,7 @@ serialver org.woehlke.simpleworklist.oodm.entities.User2UserMessage  >> ..\..\et
 serialver org.woehlke.simpleworklist.oodm.entities.UserAccount  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.UserRegistration  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.BreadcrumbItem  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.NewContextForm >> ..\..\etc\serialversions.txt

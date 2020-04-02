@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.breadcrumb;
 
-import org.woehlke.simpleworklist.model.beans.BreadcrumbItem;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 
