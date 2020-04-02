@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
+import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.model.beans.Breadcrumb;
 import org.woehlke.simpleworklist.model.beans.UserSessionBean;
 

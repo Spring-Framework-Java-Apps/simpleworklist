@@ -29,7 +29,7 @@ echo "CLASSPATH $CLASSPATH"
 cd $CLASSES_PATH
 serialver org.woehlke.simpleworklist.oodm.enumerations.Language > $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.enumerations.TaskState >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.task.TaskState >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskTime >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.enumerations.UserRegistrationStatus >> $SERIALVERSIONS_FILE

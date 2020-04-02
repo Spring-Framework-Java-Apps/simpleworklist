@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
+import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.task.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

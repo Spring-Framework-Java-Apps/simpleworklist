@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.model.beans;
 
-import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
+import org.woehlke.simpleworklist.task.TaskState;
 
 import java.io.Serializable;
 import java.util.Objects;
