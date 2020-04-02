@@ -10,22 +10,22 @@ import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
 @Controller
 @RequestMapping(value = "/test")
-public class TestController {
+public class TestDataController {
 
-    private final TestService testService;
+    private final TestDataService testDataService;
 
     private final UserAccountLoginSuccessService userAccountLoginSuccessService;
 
     @Autowired
-    public TestController(TestService testService, UserAccountLoginSuccessService userAccountLoginSuccessService) {
-        this.testService = testService;
+    public TestDataController(TestDataService testDataService, UserAccountLoginSuccessService userAccountLoginSuccessService) {
+        this.testDataService = testDataService;
         this.userAccountLoginSuccessService = userAccountLoginSuccessService;
     }
 
     @RequestMapping(value = "/helper/project/createTree", method = RequestMethod.GET)
     public String createTestCategoryTree() {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        testService.createTestCategoryTreeForUserAccount(user);
+        testDataService.createTestCategoryTreeForUserAccount(user);
         return "redirect:/";
     }
 

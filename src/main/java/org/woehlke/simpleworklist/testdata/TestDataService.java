@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.testdata;
 
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
-public interface TestService {
+public interface TestDataService {
 
     void createTestCategoryTreeForUserAccount(UserAccount userAccount);
 }

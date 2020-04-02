@@ -23,9 +23,9 @@ import java.util.List;
 
 
 @Service
-public class TestServiceImpl implements TestService {
+public class TestDataServiceImpl implements TestDataService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestDataServiceImpl.class);
 
     private final ProjectRepository projectRepository;
 
@@ -34,7 +34,7 @@ public class TestServiceImpl implements TestService {
     private final ContextRepository contextRepository;
 
     @Autowired
-    public TestServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ContextRepository contextRepository) {
+    public TestDataServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ContextRepository contextRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
         this.contextRepository = contextRepository;
