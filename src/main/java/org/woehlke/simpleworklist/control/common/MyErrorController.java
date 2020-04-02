@@ -18,22 +18,34 @@ public class MyErrorController implements ErrorController {
 
     @RequestMapping("/fehler")
     public String handleError(HttpServletRequest request, Model model) {
+        String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+        if(errorMessage!=null){
+            log.warn("errorMessage :"+errorMessage);
+        }
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        if(statusCode!=null){
+        if(statusCode != null){
             HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
+            log.warn(httpStatus.value()+""+httpStatus.getReasonPhrase());
             switch (httpStatus){
                 case NOT_FOUND:
                     return "error/error-404";
                 case INTERNAL_SERVER_ERROR:
                     return "error/error-500";
+                case UNAUTHORIZED:
+                    log.warn("##################################################");
+                    log.warn("            UNAUTHORIZED");
+                    log.warn("##################################################");
+                    return "redirect:/";
             }
         }
-        String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-        log.warn("errorMessage :"+errorMessage);
         Throwable exception = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
-        log.warn("errorMessage :"+exception.getMessage());
-        for(StackTraceElement elem:exception.getStackTrace()){
-            log.warn(elem.getFileName()+":+"+elem.getLineNumber()+" "+elem.getClassName()+"."+elem.getMethodName());
+        if(exception != null) {
+            log.warn("##################################################");
+            log.warn("Exception :" + exception.getMessage());
+            for (StackTraceElement elem : exception.getStackTrace()) {
+                log.warn("Stacktrace: " + elem.getFileName() + ":+" + elem.getLineNumber() + " " + elem.getClassName() + "." + elem.getMethodName());
+            }
+            log.warn("##################################################");
         }
         return "error/error";
     }
