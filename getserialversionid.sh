@@ -44,7 +44,7 @@ serialver org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery  >> $SER
 serialver org.woehlke.simpleworklist.oodm.entities.UserRegistration  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.model.beans.LoginForm >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.login.LoginForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.NewContextForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.NewUser2UserMessage >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.SearchResult >> $SERIALVERSIONS_FILE

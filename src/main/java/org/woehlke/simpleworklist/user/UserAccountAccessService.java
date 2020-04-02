@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.user;
 
 import org.woehlke.simpleworklist.model.beans.UserChangePasswordForm;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.model.beans.LoginForm;
+import org.woehlke.simpleworklist.user.login.LoginForm;
 
 public interface UserAccountAccessService {
 
