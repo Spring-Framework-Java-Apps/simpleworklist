@@ -60,7 +60,6 @@
         <maven-surefire-report-plugin.version>3.0.0-M4</maven-surefire-report-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <start-class>org.woehlke.simpleworklist.SimpleworklistApplication</start-class>
     </properties>
 
     <dependencyManagement>
@@ -118,17 +117,15 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <optional>false</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -258,10 +255,6 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.8.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
         </dependency>
     </dependencies>
 
@@ -432,7 +425,6 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <addResources>true</addResources>
-                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>default</profile>
                             </profiles>
@@ -522,7 +514,6 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
                         <addResources>true</addResources>
-                        <mainClass>${start-class}</mainClass>
                         <profiles>
                             <profile>testing</profile>
                         </profiles>
@@ -572,7 +563,6 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
                         <addResources>true</addResources>
-                        <mainClass>${start-class}</mainClass>
                         <profiles>
                             <profile>qa</profile>
                         </profiles>
@@ -632,7 +622,6 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
                         <addResources>true</addResources>
-                        <mainClass>${start-class}</mainClass>
                         <profiles>
                             <profile>developing</profile>
                         </profiles>
@@ -712,7 +701,6 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
-                            <mainClass>${start-class}</mainClass>
                             <profiles>
                                 <profile>travis</profile>
                             </profiles>
@@ -875,7 +863,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>${start-class}</mainClass>
                     <layout>jar</layout>
                     <profiles>
                         <profile>testing</profile>
