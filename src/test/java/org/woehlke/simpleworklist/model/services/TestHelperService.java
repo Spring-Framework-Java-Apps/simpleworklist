@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.model.services;
 
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
+import org.woehlke.simpleworklist.user.register.UserRegistration;
 
 public interface TestHelperService {
 

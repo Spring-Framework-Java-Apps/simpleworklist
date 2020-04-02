@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.control;
 import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
-import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
+import org.woehlke.simpleworklist.user.register.UserRegistration;
 import org.woehlke.simpleworklist.user.register.UserRegistrationStatus;
 import org.woehlke.simpleworklist.user.register.UserRegistrationService;
 

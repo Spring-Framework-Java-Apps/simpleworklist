@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
+import org.woehlke.simpleworklist.user.register.UserRegistration;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.user.register.UserRegistrationService;
 

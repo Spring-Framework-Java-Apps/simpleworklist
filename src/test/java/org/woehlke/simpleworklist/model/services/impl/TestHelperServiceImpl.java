@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
+import org.woehlke.simpleworklist.user.register.UserRegistration;
 import org.woehlke.simpleworklist.oodm.repository.*;
 import org.woehlke.simpleworklist.model.services.TestHelperService;
 

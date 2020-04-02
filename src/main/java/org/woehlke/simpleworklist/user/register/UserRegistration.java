@@ -1,9 +1,8 @@
-package org.woehlke.simpleworklist.oodm.entities;
+package org.woehlke.simpleworklist.user.register;
 
 import javax.validation.constraints.Email;
 
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
-import org.woehlke.simpleworklist.user.register.UserRegistrationStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

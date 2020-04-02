@@ -1,7 +1,5 @@
 package org.woehlke.simpleworklist.user.register;
 
-import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
-
 public interface UserRegistrationService {
 
     UserRegistration findByToken(String confirmId);
