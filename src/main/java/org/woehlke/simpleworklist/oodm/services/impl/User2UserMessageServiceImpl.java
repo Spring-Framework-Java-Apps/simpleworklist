@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.model.beans.NewUser2UserMessage;
+import org.woehlke.simpleworklist.user.messages.NewUser2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;

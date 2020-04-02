@@ -34,15 +34,15 @@ serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> ..\..\etc\ser
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.NewContextForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.NewUser2UserMessage >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.messages.NewUser2UserMessage >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.search.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserAccountForm  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.UserChangeNameForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.language.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> ..\..\etc\serialversions.txt
 @rem serialver org.woehlke.simpleworklist.model.beans.UserDetailsBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.UserSessionBean >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.UserSessionBean >> ..\..\etc\serialversions.txt
 cd ..\..
 echo FINISHED

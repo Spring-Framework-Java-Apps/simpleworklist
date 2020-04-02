@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.oodm.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.model.beans.NewUser2UserMessage;
+import org.woehlke.simpleworklist.user.messages.NewUser2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 

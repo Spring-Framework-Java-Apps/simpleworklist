@@ -17,7 +17,7 @@ import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.model.beans.UserSessionBean;
+import org.woehlke.simpleworklist.user.UserSessionBean;
 import org.woehlke.simpleworklist.task.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;

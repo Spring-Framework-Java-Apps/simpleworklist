@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.oodm.services.ContextService;
 import org.woehlke.simpleworklist.oodm.services.ProjectService;
 import org.woehlke.simpleworklist.oodm.services.User2UserMessageService;
 import org.woehlke.simpleworklist.oodm.services.UserAccountService;
-import org.woehlke.simpleworklist.model.beans.UserSessionBean;
+import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.UserAccountAccessService;

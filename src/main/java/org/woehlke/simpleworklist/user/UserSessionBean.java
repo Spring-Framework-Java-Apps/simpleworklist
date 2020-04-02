@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.beans;
+package org.woehlke.simpleworklist.user;
 
 import org.woehlke.simpleworklist.task.TaskState;
 

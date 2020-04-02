@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.beans;
+package org.woehlke.simpleworklist.user.messages;
 
 
 import org.hibernate.validator.constraints.Length;
