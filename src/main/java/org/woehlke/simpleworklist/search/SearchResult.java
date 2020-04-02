@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.model.beans;
+package org.woehlke.simpleworklist.search;
 
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.entities.Project;

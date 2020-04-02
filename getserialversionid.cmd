@@ -35,7 +35,7 @@ serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> ..\..\etc\serialv
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.NewContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.NewUser2UserMessage >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.model.beans.SearchResult >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.search.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserAccountForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.model.beans.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
