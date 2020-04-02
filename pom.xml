@@ -47,7 +47,8 @@
 
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>13</java.version>
+        <version.maven>3.6.3</version.maven>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
 		<maven.scm.version>1.11.2</maven.scm.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
@@ -59,6 +60,7 @@
         <maven-surefire-report-plugin.version>3.0.0-M4</maven-surefire-report-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <version.docker-compose-maven-plugin>3.0.0</version.docker-compose-maven-plugin>
     </properties>
 
     <dependencyManagement>
@@ -239,6 +241,15 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.dkanejs.maven.plugins</groupId>
+                    <artifactId>docker-compose-maven-plugin</artifactId>
+                    <version>${version.docker-compose-maven-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -252,6 +263,66 @@
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedPlugins>
+                                    <level>ERROR</level>
+                                    <excludes>
+                                        <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
+                                    </excludes>
+                                    <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
+                                </bannedPlugins>
+                                <requireMavenVersion>
+                                    <version>${version.maven}</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>${java.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-invoker-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>install</goal>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <settingsFile>src/it/settings.xml</settingsFile>
+                            <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                            <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
+                            <postBuildHookScript>verify</postBuildHookScript> <!-- no extension required -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.dkanejs.maven.plugins</groupId>
+                <artifactId>docker-compose-maven-plugin</artifactId>
+                <configuration>
+                    <composeFile>${project.basedir}/docker-compose.yml</composeFile>
+                    <verbose>true</verbose>
+                    <removeImages>true</removeImages>
+                    <removeVolumes>true</removeVolumes>
+                    <ignorePullFailures>true</ignorePullFailures>
+                    <detachedMode>true</detachedMode>
                 </configuration>
             </plugin>
         </plugins>

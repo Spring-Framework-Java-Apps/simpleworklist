@@ -29,3 +29,4 @@ docs/java-getting-started/
 docs/deploying-spring-boot-apps/
 setenv.sh
 
+/etc/pom.xml
