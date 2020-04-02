@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskState;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.task.TaskTime;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;

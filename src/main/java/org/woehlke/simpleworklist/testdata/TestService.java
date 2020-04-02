@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.testdata;
 
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 
 public interface TestService {
 

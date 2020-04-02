@@ -3,13 +3,11 @@ package org.woehlke.simpleworklist.context;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.context.NewContextForm;
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;
-import org.woehlke.simpleworklist.context.ContextService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;

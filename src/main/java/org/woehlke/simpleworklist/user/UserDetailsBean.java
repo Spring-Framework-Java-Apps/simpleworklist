@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 
 public class UserDetailsBean implements UserDetails, Serializable {
 

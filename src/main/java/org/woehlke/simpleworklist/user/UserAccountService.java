@@ -4,8 +4,7 @@ import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.woehlke.simpleworklist.user.UserAccountForm;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 
 public interface UserAccountService {
 

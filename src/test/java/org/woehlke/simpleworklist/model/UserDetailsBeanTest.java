@@ -4,7 +4,7 @@ package org.woehlke.simpleworklist.model;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.UserDetailsBean;
 
 import java.util.Collection;

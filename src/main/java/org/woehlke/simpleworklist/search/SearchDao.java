@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.search;
 
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 
 /**
  * Created by tw on 14.02.16.

@@ -12,9 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.UserDetailsBean;
-import org.woehlke.simpleworklist.oodm.repository.UserAccountRepository;
+import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

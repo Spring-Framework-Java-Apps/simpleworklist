@@ -11,6 +11,7 @@ import org.woehlke.simpleworklist.model.services.TestHelperService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.task.TaskRepository;
+import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 
 import java.util.List;
 

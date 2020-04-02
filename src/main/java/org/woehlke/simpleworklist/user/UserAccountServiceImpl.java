@@ -18,11 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
 import org.woehlke.simpleworklist.language.Language;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
-import org.woehlke.simpleworklist.oodm.repository.UserAccountRepository;
+import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;
 
 @Service("userAccountService")

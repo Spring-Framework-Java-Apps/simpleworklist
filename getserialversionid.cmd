@@ -27,7 +27,7 @@ serialver org.woehlke.simpleworklist.oodm.entities.Context  >> ..\..\etc\serialv
 serialver org.woehlke.simpleworklist.oodm.entities.Project  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.Task  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.User2UserMessage  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.oodm.entities.UserAccount  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.account.UserAccount  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.UserRegistration  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> ..\..\etc\serialversions.txt
