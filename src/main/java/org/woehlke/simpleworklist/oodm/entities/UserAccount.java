@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.oodm.entities;
 
-import org.hibernate.search.annotations.*;
 import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
@@ -43,7 +42,6 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
 
     @Email
     @Column(name="user_email", nullable = false)
-    @Field
     private String userEmail;
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)

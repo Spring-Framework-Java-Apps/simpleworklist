@@ -1,18 +1,25 @@
 package org.woehlke.simpleworklist;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.woehlke.simpleworklist.config.ApplicationConfig;
+import org.woehlke.simpleworklist.config.ApplicationProperties;
+import org.woehlke.simpleworklist.config.WebMvcConfig;
+import org.woehlke.simpleworklist.config.WebSecurityConfig;
 
+
+@ImportAutoConfiguration({
+    ApplicationConfig.class,
+    WebMvcConfig.class,
+    WebSecurityConfig.class
+})
+@EnableConfigurationProperties({
+    ApplicationProperties.class
+})
 @SpringBootApplication
-public class SimpleworklistApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
-	
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(SimpleworklistApplication.class);
-	}
+public class SimpleworklistApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SimpleworklistApplication.class, args);

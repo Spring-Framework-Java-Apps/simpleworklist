@@ -39,8 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/resetPassword*", "/passwordResetConfirm*/**", "/error*"
             )
             .permitAll()
-            .anyRequest().authenticated().antMatchers("/**").fullyAuthenticated()
-            .and()
+            //.and()
+            //.authorizeRequests()
+            .anyRequest().fullyAuthenticated().and()
+            //.authenticated().antMatcher("/**").fullyAuthenticated()
             .formLogin()
             .loginPage("/login")
             .usernameParameter("j_username").passwordParameter("j_password")

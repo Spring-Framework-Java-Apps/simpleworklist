@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.model.beans;
 
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.SafeHtml;
 

@@ -92,7 +92,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
             UserAccount user = userAccountService.findByUserEmail(email);
             Assert.assertTrue(user.getUserEmail().compareTo(email) == 0);
         }
-        Pageable request = new PageRequest(0,10);
+        Pageable request = PageRequest.of(0,10);
         for(UserAccount user: userAccountService.findAll(request)){
             Assert.assertNotNull(user.getId());
             Assert.assertNotNull(user.getUserEmail());
