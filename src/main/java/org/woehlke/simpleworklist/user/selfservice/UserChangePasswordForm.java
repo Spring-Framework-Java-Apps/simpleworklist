@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.resetpassword;
+package org.woehlke.simpleworklist.user.selfservice;
 
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
