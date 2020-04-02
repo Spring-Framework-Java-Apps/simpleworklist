@@ -9,12 +9,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 import java.util.Properties;
 
 @Configuration
 @EnableAsync
 @EnableJpaAuditing
+@EnableJdbcHttpSession
 @EnableJpaRepositories({
         "org.woehlke.simpleworklist.oodm.repository"
 })
