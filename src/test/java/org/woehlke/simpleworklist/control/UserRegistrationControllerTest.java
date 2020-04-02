@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.oodm.entities.UserRegistration;
-import org.woehlke.simpleworklist.oodm.enumerations.UserRegistrationStatus;
+import org.woehlke.simpleworklist.user.register.UserRegistrationStatus;
 import org.woehlke.simpleworklist.oodm.services.UserRegistrationService;
 
 import org.springframework.beans.factory.annotation.Autowired;

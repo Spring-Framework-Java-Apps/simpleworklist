@@ -21,7 +21,7 @@ import org.woehlke.simpleworklist.user.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.User2UserMessage;
-import org.woehlke.simpleworklist.oodm.enumerations.Language;
+import org.woehlke.simpleworklist.language.Language;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
 import org.woehlke.simpleworklist.oodm.repository.UserAccountRepository;
 import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;

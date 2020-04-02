@@ -15,13 +15,13 @@ set MY_CLASSPATH_APP=%JAVA_HOME%\jre\lib\rt.jar;%CD%\target\classes
 set CLASSPATH=%MY_CLASSPATH_APP%;%MY_CLASSPATH_DEPS%
 echo %CLASSPATH%
 cd target\classes
-serialver org.woehlke.simpleworklist.oodm.enumerations.Language > ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.language.Language > ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskEnergy >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskState >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskTime >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.oodm.enumerations.UserRegistrationStatus >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.oodm.enumerations.UserRole >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.UserRole >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.impl.AuditModel >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.Context  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.entities.Project  >> ..\..\etc\serialversions.txt

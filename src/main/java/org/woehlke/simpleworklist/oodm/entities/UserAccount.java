@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
-import org.woehlke.simpleworklist.oodm.enumerations.Language;
+import org.woehlke.simpleworklist.language.Language;
 
 import java.io.Serializable;
 import java.util.Date;

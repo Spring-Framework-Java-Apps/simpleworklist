@@ -1,10 +1,10 @@
-org.woehlke.simpleworklist.oodm.enumerations.Language:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.language.Language:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskEnergy:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskState:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskTime:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.oodm.enumerations.UserRegistrationStatus:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.oodm.enumerations.UserRole:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.user.register.UserRegistrationStatus:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.user.UserRole:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.oodm.entities.impl.AuditModel:    private static final long serialVersionUID = 4399373914714726911L;
 org.woehlke.simpleworklist.oodm.entities.Context:    private static final long serialVersionUID = -5035732370606951871L;
 org.woehlke.simpleworklist.oodm.entities.Project:    private static final long serialVersionUID = 4566653175832872422L;

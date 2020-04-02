@@ -27,13 +27,13 @@ export SERIALVERSIONS_FILE="$PROJECT_PATH/etc/serialversions.txt"
 
 echo "CLASSPATH $CLASSPATH"
 cd $CLASSES_PATH
-serialver org.woehlke.simpleworklist.oodm.enumerations.Language > $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.language.Language > $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskEnergy >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskState >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskTime >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.enumerations.UserRegistrationStatus >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.enumerations.UserRole >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.UserRole >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.impl.AuditModel >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.Context  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.Project  >> $SERIALVERSIONS_FILE

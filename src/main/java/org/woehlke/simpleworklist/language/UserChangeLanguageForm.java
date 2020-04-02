@@ -1,7 +1,5 @@
 package org.woehlke.simpleworklist.language;
 
-import org.woehlke.simpleworklist.oodm.enumerations.Language;
-
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 

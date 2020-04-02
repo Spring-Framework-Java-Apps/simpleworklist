@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.oodm.entities;
 import javax.validation.constraints.Email;
 
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
-import org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus;
+import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

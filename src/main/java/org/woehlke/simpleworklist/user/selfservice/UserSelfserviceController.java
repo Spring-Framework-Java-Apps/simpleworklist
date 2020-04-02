@@ -23,7 +23,7 @@ import org.woehlke.simpleworklist.context.UserChangeDefaultContextForm;
 import org.woehlke.simpleworklist.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.oodm.enumerations.Language;
+import org.woehlke.simpleworklist.language.Language;
 import org.woehlke.simpleworklist.user.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 

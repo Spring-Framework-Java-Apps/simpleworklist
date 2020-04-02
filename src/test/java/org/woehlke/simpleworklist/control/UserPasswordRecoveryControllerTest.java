@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
-import org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus;
+import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.oodm.services.UserPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
