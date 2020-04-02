@@ -3,13 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.3.6-SNAPSHOT</version>
+    <version>2.3.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.6.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <name>simpleworklist</name>
@@ -119,15 +118,18 @@
             <artifactId>lombok</artifactId>
             <optional>false</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+
+<!--
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
@@ -153,7 +155,7 @@
             <artifactId>ckeditor</artifactId>
             <version>4.11.3</version>
         </dependency>
-
+<!--
         <dependency>
 			<groupId>org.apache.maven.scm</groupId>
 			<artifactId>maven-scm</artifactId>
@@ -225,7 +227,7 @@
 			<version>${maven.scm.version}</version>
             <scope>provided</scope>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-jdbc</artifactId>
@@ -258,13 +260,11 @@
         </dependency>
     </dependencies>
 
-
-
-
     <build>
         <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
+                <!--
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -275,11 +275,13 @@
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>${exec-maven-plugin.version}</version>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-plugin</artifactId>
                     <version>${maven.scm.version}</version>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
@@ -340,6 +342,7 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${maven-deploy-plugin.version}</version>
                 </plugin>
+                -->
             </plugins>
         </pluginManagement>
         <plugins>
@@ -357,10 +360,7 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
@@ -385,21 +385,7 @@
                     <generateReports>true</generateReports>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals><goal>copy-dependencies</goal></goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
+            -->
         </plugins>
     </build>
 
@@ -416,9 +402,6 @@
             <build>
                 <finalName>simpleworklist</finalName>
                 <defaultGoal>clean spring-boot:run</defaultGoal>
-                <pluginManagement>
-                    <plugins></plugins>
-                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
@@ -477,16 +460,6 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
-                                    <!--
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>com.github.jsimone</groupId>
-                                        <artifactId>webapp-runner</artifactId>
-                                        <version>9.0.19.0</version>
-                                        <destFileName>webapp-runner.jar</destFileName>
-                                    </artifactItem>
-                                </artifactItems>
-                                -->
                             </configuration>
                         </execution>
                     </executions>
@@ -661,16 +634,6 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
-                                    <!--
-									<artifactItems>
-										<artifactItem>
-											<groupId>com.github.jsimone</groupId>
-											<artifactId>webapp-runner</artifactId>
-											<version>9.0.19.0</version>
-											<destFileName>webapp-runner.jar</destFileName>
-										</artifactItem>
-									</artifactItems>
-									-->
                                 </configuration>
                             </execution>
                         </executions>
@@ -757,9 +720,6 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <layout>jar</layout>
-                            <!--
-                            <mainClass>${start-class}</mainClass>
-                            -->
                             <profiles>
                                 <profile>heroku</profile>
                             </profiles>
@@ -788,18 +748,6 @@
 							<execution>
 								<phase>package</phase>
 								<goals><goal>copy</goal></goals>
-                                <!--
-								<configuration>
-									<artifactItems>
-										<artifactItem>
-											<groupId>com.github.jsimone</groupId>
-											<artifactId>webapp-runner</artifactId>
-											<version>9.0.19.0</version>
-											<destFileName>webapp-runner.jar</destFileName>
-										</artifactItem>
-									</artifactItems>
-								</configuration>
-								-->
 							</execution>
                             <execution>
                                 <id>unpack-dependencies</id>
@@ -842,16 +790,6 @@
                             <skipTests>true</skipTests>
                         </configuration>
                     </plugin>
-                    <!--
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <configuration>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <warName>simpleworklist</warName>
-                        </configuration>
-                    </plugin>
-                    -->
                 </plugins>
             </build>
         </profile>
@@ -863,16 +801,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <layout>jar</layout>
                     <profiles>
-                        <profile>testing</profile>
+                        <profile>default</profile>
                     </profiles>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports-plugin.version}</version>
                 <configuration>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                 </configuration>
@@ -880,18 +816,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven-dependency-plugin.version}</version>
                 <inherited>true</inherited>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <linksource>true</linksource>
                     <maxmemory>1024m</maxmemory>
@@ -902,7 +835,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
@@ -910,12 +842,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>${maven-jxr-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>${maven-pmd-plugin.version}</version>
                 <configuration>
                     <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
@@ -928,7 +858,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>false</skipTests>
                     <includes>
