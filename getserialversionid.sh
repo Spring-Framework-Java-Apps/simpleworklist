@@ -54,7 +54,7 @@ serialver org.woehlke.simpleworklist.model.beans.UserChangeLanguageForm  >> $SER
 serialver org.woehlke.simpleworklist.model.beans.UserChangeNameForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.UserChangePasswordForm >> $SERIALVERSIONS_FILE
 #serialver org.woehlke.simpleworklist.model.beans.UserDetailsBean >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.model.beans.UserRegistrationForm >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.model.beans.UserSessionBean >> $SERIALVERSIONS_FILE
 cd $PROJECT_PATH
 echo FINISHED

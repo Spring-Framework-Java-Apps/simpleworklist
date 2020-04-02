@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.model.beans.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
-import org.woehlke.simpleworklist.model.beans.UserRegistrationForm;
+import org.woehlke.simpleworklist.user.register.UserRegistrationForm;
 import org.woehlke.simpleworklist.oodm.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.oodm.services.UserAccountService;
 

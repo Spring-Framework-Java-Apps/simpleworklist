@@ -24,5 +24,5 @@ org.woehlke.simpleworklist.model.beans.UserChangeDefaultContextForm:    private 
 org.woehlke.simpleworklist.model.beans.UserChangeLanguageForm:    private static final long serialVersionUID = 2201123162578113187L;
 org.woehlke.simpleworklist.model.beans.UserChangeNameForm:    private static final long serialVersionUID = 5120488382888268418L;
 org.woehlke.simpleworklist.model.beans.UserChangePasswordForm:    private static final long serialVersionUID = 9149342594823222054L;
-org.woehlke.simpleworklist.model.beans.UserRegistrationForm:    private static final long serialVersionUID = 6864871862706880939L;
+org.woehlke.simpleworklist.user.register.UserRegistrationForm:    private static final long serialVersionUID = 6864871862706880939L;
 org.woehlke.simpleworklist.model.beans.UserSessionBean:    private static final long serialVersionUID = -6649686058228455825L;
