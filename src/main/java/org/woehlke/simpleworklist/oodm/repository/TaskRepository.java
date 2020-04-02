@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
-import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 
 @Repository

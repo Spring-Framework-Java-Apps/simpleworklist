@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
-import org.woehlke.simpleworklist.taskstate.TaskStateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

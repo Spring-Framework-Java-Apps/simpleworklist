@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.entities;
+package org.woehlke.simpleworklist.task;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +14,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.woehlke.simpleworklist.oodm.entities.Context;
+import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy;

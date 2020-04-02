@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.oodm.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 
 public interface TaskService {

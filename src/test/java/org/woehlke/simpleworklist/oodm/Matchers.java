@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.oodm;
 //import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.woehlke.simpleworklist.oodm.entities.Project;
-import org.woehlke.simpleworklist.oodm.entities.Task;
+import org.woehlke.simpleworklist.task.Task;
 
 public class Matchers {
 
