@@ -10,6 +10,8 @@ import org.woehlke.simpleworklist.oodm.repository.*;
 import org.woehlke.simpleworklist.model.services.TestHelperService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.task.TaskRepository;
+
 import java.util.List;
 
 @Service

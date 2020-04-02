@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
-import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
+import org.woehlke.simpleworklist.task.TaskRepository;
 import org.woehlke.simpleworklist.oodm.services.ProjectService;
 
 @Service

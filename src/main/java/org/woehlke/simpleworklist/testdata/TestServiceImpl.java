@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
-import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
+import org.woehlke.simpleworklist.task.TaskRepository;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

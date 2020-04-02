@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
-import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
+import org.woehlke.simpleworklist.task.TaskRepository;
 
 import java.util.Date;
 import java.util.List;

@@ -8,7 +8,7 @@ import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
 import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
-import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
+import org.woehlke.simpleworklist.task.TaskRepository;
 import org.woehlke.simpleworklist.oodm.services.ContextService;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.services.impl;
+package org.woehlke.simpleworklist.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.oodm.entities.Context;
 import org.woehlke.simpleworklist.oodm.entities.Project;
-import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.oodm.enumerations.TaskState;
-import org.woehlke.simpleworklist.oodm.repository.TaskRepository;
-import org.woehlke.simpleworklist.oodm.services.TaskService;
 
 import java.util.ArrayList;
 
