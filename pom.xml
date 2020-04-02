@@ -4,7 +4,7 @@
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
     <version>2.3.6-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -148,18 +148,19 @@
             <artifactId>spring-boot-admin-starter-server</artifactId>
         </dependency>
         -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-		<!--
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-		-->
+        <!--
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -381,12 +382,13 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                 </plugin>
--->
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${maven-war-plugin.version}</version>
                 </plugin>
+                -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -565,170 +567,172 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
-									<artifactItems>
-										<artifactItem>
-											<groupId>com.github.jsimone</groupId>
-											<artifactId>webapp-runner</artifactId>
-											<version>9.0.19.0</version>
-											<destFileName>webapp-runner.jar</destFileName>
-										</artifactItem>
-									</artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <skipTests>true</skipTests>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>testing</id>
-            <build>
-                <pluginManagement>
-                    <plugins></plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <addResources>true</addResources>
-                            <mainClass>${start-class}</mainClass>
-                            <profiles>
-                                <profile>testing</profile>
-                            </profiles>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>pre-integration-test</id>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>post-integration-test</id>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <spring.profiles.active>testing</spring.profiles.active>
-                            </systemPropertyVariables>
-                            <skipTests>false</skipTests>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>qa</id>
-            <build>
-                <pluginManagement>
-                    <plugins></plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <addResources>true</addResources>
-                            <mainClass>${start-class}</mainClass>
-                            <profiles>
-                                <profile>qa</profile>
-                            </profiles>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>pre-integration-test</id>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>post-integration-test</id>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <goals>
-                                    <goal>build-info</goal>
-                                </goals>
-                                <configuration>
-                                    <additionalProperties>
-                                        <encoding.source>${project.build.sourceEncoding}</encoding.source>
-                                        <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
-                                        <java.source>${maven.compiler.source}</java.source>
-                                        <java.target>${maven.compiler.target}</java.target>
-                                    </additionalProperties>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <spring.profiles.active>qa</spring.profiles.active>
-                            </systemPropertyVariables>
-                            <skipTests>false</skipTests>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>developing</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <addResources>true</addResources>
-                            <mainClass>${start-class}</mainClass>
-                            <profiles>
-                                <profile>developing</profile>
-                            </profiles>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>unpack-dependencies</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>analyze-only</goal>
-                                    <goal>analyze-report</goal>
                                     <!--
-                                    <goal>unpack-dependencies</goal>
-                                    -->
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.github.jsimone</groupId>
+                                        <artifactId>webapp-runner</artifactId>
+                                        <version>9.0.19.0</version>
+                                        <destFileName>webapp-runner.jar</destFileName>
+                                    </artifactItem>
+                                </artifactItems>
+                                -->
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+
+    <profile>
+        <id>testing</id>
+        <build>
+            <pluginManagement>
+                <plugins></plugins>
+            </pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <addResources>true</addResources>
+                        <mainClass>${start-class}</mainClass>
+                        <profiles>
+                            <profile>testing</profile>
+                        </profiles>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pre-integration-test</id>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>post-integration-test</id>
+                            <goals>
+                                <goal>stop</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <spring.profiles.active>testing</spring.profiles.active>
+                        </systemPropertyVariables>
+                        <skipTests>false</skipTests>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+
+    <profile>
+        <id>qa</id>
+        <build>
+            <pluginManagement>
+                <plugins></plugins>
+            </pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <addResources>true</addResources>
+                        <mainClass>${start-class}</mainClass>
+                        <profiles>
+                            <profile>qa</profile>
+                        </profiles>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pre-integration-test</id>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>post-integration-test</id>
+                            <goals>
+                                <goal>stop</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <goals>
+                                <goal>build-info</goal>
+                            </goals>
+                            <configuration>
+                                <additionalProperties>
+                                    <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                    <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                    <java.source>${maven.compiler.source}</java.source>
+                                    <java.target>${maven.compiler.target}</java.target>
+                                </additionalProperties>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <spring.profiles.active>qa</spring.profiles.active>
+                        </systemPropertyVariables>
+                        <skipTests>false</skipTests>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+
+    <profile>
+        <id>developing</id>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <addResources>true</addResources>
+                        <mainClass>${start-class}</mainClass>
+                        <profiles>
+                            <profile>developing</profile>
+                        </profiles>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>unpack-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>analyze-only</goal>
+                                <goal>analyze-report</goal>
+                                <!--
+                                <goal>unpack-dependencies</goal>
+                                -->
                                     <goal>build-classpath</goal>
                                 </goals>
                                 <configuration>
@@ -750,6 +754,7 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
+                                    <!--
 									<artifactItems>
 										<artifactItem>
 											<groupId>com.github.jsimone</groupId>
@@ -758,6 +763,7 @@
 											<destFileName>webapp-runner.jar</destFileName>
 										</artifactItem>
 									</artifactItems>
+									-->
                                 </configuration>
                             </execution>
                         </executions>
@@ -844,8 +850,10 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
-                            <layout>WAR</layout>
+                            <layout>jar</layout>
+                            <!--
                             <mainClass>${start-class}</mainClass>
+                            -->
                             <profiles>
                                 <profile>heroku</profile>
                             </profiles>
@@ -874,6 +882,7 @@
 							<execution>
 								<phase>package</phase>
 								<goals><goal>copy</goal></goals>
+                                <!--
 								<configuration>
 									<artifactItems>
 										<artifactItem>
@@ -884,6 +893,7 @@
 										</artifactItem>
 									</artifactItems>
 								</configuration>
+								-->
 							</execution>
                             <execution>
                                 <id>unpack-dependencies</id>
@@ -926,6 +936,7 @@
                             <skipTests>true</skipTests>
                         </configuration>
                     </plugin>
+                    <!--
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
@@ -934,6 +945,7 @@
                             <warName>simpleworklist</warName>
                         </configuration>
                     </plugin>
+                    -->
                 </plugins>
             </build>
         </profile>
@@ -946,7 +958,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>${start-class}</mainClass>
-                    <layout>WAR</layout>
+                    <layout>jar</layout>
                     <profiles>
                         <profile>testing</profile>
                     </profiles>
