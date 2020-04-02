@@ -11,7 +11,7 @@ org.woehlke.simpleworklist.oodm.entities.Project:    private static final long s
 org.woehlke.simpleworklist.task.Task:    private static final long serialVersionUID = 5247710652586269801L;
 org.woehlke.simpleworklist.user.messages.User2UserMessage:    private static final long serialVersionUID = 4263078228257938175L;
 org.woehlke.simpleworklist.user.account.UserAccount:    private static final long serialVersionUID = 7860692526488291439L;
-org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery:    private static final long serialVersionUID = 6860716425733119940L;
+org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery:    private static final long serialVersionUID = 6860716425733119940L;
 org.woehlke.simpleworklist.oodm.entities.UserRegistration:    private static final long serialVersionUID = -1955967514018161878L;
 org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem:    private static final long serialVersionUID = 8276819198016077167L;
 org.woehlke.simpleworklist.breadcrumb.Breadcrumb:    private static final long serialVersionUID = 7932703111140692689L;

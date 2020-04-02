@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.control;
 import org.junit.Assert;
 import org.junit.Test;
 import org.woehlke.simpleworklist.AbstractTest;
-import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
+import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
 

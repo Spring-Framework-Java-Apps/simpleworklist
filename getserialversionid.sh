@@ -40,7 +40,7 @@ serialver org.woehlke.simpleworklist.oodm.entities.Project  >> $SERIALVERSIONS_F
 serialver org.woehlke.simpleworklist.task.Task  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.messages.User2UserMessage  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.account.UserAccount  >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery  >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.oodm.entities.UserRegistration  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> $SERIALVERSIONS_FILE

@@ -1,7 +1,5 @@
 package org.woehlke.simpleworklist.user.resetpassword;
 
-import org.woehlke.simpleworklist.oodm.entities.UserPasswordRecovery;
-
 public interface UserPasswordRecoveryService {
 
     UserPasswordRecovery findByToken(String confirmId);
