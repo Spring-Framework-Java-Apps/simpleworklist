@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.oodm.repository.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.token.TokenGeneratorService;
 
 @Service

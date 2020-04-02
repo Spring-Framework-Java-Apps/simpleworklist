@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.repository;
+package org.woehlke.simpleworklist.project;
 
 import java.util.List;
 

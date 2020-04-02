@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;
 
 @Service

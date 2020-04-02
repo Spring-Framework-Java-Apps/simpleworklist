@@ -4,14 +4,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.project.ProjectRepository;
+import org.woehlke.simpleworklist.user.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.register.UserRegistration;
-import org.woehlke.simpleworklist.oodm.repository.*;
 import org.woehlke.simpleworklist.model.services.TestHelperService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.task.TaskRepository;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
+import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryRepository;
 
 import java.util.List;
 

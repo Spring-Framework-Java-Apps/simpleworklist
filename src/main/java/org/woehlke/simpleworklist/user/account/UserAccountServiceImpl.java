@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.messages.User2UserMessage;
 import org.woehlke.simpleworklist.language.Language;
-import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
-import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;
+import org.woehlke.simpleworklist.context.ContextRepository;
+import org.woehlke.simpleworklist.user.messages.User2UserMessageRepository;
 
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

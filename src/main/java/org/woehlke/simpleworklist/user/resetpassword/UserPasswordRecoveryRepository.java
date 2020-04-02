@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.repository;
+package org.woehlke.simpleworklist.user.resetpassword;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

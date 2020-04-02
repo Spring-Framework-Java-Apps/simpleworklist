@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.oodm.repository.User2UserMessageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;

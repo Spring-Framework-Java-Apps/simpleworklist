@@ -12,9 +12,9 @@ import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.task.TaskTime;
-import org.woehlke.simpleworklist.oodm.repository.ContextRepository;
+import org.woehlke.simpleworklist.context.ContextRepository;
 import org.woehlke.simpleworklist.task.TaskRepository;
-import org.woehlke.simpleworklist.oodm.repository.ProjectRepository;
+import org.woehlke.simpleworklist.project.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
