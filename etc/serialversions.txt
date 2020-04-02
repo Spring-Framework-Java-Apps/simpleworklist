@@ -5,7 +5,7 @@ org.woehlke.simpleworklist.task.TaskTime:    private static final long serialVer
 org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.user.register.UserRegistrationStatus:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.user.UserRole:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.oodm.entities.impl.AuditModel:    private static final long serialVersionUID = 4399373914714726911L;
+org.woehlke.simpleworklist.common.AuditModel:    private static final long serialVersionUID = 4399373914714726911L;
 org.woehlke.simpleworklist.context.Context:    private static final long serialVersionUID = -5035732370606951871L;
 org.woehlke.simpleworklist.project.Project:    private static final long serialVersionUID = 4566653175832872422L;
 org.woehlke.simpleworklist.task.Task:    private static final long serialVersionUID = 5247710652586269801L;

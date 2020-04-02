@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.oodm.entities.impl;
+package org.woehlke.simpleworklist.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;

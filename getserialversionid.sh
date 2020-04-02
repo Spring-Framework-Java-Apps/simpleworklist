@@ -34,7 +34,7 @@ serialver org.woehlke.simpleworklist.task.TaskTime >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.UserRole >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.oodm.entities.impl.AuditModel >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.common.AuditModel >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.context.Context  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.project.Project  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.Task  >> $SERIALVERSIONS_FILE
