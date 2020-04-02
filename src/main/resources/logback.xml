@@ -5,7 +5,7 @@
     <logger name="org.woehlke.simpleworklist.config" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.control.admin" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.control.anonymous" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.control.common" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.common" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.control.user" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.model.beans" level="DEBUG" />
     <logger name="org.woehlke.simpleworklist.model.dao" level="DEBUG" />
