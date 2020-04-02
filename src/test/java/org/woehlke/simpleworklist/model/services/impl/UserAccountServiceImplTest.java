@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.oodm.services.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.oodm.services.UserRegistrationService;
 import org.woehlke.simpleworklist.user.login.LoginForm;
-import org.woehlke.simpleworklist.model.beans.UserAccountForm;
+import org.woehlke.simpleworklist.user.UserAccountForm;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 
 

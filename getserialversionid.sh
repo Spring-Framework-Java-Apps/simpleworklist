@@ -48,12 +48,12 @@ serialver org.woehlke.simpleworklist.user.login.LoginForm >> $SERIALVERSIONS_FIL
 serialver org.woehlke.simpleworklist.context.NewContextForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.messages.NewUser2UserMessage >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.search.SearchResult >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.model.beans.UserAccountForm  >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.UserAccountForm  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.language.UserChangeLanguageForm  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> $SERIALVERSIONS_FILE
-#serialver org.woehlke.simpleworklist.model.beans.UserDetailsBean >> $SERIALVERSIONS_FILE
+#serialver org.woehlke.simpleworklist.user.UserDetailsBean >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.UserSessionBean >> $SERIALVERSIONS_FILE
 cd $PROJECT_PATH
