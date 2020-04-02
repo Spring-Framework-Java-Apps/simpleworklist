@@ -16,7 +16,7 @@ set CLASSPATH=%MY_CLASSPATH_APP%;%MY_CLASSPATH_DEPS%
 echo %CLASSPATH%
 cd target\classes
 serialver org.woehlke.simpleworklist.oodm.enumerations.Language > ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.task.TaskEnergy >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskState >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskTime >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt

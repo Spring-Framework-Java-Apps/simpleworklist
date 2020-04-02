@@ -1,5 +1,5 @@
 org.woehlke.simpleworklist.oodm.enumerations.Language:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.task.TaskEnergy:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskState:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskTime:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.oodm.enumerations.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;

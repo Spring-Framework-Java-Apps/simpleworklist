@@ -19,7 +19,6 @@ import org.woehlke.simpleworklist.oodm.entities.Project;
 import org.woehlke.simpleworklist.oodm.entities.UserAccount;
 import org.woehlke.simpleworklist.oodm.entities.impl.AuditModel;
 import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
-import org.woehlke.simpleworklist.oodm.enumerations.TaskEnergy;
 
 
 @Entity
