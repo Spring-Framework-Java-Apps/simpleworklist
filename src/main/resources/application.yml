@@ -78,7 +78,7 @@ org:
 spring:
   profiles: default
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist_default
+    url: jdbc:postgresql://localhost:5433/simpleworklist
 ---
 spring:
   profiles: developing
