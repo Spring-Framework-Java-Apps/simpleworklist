@@ -10,7 +10,6 @@ import javax.persistence.Index;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -45,7 +44,6 @@ import org.woehlke.simpleworklist.oodm.enumerations.TaskTime;
         @Index(name = "ix_task_title", columnList = "title")
     }
 )
-@Indexed
 public class Task extends AuditModel implements Serializable, ComparableById<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
@@ -57,7 +55,6 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
             sequenceName = "task_sequence",
             initialValue = 1000
     )
-    @DocumentId(name="id")
     private Long id;
 
     @ManyToOne(
@@ -90,14 +87,12 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @NotBlank
     @Length(min=1,max=255)
     @Column(name = "title", nullable = false)
-    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String title;
 
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
     @NotBlank
     @Length(min=0,max=65535)
     @Column(name = "description", nullable = false, length = 65535, columnDefinition="text")
-    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String text;
 
     @Column(name = "focus", nullable = false)

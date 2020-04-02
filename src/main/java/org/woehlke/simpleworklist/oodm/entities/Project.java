@@ -10,7 +10,6 @@ import javax.persistence.Index;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -30,7 +29,6 @@ import org.woehlke.simpleworklist.oodm.entities.impl.ComparableById;
         @Index(name = "ix_project_row_created_at", columnList = "row_created_at")
     }
 )
-@Indexed
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
@@ -42,7 +40,6 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         sequenceName = "project_sequence",
         initialValue = 1000
     )
-    @DocumentId(name="id")
     private Long id;
 
     @ManyToOne(
@@ -73,14 +70,12 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @NotBlank
     @Length(min=1,max=255)
     @Column(name="name",nullable = false)
-    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String name;
 
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
     @NotBlank
     @Length(min=0,max=65535)
     @Column(name="description", nullable = true, length = 65535, columnDefinition="text")
-    @Field(index= org.hibernate.search.annotations.Index.YES, analyze= Analyze.YES, store= Store.NO)
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = { CascadeType.ALL })

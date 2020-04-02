@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.oodm.entities;
 
-import org.hibernate.search.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -40,7 +39,6 @@ public class Context extends AuditModel implements Serializable, ComparableById<
             sequenceName = "context_sequence",
             initialValue = 1000
     )
-    @DocumentId(name = "id")
     private Long id;
 
     @ManyToOne(
@@ -51,7 +49,6 @@ public class Context extends AuditModel implements Serializable, ComparableById<
                     CascadeType.REFRESH
             })
     @JoinColumn(name = "user_account_id")
-    @IndexedEmbedded(includeEmbeddedObjectId = true)
     private UserAccount userAccount;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
