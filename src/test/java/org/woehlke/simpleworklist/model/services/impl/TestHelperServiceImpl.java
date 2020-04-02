@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.model.services.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.register.UserRegistration;
 import org.woehlke.simpleworklist.oodm.repository.*;

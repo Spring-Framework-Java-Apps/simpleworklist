@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.taskstate;
 
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskState;
 

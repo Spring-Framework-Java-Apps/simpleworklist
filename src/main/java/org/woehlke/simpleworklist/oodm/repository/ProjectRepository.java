@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.project.Project;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {

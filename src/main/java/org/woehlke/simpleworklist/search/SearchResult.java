@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.search;
 
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.project.Project;
 
 import java.io.Serializable;
 import java.util.ArrayList;

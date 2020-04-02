@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.project;
 import java.util.List;
 
 import org.woehlke.simpleworklist.oodm.entities.Context;
-import org.woehlke.simpleworklist.oodm.entities.Project;
 //import org.woehlke.simpleworklist.user.account.UserAccount;
 
 public interface ProjectService {

@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.oodm;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-import org.woehlke.simpleworklist.oodm.entities.Project;
+import org.woehlke.simpleworklist.project.Project;
 
 public class IsNullObjectOfCategory extends TypeSafeMatcher<Project> {
 
