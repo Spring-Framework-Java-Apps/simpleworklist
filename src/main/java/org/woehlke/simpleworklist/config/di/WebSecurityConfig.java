@@ -58,12 +58,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .headers().disable()
+            .headers()
+            .disable()
             .authorizeRequests()
             .antMatchers(applicationProperties.getWebSecurity().getAntPatternsPublic())
             .permitAll()
             .anyRequest()
             .fullyAuthenticated()
+            .and()
+            .csrf()
             .and()
             .formLogin()
             .loginPage(applicationProperties.getWebSecurity().getLoginPage())
@@ -74,6 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .defaultSuccessUrl(applicationProperties.getWebSecurity().getDefaultSuccessUrl())
             .successHandler(loginSuccessHandler)
             .permitAll()
+            .and()
+            .csrf()
             .and()
             .logout()
             .logoutUrl(applicationProperties.getWebSecurity().getLogoutUrl())

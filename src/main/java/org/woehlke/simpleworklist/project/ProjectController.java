@@ -108,11 +108,12 @@ public class ProjectController extends AbstractController {
             Locale locale, Model model
     ){
         log.info("/project/add/new/project (GET)");
-        return addNewProject(rootProjectId, userSession, locale, model);
+        addNewProject(rootProjectId, userSession, locale, model);
+        return "project/addToplevel";
     }
 
 
-    @RequestMapping(path = "/add/new/project", method = RequestMethod.POST)
+    @RequestMapping(path = "/add/new/project", method = {RequestMethod.POST, RequestMethod.PUT})
     public final String addNewTopLevelProjectSave(
         @Valid Project project,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -120,8 +121,33 @@ public class ProjectController extends AbstractController {
         Locale locale, Model model
     ){
         log.info("/project/add/new/project (POST)");
-        return addNewProjectPersist( rootProjectId, userSession, project, result, locale, model );
+        return addNewProjectPersist( rootProjectId, userSession, project,
+            result, locale, model, "project/addToplevel");
     }
+
+    @RequestMapping(path = "/{projectId}/add/new/project", method = RequestMethod.GET)
+    public final String addNewSubProjectGet(
+        @PathVariable long projectId,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Locale locale, Model model
+    ) {
+        log.info("private addNewProjectGet (GET) projectId="+projectId);
+        addNewProject(projectId, userSession, locale, model);
+        return "project/add";
+    }
+
+    @RequestMapping(path = "/{projectId}/add/new/project", method = {RequestMethod.POST, RequestMethod.PUT})
+    public final String addNewSubProjectPost(
+        @PathVariable long projectId,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @Valid Project project,
+        BindingResult result,
+        Locale locale, Model model) {
+        log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
+        return addNewProjectPersist( projectId, userSession, project,
+            result, locale, model ,"project/add");
+    }
+
 
     @RequestMapping(path = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
@@ -243,7 +269,7 @@ public class ProjectController extends AbstractController {
     }
 
 
-    private final String addNewProject(
+    private final void addNewProject(
         long projectId,
         UserSessionBean userSession,
         Locale locale,
@@ -274,7 +300,6 @@ public class ProjectController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
-        return "project/add";
     }
 
     private String addNewProjectPersist(
@@ -282,7 +307,8 @@ public class ProjectController extends AbstractController {
         UserSessionBean userSession,
         Project project,
         BindingResult result,
-        Locale locale, Model model
+        Locale locale, Model model,
+        String template
     ){
         log.info("private addNewProjectPersist projectId="+projectId+" "+project.toString());
         Context context = super.getContext(userSession);
@@ -301,7 +327,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
-            return "project/add";
+            return template;
         } else {
             if (projectId == 0) {
                 if(userSession.getContextId()>0) {
@@ -322,28 +348,6 @@ public class ProjectController extends AbstractController {
             }
             return "redirect:/project/" + projectId;
         }
-    }
-
-    @RequestMapping(path = "/{projectId}/add/new/project", method = RequestMethod.GET)
-    public final String addNewProjectGet(
-            @PathVariable long projectId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
-    ) {
-        log.info("private addNewProjectGet (GET) projectId="+projectId);
-        return addNewProject(projectId, userSession, locale, model);
-    }
-
-    @RequestMapping(path = "/{projectId}/add/new/project",
-            method = RequestMethod.POST)
-    public final String addNewProjectPost(
-            @PathVariable long projectId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            @Valid Project project,
-            BindingResult result,
-            Locale locale, Model model) {
-        log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
-        return addNewProjectPersist( projectId, userSession, project, result, locale, model );
     }
 
     @RequestMapping(path = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
