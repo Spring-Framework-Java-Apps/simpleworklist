@@ -70,3 +70,66 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * F007 Add first new Task: brokem
 
 An error happened during template parsing (template: "class path resource [templates/task/add.html]"
+
+
+## F008 Add first new Project: broken
+-> Form OK
+-> Save Data: Error
+
+````
+2020-04-03 14:29:28.044 DEBUG 2864 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.115 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/ckeditor.js", parameters={}
+2020-04-03 14:29:28.116 DEBUG 2864 --- [nio-8080-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.238 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.387 DEBUG 2864 --- [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/config.js?t=J1QB", parameters={masked}
+2020-04-03 14:29:28.388 DEBUG 2864 --- [nio-8080-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.422 DEBUG 2864 --- [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.438 DEBUG 2864 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/skins/moono-lisa/editor_gecko.css?t=J1QB", parameters={masked}
+2020-04-03 14:29:28.438 DEBUG 2864 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/lang/de.js?t=J1QB", parameters={masked}
+2020-04-03 14:29:28.439 DEBUG 2864 --- [nio-8080-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.439 DEBUG 2864 --- [io-8080-exec-10] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.502 DEBUG 2864 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.550 DEBUG 2864 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.563 DEBUG 2864 --- [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/styles.js?t=J1QB", parameters={masked}
+2020-04-03 14:29:28.563 DEBUG 2864 --- [nio-8080-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.618 DEBUG 2864 --- [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.642 DEBUG 2864 --- [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/scayt/skins/moono-lisa/scayt.css", parameters={}
+2020-04-03 14:29:28.642 DEBUG 2864 --- [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/tableselection/styles/tableselection.css", parameters={}
+2020-04-03 14:29:28.642 DEBUG 2864 --- [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/wsc/skins/moono-lisa/wsc.css", parameters={}
+2020-04-03 14:29:28.642 DEBUG 2864 --- [nio-8080-exec-7] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.642 DEBUG 2864 --- [nio-8080-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.643 DEBUG 2864 --- [nio-8080-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.646 DEBUG 2864 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/scayt/dialogs/dialog.css", parameters={}
+2020-04-03 14:29:28.647 DEBUG 2864 --- [nio-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.711 DEBUG 2864 --- [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.732 DEBUG 2864 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/copyformatting/styles/copyformatting.css", parameters={}
+2020-04-03 14:29:28.733 DEBUG 2864 --- [nio-8080-exec-9] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.766 DEBUG 2864 --- [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.835 DEBUG 2864 --- [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.880 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/tableselection/styles/tableselection.css", parameters={}
+2020-04-03 14:29:28.881 DEBUG 2864 --- [nio-8080-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.881 DEBUG 2864 --- [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/contents.css?t=J1QB", parameters={masked}
+2020-04-03 14:29:28.882 DEBUG 2864 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/copyformatting/styles/copyformatting.css", parameters={}
+2020-04-03 14:29:28.882 DEBUG 2864 --- [io-8080-exec-10] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.882 DEBUG 2864 --- [nio-8080-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.895 DEBUG 2864 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.951 DEBUG 2864 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:28.954 DEBUG 2864 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/skins/moono-lisa/icons.png?t=8b53603e8", parameters={masked}
+2020-04-03 14:29:28.955 DEBUG 2864 --- [nio-8080-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:29:28.999 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:29.024 DEBUG 2864 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:29.048 DEBUG 2864 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:29:29.072 DEBUG 2864 --- [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:30:37.047 DEBUG 2864 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/webjars/ckeditor/4.11.3/full/plugins/magicline/images/icon.png?t=J1QB", parameters={masked}
+2020-04-03 14:30:37.048 DEBUG 2864 --- [nio-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["/webjars/"]
+2020-04-03 14:30:37.148 DEBUG 2864 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-04-03 14:30:58.514 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/project/addchild/", parameters={masked}
+2020-04-03 14:30:58.586  WARN 2864 --- [nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]
+2020-04-03 14:30:58.586 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 405 METHOD_NOT_ALLOWED
+2020-04-03 14:30:58.590 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/fehler", parameters={masked}
+2020-04-03 14:30:58.590 DEBUG 2864 --- [nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.woehlke.simpleworklist.error.MyErrorController#handleError(HttpServletRequest, Model)
+2020-04-03 14:30:58.591  WARN 2864 --- [nio-8080-exec-8] o.w.s.error.MyErrorController            : errorMessage :Request method 'POST' not supported
+2020-04-03 14:30:58.591  WARN 2864 --- [nio-8080-exec-8] o.w.s.error.MyErrorController            : 405Method Not Allowed
+2020-04-03 14:30:58.593 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 405
+````
+
