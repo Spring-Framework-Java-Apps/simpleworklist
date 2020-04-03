@@ -13,7 +13,6 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -31,7 +30,6 @@ import java.util.Properties;
 @EnableJpaAuditing
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@EnableJdbcHttpSession
 @EnableJpaRepositories({
     "org.woehlke.simpleworklist"
 })

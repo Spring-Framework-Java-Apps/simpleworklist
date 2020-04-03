@@ -11,11 +11,11 @@ Fixed #32, Fixed #36,  Fixed #89, Fixed #83, Fixed #84, Fixed #85, Fixed #88, Fi
 
 
 # 2.3.8
-Fixed #79, Fixed #80, Fixed #81, Fixed #100
+Fixed #79, Fixed #80, Fixed #81, Fixed #100, Fixed #101
 
 
 ## BUGS:
-*  ERROR: relation "spring_session" does not exist
+*  #101 ERROR: relation "spring_session" does not exist
 
 ````
  Unexpected error occurred in scheduled task
@@ -58,7 +58,9 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 
 ````
 
-* asdf
+### Read about Spring-Session:
+* [Spring Session with JDBC](https://www.baeldung.com/spring-session-jdbc)
+* [Spring Session with JDBC on Github](https://github.com/eugenp/tutorials/tree/master/spring-session/spring-session-jdbc)
+* [Spring Session with JDBC](https://www.javadevjournal.com/spring/spring-session-with-jdbc/)
 
-
-
+# 2.3.9 Fixed #79, Fixed #80, Fixed #81, Fixed #100, Fixed #101
