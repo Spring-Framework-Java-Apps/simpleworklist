@@ -150,3 +150,5 @@ Errorpage - Refer to logfile:
 2020-04-03 14:30:58.593 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 405
 ```
 
+Fixed #103, Fixed #102
+
