@@ -350,7 +350,7 @@
             </activation>
             <build>
                 <finalName>simpleworklist</finalName>
-                <defaultGoal>clean spring-boot:run</defaultGoal>
+                <defaultGoal>clean install dependency:sources dependency:resolve dependency:resolve-plugins dependency:tree site spring-boot:run</defaultGoal>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
@@ -818,6 +818,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <configuration>
+                    <skipEmptyReport>true</skipEmptyReport>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                 </configuration>
             </plugin>
@@ -837,14 +838,6 @@
                     <linksource>true</linksource>
                     <maxmemory>1024m</maxmemory>
                     <source>${java.version}</source>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -853,9 +846,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <configuration>
-                    <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
                     <targetJdk>${java.version}</targetJdk>
                     <excludeRoots>
@@ -880,6 +880,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
+                <configuration>
+                    <skipFailsafeReport>true</skipFailsafeReport>
+                    <skipSurefireReport>true</skipSurefireReport>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-invoker-plugin</artifactId>
+                <configuration>
+                    <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                    <settingsFile>src/it/settings.xml</settingsFile>
+                    <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
+                    <postBuildHookScript>verify</postBuildHookScript> <!-- no extension required -->
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
