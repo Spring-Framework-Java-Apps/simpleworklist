@@ -65,6 +65,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--
             <dependency>
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-bom</artifactId>
@@ -72,6 +73,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>font-awesome</artifactId>
@@ -202,6 +204,10 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>ckeditor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>

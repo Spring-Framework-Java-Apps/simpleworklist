@@ -10,10 +10,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Component
-@Validated
 @Getter
 @Setter
 @ConfigurationProperties(prefix="org.woehlke.simpleworklist")
+@Validated
 public class ApplicationProperties {
 
     @Valid
@@ -84,10 +84,8 @@ public class ApplicationProperties {
         @NotNull
         private Integer controllerPageSize;
 
-        @NotNull
         private String[] staticResourceHandler;
 
-        @NotNull
         private String[] dynaicResourceHandler;
     }
 
@@ -102,7 +100,6 @@ public class ApplicationProperties {
         @NotNull
         private String logoutUrl;
 
-        @NotNull
         private String[] cookieNamesToClear;
 
         @NotNull
@@ -123,7 +120,6 @@ public class ApplicationProperties {
         @NotNull
         private String loginPage;
 
-        @NotNull
         private String[] antPatternsPublic;
 
         @NotNull
