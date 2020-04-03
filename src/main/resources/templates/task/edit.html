@@ -22,7 +22,7 @@
 		<form id="formId" th:action="@{/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<input type="hidden" th:field="*{taskState}" />
-			<input type="hidden" th:field="*{userAccount.id}" />
+			<input type="hidden" th:field="*{context.id}" />
 			<input type="hidden" th:field="*{rowCreatedAt.time}" />
 			<div class="form-group">
 				<label th:for="${#ids.next('title')}" class="control-label">
