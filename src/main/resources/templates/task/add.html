@@ -96,6 +96,9 @@
 				</div>
 			</span>
 		</div>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
 		<button id="createNewTask" type="submit" class="btn btn-primary">
 			<i class="fas fa-save"></i>
 			<span th:utext="#{task.add.button}">Add Task</span>

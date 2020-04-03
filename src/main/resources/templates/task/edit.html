@@ -98,6 +98,9 @@
 					</div>
 				</span>
 			</div>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
 			<button id="editDataLeaf" type="submit" class="btn btn-primary">
 				<i class="fas fa-save"></i>
 				<span th:utext="#{task.show.button}">Save Task</span>

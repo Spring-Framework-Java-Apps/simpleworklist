@@ -49,6 +49,9 @@
 				<div th:each="err : ${#fields.errors('context.id')}" th:text="${err}" class="alert alert-danger"></div>
 			</div>
 		</div>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
 		<button id="createNewProject" type="submit" class="btn btn-primary">
 			<i class="fas fa-save"></i>
 			<span th:utext="#{project.add.button}">Add Project</span>

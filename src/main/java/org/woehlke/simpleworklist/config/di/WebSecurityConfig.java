@@ -76,7 +76,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl(logoutUrl)
             .deleteCookies(cookieNamesToClear)
             .invalidateHttpSession(invalidateHttpSession)
-            .permitAll();
+            .permitAll()
+            .and()
+            .csrf()
+            .and()
+            .exceptionHandling()
+            .accessDeniedPage("/error/error-403");
     }
 
     private final static String loginProcessingUrl =  "/j_spring_security_check";
