@@ -28,7 +28,6 @@ public class TaskController extends AbstractController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
     private final TaskService taskService;
-
     private final TaskMoveService taskMoveService;
 
     @Autowired

@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.project;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,20 +26,22 @@ import java.util.Locale;
 /**
  * Created by tw on 14.02.16.
  */
+@Slf4j
 @Controller
 @RequestMapping(value = "/project")
 public class ProjectController extends AbstractController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
-
     private final TaskService taskService;
-
     private final TaskMoveService taskMoveService;
+    private final ProjectService projectService;
+
+    private static final long rootProjectId = 0L;
 
     @Autowired
-    public ProjectController(TaskService taskService, TaskMoveService taskMoveService) {
+    public ProjectController(TaskService taskService, TaskMoveService taskMoveService, ProjectService projectService) {
         this.taskService = taskService;
         this.taskMoveService = taskMoveService;
+        this.projectService = projectService;
     }
 
     @RequestMapping(value = "/root", method = RequestMethod.GET)
@@ -100,11 +101,22 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(value = "/add/new/project", method = RequestMethod.GET)
-    public final String addNewProjectForm(
+    public final String addNewTopLevelProjectForm(
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ){
-        return addNewProjectGet(0L, userSession,locale, model);
+        return addNewProjectGet(rootProjectId, userSession,locale, model);
+    }
+
+
+    @RequestMapping(value = "/add/new/project", method = RequestMethod.POST)
+    public final String addNewTopLevelProjectSave(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @Valid Project project,
+        BindingResult result,
+        Locale locale, Model model
+    ){
+        return addNewProjectPost(rootProjectId, userSession, project, result, locale, model);
     }
 
     @RequestMapping(value = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
@@ -155,7 +167,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("userSession",userSession);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
-                LOGGER.info(e.toString());
+                log.info(e.toString());
             }
             Project thisProject = projectService.findByProjectId(projectId);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
@@ -204,13 +216,13 @@ public class ProjectController extends AbstractController {
                     model.addAttribute("isDeleted",true);
                 } else {
                     StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
-                    LOGGER.info("Deletion rejected for Project " + project.getId());
+                    log.info("Deletion rejected for Project " + project.getId());
                     if (!hasNoData) {
-                        LOGGER.warn("Project " + project.getId() + " has actionItem");
+                        log.warn("Project " + project.getId() + " has actionItem");
                         s.append("Project has actionItems.");
                     }
                     if (!hasNoChildren) {
-                        LOGGER.info("Project " + project.getId() + " has children");
+                        log.info("Project " + project.getId() + " has children");
                         s.append("Project has child categories.");
                     }
                     model.addAttribute("message",s.toString());
@@ -300,8 +312,8 @@ public class ProjectController extends AbstractController {
                 project.setParent(thisProject);
                 project = projectService.saveAndFlush(project);
                 projectId = project.getId();
-                LOGGER.info("project:     "+ project.toString());
-                LOGGER.info("thisProject: "+ thisProject.toString());
+                log.info("project:     "+ project.toString());
+                log.info("thisProject: "+ thisProject.toString());
             }
             return "redirect:/project/" + projectId;
         }
@@ -319,13 +331,13 @@ public class ProjectController extends AbstractController {
             userSession.setLastProjectId(sourceTask.getProject().getId());
         }
         model.addAttribute("userSession",userSession);
-        LOGGER.info("-------------------------------------------------");
-        LOGGER.info("  changeTaskOrderIdWithinAProject");
-        LOGGER.info("-------------------------------------------------");
-        LOGGER.info("  source Task:      "+sourceTask.toString());
-        LOGGER.info("-------------------------------------------------");
-        LOGGER.info("  destination Task: "+destinationTask.toString());
-        LOGGER.info("-------------------------------------------------");
+        log.info("-------------------------------------------------");
+        log.info("  changeTaskOrderIdWithinAProject");
+        log.info("-------------------------------------------------");
+        log.info("  source Task:      "+sourceTask.toString());
+        log.info("-------------------------------------------------");
+        log.info("  destination Task: "+destinationTask.toString());
+        log.info("-------------------------------------------------");
         String returnUrl = "redirect:/taskstate/inbox";
         boolean rootProject = sourceTask.isInRootProject();
         returnUrl = "redirect:/project/0";
@@ -333,10 +345,10 @@ public class ProjectController extends AbstractController {
             taskMoveService.moveOrderIdRootProject(sourceTask, destinationTask);
         } else {
             taskMoveService.moveOrderIdProject(sourceTask, destinationTask);
-            LOGGER.info("  DONE: taskMoveService.moveOrderIdProject (2)");
+            log.info("  DONE: taskMoveService.moveOrderIdProject (2)");
             returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
         }
-        LOGGER.info("-------------------------------------------------");
+        log.info("-------------------------------------------------");
         return returnUrl;
     }
 }
