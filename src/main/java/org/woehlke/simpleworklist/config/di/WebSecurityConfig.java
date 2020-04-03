@@ -41,16 +41,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AuthenticationSuccessHandler loginSuccessHandler;
     private final UserAccountSecurityService userAccountSecurityService;
+    private final ApplicationProperties applicationProperties;
 
     @Autowired
     public WebSecurityConfig(
         AuthenticationManagerBuilder authenticationManagerBuilder,
         LoginSuccessHandler loginSuccessHandler,
-        UserAccountSecurityService userAccountSecurityService
-    ) {
+        UserAccountSecurityService userAccountSecurityService,
+        ApplicationProperties applicationProperties) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.loginSuccessHandler = loginSuccessHandler;
         this.userAccountSecurityService = userAccountSecurityService;
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
@@ -58,24 +60,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .headers().disable()
             .authorizeRequests()
-            .antMatchers(antPatternsPublic)
+            .antMatchers(applicationProperties.getWebSecurity().getAntPatternsPublic())
             .permitAll()
             .anyRequest()
             .fullyAuthenticated()
             .and()
             .formLogin()
-            .loginPage(loginPage)
-            .usernameParameter(usernameParameter).passwordParameter(passwordParameter)
-            .loginProcessingUrl(loginProcessingUrl)
-            .failureForwardUrl(failureForwardUrl)
-            .defaultSuccessUrl(defaultSuccessUrl)
+            .loginPage(applicationProperties.getWebSecurity().getLoginPage())
+            .usernameParameter(applicationProperties.getWebSecurity().getUsernameParameter())
+            .passwordParameter(applicationProperties.getWebSecurity().getPasswordParameter())
+            .loginProcessingUrl(applicationProperties.getWebSecurity().getLoginProcessingUrl())
+            .failureForwardUrl(applicationProperties.getWebSecurity().getFailureForwardUrl())
+            .defaultSuccessUrl(applicationProperties.getWebSecurity().getDefaultSuccessUrl())
             .successHandler(loginSuccessHandler)
             .permitAll()
             .and()
             .logout()
-            .logoutUrl(logoutUrl)
-            .deleteCookies(cookieNamesToClear)
-            .invalidateHttpSession(invalidateHttpSession)
+            .logoutUrl(applicationProperties.getWebSecurity().getLogoutUrl())
+            .deleteCookies(applicationProperties.getWebSecurity().getCookieNamesToClear())
+            .invalidateHttpSession(applicationProperties.getWebSecurity().getInvalidateHttpSession())
             .permitAll()
             .and()
             .csrf()
@@ -84,22 +87,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .accessDeniedPage("/error/error-403");
     }
 
-    private final static String loginProcessingUrl =  "/j_spring_security_check";
-    private final static String logoutUrl = "/logout";
-    private final static String[] cookieNamesToClear = {"JSESSIONID"};
-    private final static boolean invalidateHttpSession = true;
-    private final static String defaultSuccessUrl = "/";
-    private final static String failureForwardUrl = "/login?login_error=1";
-    private final static String usernameParameter = "j_username";
-    private final static String passwordParameter = "j_password";
-    private final static String loginPage = "/login";
-    private final static String[] antPatternsPublic = {
-        "/webjars/**", "/css/**", "/img/**", "/js/**", "/favicon.ico",
-        "/test*/**", "/login*", "/register*", "/confirm*/**",
-        "/resetPassword*", "/passwordResetConfirm*/**", "/error*"
-    };
-    private final static int strengthBCryptPasswordEncoder = 10;
-
     @Bean
     public UserDetailsService userDetailsService(){
         return this.userAccountSecurityService;
@@ -107,7 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder(){
-        int strength = strengthBCryptPasswordEncoder;
+        int strength = applicationProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
         return new BCryptPasswordEncoder(strength);
     }
 
@@ -122,7 +109,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {
         UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
-        filter.setFilterProcessesUrl(loginProcessingUrl);
+        filter.setFilterProcessesUrl(applicationProperties.getWebSecurity().getLoginProcessingUrl());
         return filter;
     }
 }
