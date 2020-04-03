@@ -29,8 +29,8 @@ spring:
     jdbc:
       initialize-schema: ALWAYS
       #cleanup-cron: 0 * * * *simpleworklist *
-      schema: classpath:org/springframework/session/jdbc/schema-postgresql.sql
-      table-name: SPRING_SESSION
+      schema: 'classpath:org/springframework/session/jdbc/schema-postgresql.sql'
+      table-name: 'spring_session'
   thymeleaf:
     cache: false
   main:

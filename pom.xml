@@ -47,14 +47,14 @@
 
 
     <properties>
-        <java.version>13</java.version>
+        <java.version>11</java.version>
         <version.maven>3.6.3</version.maven>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
 		<maven.scm.version>1.11.2</maven.scm.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
-        <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-jxr-plugin.version>3.0.0</maven-jxr-plugin.version>
         <maven-pmd-plugin.version>3.11.0</maven-pmd-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0-M4</maven-surefire-report-plugin.version>
@@ -817,6 +817,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
+		<version>3.0.0</version>
                 <configuration>
                     <skipEmptyReport>true</skipEmptyReport>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
@@ -843,18 +844,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
+		<version>${maven-jxr-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+		<version>${maven-checkstyle-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
+		<version>4.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
+		 <version>3.13.0</version>
                 <configuration>
                     <minimumTokens>100</minimumTokens>
                     <targetJdk>${java.version}</targetJdk>
@@ -880,6 +885,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
+		    <version>3.0.0-M4</version>
                 <configuration>
                     <skipFailsafeReport>true</skipFailsafeReport>
                     <skipSurefireReport>true</skipSurefireReport>
