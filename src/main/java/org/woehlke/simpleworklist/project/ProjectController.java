@@ -51,6 +51,7 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model) {
+        log.info("/project/root");
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(0L);
         model.addAttribute("userSession",userSession);
@@ -74,6 +75,7 @@ public class ProjectController extends AbstractController {
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model) {
+        log.info("/project/"+projectId);
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(projectId);
         model.addAttribute("userSession",userSession);
@@ -105,6 +107,7 @@ public class ProjectController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ){
+        log.info("/project/add/new/project (GET)");
         return addNewProject(rootProjectId, userSession, locale, model);
     }
 
@@ -116,6 +119,7 @@ public class ProjectController extends AbstractController {
         BindingResult result,
         Locale locale, Model model
     ){
+        log.info("/project/add/new/project (POST)");
         return addNewProjectPersist( rootProjectId, userSession, project, result, locale, model );
     }
 
@@ -245,6 +249,7 @@ public class ProjectController extends AbstractController {
         Locale locale,
         Model model
     ) {
+        log.info("private addNewProject projectId="+projectId);
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
         userSession.setLastProjectId(projectId);
@@ -273,12 +278,13 @@ public class ProjectController extends AbstractController {
     }
 
     private String addNewProjectPersist(
-        @PathVariable long projectId,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        @Valid Project project,
+        long projectId,
+        UserSessionBean userSession,
+        Project project,
         BindingResult result,
         Locale locale, Model model
     ){
+        log.info("private addNewProjectPersist projectId="+projectId+" "+project.toString());
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
         userSession.setLastProjectId(projectId);
@@ -324,6 +330,7 @@ public class ProjectController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
+        log.info("private addNewProjectGet (GET) projectId="+projectId);
         return addNewProject(projectId, userSession, locale, model);
     }
 
@@ -335,6 +342,7 @@ public class ProjectController extends AbstractController {
             @Valid Project project,
             BindingResult result,
             Locale locale, Model model) {
+        log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
         return addNewProjectPersist( projectId, userSession, project, result, locale, model );
     }
 

@@ -53,14 +53,14 @@
 					</div>
 				</div>
 			</div>
-            <input type="hidden"
-                   name="${_csrf.parameterName}"
-                   value="${_csrf.token}"/>
 			<input type="hidden" th:field="*{id}" />
 			<button id="saveEditedProject" type="submit" class="btn btn-primary">
 				<i class="fas fa-save"></i>
 				<span th:utext="#{project.edit.button}">Save Project</span>
 			</button>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
 		</form>
 	</div>
 	<!-- Document Window End -->
