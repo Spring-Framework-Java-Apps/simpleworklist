@@ -6,15 +6,15 @@
 * https://www.youtube.com/watch?v=hieLEsp5cTk
 
 
-# 2.3.7
+## 2.3.7
 Fixed #32, Fixed #36,  Fixed #89, Fixed #83, Fixed #84, Fixed #85, Fixed #88, Fixed #90, Fixed #91, Fixed #99
 
 
-# 2.3.8
+## 2.3.8
 Fixed #79, Fixed #80, Fixed #81, Fixed #100, Fixed #101
 
 
-## BUGS:
+### BUGS:
 *  #101 ERROR: relation "spring_session" does not exist
 
 ````
@@ -63,4 +63,10 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * [Spring Session with JDBC on Github](https://github.com/eugenp/tutorials/tree/master/spring-session/spring-session-jdbc)
 * [Spring Session with JDBC](https://www.javadevjournal.com/spring/spring-session-with-jdbc/)
 
-# 2.3.9 Fixed #79, Fixed #80, Fixed #81, Fixed #100, Fixed #101
+## 2.3.9 Fixed #79, Fixed #80, Fixed #81, Fixed #100, Fixed #101
+
+## 2.3.10 - Bugfixing 
+
+* F007 Add first new Task: brokem
+
+An error happened during template parsing (template: "class path resource [templates/task/add.html]"
