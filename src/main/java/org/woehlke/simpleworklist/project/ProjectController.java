@@ -111,8 +111,8 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/add/new/project", method = RequestMethod.POST)
     public final String addNewTopLevelProjectSave(
-        @ModelAttribute("userSession") UserSessionBean userSession,
         @Valid Project project,
+        @ModelAttribute("userSession") UserSessionBean userSession,
         BindingResult result,
         Locale locale, Model model
     ){
