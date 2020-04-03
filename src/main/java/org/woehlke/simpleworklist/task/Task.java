@@ -20,7 +20,6 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.common.ComparableById;
 
-
 @Entity
 @Table(
     name="task",
