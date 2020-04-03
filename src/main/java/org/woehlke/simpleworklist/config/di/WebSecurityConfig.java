@@ -79,12 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl(applicationProperties.getWebSecurity().getLogoutUrl())
             .deleteCookies(applicationProperties.getWebSecurity().getCookieNamesToClear())
             .invalidateHttpSession(applicationProperties.getWebSecurity().getInvalidateHttpSession())
-            .permitAll()
-            .and()
-            .csrf()
-            .and()
-            .exceptionHandling()
-            .accessDeniedPage("/error/error-403");
+            .permitAll();
     }
 
     @Bean

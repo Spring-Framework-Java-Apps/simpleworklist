@@ -22,7 +22,7 @@ import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 @Controller
-@RequestMapping(value = "/task")
+@RequestMapping(path = "/task")
 public class TaskController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
@@ -36,7 +36,7 @@ public class TaskController extends AbstractController {
         this.taskMoveService = taskMoveService;
     }
 
-    @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
     public final String editTaskGet(
             @PathVariable("taskId") Task task,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -63,7 +63,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/{taskId}/edit", method = RequestMethod.POST)
+    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.POST)
     public final String editTaskPost(
             @PathVariable long taskId,
             @Valid Task task,
@@ -136,7 +136,7 @@ public class TaskController extends AbstractController {
         return thisProject;
     }
 
-    @RequestMapping(value = "/addtorootproject/", method = RequestMethod.GET)
+    @RequestMapping(path = "/addtorootproject/", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
@@ -163,7 +163,7 @@ public class TaskController extends AbstractController {
         return "task/add";
     }
 
-    @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/addtoproject/{projectId}", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -203,7 +203,7 @@ public class TaskController extends AbstractController {
         return "task/add";
     }
 
-    @RequestMapping(value = "/addtoproject/{projectId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/addtoproject/{projectId}", method = RequestMethod.POST)
     public final String addNewTaskToProjectPost(
             @PathVariable long projectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -254,7 +254,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/delete/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/delete/{taskId}", method = RequestMethod.GET)
     public final String deleteTaskGet(@PathVariable("taskId") Task task) {
         if(task!= null){
             taskService.delete(task);
@@ -262,7 +262,7 @@ public class TaskController extends AbstractController {
         return "redirect:/taskstate/trash";
     }
 
-    @RequestMapping(value = "/task/undelete/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/task/undelete/{taskId}", method = RequestMethod.GET)
     public final String undeleteTaskGet(@PathVariable("taskId") Task task) {
         if(task!= null) {
             taskService.undelete(task);
@@ -272,7 +272,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/transform/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/transform/{taskId}", method = RequestMethod.GET)
     public final String transformTaskIntoProjectGet(@PathVariable("taskId") Task task) {
         long projectId = 0;
         if(task != null) {
@@ -294,7 +294,7 @@ public class TaskController extends AbstractController {
         return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/complete/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/complete/{taskId}", method = RequestMethod.GET)
     public final String completeTaskGet(@PathVariable("taskId") Task task) {
         if(task != null){
             long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
@@ -304,7 +304,7 @@ public class TaskController extends AbstractController {
         return "redirect:/taskstate/completed";
     }
 
-    @RequestMapping(value = "/incomplete/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/incomplete/{taskId}", method = RequestMethod.GET)
     public final String undoneTaskGet(@PathVariable("taskId") Task task) {
         if(task !=null) {
             taskService.incomplete(task);
@@ -360,7 +360,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/setfocus/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/setfocus/{taskId}", method = RequestMethod.GET)
     public final String setFocusGet(@PathVariable("taskId") Task task,
                                  @RequestParam(required=false) String back){
         if(task !=null) {
@@ -371,7 +371,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/unsetfocus/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/unsetfocus/{taskId}", method = RequestMethod.GET)
     public final String unsetFocusGet(@PathVariable("taskId") Task task,
                                    @RequestParam(required=false) String back){
         if(task !=null) {

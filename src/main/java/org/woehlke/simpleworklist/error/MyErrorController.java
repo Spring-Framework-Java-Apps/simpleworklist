@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class MyErrorController implements ErrorController {
 
-    @RequestMapping("/fehler")
+    @RequestMapping(path="/fehler", method={RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
     public String handleError(HttpServletRequest request, Model model) {
         String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
         if(errorMessage!=null){
@@ -28,12 +29,53 @@ public class MyErrorController implements ErrorController {
             log.warn(httpStatus.value()+""+httpStatus.getReasonPhrase());
             switch (httpStatus){
                 case NOT_FOUND:
+                    log.warn("##################################################");
+                    log.warn("           404 NOT_FOUND");
+                    log.warn("##################################################");
                     return "error/error-404";
                 case INTERNAL_SERVER_ERROR:
+                    log.warn("##################################################");
+                    log.warn("           500 INTERNAL_SERVER_ERROR");
+                    log.warn("##################################################");
                     return "error/error-500";
                 case UNAUTHORIZED:
                     log.warn("##################################################");
-                    log.warn("            UNAUTHORIZED");
+                    log.warn("           401 UNAUTHORIZED");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case METHOD_NOT_ALLOWED:
+                    log.warn("##################################################");
+                    log.warn("          405 METHOD_NOT_ALLOWED");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case FORBIDDEN:
+                    log.warn("##################################################");
+                    log.warn("          403 FORBIDDEN");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case REQUEST_TIMEOUT:
+                    log.warn("##################################################");
+                    log.warn("          408 REQUEST_TIMEOUT");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case CONFLICT:
+                    log.warn("##################################################");
+                    log.warn("          409 CONFLICT");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case PRECONDITION_FAILED:
+                    log.warn("##################################################");
+                    log.warn("          412 PRECONDITION_FAILED");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case URI_TOO_LONG:
+                    log.warn("##################################################");
+                    log.warn("          414 URI_TOO_LONG");
+                    log.warn("##################################################");
+                    return "redirect:/login?login_error=1";
+                case UNSUPPORTED_MEDIA_TYPE:
+                    log.warn("##################################################");
+                    log.warn("          415 UNSUPPORTED_MEDIA_TYPE");
                     log.warn("##################################################");
                     return "redirect:/login?login_error=1";
             }
