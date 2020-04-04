@@ -1,0 +1,10 @@
+@echo on
+set PORT=5000
+set MAIL_SMTP_HOST=mailhost
+set MAIL_SMTP_PORT=465
+set MAIL_SMTP_USERNAME='mailuser'
+set MAIL_SMTP_PASSWORD='mailuserpassword'
+set MAIL_FROM='noreply@example.org'
+set MAIL_URL_APP_HOST='localhost:5000'
+set JPA_DLL_AUTO='update'
+#set JPA_DLL_AUTO='create-drop'
