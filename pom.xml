@@ -434,10 +434,7 @@
             </activation>
             <build>
                 <finalName>simpleworklist</finalName>
-                <defaultGoal>clean spring-boot:run</defaultGoal>
-                <!--
-                <defaultGoal>clean install dependency:sources dependency:resolve dependency:resolve-plugins dependency:tree/defaultGoal>
-                -->
+                <defaultGoal>clean dependency:list install spring-boot:run</defaultGoal>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
