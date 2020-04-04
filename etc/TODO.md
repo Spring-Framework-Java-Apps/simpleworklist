@@ -64,5 +64,9 @@ Errorpage - Refer to logfile:
 
 Fixed #103, Fixed #102
 
-## Fixed #107, Fixed #108 Release 2.3.11 
+## 2.3.11 
+Fixed #107, Fixed #108
 
+## 2.3.12
+Fixed #106
+ 
