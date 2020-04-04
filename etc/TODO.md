@@ -68,7 +68,7 @@ Fixed #103, Fixed #102
 Fixed #107, Fixed #108
 
 ## 2.3.12
-Fixed #106, #Fixed 109, Fixed #110
+Fixed #106, Fixed #109, Fixed #110
 
 Deployment to heroku
  
