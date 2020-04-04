@@ -720,7 +720,7 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <profiles>
-                                <profile>heroku</profile>
+                                <profile>default</profile>
                             </profiles>
                         </configuration>
                         <executions>

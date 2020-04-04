@@ -7,7 +7,7 @@ server:
     min-response-size: 2048
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
+    url: jdbc:postgresql://localhost:5432//simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
@@ -86,12 +86,12 @@ org:
 spring:
   profiles: default
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist
+    url: jdbc:postgresql://localhost:5432/simpleworklist
 ---
 spring:
   profiles: developing
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist_developing
+    url: jdbc:postgresql://localhost:5432/simpleworklist_developing
   jpa:
     hibernate:
       ddl-auto: update
@@ -100,7 +100,7 @@ spring:
 spring:
   profiles: travis
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist_travis
+    url: jdbc:postgresql://localhost:5432/simpleworklist_travis
     continue-on-error: true
   jpa:
     show-sql: false
@@ -114,7 +114,7 @@ server:
 spring:
   profiles: testing
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist_testing
+    url: jdbc:postgresql://localhost:5432/simpleworklist_testing
   jpa:
     show-sql: false
     hibernate:
@@ -150,7 +150,7 @@ logging:
 spring:
   profiles: qa
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist_qa
+    url: jdbc:postgresql://localhost:5432/simpleworklist_qa
     continue-on-error: true
   jpa:
     show-sql: false
@@ -187,7 +187,7 @@ logging:
 spring:
   profiles: heroku
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist_heroku
+    url: jdbc:postgresql://localhost:5432/simpleworklist_heroku
     continue-on-error: true
   jpa:
     show-sql: false

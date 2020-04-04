@@ -15,7 +15,7 @@ function runHerokuLocal() {
 }
 
 function runDev() {
-    ./mvnw
+    ./mvnw clean install
 }
 
 function main() {
