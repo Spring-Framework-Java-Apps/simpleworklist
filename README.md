@@ -1,81 +1,40 @@
-simpleworklist
-==============
+# simpleworklist
+
+![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 
 Your Todo List for Getting Things Done
 
-Software-Stack: Spring-Boot, JPA, Spring MVC, Thymeleaf, Twitter Bootstrap, jQuery, HTML5
-
-Status
-------
-![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
-
-Getting Things Done
--------------------
+## Getting Things Done
 GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. 
 SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 
-Developer Reminder
-------------------
-* Create serialVersionUID for Classes with "implements Serializable": use the JDK tool “serialver“
-
-
-Drag and Drop
--------------
-* https://jqueryhouse.com/jquery-drag-and-drop-plugins/
-* https://mdbootstrap.com/plugins/jquery/draggable/#introduction
-* https://github.com/Shopify/draggable/tree/master/examples/src/content/Droppable/UniqueDropzone
-* https://github.com/Shopify/draggable#documentation
-* https://jqueryhouse.com/jquery-drag-and-drop-plugins/
-* https://shopify.github.io/draggable/examples/simple-list.html
-* https://www.elated.com/drag-and-drop-with-jquery-your-essential-guide/
-* https://medium.com/@okandavut/using-jquery-ui-drag-drop-64a24e75e805
-
-Shortcuts
----------
-* https://fontawesome.com/icons?d=gallery&m=free
-* https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
-* https://ckeditor.com/docs/ckeditor4/latest/guide/dev_installation.html
-* http://impossibl.github.io/pgjdbc-ng/docs/current/user-guide/#drivers
-* https://devcenter.heroku.com/articles/getting-started-with-java
-* https://devcenter.heroku.com/articles/java-support#specifying-a-java-version
-
-# java-getting-started
-
-A barebones Java app, which can easily be deployed to Heroku.
-
-This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
+## Up and Running
+A Java Web App, which can easily be deployed to Heroku.
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-## Running Locally
+## URLs
+### Development
+* Heroku Deployment: [simpleworklist.herokuapp.com/](https://simpleworklist.herokuapp.com/)
+* For Developers: [localhost:5000](http://localhost:5000/)
+### Info
+* [spring-framework-java-apps.github.io/simpleworklist](http://spring-framework-java-apps.github.io/simpleworklist/)
 
-Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
+### Github Shortcuts
+* [Projects](https://github.com/Spring-Framework-Java-Apps/simpleworklist/projects)
+* [Milestones](https://github.com/Spring-Framework-Java-Apps/simpleworklist/milestones)
+* [Issues](https://github.com/Spring-Framework-Java-Apps/simpleworklist/issues)
+* [Releases](https://github.com/Spring-Framework-Java-Apps/simpleworklist/releases)
+* [Branches](https://github.com/Spring-Framework-Java-Apps/simpleworklist/branches)
+* [CI](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
 
-```sh
-$ git clone https://github.com/heroku/java-getting-started.git
-$ cd java-getting-started
-$ mvn install
-$ heroku local:start
-```
+## Requirements
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+### Functional Requirements
+[Functional Requirements](etc/requirements/Requirements.md)
 
-If you're going to use a database, ensure you have a local `.env` file that reads something like this:
+### Nonfunctional Requirements
+[Nonfunctional Requirements](etc/requirements/Nonfunctional_Requirements.md)
 
-```
-JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name
-```
-
-## Deploying to Heroku
-
-```sh
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-
-## Documentation
-
-For more information about using Java on Heroku, see these Dev Center articles:
-
-- [Java on Heroku](https://devcenter.heroku.com/categories/java)
+## Development
+* [Changelog](etc/Changelog.md)
