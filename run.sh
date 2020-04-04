@@ -18,6 +18,10 @@ function runDev() {
     ./mvnw clean install
 }
 
+function runGithubTestBuild() {
+
+}
+
 function main() {
     runDev
     #setupHeroku
