@@ -2,30 +2,37 @@
 
 source setenv.sh
 
-function setupHeroku() {
-    heroku login
-    heroku ps -a simpleworklist
-}
 
-function runHerokuLocal() {
-    heroku ps -a simpleworklist
-    ./mvnw clean install
-    heroku local web
-    heroku open
-}
 
 function runDev() {
-    ./mvnw clean install
+    ./mvnw
 }
 
 function runGithubTestBuild() {
     ./mvnw -B package --file pom.xml
 }
 
+
+function setupHeroku() {
+    heroku login
+    heroku ps -a simpleworklist
+}
+
+function buildLikeHeroku() {
+   ./mvnw -DskipTests clean dependency:list install
+}
+
+function runHerokuLocal() {
+    buildLikeHeroku
+    heroku ps -a simpleworklist
+    heroku local web
+    heroku open
+}
+
 function main() {
-    runDev
+    #runDev
     #setupHeroku
-    #runHerokuLocal
+    runHerokuLocal
 }
 
 main
