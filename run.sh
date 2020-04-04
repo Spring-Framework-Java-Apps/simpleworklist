@@ -9,13 +9,13 @@ function setupHeroku() {
 
 function runHerokuLocal() {
     heroku ps
-    .mvnw clean install
+    ./mvnw clean install
     heroku local web
     heroku open
 }
 
 function runDev() {
-    .mvnw
+    ./mvnw
 }
 
 function main() {
