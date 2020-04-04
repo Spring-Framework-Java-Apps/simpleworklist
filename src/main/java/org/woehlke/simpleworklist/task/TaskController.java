@@ -160,7 +160,72 @@ public class TaskController extends AbstractController {
         model.addAttribute("thisProjectId", 0L);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "task/add";
+        return "task/addToProject";
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.GET)
+    public final String addNewTaskToInboxGet(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Locale locale, Model model
+    ) {
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        Task task = new Task();
+        task.setTaskState(TaskState.INBOX);
+        task.setTaskEnergy(TaskEnergy.NONE);
+        task.setTaskTime(TaskTime.NONE);
+        Boolean mustChooseContext = false;
+        if(userSession.getContextId() == 0L){
+            mustChooseContext = true;
+            task.setContext(userAccount.getDefaultContext());
+        } else {
+            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+            task.setContext(context);
+        }
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("mustChooseArea", mustChooseContext);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("task", task);
+        return "task/addToInbox";
+    }
+
+
+    @RequestMapping(path = "/add",  method = RequestMethod.POST)
+    public final String addNewTaskToInboxPost(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @Valid Task task,
+        BindingResult result, Locale locale, Model model) {
+        Context context = super.getContext(userSession);
+        if (result.hasErrors()) {
+            for (ObjectError e : result.getAllErrors()) {
+                LOGGER.info(e.toString());
+            }
+            Boolean mustChooseArea = false;
+            task.setContext(context);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale);
+            model.addAttribute("mustChooseArea", mustChooseArea);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("task", task);
+            return "task/addToProject";
+        } else {
+            task.setProject(null);
+            if(task.getDueDate()==null){
+                task.setTaskState(TaskState.INBOX);
+            } else {
+                task.setTaskState(TaskState.SCHEDULED);
+            }
+            task.setFocus(false);
+            task.setContext(context);
+            //TODO: verify, that this is correct:
+            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
+            task.setOrderIdProject(++maxOrderIdProject);
+            //
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
+            task = taskService.saveAndFlush(task);
+            LOGGER.info(task.toString());
+            return "redirect:/taskstate/" + task.getTaskState().name().toLowerCase();
+        }
     }
 
     @RequestMapping(path = "/addtoproject/{projectId}", method = RequestMethod.GET)
@@ -200,7 +265,7 @@ public class TaskController extends AbstractController {
         model.addAttribute("thisProjectId", thisProject.getId());
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "task/add";
+        return "task/addToProject";
     }
 
     @RequestMapping(path = "/addtoproject/{projectId}", method = RequestMethod.POST)
@@ -228,7 +293,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "task/add";
+            return "task/addToProject";
         } else {
             if (projectId == 0) {
                 task.setProject(null);
