@@ -5,6 +5,10 @@ Your Todo List for Getting Things Done
 
 Software-Stack: Spring-Boot, JPA, Spring MVC, Thymeleaf, Twitter Bootstrap, jQuery, HTML5
 
+Status
+------
+![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 Setup local Test-System
 -----------------------
 
