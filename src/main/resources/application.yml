@@ -17,8 +17,7 @@ spring:
     open-in-view: true
     generate-ddl: true
     hibernate:
-      #ddl-auto: update
-      ddl-auto: create-drop
+      ddl-auto: ${JPA_DLL_AUTO}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect

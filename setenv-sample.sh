@@ -6,4 +6,4 @@ export MAIL_SMTP_PORT=465
 export MAIL_SMTP_USERNAME='mailuser'
 export MAIL_SMTP_PASSWORD='mailuserpassword'
 export MAIL_FROM='noreply@example.org'
-export MAIL_URL_APP_HOST='localhost:8080'
+export MAIL_URL_APP_HOST='localhost:5000'
