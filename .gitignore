@@ -28,5 +28,5 @@ docs/tmp/
 docs/java-getting-started/
 docs/deploying-spring-boot-apps/
 setenv.sh
-
+setenv.cmd
 /etc/pom.xml
