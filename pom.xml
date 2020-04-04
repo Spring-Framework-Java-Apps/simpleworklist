@@ -47,7 +47,7 @@
 
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>13</java.version>
         <version.maven>3.6.3</version.maven>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
 		<maven.scm.version>1.11.2</maven.scm.version>
