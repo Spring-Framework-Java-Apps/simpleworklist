@@ -2,8 +2,6 @@
 
 source setenv.sh
 
-
-
 function runDev() {
     ./mvnw
 }

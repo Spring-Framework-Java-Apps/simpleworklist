@@ -1,6 +1,4 @@
-# Requirements
-
-# User Stories
+# Functional Requirements
 
 ## F001 Server Starts
 
@@ -17,8 +15,6 @@
 ## F007 Add first new Task
 
 ## F008 Add first new Project
-
-
 
 
 
