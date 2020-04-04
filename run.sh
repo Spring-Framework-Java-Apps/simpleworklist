@@ -30,9 +30,10 @@ function runHerokuLocal() {
 }
 
 function main() {
+    runGithubTestBuild
     #runDev
     #setupHeroku
-    runHerokuLocal
+    #runHerokuLocal
 }
 
 main
