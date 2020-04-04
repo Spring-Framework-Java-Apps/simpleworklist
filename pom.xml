@@ -408,14 +408,6 @@
                                     <ignoredUnusedDeclaredDependencies>
                                         <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
                                     </ignoredUnusedDeclaredDependencies>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>com.github.jsimone</groupId>
-                                            <artifactId>webapp-runner</artifactId>
-                                            <version>9.0.19.0</version>
-                                            <destFileName>webapp-runner.jar</destFileName>
-                                        </artifactItem>
-                                    </artifactItems>
                             </configuration>
                         </execution>
                         <execution>
