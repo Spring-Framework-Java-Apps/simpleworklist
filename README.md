@@ -7,7 +7,7 @@ Software-Stack: Spring-Boot, JPA, Spring MVC, Thymeleaf, Twitter Bootstrap, jQue
 
 Status
 ------
-![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 
 Setup local Test-System
 -----------------------
