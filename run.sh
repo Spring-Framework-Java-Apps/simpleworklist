@@ -25,7 +25,6 @@ function buildLikeHeroku() {
 function runHerokuLocal() {
     buildLikeHeroku
     heroku ps -a simpleworklist
-    ./mvnw clean install
     heroku local web
     heroku open
 }
