@@ -9,27 +9,10 @@ Status
 ------
 ![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 
-Setup local Test-System
------------------------
-
-1. Setup a PostgreSQL 10-Database
-3. copy src/main/resources/worklist_sample.properties to _src/main/resources/worklist.properties
-4. start project with: mvn clean spring-boot:run
-
 Getting Things Done
 -------------------
 GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. 
 SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
-
-Setup a PostgreSQL 10-Database
-------------------------------
-* https://www.postgresql.org/download/
-* Windows and macOS - Graphical installer by *BigSQL*: https://www.openscg.com/bigsql/postgresql/installers.jsp/
-* Windows: 
-    1. start cmd as admin
-    2. cd \PostgreSQL
-    3. pgc start
-    4. pgc pgadmin3
 
 Developer Reminder
 ------------------
