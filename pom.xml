@@ -320,7 +320,7 @@
                 <executions>
                     <execution>
                         <id>unpack-dependencies</id>
-                        <phase>pre-site</phase>
+                        <phase>site</phase>
                         <goals>
                             <goal>analyze-only</goal>
                             <goal>analyze-dep-mgt</goal>
@@ -358,7 +358,7 @@
                     </execution>
                     <execution>
                         <id>check-dependencies1</id>
-                        <phase>pre-site</phase>
+                        <phase>site</phase>
                         <goals>
                             <goal>list</goal>
                             <goal>list-repositories</goal>
@@ -367,7 +367,7 @@
                     </execution>
                     <execution>
                         <id>check-dependencies2</id>
-                        <phase>pre-site</phase>
+                        <phase>site</phase>
                         <goals>
                             <goal>analyze</goal>
                             <goal>analyze-dep-mgt</goal>
@@ -377,7 +377,7 @@
                     </execution>
                     <execution>
                         <id>check-dependencies3</id>
-                        <phase>verify</phase>
+                        <phase>site</phase>
                         <goals>
                             <goal>tree</goal>
                         </goals>
@@ -400,7 +400,7 @@
                     </execution>
                     <execution>
                         <id>get-dependency-sources</id>
-                        <phase>pre-site</phase>
+                        <phase>site</phase>
                         <goals>
                             <goal>sources</goal>
                             <goal>resolve</goal>
