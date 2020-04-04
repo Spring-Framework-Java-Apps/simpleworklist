@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${PORT}
   error:
     path: /fehler
   compression:
@@ -7,7 +7,7 @@ server:
     min-response-size: 2048
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/simpleworklist
+    url: jdbc:postgresql://localhost:5432/simpleworklist
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver

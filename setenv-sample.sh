@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export PORT=5000
 export MAIL_SMTP_HOST=mailhost
 export MAIL_SMTP_PORT=465
 export MAIL_SMTP_USERNAME='mailuser'
