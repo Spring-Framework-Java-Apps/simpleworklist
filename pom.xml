@@ -319,7 +319,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>unpack-dependencies</id>
+                        <id>unpack-dependencies-classpath</id>
                         <phase>site</phase>
                         <goals>
                             <goal>analyze-only</goal>
@@ -357,7 +357,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>check-dependencies1</id>
+                        <id>check-dependencies-1</id>
                         <phase>site</phase>
                         <goals>
                             <goal>list</goal>
@@ -366,7 +366,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>check-dependencies2</id>
+                        <id>check-dependencies-2</id>
                         <phase>site</phase>
                         <goals>
                             <goal>analyze</goal>
@@ -376,7 +376,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>check-dependencies3</id>
+                        <id>check-dependencies-3</id>
                         <phase>site</phase>
                         <goals>
                             <goal>tree</goal>

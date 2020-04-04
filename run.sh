@@ -9,9 +9,8 @@ function runDev() {
 }
 
 function runGithubTestBuild() {
-    ./mvnw -B package --file pom.xml
+    ./mvnw -B -DskipTests clean dependency:list install --file pom.xml
 }
-
 
 function setupHeroku() {
     heroku login
@@ -30,6 +29,7 @@ function runHerokuLocal() {
 }
 
 function main() {
+    runGithubTestBuild
     #runDev
     #setupHeroku
     runHerokuLocal
