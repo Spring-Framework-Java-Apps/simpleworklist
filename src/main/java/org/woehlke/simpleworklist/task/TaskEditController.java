@@ -66,7 +66,10 @@ public class TaskEditController extends AbstractController {
         @PathVariable long taskId,
         @Valid Task task,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        BindingResult result, Locale locale, Model model) {
+        BindingResult result,
+        Locale locale,
+        Model model
+    ) {
         Task persistentTask = taskService.findOne(taskId);
         long projectId = 0;
         Project thisProject;
