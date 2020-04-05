@@ -31,7 +31,7 @@ public class TaskControllerServiceImpl implements TaskControllerService {
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", taskState.name().toLowerCase());
         model.addAttribute("userSession", userSession);
-        return taskState.name().toLowerCase();
+        return "taskstate/"+taskState.name().toLowerCase();
     }
 
 
