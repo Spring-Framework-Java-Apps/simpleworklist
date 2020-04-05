@@ -29,5 +29,9 @@ for i in $SUBDIRS_USER ; do
 done
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" >> $OUTPUT
 
-cat $OUTPUT | sed "s/\/home\/tw\/IdeaProjects\/Spring-Framework-Java-Apps\/simpleworklist\/src\/main\/java\/org\/woehlke\/simpleworklist//g" | tr -s " " | cut -d" " -f2-4 > $OUTPUT2
+echo "$OUTPUT2" > $OUTPUT2
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" >> $OUTPUT2
+date >> $OUTPUT2
+cat $OUTPUT | sed "s/\/home\/tw\/IdeaProjects\/Spring-Framework-Java-Apps\/simpleworklist\/src\/main\/java\/org\/woehlke\/simpleworklist//g" | tr -s " " | cut -d" " -f2-4 >> $OUTPUT2
+
 cat $OUTPUT2
