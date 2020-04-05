@@ -1,5 +1,8 @@
 package org.woehlke.simpleworklist.breadcrumb;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
 
@@ -8,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Getter
+@EqualsAndHashCode
+@ToString
 public class Breadcrumb implements Serializable {
 
     private static final long serialVersionUID = 7932703111140692689L;
 
     private List<BreadcrumbItem> breadcrumb;
-
     private final Locale locale;
 
     public Breadcrumb(Locale locale) {
@@ -28,14 +33,6 @@ public class Breadcrumb implements Serializable {
         BreadcrumbItem home = new BreadcrumbItem(homeString,"/");
         breadcrumb.add(home);
         this.breadcrumb = breadcrumb;
-    }
-
-    public List<BreadcrumbItem> getBreadcrumb() {
-        return breadcrumb;
-    }
-
-    public int size(){
-        return breadcrumb.size();
     }
 
     public void addProjectRoot(){
