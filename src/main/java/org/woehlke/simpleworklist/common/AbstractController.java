@@ -8,6 +8,7 @@ import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.task.TaskService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskTime;
@@ -35,6 +36,9 @@ public abstract class AbstractController {
 
     @Autowired
     protected ProjectService projectService;
+
+    @Autowired
+    protected TaskService taskService;
 
     @Autowired
     protected UserAccountService userAccountService;

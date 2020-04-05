@@ -10,13 +10,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
-import org.woehlke.simpleworklist.taskstate.TaskMoveService;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.UserSessionBean;
-import org.woehlke.simpleworklist.task.TaskService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
@@ -31,40 +29,11 @@ import java.util.Locale;
 @RequestMapping(path = "/project")
 public class ProjectController extends AbstractController {
 
-    private final TaskService taskService;
-    private final TaskMoveService taskMoveService;
-    private final ProjectService projectService;
-
-    private static final long rootProjectId = 0L;
+    private final ProjectControllerService projectControllerService;
 
     @Autowired
-    public ProjectController(TaskService taskService, TaskMoveService taskMoveService, ProjectService projectService) {
-        this.taskService = taskService;
-        this.taskMoveService = taskMoveService;
-        this.projectService = projectService;
-    }
-
-    @RequestMapping(path = "/root", method = RequestMethod.GET)
-    public final String showRootProject(
-            @PageableDefault(sort = "orderIdProject") Pageable pageable,
-            @RequestParam(required = false) String message,
-            @RequestParam(required = false) boolean isDeleted,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model) {
-        log.info("/project/root");
-        Context context = super.getContext(userSession);
-        userSession.setLastProjectId(0L);
-        model.addAttribute("userSession",userSession);
-        Page<Task> taskPage = taskService.findByRootProject(context,pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("taskPage", taskPage);
-        if(message != null){
-            model.addAttribute("message",message);
-            model.addAttribute("isDeleted",isDeleted);
-            model.addAttribute("myTaskState","PROJECT");
-        }
-        return "project/root";
+    public ProjectController(ProjectControllerService projectControllerService) {
+        this.projectControllerService = projectControllerService;
     }
 
     @RequestMapping(path = "/{projectId}", method = RequestMethod.GET)
@@ -102,29 +71,6 @@ public class ProjectController extends AbstractController {
         return "project/show";
     }
 
-    @RequestMapping(path = "/add/new/project", method = RequestMethod.GET)
-    public final String addNewTopLevelProjectForm(
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
-    ){
-        log.info("/project/add/new/project (GET)");
-        addNewProject(rootProjectId, userSession, locale, model);
-        return "project/addToplevel";
-    }
-
-
-    @RequestMapping(path = "/add/new/project", method = {RequestMethod.POST, RequestMethod.PUT})
-    public final String addNewTopLevelProjectSave(
-        @Valid Project project,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        BindingResult result,
-        Locale locale, Model model
-    ){
-        log.info("/project/add/new/project (POST)");
-        return addNewProjectPersist( rootProjectId, userSession, project,
-            result, locale, model, "project/addToplevel");
-    }
-
     @RequestMapping(path = "/{projectId}/add/new/project", method = RequestMethod.GET)
     public final String addNewSubProjectGet(
         @PathVariable long projectId,
@@ -132,7 +78,8 @@ public class ProjectController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("private addNewProjectGet (GET) projectId="+projectId);
-        addNewProject(projectId, userSession, locale, model);
+        Context context = super.getContext(userSession);
+        projectControllerService.addNewProject(projectId, userSession, context, locale, model);
         return "project/add";
     }
 
@@ -144,7 +91,8 @@ public class ProjectController extends AbstractController {
         BindingResult result,
         Locale locale, Model model) {
         log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
-        return addNewProjectPersist( projectId, userSession, project,
+        Context context = super.getContext(userSession);
+        return projectControllerService.addNewProjectPersist( projectId, userSession, project, context,
             result, locale, model ,"project/add");
     }
 
@@ -268,118 +216,4 @@ public class ProjectController extends AbstractController {
         return "redirect:/project/" + newProjectId;
     }
 
-
-    private final void addNewProject(
-        long projectId,
-        UserSessionBean userSession,
-        Locale locale,
-        Model model
-    ) {
-        log.info("private addNewProject projectId="+projectId);
-        Context context = super.getContext(userSession);
-        UserAccount userAccount = context.getUserAccount();
-        userSession.setLastProjectId(projectId);
-        model.addAttribute("userSession",userSession);
-        Project thisProject = null;
-        Project project = null;
-        if (projectId == 0) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            project = Project.newRootProjectFactory(userAccount);
-            if(userSession.getContextId() == 0L){
-                model.addAttribute("mustChooseArea", true);
-                project.setContext(userAccount.getDefaultContext());
-            } else {
-                project.setContext(context);
-            }
-        } else {
-            thisProject = projectService.findByProjectId(projectId);
-            project = Project.newProjectFactory(thisProject);
-        }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("project", project);
-    }
-
-    private String addNewProjectPersist(
-        long projectId,
-        UserSessionBean userSession,
-        Project project,
-        BindingResult result,
-        Locale locale, Model model,
-        String template
-    ){
-        log.info("private addNewProjectPersist projectId="+projectId+" "+project.toString());
-        Context context = super.getContext(userSession);
-        UserAccount userAccount = context.getUserAccount();
-        userSession.setLastProjectId(projectId);
-        model.addAttribute("userSession",userSession);
-        if(result.hasErrors()){
-            Project thisProject = null;
-            if (projectId == 0) {
-                thisProject = new Project();
-                thisProject.setId(0L);
-            } else {
-                thisProject = projectService.findByProjectId(projectId);
-            }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject);
-            model.addAttribute("project", project);
-            return template;
-        } else {
-            if (projectId == 0) {
-                if(userSession.getContextId()>0) {
-                    project.setContext(context);
-                }
-                project = projectService.saveAndFlush(project);
-                projectId = project.getId();
-            } else {
-                Project thisProject = projectService.findByProjectId(projectId);
-                List<Project> children = thisProject.getChildren();
-                children.add(project);
-                thisProject.setChildren(children);
-                project.setParent(thisProject);
-                project = projectService.saveAndFlush(project);
-                projectId = project.getId();
-                log.info("project:     "+ project.toString());
-                log.info("thisProject: "+ thisProject.toString());
-            }
-            return "redirect:/project/" + projectId;
-        }
-    }
-
-    @RequestMapping(path = "/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String changeTaskOrderIdWithinAProject(
-            @PathVariable("sourceTaskId") Task sourceTask,
-            @PathVariable("destinationTaskId") Task destinationTask,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
-    ){
-        Context context = super.getContext(userSession);
-        if(!sourceTask.isInRootProject()){
-            userSession.setLastProjectId(sourceTask.getProject().getId());
-        }
-        model.addAttribute("userSession",userSession);
-        log.info("-------------------------------------------------");
-        log.info("  changeTaskOrderIdWithinAProject");
-        log.info("-------------------------------------------------");
-        log.info("  source Task:      "+sourceTask.toString());
-        log.info("-------------------------------------------------");
-        log.info("  destination Task: "+destinationTask.toString());
-        log.info("-------------------------------------------------");
-        String returnUrl = "redirect:/taskstate/inbox";
-        boolean rootProject = sourceTask.isInRootProject();
-        returnUrl = "redirect:/project/0";
-        if(rootProject){
-            taskMoveService.moveOrderIdRootProject(sourceTask, destinationTask);
-        } else {
-            taskMoveService.moveOrderIdProject(sourceTask, destinationTask);
-            log.info("  DONE: taskMoveService.moveOrderIdProject (2)");
-            returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
-        }
-        log.info("-------------------------------------------------");
-        return returnUrl;
-    }
 }

@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.task;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
@@ -15,11 +16,10 @@ import org.woehlke.simpleworklist.project.Project;
 
 import java.util.ArrayList;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskServiceImpl implements TaskService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskServiceImpl.class);
 
     private final TaskRepository taskRepository;
 
@@ -32,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task saveAndFlush(Task entity) {
         entity = taskRepository.saveAndFlush(entity);
-        LOGGER.info("saved: " + entity.toString());
+        log.info("saved: " + entity.toString());
         return entity;
     }
 
@@ -85,12 +85,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> findByProject(Project thisProject, Context context, Pageable request) {
-        LOGGER.info("findByProject: ");
-        LOGGER.info("---------------------------------");
-        LOGGER.info("thisProject: "+thisProject);
-        LOGGER.info("---------------------------------");
-        LOGGER.info("context:      "+ context);
-        LOGGER.info("---------------------------------");
+        log.info("findByProject: ");
+        log.info("---------------------------------");
+        log.info("thisProject: "+thisProject);
+        log.info("---------------------------------");
+        log.info("context:      "+ context);
+        log.info("---------------------------------");
         if((thisProject == null)||(context ==null)){
             return new PageImpl<Task>(new ArrayList<Task>());
         } else {
