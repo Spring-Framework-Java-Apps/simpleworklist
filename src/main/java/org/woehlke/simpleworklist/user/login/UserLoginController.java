@@ -42,6 +42,7 @@ public class UserLoginController {
      */
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public final String loginForm(Model model) {
+        log.info("loginForm");
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
         return "user/login/loginForm";
@@ -61,6 +62,7 @@ public class UserLoginController {
         BindingResult result,
         Model model
     ) {
+        log.info("loginPerform");
         boolean authorized = userAccountAccessService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
@@ -84,6 +86,7 @@ public class UserLoginController {
         HttpServletRequest request,
         HttpServletResponse response
     ) {
+        log.info("logoutPages");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);

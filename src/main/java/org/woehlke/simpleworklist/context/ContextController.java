@@ -28,8 +28,12 @@ public class ContextController extends AbstractController {
     }
 
     @RequestMapping(path = "/choose/{newContextId}", method = RequestMethod.GET)
-    public String switchContxt(@PathVariable("newContextId") Context setContext,
-                               @ModelAttribute("userSession") UserSessionBean userSession, Model model){
+    public String switchContxt(
+        @PathVariable("newContextId") Context setContext,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ){
+        log.info("switchContxt");
         Context isContext = super.getContext(userSession);
         if (setContext != null) {
             userSession.setContextId(setContext.getId());

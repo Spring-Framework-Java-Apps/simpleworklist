@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.context;
 
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -29,6 +30,11 @@ import java.util.Objects;
         @Index(name = "ix_context_row_created_at", columnList = "row_created_at")
     }
 )
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Context extends AuditModel implements Serializable, ComparableById<Context> {
 
     private static final long serialVersionUID = -5035732370606951871L;
@@ -36,19 +42,19 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     @Id
     @GeneratedValue(generator = "context_generator")
     @SequenceGenerator(
-            name = "context_generator",
-            sequenceName = "context_sequence",
-            initialValue = 1000
+        name = "context_generator",
+        sequenceName = "context_sequence",
+        initialValue = 1000
     )
     private Long id;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = false,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            })
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        })
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
 
@@ -63,9 +69,6 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     @Length(min = 1, max = 255)
     @Column(name = "name_en", nullable = false)
     private String nameEn;
-
-    public Context() {
-    }
 
     public Context(String nameDe, String nameEn) {
         this.nameDe = nameDe;
@@ -97,68 +100,6 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     @Override
     public boolean equalsByUuid(Context otherObject) {
         return super.equalsByMyUuid(otherObject);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserAccount getUserAccount() {
-        return userAccount;
-    }
-
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
-    }
-
-    public String getNameDe() {
-        return nameDe;
-    }
-
-    public void setNameDe(String name) {
-        this.nameDe = name;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Context)) return false;
-        if (!super.equals(o)) return false;
-        Context context = (Context) o;
-        return Objects.equals(getId(), context.getId()) &&
-                getUserAccount().equals(context.getUserAccount()) &&
-                getNameDe().equals(context.getNameDe()) &&
-                getNameEn().equals(context.getNameEn());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getUserAccount(), getNameDe(), getNameEn());
-    }
-
-    @Override
-    public String toString() {
-        return "Context{" +
-                "id=" + id +
-                ", userAccount=" + userAccount +
-                ", nameDe='" + nameDe + '\'' +
-                ", nameEn='" + nameEn + '\'' +
-                ", uuid='" + uuid + '\'' +
-                ", rowCreatedAt=" + rowCreatedAt +
-                ", rowUpdatedAt=" + rowUpdatedAt +
-                '}';
     }
 
 }

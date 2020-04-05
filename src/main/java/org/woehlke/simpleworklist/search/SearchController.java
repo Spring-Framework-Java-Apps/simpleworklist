@@ -38,6 +38,7 @@ public class SearchController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
+        log.info("searchResults");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         userSession.setLastSearchterm(searchterm);

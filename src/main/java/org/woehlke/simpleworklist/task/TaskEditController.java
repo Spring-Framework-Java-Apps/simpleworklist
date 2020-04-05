@@ -41,6 +41,7 @@ public class TaskEditController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
+        log.info("editTaskGet");
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         if(task != null) {
@@ -71,6 +72,7 @@ public class TaskEditController extends AbstractController {
         Locale locale,
         Model model
     ) {
+        log.info("editTaskPost");
         Task persistentTask = taskService.findOne(taskId);
         long projectId = 0;
         Project thisProject;

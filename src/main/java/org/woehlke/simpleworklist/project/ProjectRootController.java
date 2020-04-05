@@ -44,7 +44,8 @@ public class ProjectRootController extends AbstractController {
         @RequestParam(required = false) String message,
         @RequestParam(required = false) boolean isDeleted,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model) {
+        Locale locale, Model model
+    ) {
         log.info("/project/root");
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(0L);

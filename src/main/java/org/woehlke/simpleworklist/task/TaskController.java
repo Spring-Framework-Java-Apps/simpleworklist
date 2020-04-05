@@ -14,6 +14,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(path = "/delete/{taskId}", method = RequestMethod.GET)
     public final String deleteTaskGet(@PathVariable("taskId") Task task) {
+        log.info("deleteTaskGet");
         if(task!= null){
             taskService.delete(task);
         }
@@ -22,6 +23,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(path = "/task/undelete/{taskId}", method = RequestMethod.GET)
     public final String undeleteTaskGet(@PathVariable("taskId") Task task) {
+        log.info("undeleteTaskGet");
         if(task!= null) {
             taskService.undelete(task);
             return "redirect:/taskstate/completed";
@@ -32,6 +34,7 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(path = "/transform/{taskId}", method = RequestMethod.GET)
     public final String transformTaskIntoProjectGet(@PathVariable("taskId") Task task) {
+        log.info("transformTaskIntoProjectGet");
         if(task != null) {
             long projectId = 0;
             if (task.getProject() != null) {

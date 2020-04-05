@@ -26,6 +26,7 @@ public class TaskControllerServiceImpl implements TaskControllerService {
         Locale locale,
         Model model
     ){
+        log.info("getTaskStatePage");
         userSession.setLastTaskState(taskState);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale);
         model.addAttribute("breadcrumb", breadcrumb);
@@ -38,6 +39,7 @@ public class TaskControllerServiceImpl implements TaskControllerService {
 
     //TODO:  String back -> boolean project
     public String getView(Task task, String back){
+        log.info("getView");
         if(back != null && back.contentEquals("project")){
             if(task.getProject() != null) {
                 return "redirect:/project/" + task.getProject().getId();

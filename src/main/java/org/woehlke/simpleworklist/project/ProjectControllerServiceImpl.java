@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.project;
 
-import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Locale locale,
         Model model
     ) {
-        log.info("private addNewProject projectId="+projectId);
+        log.info("addNewProject projectId="+projectId);
         UserAccount userAccount = context.getUserAccount();
         userSession.setLastProjectId(projectId);
         model.addAttribute("userSession",userSession);
@@ -113,6 +112,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     public Project getProject(long projectId, UserAccount userAccount, UserSessionBean userSession){
+        log.info("getProject");
         Project thisProject;
         if (projectId == 0) {
             thisProject = new Project();
@@ -127,5 +127,28 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             thisProject = projectService.findByProjectId(projectId);
         }
         return thisProject;
+    }
+
+    @Override
+    public void addNewProjectToRoot(
+        UserSessionBean userSession,
+        Context context,
+        Locale locale,
+        Model model) {
+        log.info("addNewProjectToRoot");
+    }
+
+    @Override
+    public String addNewProjectToRootPersist(
+        UserSessionBean userSession,
+        Project project,
+        Context context,
+        BindingResult result,
+        Locale locale,
+        Model model,
+        String s
+    ) {
+        log.info("addNewProjectToRootPersist");
+        return null;
     }
 }
