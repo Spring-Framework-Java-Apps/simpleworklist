@@ -1,7 +1,9 @@
 package org.woehlke.simpleworklist.task;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class TaskControllerServiceImpl implements TaskControllerService {
 
