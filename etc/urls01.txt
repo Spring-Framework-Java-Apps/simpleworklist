@@ -1,14 +1,19 @@
 etc/urls01.txt
 ---------------------------------------------------------------------
-So 5. Apr 23:19:11 CEST 2020
+So 5. Apr 23:22:51 CEST 2020
 ---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/context
 ---------------------------------------------------------------------
 18:@RequestMapping(path = "/context")
 28:    @RequestMapping(path = "/choose/{newContextId}", method = RequestMethod.GET)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/error
 ---------------------------------------------------------------------
 20:    @RequestMapping(path="/fehler", method={RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project
 ---------------------------------------------------------------------
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:29:@RequestMapping(path = "/project")
@@ -29,9 +34,13 @@ So 5. Apr 23:19:11 CEST 2020
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:42:    @RequestMapping(path = "/{projectId}/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:75:    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.GET)
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:102:    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.POST)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/search
 ---------------------------------------------------------------------
 36:    @RequestMapping(path = "/search", method = RequestMethod.GET)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task
 ---------------------------------------------------------------------
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskAddController.java:26:@RequestMapping(path = "/task")
@@ -44,6 +53,8 @@ So 5. Apr 23:19:11 CEST 2020
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskEditController.java:28:@RequestMapping(path = "/task")
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskEditController.java:38:    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskEditController.java:65:    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.POST)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate
 ---------------------------------------------------------------------
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:24:@RequestMapping(path = "/taskstate")
@@ -73,33 +84,44 @@ So 5. Apr 23:19:11 CEST 2020
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:157:    @RequestMapping(path = "/{taskId}/incomplete/", method = RequestMethod.GET)
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:172:    @RequestMapping(path = "/{taskId}/setfocus/", method = RequestMethod.GET)
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:185:    @RequestMapping(path = "/{taskId}/unsetfocus", method = RequestMethod.GET)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/testdata
 ---------------------------------------------------------------------
 12:@RequestMapping(path = "/test")
 25:    @RequestMapping(path = "/helper/project/createTree", method = RequestMethod.GET)
 ---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/login
 ---------------------------------------------------------------------
 46:    @RequestMapping(path = "/login", method = RequestMethod.GET)
 61:    @RequestMapping(path = "/login", method = RequestMethod.POST)
 81:    @RequestMapping(path="/logout", method = RequestMethod.GET)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/messages
 ---------------------------------------------------------------------
 32:@RequestMapping(path = "/user2user/")
 37:    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.GET)
 58:    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.POST)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/register
 ---------------------------------------------------------------------
 40:    @RequestMapping(path = "/register", method = RequestMethod.GET)
 55:    @RequestMapping(path = "/register", method = RequestMethod.POST)
 93:    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
 118:    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/resetpassword
 ---------------------------------------------------------------------
 42:    @RequestMapping(path = "/resetPassword", method = RequestMethod.GET)
 57:    @RequestMapping(path = "/resetPassword", method = RequestMethod.POST)
 93:    @RequestMapping(path = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
 118:    @RequestMapping(path = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
+---------------------------------------------------------------------
+#####################################################################
 /home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/selfservice
 ---------------------------------------------------------------------
 39:@RequestMapping(path = "/user/selfservice")
@@ -117,4 +139,5 @@ So 5. Apr 23:19:11 CEST 2020
 293:    @RequestMapping(path = "/context/delete/{id}", method = RequestMethod.GET)
 323:    @RequestMapping(path = "/language", method = RequestMethod.GET)
 337:    @RequestMapping(path = "/language", method = RequestMethod.POST)
+---------------------------------------------------------------------
 ---------------------------------------------------------------------

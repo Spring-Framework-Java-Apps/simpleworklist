@@ -10,21 +10,24 @@ OUTPUT="etc/urls01.txt"
 OUTPUT2="etc/urls02.txt"
 
 echo "$OUTPUT" > $OUTPUT
-echo "---------------------------------------------------------------------" >> $OUTPUT
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" >> $OUTPUT
 date >> $OUTPUT
-echo "---------------------------------------------------------------------" >> $OUTPUT
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" >> $OUTPUT
 for i in $SUBDIRS ; do
+    echo "#####################################################################" >> $OUTPUT
     echo "$ROOT_PATH_SRC/$i" >> $OUTPUT
     echo "---------------------------------------------------------------------" >> $OUTPUT
     grep -n "RequestMapping" $ROOT_PATH_SRC/$i/*Controller*.java | grep -v "import org.springframework.web.bind.annotation.RequestMapping" >> $OUTPUT
+    echo "---------------------------------------------------------------------" >> $OUTPUT
 done
-echo "---------------------------------------------------------------------" >> $OUTPUT
 for i in $SUBDIRS_USER ; do
+    echo "#####################################################################" >> $OUTPUT
     echo "$ROOT_PATH_SRC/user/$i" >> $OUTPUT
     echo "---------------------------------------------------------------------" >> $OUTPUT
     grep -n "RequestMapping" $ROOT_PATH_SRC/user/$i/*Controller*.java | grep -v "import org.springframework.web.bind.annotation.RequestMapping" >> $OUTPUT
+    echo "---------------------------------------------------------------------" >> $OUTPUT
 done
-echo "---------------------------------------------------------------------" >> $OUTPUT
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" >> $OUTPUT
 
 cat $OUTPUT | sed "s/\/home\/tw\/IdeaProjects\/Spring-Framework-Java-Apps\/simpleworklist\/src\/main\/java\/org\/woehlke\/simpleworklist//g" | tr -s " " | cut -d" " -f2-4 > $OUTPUT2
 cat $OUTPUT2
