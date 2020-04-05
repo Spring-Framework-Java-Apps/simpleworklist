@@ -1,9 +1,9 @@
 etc/urls02.txt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-So 5. Apr 23:27:12 CEST 2020
+So 5. Apr 23:34:55 CEST 2020
 etc/urls01.txt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-5. Apr 23:27:12
+5. Apr 23:34:55
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #####################################################################
 /context
@@ -27,16 +27,15 @@ etc/urls01.txt
 @RequestMapping(path = "/{projectId}/edit",
 @RequestMapping(path = "/{projectId}/edit",
 @RequestMapping(path = "/{projectId}/delete",
+@RequestMapping(path = "/{projectId}/task/{sourceTaskId}/changeorderto/{destinationTaskId}",
+@RequestMapping(path = "/{projectId}/task/add/",
+@RequestMapping(path = "/{projectId}/task/add/",
 = "/project/root")
 @RequestMapping(path = "/",
 @RequestMapping(path = "/add/project",
 @RequestMapping(path = "/add/project",
 @RequestMapping(path = "/add/task",
 @RequestMapping(path = "/add/task",
-= "/project")
-@RequestMapping(path = "/{projectId}/task/{sourceTaskId}/changeorderto/{destinationTaskId}",
-@RequestMapping(path = "/{projectId}/task/add/",
-@RequestMapping(path = "/{projectId}/task/add/",
 ---------------------------------------------------------------------
 #####################################################################
 /search
