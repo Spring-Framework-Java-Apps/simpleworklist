@@ -43,7 +43,7 @@ public class UserLoginController {
      * @param model
      * @return Login Screen.
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
     public final String loginForm(Model model) {
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
@@ -58,7 +58,7 @@ public class UserLoginController {
      * @param model
      * @return Shows Root Project after successful login or login form with error messages.
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
     public final String loginPerform(@Valid LoginForm loginForm,
                                BindingResult result, Model model) {
         boolean authorized = userAccountAccessService.authorize(loginForm);
@@ -78,7 +78,7 @@ public class UserLoginController {
         }
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    @RequestMapping(path="/logout", method = RequestMethod.GET)
     public String logoutPage (SessionStatus status, HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){

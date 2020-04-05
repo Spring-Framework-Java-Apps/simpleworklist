@@ -36,7 +36,7 @@ import java.util.Map;
  * Created by Fert on 14.03.2016.
  */
 @Controller
-@RequestMapping(value = "/user/selfservice")
+@RequestMapping(path = "/user/selfservice")
 public class UserSelfserviceController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSelfserviceController.class);
@@ -49,7 +49,7 @@ public class UserSelfserviceController extends AbstractController {
         this.userAccountAccessService = userAccountAccessService;
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    @RequestMapping(path = "/profile", method = RequestMethod.GET)
     public String userProfileAndMenu(
             @PageableDefault(sort = "userFullname", direction = Sort.Direction.DESC) Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
@@ -69,7 +69,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/profile";
     }
 
-    @RequestMapping(value = "/name", method = RequestMethod.GET)
+    @RequestMapping(path = "/name", method = RequestMethod.GET)
     public String userNameForm(
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
@@ -84,7 +84,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/name";
     }
 
-    @RequestMapping(value = "/name", method = RequestMethod.POST)
+    @RequestMapping(path = "/name", method = RequestMethod.POST)
     public String userNameStore(
             @Valid UserChangeNameForm username,
             BindingResult result,
@@ -105,7 +105,7 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/password", method = RequestMethod.GET)
+    @RequestMapping(path = "/password", method = RequestMethod.GET)
     public String userPasswordForm(
             @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
     ){
@@ -119,7 +119,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/password";
     }
 
-    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    @RequestMapping(path = "/password", method = RequestMethod.POST)
     public String userPasswordStore(
             @Valid UserChangePasswordForm userChangePasswordForm,
             BindingResult result,
@@ -170,7 +170,7 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/contexts", method = RequestMethod.GET)
+    @RequestMapping(path = "/contexts", method = RequestMethod.GET)
     public String userAreasForm(@ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model){
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
@@ -185,7 +185,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/context/all";
     }
 
-    @RequestMapping(value = "/contexts", method = RequestMethod.POST)
+    @RequestMapping(path = "/contexts", method = RequestMethod.POST)
     public String userAreasSave(
             @Valid @ModelAttribute("thisUser") UserChangeDefaultContextForm thisUser,
             BindingResult result,
@@ -213,7 +213,7 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/context/add", method = RequestMethod.GET)
+    @RequestMapping(path = "/context/add", method = RequestMethod.GET)
     public String userNewAreaForm(@ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model){
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
@@ -225,7 +225,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/context/add";
     }
 
-    @RequestMapping(value = "/context/add", method = RequestMethod.POST)
+    @RequestMapping(path = "/context/add", method = RequestMethod.POST)
     public String userNewAreaStore(
             @Valid NewContextForm newContext,
             BindingResult result,
@@ -248,7 +248,7 @@ public class UserSelfserviceController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/context/edit/{contextId}", method = RequestMethod.GET)
     public String userEditAreaForm(
             @PathVariable("contextId") Context context,
             @ModelAttribute("userSession") UserSessionBean userSession, Locale locale, Model model
@@ -265,7 +265,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/context/edit";
     }
 
-    @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/context/edit/{contextId}", method = RequestMethod.POST)
     public String userEditAreaStore(
         @Valid NewContextForm editContext,
         @PathVariable("contextId") Context context,
@@ -290,7 +290,7 @@ public class UserSelfserviceController extends AbstractController {
 
     //TODO: is in session active? -> display message in frontend
     //TODO: has projects or tasks? -> display message in frontend
-    @RequestMapping(value = "/context/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/context/delete/{id}", method = RequestMethod.GET)
     public String userDeleteArea(
             @PathVariable("id") Context context,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -320,7 +320,7 @@ public class UserSelfserviceController extends AbstractController {
         return "redirect:/user/selfservice/contexts";
     }
 
-    @RequestMapping(value = "/language", method = RequestMethod.GET)
+    @RequestMapping(path = "/language", method = RequestMethod.GET)
     public String userLanguageForm(
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
@@ -334,7 +334,7 @@ public class UserSelfserviceController extends AbstractController {
         return "user/selfservice/language";
     }
 
-    @RequestMapping(value = "/language", method = RequestMethod.POST)
+    @RequestMapping(path = "/language", method = RequestMethod.POST)
     public String userLanguageStore(
             @Valid UserChangeLanguageForm userChangeLanguageForm,
             BindingResult result,

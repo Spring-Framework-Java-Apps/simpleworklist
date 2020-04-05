@@ -1,11 +1,11 @@
 etc/urls01.txt
 ---------------------------------------------------------------------
-5. Apr 23:17:52
+5. Apr 23:19:11
 ---------------------------------------------------------------------
 /context
 ---------------------------------------------------------------------
 = "/context")
-@RequestMapping(value = "/choose/{newContextId}",
+@RequestMapping(path = "/choose/{newContextId}",
 /error
 ---------------------------------------------------------------------
 @RequestMapping(path="/fehler", method={RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
@@ -31,7 +31,7 @@ etc/urls01.txt
 @RequestMapping(path = "/{projectId}/task/add/",
 /search
 ---------------------------------------------------------------------
-@RequestMapping(value = "/search",
+@RequestMapping(path = "/search",
 /task
 ---------------------------------------------------------------------
 = "/task")
@@ -47,28 +47,28 @@ etc/urls01.txt
 /taskstate
 ---------------------------------------------------------------------
 = "/taskstate")
-@RequestMapping(value = "/inbox",
-@RequestMapping(value = "/today",
-@RequestMapping(value = "/next",
-@RequestMapping(value = "/waiting",
-@RequestMapping(value = "/scheduled",
-@RequestMapping(value = "/someday",
-@RequestMapping(value = "/completed",
-@RequestMapping(value = "/trash",
-@RequestMapping(value = "/focus",
+@RequestMapping(path = "/inbox",
+@RequestMapping(path = "/today",
+@RequestMapping(path = "/next",
+@RequestMapping(path = "/waiting",
+@RequestMapping(path = "/scheduled",
+@RequestMapping(path = "/someday",
+@RequestMapping(path = "/completed",
+@RequestMapping(path = "/trash",
+@RequestMapping(path = "/focus",
 = "/taskstate/task")
-@RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}",
-@RequestMapping(value = "/{taskId}/move/to/project/{projectId}",
-@RequestMapping(value = "/{taskId}/move/to/taskstate/inbox",
-@RequestMapping(value = "/{taskId}/move/to/taskstate/today",
-@RequestMapping(value = "/{taskId}/move/to/taskstate//next",
-@RequestMapping(value = "/{taskId}/move/to/taskstate/waiting",
-@RequestMapping(value = "/{taskId}/move/to/taskstate//someday",
-@RequestMapping(value = "/{taskId}/move/to/taskstate/focus",
-@RequestMapping(value = "/{taskId}/move/to/taskstate/completed",
-@RequestMapping(value = "/{taskId}/move/to/taskstate/trash",
-@RequestMapping(value = "/completed/move/to/taskstate/trash",
-@RequestMapping(value = "/trash/empty",
+@RequestMapping(path = "/{sourceTaskId}/changeorderto/{destinationTaskId}",
+@RequestMapping(path = "/{taskId}/move/to/project/{projectId}",
+@RequestMapping(path = "/{taskId}/move/to/taskstate/inbox",
+@RequestMapping(path = "/{taskId}/move/to/taskstate/today",
+@RequestMapping(path = "/{taskId}/move/to/taskstate//next",
+@RequestMapping(path = "/{taskId}/move/to/taskstate/waiting",
+@RequestMapping(path = "/{taskId}/move/to/taskstate//someday",
+@RequestMapping(path = "/{taskId}/move/to/taskstate/focus",
+@RequestMapping(path = "/{taskId}/move/to/taskstate/completed",
+@RequestMapping(path = "/{taskId}/move/to/taskstate/trash",
+@RequestMapping(path = "/completed/move/to/taskstate/trash",
+@RequestMapping(path = "/trash/empty",
 @RequestMapping(path = "/{taskId}/complete",
 @RequestMapping(path = "/{taskId}/incomplete/",
 @RequestMapping(path = "/{taskId}/setfocus/",
@@ -76,45 +76,45 @@ etc/urls01.txt
 /testdata
 ---------------------------------------------------------------------
 = "/test")
-@RequestMapping(value = "/helper/project/createTree",
+@RequestMapping(path = "/helper/project/createTree",
 ---------------------------------------------------------------------
 /user/login
 ---------------------------------------------------------------------
-@RequestMapping(value = "/login",
-@RequestMapping(value = "/login",
-@RequestMapping(value="/logout", method =
+@RequestMapping(path = "/login",
+@RequestMapping(path = "/login",
+@RequestMapping(path="/logout", method =
 /user/messages
 ---------------------------------------------------------------------
 = "/user2user/")
-@RequestMapping(value = "/{userId}/messages/",
-@RequestMapping(value = "/{userId}/messages/",
+@RequestMapping(path = "/{userId}/messages/",
+@RequestMapping(path = "/{userId}/messages/",
 /user/register
 ---------------------------------------------------------------------
-@RequestMapping(value = "/register",
-@RequestMapping(value = "/register",
-@RequestMapping(value = "/confirm/{confirmId}",
-@RequestMapping(value = "/confirm/{confirmId}",
+@RequestMapping(path = "/register",
+@RequestMapping(path = "/register",
+@RequestMapping(path = "/confirm/{confirmId}",
+@RequestMapping(path = "/confirm/{confirmId}",
 /user/resetpassword
 ---------------------------------------------------------------------
-@RequestMapping(value = "/resetPassword",
-@RequestMapping(value = "/resetPassword",
-@RequestMapping(value = "/passwordResetConfirm/{confirmId}",
-@RequestMapping(value = "/passwordResetConfirm/{confirmId}",
+@RequestMapping(path = "/resetPassword",
+@RequestMapping(path = "/resetPassword",
+@RequestMapping(path = "/passwordResetConfirm/{confirmId}",
+@RequestMapping(path = "/passwordResetConfirm/{confirmId}",
 /user/selfservice
 ---------------------------------------------------------------------
 = "/user/selfservice")
-@RequestMapping(value = "/profile",
-@RequestMapping(value = "/name",
-@RequestMapping(value = "/name",
-@RequestMapping(value = "/password",
-@RequestMapping(value = "/password",
-@RequestMapping(value = "/contexts",
-@RequestMapping(value = "/contexts",
-@RequestMapping(value = "/context/add",
-@RequestMapping(value = "/context/add",
-@RequestMapping(value = "/context/edit/{contextId}",
-@RequestMapping(value = "/context/edit/{contextId}",
-@RequestMapping(value = "/context/delete/{id}",
-@RequestMapping(value = "/language",
-@RequestMapping(value = "/language",
+@RequestMapping(path = "/profile",
+@RequestMapping(path = "/name",
+@RequestMapping(path = "/name",
+@RequestMapping(path = "/password",
+@RequestMapping(path = "/password",
+@RequestMapping(path = "/contexts",
+@RequestMapping(path = "/contexts",
+@RequestMapping(path = "/context/add",
+@RequestMapping(path = "/context/add",
+@RequestMapping(path = "/context/edit/{contextId}",
+@RequestMapping(path = "/context/edit/{contextId}",
+@RequestMapping(path = "/context/delete/{id}",
+@RequestMapping(path = "/language",
+@RequestMapping(path = "/language",
 ---------------------------------------------------------------------

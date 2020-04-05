@@ -29,12 +29,12 @@ import java.util.Locale;
  * on 16.02.2016.
  */
 @Controller
-@RequestMapping(value = "/user2user/")
+@RequestMapping(path = "/user2user/")
 public class User2UserMessageController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
-    @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
@@ -55,7 +55,7 @@ public class User2UserMessageController extends AbstractController {
         return "user/messages/all";
     }
 
-    @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
+    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @Valid @ModelAttribute("newUser2UserMessage") NewUser2UserMessage newUser2UserMessage,

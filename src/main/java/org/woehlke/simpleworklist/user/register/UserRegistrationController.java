@@ -37,7 +37,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(path = "/register", method = RequestMethod.GET)
     public final String registerNewUserRequestForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -52,7 +52,7 @@ public class UserRegistrationController {
      * @param model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
     public final String registerNewUserRequestStoreAndSendEmailForVerification(
             @Valid UserRegistrationForm userRegistrationForm,
             BindingResult result, Model model) {
@@ -90,7 +90,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for Entering Account Task or Error Messages.
      */
-    @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerNewUserCheckResponseAndRegistrationForm(
             @PathVariable String confirmId, Model model) {
         LOGGER.info("GET /confirm/" + confirmId);
@@ -115,7 +115,7 @@ public class UserRegistrationController {
      * @param model
      * @return login page at success or page with error messages.
      */
-    @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
     public final String registerNewUserCheckResponseAndRegistrationStore(
             @PathVariable String confirmId,
             @Valid UserAccountForm userAccountForm,

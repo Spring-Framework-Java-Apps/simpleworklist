@@ -21,7 +21,7 @@ import java.util.Locale;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/taskstate")
+@RequestMapping(path = "/taskstate")
 public class TaskStateDisplayController extends AbstractController {
 
 
@@ -36,7 +36,7 @@ public class TaskStateDisplayController extends AbstractController {
         this.taskControllerService = taskControllerService;
     }
 
-    @RequestMapping(value = "/inbox", method = RequestMethod.GET)
+    @RequestMapping(path = "/inbox", method = RequestMethod.GET)
     public final String inbox(
         @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -48,7 +48,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.INBOX, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/today", method = RequestMethod.GET)
+    @RequestMapping(path = "/today", method = RequestMethod.GET)
     public final String today(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -60,7 +60,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.TODAY, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/next", method = RequestMethod.GET)
+    @RequestMapping(path = "/next", method = RequestMethod.GET)
     public final String next(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -72,7 +72,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.NEXT, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
+    @RequestMapping(path = "/waiting", method = RequestMethod.GET)
     public final String waiting(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -84,7 +84,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.WAITING, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/scheduled", method = RequestMethod.GET)
+    @RequestMapping(path = "/scheduled", method = RequestMethod.GET)
     public final String scheduled(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -96,7 +96,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.SCHEDULED, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/someday", method = RequestMethod.GET)
+    @RequestMapping(path = "/someday", method = RequestMethod.GET)
     public final String someday(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -108,7 +108,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.SOMEDAY, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/completed", method = RequestMethod.GET)
+    @RequestMapping(path = "/completed", method = RequestMethod.GET)
     public final String completed(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -120,7 +120,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.COMPLETED, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/trash", method = RequestMethod.GET)
+    @RequestMapping(path = "/trash", method = RequestMethod.GET)
     public final String trash(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -132,7 +132,7 @@ public class TaskStateDisplayController extends AbstractController {
         return taskControllerService.getTaskStatePage(TaskState.TRASH, taskPage, userSession, locale, model);
     }
 
-    @RequestMapping(value = "/focus", method = RequestMethod.GET)
+    @RequestMapping(path = "/focus", method = RequestMethod.GET)
     public final String focus(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,

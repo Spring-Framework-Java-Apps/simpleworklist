@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by tw on 13.03.16.
  */
 @Controller
-@RequestMapping(value = "/context")
+@RequestMapping(path = "/context")
 public class ContextController extends AbstractController {
 
     private final ContextService contextService;
@@ -25,7 +25,7 @@ public class ContextController extends AbstractController {
        this.contextService = contextService;
     }
 
-    @RequestMapping(value = "/choose/{newContextId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/choose/{newContextId}", method = RequestMethod.GET)
     public String switchContxt(@PathVariable("newContextId") Context setContext,
                                @ModelAttribute("userSession") UserSessionBean userSession, Model model){
         Context isContext = super.getContext(userSession);

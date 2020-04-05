@@ -39,7 +39,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the email-adress.
      */
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    @RequestMapping(path = "/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -54,7 +54,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @RequestMapping(path = "/resetPassword", method = RequestMethod.POST)
     public final String passwordForgottenPost(@Valid UserRegistrationForm userRegistrationForm,
                                               BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -90,7 +90,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the new Password.
      */
-    @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
     public final String enterNewPasswordFormular(@PathVariable String confirmId, Model model) {
         UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
         if (o != null) {
@@ -115,7 +115,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return Info Page for success or back to formular with error messages.
      */
-    @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
     public final String enterNewPasswordPost(@Valid UserAccountForm userAccountForm,
                                              BindingResult result,
                                              @PathVariable String confirmId,

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "/taskstate/task")
+@RequestMapping(path = "/taskstate/task")
 public class TaskStateWorkflowController extends AbstractController {
 
     private final TaskStateService taskStateService;
@@ -37,7 +37,7 @@ public class TaskStateWorkflowController extends AbstractController {
     }
 
 
-    @RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderId(
         @PathVariable("sourceTaskId") Task sourceTask,
         @PathVariable("destinationTaskId") Task destinationTask,
@@ -56,7 +56,7 @@ public class TaskStateWorkflowController extends AbstractController {
     }
 
 
-    @RequestMapping(value = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
     public final String moveTaskToAnotherProject(@PathVariable("taskId") Task task,
                                                  @PathVariable long projectId) {
         if(projectId == 0) {
@@ -68,63 +68,63 @@ public class TaskStateWorkflowController extends AbstractController {
         return "redirect:/project/" + projectId + "/";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
         task = taskMoveService.moveTaskToInbox(task);
         return "redirect:/taskstate/inbox";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
     public final String moveTaskToToday(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to today");
         task = taskMoveService.moveTaskToToday(task);
         return "redirect:/taskstate/today";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate//next", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate//next", method = RequestMethod.GET)
     public final String moveTaskToNext(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to next");
         task = taskMoveService.moveTaskToNext(task);
         return "redirect:/taskstate/next";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
         task = taskMoveService.moveTaskToWaiting(task);
         return "redirect:/taskstate/waiting";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate//someday", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate//someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to someday");
         task = taskMoveService.moveTaskToSomeday(task);
         return "redirect:/taskstate/someday";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
     public final String moveTaskToFocus(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to focus");
         task = taskMoveService.moveTaskToFocus(task);
         return "redirect:/taskstate/focus";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to completed");
         task = taskMoveService.moveTaskToCompleted(task);
         return "redirect:/taskstate/completed";
     }
 
-    @RequestMapping(value = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task = taskMoveService.moveTaskToTrash(task);
         return "redirect:/taskstate/trash";
     }
 
-    @RequestMapping(value = "/completed/move/to/taskstate/trash", method = RequestMethod.GET)
+    @RequestMapping(path = "/completed/move/to/taskstate/trash", method = RequestMethod.GET)
     public final String deleteallCompleted(
         @ModelAttribute("userSession") UserSessionBean userSession
     ) {
@@ -133,7 +133,7 @@ public class TaskStateWorkflowController extends AbstractController {
         return "redirect:/taskstate/trash";
     }
 
-    @RequestMapping(value = "/trash/empty", method = RequestMethod.GET)
+    @RequestMapping(path = "/trash/empty", method = RequestMethod.GET)
     public final String emptyTrash(
         @ModelAttribute("userSession") UserSessionBean userSession
     ) {

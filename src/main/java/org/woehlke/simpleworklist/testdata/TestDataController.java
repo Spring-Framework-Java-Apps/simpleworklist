@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
 @Controller
-@RequestMapping(value = "/test")
+@RequestMapping(path = "/test")
 public class TestDataController {
 
     private final TestDataService testDataService;
@@ -22,7 +22,7 @@ public class TestDataController {
         this.userAccountLoginSuccessService = userAccountLoginSuccessService;
     }
 
-    @RequestMapping(value = "/helper/project/createTree", method = RequestMethod.GET)
+    @RequestMapping(path = "/helper/project/createTree", method = RequestMethod.GET)
     public String createTestCategoryTree() {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         testDataService.createTestCategoryTreeForUserAccount(user);

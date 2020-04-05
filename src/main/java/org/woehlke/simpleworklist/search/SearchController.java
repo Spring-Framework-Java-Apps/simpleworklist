@@ -33,7 +33,7 @@ public class SearchController extends AbstractController {
        this.searchService = searchService;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
     public final String searchResults(
             @RequestParam String searchterm,
             @ModelAttribute("userSession") UserSessionBean userSession,
