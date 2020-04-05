@@ -1,18 +1,5 @@
- Howto Reminder
+# HOWTO
 
-## github
-* [Issues](https://github.com/BloodMoneyApp/bloodmoney/issues)
-* [Projects](https://github.com/BloodMoneyApp/bloodmoney/projects)
-* [Milestones](https://github.com/BloodMoneyApp/bloodmoney/milestones)
-* [Releases](https://github.com/BloodMoneyApp/bloodmoney/releases)
-
-## Development
-* [Changelog](etc/RELEASES.md)
-* [Todo](etc/TODO.md)
-* [Howto](etc/HOWTO.md)
-
-
-## 3rd Party Software 
 ### Howto
 * [Spring dependency-management-plugin](https://docs.spring.io/dependency-management-plugin/docs/current/reference/html/)
 * [Example on github: heroku and Gradle](https://github.com/heroku/gradle-getting-started/blob/master/build.gradle)
@@ -46,6 +33,7 @@
 * [liquibase-gradle-plugin](https://github.com/liquibase/liquibase-gradle-plugin)
 
 ## Database and JPA
+
 ### DB Datatypes
 * [H2 Datatypes](http://www.h2database.com/html/datatypes.html)
 * [PostgreSQL Datatypes](https://www.postgresql.org/docs/11/datatype.html)
