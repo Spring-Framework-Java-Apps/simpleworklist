@@ -1,0 +1,120 @@
+etc/urls01.txt
+---------------------------------------------------------------------
+So 5. Apr 23:15:56 CEST 2020
+---------------------------------------------------------------------
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/context
+---------------------------------------------------------------------
+18:@RequestMapping(value = "/context")
+28:    @RequestMapping(value = "/choose/{newContextId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/error
+---------------------------------------------------------------------
+20:    @RequestMapping(path="/fehler", method={RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project
+---------------------------------------------------------------------
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:29:@RequestMapping(path = "/project")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:39:    @RequestMapping(path = "/{projectId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:74:    @RequestMapping(path = "/{projectId}/add/project", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:86:    @RequestMapping(path = "/{projectId}/add/project", method = {RequestMethod.POST, RequestMethod.PUT})
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:108:    @RequestMapping(path = "/{thisProjectId}/move/to/project/{targetProjectId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:123:    @RequestMapping(path = "/{projectId}/edit", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:142:    @RequestMapping(path = "/{projectId}/edit", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectController.java:179:    @RequestMapping(path = "/{projectId}/delete", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectRootController.java:29:@RequestMapping(path = "/project/root")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectRootController.java:41:    @RequestMapping(path = "/", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectRootController.java:64:    @RequestMapping(path = "/add/project", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectRootController.java:75:    @RequestMapping(path = "/add/project", method = {RequestMethod.POST, RequestMethod.PUT})
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectRootController.java:95:    @RequestMapping(path = "/add/task", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectRootController.java:130:    @RequestMapping(path = "/add/task", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:30:@RequestMapping(path = "/project")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:42:    @RequestMapping(path = "/{projectId}/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:75:    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/project/ProjectTaskController.java:102:    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/search
+---------------------------------------------------------------------
+36:    @RequestMapping(value = "/search", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task
+---------------------------------------------------------------------
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskAddController.java:26:@RequestMapping(path = "/task")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskAddController.java:36:    @RequestMapping(path = "/add", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskAddController.java:62:    @RequestMapping(path = "/add",  method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskController.java:12:@RequestMapping(path = "/task")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskController.java:15:    @RequestMapping(path = "/delete/{taskId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskController.java:23:    @RequestMapping(path = "/task/undelete/{taskId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskController.java:33:    @RequestMapping(path = "/transform/{taskId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskEditController.java:28:@RequestMapping(path = "/task")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskEditController.java:38:    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/task/TaskEditController.java:65:    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate
+---------------------------------------------------------------------
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:24:@RequestMapping(value = "/taskstate")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:39:    @RequestMapping(value = "/inbox", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:51:    @RequestMapping(value = "/today", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:63:    @RequestMapping(value = "/next", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:75:    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:87:    @RequestMapping(value = "/scheduled", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:99:    @RequestMapping(value = "/someday", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:111:    @RequestMapping(value = "/completed", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:123:    @RequestMapping(value = "/trash", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateDisplayController.java:135:    @RequestMapping(value = "/focus", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:21:@RequestMapping(value = "/taskstate/task")
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:40:    @RequestMapping(value = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:59:    @RequestMapping(value = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:71:    @RequestMapping(value = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:78:    @RequestMapping(value = "/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:85:    @RequestMapping(value = "/{taskId}/move/to/taskstate//next", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:92:    @RequestMapping(value = "/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:99:    @RequestMapping(value = "/{taskId}/move/to/taskstate//someday", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:106:    @RequestMapping(value = "/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:113:    @RequestMapping(value = "/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:120:    @RequestMapping(value = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:127:    @RequestMapping(value = "/completed/move/to/taskstate/trash", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:136:    @RequestMapping(value = "/trash/empty", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:145:    @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:157:    @RequestMapping(path = "/{taskId}/incomplete/", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:172:    @RequestMapping(path = "/{taskId}/setfocus/", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/taskstate/TaskStateWorkflowController.java:185:    @RequestMapping(path = "/{taskId}/unsetfocus", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/testdata
+---------------------------------------------------------------------
+12:@RequestMapping(value = "/test")
+25:    @RequestMapping(value = "/helper/project/createTree", method = RequestMethod.GET)
+---------------------------------------------------------------------
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/login
+---------------------------------------------------------------------
+46:    @RequestMapping(value = "/login", method = RequestMethod.GET)
+61:    @RequestMapping(value = "/login", method = RequestMethod.POST)
+81:    @RequestMapping(value="/logout", method = RequestMethod.GET)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/messages
+---------------------------------------------------------------------
+32:@RequestMapping(value = "/user2user/")
+37:    @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.GET)
+58:    @RequestMapping(value = "/{userId}/messages/", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/register
+---------------------------------------------------------------------
+40:    @RequestMapping(value = "/register", method = RequestMethod.GET)
+55:    @RequestMapping(value = "/register", method = RequestMethod.POST)
+93:    @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
+118:    @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/resetpassword
+---------------------------------------------------------------------
+42:    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+57:    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+93:    @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
+118:    @RequestMapping(value = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
+/home/tw/IdeaProjects/Spring-Framework-Java-Apps/simpleworklist/src/main/java/org/woehlke/simpleworklist/user/selfservice
+---------------------------------------------------------------------
+39:@RequestMapping(value = "/user/selfservice")
+52:    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+72:    @RequestMapping(value = "/name", method = RequestMethod.GET)
+87:    @RequestMapping(value = "/name", method = RequestMethod.POST)
+108:    @RequestMapping(value = "/password", method = RequestMethod.GET)
+122:    @RequestMapping(value = "/password", method = RequestMethod.POST)
+173:    @RequestMapping(value = "/contexts", method = RequestMethod.GET)
+188:    @RequestMapping(value = "/contexts", method = RequestMethod.POST)
+216:    @RequestMapping(value = "/context/add", method = RequestMethod.GET)
+228:    @RequestMapping(value = "/context/add", method = RequestMethod.POST)
+251:    @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.GET)
+268:    @RequestMapping(value = "/context/edit/{contextId}", method = RequestMethod.POST)
+293:    @RequestMapping(value = "/context/delete/{id}", method = RequestMethod.GET)
+323:    @RequestMapping(value = "/language", method = RequestMethod.GET)
+337:    @RequestMapping(value = "/language", method = RequestMethod.POST)
+---------------------------------------------------------------------
