@@ -1,8 +1,6 @@
 package org.woehlke.simpleworklist.user.messages;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,7 +18,6 @@ import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.task.TaskController;
 
 import javax.validation.Valid;
 import java.util.Locale;
@@ -34,21 +31,21 @@ import java.util.Locale;
 @RequestMapping(path = "/user/messages/")
 public class User2UserMessageController extends AbstractController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
-
     @RequestMapping(path = "/{userId}/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
+            Locale locale,
+            Model model
     ) {
+        log.info("getLastMessagesBetweenCurrentAndOtherUser");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
-        NewUser2UserMessage newUser2UserMessage = new NewUser2UserMessage();
+        User2UserMessageFormBean user2UserMessageFormBean = new User2UserMessageFormBean();
         Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
-        model.addAttribute("newUser2UserMessage", newUser2UserMessage);
+        model.addAttribute("newUser2UserMessage", user2UserMessageFormBean);
         model.addAttribute("otherUser", otherUser);
         model.addAttribute("user2UserMessagePage", user2UserMessagePage);
         model.addAttribute("refreshMessages",true);
@@ -60,30 +57,31 @@ public class User2UserMessageController extends AbstractController {
     @RequestMapping(path = "/{userId}/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             @PathVariable("userId") UserAccount otherUser,
-            @Valid @ModelAttribute("newUser2UserMessage") NewUser2UserMessage newUser2UserMessage,
+            @Valid @ModelAttribute("newUser2UserMessage") User2UserMessageFormBean user2UserMessageFormBean,
             BindingResult result,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
+            Locale locale,
+            Model model
     ) {
-        LOGGER.info("sendNewMessageToOtherUser");
+        log.info("sendNewMessageToOtherUser");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
         model.addAttribute("breadcrumb",breadcrumb);
         if(result.hasErrors()){
-            LOGGER.info("result.hasErrors");
+            log.info("result.hasErrors");
             for(ObjectError objectError:result.getAllErrors()){
-                LOGGER.info("result.hasErrors: "+objectError.toString());
+                log.info("result.hasErrors: "+objectError.toString());
             }
             Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
             model.addAttribute("otherUser", otherUser);
             model.addAttribute("user2UserMessagePage", user2UserMessagePage);
             return "user/messages/all";
         } else {
-            user2UserMessageService.sendNewUserMessage(thisUser, otherUser, newUser2UserMessage);
-            return "redirect:/user/messages/"+otherUser.getId()+"/";
+            user2UserMessageService.sendNewUserMessage(thisUser, otherUser, user2UserMessageFormBean);
+            return "redirect:/user/messages/" + otherUser.getId();
         }
     }
 

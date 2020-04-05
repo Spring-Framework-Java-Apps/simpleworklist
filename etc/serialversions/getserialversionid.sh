@@ -33,7 +33,7 @@ serialver org.woehlke.simpleworklist.taskstate.TaskState >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskTime >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.user.UserRole >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.account.UserRole >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.common.AuditModel >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.context.Context  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.project.Project  >> $SERIALVERSIONS_FILE
@@ -46,7 +46,7 @@ serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> $SERIALVERSIO
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.context.NewContextForm >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.user.messages.NewUser2UserMessage >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.user.messages.User2UserMessageFormBean >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.search.SearchResult >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> $SERIALVERSIONS_FILE

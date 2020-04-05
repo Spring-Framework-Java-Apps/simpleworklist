@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
  */
 public interface User2UserMessageService {
 
-    void sendNewUserMessage(UserAccount thisUser, UserAccount otherUser, NewUser2UserMessage newUser2UserMessage);
+    void sendNewUserMessage(UserAccount thisUser, UserAccount otherUser, User2UserMessageFormBean user2UserMessageFormBean);
 
     int getNumberOfNewIncomingMessagesForUser(UserAccount user);
 

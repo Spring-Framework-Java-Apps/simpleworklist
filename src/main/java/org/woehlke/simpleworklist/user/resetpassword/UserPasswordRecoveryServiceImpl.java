@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.user.resetpassword;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,15 @@ import org.woehlke.simpleworklist.user.token.TokenGeneratorService;
 
 import java.util.Date;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {
 
     private final UserPasswordRecoveryRepository userPasswordRecoveryRepository;
-
     private final ApplicationProperties applicationProperties;
-
     private final TokenGeneratorService tokenGeneratorService;
-
     private final JavaMailSender mailSender;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryServiceImpl.class);
 
     @Autowired
     public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, ApplicationProperties applicationProperties, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
@@ -73,9 +70,9 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        LOGGER.info("To be saved: " + o.toString());
+        log.info("To be saved: " + o.toString());
         o = userPasswordRecoveryRepository.saveAndFlush(o);
-        LOGGER.info("Saved: " + o.toString());
+        log.info("Saved: " + o.toString());
         this.sendEmailForPasswordReset(o);
     }
 
@@ -83,7 +80,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySentEmail(UserPasswordRecovery o) {
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL);
-        LOGGER.info("about to save: " + o.toString());
+        log.info("about to save: " + o.toString());
         userPasswordRecoveryRepository.saveAndFlush(o);
     }
 
@@ -118,12 +115,12 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            LOGGER.warn(ex.getMessage() + " for " + o.toString());
+            log.warn(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
             this.passwordRecoverySentEmail(o);
         }
-        LOGGER.info("Sent MAIL: " + o.toString());
+        log.info("Sent MAIL: " + o.toString());
     }
 }

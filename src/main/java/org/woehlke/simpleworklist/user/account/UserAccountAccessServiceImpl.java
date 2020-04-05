@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.user.account;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,22 +13,23 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.login.LoginForm;
 import org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountAccessServiceImpl implements UserAccountAccessService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountAccessServiceImpl.class);
-
     private final UserAccountRepository userAccountRepository;
-
     private final AuthenticationManager authenticationManager;
-
     private final PasswordEncoder encoder;
 
     @Autowired
-    public UserAccountAccessServiceImpl(UserAccountRepository userAccountRepository, AuthenticationManager authenticationManager) {
+    public UserAccountAccessServiceImpl(
+        UserAccountRepository userAccountRepository,
+        AuthenticationManager authenticationManager
+    ) {
         this.userAccountRepository = userAccountRepository;
         this.authenticationManager = authenticationManager;
+        //TODO:
         int strength = 10;
         this.encoder = new BCryptPasswordEncoder(strength);
     }
@@ -37,8 +37,14 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void changeUsersPassword(UserChangePasswordForm userAccountFormBean, UserAccount user) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUserEmail(), userAccountFormBean.getOldUserPassword());
+    public void changeUsersPassword(
+        UserChangePasswordForm userAccountFormBean,
+        UserAccount user
+    ) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+            user.getUserEmail(),
+            userAccountFormBean.getOldUserPassword()
+        );
         Authentication authenticationResult = authenticationManager.authenticate(token);
         if(authenticationResult.isAuthenticated()){
             UserAccount ua = userAccountRepository.findByUserEmail(user.getUserEmail());
@@ -49,17 +55,26 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
     }
 
     @Override
-    public boolean confirmUserByLoginAndPassword(String userEmail, String oldUserPassword) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userEmail, oldUserPassword);
+    public boolean confirmUserByLoginAndPassword(
+        String userEmail,
+        String oldUserPassword
+    ) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+            userEmail,
+            oldUserPassword
+        );
         Authentication authenticationResult = authenticationManager.authenticate(token);
         String oldPwEncoded = this.encoder.encode(oldUserPassword);
-        LOGGER.info(userEmail+", "+oldPwEncoded);
+        log.info(userEmail+", "+oldPwEncoded);
         return authenticationResult.isAuthenticated();
     }
 
     @Override
     public boolean authorize(LoginForm loginForm) {
-        UserAccount account = userAccountRepository.findByUserEmailAndUserPassword(loginForm.getUserEmail(), loginForm.getUserPassword());
+        UserAccount account = userAccountRepository.findByUserEmailAndUserPassword(
+            loginForm.getUserEmail(),
+            loginForm.getUserPassword()
+        );
         return account != null;
     }
 }

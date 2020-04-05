@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.user.selfservice;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,13 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.UserDetailsBean;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountSecurityPasswordServiceImpl implements UserAccountSecurityPasswordService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountSecurityPasswordServiceImpl.class);
-
     private final UserAccountRepository userAccountRepository;
-
     private final PasswordEncoder encoder;
-
     private final AuthenticationManager authenticationManager;
 
     @Autowired
@@ -35,7 +33,6 @@ public class UserAccountSecurityPasswordServiceImpl implements UserAccountSecuri
         this.encoder = new BCryptPasswordEncoder(strength);
         this.authenticationManager = authenticationManager;
     }
-
 
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {

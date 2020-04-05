@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.user.login;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,7 @@ import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 
 import java.util.Date;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSuccessService {
@@ -23,7 +25,6 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
     public UserAccountLoginSuccessServiceImpl(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
-
 
     @Override
     public String retrieveUsername() {
@@ -38,17 +39,18 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void updateLastLoginTimestamp(UserAccount user) {
-        user.setLastLoginTimestamp(new Date());
-        userAccountRepository.saveAndFlush(user);
-    }
-
-    @Override
     public UserAccount retrieveCurrentUser() throws UsernameNotFoundException {
         String username = this.retrieveUsername();
         UserAccount account = userAccountRepository.findByUserEmail(username);
         if (account == null) throw new UsernameNotFoundException(username);
         return account;
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void updateLastLoginTimestamp(UserAccount user) {
+        user.setLastLoginTimestamp(new Date());
+        userAccountRepository.saveAndFlush(user);
+    }
+
 }

@@ -21,7 +21,7 @@ serialver org.woehlke.simpleworklist.taskstate.TaskState >> ..\..\etc\serialvers
 serialver org.woehlke.simpleworklist.task.TaskTime >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.UserRole >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.account.UserRole >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.common.AuditModel >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.Context  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.project.Project  >> ..\..\etc\serialversions.txt
@@ -34,7 +34,7 @@ serialver org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem  >> ..\..\etc\ser
 serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.NewContextForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.messages.NewUser2UserMessage >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.messages.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.search.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt

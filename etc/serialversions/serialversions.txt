@@ -4,7 +4,7 @@ org.woehlke.simpleworklist.taskstate.TaskState:    private static final long ser
 org.woehlke.simpleworklist.task.TaskTime:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.user.register.UserRegistrationStatus:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.user.UserRole:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.user.account.UserRole:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.common.AuditModel:    private static final long serialVersionUID = 4399373914714726911L;
 org.woehlke.simpleworklist.context.Context:    private static final long serialVersionUID = -5035732370606951871L;
 org.woehlke.simpleworklist.project.Project:    private static final long serialVersionUID = 4566653175832872422L;
@@ -17,7 +17,7 @@ org.woehlke.simpleworklist.breadcrumb.BreadcrumbItem:    private static final lo
 org.woehlke.simpleworklist.breadcrumb.Breadcrumb:    private static final long serialVersionUID = 7932703111140692689L;
 org.woehlke.simpleworklist.user.login.LoginForm:    private static final long serialVersionUID = 5936886560348238355L;
 org.woehlke.simpleworklist.context.NewContextForm:    private static final long serialVersionUID = -937143305653156981L;
-org.woehlke.simpleworklist.user.messages.NewUser2UserMessage:    private static final long serialVersionUID = 1576610181966480168L;
+org.woehlke.simpleworklist.user.messages.User2UserMessageFormBean:    private static final long serialVersionUID = 1576610181966480168L;
 org.woehlke.simpleworklist.search.SearchResult:    private static final long serialVersionUID = 1682809351146047764L;
 org.woehlke.simpleworklist.user.account.UserAccountForm:    private static final long serialVersionUID = 9180383385243540190L;
 org.woehlke.simpleworklist.context.UserChangeDefaultContextForm:    private static final long serialVersionUID = -8592295563275083292L;

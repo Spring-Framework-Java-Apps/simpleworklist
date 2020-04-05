@@ -37,7 +37,7 @@
         <div class="row" id="newUser2UserMessageForm">
             <div class="col">
                 <div class="card card-body">
-                    <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}" th:object="${newUser2UserMessage}" method="post">
+                    <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}" th:object="${user2UserMessageFormBean}" method="post">
                         <div class="form-group">
                             <label for="textEditor" class="control-label">
                                 <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>

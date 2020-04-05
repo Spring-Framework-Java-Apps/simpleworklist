@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.user.resetpassword;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,12 @@ import org.woehlke.simpleworklist.user.account.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
+@RequestMapping(path = "/user/resetPassword")
 public class UserPasswordRecoveryController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordRecoveryController.class);
-
     private final UserAccountService userAccountService;
-
     private final UserPasswordRecoveryService userPasswordRecoveryService;
 
     @Autowired
@@ -39,7 +39,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the email-adress.
      */
-    @RequestMapping(path = "/resetPassword", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -54,20 +54,23 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
-    @RequestMapping(path = "/resetPassword", method = RequestMethod.POST)
-    public final String passwordForgottenPost(@Valid UserRegistrationForm userRegistrationForm,
-                                              BindingResult result, Model model) {
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public final String passwordForgottenPost(
+        @Valid UserRegistrationForm userRegistrationForm,
+        BindingResult result,
+        Model model
+    ) {
         if (result.hasErrors()) {
-            LOGGER.info("----------------------");
-            LOGGER.info(userRegistrationForm.toString());
-            LOGGER.info(result.toString());
-            LOGGER.info(model.toString());
-            LOGGER.info("----------------------");
+            log.info("----------------------");
+            log.info(userRegistrationForm.toString());
+            log.info(result.toString());
+            log.info(model.toString());
+            log.info("----------------------");
             return "user/resetPassword/resetPasswordForm";
         } else {
-            LOGGER.info(userRegistrationForm.toString());
-            LOGGER.info(result.toString());
-            LOGGER.info(model.toString());
+            log.info(userRegistrationForm.toString());
+            log.info(result.toString());
+            log.info(model.toString());
             if (userAccountService.findByUserEmail(userRegistrationForm.getEmail()) == null) {
                 String objectName = "userRegistrationForm";
                 String field = "email";
@@ -79,7 +82,6 @@ public class UserPasswordRecoveryController {
                 userPasswordRecoveryService.passwordRecoverySendEmailTo(userRegistrationForm.getEmail());
                 return "user/resetPassword/resetPasswordSentMail";
             }
-
         }
     }
 
@@ -90,14 +92,17 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the new Password.
      */
-    @RequestMapping(path = "/passwordResetConfirm/{confirmId}", method = RequestMethod.GET)
-    public final String enterNewPasswordFormular(@PathVariable String confirmId, Model model) {
-        UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
-        if (o != null) {
-            userPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
-            UserAccount ua = userAccountService.findByUserEmail(o.getEmail());
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
+    public final String enterNewPasswordFormular(
+        @PathVariable String confirmId,
+        Model model
+    ) {
+        UserPasswordRecovery oUserPasswordRecovery = userPasswordRecoveryService.findByToken(confirmId);
+        if (oUserPasswordRecovery != null) {
+            userPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserPasswordRecovery);
+            UserAccount ua = userAccountService.findByUserEmail(oUserPasswordRecovery.getEmail());
             UserAccountForm userAccountForm = new UserAccountForm();
-            userAccountForm.setUserEmail(o.getEmail());
+            userAccountForm.setUserEmail(oUserPasswordRecovery.getEmail());
             userAccountForm.setUserFullname(ua.getUserFullname());
             model.addAttribute("userAccountForm", userAccountForm);
             return "user/resetPassword/resetPasswordConfirmed";
@@ -115,11 +120,13 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return Info Page for success or back to formular with error messages.
      */
-    @RequestMapping(path = "/passwordResetConfirm/{confirmId}", method = RequestMethod.POST)
-    public final String enterNewPasswordPost(@Valid UserAccountForm userAccountForm,
-                                             BindingResult result,
-                                             @PathVariable String confirmId,
-                                             Model model) {
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
+    public final String enterNewPasswordPost(
+        @Valid UserAccountForm userAccountForm,
+        BindingResult result,
+        @PathVariable String confirmId,
+        Model model
+    ) {
         UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
         boolean passwordsMatch = userAccountForm.passwordsAreTheSame();
         if (o != null) {
