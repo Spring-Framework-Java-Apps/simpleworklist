@@ -31,4 +31,15 @@ http://localhost:5000/project/0/?listTaskTime=MIN5&listTaskTime=MIN10&listTaskTi
 
 
 
+http://localhost:5000/taskstate/inbox
+today
+next
+waiting
+scheduled
+someday
+completed
+trash
+focus
+
+
 

@@ -68,10 +68,10 @@ public class ProjectController extends AbstractController {
             model.addAttribute("message",message);
             model.addAttribute("isDeleted",isDeleted);
         }
-        return "project/show";
+        return "project/id/show";
     }
 
-    @RequestMapping(path = "/{projectId}/add/new/project", method = RequestMethod.GET)
+    @RequestMapping(path = "/{projectId}/add/project", method = RequestMethod.GET)
     public final String addNewSubProjectGet(
         @PathVariable long projectId,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -80,10 +80,10 @@ public class ProjectController extends AbstractController {
         log.info("private addNewProjectGet (GET) projectId="+projectId);
         Context context = super.getContext(userSession);
         projectControllerService.addNewProject(projectId, userSession, context, locale, model);
-        return "project/add";
+        return "project/id/add/project";
     }
 
-    @RequestMapping(path = "/{projectId}/add/new/project", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(path = "/{projectId}/add/project", method = {RequestMethod.POST, RequestMethod.PUT})
     public final String addNewSubProjectPost(
         @PathVariable long projectId,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -92,12 +92,20 @@ public class ProjectController extends AbstractController {
         Locale locale, Model model) {
         log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
         Context context = super.getContext(userSession);
-        return projectControllerService.addNewProjectPersist( projectId, userSession, project, context,
-            result, locale, model ,"project/add");
+        return projectControllerService.addNewProjectPersist(
+            projectId,
+            userSession,
+            project,
+            context,
+            result,
+            locale,
+            model ,
+            "/add/project"
+        );
     }
 
 
-    @RequestMapping(path = "/{thisProjectId}/move/to/{targetProjectId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{thisProjectId}/move/to/project/{targetProjectId}", method = RequestMethod.GET)
     public final String moveProject(
             @PathVariable("thisProjectId") Project thisProject,
             @PathVariable long targetProjectId,
@@ -128,7 +136,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", thisProject);
-        return "project/edit";
+        return "project/id/edit";
     }
 
     @RequestMapping(path = "/{projectId}/edit", method = RequestMethod.POST)
@@ -150,7 +158,7 @@ public class ProjectController extends AbstractController {
             Project thisProject = projectService.findByProjectId(projectId);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
-            return "project/edit";
+            return "project/id/edit";
         } else {
             Project thisProject = projectService.findByProjectId(project.getId());
             thisProject.setName(project.getName());
@@ -173,47 +181,53 @@ public class ProjectController extends AbstractController {
             @PathVariable("projectId") Project project,
             @PageableDefault(sort = "title") Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model) {
+            Locale locale,
+            Model model
+    ) {
         long newProjectId = project.getId();
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(project.getId());
         model.addAttribute("userSession",userSession);
         UserAccount userAccount = context.getUserAccount();
-            if(project != null){
-                boolean hasNoData = taskService.projectHasNoTasks(project);
-                boolean hasNoChildren = project.hasNoChildren();
-                if (hasNoData && hasNoChildren) {
-                    if (!project.isRootProject()) {
-                        newProjectId = project.getParent().getId();
-                    } else {
-                        newProjectId = 0;
-                    }
-                    projectService.delete(project);
-                    String message = "Project is deleted. You see its parent project now.";
-                    model.addAttribute("message",message);
-                    model.addAttribute("isDeleted",true);
+        if(project != null){
+            boolean hasNoData = taskService.projectHasNoTasks(project);
+            boolean hasNoChildren = project.hasNoChildren();
+            if (hasNoData && hasNoChildren) {
+                if (!project.isRootProject()) {
+                    newProjectId = project.getParent().getId();
                 } else {
-                    StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
-                    log.info("Deletion rejected for Project " + project.getId());
-                    if (!hasNoData) {
-                        log.warn("Project " + project.getId() + " has actionItem");
-                        s.append("Project has actionItems.");
-                    }
-                    if (!hasNoChildren) {
-                        log.info("Project " + project.getId() + " has children");
-                        s.append("Project has child categories.");
-                    }
-                    model.addAttribute("message",s.toString());
-                    model.addAttribute("isDeleted",false);
-                    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
-                    Page<Task> taskPage = taskService.findByProject(project, context, request);
-                    model.addAttribute("taskPage", taskPage);
-                    model.addAttribute("breadcrumb", breadcrumb);
-                    model.addAttribute("thisProject", project);
-                    return "project/show";
+                    newProjectId = 0;
                 }
+                projectService.delete(project);
+                String message = "Project is deleted. You see its parent project now.";
+                model.addAttribute("message",message);
+                model.addAttribute("isDeleted",true);
+            } else {
+                StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
+                log.info("Deletion rejected for Project " + project.getId());
+                if (!hasNoData) {
+                    log.warn("Project " + project.getId() + " has actionItem");
+                    s.append("Project has actionItems.");
+                }
+                if (!hasNoChildren) {
+                    log.info("Project " + project.getId() + " has children");
+                    s.append("Project has child categories.");
+                }
+                model.addAttribute("message",s.toString());
+                model.addAttribute("isDeleted",false);
+                Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
+                Page<Task> taskPage = taskService.findByProject(project, context, request);
+                model.addAttribute("taskPage", taskPage);
+                model.addAttribute("breadcrumb", breadcrumb);
+                model.addAttribute("thisProject", project);
+                return "project/id/show";
             }
-        return "redirect:/project/" + newProjectId;
+        }
+        if( newProjectId == 0){
+            return "redirect:/project/root";
+        } else {
+            return "redirect:/project/" + newProjectId;
+        }
     }
 
 }

@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.taskstate;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskState;
 
 public interface TaskMoveService {
 

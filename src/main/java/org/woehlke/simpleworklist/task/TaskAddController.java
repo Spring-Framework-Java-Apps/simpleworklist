@@ -13,6 +13,7 @@ import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.taskstate.TaskMoveService;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
@@ -62,7 +63,10 @@ public class TaskAddController extends AbstractController {
     public final String addNewTaskToInboxPost(
         @ModelAttribute("userSession") UserSessionBean userSession,
         @Valid Task task,
-        BindingResult result, Locale locale, Model model) {
+        BindingResult result,
+        Locale locale,
+        Model model
+    ) {
         Context context = super.getContext(userSession);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
@@ -84,10 +88,8 @@ public class TaskAddController extends AbstractController {
             }
             task.setFocus(false);
             task.setContext(context);
-            //TODO: verify, that this is correct:
             long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
             task.setOrderIdProject(++maxOrderIdProject);
-            //
             long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.saveAndFlush(task);

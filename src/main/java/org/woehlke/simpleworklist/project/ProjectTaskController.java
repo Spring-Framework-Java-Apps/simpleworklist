@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskEnergy;
-import org.woehlke.simpleworklist.task.TaskState;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.task.TaskTime;
 import org.woehlke.simpleworklist.taskstate.TaskMoveService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
@@ -27,7 +27,7 @@ import java.util.Locale;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/project/task")
+@RequestMapping(path = "/project")
 public class ProjectTaskController extends AbstractController {
 
     private final TaskMoveService taskMoveService;
@@ -39,8 +39,9 @@ public class ProjectTaskController extends AbstractController {
         this.projectControllerService = projectControllerService;
     }
 
-    @RequestMapping(path = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{projectId}/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderIdWithinAProject(
+        @PathVariable("projectId") Project thisProject,
         @PathVariable("sourceTaskId") Task sourceTask,
         @PathVariable("destinationTaskId") Task destinationTask,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -71,8 +72,7 @@ public class ProjectTaskController extends AbstractController {
         return returnUrl;
     }
 
-
-    @RequestMapping(path = "/addtorootproject/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
@@ -96,50 +96,10 @@ public class ProjectTaskController extends AbstractController {
         model.addAttribute("thisProjectId", 0L);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "task/addToProject";
+        return "id/task/add";
     }
 
-    @RequestMapping(path = "/addtoproject/{projectId}", method = RequestMethod.GET)
-    public final String addNewTaskToProjectGet(
-        @PathVariable long projectId,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model
-    ) {
-        Context context = super.getContext(userSession);
-        UserAccount userAccount = context.getUserAccount();
-        Task task = new Task();
-        task.setTaskState(TaskState.INBOX);
-        task.setTaskEnergy(TaskEnergy.NONE);
-        task.setTaskTime(TaskTime.NONE);
-        Project thisProject;
-        Boolean mustChooseArea = false;
-        if (projectId == 0) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            if(userSession.getContextId() == 0L){
-                mustChooseArea = true;
-                task.setContext(userAccount.getDefaultContext());
-                thisProject.setContext(userAccount.getDefaultContext());
-            } else {
-                task.setContext(context);
-                thisProject.setContext(context);
-            }
-        } else {
-            thisProject = projectService.findByProjectId(projectId);
-            task.setProject(thisProject);
-            task.setContext(thisProject.getContext());
-        }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("mustChooseArea", mustChooseArea);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("thisProjectId", thisProject.getId());
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("task", task);
-        return "task/addToProject";
-    }
-
-    @RequestMapping(path = "/addtoproject/{projectId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.POST)
     public final String addNewTaskToProjectPost(
         @PathVariable long projectId,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -153,26 +113,19 @@ public class ProjectTaskController extends AbstractController {
             }
             Project thisProject = projectControllerService.getProject(projectId, userAccount, userSession);
             Boolean mustChooseArea = false;
-            if (projectId == 0) {
-                task.setContext(context);
-            } else {
                 task.setProject(thisProject);
                 task.setContext(thisProject.getContext());
-            }
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "task/addToProject";
+            //return "task/addToProject";
+            return "id/task/add";
         } else {
-            if (projectId == 0) {
-                task.setProject(null);
-            } else {
                 Project thisProject = projectService.findByProjectId(projectId);
                 task.setProject(thisProject);
                 task.setContext(thisProject.getContext());
-            }
             if(task.getDueDate()==null){
                 task.setTaskState(TaskState.INBOX);
             } else {

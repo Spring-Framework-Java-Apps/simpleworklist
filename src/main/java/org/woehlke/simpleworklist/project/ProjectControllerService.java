@@ -34,4 +34,21 @@ public interface ProjectControllerService {
         UserAccount userAccount,
         UserSessionBean userSession
     );
+
+    void addNewProjectToRoot(
+        UserSessionBean userSession,
+        Context context,
+        Locale locale,
+        Model model
+    );
+
+    String addNewProjectToRootPersist(
+        UserSessionBean userSession,
+        Project project,
+        Context context,
+        BindingResult result,
+        Locale locale,
+        Model model,
+        String s
+    );
 }

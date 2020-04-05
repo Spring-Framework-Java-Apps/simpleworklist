@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user;
 
-import org.woehlke.simpleworklist.task.TaskState;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.task;
+package org.woehlke.simpleworklist.taskstate;
 
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
