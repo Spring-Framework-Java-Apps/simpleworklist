@@ -19,23 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 @Controller
 @RequestMapping(path = "/taskstate/task")
-public class TaskStateWorkflowController extends AbstractController {
+public class TaskStateMoveController extends AbstractController {
 
-    private final TaskStateService taskStateService;
     private final TaskMoveService taskMoveService;
     private final TaskControllerService taskControllerService;
 
     @Autowired
-    public TaskStateWorkflowController(
-        TaskStateService taskStateService,
+    public TaskStateMoveController(
         TaskMoveService taskMoveService,
         TaskControllerService taskControllerService
     ) {
-        this.taskStateService = taskStateService;
         this.taskMoveService = taskMoveService;
         this.taskControllerService = taskControllerService;
     }
-
 
     @RequestMapping(path = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderId(
@@ -54,7 +50,6 @@ public class TaskStateWorkflowController extends AbstractController {
         taskMoveService.moveOrderIdTaskState(sourceTask, destinationTask);
         return "redirect:/taskstate/" + sourceTask.getTaskState().name().toLowerCase();
     }
-
 
     @RequestMapping(path = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
     public final String moveTaskToAnotherProject(@PathVariable("taskId") Task task,
@@ -82,7 +77,7 @@ public class TaskStateWorkflowController extends AbstractController {
         return "redirect:/taskstate/today";
     }
 
-    @RequestMapping(path = "/{taskId}/move/to/taskstate//next", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/next", method = RequestMethod.GET)
     public final String moveTaskToNext(@PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to next");
         task = taskMoveService.moveTaskToNext(task);

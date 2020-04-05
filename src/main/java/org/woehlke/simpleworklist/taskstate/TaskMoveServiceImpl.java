@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.taskstate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -14,16 +13,15 @@ import org.woehlke.simpleworklist.task.TaskRepository;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class TaskMoveServiceImpl implements TaskMoveService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskMoveServiceImpl.class);
-
     private final TaskRepository taskRepository;
 
     @Autowired
-    public TaskMoveServiceImpl(TaskRepository taskRepository) {
+    public TaskMoveServiceImpl( TaskRepository taskRepository ) {
         this.taskRepository = taskRepository;
     }
 
@@ -43,7 +41,8 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         if(okContext) {
             task.setProject(project);
             long maxOrderIdProject = this.getMaxOrderIdProject(
-                    task.getProject(), task.getContext()
+                task.getProject(),
+                task.getContext()
             );
             task.setOrderIdProject(++maxOrderIdProject);
             taskRepository.saveAndFlush(task);
@@ -53,103 +52,121 @@ public class TaskMoveServiceImpl implements TaskMoveService {
 
     @Override
     public Task moveTaskToInbox(Task task) {
-            long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-                    TaskState.INBOX, task.getContext()
-            );
-            task.setTaskState(TaskState.INBOX);
-            task.setOrderIdTaskState(++newOrderIdTaskState);
-            task = taskRepository.saveAndFlush(task);
-            LOGGER.info("moved " + task.getId() + " to inbox: " + task.toString());
+        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
+            TaskState.INBOX,
+            task.getContext()
+        );
+        task.setTaskState(TaskState.INBOX);
+        task.setOrderIdTaskState(++newOrderIdTaskState);
+        task = taskRepository.saveAndFlush(task);
+        log.info("moved " + task.getId() + " to inbox: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToToday(Task task) {
-            Date now = new Date();
-            long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-                    TaskState.TODAY, task.getContext()
-            );
-            task.setOrderIdTaskState(++newOrderIdTaskState);
-            task.setTaskState(TaskState.TODAY);
-            task.setDueDate(now);
-            task = taskRepository.saveAndFlush(task);
-            LOGGER.info("moved " + task.getId() + " to today: " + task.toString());
+        Date now = new Date();
+        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
+            TaskState.TODAY,
+            task.getContext()
+        );
+        task.setOrderIdTaskState(++newOrderIdTaskState);
+        task.setTaskState(TaskState.TODAY);
+        task.setDueDate(now);
+        task = taskRepository.saveAndFlush(task);
+        log.info("moved " + task.getId() + " to today: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToNext(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(TaskState.NEXT, task.getContext());
+        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
+            TaskState.NEXT,
+            task.getContext()
+        );
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task.setTaskState(TaskState.NEXT);
         task = taskRepository.saveAndFlush(task);
-        LOGGER.info("moved " + task.getId() + " to next: " + task.toString());
+        log.info("moved " + task.getId() + " to next: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToWaiting(Task task) {
-            long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-                    TaskState.WAITING, task.getContext()
-            );
-            task.setOrderIdTaskState(++newOrderIdTaskState);
-            task.setTaskState(TaskState.WAITING);
-            task = taskRepository.saveAndFlush(task);
-            LOGGER.info("moved " + task.getId() + " to next: " + task.toString());
+        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
+            TaskState.WAITING,
+            task.getContext()
+        );
+        task.setOrderIdTaskState(++newOrderIdTaskState);
+        task.setTaskState(TaskState.WAITING);
+        task = taskRepository.saveAndFlush(task);
+        log.info("moved " + task.getId() + " to next: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToSomeday(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-                TaskState.SOMEDAY, task.getContext()
+            TaskState.SOMEDAY,
+            task.getContext()
         );
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task.setTaskState(TaskState.SOMEDAY);
         task = taskRepository.saveAndFlush(task);
-        LOGGER.info("moved " + task.getId() + " to someday: " + task.toString());
+        log.info("moved " + task.getId() + " to someday: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToFocus(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-                TaskState.FOCUS, task.getContext()
+            TaskState.FOCUS,
+            task.getContext()
         );
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task.setFocus(true);
         task = taskRepository.saveAndFlush(task);
-        LOGGER.info("moved " + task.getId() + " to focus: " + task.toString());
+        log.info("moved " + task.getId() + " to focus: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToCompleted(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-                TaskState.COMPLETED, task.getContext()
+            TaskState.COMPLETED,
+            task.getContext()
         );
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task.setTaskState(TaskState.COMPLETED);
         task = taskRepository.saveAndFlush(task);
-        LOGGER.debug("moved " + task.getId() + " to completed: " + task.toString());
+        log.debug("moved " + task.getId() + " to completed: " + task.toString());
         return task;
     }
 
     @Override
     public Task moveTaskToTrash(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(TaskState.TRASH, task.getContext());
+        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
+            TaskState.TRASH,
+            task.getContext()
+        );
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task.setTaskState(TaskState.TRASH);
         task = taskRepository.saveAndFlush(task);
-        LOGGER.debug("moved " + task.getId() + " to trash: " + task.toString());
+        log.debug("moved " + task.getId() + " to trash: " + task.toString());
         return task;
     }
 
     @Override
     public void deleteAllCompleted(Context context) {
-        long maxOrderIdTaskState = this.getMaxOrderIdTaskStateFor(TaskState.TRASH, context);
+        long maxOrderIdTaskState = this.getMaxOrderIdTaskStateFor(
+            TaskState.TRASH,
+            context
+        );
         long newOrderIdTaskState = maxOrderIdTaskState;
-        List<Task> taskListCompleted = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState.COMPLETED, context);
+        List<Task> taskListCompleted = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
+            TaskState.COMPLETED,
+            context
+        );
         for (Task task : taskListCompleted) {
             newOrderIdTaskState++;
             task.setOrderIdTaskState(newOrderIdTaskState);
@@ -158,32 +175,36 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         taskRepository.saveAll(taskListCompleted);
     }
 
-    private long getMaxOrderIdTaskStateFor(TaskState taskState, Context context){
-        Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(taskState, context);
-        return  (task == null) ? 0 : task.getOrderIdTaskState();
-    }
-
     @Override
     public void emptyTrash(Context context) {
-        List<Task> taskList = taskRepository.findByTaskStateAndContext(TaskState.TRASH, context);
+        List<Task> taskList = taskRepository.findByTaskStateAndContext(
+            TaskState.TRASH,
+            context
+        );
         taskRepository.deleteInBatch(taskList);
     }
 
     @Override
     public long getMaxOrderIdTaskState(TaskState taskState, Context context) {
-        Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(taskState, context);
+        Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
+            taskState,
+            context
+        );
         return (task==null) ? 0 : task.getOrderIdTaskState();
     }
 
     @Override
     public long getMaxOrderIdProject(Project project, Context context) {
-        Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(project, context);
+        Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(
+            project,
+            context
+        );
         return (task==null) ? 0 : task.getOrderIdProject();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdTaskState(Task sourceTask, Task destinationTask) {
+    public void moveOrderIdTaskState( Task sourceTask, Task destinationTask ) {
         boolean notEqualsId = ! sourceTask.equalsById(destinationTask);
         boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -194,66 +215,16 @@ public class TaskMoveServiceImpl implements TaskMoveService {
                 sameContext && sameTaskType
         ) {
             if (srcIsBelowDestinationTask) {
-                this.moveTasksDownByTaskState(sourceTask, destinationTask);
+                this.moveTasksDownByTaskState( sourceTask, destinationTask );
             } else {
-                this.moveTasksUpByTaskState(sourceTask, destinationTask);
+                this.moveTasksUpByTaskState( sourceTask, destinationTask );
             }
         }
     }
 
-    /**
-     * Before: sourceTask is dragged from above down to destinationTask, so sourceTask is above destinationTask.
-     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
-     * and destinationTask are moved one position up; destinationTask is the next Task above sourceTask.
-     * @param sourceTask
-     * @param destinationTask
-     */
-    private void moveTasksUpByTaskState(Task sourceTask, Task destinationTask) {
-        TaskState taskState = sourceTask.getTaskState();
-        Context context = sourceTask.getContext();
-        long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
-        long higherOrderIdTaskState = sourceTask.getOrderIdTaskState();
-        List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
-                lowerOrderIdTaskState,higherOrderIdTaskState,taskState,context
-        );
-        for(Task task:tasks){
-            task.moveUpByTaskState();
-        }
-        sourceTask.setOrderIdTaskState(destinationTask.getOrderIdTaskState());
-        destinationTask.moveDownByTaskState();
-        tasks.add(sourceTask);
-        tasks.add(destinationTask);
-        taskRepository.saveAll(tasks);
-    }
-
-    /**
-     * Before: sourceTask is dragged from below up to destinationTask, so sourceTask is below destinationTask.
-     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
-     * are moved one position down; destinationTask is the next Task below sourceTask.
-     * @param sourceTask
-     * @param destinationTask
-     */
-    private void moveTasksDownByTaskState(Task sourceTask, Task destinationTask) {
-        TaskState taskState = sourceTask.getTaskState();
-        Context context = sourceTask.getContext();
-        long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
-        long higherOrderIdTaskState = destinationTask.getOrderIdTaskState();
-        List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
-                lowerOrderIdTaskState,higherOrderIdTaskState,taskState,context
-        );
-        for(Task task:tasks){
-            task.moveDownByTaskState();
-        }
-        sourceTask.setOrderIdTaskState(destinationTask);
-        destinationTask.moveDownByTaskState();
-        tasks.add(sourceTask);
-        tasks.add(destinationTask);
-        taskRepository.saveAll(tasks);
-    }
-
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdRootProject(Task sourceTask, Task destinationTask) {
+    public void moveOrderIdRootProject( Task sourceTask, Task destinationTask ) {
         boolean sourceTaskRoot = destinationTask.isInRootProject();
         boolean destinationTaskRoot = destinationTask.isInRootProject();
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -270,7 +241,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdProject(Task sourceTask, Task destinationTask) {
+    public void moveOrderIdProject( Task sourceTask, Task destinationTask ) {
         Project project = sourceTask.getProject();
         boolean okProject = destinationTask.hasProject(project);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -285,13 +256,83 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         }
     }
 
-    private void moveTasksUpByProject(Task sourceTask, Task destinationTask) {
+    /**
+     * Before: sourceTask is dragged from above down to destinationTask, so sourceTask is above destinationTask.
+     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
+     * and destinationTask are moved one position up; destinationTask is the next Task above sourceTask.
+     * @param sourceTask
+     * @param destinationTask
+     */
+    private void moveTasksUpByTaskState( Task sourceTask, Task destinationTask ) {
+        TaskState taskState = sourceTask.getTaskState();
+        Context context = sourceTask.getContext();
+        long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
+        long higherOrderIdTaskState = sourceTask.getOrderIdTaskState();
+        List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
+            lowerOrderIdTaskState,
+            higherOrderIdTaskState,
+            taskState,
+            context
+        );
+        for(Task task:tasks){
+            task.moveUpByTaskState();
+        }
+        sourceTask.setOrderIdTaskState( destinationTask.getOrderIdTaskState() );
+        destinationTask.moveDownByTaskState();
+        tasks.add(sourceTask);
+        tasks.add(destinationTask);
+        taskRepository.saveAll(tasks);
+    }
+
+
+
+
+    private long getMaxOrderIdTaskStateFor(TaskState taskState, Context context ){
+        Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
+            taskState,
+            context
+        );
+        return  (task == null) ? 0 : task.getOrderIdTaskState();
+    }
+
+    /**
+     * Before: sourceTask is dragged from below up to destinationTask, so sourceTask is below destinationTask.
+     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
+     * are moved one position down; destinationTask is the next Task below sourceTask.
+     * @param sourceTask
+     * @param destinationTask
+     */
+    private void moveTasksDownByTaskState( Task sourceTask, Task destinationTask ) {
+        TaskState taskState = sourceTask.getTaskState();
+        Context context = sourceTask.getContext();
+        long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
+        long higherOrderIdTaskState = destinationTask.getOrderIdTaskState();
+        List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
+            lowerOrderIdTaskState,
+            higherOrderIdTaskState,
+            taskState,
+            context
+        );
+        for(Task task:tasks){
+            task.moveDownByTaskState();
+        }
+        sourceTask.setOrderIdTaskState(destinationTask);
+        destinationTask.moveDownByTaskState();
+        tasks.add(sourceTask);
+        tasks.add(destinationTask);
+        taskRepository.saveAll(tasks);
+    }
+
+    private void moveTasksUpByProject( Task sourceTask, Task destinationTask ) {
         Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
-                lowerOrderIdProject,higherOrderIdProject,project,context
+            lowerOrderIdProject,
+            higherOrderIdProject,
+            project,
+            context
         );
         for(Task task:tasks){
             task.moveUpByProject();
@@ -303,13 +344,16 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         taskRepository.saveAll(tasks);
     }
 
-    private void moveTasksDownByProject(Task sourceTask, Task destinationTask) {
+    private void moveTasksDownByProject( Task sourceTask, Task destinationTask ) {
         Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
         long lowerOrderIdProject = sourceTask.getOrderIdProject();
         long higherOrderIdProject = destinationTask.getOrderIdProject();
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
-                lowerOrderIdProject,higherOrderIdProject,project,context
+            lowerOrderIdProject,
+            higherOrderIdProject,
+            project,
+            context
         );
         for(Task task:tasks){
             task.moveDownByProject();

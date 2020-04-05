@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.user.messages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,13 +29,14 @@ import java.util.Locale;
  * Created by
  * on 16.02.2016.
  */
+@Slf4j
 @Controller
-@RequestMapping(path = "/user2user/")
+@RequestMapping(path = "/user/messages/")
 public class User2UserMessageController extends AbstractController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
-    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
@@ -55,7 +57,7 @@ public class User2UserMessageController extends AbstractController {
         return "user/messages/all";
     }
 
-    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.POST)
+    @RequestMapping(path = "/{userId}/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @Valid @ModelAttribute("newUser2UserMessage") NewUser2UserMessage newUser2UserMessage,
@@ -81,7 +83,7 @@ public class User2UserMessageController extends AbstractController {
             return "user/messages/all";
         } else {
             user2UserMessageService.sendNewUserMessage(thisUser, otherUser, newUser2UserMessage);
-            return "redirect:/user2user/"+otherUser.getId()+"/messages/";
+            return "redirect:/user/messages/"+otherUser.getId()+"/";
         }
     }
 

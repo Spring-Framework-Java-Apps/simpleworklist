@@ -22,17 +22,15 @@ import java.util.Locale;
 @Slf4j
 @Controller
 @RequestMapping(path = "/taskstate")
-public class TaskStateDisplayController extends AbstractController {
+public class TaskStateController extends AbstractController {
 
 
     private final TaskStateService taskStateService;
-    private final TaskMoveService taskMoveService;
     private final TaskControllerService taskControllerService;
 
     @Autowired
-    public TaskStateDisplayController(TaskStateService taskStateService, TaskMoveService taskMoveService, TaskControllerService taskControllerService) {
+    public TaskStateController(TaskStateService taskStateService, TaskControllerService taskControllerService) {
         this.taskStateService = taskStateService;
-        this.taskMoveService = taskMoveService;
         this.taskControllerService = taskControllerService;
     }
 
