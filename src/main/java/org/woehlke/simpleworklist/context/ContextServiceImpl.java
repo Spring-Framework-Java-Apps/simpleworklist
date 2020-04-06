@@ -47,20 +47,20 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void createNewContext(NewContextForm newContext, UserAccount user) {
+    public Context createNewContext(NewContextForm newContext, UserAccount user) {
         log.info("createNewContext");
         Context context = new Context();
         context.setNameEn(newContext.getNameEn());
         context.setNameDe(newContext.getNameDe());
         context.setUserAccount(user);
-        contextRepository.saveAndFlush(context);
+        return contextRepository.saveAndFlush(context);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void updateContext(Context context) {
+    public Context updateContext(Context context) {
         log.info("updateContext");
-        contextRepository.saveAndFlush(context);
+        return contextRepository.saveAndFlush(context);
     }
 
     @Override

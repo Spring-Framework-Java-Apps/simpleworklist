@@ -15,6 +15,7 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
+import org.woehlke.simpleworklist.config.TestDataUser;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.context.NewContextForm;
 import org.woehlke.simpleworklist.language.Language;
@@ -54,39 +55,20 @@ public class F001ServerStartsTest {
     @Autowired
     protected ContextService contextService;
 
-    protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
-    protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
-    protected static String[] fullnames = {"test01 Name", "test02 Name", "test03 Name"};
-
-    protected static String username_email = "undefined//@Test.de";
-    protected static String password = "ASDFG";
-    protected static String full_name = "UNDEFINED_NAME";
-
-    protected static UserAccount[] testUser = new UserAccount[emails.length];
-
-    static {
-        Date lastLoginTimestamp = new Date();
-        for (int i = 0; i < testUser.length; i++) {
-            testUser[i] = new UserAccount();
-            testUser[i].setUserEmail(emails[i]);
-            testUser[i].setUserPassword(passwords[i]);
-            testUser[i].setUserFullname(fullnames[i]);
-            testUser[i].setDefaultLanguage(Language.EN);
-            testUser[i].setLastLoginTimestamp(lastLoginTimestamp);
-        }
-    }
+    private TestDataUser testDataUser = new TestDataUser();
 
     @BeforeEach
     public void setUp() throws Exception {
         log.info(" //@BeforeEach ");
         this.base = new URL("http://localhost:" + port + "/");
         this.mockMvc = webAppContextSetup(wac).build();
-        for (UserAccount u : testUser) {
-            UserAccount a = userAccountService.findByUserEmail(u.getUserEmail());
+        for (int i = 0; i < testDataUser.getTestUser().length; i++) {
+            UserAccount a = userAccountService.findByUserEmail(testDataUser.getTestUser()[i].getUserEmail());
             if (a == null) {
-                NewContextForm newContext = new NewContextForm("test","test");
-                contextService.createNewContext(newContext,u);
-                userAccountService.saveAndFlush(u);
+                //NewContextForm newContext = new NewContextForm("test","test");
+                //contextService.createNewContext(newContext,u);
+                UserAccount persisted = userAccountService.saveAndFlush(testDataUser.getTestUser()[i]);
+                testDataUser.getTestUser()[i] = persisted;
             }
         }
     }
