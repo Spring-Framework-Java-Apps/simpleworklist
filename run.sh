@@ -33,7 +33,8 @@ function runHerokuLocal() {
 function main() {
     #runGithubTestBuild
     #setupHeroku
-    runHerokuLocal
+    buildLikeHeroku
+    #runHerokuLocal
     #runDev
     #runTest
 }
