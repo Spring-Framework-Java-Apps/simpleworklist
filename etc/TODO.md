@@ -85,3 +85,5 @@ https://maven.apache.org/enforcer/enforcer-rules/requireActiveProfile.html
 https://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html
 https://www.baeldung.com/maven-enforcer-plugin
 
+# 2.3.14
+Fixed #127

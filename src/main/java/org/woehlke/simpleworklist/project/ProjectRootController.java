@@ -26,7 +26,7 @@ import java.util.Locale;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/project/root")
+@RequestMapping(path = "/project")
 public class ProjectRootController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
@@ -41,7 +41,7 @@ public class ProjectRootController extends AbstractController {
         this.taskMoveService = taskMoveService;
     }
 
-    @RequestMapping(path = "/tasks", method = RequestMethod.GET)
+    @RequestMapping(path="/root", method = RequestMethod.GET)
     public final String showRootProject(
         @PageableDefault(sort = "orderIdProject") Pageable pageable,
         @RequestParam(required = false) String message,
@@ -65,7 +65,7 @@ public class ProjectRootController extends AbstractController {
         return "project/root/show";
     }
 
-    @RequestMapping(path = "/add/project", method = RequestMethod.GET)
+    @RequestMapping(path = "/root/add/project", method = RequestMethod.GET)
     public final String addNewTopLevelProjectForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
@@ -76,7 +76,7 @@ public class ProjectRootController extends AbstractController {
         return "project/root/add/project";
     }
 
-    @RequestMapping(path = "/add/project", method = RequestMethod.POST)
+    @RequestMapping(path = "/root/add/project", method = RequestMethod.POST)
     public final String addNewTopLevelProjectSave(
         @Valid Project project,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -96,7 +96,7 @@ public class ProjectRootController extends AbstractController {
         );
     }
 
-    @RequestMapping(path = "/add/task", method = RequestMethod.GET)
+    @RequestMapping(path = "/root/add/task", method = RequestMethod.GET)
     public final String addNewTaskToRootProjectGet(
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
@@ -130,7 +130,7 @@ public class ProjectRootController extends AbstractController {
         return "project/root/add/task";
     }
 
-    @RequestMapping(path = "/add/task", method = RequestMethod.POST)
+    @RequestMapping(path = "/root/add/task", method = RequestMethod.POST)
     public final String addNewTaskToRootProjectPost(
         @ModelAttribute("userSession") UserSessionBean userSession,
         @Valid Task task,
