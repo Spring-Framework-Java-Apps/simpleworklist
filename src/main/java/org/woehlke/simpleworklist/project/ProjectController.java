@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.project;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +46,7 @@ public class ProjectController extends AbstractController {
     @RequestMapping(path = "/{projectId}", method = RequestMethod.GET)
     public final String showProject(
             @PathVariable long projectId,
-            @PageableDefault(sort = "orderIdProject") Pageable pageable,
+            @PageableDefault(sort = "orderIdProject", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false) String message,
             @RequestParam(required = false) boolean isDeleted,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -185,7 +186,7 @@ public class ProjectController extends AbstractController {
     @RequestMapping(path = "/{projectId}/delete", method = RequestMethod.GET)
     public final String deleteProject(
             @PathVariable("projectId") Project project,
-            @PageableDefault(sort = "title") Pageable request,
+            @PageableDefault(sort = "title", direction = Sort.Direction.DESC) Pageable request,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale,
             Model model

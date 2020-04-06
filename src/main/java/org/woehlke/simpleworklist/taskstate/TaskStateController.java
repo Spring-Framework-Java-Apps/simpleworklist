@@ -36,7 +36,7 @@ public class TaskStateController extends AbstractController {
 
     @RequestMapping(path = "/inbox", method = RequestMethod.GET)
     public final String inbox(
-        @PageableDefault(sort = "orderIdTaskState") Pageable pageable,
+        @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,7 @@ public class ProjectRootController extends AbstractController {
 
     @RequestMapping(path="/root", method = RequestMethod.GET)
     public final String showRootProject(
-        @PageableDefault(sort = "orderIdProject") Pageable pageable,
+        @PageableDefault(sort = "orderIdProject", direction = Sort.Direction.DESC) Pageable pageable,
         @RequestParam(required = false) String message,
         @RequestParam(required = false) boolean isDeleted,
         @ModelAttribute("userSession") UserSessionBean userSession,
