@@ -1,8 +1,7 @@
 package org.woehlke.simpleworklist.user.register;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
-import org.woehlke.simpleworklist.AbstractTest;
+import org.woehlke.simpleworklist.config.AbstractTest;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
 

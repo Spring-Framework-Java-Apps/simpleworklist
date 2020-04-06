@@ -1,9 +1,8 @@
 package org.woehlke.simpleworklist.user.account;
 
 
-import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.woehlke.simpleworklist.AbstractTest;
+import org.woehlke.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

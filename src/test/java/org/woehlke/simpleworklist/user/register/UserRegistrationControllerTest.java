@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.user.register;
 
-import org.junit.jupiter.api.Test;
-import org.woehlke.simpleworklist.AbstractTest;
+import org.woehlke.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
