@@ -134,8 +134,17 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         UserSessionBean userSession,
         Context context,
         Locale locale,
-        Model model) {
+        Model model
+    ) {
         log.info("addNewProjectToRoot");
+        Project project;
+        project = new Project();
+        project.setId(0L);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("project", project);
+        model.addAttribute("thisProjectId", project.getId());
+        model.addAttribute("breadcrumb", breadcrumb);
     }
 
     @Override
@@ -149,6 +158,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         String s
     ) {
         log.info("addNewProjectToRootPersist");
-        return null;
+        project = projectService.saveAndFlush(project);
+        return s + project.getId();
     }
 }

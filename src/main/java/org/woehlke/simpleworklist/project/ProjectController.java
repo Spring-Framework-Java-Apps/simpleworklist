@@ -94,7 +94,7 @@ public class ProjectController extends AbstractController {
             result,
             locale,
             model,
-            "project/root"
+            "redirect:/project/"
         );
     }
 
