@@ -18,7 +18,7 @@
 </div>
 
 <div th:fragment="mytwcontent">
-	<form id="formId" th:action="@{/task/addtoproject/{projectId}(projectId=${thisProject.id})}" th:object="${task}" method="post">
+	<form id="formId" th:action="@{/project/root/add/task}" th:object="${task}" method="post">
 		<input type="hidden" th:field="*{taskState}" />
 		<input type="hidden" th:field="*{context.id}" />
 		<input type="hidden" th:field="*{rowCreatedAt.time}" />
