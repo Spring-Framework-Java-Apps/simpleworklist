@@ -40,8 +40,8 @@
     </issueManagement>
     <distributionManagement>
         <site>
-            <id>simpleworklist.frodo.fritz.box</id>
-            <url>file://C:/xampp/x64-7.1.26-0-VC14/htdocs/p/simpleworklist</url>
+            <id>simpleworklist.public_html</id>
+            <url>${user.home}/public_html/p/simpleworklist</url>
         </site>
     </distributionManagement>
 
