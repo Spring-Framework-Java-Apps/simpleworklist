@@ -11,7 +11,6 @@ import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskControllerService;
 import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskTime;
 import org.woehlke.simpleworklist.user.UserSessionBean;
@@ -31,15 +30,12 @@ import java.util.Locale;
 public class TaskStateMoveController extends AbstractController {
 
     private final TaskMoveService taskMoveService;
-    private final TaskControllerService taskControllerService;
 
     @Autowired
     public TaskStateMoveController(
-        TaskMoveService taskMoveService,
-        TaskControllerService taskControllerService
+        TaskMoveService taskMoveService
     ) {
         this.taskMoveService = taskMoveService;
-        this.taskControllerService = taskControllerService;
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
@@ -213,59 +209,6 @@ public class TaskStateMoveController extends AbstractController {
         Context context = super.getContext(userSession);
         taskMoveService.emptyTrash(context);
         return "redirect:/taskstate/trash";
-    }
-
-    @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
-    public final String setDoneTaskGet(
-        @PathVariable("taskId") Task task
-    ) {
-        if(task != null){
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
-            task.setOrderIdTaskState(++maxOrderIdTaskState);
-            taskService.complete(task);
-        }
-        return "redirect:/taskstate/completed";
-    }
-
-    @RequestMapping(path = "/{taskId}/incomplete/", method = RequestMethod.GET)
-    public final String unsetDoneTaskGet(
-        @PathVariable("taskId") Task task
-    ) {
-        if(task !=null) {
-            taskService.incomplete(task);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-            task.setOrderIdTaskState(++maxOrderIdTaskState);
-            taskService.saveAndFlush(task);
-            return "redirect:/taskstate/"+task.getTaskState().name().toLowerCase();
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
-    }
-
-    @RequestMapping(path = "/{taskId}/setfocus/", method = RequestMethod.GET)
-    public final String setFocusGet(
-        @PathVariable("taskId") Task task,
-        @RequestParam(required=false) String back
-    ){
-        if(task !=null) {
-            taskService.setFocus(task);
-            return taskControllerService.getView(task,back);
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
-    }
-
-    @RequestMapping(path = "/{taskId}/unsetfocus", method = RequestMethod.GET)
-    public final String unsetFocusGet(
-        @PathVariable("taskId") Task task,
-        @RequestParam(required=false) String back
-    ){
-        if(task !=null) {
-            taskService.unsetFocus(task);
-            return taskControllerService.getView(task,back);
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
     }
 
 }

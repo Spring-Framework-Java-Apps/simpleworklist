@@ -27,10 +27,12 @@ import java.util.Locale;
 public class TaskController extends AbstractController {
 
     private final TaskMoveService taskMoveService;
+    private final TaskControllerService taskControllerService;
 
     @Autowired
-    public TaskController(TaskMoveService taskMoveService) {
+    public TaskController(TaskMoveService taskMoveService, TaskControllerService taskControllerService) {
         this.taskMoveService = taskMoveService;
+        this.taskControllerService = taskControllerService;
     }
 
     @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
@@ -169,4 +171,56 @@ public class TaskController extends AbstractController {
         return "redirect:/taskstate/inbox";
     }
 
+    @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
+    public final String setDoneTaskGet(
+        @PathVariable("taskId") Task task
+    ) {
+        if(task != null){
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
+            taskService.complete(task);
+        }
+        return "redirect:/taskstate/completed";
+    }
+
+    @RequestMapping(path = "/{taskId}/incomplete/", method = RequestMethod.GET)
+    public final String unsetDoneTaskGet(
+        @PathVariable("taskId") Task task
+    ) {
+        if(task !=null) {
+            taskService.incomplete(task);
+            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+            task.setOrderIdTaskState(++maxOrderIdTaskState);
+            taskService.saveAndFlush(task);
+            return "redirect:/taskstate/"+task.getTaskState().name().toLowerCase();
+        } else {
+            return "redirect:/taskstate/inbox";
+        }
+    }
+
+    @RequestMapping(path = "/{taskId}/setfocus/", method = RequestMethod.GET)
+    public final String setFocusGet(
+        @PathVariable("taskId") Task task,
+        @RequestParam(required=false) String back
+    ){
+        if(task !=null) {
+            taskService.setFocus(task);
+            return taskControllerService.getView(task,back);
+        } else {
+            return "redirect:/taskstate/inbox";
+        }
+    }
+
+    @RequestMapping(path = "/{taskId}/unsetfocus", method = RequestMethod.GET)
+    public final String unsetFocusGet(
+        @PathVariable("taskId") Task task,
+        @RequestParam(required=false) String back
+    ){
+        if(task !=null) {
+            taskService.unsetFocus(task);
+            return taskControllerService.getView(task,back);
+        } else {
+            return "redirect:/taskstate/inbox";
+        }
+    }
 }
