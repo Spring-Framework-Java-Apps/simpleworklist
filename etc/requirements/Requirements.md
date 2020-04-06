@@ -41,3 +41,15 @@
 ## F020 show /taskstate/completed
 
 ## F021 show /taskstate/trash
+
+## F022 Task Edit
+
+## F023 Task Edit Form -> change Taskstate via DropDown 
+
+## F024 Task complete 
+
+## F025 Task incomplete
+
+## F026 Task delete 
+
+## F027 Task undelete

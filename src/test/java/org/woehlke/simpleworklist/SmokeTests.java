@@ -161,4 +161,35 @@ public class SmokeTests {
         log.info("testF021ShowTaskstateTrash");
     }
 
+    @Test
+    public void testF022TaskEdit(){
+        log.info("testF022TaskEdit");
+    }
+
+    @Test
+    public void testF023TaskEditFormChangeTaskstateViaDropDown(){
+        log.info("testF023TaskEditFormChangeTaskstateViaDropDown");
+    }
+
+    @Test
+    public void testF024TaskComplete(){
+        log.info("testF024TaskComplete");
+    }
+
+    @Test
+    public void testF025TaskIncomplete(){
+        log.info("testF025TaskIncomplete");
+    }
+
+    @Test
+    public void testF026TaskDelete(){
+        log.info("testF026TaskDelete");
+    }
+
+    @Test
+    public void testF027TaskUndelete(){
+        log.info("testF027TaskUndelete");
+    }
+
+
 }
