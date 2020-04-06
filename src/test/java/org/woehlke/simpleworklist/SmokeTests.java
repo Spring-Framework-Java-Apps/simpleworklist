@@ -88,12 +88,77 @@ public class SmokeTests {
     }
 
     @Test
-    public void testF007AddFirstNewTask(){
-        log.info("testF007AddFirstNewTask");
+    public void testF007AddFirstNewTaskToInbox(){
+        log.info("testF007AddFirstNewTaskToInbox");
     }
 
     @Test
-    public void testF008AddFirstNewProject(){
-        log.info("testF008AddFirstNewProject");
+    public void testF008AddAnotherNewTaskToInbox(){
+        log.info("testF008AddAnotherNewTaskToInbox");
     }
+
+    @Test
+    public void testF009AddTaskToProjectRoot(){
+        log.info("testF009AddTaskToProjectRoot");
+    }
+    @Test
+    public void testF010AddSubProjectToProjectRoot(){
+        log.info("testF010AddSubProjectToProjectRoot");
+    }
+
+    @Test
+    public void testF011SetFocusOfTask(){
+        log.info("testF011SetFocusOfTask");
+    }
+
+    @Test
+    public void testF012UnSetFocusOfTask(){
+        log.info("testF012UnSetFocusOfTask");
+    }
+
+    @Test
+    public void testF013ShowTaskstateInbox(){
+        log.info("testF013ShowTaskstateInbox");
+    }
+
+    @Test
+    public void testF014ShowTaskstateToday(){
+        log.info("testF014ShowTaskstateToday");
+    }
+
+    @Test
+    public void testF015ShowTaskstateNext(){
+        log.info("testF015ShowTaskstateNext");
+    }
+
+    @Test
+    public void testF016ShowTaskstateWaiting(){
+        log.info("testF016ShowTaskstateWaiting");
+    }
+
+    @Test
+    public void testF017ShowTaskstateScheduled(){
+        log.info("testF017ShowTaskstateScheduled");
+    }
+
+    @Test
+    public void testF018ShowTaskstateSomeday(){
+        log.info("testF018ShowTaskstateSomeday");
+    }
+
+    @Test
+    public void testF019ShowTaskstateFocus(){
+        log.info("testF019ShowTaskstateFocus");
+    }
+
+    @Test
+    public void testF020ShowTaskstateCompleted(){
+        log.info("testF020ShowTaskstateCompleted");
+    }
+
+    @Test
+    public void testF021ShowTaskstateTrash(){
+        log.info("testF021ShowTaskstateTrash");
+    }
+
 }
