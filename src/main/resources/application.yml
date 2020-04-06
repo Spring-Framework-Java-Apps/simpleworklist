@@ -58,27 +58,26 @@ org:
           - "/webjars"
       webSecurity:
         loginProcessingUrl: "/j_spring_security_check"
-        logoutUrl: "/logout"
+        logoutUrl: "/user/logout"
         cookieNamesToClear:
           - "JSESSIONID"
         invalidateHttpSession: true
         defaultSuccessUrl: "/"
-        failureForwardUrl: "/login?login_error=1"
+        failureForwardUrl: "/user/login?login_error=1"
         usernameParameter: "j_username"
         passwordParameter: "j_password"
-        loginPage: "/login"
+        loginPage: "/user/login"
         antPatternsPublic:
           - "/webjars/**"
           - "/css/**"
           - "/img/**"
           - "/js/**"
           - "/favicon.ico"
-          - "/test*/**"
-          - "/login*"
-          - "/register*"
-          - "/confirm*/**"
-          - "/resetPassword*"
-          - "/passwordResetConfirm*/**"
+          - "/user/login*"
+          - "/user/register*"
+          - "/user/register/confirm/**"
+          - "/user/resetPassword*"
+          - "/user/resetPassword/confirm/**"
           - "/error*"
         strengthBCryptPasswordEncoder: 10
 ---

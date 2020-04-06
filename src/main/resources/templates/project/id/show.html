@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:sd="http://www.thymeleaf.org/spring-data">
+<head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)">
+	<title th:text="'SimpleWorklist | ' + #{project.show.h1}">Title</title>
+</head>
+<body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
+
+<div th:fragment="mytwtitle">
+	<div id="tw-content-title">
+		<h1>
+			<i class="fas fa-folder-open"></i>
+			<span th:text="#{project.show.h1}">Project</span>
+			<small th:if="${thisProject.id gt 0}">
+				<span th:text="${thisProject.name}"></span>
+			</small>
+		</h1>
+		<div id="tw-content-title-actionbuttons">
+			<a class="btn btn-sm btn-primary" data-toggle="collapse" href="#collapseDescription" role="button" aria-expanded="false" aria-controls="collapseExample">
+				<div th:text="#{project.show.description}">Project Description</div>
+			</a>
+			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}" href="#">
+				<i class="fas fa-edit"></i>
+				<span th:text="#{project.show.edit}">Edit Project</span>
+			</a>
+			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
+				<i class="fas fa-trash-alt"></i>
+				<span th:text="#{project.show.delete}">Delete Project</span>
+			</a>
+			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/add/project(thisProjectId=${thisProject.id})}">
+				<i class="fas fa-plus-square"></i>
+				<span th:text="#{layout.page.addProject}">Add a Project</span>
+			</a>
+			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/add/task(thisProjectId=${thisProject.id})}" href="#">
+				<i class="fas fa-plus-square"></i>
+				<span th:text="#{project.show.addTask}">Add a Task</span>
+			</a>
+		</div>
+		<div class="collapse" id="collapseDescription">
+			<div class="card card-body" th:text="${thisProject.description}"></div>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="mytwcontent">
+	<!-- Document Window -->
+	<div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
+	</div>
+	<div th:if="${taskPage.getTotalElements() gt 0}">
+		<!-- TODO: #34 -->
+		<div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='PROJECT')">
+		</div>
+	</div>
+	<div th:if="${taskPage.getTotalElements() eq 0}">
+		<p><span th:text="#{project.show.nothingToDo}">There is nothing to do in this project.</span></p>
+	</div>
+</div>
+
+</body>
+</html>
