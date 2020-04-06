@@ -1,14 +1,20 @@
 package org.woehlke.simpleworklist;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.event.annotation.AfterTestClass;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,33 +30,40 @@ import org.woehlke.simpleworklist.user.account.UserAccountSecurityService;
 import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
 
+import java.net.URL;
+
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
 @Slf4j
+@AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(classes={
-    SimpleworklistApplication.class,
+@ImportAutoConfiguration({
     WebMvcConfig.class,
-    WebSecurityConfig.class,
+    WebSecurityConfig.class
+})
+@EnableConfigurationProperties({
     ApplicationProperties.class
 })
 public abstract class AbstractTest {
 
-    @Autowired
-    protected WebApplicationContext wac;
-
     @LocalServerPort
-    int randomServerPort;
+    protected int port;
+
+    protected URL base;
 
     @Autowired
     protected ApplicationProperties applicationProperties;
 
+    @Autowired
+    protected WebApplicationContext wac;
 
     protected MockMvc mockMvc;
 
-    @BeforeTestClass
-    public void setup() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
+        log.info(" @BeforeEach ");
+        this.base = new URL("http://localhost:" + port + "/");
         this.mockMvc = webAppContextSetup(wac).build();
         for (UserAccount u : testUser) {
             UserAccount a = userAccountService.findByUserEmail(u.getUserEmail());
@@ -60,25 +73,16 @@ public abstract class AbstractTest {
         }
     }
 
-    @AfterTestClass
-    public void clearContext() {
-        SecurityContextHolder.clearContext();
+    @BeforeTestClass
+    public void setupClass() throws Exception {
+        log.info(" @BeforeTestClass ");
     }
 
-    @Autowired
-    protected TestHelperService testHelperService;
-
-    @Autowired
-    protected UserAccountService userAccountService;
-
-    @Autowired
-    protected UserAccountSecurityService userAccountSecurityService;
-
-    @Autowired
-    protected UserAccountAccessService userAccountAccessService;
-
-    @Autowired
-    protected UserAccountLoginSuccessService userAccountLoginSuccessService;
+    @AfterTestClass
+    public void clearContext() {
+        log.info(" @AfterTestClass ");
+        SecurityContextHolder.clearContext();
+    }
 
     protected static String[] emails = {"test01@test.de", "test02@test.de", "test03@test.de"};
     protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
@@ -111,5 +115,20 @@ public abstract class AbstractTest {
         testHelperService.deleteAllCategory();
         testHelperService.deleteUserAccount();
     }
+
+    @Autowired
+    protected TestHelperService testHelperService;
+
+    @Autowired
+    protected UserAccountService userAccountService;
+
+    @Autowired
+    protected UserAccountSecurityService userAccountSecurityService;
+
+    @Autowired
+    protected UserAccountAccessService userAccountAccessService;
+
+    @Autowired
+    protected UserAccountLoginSuccessService userAccountLoginSuccessService;
 
 }
