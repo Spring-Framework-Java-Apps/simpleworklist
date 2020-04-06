@@ -11,7 +11,8 @@ function runTest() {
 }
 
 function runGithubTestBuild() {
-    ./mvnw -B -DskipTests clean dependency:list install --file pom.xml
+    #./mvnw -B -DskipTests -DskipIntegrationTests clean dependency:list install --file pom.xml
+      ./mvnw -B -DskipTests clean dependency:list install --file pom.xml
 }
 
 function setupHeroku() {
@@ -20,6 +21,7 @@ function setupHeroku() {
 }
 
 function buildLikeHeroku() {
+    #./mvnw -DskipTests -DskipIntegrationTests clean dependency:list install
    ./mvnw -DskipTests clean dependency:list install
 }
 
@@ -31,11 +33,11 @@ function runHerokuLocal() {
 }
 
 function main() {
-    #runGithubTestBuild
+    runGithubTestBuild
     #setupHeroku
     #runHerokuLocal
     #runDev
-    runTest
+    #runTest
 }
 
 main
