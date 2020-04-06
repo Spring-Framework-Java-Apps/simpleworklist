@@ -112,7 +112,7 @@
         <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
         <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
 
-        <testing.skipTests>true</testing.skipTests>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencyManagement>
@@ -778,9 +778,6 @@
     <profiles>
         <profile>
             <id>default</id>
-            <properties>
-                <testing.skipTests>true</testing.skipTests>
-            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
                 <property>
@@ -808,7 +805,7 @@
                                     <goal>start</goal>
                                 </goals>
                                 <configuration>
-                                    <skip>${testing.skipTests}</skip>
+                                    <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
                             <execution>
@@ -817,7 +814,7 @@
                                     <goal>stop</goal>
                                 </goals>
                                 <configuration>
-                                    <skip>${testing.skipTests}</skip>
+                                    <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
                             <execution>
@@ -840,10 +837,10 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
-                        <skipTests>${testing.skipTests}</skipTests>
+                        <skipTests>${skipTests}</skipTests>
                         <systemPropertyVariables>
                             <spring.profiles.active>default</spring.profiles.active>
-                            <skipIntegrationTests>${testing.skipTests}</skipIntegrationTests>
+                            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>

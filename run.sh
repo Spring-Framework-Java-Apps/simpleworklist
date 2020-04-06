@@ -7,7 +7,7 @@ function runDev() {
 }
 
 function runTest() {
-    ./mvnw -B clean dependency:list install --file pom.xml
+    ./mvnw -B -DskipTests=false  clean dependency:list install --file pom.xml
 }
 
 function runGithubTestBuild() {
@@ -33,11 +33,11 @@ function runHerokuLocal() {
 }
 
 function main() {
-    runGithubTestBuild
+    #runGithubTestBuild
     #setupHeroku
     #runHerokuLocal
     #runDev
-    #runTest
+    runTest
 }
 
 main
