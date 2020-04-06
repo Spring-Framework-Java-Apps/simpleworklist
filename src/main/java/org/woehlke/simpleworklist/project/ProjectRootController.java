@@ -73,7 +73,7 @@ public class ProjectRootController extends AbstractController {
         return "project/addToplevel";
     }
 
-    @RequestMapping(path = "/add/project", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(path = "/add/project", method = RequestMethod.POST)
     public final String addNewTopLevelProjectSave(
         @Valid Project project,
         @ModelAttribute("userSession") UserSessionBean userSession,

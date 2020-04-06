@@ -269,7 +269,7 @@ public class ProjectController extends AbstractController {
         return returnUrl;
     }
 
-    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{projectId}/add/task", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
@@ -296,7 +296,7 @@ public class ProjectController extends AbstractController {
         return "id/task/add";
     }
 
-    @RequestMapping(path = "/{projectId}/task/add/", method = RequestMethod.POST)
+    @RequestMapping(path = "/{projectId}/add/task", method = RequestMethod.POST)
     public final String addNewTaskToProjectPost(
         @PathVariable long projectId,
         @ModelAttribute("userSession") UserSessionBean userSession,
