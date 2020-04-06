@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping(path="/fehler")
 public class MyErrorController implements ErrorController {
 
+    @ExceptionHandler
     @RequestMapping(path="/", method={ GET, POST, PUT,  HEAD, PATCH, DELETE, OPTIONS, TRACE  })
     public String handleError(
         HttpServletRequest request
