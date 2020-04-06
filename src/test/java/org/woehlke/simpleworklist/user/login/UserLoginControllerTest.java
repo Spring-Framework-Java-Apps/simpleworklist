@@ -5,7 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.woehlke.simpleworklist.AbstractTest;
 
 public class UserLoginControllerTest extends AbstractTest {
@@ -13,8 +13,8 @@ public class UserLoginControllerTest extends AbstractTest {
     @Test
     public void testLoginFormular() throws Exception {
         this.mockMvc.perform(
-                get("/login")).andDo(print())
-                .andExpect(view().name(containsString("user/loginForm")));
+                get("/user/login")).andDo(print())
+                .andExpect(view().name(containsString("user/login/loginForm")));
     }
 
     @Test

@@ -1,13 +1,14 @@
 package org.woehlke.simpleworklist.user;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.UserDetailsBean;
 
 import java.util.Collection;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserDetailsBeanTest {
@@ -17,9 +18,9 @@ public class UserDetailsBeanTest {
         UserAccount account = new UserAccount();
         UserDetailsBean b = new UserDetailsBean(account);
         Collection<? extends GrantedAuthority> c = b.getAuthorities();
-        Assert.assertTrue(c.size()==1);
+        assertTrue(c.size()==1);
         for(GrantedAuthority authority:c){
-            Assert.assertTrue(authority.getAuthority().compareTo("ROLE_USER")==0);
+            assertTrue(authority.getAuthority().compareTo("ROLE_USER")==0);
         }
     }
 
@@ -27,10 +28,10 @@ public class UserDetailsBeanTest {
     public void testDefaultBooleans(){
         UserAccount account = new UserAccount();
         UserDetailsBean b = new UserDetailsBean(account);
-        Assert.assertTrue(b.isAccountNonExpired());
-        Assert.assertTrue(b.isAccountNonLocked());
-        Assert.assertTrue(b.isCredentialsNonExpired());
-        Assert.assertTrue(b.isEnabled());
+        assertTrue(b.isAccountNonExpired());
+        assertTrue(b.isAccountNonLocked());
+        assertTrue(b.isCredentialsNonExpired());
+        assertTrue(b.isEnabled());
     }
 
     @Test
@@ -82,34 +83,34 @@ public class UserDetailsBeanTest {
         UserDetailsBean b8 = new UserDetailsBean(account8);
         UserDetailsBean b9 = new UserDetailsBean(account9);
 
-        Assert.assertEquals(b1.hashCode(),b2.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b3.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b4.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b5.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b6.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b7.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b8.hashCode());
-        Assert.assertTrue(b1.hashCode()!=b9.hashCode());
+        assertEquals(b1.hashCode(),b2.hashCode());
+        assertTrue(b1.hashCode()!=b3.hashCode());
+        assertTrue(b1.hashCode()!=b4.hashCode());
+        assertTrue(b1.hashCode()!=b5.hashCode());
+        assertTrue(b1.hashCode()!=b6.hashCode());
+        assertTrue(b1.hashCode()!=b7.hashCode());
+        assertTrue(b1.hashCode()!=b8.hashCode());
+        assertTrue(b1.hashCode()!=b9.hashCode());
 
-        Assert.assertTrue(b1.equals(b1));
-        Assert.assertTrue(b1.equals(b2));
+        assertTrue(b1.equals(b1));
+        assertTrue(b1.equals(b2));
 
-        Assert.assertFalse(b1.equals(null));
-        Assert.assertFalse(b1.equals(account1));
-        Assert.assertFalse(b1.equals(b3));
-        Assert.assertFalse(b1.equals(b4));
-        Assert.assertFalse(b1.equals(b5));
-        Assert.assertFalse(b1.equals(b6));
-        Assert.assertFalse(b1.equals(b7));
-        Assert.assertFalse(b1.equals(b8));
-        Assert.assertFalse(b1.equals(b9));
+        assertFalse(b1.equals(null));
+        assertFalse(b1.equals(account1));
+        assertFalse(b1.equals(b3));
+        assertFalse(b1.equals(b4));
+        assertFalse(b1.equals(b5));
+        assertFalse(b1.equals(b6));
+        assertFalse(b1.equals(b7));
+        assertFalse(b1.equals(b8));
+        assertFalse(b1.equals(b9));
 
-        Assert.assertFalse(b3.equals(b1));
-        Assert.assertFalse(b4.equals(b1));
-        Assert.assertFalse(b5.equals(b1));
-        Assert.assertFalse(b6.equals(b1));
-        Assert.assertFalse(b7.equals(b1));
-        Assert.assertFalse(b8.equals(b1));
-        Assert.assertFalse(b9.equals(b1));
+        assertFalse(b3.equals(b1));
+        assertFalse(b4.equals(b1));
+        assertFalse(b5.equals(b1));
+        assertFalse(b6.equals(b1));
+        assertFalse(b7.equals(b1));
+        assertFalse(b8.equals(b1));
+        assertFalse(b9.equals(b1));
     }
 }

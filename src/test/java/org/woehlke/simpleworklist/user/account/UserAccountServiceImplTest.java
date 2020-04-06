@@ -1,10 +1,9 @@
 package org.woehlke.simpleworklist.user.account;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.junit.Assert;
 
-import org.junit.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,8 +13,8 @@ import org.woehlke.simpleworklist.AbstractTest;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.user.register.UserRegistrationService;
 import org.woehlke.simpleworklist.user.login.LoginForm;
-import org.woehlke.simpleworklist.user.account.UserAccountForm;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserAccountServiceImplTest extends AbstractTest {
@@ -31,26 +30,26 @@ public class UserAccountServiceImplTest extends AbstractTest {
         int zeroNumberOfAllRegistrations = 0;
         deleteAll();
         String email = applicationProperties.getRegistration().getMailFrom();
-        Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
-        Assert.assertNotNull(email);
-        Assert.assertTrue(userAccountService.isEmailAvailable(email));
+        assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
+        assertNotNull(email);
+        assertTrue(userAccountService.isEmailAvailable(email));
         registrationService.registrationSendEmailTo(email);
-        Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
-        Assert.assertTrue(userAccountService.isEmailAvailable(email));
+        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertTrue(userAccountService.isEmailAvailable(email));
         registrationService.registrationSendEmailTo(email);
-        Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
-        Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
-        Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
-        Assert.assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
-        Assert.assertTrue(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertTrue(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         int sixSeconds = 6000;
         Thread.sleep(sixSeconds);
         deleteAll();
-        Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
+        assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
     @Test
@@ -60,26 +59,26 @@ public class UserAccountServiceImplTest extends AbstractTest {
             userAccountService.saveAndFlush(userAccount);
         }
         int zeroNumberOfAllRegistrations = 0;
-        Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
-        Assert.assertNotNull(emails[0]);
-        Assert.assertFalse(userAccountService.isEmailAvailable(emails[0]));
+        assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
+        assertNotNull(emails[0]);
+        assertFalse(userAccountService.isEmailAvailable(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        Assert.assertFalse(userAccountService.isEmailAvailable(emails[0]));
+        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        assertFalse(userAccountService.isEmailAvailable(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        Assert.assertTrue(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        assertTrue(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         int sixSeconds = 6000;
         Thread.sleep(sixSeconds);
         deleteAll();
-        Assert.assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
+        assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
     @Test
@@ -90,15 +89,15 @@ public class UserAccountServiceImplTest extends AbstractTest {
         }
         for(String email:emails){
             UserAccount user = userAccountService.findByUserEmail(email);
-            Assert.assertTrue(user.getUserEmail().compareTo(email) == 0);
+            assertTrue(user.getUserEmail().compareTo(email) == 0);
         }
         Pageable request = PageRequest.of(0,10);
         for(UserAccount user: userAccountService.findAll(request)){
-            Assert.assertNotNull(user.getId());
-            Assert.assertNotNull(user.getUserEmail());
-            Assert.assertNotNull(user.getUserPassword());
-            Assert.assertNotNull(user.getUserFullname());
-            Assert.assertNotNull(user.getRowCreatedAt());
+            assertNotNull(user.getId());
+            assertNotNull(user.getUserEmail());
+            assertNotNull(user.getUserPassword());
+            assertNotNull(user.getUserFullname());
+            assertNotNull(user.getRowCreatedAt());
         }
     }
 
@@ -106,13 +105,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
     public void testLoadUserByUsername(){
         for(String email:emails){
             UserDetails userDetails = userAccountSecurityService.loadUserByUsername(email);
-            Assert.assertTrue(userDetails.getUsername().compareTo(email) == 0);
+            assertTrue(userDetails.getUsername().compareTo(email) == 0);
         }
         try {
             UserDetails userDetails = userAccountSecurityService.loadUserByUsername(username_email);
         } catch (UsernameNotFoundException e){
-            Assert.assertNotNull(e.getMessage());
-            Assert.assertTrue(username_email.compareTo(e.getMessage())==0);
+            assertNotNull(e.getMessage());
+            assertTrue(username_email.compareTo(e.getMessage())==0);
         }
     }
 
@@ -121,17 +120,17 @@ public class UserAccountServiceImplTest extends AbstractTest {
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
         loginForm.setUserPassword(passwords[0]);
-        Assert.assertTrue(userAccountAccessService.authorize(loginForm));
+        assertTrue(userAccountAccessService.authorize(loginForm));
         loginForm = new LoginForm();
         loginForm.setUserEmail(username_email);
         loginForm.setUserPassword(password);
-        Assert.assertFalse(userAccountAccessService.authorize(loginForm));
+        assertFalse(userAccountAccessService.authorize(loginForm));
     }
 
     @Test
     public void testIsEmailAvailable() {
-        Assert.assertFalse(userAccountService.isEmailAvailable(emails[0]));
-        Assert.assertTrue(userAccountService.isEmailAvailable(username_email));
+        assertFalse(userAccountService.isEmailAvailable(emails[0]));
+        assertTrue(userAccountService.isEmailAvailable(username_email));
     }
 
     @Test
@@ -142,7 +141,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
         userAccount.setUserPasswordConfirmation(password);
         userAccount.setUserFullname(full_name);
         userAccountService.createUser(userAccount);
-        Assert.assertFalse(userAccountService.isEmailAvailable(username_email));
+        assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
     @Test
@@ -158,19 +157,20 @@ public class UserAccountServiceImplTest extends AbstractTest {
     @Test
     public void testRetrieveUsernameLoggedOut(){
         String userName = userAccountLoginSuccessService.retrieveUsername();
-        Assert.assertTrue(userName.compareTo(" ")==0);
+        assertTrue(userName.compareTo(" ")==0);
     }
 
     @Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
         String userName = userAccountLoginSuccessService.retrieveUsername();
-        Assert.assertNotNull(userName);
-        Assert.assertTrue(emails[0].compareTo(userName) == 0);
+        assertNotNull(userName);
+        assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
     }
 
-    @Test(expected = UsernameNotFoundException.class)
+    @Test
+    //@Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
         userAccountLoginSuccessService.retrieveCurrentUser();
     }
@@ -179,8 +179,8 @@ public class UserAccountServiceImplTest extends AbstractTest {
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        Assert.assertNotNull(userAccount);
-        Assert.assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
+        assertNotNull(userAccount);
+        assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
         SecurityContextHolder.clearContext();
         deleteAll();
     }

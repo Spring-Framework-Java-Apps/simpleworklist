@@ -39,7 +39,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the email-adress.
      */
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -54,7 +54,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public final String passwordForgottenPost(
         @Valid UserRegistrationForm userRegistrationForm,
         BindingResult result,
