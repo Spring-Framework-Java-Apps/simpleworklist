@@ -41,7 +41,7 @@ public class ProjectRootController extends AbstractController {
         this.taskMoveService = taskMoveService;
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/tasks", method = RequestMethod.GET)
     public final String showRootProject(
         @PageableDefault(sort = "orderIdProject") Pageable pageable,
         @RequestParam(required = false) String message,
@@ -164,7 +164,7 @@ public class ProjectRootController extends AbstractController {
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.saveAndFlush(task);
             log.info(task.toString());
-            return "redirect:/project/root/";
+            return "redirect:/project/root/tasks";
         }
     }
 }

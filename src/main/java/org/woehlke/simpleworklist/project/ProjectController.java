@@ -230,7 +230,7 @@ public class ProjectController extends AbstractController {
             }
         }
         if( newProjectId == 0){
-            return "redirect:/project/root";
+            return "redirect:/project/root/tasks";
         } else {
             return "redirect:/project/" + newProjectId;
         }
