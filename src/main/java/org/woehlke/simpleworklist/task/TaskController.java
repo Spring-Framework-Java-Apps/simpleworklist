@@ -116,10 +116,10 @@ public class TaskController extends AbstractController {
                 }
                 userSession.setContextId(task.getContext().getId());
                 model.addAttribute("userSession", userSession);
-                return "redirect:/project/root/tasks";
+                return "redirect:/project/root";
             }
             taskService.saveAndFlush(persistentTask);
-            return "redirect:/project/" + projectId + "/";
+            return "redirect:/project/" + projectId;
         }
     }
 
