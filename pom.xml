@@ -79,6 +79,7 @@
         <xml-maven-plugin.version>1.0.2</xml-maven-plugin.version>
         <dependency-management-plugin.version>1.0.9.RELEASE</dependency-management-plugin.version>
         <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
+        <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
 
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
@@ -328,6 +329,12 @@
                 <version>${maven-surefire-report-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>${maven-changes-plugin.version}</version>
+                <type>maven-plugin</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -543,6 +550,11 @@
             <artifactId>maven-surefire-report-plugin</artifactId>
             <type>maven-plugin</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <type>maven-plugin</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -564,6 +576,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>${maven-project-info-reports-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-changes-plugin</artifactId>
+                    <version>${maven-changes-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -924,6 +941,22 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <inherited>true</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <configuration>
+                    <githubAPIScheme>https</githubAPIScheme>
+                    <githubAPIPort>443</githubAPIPort>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>id-github-report</id>
+                        <reports>
+                            <report>github-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
