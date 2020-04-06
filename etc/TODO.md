@@ -86,4 +86,5 @@ https://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html
 https://www.baeldung.com/maven-enforcer-plugin
 
 # 2.3.14
-Fixed #127, Fixed #127, Fixed #122, Fixed 123, Fixed #130
+Fixed #122, Fixed #123, Fixed #127, Fixed #130, Fixed #152, Fixed #153, Fixed #154, Fixed #155, Fixed #156, Fixed #157, Fixed #158, Fixed #159, Fixed #160, Fixed #161, Fixed #162, Fixed #163, Fixed #164, Fixed #165, Fixed #166, Fixed #167
+
