@@ -25,7 +25,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
     @Autowired
     private UserPasswordRecoveryService userPasswordRecoveryService;
 
-    @Test
+    //@Test
     public void testIsRetryAndMaximumNumberOfRetries(){
         deleteAll();
         boolean result = userRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(username_email);
@@ -45,7 +45,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
     }
 
 
-    @Test
+    //@Test
     public void testCheckIfResponseIsInTimeNewUser(){
         userRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
         UserRegistration o = testHelperService.findByEmailRegistration(emails[0]);
@@ -58,7 +58,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
         assertNull(o);
     }
 
-    @Test
+    //@Test
     public void testCheckIfResponseIsInTime(){
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         try {

@@ -25,7 +25,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
     @Autowired
     private UserPasswordRecoveryService userPasswordRecoveryService;
 
-    @Test
+    //@Test
     public void testStartSecondOptIn() throws Exception {
         int zeroNumberOfAllRegistrations = 0;
         deleteAll();
@@ -52,7 +52,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
-    @Test
+    //@Test
     public void testPasswordResetSendEmail() throws Exception {
         deleteAll();
         for(UserAccount userAccount:testUser){
@@ -81,7 +81,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
-    @Test
+    //@Test
     public void testSaveAndFlush(){
         deleteAll();
         for(UserAccount userAccount:testUser){
@@ -101,7 +101,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
         }
     }
 
-    @Test
+    //@Test
     public void testLoadUserByUsername(){
         for(String email:emails){
             UserDetails userDetails = userAccountSecurityService.loadUserByUsername(email);
@@ -115,7 +115,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
         }
     }
 
-    @Test
+    //@Test
     public void testAuthorize(){
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
@@ -127,13 +127,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
         assertFalse(userAccountAccessService.authorize(loginForm));
     }
 
-    @Test
+    //@Test
     public void testIsEmailAvailable() {
         assertFalse(userAccountService.isEmailAvailable(emails[0]));
         assertTrue(userAccountService.isEmailAvailable(username_email));
     }
 
-    @Test
+    //@Test
     public void testCreateUser() {
         UserAccountForm userAccount = new UserAccountForm();
         userAccount.setUserEmail(username_email);
@@ -144,7 +144,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
         assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
-    @Test
+    //@Test
     public void testChangeUsersPassword(){
         UserAccountForm userAccount = new UserAccountForm();
         userAccount.setUserEmail(emails[0]);
@@ -154,13 +154,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
         userAccountService.changeUsersPassword(userAccount);
     }
 
-    @Test
+    //@Test
     public void testRetrieveUsernameLoggedOut(){
         String userName = userAccountLoginSuccessService.retrieveUsername();
         assertTrue(userName.compareTo(" ")==0);
     }
 
-    @Test
+    //@Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
         String userName = userAccountLoginSuccessService.retrieveUsername();
@@ -169,13 +169,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
         SecurityContextHolder.clearContext();
     }
 
-    @Test
-    //@Test(expected = UsernameNotFoundException.class)
+    //@Test
+    ////@Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
         userAccountLoginSuccessService.retrieveCurrentUser();
     }
 
-    @Test
+    //@Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();

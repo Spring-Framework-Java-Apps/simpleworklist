@@ -19,21 +19,21 @@ public class UserRegistrationControllerTest extends AbstractTest {
     @Autowired
     private UserRegistrationService userRegistrationService;
 
-    @Test
+    //@Test
     public void testSignInFormularEmail() throws Exception {
         this.mockMvc.perform(
                 get("/user/register")).andDo(print())
                 .andExpect(view().name(containsString("user/register/registerForm")));
     }
 
-    @Test
+    //@Test
     public void testSignInFormularAccount() throws Exception {
         this.mockMvc.perform(
                 get("/user/register/confirm/ASDF")).andDo(print())
                 .andExpect(view().name(containsString("user/register/registerNotConfirmed")));
     }
 
-    @Test
+    //@Test
     public void testRegisterNewUserCheckResponseAndRegistrationForm() throws Exception{
         userRegistrationService.registrationSendEmailTo(emails[0]);
         try {
@@ -54,7 +54,7 @@ public class UserRegistrationControllerTest extends AbstractTest {
         userRegistrationService.registrationUserCreated(o);
     }
 
-    @Test
+    //@Test
     public void finish(){
         super.deleteAll();
     }

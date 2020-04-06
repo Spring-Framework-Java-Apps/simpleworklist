@@ -26,26 +26,25 @@ import java.net.URL;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
 public abstract class AbstractTest {
 
-    @LocalServerPort
+    //@LocalServerPort
     protected int port;
 
     protected URL base;
 
-    @Autowired
+    //@Autowired
     protected ApplicationProperties applicationProperties;
 
-    @Autowired
+    //@Autowired
     protected WebApplicationContext wac;
 
     protected MockMvc mockMvc;
 
-    @BeforeEach
+   // //@BeforeEach
     public void setUp() throws Exception {
-        log.info(" @BeforeEach ");
+        //log.info(" //@BeforeEach ");
         this.base = new URL("http://localhost:" + port + "/");
         this.mockMvc = webAppContextSetup(wac).build();
         for (UserAccount u : testUser) {
@@ -56,22 +55,22 @@ public abstract class AbstractTest {
         }
     }
 
-    @BeforeTestClass
+    //@BeforeTestClass
     public void setupClass() throws Exception {
-        log.info(" @BeforeTestClass ");
+        //log.info(" //@BeforeTestClass ");
     }
 
-    @AfterTestClass
+    //@AfterTestClass
     public void clearContext() {
-        log.info(" @AfterTestClass ");
+       // log.info(" //@AfterTestClass ");
         SecurityContextHolder.clearContext();
     }
 
-    protected static String[] emails = {"test01@test.de", "test02@test.de", "test03@test.de"};
+    protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
     protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
     protected static String[] fullnames = {"test01 Name", "test02 Name", "test03 Name"};
 
-    protected static String username_email = "undefined@test.de";
+    protected static String username_email = "undefined//@Test.de";
     protected static String password = "ASDFG";
     protected static String full_name = "UNDEFINED_NAME";
 

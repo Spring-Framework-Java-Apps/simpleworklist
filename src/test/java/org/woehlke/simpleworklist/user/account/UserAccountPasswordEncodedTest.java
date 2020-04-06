@@ -16,7 +16,7 @@ public class UserAccountPasswordEncodedTest extends AbstractTest {
     @Autowired
     private PasswordEncoder encoder;
 
-    @Test
+    //@Test
     public void testEncoderIsWired(){
         assertTrue(encoder != null);
     }
@@ -24,10 +24,10 @@ public class UserAccountPasswordEncodedTest extends AbstractTest {
     /**
      * This Test is obsolete now due to changed encoder from MD5 to BCrypt (20.02.2016).
      */
-    @Test
+    //@Test
     public void testGetUserPasswordEncoded(){
         UserAccountForm u = new UserAccountForm();
-        u.setUserEmail("test01@test.de");
+        u.setUserEmail("test01//@Test.de");
         u.setUserFullname("some_name");
         u.setUserPassword("pwd01_ASDFGHJKLMOP_22");
         u.setUserPasswordConfirmation("pwd01_ASDFGHJKLMOP_22");
@@ -35,10 +35,10 @@ public class UserAccountPasswordEncodedTest extends AbstractTest {
         assertTrue(encodedPassword.compareTo(encoder.encode(u.getUserPassword()))==0);
     }
 
-    @Test
+    //@Test
     public void testPasswordsAreTheSame(){
         UserAccountForm u = new UserAccountForm();
-        u.setUserEmail("test01@test.de");
+        u.setUserEmail("test01//@Test.de");
         u.setUserFullname("some_name");
         u.setUserPassword("pwd01_ASDFGHJKLMOP_22");
         u.setUserPasswordConfirmation("pwd01_ASDFGHJKLMOP_22");

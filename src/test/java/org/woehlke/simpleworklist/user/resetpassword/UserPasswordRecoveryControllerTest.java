@@ -18,21 +18,21 @@ public class UserPasswordRecoveryControllerTest extends AbstractTest {
     @Autowired
     private UserPasswordRecoveryService userPasswordRecoveryService;
 
-    @Test
+    //@Test
     public void testResetPassword() throws Exception {
         this.mockMvc.perform(
                 get("/user/resetPassword")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordForm")));
     }
 
-    @Test
+    //@Test
     public void testEnterNewPasswordFormular() throws Exception {
         this.mockMvc.perform(
                 get("/user/resetPassword/confirm/ASDF")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordNotConfirmed")));
     }
 
-    @Test
+    //@Test
     public void testEnterNewPasswordFormularWithToken() throws Exception {
         userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         try {
@@ -53,7 +53,7 @@ public class UserPasswordRecoveryControllerTest extends AbstractTest {
         userPasswordRecoveryService.passwordRecoveryDone(o);
     }
 
-    @Test
+    //@Test
     public void finish(){
         super.deleteAll();
     }

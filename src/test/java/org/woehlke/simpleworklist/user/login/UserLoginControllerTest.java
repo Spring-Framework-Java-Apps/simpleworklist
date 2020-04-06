@@ -10,14 +10,14 @@ import org.woehlke.simpleworklist.AbstractTest;
 
 public class UserLoginControllerTest extends AbstractTest {
 
-    @Test
+    //@Test
     public void testLoginFormular() throws Exception {
         this.mockMvc.perform(
                 get("/user/login")).andDo(print())
                 .andExpect(view().name(containsString("user/login/loginForm")));
     }
 
-    @Test
+    //@Test
     public void testFinish() {
         deleteAll();
     }
