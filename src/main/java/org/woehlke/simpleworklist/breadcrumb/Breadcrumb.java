@@ -35,8 +35,12 @@ public class Breadcrumb implements Serializable {
         this.breadcrumb = breadcrumb;
     }
 
+    public int size(){
+        return breadcrumb.size();
+    }
+
     public void addProjectRoot(){
-        String urlProject = "/project/0";
+        String urlProject = "/project/root";
         String name;
         if(this.locale == Locale.GERMAN){
             name = "Projekte";
