@@ -183,7 +183,7 @@ public class TaskController extends AbstractController {
         return "redirect:/taskstate/completed";
     }
 
-    @RequestMapping(path = "/{taskId}/incomplete/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/incomplete", method = RequestMethod.GET)
     public final String unsetDoneTaskGet(
         @PathVariable("taskId") Task task
     ) {
@@ -198,7 +198,7 @@ public class TaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(path = "/{taskId}/setfocus/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/setfocus", method = RequestMethod.GET)
     public final String setFocusGet(
         @PathVariable("taskId") Task task,
         @RequestParam(required=false) String back
