@@ -93,7 +93,7 @@ public class ProjectRootController extends AbstractController {
             result,
             locale,
             model,
-            "project/root/add/project"
+            "project/root"
         );
     }
 
@@ -165,7 +165,7 @@ public class ProjectRootController extends AbstractController {
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.saveAndFlush(task);
             log.info(task.toString());
-            return "redirect:/project/root/tasks";
+            return "redirect:/project/root";
         }
     }
 }
