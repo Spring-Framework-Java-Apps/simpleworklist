@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.search;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tw on 14.02.16.
  */
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class SearchServiceImpl implements SearchService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
 
     private final SearchDao searchDao;
 
@@ -28,13 +26,14 @@ public class SearchServiceImpl implements SearchService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public SearchResult search(String searchterm, UserAccount userAccount) {
+        log.info("search");
         SearchResult searchResult = searchDao.search(searchterm, userAccount);
         return searchResult;
     }
 
     @Override
     public void resetSearchIndex() {
-        LOGGER.info("resetSearchIndex");
+        log.info("resetSearchIndex");
         searchDao.resetSearchIndex();
     }
 }

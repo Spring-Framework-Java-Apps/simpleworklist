@@ -56,13 +56,13 @@
                         draggable="true" ondragstart="dragTask(event)"
                         ondrop="dropTask2Task(event)" ondragover="allowDropOfTask(event)">
                         <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
-                            <a th:href="@{/task/complete/{id}(id=${task.id})}"
+                            <a th:href="@{/task/{id}/complete(id=${task.id})}"
                                th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
                                class="task_col_content task_col_content_finish twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.finish.task}">
                                 <i class="far fa-square"></i>
                             </a>
-                            <a th:href="@{/task/incomplete/{id}(id=${task.id})}"
+                            <a th:href="@{/task/{id}/incomplete(id=${task.id})}"
                                th:if="${task.taskState.name() eq 'COMPLETED'}"
                                class="task_col_content task_col_content_unfinish twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.unfinish.task}">
@@ -72,13 +72,13 @@
                                th:if="${task.taskState.name() eq 'TRASHED'}"
                                th:alt-title="#{task.col.twtooltip.infoicons.trash}"
                                draggable="true" ondragstart="dragTask(event)" data-placement="bottom"></i>
-                            <a th:if="${task.focus}" th:href="@{/task/unsetfocus/{id}(id=${task.id})}"
+                            <a th:if="${task.focus}" th:href="@{/task/{id}/unsetfocus(id=${task.id})}"
                                class="task_col_content task_col_content_unsetfocus twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.unsetfocus}"
                                th:id="'task_' + ${task.id} + '_col_unsetfocus'" draggable="true" ondragstart="dragTask(event)">
                                 <i class="fas fa-star"></i>
                             </a>
-                            <a th:if="${not task.focus}" th:href="@{/task/setfocus/{id}(id=${task.id})}"
+                            <a th:if="${not task.focus}" th:href="@{/task/{id}/setfocus(id=${task.id})}"
                                class="task_col_content task_col_content_setfocus twtooltip"
                                th:alt-title="#{task.col.twtooltip.infoicons.setfocus}"
                                th:id="'task_' + ${task.id} + '_col_setfocus'" draggable="true" ondragstart="dragTask(event)">

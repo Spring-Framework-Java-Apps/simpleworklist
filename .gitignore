@@ -30,3 +30,9 @@ docs/deploying-spring-boot-apps/
 setenv.sh
 setenv.cmd
 /etc/pom.xml
+/src/main/java/org/woehlke/simpleworklist/project/x.txt
+/src/main/java/org/woehlke/simpleworklist/task/x.txt
+/src/main/java/org/woehlke/simpleworklist/taskstate/x.txt
+/src/main/java/org/woehlke/simpleworklist/context/x.txt
+/src/main/java/org/woehlke/simpleworklist/error/x.txt
+/src/main/java/org/woehlke/simpleworklist/search/x.txt

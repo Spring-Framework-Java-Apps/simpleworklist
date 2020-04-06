@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
@@ -14,14 +15,12 @@ import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskRepository;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ProjectServiceImpl implements ProjectService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
-
     private final ProjectRepository projectRepository;
-
     private final TaskRepository taskRepository;
 
     @Autowired
@@ -46,16 +45,19 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> findRootProjectsByContext(Context context) {
+        log.info("findRootProjectsByContext");
         return projectRepository.findByParentIsNullAndContext(context);
     }
 
     @Override
     public List<Project> findAllProjectsByContext(Context context) {
+        log.info("findAllProjectsByContext");
         return projectRepository.findByContext(context);
     }
 
     @Override
     public Project findByProjectId(long projectId) {
+        log.info("findByProjectId");
         if(projectRepository.existsById(projectId)){
             return projectRepository.getOne(projectId);
         } else {
@@ -66,12 +68,14 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Project saveAndFlush(Project entity) {
+        log.info("saveAndFlush");
         return projectRepository.saveAndFlush(entity);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void delete(Project thisProject) {
+        log.info("delete");
         Project oldParent = thisProject.getParent();
         if (oldParent != null) {
             oldParent.getChildren().remove(thisProject);
@@ -83,26 +87,27 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveProjectToAnotherContext(Project thisProject, Context newContext) {
-            LOGGER.info("----------------------------------------------------");
-            LOGGER.info("moveProjectToAnotherContext: Project: "+thisProject.toString());
-            LOGGER.info("----------------------------------------------------");
-            LOGGER.info("moveProjectToAnotherContext: newContext: "+ newContext.toString());
-            LOGGER.info("----------------------------------------------------");
-            thisProject.setParent(null);
-            projectRepository.saveAndFlush(thisProject);
-            List<Project> list = getAllChildrenOfProject(thisProject);
-            for(Project p : list){
-                List<Task> tasks = taskRepository.findByProject(p);
-                for(Task t:tasks){
-                    t.setContext(newContext);
-                }
-                taskRepository.saveAll(tasks);
-                p.setContext(newContext);
-                projectRepository.saveAndFlush(p);
+        log.info("----------------------------------------------------");
+        log.info("moveProjectToAnotherContext: Project: "+thisProject.toString());
+        log.info("----------------------------------------------------");
+        log.info("moveProjectToAnotherContext: newContext: "+ newContext.toString());
+        log.info("----------------------------------------------------");
+        thisProject.setParent(null);
+        projectRepository.saveAndFlush(thisProject);
+        List<Project> list = getAllChildrenOfProject(thisProject);
+        for(Project p : list){
+            List<Task> tasks = taskRepository.findByProject(p);
+            for(Task t:tasks){
+                t.setContext(newContext);
             }
+            taskRepository.saveAll(tasks);
+            p.setContext(newContext);
+            projectRepository.saveAndFlush(p);
+        }
     }
 
     private List<Project> getAllChildrenOfProject(Project thisProject) {
+        log.info("getAllChildrenOfProject");
         List<Project> retVal = new ArrayList<>();
         retVal.add(thisProject);
         for(Project p : thisProject.getChildren()){
@@ -114,8 +119,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveProjectToAnotherProject(Project thisProject,
-                                            Project targetProject) {
+    public void moveProjectToAnotherProject(
+        Project thisProject,
+        Project targetProject
+    ) {
+        log.info("moveProjectToAnotherProject");
         Project oldParent = thisProject.getParent();
         if (oldParent != null) {
             oldParent.getChildren().remove(thisProject);

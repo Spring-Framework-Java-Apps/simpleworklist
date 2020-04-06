@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.search;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,10 +20,10 @@ import java.util.Locale;
 /**
  * Created by tw on 14.02.16.
  */
+@Slf4j
 @Controller
+@RequestMapping(path = "/search")
 public class SearchController extends AbstractController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
 
     private final SearchService searchService;
 
@@ -33,19 +32,20 @@ public class SearchController extends AbstractController {
        this.searchService = searchService;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String searchResults(
             @RequestParam String searchterm,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
+        log.info("searchResults");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         userSession.setLastSearchterm(searchterm);
         model.addAttribute("userSession",userSession);
-        LOGGER.info("Search: "+ searchterm);
+        log.info("Search: "+ searchterm);
         SearchResult searchResult = searchService.search(searchterm, thisUser);
-        LOGGER.info("found: "+ searchResult.toString());
+        log.info("found: "+ searchResult.toString());
         model.addAttribute("searchResult",searchResult);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale);
         model.addAttribute("breadcrumb",breadcrumb);

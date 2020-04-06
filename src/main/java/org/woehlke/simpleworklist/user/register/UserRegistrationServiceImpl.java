@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.user.register;
 
 import java.util.Date;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
@@ -16,19 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.user.token.TokenGeneratorService;
 
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserRegistrationServiceImpl implements
-        UserRegistrationService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationServiceImpl.class);
+public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     private final ApplicationProperties applicationProperties;
-
     private final UserRegistrationRepository userRegistrationRepository;
-
     private final TokenGeneratorService tokenGeneratorService;
-
     private final JavaMailSender mailSender;
 
     @Autowired
@@ -71,9 +67,9 @@ public class UserRegistrationServiceImpl implements
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        LOGGER.info("To be saved: " + o.toString());
+        log.info("To be saved: " + o.toString());
         o = userRegistrationRepository.saveAndFlush(o);
-        LOGGER.info("Saved: " + o.toString());
+        log.info("Saved: " + o.toString());
         this.sendEmailToRegisterNewUser(o);
     }
 
@@ -86,7 +82,7 @@ public class UserRegistrationServiceImpl implements
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void registrationSentEmail(UserRegistration o) {
         o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_SENT_MAIL);
-        LOGGER.info("about to save: " + o.toString());
+        log.info("about to save: " + o.toString());
         userRegistrationRepository.saveAndFlush(o);
     }
 
@@ -121,13 +117,13 @@ public class UserRegistrationServiceImpl implements
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            LOGGER.warn(ex.getMessage() + " for " + o.toString());
+            log.warn(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
             this.registrationSentEmail(o);
         }
-        LOGGER.info("Sent MAIL: " + o.toString());
+        log.info("Sent MAIL: " + o.toString());
     }
 
 

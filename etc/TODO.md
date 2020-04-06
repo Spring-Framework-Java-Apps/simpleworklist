@@ -72,3 +72,21 @@ Fixed #106, Fixed #109, Fixed #110
 
 Deployment to heroku
  
+# Maven Config:
+## maven-changes-plugin
+https://maven.apache.org/plugins/maven-changes-plugin/examples/configuring-github-report.html
+
+## maven-enforcer-plugin
+http://maven.apache.org/enforcer/maven-enforcer-plugin/plugin-info.html
+http://maven.apache.org/enforcer/enforcer-rules/
+https://maven.apache.org/enforcer/enforcer-rules/requireFilesExist.html
+https://maven.apache.org/enforcer/enforcer-rules/requireEnvironmentVariable.html
+https://maven.apache.org/enforcer/enforcer-rules/requireActiveProfile.html
+https://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html
+https://www.baeldung.com/maven-enforcer-plugin
+
+# 2.3.14
+Fixed #122, Fixed #123, Fixed #127, Fixed #130, Fixed #152, Fixed #153, Fixed #154, Fixed #155, Fixed #156, Fixed #157, Fixed #158, Fixed #159, Fixed #160, Fixed #161, Fixed #162, Fixed #163, Fixed #164, Fixed #165, Fixed #166, Fixed #167
+
+Fixed #129 
+Fixed #126

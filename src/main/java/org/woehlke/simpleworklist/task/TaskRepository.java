@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {

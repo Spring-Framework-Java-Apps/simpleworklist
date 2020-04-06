@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.user.register;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +14,12 @@ import org.woehlke.simpleworklist.user.account.UserAccountService;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
+@RequestMapping(path = "/user/register")
 public class UserRegistrationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRegistrationController.class);
-
     private final UserAccountService userAccountService;
-
     private final UserRegistrationService userRegistrationService;
 
     @Autowired
@@ -37,7 +35,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String registerNewUserRequestForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -52,10 +50,12 @@ public class UserRegistrationController {
      * @param model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     public final String registerNewUserRequestStoreAndSendEmailForVerification(
             @Valid UserRegistrationForm userRegistrationForm,
-            BindingResult result, Model model) {
+            BindingResult result,
+            Model model
+    ) {
         if (result.hasErrors()) {
             return "user/register/registerForm";
         } else {
@@ -90,10 +90,12 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for Entering Account Task or Error Messages.
      */
-    @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerNewUserCheckResponseAndRegistrationForm(
-            @PathVariable String confirmId, Model model) {
-        LOGGER.info("GET /confirm/" + confirmId);
+        @PathVariable String confirmId,
+        Model model
+    ) {
+        log.info("GET /confirm/" + confirmId);
         UserRegistration o = userRegistrationService.findByToken(confirmId);
         if (o != null) {
             userRegistrationService.registrationClickedInEmail(o);
@@ -115,19 +117,21 @@ public class UserRegistrationController {
      * @param model
      * @return login page at success or page with error messages.
      */
-    @RequestMapping(value = "/confirm/{confirmId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
     public final String registerNewUserCheckResponseAndRegistrationStore(
-            @PathVariable String confirmId,
-            @Valid UserAccountForm userAccountForm,
-            BindingResult result, Model model) {
-        LOGGER.info("POST /confirm/" + confirmId + " : " + userAccountForm.toString());
+        @PathVariable String confirmId,
+        @Valid UserAccountForm userAccountForm,
+        BindingResult result,
+        Model model
+    ) {
+        log.info("POST /confirm/" + confirmId + " : " + userAccountForm.toString());
         userRegistrationService.registrationCheckIfResponseIsInTime(userAccountForm.getUserEmail());
-        UserRegistration o = userRegistrationService.findByToken(confirmId);
-        if (o != null) {
+        UserRegistration oUserRegistration = userRegistrationService.findByToken(confirmId);
+        if (oUserRegistration != null) {
             boolean passwordsMatch = userAccountForm.passwordsAreTheSame();
             if (!result.hasErrors() && passwordsMatch) {
                 userAccountService.createUser(userAccountForm);
-                userRegistrationService.registrationUserCreated(o);
+                userRegistrationService.registrationUserCreated(oUserRegistration);
                 return "user/register/registerDone";
             } else {
                 if (!passwordsMatch) {

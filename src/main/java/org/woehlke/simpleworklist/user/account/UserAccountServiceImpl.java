@@ -6,10 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,18 +22,14 @@ import org.woehlke.simpleworklist.language.Language;
 import org.woehlke.simpleworklist.context.ContextRepository;
 import org.woehlke.simpleworklist.user.messages.User2UserMessageRepository;
 
+@Slf4j
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountServiceImpl.class);
-
     private final UserAccountRepository userAccountRepository;
-
     private final User2UserMessageRepository userMessageRepository;
-
     private final ContextRepository contextRepository;
-
     private final PasswordEncoder encoder;
 
     @Autowired
@@ -64,19 +59,19 @@ public class UserAccountServiceImpl implements UserAccountService {
         u.setAccountNonLocked(true);
         u.setCredentialsNonExpired(true);
         u.setEnabled(true);
-        LOGGER.info("About to save " + u.toString());
+        log.info("About to save " + u.toString());
         u = userAccountRepository.save(u);
         Context workContext = new Context("Arbeit","Work");
         Context privContext = new Context("Privat","Private");
         workContext.setUserAccount(u);
         privContext.setUserAccount(u);
-        LOGGER.info("About to save " + workContext.toString());
+        log.info("About to save " + workContext.toString());
         contextRepository.save(workContext);
-        LOGGER.info("About to save " + privContext.toString());
+        log.info("About to save " + privContext.toString());
         contextRepository.save(privContext);
         u.setDefaultContext(workContext);
         u = userAccountRepository.save(u);
-        LOGGER.info("Saved " + u.toString());
+        log.info("Saved " + u.toString());
     }
 
     @Override

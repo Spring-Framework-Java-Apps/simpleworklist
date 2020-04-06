@@ -1,12 +1,11 @@
 package org.woehlke.simpleworklist.user.login;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -20,14 +19,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
 
-
+@Slf4j
 @Controller
+@RequestMapping(path = "/user")
 public class UserLoginController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginController.class);
-
     private final UserAccountLoginSuccessService userAccountLoginSuccessService;
-
     private final UserAccountAccessService userAccountAccessService;
 
     @Autowired
@@ -43,8 +40,9 @@ public class UserLoginController {
      * @param model
      * @return Login Screen.
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
     public final String loginForm(Model model) {
+        log.info("loginForm");
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
         return "user/login/loginForm";
@@ -58,14 +56,18 @@ public class UserLoginController {
      * @param model
      * @return Shows Root Project after successful login or login form with error messages.
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public final String loginPerform(@Valid LoginForm loginForm,
-                               BindingResult result, Model model) {
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public final String loginPerform(
+        @Valid LoginForm loginForm,
+        BindingResult result,
+        Model model
+    ) {
+        log.info("loginPerform");
         boolean authorized = userAccountAccessService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
             userAccountLoginSuccessService.updateLastLoginTimestamp(user);
-            LOGGER.info("logged in");
+            log.info("logged in");
             return "redirect:/";
         } else {
             String objectName = "loginForm";
@@ -73,13 +75,18 @@ public class UserLoginController {
             String defaultMessage = "Email or Password wrong.";
             FieldError e = new FieldError(objectName, field, defaultMessage);
             result.addError(e);
-            LOGGER.info("not logged in");
+            log.info("not logged in");
             return "user/login/loginForm";
         }
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (SessionStatus status, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(path="/logout", method = RequestMethod.GET)
+    public String logoutPage (
+        SessionStatus status,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
+        log.info("logoutPages");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);

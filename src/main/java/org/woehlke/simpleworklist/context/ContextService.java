@@ -13,9 +13,9 @@ public interface ContextService {
 
     Context findByIdAndUserAccount(long newContextId, UserAccount userAccount);
 
-    void createNewContext(NewContextForm newContext, UserAccount user);
+    Context createNewContext(NewContextForm newContext, UserAccount user);
 
-    void updateContext(Context context);
+    Context updateContext(Context context);
 
     boolean delete(Context context);
 

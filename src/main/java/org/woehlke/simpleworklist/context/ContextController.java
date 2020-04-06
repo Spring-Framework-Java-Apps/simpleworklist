@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.context;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tw on 13.03.16.
  */
+@Slf4j
 @Controller
-@RequestMapping(value = "/context")
+@RequestMapping(path = "/context")
 public class ContextController extends AbstractController {
 
     private final ContextService contextService;
@@ -25,9 +27,13 @@ public class ContextController extends AbstractController {
        this.contextService = contextService;
     }
 
-    @RequestMapping(value = "/choose/{newContextId}", method = RequestMethod.GET)
-    public String switchContxt(@PathVariable("newContextId") Context setContext,
-                               @ModelAttribute("userSession") UserSessionBean userSession, Model model){
+    @RequestMapping(path = "/choose/{newContextId}", method = RequestMethod.GET)
+    public String switchContxt(
+        @PathVariable("newContextId") Context setContext,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ){
+        log.info("switchContxt");
         Context isContext = super.getContext(userSession);
         if (setContext != null) {
             userSession.setContextId(setContext.getId());

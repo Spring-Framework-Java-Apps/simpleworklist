@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.common.ComparableById;

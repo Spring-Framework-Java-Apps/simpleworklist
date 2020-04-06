@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.taskstate;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -7,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.task.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tw on 21.02.16.
  */
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskStateServiceImpl implements TaskStateService {

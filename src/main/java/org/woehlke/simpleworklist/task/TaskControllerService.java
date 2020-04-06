@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.task;
 
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import java.util.Locale;

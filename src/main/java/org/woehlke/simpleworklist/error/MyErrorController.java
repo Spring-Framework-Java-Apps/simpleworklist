@@ -5,25 +5,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+
+import static javax.servlet.RequestDispatcher.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 @Slf4j
 @Controller
+@RequestMapping(path="/fehler")
 public class MyErrorController implements ErrorController {
 
-    @RequestMapping(path="/fehler", method={RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
-    public String handleError(HttpServletRequest request, Model model) {
-        String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+    @ExceptionHandler
+    @RequestMapping(path="/", method={ GET, POST, PUT,  HEAD, PATCH, DELETE, OPTIONS, TRACE  })
+    public String handleError(
+        HttpServletRequest request
+    ) {
+        log.info("handleError");
+        String errorMessage = (String) request.getAttribute(ERROR_MESSAGE);
         if(errorMessage!=null){
             log.warn("errorMessage :"+errorMessage);
         }
-        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Integer statusCode = (Integer) request.getAttribute(ERROR_STATUS_CODE);
         if(statusCode != null){
             HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
             log.warn(httpStatus.value()+""+httpStatus.getReasonPhrase());
@@ -80,7 +86,7 @@ public class MyErrorController implements ErrorController {
                     return "redirect:/login?login_error=1";
             }
         }
-        Throwable exception = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        Throwable exception = (Throwable) request.getAttribute(ERROR_EXCEPTION);
         if(exception != null) {
             log.warn("##################################################");
             log.warn("Exception :" + exception.getMessage());
