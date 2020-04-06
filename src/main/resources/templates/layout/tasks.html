@@ -72,13 +72,13 @@
                                th:if="${task.taskState.name() eq 'TRASHED'}"
                                th:alt-title="#{task.col.twtooltip.infoicons.trash}"
                                draggable="true" ondragstart="dragTask(event)" data-placement="bottom"></i>
-                            <a th:if="${task.focus}" th:href="@{/task/unsetfocus/{id}(id=${task.id})}"
+                            <a th:if="${task.focus}" th:href="@{/task/{id}/unsetfocus(id=${task.id})}"
                                class="task_col_content task_col_content_unsetfocus twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.unsetfocus}"
                                th:id="'task_' + ${task.id} + '_col_unsetfocus'" draggable="true" ondragstart="dragTask(event)">
                                 <i class="fas fa-star"></i>
                             </a>
-                            <a th:if="${not task.focus}" th:href="@{/task/setfocus/{id}(id=${task.id})}"
+                            <a th:if="${not task.focus}" th:href="@{/task/{id}/setfocus(id=${task.id})}"
                                class="task_col_content task_col_content_setfocus twtooltip"
                                th:alt-title="#{task.col.twtooltip.infoicons.setfocus}"
                                th:id="'task_' + ${task.id} + '_col_setfocus'" draggable="true" ondragstart="dragTask(event)">
