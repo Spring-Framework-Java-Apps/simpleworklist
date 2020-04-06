@@ -33,7 +33,10 @@ public class ProjectRootController extends AbstractController {
     private final TaskMoveService taskMoveService;
 
     @Autowired
-    public ProjectRootController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService) {
+    public ProjectRootController(
+        ProjectControllerService projectControllerService,
+        TaskMoveService taskMoveService
+    ) {
         this.projectControllerService = projectControllerService;
         this.taskMoveService = taskMoveService;
     }
@@ -59,7 +62,7 @@ public class ProjectRootController extends AbstractController {
             model.addAttribute("isDeleted",isDeleted);
             model.addAttribute("myTaskState","PROJECT");
         }
-        return "project/root";
+        return "project/root/show";
     }
 
     @RequestMapping(path = "/add/project", method = RequestMethod.GET)
@@ -70,7 +73,7 @@ public class ProjectRootController extends AbstractController {
         log.info("/project/root/add/project (GET)");
         Context context = super.getContext(userSession);
         projectControllerService.addNewProjectToRoot(userSession, context, locale, model);
-        return "project/addToplevel";
+        return "project/root/add/project";
     }
 
     @RequestMapping(path = "/add/project", method = RequestMethod.POST)
@@ -89,7 +92,7 @@ public class ProjectRootController extends AbstractController {
             result,
             locale,
             model,
-            "project/addToplevel"
+            "project/root/add/project"
         );
     }
 
@@ -107,16 +110,16 @@ public class ProjectRootController extends AbstractController {
         task.setTaskTime(TaskTime.NONE);
         Project thisProject;
         Boolean mustChooseArea = false;
-            thisProject = new Project();
-            thisProject.setId(0L);
-            if(userSession.getContextId() == 0L){
-                mustChooseArea = true;
-                task.setContext(userAccount.getDefaultContext());
-                thisProject.setContext(userAccount.getDefaultContext());
-            } else {
-                task.setContext(context);
-                thisProject.setContext(context);
-            }
+        thisProject = new Project();
+        thisProject.setId(0L);
+        if(userSession.getContextId() == 0L){
+            mustChooseArea = true;
+            task.setContext(userAccount.getDefaultContext());
+            thisProject.setContext(userAccount.getDefaultContext());
+        } else {
+            task.setContext(context);
+            thisProject.setContext(context);
+        }
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
@@ -124,7 +127,6 @@ public class ProjectRootController extends AbstractController {
         model.addAttribute("thisProjectId", thisProject.getId());
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        //return "task/addToProject";
         return "project/root/add/task";
     }
 
@@ -146,7 +148,6 @@ public class ProjectRootController extends AbstractController {
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            //return "task/addToProject";
             return "project/root/add/task";
         } else {
             task.setProject(null);

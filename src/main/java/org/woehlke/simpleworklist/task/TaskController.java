@@ -57,7 +57,7 @@ public class TaskController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
-            return "task/edit";
+            return "taskstate/task/edit";
         } else {
             return "redirect:/taskstate/inbox";
         }
@@ -91,7 +91,7 @@ public class TaskController extends AbstractController {
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "task/edit";
+            return "taskstate/task/edit";
         } else {
             persistentTask.setTitle(task.getTitle());
             persistentTask.setText(task.getText());
@@ -116,7 +116,7 @@ public class TaskController extends AbstractController {
                 }
                 userSession.setContextId(task.getContext().getId());
                 model.addAttribute("userSession", userSession);
-                return "redirect:/project/0/";
+                return "redirect:/project/root";
             }
             taskService.saveAndFlush(persistentTask);
             return "redirect:/project/" + projectId + "/";
