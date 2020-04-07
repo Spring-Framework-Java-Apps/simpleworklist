@@ -3,37 +3,41 @@ package org.woehlke.simpleworklist;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
+import org.woehlke.simpleworklist.config.FunctionalRequirements;
 import org.woehlke.simpleworklist.config.UserAccountTestDataService;
 
 import java.net.URL;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.woehlke.simpleworklist.config.Requirements.*;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SmokeTests {
 
     @Autowired
-    ServletWebServerApplicationContext server;
+    private ServletWebServerApplicationContext server;
 
     @LocalServerPort
-    int port;
+    private int port;
 
     protected URL base;
 
     @Autowired
-    protected WebApplicationContext wac;
-
-    protected MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
     private UserAccountTestDataService userAccountTestDataService;
@@ -49,7 +53,6 @@ public class SmokeTests {
         log.info(" @BeforeEach setUp()");
         log.info(eyecatcherH2);
         this.base = new URL("http://localhost:" + port + "/");
-        this.mockMvc = webAppContextSetup(wac).build();
         log.info(" Server URL: "+this.base.toString());
         //userAccountTestDataService.setUp();
         log.info(eyecatcherH1);
@@ -61,7 +64,6 @@ public class SmokeTests {
         log.info(" @BeforeTestClass runBeforeTestClass");
         log.info(eyecatcherH2);
         this.base = new URL("http://localhost:" + port + "/");
-        this.mockMvc = webAppContextSetup(wac).build();
         log.info(" Server URL: "+this.base.toString());
         log.info(eyecatcherH2);
         userAccountTestDataService.setUp();
@@ -80,7 +82,7 @@ public class SmokeTests {
     }
 
 
-    @DisplayName("Test Mock helloService + helloRepository")
+    @DisplayName(F001)
     @Order(1)
     @Test
     public void testF001ServerStarts(){
@@ -92,15 +94,25 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F002)
     @Order(2)
     @Test
-    public void testF002HomePageRendered(){
+    public void testF002HomePageRendered() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF002HomePageRendered");
         log.info(eyecatcherH2);
+        this.mockMvc.perform(get( this.base.toString() ))
+            .andDo(print())
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl(this.base+"user/login"));
+        this.mockMvc.perform(get( this.base+"user/login" ))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("SimpleWorklist")));
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F003)
     @Order(3)
     @Test
     public void testF003Registration(){
@@ -109,6 +121,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F004)
     @Order(4)
     @Test
     public void testF004PasswordRecovery(){
@@ -117,6 +130,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F005)
     @Order(5)
     @Test
     public void testF005Login(){
@@ -125,6 +139,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F006)
     @Order(6)
     @Test
     public void testF006PageAfterFirstSuccessfulLogin(){
@@ -133,6 +148,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F007)
     @Order(7)
     @Test
     public void testF007AddFirstNewTaskToInbox(){
@@ -141,6 +157,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F008)
     @Order(8)
     @Test
     public void testF008AddAnotherNewTaskToInbox(){
@@ -149,6 +166,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F009)
     @Order(9)
     @Test
     public void testF009AddTaskToProjectRoot(){
@@ -157,6 +175,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F010)
     @Order(10)
     @Test
     public void testF010AddSubProjectToProjectRoot(){
@@ -165,6 +184,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F011)
     @Order(11)
     @Test
     public void testF011SetFocusOfTask(){
@@ -173,6 +193,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F012)
     @Order(12)
     @Test
     public void testF012UnSetFocusOfTask(){
@@ -181,6 +202,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F013)
     @Order(13)
     @Test
     public void testF013ShowTaskstateInbox(){
@@ -189,6 +211,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F014)
     @Order(14)
     @Test
     public void testF014ShowTaskstateToday(){
@@ -197,6 +220,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F015)
     @Order(15)
     @Test
     public void testF015ShowTaskstateNext(){
@@ -205,6 +229,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F016)
     @Order(16)
     @Test
     public void testF016ShowTaskstateWaiting(){
@@ -213,6 +238,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F017)
     @Order(17)
     @Test
     public void testF017ShowTaskstateScheduled(){
@@ -221,6 +247,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F018)
     @Order(18)
     @Test
     public void testF018ShowTaskstateSomeday(){
@@ -229,6 +256,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F019)
     @Order(19)
     @Test
     public void testF019ShowTaskstateFocus(){
@@ -237,6 +265,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F020)
     @Order(20)
     @Test
     public void testF020ShowTaskstateCompleted(){
@@ -245,6 +274,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F021)
     @Order(21)
     @Test
     public void testF021ShowTaskstateTrash(){
@@ -253,6 +283,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F022)
     @Order(22)
     @Test
     public void testF022TaskEdit(){
@@ -261,6 +292,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F023)
     @Order(23)
     @Test
     public void testF023TaskEditFormChangeTaskstateViaDropDown(){
@@ -269,6 +301,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F024)
     @Order(24)
     @Test
     public void testF024TaskComplete(){
@@ -277,6 +310,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F025)
     @Order(25)
     @Test
     public void testF025TaskIncomplete(){
@@ -285,6 +319,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F026)
     @Order(26)
     @Test
     public void testF026TaskDelete(){
@@ -293,6 +328,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @DisplayName(F027)
     @Order(27)
     @Test
     public void testF027TaskUndelete(){
