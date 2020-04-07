@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,14 +9,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.woehlke.simpleworklist.config.FunctionalRequirements;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.config.UserAccountTestDataService;
 
 import java.net.URL;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,13 +37,13 @@ public class SmokeTests {
     @Autowired
     private ServletWebServerApplicationContext server;
 
+    @Autowired
+    private MockMvc mockMvc;
+
     @LocalServerPort
     private int port;
 
     protected URL base;
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @Autowired
     private UserAccountTestDataService userAccountTestDataService;
@@ -52,8 +58,7 @@ public class SmokeTests {
         log.info(eyecatcherH1);
         log.info(" @BeforeEach setUp()");
         log.info(eyecatcherH2);
-        this.base = new URL("http://localhost:" + port + "/");
-        log.info(" Server URL: "+this.base.toString());
+
         //userAccountTestDataService.setUp();
         log.info(eyecatcherH1);
     }
@@ -73,9 +78,12 @@ public class SmokeTests {
     }
 
     @AfterAll
-    public void runAfterTestClass() {
+    public void runAfterTestClass() throws Exception {
         log.info(eyecatcherH1);
         log.info(" @AfterTestClass clearContext");
+        log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/");
+        log.info(" Server URL: "+this.base.toString());
         log.info(eyecatcherH2);
         SecurityContextHolder.clearContext();
         log.info(eyecatcherH1);
@@ -85,10 +93,11 @@ public class SmokeTests {
     @DisplayName(F001)
     @Order(1)
     @Test
-    public void testF001ServerStarts(){
+    public void testF001ServerStarts() throws Exception{
         log.info(eyecatcherH1);
         log.info("testF001ServerStarts");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/");
         log.info("Server URL: "+this.base.toString());
         assertTrue(true);
         log.info(eyecatcherH2);
@@ -101,11 +110,15 @@ public class SmokeTests {
         log.info(eyecatcherH1);
         log.info("testF002HomePageRendered");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port);
+        log.info("Server URL: "+this.base.toString());
         this.mockMvc.perform(get( this.base.toString() ))
             .andDo(print())
             .andExpect(status().is3xxRedirection())
-            .andExpect(redirectedUrl(this.base+"user/login"));
-        this.mockMvc.perform(get( this.base+"user/login" ))
+            .andExpect(redirectedUrl(this.base+"/user/login"));
+        this.base = new URL("http://localhost:" + port + "/user/login");
+        log.info("Server URL: "+this.base.toString());
+        this.mockMvc.perform(get( this.base.toString()))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("SimpleWorklist")));
@@ -148,6 +161,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F007)
     @Order(7)
     @Test
@@ -157,6 +171,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F008)
     @Order(8)
     @Test
@@ -166,6 +181,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F009)
     @Order(9)
     @Test
@@ -175,6 +191,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F010)
     @Order(10)
     @Test
@@ -184,6 +201,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F011)
     @Order(11)
     @Test
@@ -193,6 +211,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F012)
     @Order(12)
     @Test
@@ -202,87 +221,179 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F013)
     @Order(13)
     @Test
-    public void testF013ShowTaskstateInbox(){
+    public void testF013ShowTaskstateInbox() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF013ShowTaskstateInbox");
         log.info(eyecatcherH2);
+        assertNotNull(this.base);
+        this.base = new URL("http://localhost:" + port + "/taskstate/inbox");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        try {
+            this.mockMvc.perform(get(this.base.toString()))
+                .andDo(print())
+                .andExpect(status().isOk());
+            //.andExpect(content().string(containsString("SimpleWorklist")));
+        } catch (UsernameNotFoundException e) {
+            log.error("UsernameNotFoundException: "+e.getLocalizedMessage());
+        } catch (NullPointerException npe){
+            log.error("NullPointerException: "+npe.getLocalizedMessage());
+            for(StackTraceElement e:npe.getStackTrace()){
+                log.error(e.getClassName()+"."+e.getMethodName()+"in: "+e.getFileName()+" line: "+e.getLineNumber());
+            }
+        }
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F014)
     @Order(14)
     @Test
-    public void testF014ShowTaskstateToday(){
+    public void testF014ShowTaskstateToday() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF014ShowTaskstateToday");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/today");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+            //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F015)
     @Order(15)
     @Test
-    public void testF015ShowTaskstateNext(){
+    public void testF015ShowTaskstateNext() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF015ShowTaskstateNext");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/next");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F016)
     @Order(16)
     @Test
-    public void testF016ShowTaskstateWaiting(){
+    public void testF016ShowTaskstateWaiting() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF016ShowTaskstateWaiting");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/waiting");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F017)
     @Order(17)
     @Test
-    public void testF017ShowTaskstateScheduled(){
+    public void testF017ShowTaskstateScheduled() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF017ShowTaskstateScheduled");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/scheduled");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F018)
     @Order(18)
     @Test
-    public void testF018ShowTaskstateSomeday(){
+    public void testF018ShowTaskstateSomeday() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF018ShowTaskstateSomeday");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/someday");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F019)
     @Order(19)
     @Test
-    public void testF019ShowTaskstateFocus(){
+    public void testF019ShowTaskstateFocus() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF019ShowTaskstateFocus");
         log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/focus");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F020)
     @Order(20)
     @Test
-    public void testF020ShowTaskstateCompleted(){
+    public void testF020ShowTaskstateCompleted() throws Exception {
         log.info(eyecatcherH1);
         log.info("testF020ShowTaskstateCompleted");
         log.info(eyecatcherH2);
-    }
-
-    @DisplayName(F021)
-    @Order(21)
-    @Test
-    public void testF021ShowTaskstateTrash(){
-        log.info(eyecatcherH1);
-        log.info("testF021ShowTaskstateTrash");
+        this.base = new URL("http://localhost:" + port + "/taskstate/completed");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
+    @DisplayName(F021)
+    @Order(21)
+    @Test
+    public void testF021ShowTaskstateTrash() throws Exception {
+        log.info(eyecatcherH1);
+        log.info("testF021ShowTaskstateTrash");
+        log.info(eyecatcherH2);
+        this.base = new URL("http://localhost:" + port + "/taskstate/trash");
+        log.info("Server URL: "+this.base.toString());
+        assertNotNull(this.mockMvc);
+        this.mockMvc.perform(get(this.base.toString()))
+            .andDo(print())
+            .andExpect(status().isOk());
+        //.andExpect(content().string(containsString("SimpleWorklist")));
+        log.info(eyecatcherH2);
+    }
+
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F022)
     @Order(22)
     @Test
@@ -292,6 +403,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F023)
     @Order(23)
     @Test
@@ -301,6 +413,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F024)
     @Order(24)
     @Test
@@ -310,6 +423,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F025)
     @Order(25)
     @Test
@@ -319,6 +433,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F026)
     @Order(26)
     @Test
@@ -328,6 +443,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+    @WithMockUser(username="test01@test.de")
     @DisplayName(F027)
     @Order(27)
     @Test

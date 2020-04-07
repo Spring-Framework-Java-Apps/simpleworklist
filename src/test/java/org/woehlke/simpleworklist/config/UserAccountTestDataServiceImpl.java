@@ -68,6 +68,7 @@ public class UserAccountTestDataServiceImpl implements UserAccountTestDataServic
                 Context persistedContextPrivate = contextService.createNewContext(newContextPrivate, testUser[i]);
                 Context persistedContextWork = contextService.createNewContext(newContextWork, testUser[i]);
                 testUser[i].setDefaultContext(persistedContextPrivate);
+                persisted = userAccountService.saveAndFlush(testUser[i]);
             }
        }
     }
