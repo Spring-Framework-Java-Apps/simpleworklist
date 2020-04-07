@@ -865,6 +865,17 @@
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                        <systemPropertyVariables>
+                            <spring.profiles.active>default</spring.profiles.active>
+                            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
             </plugins>
         </build>
     </profile>
