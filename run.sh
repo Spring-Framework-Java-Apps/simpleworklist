@@ -7,7 +7,7 @@ function runDev() {
 }
 
 function runTest() {
-    ./mvnw -B -DskipTests=false  clean dependency:list install --file pom.xml
+    ./mvnw -B -DskipTests=false clean dependency:list install --file pom.xml
 }
 
 function runGithubTestBuild() {
@@ -19,8 +19,12 @@ function setupHeroku() {
     heroku ps -a simpleworklist
 }
 
-function buildLikeHeroku() {
+function buildLikeHerokuWithSite() {
    ./mvnw -DskipTests clean dependency:list install site site:deploy
+}
+
+function buildLikeHeroku() {
+   ./mvnw -DskipTests clean dependency:list install
 }
 
 function runHerokuLocal() {
@@ -33,10 +37,10 @@ function runHerokuLocal() {
 function main() {
     #runGithubTestBuild
     #setupHeroku
-    buildLikeHeroku
+    #buildLikeHeroku
     #runHerokuLocal
     #runDev
-    #runTest
+    runTest
 }
 
 main

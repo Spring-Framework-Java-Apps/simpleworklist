@@ -380,6 +380,10 @@
             <scope>test</scope>
             <exclusions>
                 <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
@@ -853,6 +857,17 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                        <systemPropertyVariables>
+                            <spring.profiles.active>default</spring.profiles.active>
+                            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
                     <configuration>
                         <skipTests>${skipTests}</skipTests>
                         <systemPropertyVariables>
