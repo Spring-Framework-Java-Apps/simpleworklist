@@ -98,7 +98,7 @@ public class TaskController extends AbstractController {
             if(task.getDueDate()==null){
                 persistentTask.setDueDate(null);
                 if(persistentTask.getTaskState().compareTo(TaskState.SCHEDULED)==0){
-                    persistentTask.setTaskState(TaskState.INBOX);
+                    persistentTask.setTaskState(task.getTaskState());
                 }
             } else {
                 persistentTask.setDueDate(task.getDueDate());
