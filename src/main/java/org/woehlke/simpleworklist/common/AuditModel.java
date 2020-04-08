@@ -1,17 +1,17 @@
 package org.woehlke.simpleworklist.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.id.UUIDGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
+;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
@@ -22,9 +22,8 @@ public class AuditModel implements Serializable {
 
     private static final long serialVersionUID = 4399373914714726911L;
 
-    @NotNull
     @Column(name="uuid", nullable = false)
-    protected String uuid = UUID.randomUUID().toString();
+    protected String uuid;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "row_created_at", nullable = false, updatable = false)

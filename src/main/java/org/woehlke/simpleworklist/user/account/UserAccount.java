@@ -40,7 +40,6 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
         initialValue = 1000
     )
     private Long id;
-
     @Email
     @Column(name="user_email", nullable = false)
     private String userEmail;
@@ -61,31 +60,30 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
             fetch = FetchType.LAZY,
             optional = true,
             cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
+                CascadeType.REFRESH
             }
     )
     @JoinColumn(name = "default_context_id",nullable=true)
     private Context defaultContext;
 
-    @NotNull
+    //@NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name="last_login_timestamp", nullable = false)
     private Date lastLoginTimestamp;
 
-    @NotNull
+    //@NotNull
     @Column(name="account_non_expired", nullable = false)
     private Boolean accountNonExpired=true;
 
-    @NotNull
+    //@NotNull
     @Column(name="account_non_locked", nullable = false)
     private Boolean accountNonLocked=true;
 
-    @NotNull
+    //@NotNull
     @Column(name="credentials_non_expired", nullable = false)
     private Boolean credentialsNonExpired=true;
 
-    @NotNull
+    //@NotNull
     @Column(name="enabled", nullable = false)
     private Boolean enabled=true;
 

@@ -1,12 +1,10 @@
 package org.woehlke.simpleworklist.user.account;
 
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.id.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -49,6 +47,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createUser(UserAccountForm userAccount) {
         UserAccount u = new UserAccount();
+        u.setUuid(UUID.randomUUID().toString());
         u.setUserEmail(userAccount.getUserEmail());
         u.setUserFullname(userAccount.getUserFullname());
         u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
@@ -63,6 +62,8 @@ public class UserAccountServiceImpl implements UserAccountService {
         u = userAccountRepository.save(u);
         Context workContext = new Context("Arbeit","Work");
         Context privContext = new Context("Privat","Private");
+        workContext.setUuid(UUID.randomUUID().toString());
+        privContext.setUuid(UUID.randomUUID().toString());
         workContext.setUserAccount(u);
         privContext.setUserAccount(u);
         log.info("About to save " + workContext.toString());

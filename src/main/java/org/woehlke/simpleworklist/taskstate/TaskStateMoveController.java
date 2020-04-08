@@ -111,9 +111,11 @@ public class TaskStateMoveController extends AbstractController {
             } else {
                 thisProject = task.getProject();
             }
-            model.addAttribute("thisProject", thisProject);
+            Context thisContext = task.getContext();
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("thisProject", thisProject);
+            model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
             return "taskstate/task/edit";

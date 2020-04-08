@@ -10,10 +10,15 @@ import javax.persistence.Index;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.context.Context;
@@ -22,6 +27,8 @@ import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.common.ComparableById;
+
+import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
 @Entity
 @Table(
@@ -83,10 +90,10 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     )
     @JoinColumn(name = "context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @LazyToOne(PROXY)
     private Context context;
 
     @Deprecated
-
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
