@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/user/register")
+@RequestMapping(path = "/user")
 public class UserRegistrationController {
 
     private final UserAccountService userAccountService;
@@ -35,7 +35,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/register", method = RequestMethod.GET)
     public final String registerNewUserRequestForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -50,7 +50,7 @@ public class UserRegistrationController {
      * @param model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
     public final String registerNewUserRequestStoreAndSendEmailForVerification(
             @Valid UserRegistrationForm userRegistrationForm,
             BindingResult result,
@@ -90,7 +90,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for Entering Account Task or Error Messages.
      */
-    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/register/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerNewUserCheckResponseAndRegistrationForm(
         @PathVariable String confirmId,
         Model model
@@ -117,7 +117,7 @@ public class UserRegistrationController {
      * @param model
      * @return login page at success or page with error messages.
      */
-    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/register/confirm/{confirmId}", method = RequestMethod.POST)
     public final String registerNewUserCheckResponseAndRegistrationStore(
         @PathVariable String confirmId,
         @Valid UserAccountForm userAccountForm,
