@@ -19,7 +19,7 @@
 
 <div th:fragment="mytwcontent">
 	<div>
-		<form id="formId" th:action="@{/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}" method="post">
+		<form id="formId" th:action="@{/taskstate/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<input type="hidden" th:field="*{taskState}" />
 			<input type="hidden" th:field="*{context.id}" />
