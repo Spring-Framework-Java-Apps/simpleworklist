@@ -38,9 +38,9 @@ function main() {
     #runGithubTestBuild
     #setupHeroku
     #buildLikeHeroku
-    #runHerokuLocal
+    runHerokuLocal
     #runDev
-    runTest
+    #runTest
 }
 
 main
