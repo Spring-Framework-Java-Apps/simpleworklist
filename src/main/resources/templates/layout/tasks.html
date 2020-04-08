@@ -216,16 +216,14 @@
                             <a th:href="@{/project/{id}(id=${task.project.id})}"
                                th:if="${task.project ne null}">
                                 <i class="fas fa-folder-open"></i>
-                                <b th:text="${tasks.col.project}">tasks.col.project</b>
-                                <span th:text="${task.project.name}">
-                                    task.project.name
-                                </span>
+                                <b th:text="#{tasks.col.project}">tasks.col.project</b>
+                                <span th:text="${task.project.name}">task.project.name</span>
                             </a>
                             <a th:href="@{/project/root}"
                                th:if="${task.project eq null}">
                                 <i class="fas fa-folder-open"></i>
-                                <b th:text="${tasks.col.project}">tasks.col.project</b>
-                                <span th:text="${tasks.col.projectroot}">tasks.col.projectroot</span>
+                                <b th:text="#{tasks.col.project}">tasks.col.project</b>
+                                <span th:text="#{tasks.col.projectroot}">tasks.col.projectroot</span>
                             </a>
                         </div>
                         <div>
