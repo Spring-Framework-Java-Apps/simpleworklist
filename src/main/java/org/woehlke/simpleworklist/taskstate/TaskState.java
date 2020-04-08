@@ -38,7 +38,10 @@ public enum TaskState implements Serializable {
     COMPLETED("fas fa-check-square"),
 
     @Enumerated
-    TRASH("fas fa-trash-alt");
+    TRASH("fas fa-trash-alt"),
+
+    @Enumerated
+    DELETED("fas fa-trash-alt");
 
     TaskState(final String icon) {
         this.icon=icon;

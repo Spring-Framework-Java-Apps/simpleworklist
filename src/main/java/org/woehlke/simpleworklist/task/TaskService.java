@@ -7,25 +7,20 @@ import org.woehlke.simpleworklist.project.Project;
 
 public interface TaskService {
 
-    Task saveAndFlush(Task persistentTask);
-
-    void delete(Task task);
-
     boolean projectHasNoTasks(Project project);
 
-    void undelete(Task task);
+    Page<Task> getEmptyPage(Pageable request);
 
-    void complete(Task task);
+    Page<Task> findByProject(Project thisProject, Pageable request);
 
-    void incomplete(Task task);
-
-    void setFocus(Task task);
-
-    void unsetFocus(Task task);
-
-    Page<Task> findByProject(Project thisProject, Context context, Pageable request);
-
-    Page<Task> findByRootProject(Context context,Pageable request);
+    Page<Task> findByRootProject(Context context, Pageable request);
 
     Task findOne(long taskId);
+
+    Task addToInbox(Task task);
+    Task addToRootProject(Task task);
+
+    Task updatedViaTaskstate(Task task);
+    Task updatedViaProject(Task task);
+
 }

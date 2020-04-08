@@ -10,27 +10,13 @@ public interface TaskMoveService {
 
     Task moveTaskToAnotherProject(Task task, Project project);
 
-    Task moveTaskToInbox(Task task);
-
-    Task moveTaskToToday(Task task);
-
-    Task moveTaskToNext(Task task);
-
-    Task moveTaskToWaiting(Task task);
-
-    Task moveTaskToSomeday(Task task);
-
-    Task moveTaskToFocus(Task task);
-
-    Task moveTaskToCompleted(Task task);
-
-    Task moveTaskToTrash(Task task);
-
-    void deleteAllCompleted(Context context);
+    void moveAllCompletedToTrash(Context context);
 
     void emptyTrash(Context context);
 
     long getMaxOrderIdTaskState(TaskState taskState, Context context);
+
+    long getMaxOrderIdRootProject(Context context);
 
     long getMaxOrderIdProject(Project project, Context context);
 
@@ -39,4 +25,5 @@ public interface TaskMoveService {
     void moveOrderIdProject(Task sourceTask, Task destinationTask);
 
     void moveOrderIdRootProject(Task sourceTask, Task destinationTask);
+
 }

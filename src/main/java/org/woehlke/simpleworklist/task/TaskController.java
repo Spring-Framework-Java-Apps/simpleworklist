@@ -35,94 +35,6 @@ public class TaskController extends AbstractController {
         this.taskControllerService = taskControllerService;
     }
 
-    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
-    public final String editTaskGet(
-        @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model
-    ) {
-        log.info("editTaskGet");
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        List<Context> contexts = contextService.getAllForUser(userAccount);
-        if(task != null) {
-            Project thisProject = null;
-            if (task.getProject() == null) {
-                thisProject = new Project();
-                thisProject.setId(0L);
-            } else {
-                thisProject = task.getProject();
-            }
-            model.addAttribute("thisProject", thisProject);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("task", task);
-            model.addAttribute("areas", contexts);
-            return "taskstate/task/edit";
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
-    }
-
-    @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.POST)
-    public final String editTaskPost(
-        @PathVariable long taskId,
-        @Valid Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        BindingResult result,
-        Locale locale,
-        Model model
-    ) {
-        log.info("editTaskPost");
-        Task persistentTask = taskService.findOne(taskId);
-        long projectId = 0;
-        Project thisProject;
-        if (persistentTask.getProject() == null) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-        } else {
-            thisProject = persistentTask.getProject();
-            projectId = thisProject.getId();
-        }
-        if (result.hasErrors()) {
-            for (ObjectError e : result.getAllErrors()) {
-                log.info(e.toString());
-            }
-            model.addAttribute("thisProject", thisProject);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("task", task);
-            return "taskstate/task/edit";
-        } else {
-            persistentTask.setTitle(task.getTitle());
-            persistentTask.setText(task.getText());
-            if(task.getDueDate()==null){
-                persistentTask.setDueDate(null);
-                if(persistentTask.getTaskState().compareTo(TaskState.SCHEDULED)==0){
-                    persistentTask.setTaskState(task.getTaskState());
-                }
-            } else {
-                persistentTask.setDueDate(task.getDueDate());
-                persistentTask.setTaskState(TaskState.SCHEDULED);
-            }
-            persistentTask.setTaskTime(task.getTaskTime());
-            persistentTask.setTaskEnergy(task.getTaskEnergy());
-            boolean contextChanged =  persistentTask.getContext().equalsById(task.getContext());
-            if(contextChanged){
-                persistentTask.setContext(task.getContext());
-                if(thisProject.getId()==0L) {
-                    persistentTask.setRootProject();
-                } else if(thisProject.getContext().equalsById(task.getContext())){
-                    persistentTask.setProject(thisProject);
-                }
-                userSession.setContextId(task.getContext().getId());
-                model.addAttribute("userSession", userSession);
-                return "redirect:/project/root";
-            }
-            taskService.saveAndFlush(persistentTask);
-            return "redirect:/project/" + projectId;
-        }
-    }
-
     @RequestMapping(path = "/{taskId}/delete", method = RequestMethod.GET)
     public final String deleteTaskGet(@PathVariable("taskId") Task task) {
         log.info("deleteTaskGet");
@@ -191,8 +103,8 @@ public class TaskController extends AbstractController {
             taskService.incomplete(task);
             long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            taskService.saveAndFlush(task);
-            return "redirect:/taskstate/"+task.getTaskState().name().toLowerCase();
+            task = taskService.updatedViaTaskstate(task);
+            return "redirect:"+task.getTaskState().getUrl();
         } else {
             return "redirect:/taskstate/inbox";
         }

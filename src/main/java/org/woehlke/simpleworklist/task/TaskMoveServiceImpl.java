@@ -1,22 +1,26 @@
-package org.woehlke.simpleworklist.taskstate;
+package org.woehlke.simpleworklist.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskRepository;
+import org.woehlke.simpleworklist.taskstate.TaskMoveService;
+import org.woehlke.simpleworklist.taskstate.TaskState;
+import org.woehlke.simpleworklist.taskstate.TaskStateService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.REQUIRES_NEW)
-public class TaskMoveServiceImpl implements TaskMoveService {
+public class TaskMoveServiceImpl implements TaskMoveService, TaskService, TaskStateService {
 
     private final TaskRepository taskRepository;
 
@@ -26,6 +30,137 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getFocus(Context context, Pageable request) {
+        return taskRepository.findByFocusAndContext(true, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getInbox(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.INBOX, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getToday(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.TODAY, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getNext(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.NEXT, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getWaiting(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.WAITING, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getScheduled(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.SCHEDULED, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getSomeday(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.SOMEDAY, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getCompleted(Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getTrash( Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(TaskState.TRASH, context, request);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public boolean projectHasNoTasks(Project project) {
+        log.info("projectHasNoTasks");
+        return taskRepository.findByProject(project).isEmpty();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> getEmptyPage(Pageable request){
+        return new PageImpl<Task>(new ArrayList<Task>(),request,0L);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> findByProject(Project thisProject, Pageable request) {
+        log.info("findByProject: ");
+        log.info("---------------------------------");
+        log.info("thisProject: "+thisProject);
+        log.info("---------------------------------");
+        if(thisProject == null){
+            return this.getEmptyPage(request);
+        } else {
+            return taskRepository.findByProject(thisProject,request);
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> findByRootProject(Context context, Pageable request) {
+        log.info("findByRootProject: ");
+        if(context == null){
+            return this.getEmptyPage(request);
+        } else {
+            return taskRepository.findByProjectIsNullAndContext(context, request);
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Task findOne(long taskId) {
+        log.info("findOne: ");
+        if(taskRepository.existsById(taskId)) {
+            return taskRepository.getOne(taskId);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Task updatedViaTaskstate(Task task) {
+        log.info("updatedViaTaskstate");
+        task = taskRepository.saveAndFlush(task);
+        log.info("persisted: " + task.getId());
+        return task;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Task updatedViaProject(Task task) {
+        log.info("updatedViaProject");
+        task = taskRepository.saveAndFlush(task);
+        log.info("persisted: " + task.getId());
+        return task;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Task addToRootProject(Task task) {
+        log.info("addToRootProject");
+        task = taskRepository.saveAndFlush(task);
+        log.info("persisted: " + task.getId());
+        return task;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToRootProject(Task task) {
         task.setRootProject();
         long maxOrderIdProject = this.getMaxOrderIdProject(
@@ -36,6 +171,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToAnotherProject(Task task, Project project) {
         boolean okContext = task.hasSameContextAs(project);
         if(okContext) {
@@ -50,7 +186,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToInbox(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.INBOX,
@@ -63,7 +199,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToToday(Task task) {
         Date now = new Date();
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
@@ -78,7 +214,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToNext(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.NEXT,
@@ -91,7 +227,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToWaiting(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.WAITING,
@@ -104,7 +240,8 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToSomeday(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.SOMEDAY,
@@ -117,7 +254,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToFocus(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.FOCUS,
@@ -130,7 +267,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToCompleted(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.COMPLETED,
@@ -143,7 +280,8 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         return task;
     }
 
-    @Override
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task moveTaskToTrash(Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.TRASH,
@@ -157,7 +295,8 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     }
 
     @Override
-    public void deleteAllCompleted(Context context) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveAllCompletedToTrash(Context context) {
         long maxOrderIdTaskState = this.getMaxOrderIdTaskStateFor(
             TaskState.TRASH,
             context
@@ -170,21 +309,28 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         for (Task task : taskListCompleted) {
             newOrderIdTaskState++;
             task.setOrderIdTaskState(newOrderIdTaskState);
-            task.setTaskState(TaskState.TRASH);
+            task.moveToTrash();
         }
         taskRepository.saveAll(taskListCompleted);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void emptyTrash(Context context) {
         List<Task> taskList = taskRepository.findByTaskStateAndContext(
             TaskState.TRASH,
             context
         );
-        taskRepository.deleteInBatch(taskList);
+        List<Task> taskListChanged = new ArrayList<>(taskList.size());
+        for(Task task: taskList){
+            task.emptyTrash();
+            taskListChanged.add(task);
+        }
+        taskRepository.saveAll(taskListChanged);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public long getMaxOrderIdTaskState(TaskState taskState, Context context) {
         Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
             taskState,
@@ -194,6 +340,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public long getMaxOrderIdProject(Project project, Context context) {
         Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(
             project,
@@ -237,6 +384,16 @@ public class TaskMoveServiceImpl implements TaskMoveService {
                 this.moveTasksUpByProject(sourceTask, destinationTask);
             }
         }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public long getMaxOrderIdRootProject(Context context) {
+        Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(
+            null,
+            context
+        );
+        return (task==null) ? 0 : task.getOrderIdProject();
     }
 
     @Override
@@ -285,8 +442,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     }
 
 
-
-
     private long getMaxOrderIdTaskStateFor(TaskState taskState, Context context ){
         Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
             taskState,
@@ -316,7 +471,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         for(Task task:tasks){
             task.moveDownByTaskState();
         }
-        sourceTask.setOrderIdTaskState(destinationTask);
+        sourceTask.setOrderIdTaskState(destinationTask.getOrderIdProject());
         destinationTask.moveDownByTaskState();
         tasks.add(sourceTask);
         tasks.add(destinationTask);
@@ -337,7 +492,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         for(Task task:tasks){
             task.moveUpByProject();
         }
-        sourceTask.setOrderIdProject(destinationTask);
+        sourceTask.setOrderIdProject(destinationTask.getOrderIdProject());
         destinationTask.moveUpByProject();
         tasks.add(sourceTask);
         tasks.add(destinationTask);
@@ -358,11 +513,32 @@ public class TaskMoveServiceImpl implements TaskMoveService {
         for(Task task:tasks){
             task.moveDownByProject();
         }
-        sourceTask.setOrderIdProject(destinationTask);
+        sourceTask.setOrderIdProject(destinationTask.getOrderIdProject());
         destinationTask.moveDownByProject();
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Task addToInbox(Task task) {
+        task.setRootProject();
+        if(task.getDueDate()==null){
+            task.setTaskState(TaskState.INBOX);
+        } else {
+            task.setTaskState(TaskState.SCHEDULED);
+        }
+        //task.setFocus(false);
+        //task.setContext(context);
+        long maxOrderIdProject = this.getMaxOrderIdRootProject(task.getContext());
+        task.setOrderIdProject(++maxOrderIdProject);
+        long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+        task.setOrderIdTaskState(++maxOrderIdTaskState);
+
+        log.info("addToRootProject");
+        task = taskRepository.saveAndFlush(task);
+        log.info("persisted: " + task.getId());
+        return task;
+    }
 }
