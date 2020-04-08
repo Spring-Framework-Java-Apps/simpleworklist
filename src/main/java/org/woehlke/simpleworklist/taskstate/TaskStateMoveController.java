@@ -185,8 +185,11 @@ public class TaskStateMoveController extends AbstractController {
                 return "redirect:/project/root";
             }
             */
-
-            task = taskService.updatedViaTaskstate(task);
+            task.unsetFocus();
+            task.setRootProject();
+            Task persistentTask = taskService.findOne(task.getId());
+            persistentTask.merge(task);
+            task = taskService.updatedViaTaskstate(persistentTask);
             return "redirect:" + task.getTaskState().getUrl();
         }
     }

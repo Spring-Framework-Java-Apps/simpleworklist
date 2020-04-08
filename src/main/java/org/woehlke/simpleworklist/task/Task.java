@@ -374,4 +374,14 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
 
         return getView(true);
     }
+
+    public void merge(Task task) {
+        this.setTitle(task.title);
+        this.setText(task.text);
+        this.setFocus(task.focus);
+        this.setTaskState(task.taskState);
+        this.setDueDate(task.dueDate);
+        this.setTaskEnergy(task.taskEnergy);
+        this.setTaskTime(task.taskTime);
+    }
 }
