@@ -93,4 +93,4 @@ Fixed #122, Fixed #123, Fixed #127, Fixed #130, Fixed #152, Fixed #153, Fixed #1
 https://developer.okta.com/blog/2019/03/28/test-java-spring-boot-junit5
 
 # 2.3.15
-Fixed #129, Fixed #126 
+Fixed #129, Fixed #126, Fixed #168 
