@@ -17,6 +17,7 @@ import org.woehlke.simpleworklist.task.TaskService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -106,6 +107,7 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToProject(Task task) {
         log.info("addToProject");
+        task.setUuid(UUID.randomUUID().toString());
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.getId());
         return task;
@@ -115,6 +117,7 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToRootProject(Task task) {
         log.info("addToRootProject");
+        task.setUuid(UUID.randomUUID().toString());
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.getId());
         return task;
@@ -484,6 +487,7 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToInbox(Task task) {
+        task.setUuid(UUID.randomUUID().toString());
         task.setRootProject();
         if(task.getDueDate()==null){
             task.setTaskState(TaskState.INBOX);
