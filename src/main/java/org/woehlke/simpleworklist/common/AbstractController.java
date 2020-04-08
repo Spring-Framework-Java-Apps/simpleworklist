@@ -9,6 +9,7 @@ import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.TaskService;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskTime;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -94,6 +96,15 @@ public abstract class AbstractController {
     public final List<Context> getContexts(){
         UserAccount user = this.getUser();
         return contextService.getAllForUser(user);
+    }
+
+    @ModelAttribute("listTaskState")
+    public final List<TaskState> getTaskStates(){
+        List<TaskState> listTaskState = new ArrayList<>(TaskState.values().length);
+        for(TaskState taskState:TaskState.values()){
+            listTaskState.add(taskState);
+        }
+        return listTaskState;
     }
 
     @ModelAttribute("context")

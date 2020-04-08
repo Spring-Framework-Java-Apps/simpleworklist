@@ -55,6 +55,22 @@
 				</div>
 			</div>
 			<div>
+
+                <span class="form-group">
+					<label th:for="${#ids.next('taskState')}" class="control-label">
+						<span th:utext="#{task.show.taskState}">taskState</span>
+					</label>
+					<select th:field="*{taskState}">
+						<option th:each="taskStateItem   : ${listTaskState}"
+                                th:value="${taskStateItem.value}"
+                                th:text="${#messages.msgOrNull(taskStateItem.code)}">Wireframe</option>
+					</select>
+					<div>
+						<div th:each="err : ${#fields.errors('taskState')}" th:text="${err}" class="alert alert-danger">
+						</div>
+					</div>
+				</span>&nbsp;
+
 				<span class="form-group">
 					<label th:for="${#ids.next('taskEnergy')}" class="control-label">
 						<span th:utext="#{task.show.taskEnergy}">Energy</span>

@@ -1,8 +1,12 @@
 package org.woehlke.simpleworklist.taskstate;
 
+import org.woehlke.simpleworklist.task.TaskEnergy;
+
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by tw on 21.02.16.
@@ -40,6 +44,14 @@ public enum TaskState implements Serializable {
         this.icon=icon;
     }
 
+    public int getId(){
+        return this.ordinal();
+    }
+
+    public String getValue(){
+        return this.name();
+    }
+
     public String getCode() {
         return "layout.page."+this.name().toLowerCase();
     }
@@ -47,6 +59,11 @@ public enum TaskState implements Serializable {
     public String getUrl() {
         return "/taskstate/"+this.name().toLowerCase();
     }
+
+    public static List<TaskState> list() {
+        return Arrays.asList(values());
+    }
+
 
     public String getIcon() {
         return icon;
