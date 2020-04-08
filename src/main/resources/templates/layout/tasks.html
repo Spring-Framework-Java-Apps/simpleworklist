@@ -261,7 +261,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
                                 th:utext="#{button.back}">Close</button>
-                        <a th:href="@{/task/{id}/edit(id=${task.id})}" class="btn btn-secondary"
+                        <a th:href="@{/taskstate/task/{id}/edit(id=${task.id})}" class="btn btn-secondary"
                            role="button" th:id="'task_' + ${task.id}" th:utext="#{task.show.button.edit}">
                             task.show.button.edit
                         </a>
