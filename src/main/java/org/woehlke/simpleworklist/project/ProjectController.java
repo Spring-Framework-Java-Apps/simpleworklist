@@ -136,7 +136,9 @@ public class ProjectController extends AbstractController {
     public final String addNewTaskToRootProjectPost(
         @ModelAttribute("userSession") UserSessionBean userSession,
         @Valid Task task,
-        BindingResult result, Locale locale, Model model
+        BindingResult result,
+        Locale locale,
+        Model model
     ) {
         log.info("/project/root/add/task (POST)");
         Context context = super.getContext(userSession);
@@ -152,15 +154,17 @@ public class ProjectController extends AbstractController {
             model.addAttribute("task", task);
             return "project/root/add/task";
         } else {
-            task.setProject(null);
+            task.setRootProject();
+            /*
             if(task.getDueDate()==null){
                 task.setTaskState(TaskState.INBOX);
             } else {
                 task.setTaskState(TaskState.SCHEDULED);
             }
-            task.setFocus(false);
+            */
+            task.unsetFocus();
             task.setContext(context);
-            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
+            long maxOrderIdProject = taskMoveService.getMaxOrderIdRootProject(context);
             task.setOrderIdProject(++maxOrderIdProject);
             long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);

@@ -118,6 +118,7 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
     public Task addToRootProject(Task task) {
         log.info("addToRootProject");
         task.setUuid(UUID.randomUUID().toString());
+        task.unsetFocus();
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.getId());
         return task;
@@ -487,21 +488,24 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToInbox(Task task) {
+        log.info("addToInbox");
         task.setUuid(UUID.randomUUID().toString());
         task.setRootProject();
+        task.unsetFocus();
+        task.setTaskState(TaskState.INBOX);
+        /*
         if(task.getDueDate()==null){
             task.setTaskState(TaskState.INBOX);
         } else {
             task.setTaskState(TaskState.SCHEDULED);
         }
+        */
         //task.setFocus(false);
         //task.setContext(context);
         long maxOrderIdProject = this.getMaxOrderIdRootProject(task.getContext());
         task.setOrderIdProject(++maxOrderIdProject);
         long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
-
-        log.info("addToRootProject");
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.getId());
         return task;
