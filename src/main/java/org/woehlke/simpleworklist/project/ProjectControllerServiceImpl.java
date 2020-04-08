@@ -9,6 +9,7 @@ import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.context.ContextService;
+import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
@@ -160,5 +161,29 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         log.info("addNewProjectToRootPersist");
         project = projectService.saveAndFlush(project);
         return s + project.getId();
+    }
+
+    @Override
+    public String transformTaskIntoProjectGet(Task task) {
+        if(task != null) {
+            long projectId = 0;
+            if (task.getProject() != null) {
+                projectId = task.getProject().getId();
+            }
+            Project parentProject = projectService.findByProjectId(projectId);
+            Project thisProject = new Project();
+            thisProject.setParent(parentProject);
+            thisProject.setName(task.getTitle());
+            thisProject.setDescription(task.getText());
+            thisProject.setUuid(task.getUuid());
+            thisProject.setContext(task.getContext());
+            thisProject = projectService.saveAndFlush(thisProject);
+            task.emptyTrash();
+            //taskService.updatedViaTaskstate(task);
+            projectId = thisProject.getId();
+            log.info("tried to transform Task " + task.getId() + " to new Project " + projectId);
+            return thisProject.getUrl();
+        }
+        return "redirect:/taskstate/inbox";
     }
 }

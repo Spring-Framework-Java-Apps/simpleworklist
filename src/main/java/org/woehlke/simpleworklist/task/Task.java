@@ -344,4 +344,27 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         return (this.getContext().getId().longValue() == context.getId().longValue());
     }
 
+    @Transient
+    public String getView(boolean project){
+        if(project){
+            if(this.project == null){
+                return "redirect:/project/root";
+            } else {
+                return this.project.getUrl();
+            }
+        } else {
+            return "redirect:/"+this.taskState.getUrl();
+        }
+    }
+
+    @Transient
+    public String getUrl(){
+        return getView(false);
+    }
+
+    @Transient
+    public String getProjectUrl() {
+
+        return getView(true);
+    }
 }

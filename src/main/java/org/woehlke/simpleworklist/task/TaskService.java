@@ -4,8 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.taskstate.TaskState;
 
 public interface TaskService {
+
+    Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
 
     boolean projectHasNoTasks(Project project);
 
@@ -23,4 +26,5 @@ public interface TaskService {
     Task updatedViaTaskstate(Task task);
     Task updatedViaProject(Task task);
 
+    Task addToProject(Task task);
 }

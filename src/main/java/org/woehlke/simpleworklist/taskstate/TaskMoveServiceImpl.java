@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.task;
+package org.woehlke.simpleworklist.taskstate;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.taskstate.TaskMoveService;
-import org.woehlke.simpleworklist.taskstate.TaskState;
-import org.woehlke.simpleworklist.taskstate.TaskStateService;
+import org.woehlke.simpleworklist.task.Task;
+import org.woehlke.simpleworklist.task.TaskRepository;
+import org.woehlke.simpleworklist.task.TaskService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class TaskMoveServiceImpl implements TaskMoveService, TaskService, TaskStateService {
+public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
 
     private final TaskRepository taskRepository;
 
@@ -31,63 +31,15 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService, TaskSt
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getFocus(Context context, Pageable request) {
-        return taskRepository.findByFocusAndContext(true, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getInbox(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.INBOX, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getToday(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.TODAY, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getNext(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.NEXT, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getWaiting(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.WAITING, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getScheduled(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.SCHEDULED, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getSomeday(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.SOMEDAY, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getCompleted(Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.COMPLETED, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getTrash( Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(TaskState.TRASH, context, request);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public boolean projectHasNoTasks(Project project) {
         log.info("projectHasNoTasks");
         return taskRepository.findByProject(project).isEmpty();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request) {
+        return taskRepository.findByTaskStateAndContext(taskState, context, request);
     }
 
     @Override
@@ -145,6 +97,15 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService, TaskSt
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProject(Task task) {
         log.info("updatedViaProject");
+        task = taskRepository.saveAndFlush(task);
+        log.info("persisted: " + task.getId());
+        return task;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Task addToProject(Task task) {
+        log.info("addToProject");
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.getId());
         return task;

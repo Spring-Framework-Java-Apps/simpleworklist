@@ -164,7 +164,7 @@ public class ProjectController extends AbstractController {
             task.setOrderIdProject(++maxOrderIdProject);
             long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            task = taskService.saveAndFlush(task);
+            task = taskService.addToRootProject(task);
             log.info(task.toString());
             return "redirect:/project/root";
         }
@@ -186,7 +186,7 @@ public class ProjectController extends AbstractController {
         Page<Task> taskPage = null;
         if (projectId != 0) {
             thisProject = projectService.findByProjectId(projectId);
-            taskPage = taskService.findByProject(thisProject, context, pageable);
+            taskPage = taskService.findByProject(thisProject, pageable);
         } else {
             thisProject = new Project();
             thisProject.setId(0L);
@@ -350,7 +350,7 @@ public class ProjectController extends AbstractController {
                 model.addAttribute("message",s.toString());
                 model.addAttribute("isDeleted",false);
                 Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
-                Page<Task> taskPage = taskService.findByProject(project, context, request);
+                Page<Task> taskPage = taskService.findByProject(project, request);
                 model.addAttribute("taskPage", taskPage);
                 model.addAttribute("breadcrumb", breadcrumb);
                 model.addAttribute("thisProject", project);
@@ -399,6 +399,7 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(path = "/{projectId}/add/task", method = RequestMethod.GET)
     public final String addNewTaskToProjectGet(
+        @PathVariable("projectId") Project thisProject,
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
@@ -407,6 +408,7 @@ public class ProjectController extends AbstractController {
         task.setTaskState(TaskState.INBOX);
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
+        task.setProject(thisProject);
         Boolean mustChooseArea = false;
         if(userSession.getContextId() == 0L){
             mustChooseArea = true;
@@ -418,7 +420,7 @@ public class ProjectController extends AbstractController {
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
-        model.addAttribute("thisProjectId", 0L);
+        model.addAttribute("thisProject", thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
         return "id/task/add";
@@ -445,7 +447,6 @@ public class ProjectController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            //return "task/addToProject";
             return "id/task/add";
         } else {
             Project thisProject = projectService.findByProjectId(projectId);
@@ -462,9 +463,9 @@ public class ProjectController extends AbstractController {
             task.setOrderIdProject(++maxOrderIdProject);
             long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            task = taskService.saveAndFlush(task);
+            task = taskService.addToProject(task);
             log.info(task.toString());
-            return "redirect:/project/" + projectId + "/";
+            return thisProject.getUrl();
         }
     }
 

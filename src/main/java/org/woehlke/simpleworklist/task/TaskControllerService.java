@@ -1,7 +1,8 @@
 package org.woehlke.simpleworklist.task;
 
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
@@ -9,16 +10,13 @@ import java.util.Locale;
 
 public interface TaskControllerService {
 
-    String getView(
-        Task task,
-        String back
-    );
-
     String getTaskStatePage(
         TaskState taskState,
-        Page<Task> taskPage,
+        Context context,
+        Pageable pageRequest,
         UserSessionBean userSession,
         Locale locale,
         Model model
     );
+
 }
