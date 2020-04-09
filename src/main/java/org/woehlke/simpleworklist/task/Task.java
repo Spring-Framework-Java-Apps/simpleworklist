@@ -101,7 +101,6 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     private String title;
 
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
-    @NotBlank
     @Length(min=0,max=65535)
     @Column(name = "description", nullable = false, length = 65535, columnDefinition="text")
     private String text;

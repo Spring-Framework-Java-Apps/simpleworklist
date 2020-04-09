@@ -54,7 +54,7 @@ function run() {
 }
 
 function main() {
-    build
+    #build
     run
 }
 
