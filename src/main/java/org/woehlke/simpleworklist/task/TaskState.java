@@ -47,6 +47,10 @@ public enum TaskState implements Serializable {
         return "redirect:/taskstate/"+this.name().toLowerCase();
     }
 
+    public String getTemplate(){
+        return "taskstate/"+this.name().toLowerCase();
+    }
+
     public static List<TaskState> list() {
         return Arrays.asList(values());
     }
