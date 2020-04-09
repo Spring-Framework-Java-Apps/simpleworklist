@@ -21,8 +21,14 @@ public enum TaskState implements Serializable {
     TRASH("fas fa-trash-alt"),
     DELETED("fas fa-trash-alt");
 
-    TaskState(final String icon) {
+    private String icon;
+
+    TaskState(final String icon){
         this.icon=icon;
+    }
+
+    public String getIcon(){
+        return icon;
     }
 
     public int getId(){
@@ -33,23 +39,17 @@ public enum TaskState implements Serializable {
         return this.name();
     }
 
-    public String getCode() {
+    public String getCode(){
         return "layout.page."+this.name().toLowerCase();
     }
 
-    public String getUrl() {
+    public String getUrl(){
         return "redirect:/taskstate/"+this.name().toLowerCase();
     }
 
     public static List<TaskState> list() {
         return Arrays.asList(values());
     }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    private String icon;
 
     private static final long serialVersionUID = 0L;
 }

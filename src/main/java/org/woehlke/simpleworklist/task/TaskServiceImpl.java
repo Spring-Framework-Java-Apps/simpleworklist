@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,12 +17,12 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
+public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
 
     @Autowired
-    public TaskMoveServiceImpl( TaskRepository taskRepository ) {
+    public TaskServiceImpl(TaskRepository taskRepository ) {
         this.taskRepository = taskRepository;
     }
 
@@ -42,19 +41,13 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> getEmptyPage(Pageable request){
-        return new PageImpl<Task>(new ArrayList<Task>(),request,0L);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Page<Task> findByProject(Project thisProject, Pageable request) {
         log.info("findByProject: ");
         log.info("---------------------------------");
         log.info("thisProject: "+thisProject);
         log.info("---------------------------------");
         if(thisProject == null){
-            return this.getEmptyPage(request);
+            return Task.getEmptyPage(request);
         } else {
             return taskRepository.findByProject(thisProject,request);
         }
@@ -65,7 +58,7 @@ public class TaskMoveServiceImpl implements TaskMoveService, TaskService {
     public Page<Task> findByRootProject(Context context, Pageable request) {
         log.info("findByRootProject: ");
         if(context == null){
-            return this.getEmptyPage(request);
+            return Task.getEmptyPage(request);
         } else {
             return taskRepository.findByProjectIsNullAndContext(context, request);
         }

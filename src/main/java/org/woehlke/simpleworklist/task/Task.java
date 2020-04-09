@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.task;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -17,6 +18,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
@@ -369,5 +373,9 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         this.setDueDate(task.dueDate);
         this.setTaskEnergy(task.taskEnergy);
         this.setTaskTime(task.taskTime);
+    }
+
+    public static Page<Task> getEmptyPage(Pageable request){
+        return new PageImpl<Task>(new ArrayList<Task>(),request,0L);
     }
 }

@@ -5,6 +5,10 @@ server:
   compression:
     enabled: false
     min-response-size: 2048
+
+
+    server:
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432//simpleworklist

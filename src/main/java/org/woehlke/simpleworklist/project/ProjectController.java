@@ -12,11 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskEnergy;
-import org.woehlke.simpleworklist.task.TaskTime;
-import org.woehlke.simpleworklist.task.TaskMoveService;
-import org.woehlke.simpleworklist.task.TaskState;
+import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.UserSessionBean;
@@ -35,12 +31,12 @@ import java.util.Locale;
 public class ProjectController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
-    private final TaskMoveService taskMoveService;
+    private final TaskService taskService;
 
     @Autowired
-    public ProjectController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService) {
+    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService) {
         this.projectControllerService = projectControllerService;
-        this.taskMoveService = taskMoveService;
+        this.taskService = taskService;
     }
 
     @RequestMapping(path="/root", method = RequestMethod.GET)
@@ -164,9 +160,9 @@ public class ProjectController extends AbstractController {
             */
             task.unsetFocus();
             task.setContext(context);
-            long maxOrderIdProject = taskMoveService.getMaxOrderIdRootProject(context);
+            long maxOrderIdProject = taskService.getMaxOrderIdRootProject(context);
             task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.addToRootProject(task);
             log.info(task.toString());
@@ -391,9 +387,9 @@ public class ProjectController extends AbstractController {
         boolean rootProject = sourceTask.isInRootProject();
         returnUrl = "redirect:/project/0";
         if(rootProject){
-            taskMoveService.moveOrderIdRootProject(sourceTask, destinationTask);
+            taskService.moveOrderIdRootProject(sourceTask, destinationTask);
         } else {
-            taskMoveService.moveOrderIdProject(sourceTask, destinationTask);
+            taskService.moveOrderIdProject(sourceTask, destinationTask);
             log.info("  DONE: taskMoveService.moveOrderIdProject (2)");
             returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
         }
@@ -463,9 +459,9 @@ public class ProjectController extends AbstractController {
             }
             task.setFocus(false);
             task.setContext(context);
-            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
+            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),context);
             task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.addToProject(task);
             log.info(task.toString());
