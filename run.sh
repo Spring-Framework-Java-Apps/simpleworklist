@@ -49,13 +49,13 @@ function testing() {
 }
 
 function run() {
-    #runHerokuLocal
-    runDev
+    runHerokuLocal
+    #runDev
 }
 
 function main() {
-    #run
     build
+    run
 }
 
 main
