@@ -1,6 +1,6 @@
 org.woehlke.simpleworklist.language.Language:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskEnergy:    private static final long serialVersionUID = 0L;
-org.woehlke.simpleworklist.taskstate.TaskState:    private static final long serialVersionUID = 0L;
+org.woehlke.simpleworklist.task.TaskState:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.task.TaskTime:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus:    private static final long serialVersionUID = 0L;
 org.woehlke.simpleworklist.user.register.UserRegistrationStatus:    private static final long serialVersionUID = 0L;

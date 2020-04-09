@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import java.util.Locale;
@@ -47,7 +46,7 @@ public class TaskControllerServiceImpl implements TaskControllerService {
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", taskState.name().toLowerCase());
         model.addAttribute("userSession", userSession);
-        return "taskstate/"+taskState.name().toLowerCase();
+        return taskState.getUrl();
     }
 
 }

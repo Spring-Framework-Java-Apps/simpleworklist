@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.project.ProjectControllerService;
-import org.woehlke.simpleworklist.taskstate.TaskMoveService;
-import org.woehlke.simpleworklist.taskstate.TaskState;
 
 @Slf4j
 @Controller

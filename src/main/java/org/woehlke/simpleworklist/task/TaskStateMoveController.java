@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.taskstate;
+package org.woehlke.simpleworklist.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -10,9 +10,7 @@ import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskEnergy;
-import org.woehlke.simpleworklist.task.TaskTime;
+import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
