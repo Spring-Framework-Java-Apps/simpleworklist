@@ -54,7 +54,8 @@ function run() {
 }
 
 function main() {
-    run
+    #run
+    build
 }
 
 main

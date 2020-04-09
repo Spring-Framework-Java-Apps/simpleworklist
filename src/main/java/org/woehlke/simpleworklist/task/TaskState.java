@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.task;
 
-import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -10,34 +9,16 @@ import java.util.List;
  */
 public enum TaskState implements Serializable {
 
-    @Enumerated
+
     INBOX("fas fa-inbox"),
-
-    @Enumerated
     TODAY("fas fa-clock"),
-
-    @Enumerated
     NEXT("fas fa-cogs"),
-
-    @Enumerated
     WAITING("fas fa-hourglass-half"),
-
-    @Enumerated
     SCHEDULED("fas fa-calendar-alt"),
-
-    @Enumerated
     SOMEDAY("fas fa-road"),
-
-    @Enumerated
     FOCUS("fas fa-star"),
-
-    @Enumerated
     COMPLETED("fas fa-check-square"),
-
-    @Enumerated
     TRASH("fas fa-trash-alt"),
-
-    @Enumerated
     DELETED("fas fa-trash-alt");
 
     TaskState(final String icon) {
