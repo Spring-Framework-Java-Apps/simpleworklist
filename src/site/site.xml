@@ -6,7 +6,7 @@
     <bannerLeft>
         <name>SimpleWorklist</name>
         <src>/img/phasenraum_logo.gif</src>
-        <href>http://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/</href>
+        <href>https://woehlke.org</href>
     </bannerLeft>
     <body>
         <menu ref="parent"/>
