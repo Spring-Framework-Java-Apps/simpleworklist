@@ -20,7 +20,7 @@ function setupHeroku() {
 }
 
 function buildLikeHerokuWithSite() {
-   ./mvnw -DskipTests clean dependency:list install site site:deploy
+   ./mvnw -DskipTests=true clean dependency:list install site site:deploy
 }
 
 function buildLikeHeroku() {
@@ -38,9 +38,10 @@ function main() {
     #runGithubTestBuild
     #setupHeroku
     #buildLikeHeroku
-    runHerokuLocal
+    #runHerokuLocal
     #runDev
     #runTest
+    buildLikeHerokuWithSite
 }
 
 main
