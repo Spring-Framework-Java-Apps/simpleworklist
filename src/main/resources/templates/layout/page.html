@@ -12,30 +12,9 @@
 	<meta http-equiv="refresh" content="25" th:if="${refreshMessages}">
 	<meta name="author" content="Thomas Woehlke">
 	<meta name="description" content="Your Todo-List for Getting Things Done.">
-	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
-	<script>
-	  window.addEventListener("load", function(){
-		window.cookieconsent.initialise({
-		  "palette": {
-			"popup": {
-			  "background": "#000000"
-			},
-			"button": {
-			  "background": "transparent",
-			  "border": "#ffffff",
-			  "text": "#ffffff"
-			}
-		  },
-		  "content": {
-			"link": "Read the Privacy Policy",
-			"href": "/privacy"
-		  }
-		})});
-	</script>
 	<title th:replace="${headtitle}">SimpleWorklist</title>
-	<link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
-	<link th:href="@{/webjars/font-awesome/5.8.1/css/all.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/font-awesome/5.13.0/css/all.min.css}" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Lato|Varela+Round" rel="stylesheet">
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
 	<!--/* Per-page placeholder for additional links */-->
@@ -92,10 +71,10 @@
 		</nav>
 	</footer>
 	<script th:src="@{/js/google-analytics.js}"></script>
-	<script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
-	<script th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-	<script th:src="@{/webjars/font-awesome/5.8.1/js/all.min.js}"></script>
+	<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.16.0/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/font-awesome/5.13.0/js/all.min.js}"></script>
 	<!--/* Per-page placeholder for additional links */-->
 	<th:block th:replace="${scripts}" />
 
