@@ -34,14 +34,28 @@ function runHerokuLocal() {
     heroku open
 }
 
-function main() {
-    #runGithubTestBuild
-    #setupHeroku
-    #buildLikeHeroku
-    #runHerokuLocal
-    #runDev
-    #runTest
+function setup() {
+   setupHeroku
+}
+
+function build() {
     buildLikeHerokuWithSite
+    #buildLikeHeroku
+    #runGithubTestBuild
+}
+
+function testing() {
+   runTest
+}
+
+function run() {
+    #runHerokuLocal
+    runDev
+}
+
+function main() {
+    run
 }
 
 main
+
