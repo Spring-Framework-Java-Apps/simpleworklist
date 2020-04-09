@@ -352,27 +352,17 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     }
 
     @Transient
-    public String getView(boolean project){
-        if(project){
-            if(this.project == null){
-                return "redirect:/project/root";
-            } else {
-                return this.project.getUrl();
-            }
-        } else {
-            return "redirect:/"+this.taskState.getUrl();
-        }
-    }
-
-    @Transient
     public String getUrl(){
-        return getView(false);
+        return this.taskState.getUrl();
     }
 
     @Transient
     public String getProjectUrl() {
-
-        return getView(true);
+        if(this.project == null){
+            return "redirect:/project/root";
+        } else {
+            return this.project.getUrl();
+        }
     }
 
     public void merge(Task task) {

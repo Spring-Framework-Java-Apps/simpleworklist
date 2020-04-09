@@ -60,7 +60,7 @@ public enum TaskState implements Serializable {
     }
 
     public String getUrl() {
-        return "/taskstate/"+this.name().toLowerCase();
+        return "redirect:/taskstate/"+this.name().toLowerCase();
     }
 
     public static List<TaskState> list() {
