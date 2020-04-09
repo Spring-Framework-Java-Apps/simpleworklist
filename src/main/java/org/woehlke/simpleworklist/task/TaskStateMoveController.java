@@ -98,18 +98,18 @@ public class TaskStateMoveController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-        List<Context> contexts = contextService.getAllForUser(userAccount);
         if(task != null) {
-            Project thisProject = null;
-            if (task.getProject() == null) {
+            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            List<Context> contexts = contextService.getAllForUser(userAccount);
+            Project thisProject;
+            if (task.getContext() == null) {
                 thisProject = new Project();
                 thisProject.setId(0L);
             } else {
                 thisProject = task.getProject();
             }
             Context thisContext = task.getContext();
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("thisContext", thisContext);
@@ -131,63 +131,38 @@ public class TaskStateMoveController extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
-        if (result.hasErrors() || taskId != task.getId()) {
-            if(result.hasErrors()) {
-                log.warn("result.hasErrors");
-                for (ObjectError e : result.getAllErrors()) {
-                    log.error(e.toString());
-                }
-            }
-            if (taskId != task.getId()) {
-                log.error("taskId "+taskId+" != task.getId "+task.getId());
+        if (result.hasErrors() ) {
+            log.warn("result.hasErrors");
+            for (ObjectError e : result.getAllErrors()) {
+                log.error(e.toString());
             }
             Task persistentTask = taskService.findOne(taskId);
-            if(task.getId()!= persistentTask.getId()){
-                log.error("task.getId()!= persistentTask.getId()");
-            }
-            if(persistentTask.isInRootProject()) {
-                Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
-                model.addAttribute("breadcrumb", breadcrumb);
-                task.setRootProject();
+            persistentTask.merge(task);
+            task = persistentTask;
+            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            List<Context> contexts = contextService.getAllForUser(userAccount);
+            Project thisProject;
+            if (task.getContext() == null) {
+                thisProject = new Project();
+                thisProject.setId(0L);
             } else {
-                Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(persistentTask.getProject(),locale);
-                model.addAttribute("breadcrumb", breadcrumb);
-                task.setProject(persistentTask.getProject());
+                thisProject = task.getProject();
             }
+            Context thisContext = task.getContext();
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("thisProject", thisProject);
+            model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
+            model.addAttribute("areas", contexts);
             return "taskstate/task/edit";
         } else {
-            /*
-            Task persistentTask = taskService.findOne(taskId);
-            persistentTask.updateTo(task);
-            persistentTask.switchTaskState(task.getTaskState(), task.getContext(), task.getDueDate(), thisProject);            if(task.getDueDate()==null){
-                persistentTask.setDueDate(null);
-                if(persistentTask.getTaskState().compareTo(TaskState.SCHEDULED)==0){
-                    persistentTask.setTaskState(task.getTaskState());
-                }
-            } else {
-                persistentTask.setDueDate(task.getDueDate());
-                persistentTask.setTaskState(TaskState.SCHEDULED);
-            }
-            boolean contextChanged = persistentTask.getContext().equalsById();
-            if(contextChanged){
-                persistentTask.setContext(task.getContext());
-                if(thisProject.getId()==0L) {
-                    persistentTask.setRootProject();
-                } else if(thisProject.getContext().equalsById(task.getContext())){
-                    persistentTask.setProject(thisProject);
-                }
-                userSession.setContextId(task.getContext().getId());
-                model.addAttribute("userSession", userSession);
-                return "redirect:/project/root";
-            }
-            */
             task.unsetFocus();
             task.setRootProject();
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);
             task = taskService.updatedViaTaskstate(persistentTask);
-            return "redirect:" + task.getTaskState().getUrl();
+            return task.getTaskState().getUrl();
         }
     }
 

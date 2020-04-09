@@ -39,6 +39,9 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
         log.info("getBreadcrumbForShowOneProject");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         breadcrumb.addProjectRoot();
+        if(thisProject == null){
+            return breadcrumb;
+        } else {
             if (thisProject.getId() > 0) {
                 Stack<Project> stack = new Stack<>();
                 Project breadcrumbProject = thisProject;
@@ -50,7 +53,8 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
                     breadcrumb.addProject(stack.pop());
                 }
             }
-        return breadcrumb;
+            return breadcrumb;
+        }
     }
 
     @Override
