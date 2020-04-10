@@ -167,26 +167,22 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     }
 
     public void delete(){
-        this.lastTaskState = this.taskState;
-        this.taskState = TaskState.TRASH;
+        pushTaskstate(TaskState.TRASH);
     }
 
     public void undelete(){
         if( this.taskState == TaskState.TRASH){
-            this.taskState = this.lastTaskState;
-            this.lastTaskState = TaskState.TRASH;
+            popTaskstate(TaskState.TRASH);
         }
     }
 
     public void complete(){
-        this.lastTaskState = this.taskState;
-        this.taskState = TaskState.COMPLETED;
+        pushTaskstate(TaskState.COMPLETED);
     }
 
     public void incomplete(){
         if( this.taskState == TaskState.COMPLETED){
-            this.taskState = this.lastTaskState;
-            this.lastTaskState = TaskState.COMPLETED;
+            popTaskstate(TaskState.COMPLETED);
         }
     }
 
@@ -198,9 +194,14 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         this.focus = false;
     }
 
-    private void pushTaskstate(TaskState newState){
+    private void popTaskstate(TaskState oldState){
         this.taskState = this.lastTaskState;
-        this.lastTaskState = newState;
+        this.lastTaskState = oldState;
+    }
+
+    private void pushTaskstate(TaskState newState){
+        this.lastTaskState = this.taskState;
+        this.taskState = newState;
     }
 
     //TODO: delete Due Date
