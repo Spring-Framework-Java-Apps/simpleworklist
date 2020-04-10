@@ -97,6 +97,4 @@ Fixed #129, Fixed #126, Fixed #168
 https://github.com/thymeleaf/thymeleaf-testing
 
 # 2.3.16 
-Fixed #183
-     
-     
+Fixed #169, Fixed #170, Fixed #171, Fixed #172, Fixed #183 
