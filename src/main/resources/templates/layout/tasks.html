@@ -107,7 +107,7 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col task_col_taskstate"
                             th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
-                            <a th:href="@{{url}(url=${task.taskState.getUrl()})}" class="twtooltip"
+                            <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}" class="twtooltip"
                                th:alt-title="#{task.col.twtooltip.taskstate}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
                                 <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
