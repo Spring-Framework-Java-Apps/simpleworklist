@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.user.UserSessionBean;
+import org.woehlke.simpleworklist.session.UserSessionBean;
 
 import java.util.Locale;
 

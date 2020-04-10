@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user;
+package org.woehlke.simpleworklist.session;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

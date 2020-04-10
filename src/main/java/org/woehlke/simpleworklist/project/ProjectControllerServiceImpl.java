@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskService;
-import org.woehlke.simpleworklist.user.UserSessionBean;
+import org.woehlke.simpleworklist.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import java.util.List;

@@ -15,15 +15,12 @@ import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.user.UserSessionBean;
+import org.woehlke.simpleworklist.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
-
-import static org.woehlke.simpleworklist.project.Project.rootProjectId;
 
 /**
  * Created by tw on 14.02.16.

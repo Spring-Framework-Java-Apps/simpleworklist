@@ -43,6 +43,6 @@ serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> ..\.
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> ..\..\etc\serialversions.txt
 @rem serialver org.woehlke.simpleworklist.user.UserDetailsBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.UserSessionBean >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.session.UserSessionBean >> ..\..\etc\serialversions.txt
 cd ..\..
 echo FINISHED
