@@ -2,9 +2,9 @@ package org.woehlke.simpleworklist.user;
 
 
 
-import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserDetailsBean;
 
 import java.util.Collection;
 

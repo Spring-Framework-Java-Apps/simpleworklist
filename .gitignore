@@ -34,4 +34,4 @@ setenv.cmd
 /src/main/java/org/woehlke/simpleworklist/task/x.txt
 /src/main/java/org/woehlke/simpleworklist/context/x.txt
 /src/main/java/org/woehlke/simpleworklist/error/x.txt
-/src/main/java/org/woehlke/simpleworklist/search/x.txt
+/src/main/java/org/woehlke/simpleworklist/searchRequest/x.txt

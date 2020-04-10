@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static java.util.Locale.GERMAN;
+
 /**
  * Created by tw on 14.02.16.
  */
@@ -60,17 +62,23 @@ public abstract class AbstractController {
     @Autowired
     protected BreadcrumbService breadcrumbService;
 
+    //TODO: rename allCategories to allProjects
     @ModelAttribute("allCategories")
-    public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,
-                                                BindingResult result, Model model) {
+    public final List<Project> getAllCategories(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        BindingResult result, //TODO: remove
+        Model model  //TODO: remove
+    ) {
         Context context = this.getContext(userSession);
         return projectService.findAllProjectsByContext(context);
     }
 
+    //TODO: rename rootCategories to rootProjects
     @ModelAttribute("rootCategories")
     public final List<Project> getRootCategories(
-            @ModelAttribute("userSession") UserSessionBean userSession,
-             BindingResult result, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        BindingResult result,  //TODO: remove
+        Model model  //TODO: remove
     ) {
         Context context = this.getContext(userSession);
         return projectService.findRootProjectsByContext(context);
@@ -108,10 +116,18 @@ public abstract class AbstractController {
     }
 
     @ModelAttribute("context")
-    public final String getCurrentArea(@ModelAttribute("userSession") UserSessionBean userSession,
-                                       Locale locale){
-        Context context = this.getContext(userSession);
-        if(locale == Locale.GERMAN){
+    public final String getCurrentContext(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @ModelAttribute("userSession") Locale locale
+    ){
+        if(userSession == null){
+            userSession = new UserSessionBean();
+        }
+        if(locale == null){
+            locale = Locale.ENGLISH;
+        }
+        Context context = getContext(userSession);
+        if(locale == GERMAN){
             return context.getNameDe();
         } else {
             return context.getNameEn();
@@ -123,21 +139,17 @@ public abstract class AbstractController {
         return false;
     }
 
-    protected UserAccount getUser(){
+    protected UserAccount getUser() {
         return this.userAccountLoginSuccessService.retrieveCurrentUser();
     }
 
     protected Context getContext(UserSessionBean userSession){
         UserAccount thisUser = this.getUser();
         long defaultContextId = thisUser.getDefaultContext().getId();
-        if(userSession == null){
-            userSession = new UserSessionBean(defaultContextId);
-        }
-        long contextId = userSession.getContextId();
-        if(contextId == 0){
-            userSession.setContextId(defaultContextId);
-        }
-        return contextService.findByIdAndUserAccount(contextId, thisUser);
+        Context context = contextService.findByIdAndUserAccount(defaultContextId, thisUser);
+        userSession.setLastContextId(context.getId());
+        userSession.setUserAccountid(thisUser.getId());
+        return context;
     }
 
 }

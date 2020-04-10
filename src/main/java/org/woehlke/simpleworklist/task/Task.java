@@ -8,8 +8,10 @@ import javax.persistence.*;
 import javax.persistence.Index;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -30,6 +32,7 @@ import org.woehlke.simpleworklist.common.ComparableById;
 
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
+//TODO: test all three UniqueConstraints
 @Entity
 @Table(
     name="task",
@@ -44,7 +47,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         ),
         @UniqueConstraint(
             name="ux_task_order_id_task_state",
-            columnNames = {"order_id_task_state", "task_state", "project_id", "context_id", "user_account_id"}
+            columnNames = {"order_id_task_state", "task_state", "context_id", "user_account_id"}
         )*/
     },
     indexes = {
@@ -55,6 +58,8 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 )
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Task extends AuditModel implements Serializable, ComparableById<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
@@ -93,14 +98,13 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @LazyToOne(PROXY)
     private Context context;
 
-    @Deprecated
+
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
     @Column(name = "title", nullable = false)
     private String title;
 
-    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
     @Length(min=0,max=65535)
     @Column(name = "description", nullable = false, length = 65535, columnDefinition="text")
     private String text;
@@ -135,10 +139,10 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date dueDate;
 
-    @Column(name = "order_id_project",nullable = false)
+    @Column(name = "order_id_project", nullable = false)
     private long orderIdProject;
 
-    @Column(name = "order_id_task_state",nullable = false)
+    @Column(name = "order_id_task_state", nullable = false)
     private long orderIdTaskState;
 
     @Transient

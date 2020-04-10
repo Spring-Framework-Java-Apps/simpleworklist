@@ -1,75 +1,105 @@
 package org.woehlke.simpleworklist.search;
 
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.woehlke.simpleworklist.common.AuditModel;
+import org.woehlke.simpleworklist.common.ComparableById;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.project.Project;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by tw on 14.02.16.
  */
-public class SearchResult implements Serializable {
+
+@Entity
+@Table(
+    name="search_result",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "ux_search_result",
+            columnNames = {"search_request_id"}
+        )
+    },
+    indexes = {
+        @Index(name = "ix_search_result_uuid", columnList = "uuid"),
+        @Index(name = "ix_search_result_row_created_at", columnList = "row_created_at")
+    }
+)
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class SearchResult extends AuditModel implements Serializable, ComparableById<SearchResult> {
 
     private static final long serialVersionUID = 1682809351146047764L;
 
-    private String searchterm = "";
-    private List<Task> taskList = new ArrayList<>();
-    private List<Project> projectList = new ArrayList<>();
+    @Id
+    @GeneratedValue(generator = "search_request_generator")
+    @SequenceGenerator(
+        name = "search_request_generator",
+        sequenceName = "search_request_sequence",
+        initialValue = 1000
+    )
+    private Long id;
 
-    public String getSearchterm() {
-        return searchterm;
-    }
+    @ManyToOne(
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        }
+    )
+    @JoinColumn(name = "search_request_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private SearchRequest searchRequest;
 
-    public void setSearchterm(String searchterm) {
-        this.searchterm = searchterm;
-    }
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        }
+    )
+    @JoinTable(name = "search_result2task")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private List<Task> resultListTasks;
 
-    public List<Task> getTaskList() {
-        return taskList;
-    }
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        }
+    )
+    @JoinTable(name = "search_result2project")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private List<Project> resultListProject;
 
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
-
-    public List<Project> getProjectList() {
-        return projectList;
-    }
-
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
-
+    @Transient
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SearchResult that = (SearchResult) o;
-
-        if (searchterm != null ? !searchterm.equals(that.searchterm) : that.searchterm != null) return false;
-        if (taskList != null ? !taskList.equals(that.taskList) : that.taskList != null)
-            return false;
-        return projectList != null ? projectList.equals(that.projectList) : that.projectList == null;
-
+    public boolean equalsById(SearchResult otherObject) {
+        return (this.getId().longValue() == otherObject.getId().longValue());
     }
 
+    @Transient
     @Override
-    public int hashCode() {
-        int result = searchterm != null ? searchterm.hashCode() : 0;
-        result = 31 * result + (taskList != null ? taskList.hashCode() : 0);
-        result = 31 * result + (projectList != null ? projectList.hashCode() : 0);
-        return result;
+    public boolean equalsByUniqueConstraint(SearchResult otherObject) {
+        boolean okUuid = this.equalsByUuid(otherObject);
+        boolean contextId = searchRequest.getContext().equalsByUniqueConstraint(otherObject.getSearchRequest().getContext());
+        return okUuid && contextId;
     }
 
+    @Transient
     @Override
-    public String toString() {
-        return "SearchResult{" +
-                "searchterm='" + searchterm + '\'' +
-                ", taskList=" + taskList +
-                ", projectList=" + projectList +
-                '}';
+    public boolean equalsByUuid(SearchResult otherObject) {
+        return super.equalsByMyUuid(otherObject);
     }
 }

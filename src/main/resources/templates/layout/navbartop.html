@@ -90,12 +90,12 @@
                             </div>
                         </li>
                     </ul>
-                    <form th:action="@{/search}" class="form-inline my-2 my-lg-0" role="search" method="get"
+                    <form th:action="@{/searchRequest}" class="form-inline my-2 my-lg-0" role="searchRequest" method="get"
                           sec:authorize="isAuthenticated()">
-                        <input class="form-control mr-sm-2" type="search" name="searchterm" placeholder="Search"
+                        <input class="form-control mr-sm-2" type="searchRequest" name="searchterm" placeholder="Search"
                                aria-label="Search">
                         <button class="btn btn-outline-secondary btn-sm my-2 my-sm-0" type="submit">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-searchRequest"></i>
                         </button>
                     </form>
                 </div>

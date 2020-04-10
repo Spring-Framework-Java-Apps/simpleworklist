@@ -4,36 +4,51 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.context.Context;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by tw on 14.02.16.
  */
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class SearchServiceImpl implements SearchService {
 
-    private final SearchDao searchDao;
+    private final SearchRequestService searchRequestService;
+    private final SearchResultService searchResultService;
 
-    @Autowired
-    public SearchServiceImpl(SearchDao searchDao) {
-        this.searchDao = searchDao;
+    public SearchServiceImpl(SearchRequestService searchRequestService, SearchResultService searchResultService) {
+        this.searchRequestService = searchRequestService;
+        this.searchResultService = searchResultService;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public SearchResult search(String searchterm, UserAccount userAccount) {
+    public SearchResult search(SearchRequest searchRequest) {
         log.info("search");
-        SearchResult searchResult = searchDao.search(searchterm, userAccount);
-        return searchResult;
+        searchRequest = searchRequestService.update(searchRequest);
+        SearchResult result = new SearchResult();
+        result.setSearchRequest(searchRequest);
+        return result;
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public SearchResult search(String searchterm, Context context) {
+        log.info("search");
+        SearchRequest searchRequest = new SearchRequest();
+        searchRequest.setSearchterm(searchterm);
+        searchRequest.setContext(context);
+        searchRequest = searchRequestService.add(searchRequest);
+        SearchResult result = new SearchResult();
+        result.setSearchRequest(searchRequest);
+        return result;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void resetSearchIndex() {
         log.info("resetSearchIndex");
-        searchDao.resetSearchIndex();
+        searchResultService.resetSearchIndex();
     }
 }

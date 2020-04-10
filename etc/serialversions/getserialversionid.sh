@@ -53,7 +53,7 @@ serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> $SE
 serialver org.woehlke.simpleworklist.language.UserChangeLanguageForm  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> $SERIALVERSIONS_FILE
-#serialver org.woehlke.simpleworklist.user.UserDetailsBean >> $SERIALVERSIONS_FILE
+#serialver org.woehlke.simpleworklist.user.account.UserDetailsBean >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.UserSessionBean >> $SERIALVERSIONS_FILE
 cd $PROJECT_PATH

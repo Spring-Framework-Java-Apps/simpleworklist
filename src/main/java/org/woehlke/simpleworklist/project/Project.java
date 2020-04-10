@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.*;
 import javax.persistence.Index;
@@ -37,8 +36,8 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 )
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
@@ -165,10 +164,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     //TODO: use newRootProjectFactory(Context context);
     @Deprecated
     public static Project newRootProjectFactory(UserAccount userAccount, Context context) {
-        Project n = new Project();
-        n.setParent(null);
-        n.setContext(context);
-        return n;
+        return newRootProjectFactory(context);
     }
 
 }

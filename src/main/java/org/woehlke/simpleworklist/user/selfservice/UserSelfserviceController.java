@@ -50,7 +50,7 @@ public class UserSelfserviceController extends AbstractController {
     public String userProfileAndMenu(
         @PageableDefault(sort = "userFullname", direction = Sort.Direction.DESC) Pageable request,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userProfileAndMenu");
@@ -72,7 +72,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/name", method = RequestMethod.GET)
     public String userNameForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userNameForm");
@@ -91,7 +91,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid UserChangeNameForm username,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userNameStore");
@@ -113,7 +113,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/password", method = RequestMethod.GET)
     public String userPasswordForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userPasswordForm");
@@ -132,7 +132,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid UserChangePasswordForm userChangePasswordForm,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ) {
         log.info("userPasswordStore");
@@ -184,7 +184,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/contexts", method = RequestMethod.GET)
     public String userAreasForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userAreasForm");
@@ -206,7 +206,7 @@ public class UserSelfserviceController extends AbstractController {
             @Valid @ModelAttribute("thisUser") UserChangeDefaultContextForm thisUser,
             BindingResult result,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale,
+            @ModelAttribute("locale") Locale locale,
             Model model
     ){
         log.info("userAreasSave");
@@ -235,7 +235,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/context/add", method = RequestMethod.GET)
     public String userNewAreaForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userNewAreaForm");
@@ -254,7 +254,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid NewContextForm newContext,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userNewAreaStore");
@@ -279,7 +279,7 @@ public class UserSelfserviceController extends AbstractController {
     public String userEditAreaForm(
         @PathVariable("id") Context context,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userEditAreaForm");
@@ -301,7 +301,7 @@ public class UserSelfserviceController extends AbstractController {
         @PathVariable("id") Context context,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userEditAreaStore");
@@ -327,7 +327,7 @@ public class UserSelfserviceController extends AbstractController {
     public String userDeleteArea(
         @PathVariable("id") Context context,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userDeleteArea");
@@ -336,7 +336,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", thisUser);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale,context);
         model.addAttribute("breadcrumb", breadcrumb);
-        if(userSession.getContextId() == context.getId()){
+        if(userSession.getLastContextId() == context.getId()){
             log.info("context is active in session: "+ context);
         } else {
             if(thisUser.getDefaultContext().getId() == context.getId()){
@@ -358,7 +358,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/language", method = RequestMethod.GET)
     public String userLanguageForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userLanguageForm");
@@ -376,7 +376,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid UserChangeLanguageForm userChangeLanguageForm,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale,
+        @ModelAttribute("locale") Locale locale,
         Model model
     ){
         log.info("userLanguageStore");

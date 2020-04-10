@@ -1,6 +1,11 @@
 package org.woehlke.simpleworklist.user.account;
 
 import javax.validation.constraints.Email;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.common.AuditModel;
@@ -9,11 +14,10 @@ import org.woehlke.simpleworklist.language.Language;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.*;
 import javax.persistence.Index;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(
@@ -28,6 +32,10 @@ import javax.validation.constraints.NotNull;
         @Index(name="ix_user_account_last_login_timestamp", columnList = "last_login_timestamp")
     }
 )
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "userPassword")
 public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount> {
 
     private static final long serialVersionUID = 7860692526488291439L;
@@ -40,15 +48,17 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
         initialValue = 1000
     )
     private Long id;
+
     @Email
+    @NotBlank
     @Column(name="user_email", nullable = false)
     private String userEmail;
 
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    @NotBlank
     @Column(name="user_password", nullable = false)
     private String userPassword;
 
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    @NotBlank
     @Column(name="user_fullname", nullable = false)
     private String userFullname;
 
@@ -56,6 +66,7 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
     @Enumerated(EnumType.STRING)
     private Language defaultLanguage;
 
+    //TODO: why nullable=true and optional = true?
     @OneToOne(
             fetch = FetchType.LAZY,
             optional = true,
@@ -63,7 +74,7 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
                 CascadeType.REFRESH
             }
     )
-    @JoinColumn(name = "default_context_id",nullable=true)
+    @JoinColumn(name = "default_context_id", nullable=true)
     private Context defaultContext;
 
     //@NotNull
@@ -73,19 +84,19 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
 
     //@NotNull
     @Column(name="account_non_expired", nullable = false)
-    private Boolean accountNonExpired=true;
+    private Boolean accountNonExpired = true;
 
     //@NotNull
     @Column(name="account_non_locked", nullable = false)
-    private Boolean accountNonLocked=true;
+    private Boolean accountNonLocked = true;
 
     //@NotNull
-    @Column(name="credentials_non_expired", nullable = false)
-    private Boolean credentialsNonExpired=true;
+    @Column(name="account_credentials_non_expired", nullable = false)
+    private Boolean credentialsNonExpired = true;
 
     //@NotNull
-    @Column(name="enabled", nullable = false)
-    private Boolean enabled=true;
+    @Column(name="account_enabled", nullable = false)
+    private Boolean enabled = true;
 
     @Transient
     @Override
@@ -103,137 +114,6 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
     @Override
     public boolean equalsByUuid(UserAccount otherObject) {
         return super.equalsByMyUuid(otherObject);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
-
-    public String getUserFullname() {
-        return userFullname;
-    }
-
-    public void setUserFullname(String userFullname) {
-        this.userFullname = userFullname;
-    }
-
-    public Date getLastLoginTimestamp() {
-        return lastLoginTimestamp;
-    }
-
-    public void setLastLoginTimestamp(Date lastLoginTimestamp) {
-        this.lastLoginTimestamp = lastLoginTimestamp;
-    }
-
-    public Context getDefaultContext() {
-        return defaultContext;
-    }
-
-    public void setDefaultContext(Context defaultContext) {
-        this.defaultContext = defaultContext;
-    }
-
-    public Language getDefaultLanguage() {
-        return defaultLanguage;
-    }
-
-    public void setDefaultLanguage(Language defaultLanguage) {
-        this.defaultLanguage = defaultLanguage;
-    }
-
-    public Boolean getAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    public void setAccountNonExpired(Boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public Boolean getAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    public void setAccountNonLocked(Boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public Boolean getCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserAccount)) return false;
-        if (!super.equals(o)) return false;
-        UserAccount that = (UserAccount) o;
-        return Objects.equals(getId(), that.getId()) &&
-                getUserEmail().equals(that.getUserEmail()) &&
-                getUserPassword().equals(that.getUserPassword()) &&
-                getUserFullname().equals(that.getUserFullname()) &&
-                getDefaultLanguage() == that.getDefaultLanguage() &&
-                getDefaultContext().equals(that.getDefaultContext()) &&
-                Objects.equals(getLastLoginTimestamp(), that.getLastLoginTimestamp()) &&
-                getAccountNonExpired().equals(that.getAccountNonExpired()) &&
-                getAccountNonLocked().equals(that.getAccountNonLocked()) &&
-                getCredentialsNonExpired().equals(that.getCredentialsNonExpired()) &&
-                getEnabled().equals(that.getEnabled());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getUserEmail(), getUserPassword(), getUserFullname(), getDefaultLanguage(), getDefaultContext(), getLastLoginTimestamp(), getAccountNonExpired(), getAccountNonLocked(), getCredentialsNonExpired(), getEnabled());
-    }
-
-    @Override
-    public String toString() {
-        return "UserAccount{" +
-                "id=" + id +
-                ", userEmail='" + userEmail + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userFullname='" + userFullname + '\'' +
-                ", defaultLanguage=" + defaultLanguage +
-                ", lastLoginTimestamp=" + lastLoginTimestamp +
-                ", accountNonExpired=" + accountNonExpired +
-                ", accountNonLocked=" + accountNonLocked +
-                ", credentialsNonExpired=" + credentialsNonExpired +
-                ", enabled=" + enabled +
-                ", uuid='" + uuid + '\'' +
-                ", rowCreatedAt=" + rowCreatedAt +
-                ", rowUpdatedAt=" + rowUpdatedAt +
-                '}';
     }
 
 }

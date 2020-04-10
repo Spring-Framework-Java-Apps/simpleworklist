@@ -11,12 +11,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
-        value = {"rowCreatedAt", "rowUpdatedAt"},
-        allowGetters = true
+    value = {"rowCreatedAt", "rowUpdatedAt"},
+    allowGetters = true
 )
 public class AuditModel implements Serializable {
 
@@ -25,14 +24,14 @@ public class AuditModel implements Serializable {
     @Column(name="uuid", nullable = false)
     protected String uuid;
 
+    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "row_created_at", nullable = false, updatable = false)
-    @CreatedDate
     protected Date rowCreatedAt;
 
+    @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "row_updated_at", nullable = false)
-    @LastModifiedDate
     protected Date rowUpdatedAt;
 
     public String getUuid() {

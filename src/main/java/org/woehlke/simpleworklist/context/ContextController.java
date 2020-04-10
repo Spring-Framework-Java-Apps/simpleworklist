@@ -29,16 +29,18 @@ public class ContextController extends AbstractController {
 
     @RequestMapping(path = "/choose/{newContextId}", method = RequestMethod.GET)
     public String switchContxt(
-        @PathVariable("newContextId") Context setContext,
+        @PathVariable("newContextId") Context newContext,
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ){
         log.info("switchContxt");
-        Context isContext = super.getContext(userSession);
-        if (setContext != null) {
-            userSession.setContextId(setContext.getId());
+        Context oldContext = super.getContext(userSession);
+        if (newContext != null) {
+            userSession.setLastContextId(newContext.getId());
+        } else {
+            userSession.setLastContextId(oldContext.getId());
         }
-        model.addAttribute("userSession",userSession);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/inbox";
     }
 }

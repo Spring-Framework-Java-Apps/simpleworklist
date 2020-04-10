@@ -35,13 +35,13 @@ serialver org.woehlke.simpleworklist.breadcrumb.Breadcrumb  >> ..\..\etc\serialv
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.NewContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.messages.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.search.SearchResult >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.searchRequest.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.language.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> ..\..\etc\serialversions.txt
-@rem serialver org.woehlke.simpleworklist.user.UserDetailsBean >> ..\..\etc\serialversions.txt
+@rem serialver org.woehlke.simpleworklist.user.account.UserDetailsBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.session.UserSessionBean >> ..\..\etc\serialversions.txt
 cd ..\..

@@ -38,8 +38,8 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Context extends AuditModel implements Serializable, ComparableById<Context> {
 
     private static final long serialVersionUID = -5035732370606951871L;

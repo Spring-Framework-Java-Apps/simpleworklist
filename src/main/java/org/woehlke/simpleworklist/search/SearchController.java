@@ -32,7 +32,7 @@ public class SearchController extends AbstractController {
        this.searchService = searchService;
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "", method = RequestMethod.GET)
     public final String searchResults(
             @RequestParam String searchterm,
             @ModelAttribute("userSession") UserSessionBean userSession,
@@ -40,14 +40,13 @@ public class SearchController extends AbstractController {
     ) {
         log.info("searchResults");
         Context context = super.getContext(userSession);
-        UserAccount thisUser = context.getUserAccount();
         userSession.setLastSearchterm(searchterm);
-        model.addAttribute("userSession",userSession);
+        model.addAttribute("userSession", userSession);
         log.info("Search: "+ searchterm);
-        SearchResult searchResult = searchService.search(searchterm, thisUser);
+        SearchResult searchResult = searchService.search(searchterm, context);
         log.info("found: "+ searchResult.toString());
-        model.addAttribute("searchResult",searchResult);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale);
+        model.addAttribute("searchResult",searchResult);
         model.addAttribute("breadcrumb",breadcrumb);
         return "search/resultlist";
     }
