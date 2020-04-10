@@ -17,7 +17,7 @@ public interface ProjectService {
     //@Deprecated
     //List<Project> findAllProjectsByUserAccount(UserAccount user);
 
-    void moveProjectToAnotherProject(Project thisProject, Project targetProject);
+    Project moveProjectToAnotherProject(Project thisProject, Project targetProject);
 
     Project findByProjectId(long categoryId);
 

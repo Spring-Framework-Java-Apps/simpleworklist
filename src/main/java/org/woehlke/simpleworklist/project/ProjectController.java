@@ -155,7 +155,7 @@ public class ProjectController extends AbstractController {
         log.info("private addNewProjectGet (GET) projectId="+projectId);
         Context context = super.getContext(userSession);
         projectControllerService.addNewProject(projectId, userSession, context, locale, model);
-        return "project/id/add/project";
+        return "project/id/project/add";
     }
 
     @RequestMapping(path = "/project/add", method = {RequestMethod.POST})
@@ -175,7 +175,7 @@ public class ProjectController extends AbstractController {
             result,
             locale,
             model ,
-            "/add/project"
+            "project/id/project/add"
         );
     }
 
@@ -191,8 +191,8 @@ public class ProjectController extends AbstractController {
         userSession.setLastProjectId(thisProject.getId());
         model.addAttribute("userSession",userSession);
         Project targetProject = projectService.findByProjectId(targetProjectId);
-        projectService.moveProjectToAnotherProject(thisProject, targetProject );
-        return "redirect:/project/" + thisProject.getId();
+        thisProject = projectService.moveProjectToAnotherProject(thisProject, targetProject );
+        return thisProject.getUrl();
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.GET)
@@ -225,16 +225,17 @@ public class ProjectController extends AbstractController {
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession", userSession);
+        Project thisProject;
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 log.info(e.toString());
             }
-            Project thisProject = projectService.findByProjectId(projectId);
+            thisProject = projectService.findByProjectId(projectId);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             return "project/id/edit";
         } else {
-            Project thisProject = projectService.findByProjectId(project.getId());
+            thisProject = projectService.findByProjectId(project.getId());
             thisProject.setName(project.getName());
             thisProject.setDescription(project.getDescription());
             Context newContext = project.getContext();
@@ -242,12 +243,14 @@ public class ProjectController extends AbstractController {
             if(contextChanged){
                 long newContextId = newContext.getId();
                 newContext = contextService.findByIdAndUserAccount(newContextId, thisUser);
-                projectService.moveProjectToAnotherContext(thisProject, newContext);
-                model.addAttribute("userSession", new UserSessionBean(newContextId));
+                thisProject = projectService.moveProjectToAnotherContext(thisProject, newContext);
+                userSession.setLastContextId(newContextId);
             } else {
-                projectService.saveAndFlush(thisProject);
+                thisProject = projectService.saveAndFlush(thisProject);
             }
-            return "redirect:/project/" + projectId;
+            userSession.setLastProjectId(thisProject.getId());
+            model.addAttribute("userSession", userSession);
+            return thisProject.getUrl();
         }
     }
 

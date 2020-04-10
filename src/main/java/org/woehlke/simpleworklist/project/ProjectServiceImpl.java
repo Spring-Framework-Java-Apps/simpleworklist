@@ -121,7 +121,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveProjectToAnotherProject(
+    public Project moveProjectToAnotherProject(
         Project thisProject,
         Project targetProject
     ) {
@@ -132,6 +132,6 @@ public class ProjectServiceImpl implements ProjectService {
             projectRepository.saveAndFlush(oldParent);
         }
         thisProject.setParent(targetProject);
-        projectRepository.saveAndFlush(thisProject);
+        return projectRepository.saveAndFlush(thisProject);
     }
 }
