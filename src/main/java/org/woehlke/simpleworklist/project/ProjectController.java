@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Created by tw on 14.02.16.
@@ -86,6 +87,7 @@ public class ProjectController extends AbstractController {
         if (result.hasErrors()) {
             return "project/root/add/project";
         } else {
+            project.setUuid(UUID.randomUUID().toString());
             return projectControllerService.addNewProjectToRootPersist(
                 userSession,
                 project,
