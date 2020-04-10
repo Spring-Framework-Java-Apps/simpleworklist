@@ -23,8 +23,8 @@ public interface ProjectService {
 
     Project saveAndFlush(Project project);
 
-    void delete(Project project);
+    Project delete(Project project);
 
-    void moveProjectToAnotherContext(Project thisProject, Context newContext);
+    Project moveProjectToAnotherContext(Project thisProject, Context newContext);
 
 }

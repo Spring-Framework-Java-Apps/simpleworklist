@@ -49,8 +49,7 @@ public interface ProjectControllerService {
         Context context,
         BindingResult result,
         Locale locale,
-        Model model,
-        String s
+        Model model
     );
 
     String transformTaskIntoProjectGet(Task task);

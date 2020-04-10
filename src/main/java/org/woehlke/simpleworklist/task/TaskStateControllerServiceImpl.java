@@ -15,13 +15,13 @@ import java.util.Locale;
 
 @Slf4j
 @Service
-public class TaskControllerServiceImpl implements TaskControllerService {
+public class TaskStateControllerServiceImpl implements TaskStateControllerService {
 
     private final BreadcrumbService breadcrumbService;
     private final TaskService taskService;
 
     @Autowired
-    public TaskControllerServiceImpl(
+    public TaskStateControllerServiceImpl(
         BreadcrumbService breadcrumbService,
         TaskService taskService
     ) {

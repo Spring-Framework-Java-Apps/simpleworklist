@@ -10,23 +10,28 @@ import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.task.Task;
+import org.woehlke.simpleworklist.task.TaskService;
 import org.woehlke.simpleworklist.user.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import java.util.List;
 import java.util.Locale;
 
+import static org.woehlke.simpleworklist.project.Project.rootProjectId;
+
 @Slf4j
 @Service
 public class ProjectControllerServiceImpl implements ProjectControllerService {
 
     private final ProjectService projectService;
+    private final TaskService taskService;
     private final ContextService contextService;
     private final BreadcrumbService breadcrumbService;
 
     @Autowired
-    public ProjectControllerServiceImpl(ProjectService projectService, ContextService contextService, BreadcrumbService breadcrumbService) {
+    public ProjectControllerServiceImpl(ProjectService projectService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
         this.projectService = projectService;
+        this.taskService = taskService;
         this.contextService = contextService;
         this.breadcrumbService = breadcrumbService;
     }
@@ -48,7 +53,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             thisProject = new Project();
             thisProject.setId(0L);
             project = Project.newRootProjectFactory(userAccount);
-            if(userSession.getContextId() == 0L){
+            if(userSession.getLastContextId() == 0L){
                 model.addAttribute("mustChooseArea", true);
                 project.setContext(userAccount.getDefaultContext());
             } else {
@@ -92,7 +97,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             return template;
         } else {
             if (projectId == 0) {
-                if(userSession.getContextId()>0) {
+                if(userSession.getLastContextId()>0) {
                     project.setContext(context);
                 }
                 project = projectService.saveAndFlush(project);
@@ -118,10 +123,10 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
-            if(userSession.getContextId() == 0L){
+            if(userSession.getLastContextId() == 0L){
                 thisProject.setContext(userAccount.getDefaultContext());
             } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), userAccount);
                 thisProject.setContext(context);
             }
         } else {
@@ -140,12 +145,13 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         log.info("addNewProjectToRoot");
         Project project;
         project = new Project();
-        project.setId(0L);
+        project.setId(rootProjectId);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("project", project);
         model.addAttribute("thisProjectId", project.getId());
         model.addAttribute("breadcrumb", breadcrumb);
+        userSession.setLastProjectId(rootProjectId);
     }
 
     @Override
@@ -155,35 +161,31 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Context context,
         BindingResult result,
         Locale locale,
-        Model model,
-        String s
+        Model model
     ) {
         log.info("addNewProjectToRootPersist");
         project = projectService.saveAndFlush(project);
-        return s + project.getId();
+        userSession.setLastProjectId(project.getId());
+        return project.getUrl();
     }
 
     @Override
     public String transformTaskIntoProjectGet(Task task) {
-        if(task != null) {
-            long projectId = 0;
-            if (task.getProject() != null) {
-                projectId = task.getProject().getId();
-            }
+        Project thisProject = new Project();
+        thisProject.setName(task.getTitle());
+        thisProject.setDescription(task.getText());
+        thisProject.setUuid(task.getUuid());
+        thisProject.setContext(task.getContext());
+        if (task.getProject() != null) {
+            long projectId = task.getProject().getId();
             Project parentProject = projectService.findByProjectId(projectId);
-            Project thisProject = new Project();
             thisProject.setParent(parentProject);
-            thisProject.setName(task.getTitle());
-            thisProject.setDescription(task.getText());
-            thisProject.setUuid(task.getUuid());
-            thisProject.setContext(task.getContext());
-            thisProject = projectService.saveAndFlush(thisProject);
-            task.emptyTrash();
-            //taskService.updatedViaTaskstate(task);
-            projectId = thisProject.getId();
-            log.info("tried to transform Task " + task.getId() + " to new Project " + projectId);
-            return thisProject.getUrl();
         }
-        return "redirect:/project/root";
+        thisProject = projectService.saveAndFlush(thisProject);
+        task.moveToTrash();
+        task.emptyTrash();
+        taskService.updatedViaTaskstate(task);
+        log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
+        return thisProject.getUrl();
     }
 }

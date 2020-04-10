@@ -19,23 +19,30 @@ public class UserSessionBean implements Serializable {
 
     private static final long serialVersionUID = -6649686058228455825L;
 
-    private Long contextId;
-    private TaskState lastTaskState;
+    private Long userAccountid;
+    private Long lastContextId;
     private Long lastProjectId;
-    private String lastSearchterm;
+    private Long lastTaskId;
+    private TaskState lastTaskState;
+    private String lastSearchterm; //TODO: Make SearchRequest to Entity
 
     public UserSessionBean(){
-        lastSearchterm="";
+        lastSearchterm=""; //TODO: Make SearchRequest to Entity
         lastTaskState=TaskState.INBOX;
         lastProjectId=0L;
-        contextId=0L;
+        lastContextId=0L;
+        lastTaskId=0L;
+        userAccountid=0L;
     }
 
+    @Deprecated
     public UserSessionBean(long contextId){
-        lastSearchterm="";
+        this.lastContextId = contextId;
+        lastSearchterm=""; //TODO: Make SearchRequest to Entity
         lastTaskState=TaskState.INBOX;
         lastProjectId=0L;
-        this.contextId = contextId;
+        lastTaskId=0L;
+        userAccountid=0L;
     }
 
 }

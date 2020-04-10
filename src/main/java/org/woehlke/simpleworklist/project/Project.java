@@ -42,6 +42,7 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
+    public final static long rootProjectId = 0L;
 
     @Id
     @GeneratedValue(generator = "project_generator")

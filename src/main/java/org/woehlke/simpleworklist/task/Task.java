@@ -243,7 +243,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
 
     public void emptyTrash(){
         if(this.taskState == TaskState.TRASH){
-            pushTaskstate(TaskState.TRASH);
+            pushTaskstate(TaskState.DELETED);
         }
     }
 

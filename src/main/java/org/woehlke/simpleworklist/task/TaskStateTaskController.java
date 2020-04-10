@@ -1,7 +1,6 @@
-package org.woehlke.simpleworklist.project;
+package org.woehlke.simpleworklist.task;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,25 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.task.*;
+import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.user.UserSessionBean;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Created by tw on 21.02.16.
+ */
 @Slf4j
 @Controller
-@RequestMapping(path = "/project/task")
-public class ProjectTaskController extends AbstractController {
+@RequestMapping(path = "/taskstate/task")
+public class TaskStateTaskController extends AbstractController {
 
-    private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
 
     @Autowired
-    public ProjectTaskController(ProjectControllerService projectControllerService, TaskService taskService) {
-        this.projectControllerService = projectControllerService;
+    public TaskStateTaskController(
+        TaskService taskService
+    ) {
         this.taskService = taskService;
     }
 
@@ -44,11 +48,11 @@ public class ProjectTaskController extends AbstractController {
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
         Boolean mustChooseContext = false;
-        if(userSession.getContextId() == 0L){
+        if(userSession.getLastContextId() == 0L){
             mustChooseContext = true;
             task.setContext(userAccount.getDefaultContext());
         } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+            Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), userAccount);
             task.setContext(context);
         }
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale);
@@ -56,7 +60,7 @@ public class ProjectTaskController extends AbstractController {
         model.addAttribute("mustChooseArea", mustChooseContext);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "project/task/add";
+        return "taskstate/task/add";
     }
 
     @RequestMapping(path = "/add",  method = RequestMethod.POST)
@@ -79,7 +83,7 @@ public class ProjectTaskController extends AbstractController {
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            return "project/task/add";
+            return "taskstate/task/add";
         } else {
             task = taskService.addToInbox(task);
             log.info(task.toString());
@@ -111,7 +115,7 @@ public class ProjectTaskController extends AbstractController {
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
-            return "project/task/edit";
+            return "taskstate/task/edit";
         } else {
             return "redirect:/taskstate/inbox";
         }
@@ -151,7 +155,7 @@ public class ProjectTaskController extends AbstractController {
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
-            return "project/task/edit";
+            return "taskstate/task/edit";
         } else {
             task.unsetFocus();
             task.setRootProject();
@@ -162,9 +166,9 @@ public class ProjectTaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(path = "/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
     public String changeTaskOrderId(
-        @PathVariable("sourceTaskId") Task sourceTask,
+        @PathVariable("taskId") Task sourceTask,
         @PathVariable("destinationTaskId") Task destinationTask,
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
@@ -177,7 +181,7 @@ public class ProjectTaskController extends AbstractController {
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
         taskService.moveOrderIdTaskState(sourceTask, destinationTask);
-        return "redirect:/project/" + sourceTask.getTaskState().name().toLowerCase();
+        return "redirect:/taskstate/" + sourceTask.getTaskState().name().toLowerCase();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
