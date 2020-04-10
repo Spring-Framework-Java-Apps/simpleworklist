@@ -65,7 +65,7 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
             Project parentProject = projectService.findByProjectId(projectId);
             thisProject.setParent(parentProject);
         }
-        thisProject = projectService.saveAndFlush(thisProject);
+        thisProject = projectService.add(thisProject);
         task.setProject(null);
         task.moveToTrash();
         task.emptyTrash();
