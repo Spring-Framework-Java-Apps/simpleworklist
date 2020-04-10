@@ -178,20 +178,20 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="taskModalScrollableTitle">
                             <a th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
-                               th:href="@{/task/complete/{id}(id=${task.id})}">
+                               th:href="@{/taskstate/task/complete/{id}(id=${task.id})}">
                                 <i class="far fa-square"></i>
                             </a>
                             <a th:if="${task.taskState.name() eq 'COMPLETED'}"
-                               th:href="@{/task/incomplete/{id}(id=${task.id})}" >
+                               th:href="@{/taskstate/task/incomplete/{id}(id=${task.id})}" >
                                 <i class="fas fa-check-square"></i>
                             </a>
                             <i class="fas fa-trash-alt" th:if="${task.taskState.name() eq 'TRASHED'}"></i>
                             <a th:if="${task.focus}"
-                               th:href="@{/task/unsetfocus/{id}(id=${task.id})}">
+                               th:href="@{/taskstate/task/unsetfocus/{id}(id=${task.id})}">
                                 <i class="fas fa-star"></i>
                             </a>
                             <a th:if="${not task.focus}"
-                               th:href="@{/task/setfocus/{id}(id=${task.id})}">
+                               th:href="@{/taskstate/task/setfocus/{id}(id=${task.id})}">
                                 <i class="far fa-star"></i>
                             </a>
                             <span th:text="${task.title}">Modal title</span>
