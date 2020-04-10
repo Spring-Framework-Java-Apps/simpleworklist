@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,15 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project saveAndFlush(Project entity) {
+    public Project add(Project entity) {
+        log.info("saveAndFlush");
+        entity.setUuid(UUID.randomUUID().toString());
+        return projectRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public Project update(Project entity) {
         log.info("saveAndFlush");
         return projectRepository.saveAndFlush(entity);
     }

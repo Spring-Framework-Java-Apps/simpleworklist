@@ -100,7 +100,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
                 if(userSession.getLastContextId()>0) {
                     project.setContext(context);
                 }
-                project = projectService.saveAndFlush(project);
+                project = projectService.add(project);
                 projectId = project.getId();
             } else {
                 Project thisProject = projectService.findByProjectId(projectId);
@@ -108,7 +108,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
                 children.add(project);
                 thisProject.setChildren(children);
                 project.setParent(thisProject);
-                project = projectService.saveAndFlush(project);
+                project = projectService.add(project);
                 projectId = project.getId();
                 log.info("project:     "+ project.toString());
                 log.info("thisProject: "+ thisProject.toString());
@@ -164,7 +164,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Model model
     ) {
         log.info("addNewProjectToRootPersist");
-        project = projectService.saveAndFlush(project);
+        project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
         return project.getUrl();
     }

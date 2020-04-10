@@ -246,7 +246,7 @@ public class ProjectController extends AbstractController {
                 thisProject = projectService.moveProjectToAnotherContext(thisProject, newContext);
                 userSession.setLastContextId(newContextId);
             } else {
-                thisProject = projectService.saveAndFlush(thisProject);
+                thisProject = projectService.update(thisProject);
             }
             userSession.setLastProjectId(thisProject.getId());
             model.addAttribute("userSession", userSession);
