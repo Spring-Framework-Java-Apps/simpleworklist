@@ -9,23 +9,29 @@ import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.context.ContextService;
-import org.woehlke.simpleworklist.user.UserSessionBean;
+import org.woehlke.simpleworklist.task.Task;
+import org.woehlke.simpleworklist.task.TaskService;
+import org.woehlke.simpleworklist.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import java.util.List;
 import java.util.Locale;
+
+import static org.woehlke.simpleworklist.project.Project.rootProjectId;
 
 @Slf4j
 @Service
 public class ProjectControllerServiceImpl implements ProjectControllerService {
 
     private final ProjectService projectService;
+    private final TaskService taskService;
     private final ContextService contextService;
     private final BreadcrumbService breadcrumbService;
 
     @Autowired
-    public ProjectControllerServiceImpl(ProjectService projectService, ContextService contextService, BreadcrumbService breadcrumbService) {
+    public ProjectControllerServiceImpl(ProjectService projectService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
         this.projectService = projectService;
+        this.taskService = taskService;
         this.contextService = contextService;
         this.breadcrumbService = breadcrumbService;
     }
@@ -47,7 +53,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             thisProject = new Project();
             thisProject.setId(0L);
             project = Project.newRootProjectFactory(userAccount);
-            if(userSession.getContextId() == 0L){
+            if(userSession.getLastContextId() == 0L){
                 model.addAttribute("mustChooseArea", true);
                 project.setContext(userAccount.getDefaultContext());
             } else {
@@ -91,10 +97,10 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             return template;
         } else {
             if (projectId == 0) {
-                if(userSession.getContextId()>0) {
+                if(userSession.getLastContextId()>0) {
                     project.setContext(context);
                 }
-                project = projectService.saveAndFlush(project);
+                project = projectService.add(project);
                 projectId = project.getId();
             } else {
                 Project thisProject = projectService.findByProjectId(projectId);
@@ -102,7 +108,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
                 children.add(project);
                 thisProject.setChildren(children);
                 project.setParent(thisProject);
-                project = projectService.saveAndFlush(project);
+                project = projectService.add(project);
                 projectId = project.getId();
                 log.info("project:     "+ project.toString());
                 log.info("thisProject: "+ thisProject.toString());
@@ -117,10 +123,10 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         if (projectId == 0) {
             thisProject = new Project();
             thisProject.setId(0L);
-            if(userSession.getContextId() == 0L){
+            if(userSession.getLastContextId() == 0L){
                 thisProject.setContext(userAccount.getDefaultContext());
             } else {
-                Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+                Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), userAccount);
                 thisProject.setContext(context);
             }
         } else {
@@ -139,12 +145,13 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         log.info("addNewProjectToRoot");
         Project project;
         project = new Project();
-        project.setId(0L);
+        project.setId(rootProjectId);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("project", project);
         model.addAttribute("thisProjectId", project.getId());
         model.addAttribute("breadcrumb", breadcrumb);
+        userSession.setLastProjectId(rootProjectId);
     }
 
     @Override
@@ -154,11 +161,11 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Context context,
         BindingResult result,
         Locale locale,
-        Model model,
-        String s
+        Model model
     ) {
         log.info("addNewProjectToRootPersist");
-        project = projectService.saveAndFlush(project);
-        return s + project.getId();
+        project = projectService.add(project);
+        userSession.setLastProjectId(project.getId());
+        return project.getUrl();
     }
 }

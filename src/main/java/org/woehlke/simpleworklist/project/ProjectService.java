@@ -3,7 +3,6 @@ package org.woehlke.simpleworklist.project;
 import java.util.List;
 
 import org.woehlke.simpleworklist.context.Context;
-//import org.woehlke.simpleworklist.user.account.UserAccount;
 
 public interface ProjectService {
 
@@ -11,20 +10,16 @@ public interface ProjectService {
 
     List<Project> findAllProjectsByContext(Context context);
 
-    //@Deprecated
-    //List<Project> findRootProjectsByUserAccount(UserAccount userAccount);
+    Project moveProjectToAnotherProject(Project thisProject, Project targetProject);
 
-    //@Deprecated
-    //List<Project> findAllProjectsByUserAccount(UserAccount user);
+    Project findByProjectId(long projectId);
 
-    void moveProjectToAnotherProject(Project thisProject, Project targetProject);
+    Project add(Project project);
 
-    Project findByProjectId(long categoryId);
+    Project update(Project project);
 
-    Project saveAndFlush(Project project);
+    Project delete(Project project);
 
-    void delete(Project project);
-
-    void moveProjectToAnotherContext(Project thisProject, Context newContext);
+    Project moveProjectToAnotherContext(Project thisProject, Context newContext);
 
 }

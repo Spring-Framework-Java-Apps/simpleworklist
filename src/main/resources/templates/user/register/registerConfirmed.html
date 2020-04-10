@@ -17,7 +17,7 @@
 
 <div th:fragment="mytwcontent">
 	<div class="card card-body">
-		<form id="formId" th:action="@{/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountForm}" method="post">
+		<form id="formId" th:action="@{/user/register/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountForm}" method="post">
 			<input type="hidden" th:field="*{userEmail}" />
 			<div class="form-group">
 				<label th:for="${#ids.next('userFullname')}" class="control-label">

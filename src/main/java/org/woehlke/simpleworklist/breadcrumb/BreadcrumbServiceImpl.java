@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.taskstate.TaskState;
+import org.woehlke.simpleworklist.task.TaskState;
 
 import java.util.Locale;
 import java.util.Stack;
@@ -39,6 +39,9 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
         log.info("getBreadcrumbForShowOneProject");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         breadcrumb.addProjectRoot();
+        if(thisProject == null){
+            return breadcrumb;
+        } else {
             if (thisProject.getId() > 0) {
                 Stack<Project> stack = new Stack<>();
                 Project breadcrumbProject = thisProject;
@@ -50,7 +53,8 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
                     breadcrumb.addProject(stack.pop());
                 }
             }
-        return breadcrumb;
+            return breadcrumb;
+        }
     }
 
     @Override

@@ -20,7 +20,7 @@ function setupHeroku() {
 }
 
 function buildLikeHerokuWithSite() {
-   ./mvnw -DskipTests clean dependency:list install site site:deploy
+   ./mvnw -DskipTests=true clean dependency:list install site site:deploy
 }
 
 function buildLikeHeroku() {
@@ -34,13 +34,29 @@ function runHerokuLocal() {
     heroku open
 }
 
-function main() {
-    #runGithubTestBuild
-    #setupHeroku
+function setup() {
+   setupHeroku
+}
+
+function build() {
+    buildLikeHerokuWithSite
     #buildLikeHeroku
+    #runGithubTestBuild
+}
+
+function testing() {
+   runTest
+}
+
+function run() {
     #runHerokuLocal
-    #runDev
-    runTest
+    runDev
+}
+
+function main() {
+    #build
+    run
 }
 
 main
+

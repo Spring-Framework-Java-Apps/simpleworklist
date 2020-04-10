@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.search;
 
+import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 /**
@@ -7,7 +8,9 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
  */
 public interface SearchService {
 
-    SearchResult search(String searchterm, UserAccount userAccount);
+    SearchResult search(SearchRequest searchRequest);
+
+    SearchResult search(String searchterm, Context context);
 
     void resetSearchIndex();
 

@@ -1,8 +1,6 @@
 package org.woehlke.simpleworklist.user.selfservice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.UserDetailsBean;
+import org.woehlke.simpleworklist.user.account.UserDetailsBean;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 
 @Slf4j

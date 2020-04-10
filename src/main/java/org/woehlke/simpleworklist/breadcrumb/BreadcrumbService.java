@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.breadcrumb;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.taskstate.TaskState;
+import org.woehlke.simpleworklist.task.TaskState;
 
 import java.util.Locale;
 

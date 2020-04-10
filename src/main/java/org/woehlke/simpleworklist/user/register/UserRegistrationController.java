@@ -35,8 +35,9 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public final String registerNewUserRequestForm(Model model) {
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public final String registerGet(Model model) {
+        log.info("registerGet");
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
         return "user/register/registerForm";
@@ -50,12 +51,13 @@ public class UserRegistrationController {
      * @param model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    public final String registerNewUserRequestStoreAndSendEmailForVerification(
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public final String registerPost(
             @Valid UserRegistrationForm userRegistrationForm,
             BindingResult result,
             Model model
     ) {
+        log.info("registerPost");
         if (result.hasErrors()) {
             return "user/register/registerForm";
         } else {
@@ -91,10 +93,11 @@ public class UserRegistrationController {
      * @return Formular for Entering Account Task or Error Messages.
      */
     @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
-    public final String registerNewUserCheckResponseAndRegistrationForm(
+    public final String registerConfirmGet(
         @PathVariable String confirmId,
         Model model
     ) {
+        log.info("registerConfirmGet");
         log.info("GET /confirm/" + confirmId);
         UserRegistration o = userRegistrationService.findByToken(confirmId);
         if (o != null) {
@@ -118,12 +121,13 @@ public class UserRegistrationController {
      * @return login page at success or page with error messages.
      */
     @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
-    public final String registerNewUserCheckResponseAndRegistrationStore(
+    public final String registerConfirmPost(
         @PathVariable String confirmId,
         @Valid UserAccountForm userAccountForm,
         BindingResult result,
         Model model
     ) {
+        log.info("registerConfirmPost");
         log.info("POST /confirm/" + confirmId + " : " + userAccountForm.toString());
         userRegistrationService.registrationCheckIfResponseIsInTime(userAccountForm.getUserEmail());
         UserRegistration oUserRegistration = userRegistrationService.findByToken(confirmId);

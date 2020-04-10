@@ -29,7 +29,7 @@ echo "CLASSPATH $CLASSPATH"
 cd $CLASSES_PATH
 serialver org.woehlke.simpleworklist.language.Language > $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskEnergy >> $SERIALVERSIONS_FILE
-serialver org.woehlke.simpleworklist.taskstate.TaskState >> $SERIALVERSIONS_FILE
+serialver org.woehlke.simpleworklist.task.TaskState >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.task.TaskTime >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> $SERIALVERSIONS_FILE
@@ -53,7 +53,7 @@ serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> $SE
 serialver org.woehlke.simpleworklist.language.UserChangeLanguageForm  >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> $SERIALVERSIONS_FILE
-#serialver org.woehlke.simpleworklist.user.UserDetailsBean >> $SERIALVERSIONS_FILE
+#serialver org.woehlke.simpleworklist.user.account.UserDetailsBean >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> $SERIALVERSIONS_FILE
 serialver org.woehlke.simpleworklist.user.UserSessionBean >> $SERIALVERSIONS_FILE
 cd $PROJECT_PATH

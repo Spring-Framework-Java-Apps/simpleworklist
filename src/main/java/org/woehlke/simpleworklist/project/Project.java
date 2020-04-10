@@ -3,11 +3,14 @@ package org.woehlke.simpleworklist.project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.*;
 import javax.persistence.Index;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
@@ -31,9 +34,14 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
         @Index(name = "ix_project_row_created_at", columnList = "row_created_at")
     }
 )
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "children")
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
+    public final static long rootProjectId = 0L;
 
     @Id
     @GeneratedValue(generator = "project_generator")
@@ -45,43 +53,51 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     private Long id;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = true,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
+        fetch = FetchType.LAZY,
+        optional = true,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        }
     )
     @JoinColumn(name = "parent_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project parent;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = false,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            }
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        }
     )
     @JoinColumn(name = "context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
-    @SafeHtml(whitelistType=SafeHtml.WhiteListType.NONE)
+    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
-    @Length(min=1,max=255)
-    @Column(name="name",nullable = false)
+    @Length(min = 1, max = 255)
+    @Column(name = "name", nullable = false)
     private String name;
 
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
-    @NotBlank
-    @Length(min=0,max=65535)
-    @Column(name="description", nullable = true, length = 65535, columnDefinition="text")
+    @Length(min = 0, max = 65535)
+    @Column(name = "description", nullable = true, length = 65535, columnDefinition = "text")
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = { CascadeType.ALL })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = {CascadeType.ALL})
     private List<Project> children = new ArrayList<>();
+
+    @Transient
+    public String getUrl() {
+        if (this.getId() == null || this.getId() == 0L) {
+            return "redirect:/project/root";
+        } else {
+            return "redirect:/project/" + this.getId();
+        }
+    }
 
     @Transient
     public boolean hasNoChildren() {
@@ -108,7 +124,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @Override
     public boolean equalsByUniqueConstraint(Project otherObject) {
         boolean okParent;
-        if(this.isRootProject()){
+        if (this.isRootProject()) {
             okParent = (otherObject.isRootProject());
         } else {
             okParent = this.getParent().equalsByUniqueConstraint(otherObject.getParent());
@@ -137,92 +153,19 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return n;
     }
 
-    public static Project newRootProjectFactory(UserAccount userAccount,Context context) {
+    public static Project newRootProjectFactory(Context context) {
         Project n = new Project();
         n.setParent(null);
         n.setContext(context);
         return n;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Project getParent() {
-        return parent;
-    }
-
-    public void setParent(Project parent) {
-        this.parent = parent;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Project> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Project> children) {
-        this.children = children;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Project)) return false;
-        if (!super.equals(o)) return false;
-        Project project = (Project) o;
-        return Objects.equals(getId(), project.getId()) &&
-                Objects.equals(getParent(), project.getParent()) &&
-                getContext().equals(project.getContext()) &&
-                getName().equals(project.getName()) &&
-                getDescription().equals(project.getDescription()) &&
-                getChildren().equals(project.getChildren());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getParent(), getContext(), getName(), getDescription(), getChildren());
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", parent=" + parent +
-                ", context=" + context +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", uuid='" + uuid + '\'' +
-                ", rowCreatedAt=" + rowCreatedAt +
-                ", rowUpdatedAt=" + rowUpdatedAt +
-                '}';
+    //TODO: use newRootProjectFactory(Context context);
+    @Deprecated
+    public static Project newRootProjectFactory(UserAccount userAccount, Context context) {
+        return newRootProjectFactory(context);
     }
 
 }
+

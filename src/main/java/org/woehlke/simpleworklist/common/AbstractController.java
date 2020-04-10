@@ -9,6 +9,7 @@ import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.TaskService;
+import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskTime;
@@ -16,14 +17,17 @@ import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.project.ProjectService;
 import org.woehlke.simpleworklist.user.messages.User2UserMessageService;
 import org.woehlke.simpleworklist.user.account.UserAccountService;
-import org.woehlke.simpleworklist.user.UserSessionBean;
+import org.woehlke.simpleworklist.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.login.UserAccountLoginSuccessService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static java.util.Locale.GERMAN;
 
 /**
  * Created by tw on 14.02.16.
@@ -58,17 +62,23 @@ public abstract class AbstractController {
     @Autowired
     protected BreadcrumbService breadcrumbService;
 
+    //TODO: rename allCategories to allProjects
     @ModelAttribute("allCategories")
-    public final List<Project> getAllCategories(@ModelAttribute("userSession") UserSessionBean userSession,
-                                                BindingResult result, Model model) {
+    public final List<Project> getAllCategories(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        BindingResult result, //TODO: remove
+        Model model  //TODO: remove
+    ) {
         Context context = this.getContext(userSession);
         return projectService.findAllProjectsByContext(context);
     }
 
+    //TODO: rename rootCategories to rootProjects
     @ModelAttribute("rootCategories")
     public final List<Project> getRootCategories(
-            @ModelAttribute("userSession") UserSessionBean userSession,
-             BindingResult result, Model model
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        BindingResult result,  //TODO: remove
+        Model model  //TODO: remove
     ) {
         Context context = this.getContext(userSession);
         return projectService.findRootProjectsByContext(context);
@@ -96,11 +106,28 @@ public abstract class AbstractController {
         return contextService.getAllForUser(user);
     }
 
+    @ModelAttribute("listTaskState")
+    public final List<TaskState> getTaskStates(){
+        List<TaskState> listTaskState = new ArrayList<>(TaskState.values().length);
+        for(TaskState taskState:TaskState.values()){
+            listTaskState.add(taskState);
+        }
+        return listTaskState;
+    }
+
     @ModelAttribute("context")
-    public final String getCurrentArea(@ModelAttribute("userSession") UserSessionBean userSession,
-                                       Locale locale){
-        Context context = this.getContext(userSession);
-        if(locale == Locale.GERMAN){
+    public final String getCurrentContext(
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Locale locale
+    ){
+        if(userSession == null){
+            userSession = new UserSessionBean();
+        }
+        Context context = getContext(userSession);
+        if(locale == null){
+            locale = Locale.ENGLISH;
+        }
+        if(locale == GERMAN){
             return context.getNameDe();
         } else {
             return context.getNameEn();
@@ -112,21 +139,21 @@ public abstract class AbstractController {
         return false;
     }
 
-    protected UserAccount getUser(){
+    protected UserAccount getUser() {
         return this.userAccountLoginSuccessService.retrieveCurrentUser();
     }
 
     protected Context getContext(UserSessionBean userSession){
         UserAccount thisUser = this.getUser();
-        long defaultContextId = thisUser.getDefaultContext().getId();
         if(userSession == null){
-            userSession = new UserSessionBean(defaultContextId);
+            userSession = new UserSessionBean();
+            long defaultContextId = thisUser.getDefaultContext().getId();
+            userSession.setLastContextId(defaultContextId);
         }
-        long contextId = userSession.getContextId();
-        if(contextId == 0){
-            userSession.setContextId(defaultContextId);
-        }
-        return contextService.findByIdAndUserAccount(contextId, thisUser);
+        Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), thisUser);
+        userSession.setLastContextId(context.getId());
+        userSession.setUserAccountid(thisUser.getId());
+        return context;
     }
 
 }

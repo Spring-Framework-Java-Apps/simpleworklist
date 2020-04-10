@@ -12,14 +12,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.TaskEnergy;
-import org.woehlke.simpleworklist.task.TaskTime;
-import org.woehlke.simpleworklist.taskstate.TaskMoveService;
-import org.woehlke.simpleworklist.taskstate.TaskState;
+import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.user.UserSessionBean;
+import org.woehlke.simpleworklist.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
@@ -31,374 +27,21 @@ import java.util.Locale;
  */
 @Slf4j
 @Controller
-@RequestMapping(path = "/project")
+@RequestMapping(path = "/project/{projectId}")
 public class ProjectController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
-    private final TaskMoveService taskMoveService;
+    private final TaskService taskService;
 
     @Autowired
-    public ProjectController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService) {
+    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService) {
         this.projectControllerService = projectControllerService;
-        this.taskMoveService = taskMoveService;
+        this.taskService = taskService;
     }
 
-    @RequestMapping(path="/root", method = RequestMethod.GET)
-    public final String showRootProject(
-        @PageableDefault(sort = "orderIdProject", direction = Sort.Direction.DESC) Pageable pageable,
-        @RequestParam(required = false) String message,
-        @RequestParam(required = false) boolean isDeleted,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model
-    ) {
-        log.info("/project/root");
-        Context context = super.getContext(userSession);
-        userSession.setLastProjectId(0L);
-        model.addAttribute("userSession",userSession);
-        Page<Task> taskPage = taskService.findByRootProject(context,pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("taskPage", taskPage);
-        if(message != null){
-            model.addAttribute("message",message);
-            model.addAttribute("isDeleted",isDeleted);
-            model.addAttribute("myTaskState","PROJECT");
-        }
-        return "project/root/show";
-    }
-
-    @RequestMapping(path = "/root/add/project", method = RequestMethod.GET)
-    public final String addNewTopLevelProjectForm(
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model
-    ){
-        log.info("/project/root/add/project (GET)");
-        Context context = super.getContext(userSession);
-        projectControllerService.addNewProjectToRoot(userSession, context, locale, model);
-        return "project/root/add/project";
-    }
-
-    @RequestMapping(path = "/root/add/project", method = RequestMethod.POST)
-    public final String addNewTopLevelProjectSave(
-        @Valid Project project,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        BindingResult result,
-        Locale locale, Model model
-    ){
-        log.info("/project/root/add/project (POST)");
-        Context context = super.getContext(userSession);
-        return projectControllerService.addNewProjectToRootPersist(
-            userSession,
-            project,
-            context,
-            result,
-            locale,
-            model,
-            "redirect:/project/"
-        );
-    }
-
-    @RequestMapping(path = "/root/add/task", method = RequestMethod.GET)
-    public final String addNewTaskToRootProjectGet(
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model
-    ) {
-        log.info("/project/root/add/task (GET)");
-        Context context = super.getContext(userSession);
-        UserAccount userAccount = context.getUserAccount();
-        Task task = new Task();
-        task.setTaskState(TaskState.INBOX);
-        task.setTaskEnergy(TaskEnergy.NONE);
-        task.setTaskTime(TaskTime.NONE);
-        Project thisProject;
-        Boolean mustChooseArea = false;
-        thisProject = new Project();
-        thisProject.setId(0L);
-        if(userSession.getContextId() == 0L){
-            mustChooseArea = true;
-            task.setContext(userAccount.getDefaultContext());
-            thisProject.setContext(userAccount.getDefaultContext());
-        } else {
-            task.setContext(context);
-            thisProject.setContext(context);
-        }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("mustChooseArea", mustChooseArea);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("thisProjectId", thisProject.getId());
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("task", task);
-        return "project/root/add/task";
-    }
-
-    @RequestMapping(path = "/root/add/task", method = RequestMethod.POST)
-    public final String addNewTaskToRootProjectPost(
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        @Valid Task task,
-        BindingResult result, Locale locale, Model model
-    ) {
-        log.info("/project/root/add/task (POST)");
-        Context context = super.getContext(userSession);
-        if (result.hasErrors()) {
-            for (ObjectError e : result.getAllErrors()) {
-                log.info(e.toString());
-            }
-            Boolean mustChooseArea = false;
-            task.setContext(context);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale);
-            model.addAttribute("mustChooseArea", mustChooseArea);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("task", task);
-            return "project/root/add/task";
-        } else {
-            task.setProject(null);
-            if(task.getDueDate()==null){
-                task.setTaskState(TaskState.INBOX);
-            } else {
-                task.setTaskState(TaskState.SCHEDULED);
-            }
-            task.setFocus(false);
-            task.setContext(context);
-            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
-            task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-            task.setOrderIdTaskState(++maxOrderIdTaskState);
-            task = taskService.saveAndFlush(task);
-            log.info(task.toString());
-            return "redirect:/project/root";
-        }
-    }
-
-    @RequestMapping(path = "/{projectId}", method = RequestMethod.GET)
-    public final String showProject(
-            @PathVariable long projectId,
-            @PageableDefault(sort = "orderIdProject", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false) String message,
-            @RequestParam(required = false) boolean isDeleted,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model) {
-        log.info("/project/"+projectId);
-        Context context = super.getContext(userSession);
-        userSession.setLastProjectId(projectId);
-        model.addAttribute("userSession",userSession);
-        Project thisProject = null;
-        Page<Task> taskPage = null;
-        if (projectId != 0) {
-            thisProject = projectService.findByProjectId(projectId);
-            taskPage = taskService.findByProject(thisProject, context, pageable);
-        } else {
-            thisProject = new Project();
-            thisProject.setId(0L);
-            thisProject.setContext(context);
-            taskPage = taskService.findByRootProject(context, pageable);
-        }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("taskPage", taskPage);
-        model.addAttribute("myTaskState","PROJECT");
-        if(message != null){
-            model.addAttribute("message",message);
-            model.addAttribute("isDeleted",isDeleted);
-        }
-        return "project/id/show";
-    }
-
-    @RequestMapping(path = "/{projectId}/add/project", method = RequestMethod.GET)
-    public final String addNewSubProjectGet(
-        @PathVariable long projectId,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale, Model model
-    ) {
-        log.info("private addNewProjectGet (GET) projectId="+projectId);
-        Context context = super.getContext(userSession);
-        projectControllerService.addNewProject(projectId, userSession, context, locale, model);
-        return "project/id/add/project";
-    }
-
-    @RequestMapping(path = "/{projectId}/add/project", method = {RequestMethod.POST, RequestMethod.PUT})
-    public final String addNewSubProjectPost(
-        @PathVariable long projectId,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        @Valid Project project,
-        BindingResult result,
-        Locale locale, Model model) {
-        log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
-        Context context = super.getContext(userSession);
-        return projectControllerService.addNewProjectPersist(
-            projectId,
-            userSession,
-            project,
-            context,
-            result,
-            locale,
-            model ,
-            "/add/project"
-        );
-    }
-
-
-    @RequestMapping(path = "/{thisProjectId}/move/to/project/{targetProjectId}", method = RequestMethod.GET)
-    public final String moveProject(
-            @PathVariable("thisProjectId") Project thisProject,
-            @PathVariable long targetProjectId,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
-    ) {
-        Context context = super.getContext(userSession);
-        userSession.setLastProjectId(thisProject.getId());
-        model.addAttribute("userSession",userSession);
-        Project targetProject = projectService.findByProjectId(targetProjectId);
-        projectService.moveProjectToAnotherProject(thisProject, targetProject );
-        return "redirect:/project/" + thisProject.getId();
-    }
-
-    @RequestMapping(path = "/{projectId}/edit", method = RequestMethod.GET)
-    public final String editProjectGet(
-            @PathVariable("projectId") Project thisProject,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
-    ) {
-        Context context = super.getContext(userSession);
-        UserAccount userAccount = context.getUserAccount();
-        userSession.setLastProjectId(thisProject.getId());
-        model.addAttribute("userSession",userSession);
-        List<Context> contexts = contextService.getAllForUser(userAccount);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("areas", contexts);
-        model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("thisProject", thisProject);
-        model.addAttribute("project", thisProject);
-        return "project/id/edit";
-    }
-
-    @RequestMapping(path = "/{projectId}/edit", method = RequestMethod.POST)
-    public final String editProjectPost(
-            @PathVariable long projectId,
-            @Valid Project project,
-            BindingResult result,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
-    ) {
-        Context context = super.getContext(userSession);
-        UserAccount thisUser = context.getUserAccount();
-        userSession.setLastProjectId(projectId);
-        model.addAttribute("userSession",userSession);
-        if (result.hasErrors()) {
-            for (ObjectError e : result.getAllErrors()) {
-                log.info(e.toString());
-            }
-            Project thisProject = projectService.findByProjectId(projectId);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-            model.addAttribute("breadcrumb", breadcrumb);
-            return "project/id/edit";
-        } else {
-            Project thisProject = projectService.findByProjectId(project.getId());
-            thisProject.setName(project.getName());
-            thisProject.setDescription(project.getDescription());
-            Context newContext = project.getContext();
-            boolean areaChanged = (newContext.getId().longValue() != thisProject.getContext().getId().longValue());
-            if(areaChanged){
-                newContext = contextService.findByIdAndUserAccount(newContext.getId().longValue(), thisUser);
-                projectService.moveProjectToAnotherContext(thisProject, newContext);
-                model.addAttribute("userSession", new UserSessionBean(newContext.getId().longValue()));
-            } else {
-                projectService.saveAndFlush(thisProject);
-            }
-            return "redirect:/project/" + projectId;
-        }
-    }
-
-    @RequestMapping(path = "/{projectId}/delete", method = RequestMethod.GET)
-    public final String deleteProject(
-            @PathVariable("projectId") Project project,
-            @PageableDefault(sort = "title", direction = Sort.Direction.DESC) Pageable request,
-            @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale,
-            Model model
-    ) {
-        long newProjectId = project.getId();
-        Context context = super.getContext(userSession);
-        userSession.setLastProjectId(project.getId());
-        model.addAttribute("userSession",userSession);
-        UserAccount userAccount = context.getUserAccount();
-        if(project != null){
-            boolean hasNoData = taskService.projectHasNoTasks(project);
-            boolean hasNoChildren = project.hasNoChildren();
-            if (hasNoData && hasNoChildren) {
-                if (!project.isRootProject()) {
-                    newProjectId = project.getParent().getId();
-                } else {
-                    newProjectId = 0;
-                }
-                projectService.delete(project);
-                String message = "Project is deleted. You see its parent project now.";
-                model.addAttribute("message",message);
-                model.addAttribute("isDeleted",true);
-            } else {
-                StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
-                log.info("Deletion rejected for Project " + project.getId());
-                if (!hasNoData) {
-                    log.warn("Project " + project.getId() + " has actionItem");
-                    s.append("Project has actionItems.");
-                }
-                if (!hasNoChildren) {
-                    log.info("Project " + project.getId() + " has children");
-                    s.append("Project has child categories.");
-                }
-                model.addAttribute("message",s.toString());
-                model.addAttribute("isDeleted",false);
-                Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
-                Page<Task> taskPage = taskService.findByProject(project, context, request);
-                model.addAttribute("taskPage", taskPage);
-                model.addAttribute("breadcrumb", breadcrumb);
-                model.addAttribute("thisProject", project);
-                return "project/id/show";
-            }
-        }
-        if( newProjectId == 0){
-            return "redirect:/project/root/tasks";
-        } else {
-            return "redirect:/project/" + newProjectId;
-        }
-    }
-
-    @RequestMapping(path = "/{projectId}/task/{sourceTaskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String changeTaskOrderIdWithinAProject(
+    @RequestMapping(path = "/task/add", method = RequestMethod.GET)
+    public final String projectTaskAddGet(
         @PathVariable("projectId") Project thisProject,
-        @PathVariable("sourceTaskId") Task sourceTask,
-        @PathVariable("destinationTaskId") Task destinationTask,
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        Model model
-    ){
-        if(!sourceTask.isInRootProject()){
-            userSession.setLastProjectId(sourceTask.getProject().getId());
-        }
-        model.addAttribute("userSession",userSession);
-        log.info("-------------------------------------------------");
-        log.info("  changeTaskOrderIdWithinAProject");
-        log.info("-------------------------------------------------");
-        log.info("  source Task:      "+sourceTask.toString());
-        log.info("-------------------------------------------------");
-        log.info("  destination Task: "+destinationTask.toString());
-        log.info("-------------------------------------------------");
-        String returnUrl = "redirect:/taskstate/inbox";
-        boolean rootProject = sourceTask.isInRootProject();
-        returnUrl = "redirect:/project/0";
-        if(rootProject){
-            taskMoveService.moveOrderIdRootProject(sourceTask, destinationTask);
-        } else {
-            taskMoveService.moveOrderIdProject(sourceTask, destinationTask);
-            log.info("  DONE: taskMoveService.moveOrderIdProject (2)");
-            returnUrl = "redirect:/project/" + sourceTask.getProject().getId();
-        }
-        log.info("-------------------------------------------------");
-        return returnUrl;
-    }
-
-    @RequestMapping(path = "/{projectId}/add/task", method = RequestMethod.GET)
-    public final String addNewTaskToProjectGet(
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
@@ -407,25 +50,26 @@ public class ProjectController extends AbstractController {
         task.setTaskState(TaskState.INBOX);
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
+        task.setProject(thisProject);
         Boolean mustChooseArea = false;
-        if(userSession.getContextId() == 0L){
+        if(userSession.getLastContextId() == 0L){
             mustChooseArea = true;
             task.setContext(userAccount.getDefaultContext());
         } else {
-            Context context = contextService.findByIdAndUserAccount(userSession.getContextId(), userAccount);
+            Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), userAccount);
             task.setContext(context);
         }
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
-        model.addAttribute("thisProjectId", 0L);
+        model.addAttribute("thisProject", thisProject);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
-        return "id/task/add";
+        return "project/id/task/add";
     }
 
-    @RequestMapping(path = "/{projectId}/add/task", method = RequestMethod.POST)
-    public final String addNewTaskToProjectPost(
+    @RequestMapping(path = "/task/add", method = RequestMethod.POST)
+    public final String projectTaskAddPost(
         @PathVariable long projectId,
         @ModelAttribute("userSession") UserSessionBean userSession,
         @Valid Task task,
@@ -445,8 +89,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
-            //return "task/addToProject";
-            return "id/task/add";
+            return "project/id/task/add";
         } else {
             Project thisProject = projectService.findByProjectId(projectId);
             task.setProject(thisProject);
@@ -458,14 +101,434 @@ public class ProjectController extends AbstractController {
             }
             task.setFocus(false);
             task.setContext(context);
-            long maxOrderIdProject = taskMoveService.getMaxOrderIdProject(task.getProject(),context);
+            long maxOrderIdProject = taskService.getMaxOrderIdProject(task.getProject(),context);
             task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskMoveService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
-            task = taskService.saveAndFlush(task);
+            task = taskService.addToProject(task);
             log.info(task.toString());
-            return "redirect:/project/" + projectId + "/";
+            return thisProject.getUrl();
         }
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public final String project(
+            @PathVariable long projectId,
+            @PageableDefault(sort = "orderIdProject", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(required = false) String message,
+            @RequestParam(required = false) boolean isDeleted,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model) {
+        log.info("/project/"+projectId);
+        Context context = super.getContext(userSession);
+        userSession.setLastProjectId(projectId);
+        model.addAttribute("userSession",userSession);
+        Project thisProject = null;
+        Page<Task> taskPage = null;
+        if (projectId != 0) {
+            thisProject = projectService.findByProjectId(projectId);
+            taskPage = taskService.findByProject(thisProject, pageable);
+        } else {
+            thisProject = new Project();
+            thisProject.setId(0L);
+            thisProject.setContext(context);
+            taskPage = taskService.findByRootProject(context, pageable);
+        }
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("taskPage", taskPage);
+        model.addAttribute("myTaskState","PROJECT");
+        if(message != null){
+            model.addAttribute("message",message);
+            model.addAttribute("isDeleted",isDeleted);
+        }
+        return "project/id/show";
+    }
+
+    @RequestMapping(path = "/project/add", method = RequestMethod.GET)
+    public final String projectAddProjectGet(
+        @PathVariable long projectId,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Locale locale, Model model
+    ) {
+        log.info("private addNewProjectGet (GET) projectId="+projectId);
+        Context context = super.getContext(userSession);
+        projectControllerService.addNewProject(projectId, userSession, context, locale, model);
+        return "project/id/project/add";
+    }
+
+    @RequestMapping(path = "/project/add", method = {RequestMethod.POST})
+    public final String projectAddProjectPost(
+        @PathVariable long projectId,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @Valid Project project,
+        BindingResult result,
+        Locale locale, Model model) {
+        log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
+        Context context = super.getContext(userSession);
+        return projectControllerService.addNewProjectPersist(
+            projectId,
+            userSession,
+            project,
+            context,
+            result,
+            locale,
+            model ,
+            "project/id/project/add"
+        );
+    }
+
+
+    @RequestMapping(path = "/project/move/{targetProjectId}", method = RequestMethod.GET)
+    public final String projectMoveToProjectGet(
+            @PathVariable("projectId") Project thisProject,
+            @PathVariable long targetProjectId,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ) {
+        Context context = super.getContext(userSession);
+        userSession.setLastProjectId(thisProject.getId());
+        model.addAttribute("userSession",userSession);
+        Project targetProject = projectService.findByProjectId(targetProjectId);
+        thisProject = projectService.moveProjectToAnotherProject(thisProject, targetProject );
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/edit", method = RequestMethod.GET)
+    public final String projectEditGet(
+            @PathVariable("projectId") Project thisProject,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ) {
+        Context context = super.getContext(userSession);
+        UserAccount userAccount = context.getUserAccount();
+        userSession.setLastProjectId(thisProject.getId());
+        model.addAttribute("userSession",userSession);
+        List<Context> contexts = contextService.getAllForUser(userAccount);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        model.addAttribute("areas", contexts);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("project", thisProject);
+        return "project/id/edit";
+    }
+
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
+    public final String projectEditPost(
+            @PathVariable long projectId,
+            @Valid Project project,
+            BindingResult result,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale, Model model
+    ) {
+        Context context = super.getContext(userSession);
+        UserAccount thisUser = context.getUserAccount();
+        model.addAttribute("userSession", userSession);
+        Project thisProject;
+        if (result.hasErrors()) {
+            for (ObjectError e : result.getAllErrors()) {
+                log.info(e.toString());
+            }
+            thisProject = projectService.findByProjectId(projectId);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            model.addAttribute("breadcrumb", breadcrumb);
+            return "project/id/edit";
+        } else {
+            thisProject = projectService.findByProjectId(project.getId());
+            thisProject.setName(project.getName());
+            thisProject.setDescription(project.getDescription());
+            Context newContext = project.getContext();
+            boolean contextChanged = (newContext.getId().longValue() != thisProject.getContext().getId().longValue());
+            if(contextChanged){
+                long newContextId = newContext.getId();
+                newContext = contextService.findByIdAndUserAccount(newContextId, thisUser);
+                thisProject = projectService.moveProjectToAnotherContext(thisProject, newContext);
+                userSession.setLastContextId(newContextId);
+            } else {
+                thisProject = projectService.update(thisProject);
+            }
+            userSession.setLastProjectId(thisProject.getId());
+            model.addAttribute("userSession", userSession);
+            return thisProject.getUrl();
+        }
+    }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.GET)
+    public final String projectDeleteGet(
+            @PathVariable("projectId") Project project,
+            @PageableDefault(sort = "title", direction = Sort.Direction.DESC) Pageable request,
+            @ModelAttribute("userSession") UserSessionBean userSession,
+            Locale locale,
+            Model model
+    ) {
+        //Context context = super.getContext(userSession);
+        userSession.setLastProjectId(project.getId());
+        //model.addAttribute("userSession", userSession);//TODO: really?
+        boolean hasNoData = taskService.projectHasNoTasks(project);
+        boolean hasNoChildren = project.hasNoChildren();
+        boolean delete = hasNoData && hasNoChildren;
+        if (delete) {
+            Project parent = projectService.delete(project);
+            String message = "Project is deleted. You see its parent project now."; //TODO: message to message_properties
+            //TODO: message to UserSessionBean userSession
+            model.addAttribute("message", message );
+            //TODO: isDeleted as message to UserSessionBean userSession
+            model.addAttribute("isDeleted",true);
+            if(parent == null){
+                return "redirect:/project/root";
+            } else {
+                return parent.getUrl();
+            }
+        } else {
+            //TODO: message to message_properties
+            StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
+            log.info("Deletion rejected for Project " + project.getId());
+            if (!hasNoData) {
+                //TODO: message to message_properties
+                log.warn("Project " + project.getId() + " has actionItem");
+                s.append("Project has actionItems.");
+            }
+            if (!hasNoChildren) {
+                //TODO: message to message_properties
+                log.info("Project " + project.getId() + " has children");
+                s.append("Project has child categories.");
+            }
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
+            Page<Task> taskPage = taskService.findByProject(project, request);
+            model.addAttribute("message",s.toString());
+            model.addAttribute("isDeleted",false);
+            model.addAttribute("taskPage", taskPage);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("thisProject", project);
+            return "project/id/show";
+        }
+    }
+
+    @RequestMapping(path = "/task/{taskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
+    public String projectTaskChangeOrderToTaskGet(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable("taskId") Task sourceTask,
+        @PathVariable("destinationTaskId") Task destinationTask,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ){
+        userSession.setLastProjectId(thisProject.getId());
+        model.addAttribute("userSession",userSession);
+        log.info("-------------------------------------------------");
+        log.info("  projectTaskChangeOrderToTaskGet");
+        log.info("-------------------------------------------------");
+        log.info("  source Task:      "+sourceTask.toString());
+        log.info("-------------------------------------------------");
+        log.info("  destination Task: "+destinationTask.toString());
+        log.info("-------------------------------------------------");
+        taskService.moveOrderIdProject(sourceTask, destinationTask);
+        log.info("  DONE: taskMoveService.moveOrderIdProject");
+        log.info("-------------------------------------------------");
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/completed/move/to/trash", method = RequestMethod.GET)
+    public final String moveAllCompletedToTrash(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
+        userSession.setLastProjectId(thisProject.getId());
+        Context context = super.getContext(userSession);
+        taskService.moveAllCompletedToTrash(context);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/trash/empty", method = RequestMethod.GET)
+    public final String emptyTrash(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
+        userSession.setLastProjectId(thisProject.getId());
+        Context context = super.getContext(userSession);
+        taskService.emptyTrash(context);
+        return thisProject.getUrl();
+    }
+
+
+    @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
+    public final String setDoneTaskGet(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        userSession.setLastProjectId(thisProject.getId());
+        task.complete();
+        long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
+        task.setOrderIdTaskState(++maxOrderIdTaskState);
+        task = taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/incomplete", method = RequestMethod.GET)
+    public final String unsetDoneTaskGet(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        userSession.setLastProjectId(thisProject.getId());
+        task.incomplete();
+        long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState( task.getTaskState(), task.getContext());
+        task.setOrderIdTaskState(++maxOrderIdTaskState);
+        task = taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/setfocus", method = RequestMethod.GET)
+    public final String setFocusGet(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task,
+        @RequestParam(required=false) String back
+    ){
+        if(task !=null) {
+            task.setFocus();
+            task = taskService.updatedViaTaskstate(task);
+            return task.getUrl();
+        } else {
+            return "redirect:/taskstate/inbox";
+        }
+    }
+
+    @RequestMapping(path = "/task/{taskId}/unsetfocus", method = RequestMethod.GET)
+    public final String unsetFocusGet(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task,
+        @RequestParam(required=false) String back
+    ){
+        if(task !=null) {
+            task.unsetFocus();
+            task = taskService.updatedViaTaskstate(task);
+            return task.getUrl();
+        } else {
+            return "redirect:/taskstate/inbox";
+        }
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/project/root", method = RequestMethod.GET)
+    public final String moveTaskToAnotherProject(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable("taskId") Task task,
+        @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
+        task = taskService.moveTaskToRootProject(task);
+        return "redirect:/project/root";
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/project/{otherProjectId}", method = RequestMethod.GET)
+    public final String moveTaskToAnotherProject(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable("taskId") Task task,
+        @PathVariable("otherProjectId") Project otherProject,
+        @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
+        task = taskService.moveTaskToAnotherProject(task,otherProject);
+        return otherProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
+    public final String moveTaskToInbox(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to inbox");
+        task.moveToInbox();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
+    public final String moveTaskToToday(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to today");
+        task.moveToToday();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/next", method = RequestMethod.GET)
+    public final String moveTaskToNext(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to next");
+        task.moveToNext();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
+    public final String moveTaskToWaiting(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to waiting");
+        task.moveToWaiting();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/someday", method = RequestMethod.GET)
+    public final String moveTaskToSomeday(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to someday");
+        task.moveToSomeday();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
+    public final String moveTaskToFocus(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to focus");
+        task.moveToFocus();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
+    public final String moveTaskToCompleted(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to completed");
+        task.moveToCompletedTasks();
+        taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
+    }
+
+    @RequestMapping(path = "/task/{taskId}/move/to/trash", method = RequestMethod.GET)
+    public final String moveTaskToTrash(
+        @PathVariable("projectId") Project thisProject,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        @PathVariable("taskId") Task task
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to trash");
+        task.moveToTrash();
+        task = taskService.updatedViaProject(task);
+        userSession.setLastProjectId(thisProject.getId());
+        userSession.setLastTaskState(task.getTaskState());
+        userSession.setLastTaskId(task.getId());
+        return thisProject.getUrl();
     }
 
 }

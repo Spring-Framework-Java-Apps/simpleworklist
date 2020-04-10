@@ -1,7 +1,10 @@
 package org.woehlke.simpleworklist.context;
 
 import lombok.*;
+import org.hibernate.annotations.LazyToOne;
 import org.hibernate.validator.constraints.Length;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.common.AuditModel;
@@ -12,6 +15,8 @@ import javax.persistence.*;
 import javax.persistence.Index;
 import java.io.Serializable;
 import java.util.Objects;
+
+import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
 /**
  * Created by tw on 13.03.16.
@@ -33,8 +38,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "userAccount")
 public class Context extends AuditModel implements Serializable, ComparableById<Context> {
 
     private static final long serialVersionUID = -5035732370606951871L;
@@ -56,16 +61,17 @@ public class Context extends AuditModel implements Serializable, ComparableById<
             CascadeType.REFRESH
         })
     @JoinColumn(name = "user_account_id")
+    @LazyToOne(PROXY)
     private UserAccount userAccount;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-    @NotBlank
+    //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_de", nullable = false)
     private String nameDe;
 
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-    @NotBlank
+    //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_en", nullable = false)
     private String nameEn;

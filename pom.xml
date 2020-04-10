@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.3.14-SNAPSHOT</version>
+    <version>2.3.16-SNAPSHOT</version>
 	<packaging>jar</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -13,7 +14,7 @@
 
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
-    <url>http://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/p/simpleworklist</url>
+    <url>https://woehlke.org/p/simpleworklist</url>
     <inceptionYear>2012</inceptionYear>
 
     <organization>
@@ -71,7 +72,7 @@
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-shade-plugin.version>3.2.2</maven-shade-plugin.version>
-        <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
+        <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
@@ -125,27 +126,29 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring-framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-releasetrain</artifactId>
-                <version>${spring-data-releasetrain.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-bom</artifactId>
-                <version>${spring-security.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+            <!--
+       <dependency>
+           <groupId>org.springframework</groupId>
+           <artifactId>spring-framework-bom</artifactId>
+           <version>${spring-framework.version}</version>
+           <type>pom</type>
+           <scope>import</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.springframework.data</groupId>
+           <artifactId>spring-data-releasetrain</artifactId>
+           <version>${spring-data-releasetrain.version}</version>
+           <type>pom</type>
+           <scope>import</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.springframework.security</groupId>
+           <artifactId>spring-security-bom</artifactId>
+           <version>${spring-security.version}</version>
+           <type>pom</type>
+           <scope>import</scope>
+       </dependency>
+       -->
             <dependency>
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-bom</artifactId>
@@ -156,50 +159,54 @@
 
             <dependency>
                 <groupId>org.webjars</groupId>
-                <artifactId>font-awesome</artifactId>
-                <version>5.8.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
                 <artifactId>jquery</artifactId>
-                <version>3.3.1-2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>popper.js</artifactId>
-                <version>1.14.7</version>
+                <version>3.4.1</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap</artifactId>
-                <version>4.3.1</version>
+                <version>4.4.1-1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>font-awesome</artifactId>
+                <version>5.13.0</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>ckeditor</artifactId>
-                <version>4.11.3</version>
+                <version>4.14.0</version>
             </dependency>
-
+<!--
             <dependency>
                 <groupId>org.thymeleaf</groupId>
                 <artifactId>thymeleaf</artifactId>
                 <version>${thymeleaf.version}</version>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.thymeleaf</groupId>
-                <artifactId>thymeleaf-spring5</artifactId>
-                <version>${thymeleaf.version}</version>
+                <artifactId>thymeleaf-testing</artifactId>
+                <version>3.0.4.RELEASE</version>
+                <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.thymeleaf.extras</groupId>
-                <artifactId>thymeleaf-extras-java8time</artifactId>
-                <version>${thymeleaf-extras-java8time.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.thymeleaf.extras</groupId>
-                <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-                <version>${thymeleaf-extras-springsecurity.version}</version>
-            </dependency>
+            <!--
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+            <version>${thymeleaf-extras-java8time.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>${thymeleaf-extras-springsecurity.version}</version>
+        </dependency>
+        -->
             <dependency>
                 <groupId>io.github.jpenren</groupId>
                 <artifactId>thymeleaf-spring-data-dialect</artifactId>
@@ -284,7 +291,7 @@
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.9.0</version>
+                <version>${maven-site-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
             <dependency>
@@ -345,8 +352,8 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -363,10 +370,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -395,6 +398,31 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-remoting</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-data</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
@@ -419,10 +447,6 @@
 		</dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>popper.js</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
         </dependency>
         <dependency>
@@ -437,11 +461,6 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-jdbc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.mxab.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-data-attribute</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
@@ -459,8 +478,17 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.github.mxab.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-data-attribute</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.github.jpenren</groupId>
             <artifactId>thymeleaf-spring-data-dialect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-testing</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -563,6 +591,7 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+        <defaultGoal>clean dependency:list install spring-boot:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -575,7 +604,6 @@
                     <artifactId>docker-compose-maven-plugin</artifactId>
                     <version>${version.docker-compose-maven-plugin}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -638,6 +666,17 @@
                                 <requireJavaVersion>
                                     <version>${java.version}</version>
                                 </requireJavaVersion>
+                                <!--
+                                <requireOS>
+                                    <family>unix</family>
+                                </requireOS>
+                                <requireFilesExist>
+                                    <files>
+                                        <file>${project.basedir}/docker-compose.yml</file>
+                                        <file>${project.basedir}/etc/setenv.sh</file>
+                                    </files>
+                                </requireFilesExist>
+                                -->
                             </rules>
                         </configuration>
                     </execution>
@@ -673,6 +712,74 @@
                     <ignorePullFailures>true</ignorePullFailures>
                     <detachedMode>true</detachedMode>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <linksource>true</linksource>
+                    <maxmemory>1024m</maxmemory>
+                    <source>${java.version}</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
+                <executions>
+                    <!--
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
+                    </execution>
+                    -->
+                    <execution>
+                        <id>id-build-info</id>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <additionalProperties>
+                                <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                <java.source>${maven.compiler.source}</java.source>
+                                <java.target>${maven.compiler.target}</java.target>
+                            </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -793,138 +900,37 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>default</spring.profiles.active>
+                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>default</spring.profiles.active>
+                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>default</value>
-                </property>
-            </activation>
-            <build>
-                <finalName>simpleworklist</finalName>
-                <defaultGoal>clean dependency:list install spring-boot:run</defaultGoal>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <addResources>true</addResources>
-                            <profiles>
-                                <profile>default</profile>
-                            </profiles>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>pre-integration-test</id>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>${skipTests}</skip>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>post-integration-test</id>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>${skipTests}</skip>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>id-build-info</id>
-                                <goals>
-                                    <goal>build-info</goal>
-                                </goals>
-                                <configuration>
-                                    <additionalProperties>
-                                        <encoding.source>${project.build.sourceEncoding}</encoding.source>
-                                        <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
-                                        <java.source>${maven.compiler.source}</java.source>
-                                        <java.target>${maven.compiler.target}</java.target>
-                                    </additionalProperties>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <skipTests>${skipTests}</skipTests>
-                        <systemPropertyVariables>
-                            <spring.profiles.active>default</spring.profiles.active>
-                            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
-                        </systemPropertyVariables>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <configuration>
-                        <skipTests>${skipTests}</skipTests>
-                        <systemPropertyVariables>
-                            <spring.profiles.active>default</spring.profiles.active>
-                            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
-                        </systemPropertyVariables>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
-
-    <profile>
-        <id>testing</id>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <configuration>
-                        <addResources>true</addResources>
-                        <profiles>
-                            <profile>testing</profile>
-                        </profiles>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>pre-integration-test</id>
-                            <goals>
-                                <goal>start</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>post-integration-test</id>
-                            <goals>
-                                <goal>stop</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <systemPropertyVariables>
-                            <spring.profiles.active>testing</spring.profiles.active>
-                        </systemPropertyVariables>
-                        <skipTests>false</skipTests>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
-    </profiles>
-
     <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-invoker-plugin</artifactId>
@@ -939,9 +945,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <profiles>
-                        <profile>default</profile>
-                    </profiles>
+                    <addResources>true</addResources>
                 </configuration>
             </plugin>
             <plugin>
@@ -989,16 +993,28 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
+                <configuration>
+                    <linkJavadoc>true</linkJavadoc>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <enableRulesSummary>true</enableRulesSummary>
+                    <enableSeveritySummary>true</enableSeveritySummary>
+                    <enableFilesSummary>true</enableFilesSummary>
+                    <failOnViolation>false</failOnViolation>
+                    <failsOnError>false</failsOnError>
+                </configuration>
             </plugin>
 	        <plugin>
         	    <groupId>com.github.spotbugs</groupId>
         	    <artifactId>spotbugs-maven-plugin</artifactId>
-        	    <configuration>
-          	        <!-- Optional directory to put spotbugs xml report -->
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <detail>true</detail>
+                    <relaxed>true</relaxed>
                 </configuration>
             </plugin>
             <plugin>
@@ -1016,7 +1032,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <skipTests>false</skipTests>
+                    <skipTests>${skipTests}</skipTests>
                     <includes>
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
@@ -1024,14 +1040,33 @@
                     <excludes>
                         <exclude>**/Abstract*.java</exclude>
                     </excludes>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>default</spring.profiles.active>
+                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                    </systemPropertyVariables>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>default</spring.profiles.active>
+                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <configuration>
-                    <skipFailsafeReport>true</skipFailsafeReport>
-                    <skipSurefireReport>true</skipSurefireReport>
+                    <skipFailsafeReport>${skipTests}</skipFailsafeReport>
+                    <skipSurefireReport>${skipTests}</skipSurefireReport>
                 </configuration>
             </plugin>
         </plugins>

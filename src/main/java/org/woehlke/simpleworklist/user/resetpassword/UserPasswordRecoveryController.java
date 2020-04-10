@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/user/resetPassword")
+@RequestMapping(path = "/user")
 public class UserPasswordRecoveryController {
 
     private final UserAccountService userAccountService;
@@ -39,7 +39,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the email-adress.
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path="/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
@@ -54,7 +54,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path="/resetPassword", method = RequestMethod.POST)
     public final String passwordForgottenPost(
         @Valid UserRegistrationForm userRegistrationForm,
         BindingResult result,
@@ -92,7 +92,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the new Password.
      */
-    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/resetPassword/confirm/{confirmId}", method = RequestMethod.GET)
     public final String enterNewPasswordFormular(
         @PathVariable String confirmId,
         Model model
@@ -120,7 +120,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return Info Page for success or back to formular with error messages.
      */
-    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
+    @RequestMapping(path =  "/resetPassword/confirm/{confirmId}", method = RequestMethod.POST)
     public final String enterNewPasswordPost(
         @Valid UserAccountForm userAccountForm,
         BindingResult result,

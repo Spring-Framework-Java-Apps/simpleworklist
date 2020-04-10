@@ -5,39 +5,39 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)">
-    <title th:text="'SimpleWorklist | ' + #{search.resultlist.h1}">Title</title>
+    <title th:text="'SimpleWorklist | ' + #{searchRequest.resultlist.h1}">Title</title>
 </head>
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
 <div th:fragment="mytwtitle">
     <h1>
-        <span th:utext="#{search.resultlist.h1}">Search Result for searchterm</span>
+        <span th:utext="#{searchRequest.resultlist.h1}">Search Result for searchterm</span>
         <i>${searchResult.searchterm}</i>
     </h1>
 </div>
 
 <div th:fragment="mytwcontent">
     <h2 th:if="${searchResult.taskList != null}">
-        <span th:utext="#{search.resultlist.h2.noTasks}">No Tasks found</span>
+        <span th:utext="#{searchRequest.resultlist.h2.noTasks}">No Tasks found</span>
     </h2>
     <div th:if="${searchResult.taskList != null}">
         <h2>
-            <span th:utext="#{search.resultlist.h2.tasks}">Tasks</span>
+            <span th:utext="#{searchRequest.resultlist.h2.tasks}">Tasks</span>
         </h2>
         <div th:replace="layout/tasks :: tw-tasks-table(dataList=${searchResult.taskList},myTaskState='ALL')">
         </div>
     </div>
     <h2 th:if="${searchResult.projectList == null}">
-        <span th:utext="#{search.resultlist.projects.h2.noProjects}">No Projects found</span>
+        <span th:utext="#{searchRequest.resultlist.projects.h2.noProjects}">No Projects found</span>
     </h2>
     <div th:if="${searchResult.projectList != null}">
         <h2>
-            <span th:utext="#{search.resultlist.projects.h2.projects}">Projects</span>
+            <span th:utext="#{searchRequest.resultlist.projects.h2.projects}">Projects</span>
         </h2>
         <table class="table table-striped table-hover">
             <tr>
-                <th><span th:utext="#{search.resultlist.projects.name}">Name</span></th>
-                <th><span th:utext="#{search.resultlist.projects.description}">Description</span></th>
+                <th><span th:utext="#{searchRequest.resultlist.projects.name}">Name</span></th>
+                <th><span th:utext="#{searchRequest.resultlist.projects.description}">Description</span></th>
             </tr>
             <tr th:each="cat : ${searchResult.projectList}">
                 <td>

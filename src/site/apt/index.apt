@@ -2,11 +2,11 @@ SimpleWorklist
 
     Your Todo-List for Getting Things Done
 
-    Software-Stack: {{{http://docs.oracle.com/javaee/6/tutorial/doc/}Java EE}}, {{{http://www.springsource.org/spring-data/jpa}JPA}}, {{{http://www.springsource.org/spring-framework}Spring Frameworks}}, {{{http://static.springsource.org/spring/docs/3.2.x/spring-framework-reference/html/mvc.html}Spring MVC}}, {{{http://getbootstrap.com/2.3.5/}Twitter Bootstrap}}, {{{http://jquery.com/}jQuery}}, HTML5
+)
 
-    Repository: {{https://github.com/phasenraum2010/simpleworklist}}
-
-    Demo: {{http://jbosswildfly-simpleworklist.rhcloud.com/}}
+    Software-Stack: {{{https://spring.io/projects/spring-boot/}Spring-Boot}},{{{https://spring.io/projects/spring-data-jpa}JPA}},{{{https://spring.io/projects/spring-session-jdbc}Spring Session JDBC}},{{{https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html}Spring MVC (Servlet Stack}},{{{https://github.com/thymeleaf/thymeleaf}Thymeleaf},{{{https://getbootstrap.com/docs/4.4/getting-started/introduction/}Bootstrap}},{{{http://jquery.com/}jQuery}}, HTML5
+    Repository: {{https://github.com/Spring-Framework-Java-Apps/simpleworklist}}
+    Demo: {{https://simpleworklist.herokuapp.com/}}
 
 * Use Cases
 

@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.user.register;
 
 import java.util.Date;
+import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     public void registrationSendEmailTo(String email) {
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
         UserRegistration o = new UserRegistration();
+        o.setUuid(UUID.randomUUID().toString());
         if (earlierOptIn != null) {
             o = earlierOptIn;
             o.increaseNumberOfRetries();
@@ -110,7 +112,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         msg.setText(
                 "Dear new User, "
                         + "thank you for registring at Simple Worklist. \n"
-                        + "Please validate your email and go to URL: \nhttp://" + urlHost + "/confirm/" + o.getToken()
+                        + "Please validate your email and go to URL: \nhttp://" + urlHost + "/user/register/confirm/" + o.getToken()
                         + "\n\nSincerely Yours, The Team");
         msg.setSubject("Your Registration at Simple Worklist");
         msg.setFrom(mailFrom);

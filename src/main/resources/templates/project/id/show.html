@@ -19,22 +19,27 @@
 			</small>
 		</h1>
 		<div id="tw-content-title-actionbuttons">
-			<a class="btn btn-sm btn-primary" data-toggle="collapse" href="#collapseDescription" role="button" aria-expanded="false" aria-controls="collapseExample">
+			<a class="btn btn-sm btn-primary" data-toggle="collapse"
+               href="#collapseDescription" role="button" aria-expanded="false" aria-controls="collapseExample">
 				<div th:text="#{project.show.description}">Project Description</div>
 			</a>
-			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}" href="#">
+			<a class="btn btn-sm btn-secondary" role="button" href="#"
+               th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}">
 				<i class="fas fa-edit"></i>
 				<span th:text="#{project.show.edit}">Edit Project</span>
 			</a>
-			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}" href="#">
+			<a class="btn btn-sm btn-secondary" role="button" href="#"
+               th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}">
 				<i class="fas fa-trash-alt"></i>
 				<span th:text="#{project.show.delete}">Delete Project</span>
-			</a>
-			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/add/project(thisProjectId=${thisProject.id})}">
+			</a>s
+			<a class="btn btn-sm btn-secondary" role="button" href="#"
+               th:href="@{/project/{thisProjectId}/project/add(thisProjectId=${thisProject.id})}">
 				<i class="fas fa-plus-square"></i>
 				<span th:text="#{layout.page.addProject}">Add a Project</span>
 			</a>
-			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/{thisProjectId}/add/task(thisProjectId=${thisProject.id})}" href="#">
+			<a class="btn btn-sm btn-secondary" role="button" href="#"
+               th:href="@{/project/{thisProjectId}/task/add(thisProjectId=${thisProject.id})}">
 				<i class="fas fa-plus-square"></i>
 				<span th:text="#{project.show.addTask}">Add a Task</span>
 			</a>

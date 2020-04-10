@@ -1,26 +1,38 @@
 package org.woehlke.simpleworklist.task;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.*;
 import javax.persistence.Index;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.NotBlank;
+
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.taskstate.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.common.ComparableById;
 
+import static org.hibernate.annotations.LazyToOneOption.PROXY;
+
+//TODO: test all three UniqueConstraints
 @Entity
 @Table(
     name="task",
@@ -35,7 +47,7 @@ import org.woehlke.simpleworklist.common.ComparableById;
         ),
         @UniqueConstraint(
             name="ux_task_order_id_task_state",
-            columnNames = {"order_id_task_state", "task_state", "project_id", "context_id", "user_account_id"}
+            columnNames = {"order_id_task_state", "task_state", "context_id", "user_account_id"}
         )*/
     },
     indexes = {
@@ -44,6 +56,10 @@ import org.woehlke.simpleworklist.common.ComparableById;
         @Index(name = "ix_task_title", columnList = "title")
     }
 )
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Task extends AuditModel implements Serializable, ComparableById<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
@@ -79,9 +95,9 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     )
     @JoinColumn(name = "context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @LazyToOne(PROXY)
     private Context context;
 
-    @Deprecated
 
     @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
@@ -89,8 +105,6 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @Column(name = "title", nullable = false)
     private String title;
 
-    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
-    @NotBlank
     @Length(min=0,max=65535)
     @Column(name = "description", nullable = false, length = 65535, columnDefinition="text")
     private String text;
@@ -125,10 +139,10 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date dueDate;
 
-    @Column(name = "order_id_project",nullable = false)
+    @Column(name = "order_id_project", nullable = false)
     private long orderIdProject;
 
-    @Column(name = "order_id_task_state",nullable = false)
+    @Column(name = "order_id_task_state", nullable = false)
     private long orderIdTaskState;
 
     @Transient
@@ -150,6 +164,92 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         TaskState old = this.taskState;
         this.taskState = this.lastTaskState;
         this.lastTaskState = old;
+    }
+
+    public void delete(){
+        pushTaskstate(TaskState.TRASH);
+    }
+
+    public void undelete(){
+        if( this.taskState == TaskState.TRASH){
+            popTaskstate(TaskState.TRASH);
+        }
+    }
+
+    public void complete(){
+        pushTaskstate(TaskState.COMPLETED);
+    }
+
+    public void incomplete(){
+        if( this.taskState == TaskState.COMPLETED){
+            popTaskstate(TaskState.COMPLETED);
+        }
+    }
+
+    public void setFocus(){
+        this.focus = true;
+    }
+
+    public void unsetFocus(){
+        this.focus = false;
+    }
+
+    private void popTaskstate(TaskState oldState){
+        this.taskState = this.lastTaskState;
+        this.lastTaskState = oldState;
+    }
+
+    private void pushTaskstate(TaskState newState){
+        this.lastTaskState = this.taskState;
+        this.taskState = newState;
+    }
+
+    //TODO: delete Due Date
+    public void moveToInbox(){
+        pushTaskstate(TaskState.INBOX);
+    }
+
+    //TODO: Due Date = Date of Today
+    public void moveToToday(){
+        pushTaskstate(TaskState.TODAY);
+    }
+
+    //TODO: delete Due Date
+    public void moveToNext(){
+        pushTaskstate(TaskState.NEXT);
+    }
+
+    //TODO: delete Due Date
+    public void moveToWaiting(){
+        pushTaskstate(TaskState.WAITING);
+    }
+
+    //TODO: Due Date = Date of Tomorrow
+    public void moveToScheduled(){
+        pushTaskstate(TaskState.SCHEDULED);
+    }
+
+    //TODO: delete Due Date
+    public void moveToSomeday(){
+        pushTaskstate(TaskState.SOMEDAY);
+    }
+
+    public void moveToFocus(){
+        this.focus = true;
+    }
+
+    public void moveToCompletedTasks(){
+        pushTaskstate(TaskState.COMPLETED);
+    }
+
+    public void moveToTrash(){
+        pushTaskstate(TaskState.TRASH);
+    }
+
+    public void emptyTrash(){
+        if(this.taskState == TaskState.TRASH){
+            pushTaskstate(TaskState.DELETED);
+        }
     }
 
     @Transient
@@ -208,7 +308,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
 
     @Transient
     public boolean isInRootProject(){
-        return (this.getProject() == null);
+        return ((this.getProject() == null)) || (this.getProject().getId()==0L);
     }
 
     @Transient
@@ -255,168 +355,31 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         return (this.getContext().getId().longValue() == context.getId().longValue());
     }
 
-    public void setOrderIdTaskState(Task destinationTask) {
-        this.orderIdTaskState = destinationTask.getOrderIdTaskState();
+    @Transient
+    public String getUrl(){
+        return this.taskState.getUrl();
     }
 
-    public void setOrderIdProject(Task otherTask) {
-        this.orderIdProject = otherTask.getOrderIdProject();
+    @Transient
+    public String getProjectUrl() {
+        if(this.project == null){
+            return "redirect:/project/root";
+        } else {
+            return this.project.getUrl();
+        }
     }
 
-    /**
-     * Sets also 'history back' for taskState
-     */
-    public void setTaskState(TaskState taskState) {
-        this.lastTaskState = this.taskState;
-        this.taskState = taskState;
+    public void merge(Task task) {
+        this.setTitle(task.title);
+        this.setText(task.text);
+        this.setFocus(task.focus);
+        this.setTaskState(task.taskState);
+        this.setDueDate(task.dueDate);
+        this.setTaskEnergy(task.taskEnergy);
+        this.setTaskTime(task.taskTime);
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public TaskState getTaskState() {
-        return taskState;
-    }
-
-    public Boolean getFocus() {
-        return focus;
-    }
-
-    public void setFocus(Boolean focus) {
-        this.focus = focus;
-    }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public TaskState getLastTaskState() {
-        return lastTaskState;
-    }
-
-    public void setLastTaskState(TaskState lastTaskState) {
-        this.lastTaskState = lastTaskState;
-    }
-
-    public TaskEnergy getTaskEnergy() {
-        return taskEnergy;
-    }
-
-    public void setTaskEnergy(TaskEnergy taskEnergy) {
-        this.taskEnergy = taskEnergy;
-    }
-
-    public TaskTime getTaskTime() {
-        return taskTime;
-    }
-
-    public void setTaskTime(TaskTime taskTime) {
-        this.taskTime = taskTime;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    public long getOrderIdProject() {
-        return orderIdProject;
-    }
-
-    public void setOrderIdProject(long orderIdProject) {
-        this.orderIdProject = orderIdProject;
-    }
-
-    public long getOrderIdTaskState() {
-        return orderIdTaskState;
-    }
-
-    public void setOrderIdTaskState(long orderIdTaskState) {
-        this.orderIdTaskState = orderIdTaskState;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Task)) return false;
-        if (!super.equals(o)) return false;
-        Task task = (Task) o;
-        return getOrderIdProject() == task.getOrderIdProject() &&
-                getOrderIdTaskState() == task.getOrderIdTaskState() &&
-                Objects.equals(getId(), task.getId()) &&
-                getProject().equals(task.getProject()) &&
-                getContext().equals(task.getContext()) &&
-                getTitle().equals(task.getTitle()) &&
-                getText().equals(task.getText()) &&
-                getFocus().equals(task.getFocus()) &&
-                getTaskState() == task.getTaskState() &&
-                getLastTaskState() == task.getLastTaskState() &&
-                getTaskEnergy() == task.getTaskEnergy() &&
-                getTaskTime() == task.getTaskTime() &&
-                Objects.equals(getDueDate(), task.getDueDate());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getId(), getProject(), getContext(), getTitle(), getText(), getFocus(), getTaskState(), getLastTaskState(), getTaskEnergy(), getTaskTime(), getDueDate(), getOrderIdProject(), getOrderIdTaskState());
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", project=" + project +
-                ", context=" + context +
-                ", title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                ", focus=" + focus +
-                ", taskState=" + taskState +
-                ", lastTaskState=" + lastTaskState +
-                ", taskEnergy=" + taskEnergy +
-                ", taskTime=" + taskTime +
-                ", dueDate=" + dueDate +
-                ", orderIdProject=" + orderIdProject +
-                ", orderIdTaskState=" + orderIdTaskState +
-                ", uuid='" + uuid + '\'' +
-                ", rowCreatedAt=" + rowCreatedAt +
-                ", rowUpdatedAt=" + rowUpdatedAt +
-                '}';
+    public static Page<Task> getEmptyPage(Pageable request){
+        return new PageImpl<Task>(new ArrayList<Task>(),request,0L);
     }
 }

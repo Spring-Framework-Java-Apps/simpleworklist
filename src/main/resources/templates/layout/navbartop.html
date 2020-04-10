@@ -46,7 +46,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/logout}">
+                            <a class="nav-link" th:href="@{/user/logout}">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <span th:text="#{layout.page.logout}">Logout</span>
                             </a>
@@ -54,19 +54,19 @@
                     </ul>
                     <ul class="navbar-nav mr-auto" sec:authorize="isAnonymous()">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/register}">
+                            <a class="nav-link" th:href="@{/user/register}">
                                 <i class="fas fa-user"></i>
                                 <span th:text="#{layout.page.register}">Register as New User</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/login}">
+                            <a class="nav-link" th:href="@{/user/login}">
                                 <i class="fas fa-sign-in-alt"></i>
                                 <span th:text="#{layout.page.login}">Login</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/resetPassword}">
+                            <a class="nav-link" th:href="@{/user/resetPassword}">
                                 <i class="fas fa-question-circle"></i>
                                 <span th:text="#{layout.page.passwordForgotten}">Password forgotten?</span>
                             </a>
@@ -90,12 +90,12 @@
                             </div>
                         </li>
                     </ul>
-                    <form th:action="@{/search}" class="form-inline my-2 my-lg-0" role="search" method="get"
+                    <form th:action="@{/searchRequest}" class="form-inline my-2 my-lg-0" role="searchRequest" method="get"
                           sec:authorize="isAuthenticated()">
-                        <input class="form-control mr-sm-2" type="search" name="searchterm" placeholder="Search"
+                        <input class="form-control mr-sm-2" type="searchRequest" name="searchterm" placeholder="Search"
                                aria-label="Search">
                         <button class="btn btn-outline-secondary btn-sm my-2 my-sm-0" type="submit">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-searchRequest"></i>
                         </button>
                     </form>
                 </div>
