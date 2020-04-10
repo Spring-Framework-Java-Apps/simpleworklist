@@ -36,7 +36,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request) {
-        return taskRepository.findByTaskStateAndContext(taskState, context, request);
+        if(taskState == TaskState.FOCUS){
+            return taskRepository.findByFocusAndContext(true,context,request);
+        }else {
+            return taskRepository.findByTaskStateAndContext(taskState, context, request);
+        }
     }
 
     @Override
