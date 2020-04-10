@@ -52,5 +52,4 @@ public interface ProjectControllerService {
         Model model
     );
 
-    String transformTaskIntoProjectGet(Task task);
 }

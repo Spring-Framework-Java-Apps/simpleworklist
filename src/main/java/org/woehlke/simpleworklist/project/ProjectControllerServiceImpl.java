@@ -168,24 +168,4 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         userSession.setLastProjectId(project.getId());
         return project.getUrl();
     }
-
-    @Override
-    public String transformTaskIntoProjectGet(Task task) {
-        Project thisProject = new Project();
-        thisProject.setName(task.getTitle());
-        thisProject.setDescription(task.getText());
-        thisProject.setUuid(task.getUuid());
-        thisProject.setContext(task.getContext());
-        if (task.getProject() != null) {
-            long projectId = task.getProject().getId();
-            Project parentProject = projectService.findByProjectId(projectId);
-            thisProject.setParent(parentProject);
-        }
-        thisProject = projectService.saveAndFlush(thisProject);
-        task.moveToTrash();
-        task.emptyTrash();
-        taskService.updatedViaTaskstate(task);
-        log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
-        return thisProject.getUrl();
-    }
 }

@@ -18,4 +18,5 @@ public interface TaskStateControllerService {
         Model model
     );
 
+    String transformTaskIntoProjectGet(Task task);
 }
