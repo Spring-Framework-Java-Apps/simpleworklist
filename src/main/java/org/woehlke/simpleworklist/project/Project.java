@@ -83,7 +83,6 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     private String name;
 
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
-    @NotBlank
     @Length(min = 0, max = 65535)
     @Column(name = "description", nullable = true, length = 65535, columnDefinition = "text")
     private String description;

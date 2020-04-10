@@ -184,6 +184,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             log.info("tried to transform Task " + task.getId() + " to new Project " + projectId);
             return thisProject.getUrl();
         }
-        return "redirect:/taskstate/inbox";
+        return "redirect:/project/root";
     }
 }

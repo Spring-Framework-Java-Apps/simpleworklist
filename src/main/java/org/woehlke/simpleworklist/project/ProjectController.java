@@ -80,18 +80,22 @@ public class ProjectController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         BindingResult result,
         Locale locale, Model model
-    ){
+    ) {
         log.info("/project/root/add/project (POST)");
         Context context = super.getContext(userSession);
-        return projectControllerService.addNewProjectToRootPersist(
-            userSession,
-            project,
-            context,
-            result,
-            locale,
-            model,
-            "redirect:/project/"
-        );
+        if (result.hasErrors()) {
+            return "project/root/add/project";
+        } else {
+            return projectControllerService.addNewProjectToRootPersist(
+                userSession,
+                project,
+                context,
+                result,
+                locale,
+                model,
+                "redirect:/project/"
+            );
+        }
     }
 
     @RequestMapping(path = "/root/add/task", method = RequestMethod.GET)
