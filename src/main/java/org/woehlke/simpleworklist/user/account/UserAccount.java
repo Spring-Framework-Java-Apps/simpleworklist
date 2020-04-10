@@ -35,7 +35,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true, exclude = "userPassword")
+@ToString(callSuper = true, exclude = {"userPassword","defaultContext","lastLoginTimestamp"})
 public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount> {
 
     private static final long serialVersionUID = 7860692526488291439L;

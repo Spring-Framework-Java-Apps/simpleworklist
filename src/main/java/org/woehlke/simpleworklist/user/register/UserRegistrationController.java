@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/user/register")
 public class UserRegistrationController {
 
     private final UserAccountService userAccountService;
@@ -35,7 +35,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(path = "/register", method = RequestMethod.GET)
+    @RequestMapping(path = "", method = RequestMethod.GET)
     public final String registerGet(Model model) {
         log.info("registerGet");
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
@@ -51,7 +51,7 @@ public class UserRegistrationController {
      * @param model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     public final String registerPost(
             @Valid UserRegistrationForm userRegistrationForm,
             BindingResult result,
@@ -92,7 +92,7 @@ public class UserRegistrationController {
      * @param model
      * @return Formular for Entering Account Task or Error Messages.
      */
-    @RequestMapping(path = "/register/confirm/{confirmId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerConfirmGet(
         @PathVariable String confirmId,
         Model model
@@ -120,7 +120,7 @@ public class UserRegistrationController {
      * @param model
      * @return login page at success or page with error messages.
      */
-    @RequestMapping(path = "/register/confirm/{confirmId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
     public final String registerConfirmPost(
         @PathVariable String confirmId,
         @Valid UserAccountForm userAccountForm,

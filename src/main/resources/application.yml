@@ -5,10 +5,6 @@ server:
   compression:
     enabled: false
     min-response-size: 2048
-
-
-    server:
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432//simpleworklist
@@ -80,8 +76,10 @@ org:
           - "/user/login*"
           - "/user/register*"
           - "/user/register/**"
+          - "/user/register/confirm/**"
           - "/user/resetPassword*"
           - "/user/resetPassword/**"
+          - "/user/resetPassword/confirm/**"
           - "/error*"
         strengthBCryptPasswordEncoder: 10
 ---

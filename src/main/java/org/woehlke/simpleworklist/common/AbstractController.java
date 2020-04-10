@@ -118,15 +118,15 @@ public abstract class AbstractController {
     @ModelAttribute("context")
     public final String getCurrentContext(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("userSession") Locale locale
+        Locale locale
     ){
         if(userSession == null){
             userSession = new UserSessionBean();
         }
+        Context context = getContext(userSession);
         if(locale == null){
             locale = Locale.ENGLISH;
         }
-        Context context = getContext(userSession);
         if(locale == GERMAN){
             return context.getNameDe();
         } else {
@@ -145,8 +145,12 @@ public abstract class AbstractController {
 
     protected Context getContext(UserSessionBean userSession){
         UserAccount thisUser = this.getUser();
-        long defaultContextId = thisUser.getDefaultContext().getId();
-        Context context = contextService.findByIdAndUserAccount(defaultContextId, thisUser);
+        if(userSession == null){
+            userSession = new UserSessionBean();
+            long defaultContextId = thisUser.getDefaultContext().getId();
+            userSession.setLastContextId(defaultContextId);
+        }
+        Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), thisUser);
         userSession.setLastContextId(context.getId());
         userSession.setUserAccountid(thisUser.getId());
         return context;

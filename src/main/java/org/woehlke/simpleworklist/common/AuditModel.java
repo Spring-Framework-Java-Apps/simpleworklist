@@ -77,8 +77,6 @@ public class AuditModel implements Serializable {
     public String toString() {
         return "AuditModel{" +
                 "uuid='" + uuid + '\'' +
-                ", rowCreatedAt=" + rowCreatedAt +
-                ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
 
