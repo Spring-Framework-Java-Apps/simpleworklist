@@ -19,7 +19,8 @@
 
 <div th:fragment="mytwcontent">
 	<div>
-		<form id="formId" th:action="@{/project/root/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}" method="post">
+		<form id="formId" method="post"
+              th:action="@{/project/root/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}">
 			<input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{uuid}" />
 			<input type="hidden" th:field="*{rowCreatedAt.time}" />
@@ -61,7 +62,8 @@
 				<label th:for="textEditor" class="control-label">
 					<span th:utext="#{task.show.text}">Text</span>
 				</label>
-				<textarea id="textEditor" name="textEditor" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
+				<textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control"
+                          th:field="*{text}">Text</textarea>
 				<div>
 					<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
 					</div>
@@ -78,7 +80,8 @@
 								th:text="${#messages.msgOrNull(taskEnergyItem.code)}">Wireframe</option>
 					</select>
 					<div>
-						<div th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}" class="alert alert-danger">
+						<div class="alert alert-danger"
+                             th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}">
 						</div>
 					</div>
 				</span>&nbsp;
@@ -92,7 +95,8 @@
 								th:text="${#messages.msgOrNull(taskTimeItem.code)}">Wireframe</option>
 					</select>
 					<div>
-						<div th:each="err : ${#fields.errors('taskTime')}" th:text="${err}" class="alert alert-danger">
+						<div class="alert alert-danger"
+                             th:each="err : ${#fields.errors('taskTime')}" th:text="${err}">
 						</div>
 					</div>
 				</span>&nbsp;
@@ -101,12 +105,13 @@
 						<span th:utext="#{task.show.context}">Area</span>
 					</label>
 					<select th:field="*{context.id}">
-						<option th:each="areaOption : ${contexts}"
-								th:value="${areaOption.id}"
-								th:text="${locale == 'de' ? areaOption.nameDe : areaOption.nameEn}">Wireframe</option>
+						<option th:each="contextOption : ${contexts}"
+								th:value="${contextOption.id}"
+								th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">ctxO</option>
 					</select>
 					<div>
-						<div th:each="err : ${#fields.errors('context.id')}" th:text="${err}" class="alert alert-danger">
+						<div class="alert alert-danger"
+                             th:each="err : ${#fields.errors('context.id')}" th:text="${err}">
 						</div>
 					</div>
 				</span>

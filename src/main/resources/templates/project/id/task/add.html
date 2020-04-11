@@ -18,7 +18,8 @@
 </div>
 
 <div th:fragment="mytwcontent">
-	<form id="formId" th:action="@{/project/{projectId}/task/add(projectId=${thisProject.id})}" th:object="${task}" method="post">
+	<form id="formId" method="post"
+          th:action="@{/project/{projectId}/task/add(projectId=${thisProject.id})}" th:object="${task}">
 		<input type="hidden" th:field="*{taskState}" />
 		<input type="hidden" th:field="*{context.id}" />
 		<input type="hidden" th:field="*{rowCreatedAt.time}" />
@@ -46,7 +47,8 @@
 			<label th:for="textEditor" class="control-label">
 				<span th:utext="#{task.show.text}">Text</span>
 			</label>
-			<textarea id="textEditor" name="textEditor" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
+			<textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control"
+                      th:field="*{text}" >Text</textarea>
 			<div>
 				<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
 				</div>
@@ -106,7 +108,7 @@
 	</form>
 </div>
 
-	<script th:src="@{/webjars/ckeditor/4.11.3/full/ckeditor.js}"></script>
+	<script th:src="@{/webjars/ckeditor/4.14.0/full/ckeditor.js}"></script>
 	<script th:inline="javascript">
 		CKEDITOR.replace( 'textEditor' );
 	</script>

@@ -19,7 +19,8 @@
 
 <div th:fragment="mytwcontent">
 	<div>
-		<form id="formId" th:action="@{/project/root/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}" method="post">
+		<form id="formId" th:object="${task}" method="post"
+              th:action="@{/project/{projectId}/task/{taskId}/edit(taskId=${task.id},projectId=${thisProject.id})}" >
 			<input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{uuid}" />
 			<input type="hidden" th:field="*{rowCreatedAt.time}" />
@@ -29,7 +30,7 @@
 				</label>
 				<input type="text" th:field="*{title}" class="form-control" />
 				<div>
-					<div th:each="err : ${#fields.errors('title')}" th:text="${err}" class="alert alert-danger" >
+					<div class="alert alert-danger" th:each="err : ${#fields.errors('title')}" th:text="${err}">
 					</div>
 				</div>
 			</div>
@@ -43,7 +44,8 @@
                             th:text="${#messages.msgOrNull(taskStateItem.code)}">taskStateItemCode</option>
                 </select>
                 <div>
-                    <div th:each="err : ${#fields.errors('taskState')}" th:text="${err}" class="alert alert-danger">
+                    <div class="alert alert-danger"
+                          th:each="err : ${#fields.errors('taskState')}" th:text="${err}">
                     </div>
                 </div>
             </span>
@@ -53,7 +55,8 @@
 				</label>
 				<input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control" />
 				<div>
-					<div th:each="err : ${#fields.errors('dueDate')}" th:text="${err}" class="alert alert-danger">
+					<div class="alert alert-danger"
+                         th:each="err : ${#fields.errors('dueDate')}" th:text="${err}" >
 					</div>
 				</div>
 			</div>
@@ -61,9 +64,11 @@
 				<label th:for="textEditor" class="control-label">
 					<span th:utext="#{task.show.text}">Text</span>
 				</label>
-				<textarea id="textEditor" name="textEditor" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
+				<textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control"
+                          th:field="*{text}">Text
+                </textarea>
 				<div>
-					<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
+					<div class="alert alert-danger" th:each="err : ${#fields.errors('text')}" th:text="${err}">
 					</div>
 				</div>
 			</div>
@@ -78,7 +83,8 @@
 								th:text="${#messages.msgOrNull(taskEnergyItem.code)}">Wireframe</option>
 					</select>
 					<div>
-						<div th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}" class="alert alert-danger">
+						<div class="alert alert-danger"
+                              th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}">
 						</div>
 					</div>
 				</span>&nbsp;
@@ -92,7 +98,8 @@
 								th:text="${#messages.msgOrNull(taskTimeItem.code)}">Wireframe</option>
 					</select>
 					<div>
-						<div th:each="err : ${#fields.errors('taskTime')}" th:text="${err}" class="alert alert-danger">
+						<div class="alert alert-danger"
+                             th:each="err : ${#fields.errors('taskTime')}" th:text="${err}" >
 						</div>
 					</div>
 				</span>&nbsp;
@@ -101,12 +108,13 @@
 						<span th:utext="#{task.show.context}">Area</span>
 					</label>
 					<select th:field="*{context.id}">
-						<option th:each="areaOption : ${contexts}"
-								th:value="${areaOption.id}"
-								th:text="${locale == 'de' ? areaOption.nameDe : areaOption.nameEn}">Wireframe</option>
+						<option th:each="contextOption : ${contexts}"
+								th:value="${contextOption.id}"
+								th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">ctxO</option>
 					</select>
 					<div>
-						<div th:each="err : ${#fields.errors('context.id')}" th:text="${err}" class="alert alert-danger">
+						<div class="alert alert-danger"
+                             th:each="err : ${#fields.errors('context.id')}" th:text="${err}">
 						</div>
 					</div>
 				</span>
@@ -118,7 +126,8 @@
 				<i class="fas fa-save"></i>
 				<span th:utext="#{task.show.button}">Save Task</span>
 			</button>
-			<a th:href="@{/task/{id}/transform(id=${task.id})}" class="btn btn-secondary" role="button">
+			<a class="btn btn-secondary" role="button"
+               th:href="@{/project/{projectId}/task/{id}/transform(id=${task.id},projectId=${thisProject.id})}">
 				<i class="fas fa-project-diagram"></i>
 				<span th:utext="#{task.show.transform}">Transform into Project</span>
 			</a>

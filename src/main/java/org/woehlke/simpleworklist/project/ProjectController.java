@@ -22,6 +22,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
+import static org.woehlke.simpleworklist.project.Project.rootProjectId;
+
 /**
  * Created by tw on 14.02.16.
  */
@@ -350,6 +352,73 @@ public class ProjectController extends AbstractController {
         return thisProject.getUrl();
     }
 
+
+    @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.GET)
+    public final String editTaskGet(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable("taskId") Task task,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Locale locale, Model model
+    ) {
+        log.info("editTaskGet");
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        List<Context> contexts = contextService.getAllForUser(userAccount);
+        Context thisContext = task.getContext();
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("thisContext", thisContext);
+        model.addAttribute("task", task);
+        model.addAttribute("areas", contexts);
+        return "project/id/task/edit";
+    }
+
+    @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.POST)
+    public final String editTaskPost(
+        @PathVariable long taskId,
+        @Valid Task task,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        BindingResult result,
+        Locale locale,
+        Model model
+    ) {
+        log.info("editTaskPost");
+        if (result.hasErrors() ) {
+            log.warn("result.hasErrors");
+            for (ObjectError e : result.getAllErrors()) {
+                log.error(e.toString());
+            }
+            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            List<Context> contexts = contextService.getAllForUser(userAccount);
+            Task persistentTask = taskService.findOne(taskId);
+            persistentTask.merge(task);
+            task = persistentTask;
+            Context thisContext = task.getContext();
+            Project thisProject = new Project();
+            thisProject.setId(0L);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("thisProject", thisProject); //TODO: remove?
+            model.addAttribute("thisContext", thisContext);
+            model.addAttribute("task", task);
+            model.addAttribute("areas", contexts);
+            userSession.setLastProjectId(thisProject.getId());
+            userSession.setLastTaskState(task.getTaskState());
+            userSession.setLastTaskId(task.getId());
+            userSession.setLastContextId(thisContext.getId());
+            return "project/id/task/edit";
+        } else {
+            task.unsetFocus();
+            task.setRootProject();
+            Task persistentTask = taskService.findOne(task.getId());
+            persistentTask.merge(task);
+            task = taskService.updatedViaProject(persistentTask);
+            userSession.setLastProjectId(rootProjectId);
+            userSession.setLastTaskState(task.getTaskState());
+            userSession.setLastTaskId(task.getId());
+            return task.getTaskState().getUrl();
+        }
+    }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
     public final String setDoneTaskGet(
