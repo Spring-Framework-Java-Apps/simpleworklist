@@ -19,7 +19,8 @@
             </div>
             <div class="row">
                 <div id="tw-content-title-actionbuttons" class="col-md-3 mb-3">
-                    <a th:href="@{/task/move/completed/to/trash}" class="btn btn-block btn-primary" role="button">
+                    <a th:href="@{/taskstate/task/completed/move/to/trash}"
+                       class="btn btn-block btn-primary" role="button">
                         <i class="fas fa-trash-alt"></i>
                         <span th:utext="#{tasks.completed.delete}">Delete All Completed Tasks</span>
                     </a>
