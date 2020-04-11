@@ -15,6 +15,8 @@ import org.woehlke.simpleworklist.task.TaskRepository;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryRepository;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Service
@@ -38,31 +40,32 @@ public class TestHelperServiceImpl implements TestHelperService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteAllRegistrationProcess() {
+    public void deleteAllRegistrations() {
         userRegistrationRepository.deleteAll();
-
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteAllActionItem() {
+    public void deleteAllPasswordRecoveries() {
+        userPasswordRecoveryRepository.deleteAll();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void deleteAllTasks() {
         taskRepository.deleteAll();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void deleteAllCategory() {
-        List<Project> roots = projectRepository.findByParentIsNull();
-        for(Project root:roots){
-            remove(root);
+    public void deleteAllProjects() {
+        List<Project> projects = projectRepository.findAll();
+        for(Project project:projects){
+            project.setParent(null);
         }
-    }
-
-    private void remove(Project root){
-        for(Project child:root.getChildren()){
-            remove(child);
-        }
-        projectRepository.delete(root);
+        projectRepository.saveAll(projects);
+        projectRepository.flush();
+        projectRepository.deleteAll();
     }
 
     @Override
@@ -77,12 +80,17 @@ public class TestHelperServiceImpl implements TestHelperService {
     }
 
     @Override
-    public UserRegistration findByEmailRegistration(String email) {
+    public int getNumberOfAllPasswordRecoveries() {
+        return userPasswordRecoveryRepository.findAll().size();
+    }
+
+    @Override
+    public UserRegistration findRegistrationByEmail(@Email @NotBlank String email) {
         return userRegistrationRepository.findByEmail(email);
     }
 
     @Override
-    public UserPasswordRecovery findByEmailPasswordRecovery(String email) {
+    public UserPasswordRecovery findPasswordRecoveryByEmail(@Email @NotBlank String email) {
         return userPasswordRecoveryRepository.findByEmail(email);
     }
 }

@@ -35,7 +35,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        UserRegistration o = testHelperService.findByEmailRegistration(emails[0]);
+        UserRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
         assertTrue(o.getEmail().compareTo(emails[0])==0);
         o.setNumberOfRetries(maxRetries);
         userRegistrationService.registrationClickedInEmail(o);
@@ -47,13 +47,13 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
     //@Test
     public void testCheckIfResponseIsInTimeNewUser(){
         userRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
-        UserRegistration o = testHelperService.findByEmailRegistration(emails[0]);
+        UserRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
         assertNotNull(o);
         o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
         o.setNumberOfRetries(0);
         userRegistrationService.registrationClickedInEmail(o);
         userRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
-        o = testHelperService.findByEmailRegistration(emails[0]);
+        o = testHelperService.findRegistrationByEmail(emails[0]);
         assertNull(o);
     }
 
@@ -66,13 +66,13 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
             e.printStackTrace();
         }
         userPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);
-        UserPasswordRecovery o = testHelperService.findByEmailPasswordRecovery(emails[0]);
+        UserPasswordRecovery o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
         assertNotNull(o);
         o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
         o.setNumberOfRetries(0);
         userPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
         userPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);
-        o = testHelperService.findByEmailPasswordRecovery(emails[0]);
+        o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
         assertNull(o);
     }
 }

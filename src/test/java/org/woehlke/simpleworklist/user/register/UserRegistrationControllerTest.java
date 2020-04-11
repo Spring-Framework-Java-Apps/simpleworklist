@@ -40,7 +40,7 @@ public class UserRegistrationControllerTest extends AbstractTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        UserRegistration o = testHelperService.findByEmailRegistration(emails[0]);
+        UserRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
         assertNotNull(o);
         boolean result = o.getDoubleOptInStatus()== UserRegistrationStatus.REGISTRATION_SAVED_EMAIL
                 || o.getDoubleOptInStatus()== UserRegistrationStatus.REGISTRATION_SENT_MAIL;

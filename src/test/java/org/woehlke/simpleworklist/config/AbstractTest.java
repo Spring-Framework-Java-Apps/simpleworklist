@@ -1,19 +1,12 @@
 package org.woehlke.simpleworklist.config;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.event.annotation.AfterTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import org.woehlke.simpleworklist.config.ApplicationProperties;
 import org.woehlke.simpleworklist.helper.TestHelperService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.account.UserAccountService;
@@ -92,9 +85,9 @@ public abstract class AbstractTest {
     }
 
     protected void deleteAll(){
-        testHelperService.deleteAllRegistrationProcess();
-        testHelperService.deleteAllActionItem();
-        testHelperService.deleteAllCategory();
+        testHelperService.deleteAllRegistrations();
+        testHelperService.deleteAllTasks();
+        testHelperService.deleteAllProjects();
         testHelperService.deleteUserAccount();
     }
 

@@ -5,17 +5,21 @@ import org.woehlke.simpleworklist.user.register.UserRegistration;
 
 public interface TestHelperService {
 
-    void deleteAllRegistrationProcess();
+    void deleteAllRegistrations();
 
-    void deleteAllActionItem();
+    void deleteAllPasswordRecoveries();
 
-    void deleteAllCategory();
+    void deleteAllTasks();
+
+    void deleteAllProjects();
 
     void deleteUserAccount();
 
     int getNumberOfAllRegistrations();
 
-    UserRegistration findByEmailRegistration(String email);
+    int getNumberOfAllPasswordRecoveries();
 
-    UserPasswordRecovery findByEmailPasswordRecovery(String email);
+    UserRegistration findRegistrationByEmail(String email);
+
+    UserPasswordRecovery findPasswordRecoveryByEmail(String email);
 }
