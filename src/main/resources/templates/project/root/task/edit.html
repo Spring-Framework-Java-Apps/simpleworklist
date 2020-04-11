@@ -11,15 +11,15 @@
 
 <div th:fragment="mytwtitle">
 	<!-- Document Window -->
-	<h1>
+	<h1 class="tw-title">
 		<i class="fas fa-edit"></i>&nbsp;
 		<span th:utext="#{task.show.h1}">Edit Task</span>
 	</h1>
 </div>
 
 <div th:fragment="mytwcontent">
-	<div>
-		<form id="formId" method="post"
+	<div class="tw-content">
+		<form id="formId" method="post" class="was-validated"
               th:action="@{/project/root/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}">
             <div th:replace="layout/taskedit :: tw-task-edit-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
 			<a th:href="@{/task/{id}/transform(id=${task.id})}" class="btn btn-secondary" role="button">

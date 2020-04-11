@@ -19,7 +19,7 @@
 
 <div th:fragment="mytwcontent">
 	<div>
-		<form id="formId" th:object="${task}" method="post"
+		<form id="formId" th:object="${task}" method="post" class="was-validated"
               th:action="@{/project/{projectId}/task/{taskId}/edit(taskId=${task.id},projectId=${thisProject.id})}" >
             <div th:replace="layout/taskedit :: tw-task-edit-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
 			<a class="btn btn-secondary" role="button"

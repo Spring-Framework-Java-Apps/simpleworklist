@@ -27,7 +27,7 @@ public class LoginForm implements Serializable {
     private String userEmail;
 
     //TODO: Messages i18n
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")
     private String userPassword;

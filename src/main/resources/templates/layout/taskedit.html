@@ -13,7 +13,7 @@
             <label th:for="${#ids.next('title')}" class="control-label">
                 <span th:utext="#{task.show.title}">Title</span>
             </label>
-            <input type="text" th:field="*{title}" class="form-control" />
+            <input type="text" th:field="*{title}" class="form-control is-invalid" />
             <div th:each="err : ${#fields.errors('title')}">
                 <div class="invalid-feedback" th:text="${err}" >err</div>
             </div>
@@ -22,7 +22,7 @@
             <label th:for="${#ids.next('listTaskState')}" class="control-label">
                 <span th:utext="#{tasks.col.taskState}">taskState</span>
             </label>
-            <select th:field="*{taskState}">
+            <select th:field="*{taskState}" class="form-control is-invalid">
                 <option th:each="taskStateItem : ${listTaskState}"
                         th:value="${taskStateItem.value}"
                         th:text="${#messages.msgOrNull(taskStateItem.code)}">
@@ -37,7 +37,7 @@
             <label for="taskDueDate" class="control-label">
                 <span th:utext="#{task.show.dueDate}">dueDate</span>
             </label>
-            <input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control" />
+            <input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control is-invalid" />
             <div th:each="err : ${#fields.errors('dueDate')}">
                 <div class="invalid-feedback" th:text="${err}" >err</div>
             </div>
@@ -46,7 +46,7 @@
             <label th:for="textEditor" class="control-label">
                 <span th:utext="#{task.show.text}">Text</span>
             </label>
-            <textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control"
+            <textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control is-invalid"
                       th:field="*{text}">Text
             </textarea>
             <div th:each="err : ${#fields.errors('text')}">
@@ -57,7 +57,7 @@
                 <label th:for="${#ids.next('taskEnergy')}" class="control-label">
                     <span th:utext="#{task.show.taskEnergy}">taskEnergy</span>
                 </label>
-                <select th:field="*{taskEnergy}">
+                <select th:field="*{taskEnergy}" class="form-control is-invalid">
                     <option th:each="taskEnergyItem : ${listTaskEnergy}"
                             th:value="${taskEnergyItem.value}"
                             th:text="${#messages.msgOrNull(taskEnergyItem.code)}">
@@ -72,7 +72,7 @@
                 <label th:for="${#ids.next('taskTime')}" class="control-label">
                     <span th:utext="#{task.show.taskTime}">Time</span>
                 </label>
-                <select th:field="*{taskTime}">
+                <select th:field="*{taskTime}" class="form-control is-invalid">
                     <option th:each="taskTimeItem : ${listTaskTime}"
                             th:value="${taskTimeItem.value}"
                             th:text="${#messages.msgOrNull(taskTimeItem.code)}">
@@ -87,7 +87,7 @@
                 <label th:for="${#ids.next('context.id')}" class="control-label">
                     <span th:utext="#{task.show.context}">Area</span>
                 </label>
-                <select th:field="*{context.id}">
+                <select th:field="*{context.id}" class="form-control is-invalid">
                     <option th:each="contextOption : ${contexts}"
                             th:value="${contextOption.id}"
                             th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">
