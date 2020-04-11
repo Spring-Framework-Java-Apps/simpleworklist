@@ -8,14 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.context.ContextService;
-import org.woehlke.simpleworklist.task.TaskService;
 import org.woehlke.simpleworklist.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Locale;
 
 import static org.woehlke.simpleworklist.project.Project.rootProjectId;
@@ -25,15 +22,14 @@ import static org.woehlke.simpleworklist.project.Project.rootProjectId;
 public class ProjectControllerServiceImpl implements ProjectControllerService {
 
     private final ProjectService projectService;
-    private final TaskService taskService;
-    private final ContextService contextService;
     private final BreadcrumbService breadcrumbService;
 
     @Autowired
-    public ProjectControllerServiceImpl(ProjectService projectService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
+    public ProjectControllerServiceImpl(
+        ProjectService projectService,
+        BreadcrumbService breadcrumbService
+    ) {
         this.projectService = projectService;
-        this.taskService = taskService;
-        this.contextService = contextService;
         this.breadcrumbService = breadcrumbService;
     }
 
@@ -66,7 +62,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Model model
     ){
         log.info("private addNewProjectPersist projectId="+projectId+" "+project.toString());
-        UserAccount userAccount = context.getUserAccount();
         userSession.setLastProjectId(projectId);
         model.addAttribute("userSession",userSession);
         if(result.hasErrors()){
