@@ -54,6 +54,7 @@ public class ProjectController extends AbstractController {
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
         task.setProject(thisProject);
+        task.unsetFocus();
         Boolean mustChooseArea = false;
         if(userSession.getLastContextId() == 0L){
             mustChooseArea = true;

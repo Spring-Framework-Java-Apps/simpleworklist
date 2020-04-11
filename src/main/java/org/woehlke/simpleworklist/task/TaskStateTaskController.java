@@ -52,6 +52,7 @@ public class TaskStateTaskController extends AbstractController {
         task.setTaskState(TaskState.INBOX);
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
+        task.unsetFocus();
         Boolean mustChooseContext = false;
         if(userSession.getLastContextId() == 0L){
             mustChooseContext = true;
