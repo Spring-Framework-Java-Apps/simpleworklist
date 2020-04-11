@@ -18,48 +18,18 @@
 </div>
 
 <div th:fragment="mytwcontent">
-	<div>
-	<form id="formId" th:action="@{/project/{id}/project/add(id=${thisProject.id})}" th:object="${project}" method="post">
-		<div class="form-group form-control-lg">
-			<label th:for="${#ids.next('name')}" class="control-label">Name</label>
-			<input type="text" th:field="*{name}" class="form-control" />
-			<div>
-				<div th:each="err : ${#fields.errors('name')}" th:text="${err}" class="alert alert-danger"></div>
-			</div>
-		</div>
-		<div class="form-group form-control-lg">
-			<label th:for="textEditor"  class="control-label">
-				<span th:utext="#{project.add.description}">Description</span>
-			</label>
-			<textarea id="textEditor" name="textEditor" rows="10" cols="50" th:field="*{description}" class="form-control"></textarea>
-			<div>
-				<div th:each="err : ${#fields.errors('description')}" th:text="${err}" class="alert alert-danger"></div>
-			</div>
-		</div>
-		<div class="form-group form-control-lg">
-			<label th:for="${#ids.next('context.id')}" class="control-label">
-				<span th:utext="#{project.edit.context}">Area</span>
-			</label>
-			<select th:field="*{context.id}">
-				<option th:each="areaOption : ${contexts}"
-						th:value="${areaOption.id}"
-						th:text="${locale == 'de' ? areaOption.nameDe : areaOption.nameEn}">Wireframe</option>
-			</select>
-			<div>
-				<div th:each="err : ${#fields.errors('context.id')}" th:text="${err}" class="alert alert-danger"></div>
-			</div>
-		</div>
-		<button id="createNewProject" type="submit" class="btn btn-primary">
-			<i class="fas fa-save"></i>
-			<span th:utext="#{project.add.button}">Add Project</span>
-		</button>
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-	</form>
-	</div>
-	<!-- Document Window End -->
-
+    <form id="formId" class="was-validated" method="post"
+          th:action="@{/project/{id}/project/add(id=${thisProject.id})}" th:object="${project}">
+        <div th:replace="layout/project :: tw-project-form(project=${project},contexts=${contexts})"></div>
+        <div class="form-row">
+            <div class="col-md-12 mb-12">
+                <button id="createNewProject" type="submit" class="btn btn-block btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span th:utext="#{project.add.button}">Add Project</span>
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 
 	<script th:src="@{/webjars/ckeditor/4.14.0/full/ckeditor.js}"></script>
