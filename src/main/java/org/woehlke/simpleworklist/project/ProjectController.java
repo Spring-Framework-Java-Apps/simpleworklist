@@ -384,8 +384,6 @@ public class ProjectController extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
-
-        log.info("editTaskPost");
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -419,7 +417,6 @@ public class ProjectController extends AbstractController {
             userSession.setLastContextId(thisContext.getId());
             return "project/id/task/edit";
         } else {
-            task.unsetFocus();
             task.setProject(thisProject);
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);

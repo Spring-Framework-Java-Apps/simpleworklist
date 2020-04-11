@@ -23,6 +23,7 @@
               th:action="@{/project/{projectId}/task/{taskId}/edit(taskId=${task.id},projectId=${thisProject.id})}" >
 			<input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{uuid}" />
+            <input type="hidden" th:field="*{focus}" />
 			<input type="hidden" th:field="*{rowCreatedAt.time}" />
 			<div class="form-group">
 				<label th:for="${#ids.next('title')}" class="control-label">

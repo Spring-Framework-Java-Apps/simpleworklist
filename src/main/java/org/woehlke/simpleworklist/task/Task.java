@@ -18,6 +18,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.data.domain.Page;
@@ -109,6 +110,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @Column(name = "description", nullable = false, length = 65535, columnDefinition="text")
     private String text;
 
+    @NotNull
     @Column(name = "focus", nullable = false)
     private Boolean focus;
 
@@ -212,6 +214,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     //TODO: Due Date = Date of Today
     public void moveToToday(){
         pushTaskstate(TaskState.TODAY);
+        this.dueDate = new Date();
     }
 
     //TODO: delete Due Date
