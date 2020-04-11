@@ -46,7 +46,7 @@
                                       th:field="*{messageText}" class="form-control" />
                             <div>
                                 <div th:each="err : ${#fields.errors('messageText')}"
-                                     th:text="${err}" class="alert alert-danger" />
+                                     th:text="${err}" class="invalid-feedback" />
                             </div>
                         </div>
                         <div class="form-group form-control-lg">
