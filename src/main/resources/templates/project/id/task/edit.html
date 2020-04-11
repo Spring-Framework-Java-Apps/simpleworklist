@@ -25,99 +25,95 @@
             <input type="hidden" th:field="*{uuid}" />
             <input type="hidden" th:field="*{focus}" />
 			<input type="hidden" th:field="*{rowCreatedAt.time}" />
-			<div class="form-group">
+			<div class="form-group form-control-lg">
+                <div th:each="err : ${#fields.errors('title')}">
+                    <div class="alert alert-danger" th:text="${err}" >err</div>
+                </div>
 				<label th:for="${#ids.next('title')}" class="control-label">
 					<span th:utext="#{task.show.title}">Title</span>
 				</label>
 				<input type="text" th:field="*{title}" class="form-control" />
-				<div>
-					<div class="alert alert-danger" th:each="err : ${#fields.errors('title')}" th:text="${err}">
-					</div>
-				</div>
 			</div>
-            <span class="form-group">
+            <span class="form-group form-control-lg">
+                <div th:each="err : ${#fields.errors('taskState')}">
+                    <div class="alert alert-danger" th:text="${err}" >err</div>
+                </div>
                 <label th:for="${#ids.next('listTaskState')}" class="control-label">
                     <span th:utext="#{tasks.col.taskState}">taskState</span>
                 </label>
                 <select th:field="*{taskState}">
                     <option th:each="taskStateItem : ${listTaskState}"
                             th:value="${taskStateItem.value}"
-                            th:text="${#messages.msgOrNull(taskStateItem.code)}">taskStateItemCode</option>
+                            th:text="${#messages.msgOrNull(taskStateItem.code)}">
+                        taskStateItem
+                    </option>
                 </select>
-                <div>
-                    <div class="alert alert-danger"
-                          th:each="err : ${#fields.errors('taskState')}" th:text="${err}">
-                    </div>
-                </div>
             </span>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
+                <div th:each="err : ${#fields.errors('dueDate')}">
+                    <div class="alert alert-danger" th:text="${err}" >err</div>
+                </div>
 				<label for="taskDueDate" class="control-label">
-					<span th:utext="#{task.show.dueDate}">Due Date</span>
+					<span th:utext="#{task.show.dueDate}">dueDate</span>
 				</label>
 				<input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control" />
-				<div>
-					<div class="alert alert-danger"
-                         th:each="err : ${#fields.errors('dueDate')}" th:text="${err}" >
-					</div>
-				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
+                <div th:each="err : ${#fields.errors('text')}">
+                    <div class="alert alert-danger" th:text="${err}" >err</div>
+                </div>
 				<label th:for="textEditor" class="control-label">
 					<span th:utext="#{task.show.text}">Text</span>
 				</label>
 				<textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control"
                           th:field="*{text}">Text
                 </textarea>
-				<div>
-					<div class="alert alert-danger" th:each="err : ${#fields.errors('text')}" th:text="${err}">
-					</div>
-				</div>
 			</div>
 			<div>
-				<span class="form-group">
+				<span class="form-group form-control-lg">
+                    <div th:each="err : ${#fields.errors('taskEnergy')}">
+                        <div class="alert alert-danger" th:text="${err}" >err</div>
+                    </div>
 					<label th:for="${#ids.next('taskEnergy')}" class="control-label">
-						<span th:utext="#{task.show.taskEnergy}">Energy</span>
+						<span th:utext="#{task.show.taskEnergy}">taskEnergy</span>
 					</label>
 					<select th:field="*{taskEnergy}">
 						<option th:each="taskEnergyItem : ${listTaskEnergy}"
 								th:value="${taskEnergyItem.value}"
-								th:text="${#messages.msgOrNull(taskEnergyItem.code)}">Wireframe</option>
+								th:text="${#messages.msgOrNull(taskEnergyItem.code)}">
+                            taskEnergyItem
+                        </option>
 					</select>
-					<div>
-						<div class="alert alert-danger"
-                              th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}">
-						</div>
-					</div>
 				</span>&nbsp;
-				<span class="form-group">
+				<span class="form-group form-control-lg">
+                    <div th:each="err : ${#fields.errors('taskEnergy')}">
+                        <div class="alert alert-danger" th:text="${err}" >err</div>
+                    </div>
 					<label th:for="${#ids.next('taskTime')}" class="control-label">
 						<span th:utext="#{task.show.taskTime}">Time</span>
 					</label>
 					<select th:field="*{taskTime}">
 						<option th:each="taskTimeItem : ${listTaskTime}"
 								th:value="${taskTimeItem.value}"
-								th:text="${#messages.msgOrNull(taskTimeItem.code)}">Wireframe</option>
+								th:text="${#messages.msgOrNull(taskTimeItem.code)}">
+                            taskTimeItem
+                        </option>
 					</select>
-					<div>
-						<div class="alert alert-danger"
-                             th:each="err : ${#fields.errors('taskTime')}" th:text="${err}" >
-						</div>
-					</div>
 				</span>&nbsp;
-				<span class="form-group">
+				<span class="form-group form-control-lg">
+                    <div th:each="err : ${#fields.errors('context.id')}">
+                        <div class="alert alert-danger" th:text="${err}" >err</div>
+                    </div>
 					<label th:for="${#ids.next('context.id')}" class="control-label">
 						<span th:utext="#{task.show.context}">Area</span>
 					</label>
 					<select th:field="*{context.id}">
 						<option th:each="contextOption : ${contexts}"
 								th:value="${contextOption.id}"
-								th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">ctxO</option>
+								th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">
+                            contextOption
+                        </option>
 					</select>
-					<div>
-						<div class="alert alert-danger"
-                             th:each="err : ${#fields.errors('context.id')}" th:text="${err}">
-						</div>
-					</div>
 				</span>
 			</div>
             <input type="hidden"

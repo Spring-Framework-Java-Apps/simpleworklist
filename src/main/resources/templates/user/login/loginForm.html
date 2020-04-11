@@ -30,11 +30,11 @@
 					<input type="hidden"
 						   name="${_csrf.parameterName}"
 						   value="${_csrf.token}"/>
-					<div class="form-group">
+					<div class="form-group form-control-lg">
 						<label for="j_username">Email</label>
 						<input id="j_username" type="email" name="j_username" class="form-control" placeholder="Enter email"/>
 					</div>
-					<div class="form-group">
+					<div class="form-group form-control-lg">
 						<label for="j_password" th:text="#{user.loginForm.password}">Password</label>
 						<input id="j_password" type="password" name="j_password" class="form-control" placeholder="Password"/>
 					</div>

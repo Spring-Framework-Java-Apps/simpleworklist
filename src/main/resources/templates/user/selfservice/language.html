@@ -24,7 +24,7 @@
 
     <div th:fragment="mytwcontent">
         <form id="formId" th:action="@{/user/selfservice/language}" th:object="${userChangeLanguageForm}" method="post">
-            <div class="form-group">
+            <div class="form-group form-control-lg">
                 <label th:for="${#ids.next('defaultLanguage')}" class="control-label">
                     <span th:text="#{user.selfservice.language.defaultLanguage}">Language</span>
                 </label>

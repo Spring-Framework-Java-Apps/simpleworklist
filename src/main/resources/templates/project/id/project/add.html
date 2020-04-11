@@ -20,14 +20,14 @@
 <div th:fragment="mytwcontent">
 	<div>
 	<form id="formId" th:action="@{/project/{id}/project/add(id=${thisProject.id})}" th:object="${project}" method="post">
-		<div class="form-group">
+		<div class="form-group form-control-lg">
 			<label th:for="${#ids.next('name')}" class="control-label">Name</label>
 			<input type="text" th:field="*{name}" class="form-control" />
 			<div>
 				<div th:each="err : ${#fields.errors('name')}" th:text="${err}" class="alert alert-danger"></div>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group form-control-lg">
 			<label th:for="textEditor"  class="control-label">
 				<span th:utext="#{project.add.description}">Description</span>
 			</label>
@@ -36,7 +36,7 @@
 				<div th:each="err : ${#fields.errors('description')}" th:text="${err}" class="alert alert-danger"></div>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group form-control-lg">
 			<label th:for="${#ids.next('context.id')}" class="control-label">
 				<span th:utext="#{project.edit.context}">Area</span>
 			</label>

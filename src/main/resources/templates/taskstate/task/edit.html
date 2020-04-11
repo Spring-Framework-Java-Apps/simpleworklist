@@ -23,7 +23,7 @@
 			<input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{uuid}" />
 			<input type="hidden" th:field="*{rowCreatedAt.time}" />
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="${#ids.next('title')}" class="control-label">
 					<span th:utext="#{task.show.title}">Title</span>
 				</label>
@@ -33,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-            <span class="form-group">
+            <span class="form-group form-control-lg">
                 <label th:for="${#ids.next('listTaskState')}" class="control-label">
                     <span th:utext="#{tasks.col.taskState}">taskState</span>
                 </label>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </span>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label for="taskDueDate" class="control-label">
 					<span th:utext="#{task.show.dueDate}">Due Date</span>
 				</label>
@@ -57,7 +57,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="textEditor" class="control-label">
 					<span th:utext="#{task.show.text}">Text</span>
 				</label>
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div>
-				<span class="form-group">
+				<span class="form-group form-control-lg">
 					<label th:for="${#ids.next('taskEnergy')}" class="control-label">
 						<span th:utext="#{task.show.taskEnergy}">Energy</span>
 					</label>
@@ -82,7 +82,7 @@
 						</div>
 					</div>
 				</span>&nbsp;
-				<span class="form-group">
+				<span class="form-group form-control-lg">
 					<label th:for="${#ids.next('taskTime')}" class="control-label">
 						<span th:utext="#{task.show.taskTime}">Time</span>
 					</label>
@@ -96,7 +96,7 @@
 						</div>
 					</div>
 				</span>&nbsp;
-				<span class="form-group">
+				<span class="form-group form-control-lg">
 					<label th:for="${#ids.next('context.id')}" class="control-label">
 						<span th:utext="#{task.show.context}">Area</span>
 					</label>

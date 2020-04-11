@@ -19,7 +19,7 @@
 	<div class="card card-body">
 		<form id="formId" th:action="@{/user/register/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountForm}" method="post">
 			<input type="hidden" th:field="*{userEmail}" />
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="${#ids.next('userFullname')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userFullname}">Full Name</span>
 				</label>
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="${#ids.next('userPassword')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userPassword}">Password</span>
 				</label>
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="${#ids.next('userPasswordConfirmation')}" class="control-label">
 					<span th:utext="#{user.registerConfirmed.userPasswordConfirmation}">Password again</span>
 				</label>

@@ -26,7 +26,7 @@
     <div>
         <form id="formId" th:action="@{/user/selfservice/context/add}" th:object="${newContext}" method="post">
             <td>
-                <div class="form-group">
+                <div class="form-group form-control-lg">
                     <label th:for="${#ids.next('nameEn')}" class="control-label">
                         <span th:utext="#{enum.language.en}">Englisch</span>
                     </label>
@@ -37,7 +37,7 @@
                 </div>
             </td>
             <td>
-                <div class="form-group">
+                <div class="form-group form-control-lg">
                     <label th:for="${#ids.next('nameDe')}" class="control-label">
                         <span th:utext="#{enum.language.de}">Deutsch</span>
                     </label>

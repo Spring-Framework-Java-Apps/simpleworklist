@@ -26,7 +26,7 @@
     <div th:fragment="mytwcontent">
         <div>
             <form id="formId" th:action="@{/user/selfservice/name}" th:object="${username}" method="post">
-                <div class="form-group">
+                <div class="form-group form-control-lg">
                     <label th:for="${#ids.next('userFullname')}" class="control-label">
                         <span th:utext="#{user.registerConfirmed.userFullname}">Full Name</span>
                     </label>
