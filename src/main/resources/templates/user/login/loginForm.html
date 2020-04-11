@@ -49,16 +49,24 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6 mb-6">
+                        <div class="col-md-4 mb-4">
                             <button id="loginButton" type="submit" class="btn btn-block btn-primary">
                                 <i class="fas fa-sign-in-alt"></i>
                                 <span th:utext="#{user.loginForm.loginButton}"></span>
                             </button>
                         </div>
-                        <div class="col-md-6 mb-6">
-                            <a th:href="@{/user/resetPassword}" class="btn btn-block btn-secondary" role="button">
+                        <div class="col-md-4 mb-4">
+                            <a id="passwordResetButton" th:href="@{/user/resetPassword}" role="button"
+                               class="btn btn-block btn-secondary">
                                 <i class="fas fa-question-circle"></i>
                                 <span th:utext="#{user.loginForm.passwordReset}">Password forgotten?</span>
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <a id="registerButton" th:href="@{/user/register}" role="button"
+                               class="btn btn-block btn-secondary">
+                                <i class="fas fa-user"></i>
+                                <span th:utext="#{user.loginForm.register}">register as new user</span>
                             </a>
                         </div>
                     </div>
