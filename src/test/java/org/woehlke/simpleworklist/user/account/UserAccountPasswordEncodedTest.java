@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.user.account;
 
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.woehlke.simpleworklist.config.AbstractTest;
+import org.woehlke.simpleworklist.application.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

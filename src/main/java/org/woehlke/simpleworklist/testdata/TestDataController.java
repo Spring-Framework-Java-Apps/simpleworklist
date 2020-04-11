@@ -30,7 +30,7 @@ public class TestDataController {
     public String createTestCategoryTree() {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         testDataService.createTestCategoryTreeForUserAccount(user);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
 }

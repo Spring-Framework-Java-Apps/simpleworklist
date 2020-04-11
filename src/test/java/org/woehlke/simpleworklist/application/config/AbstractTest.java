@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.config;
+package org.woehlke.simpleworklist.application.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.common;
+package org.woehlke.simpleworklist.application.common;
 
 public interface ComparableById<T extends AuditModel> {
     boolean equalsById(T otherObject);

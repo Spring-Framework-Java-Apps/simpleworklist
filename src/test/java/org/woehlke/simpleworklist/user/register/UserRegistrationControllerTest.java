@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.register;
 
-import org.woehlke.simpleworklist.config.AbstractTest;
+import org.woehlke.simpleworklist.application.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

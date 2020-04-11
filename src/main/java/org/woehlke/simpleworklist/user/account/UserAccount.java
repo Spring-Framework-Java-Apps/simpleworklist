@@ -8,9 +8,9 @@ import lombok.Setter;
 import lombok.ToString;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.common.AuditModel;
-import org.woehlke.simpleworklist.common.ComparableById;
-import org.woehlke.simpleworklist.language.Language;
+import org.woehlke.simpleworklist.application.common.AuditModel;
+import org.woehlke.simpleworklist.application.common.ComparableById;
+import org.woehlke.simpleworklist.application.language.Language;
 
 import java.io.Serializable;
 import java.util.Date;

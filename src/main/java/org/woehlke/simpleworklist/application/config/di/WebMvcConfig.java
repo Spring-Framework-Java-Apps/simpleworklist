@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.config.di;
+package org.woehlke.simpleworklist.application.config.di;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
-import org.woehlke.simpleworklist.config.ApplicationProperties;
+import org.woehlke.simpleworklist.application.config.ApplicationProperties;
 
 import java.util.Locale;
 import java.util.Properties;

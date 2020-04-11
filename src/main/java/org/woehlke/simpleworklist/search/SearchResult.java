@@ -3,8 +3,8 @@ package org.woehlke.simpleworklist.search;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.woehlke.simpleworklist.common.AuditModel;
-import org.woehlke.simpleworklist.common.ComparableById;
+import org.woehlke.simpleworklist.application.common.AuditModel;
+import org.woehlke.simpleworklist.application.common.ComparableById;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.project.Project;
 

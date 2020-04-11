@@ -10,7 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import org.woehlke.simpleworklist.config.UserAccountTestDataService;
+import org.woehlke.simpleworklist.application.config.UserAccountTestDataService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import java.net.URL;

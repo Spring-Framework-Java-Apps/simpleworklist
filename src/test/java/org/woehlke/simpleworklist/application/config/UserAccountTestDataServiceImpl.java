@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.config;
+package org.woehlke.simpleworklist.application.config;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.context.NewContextForm;
-import org.woehlke.simpleworklist.language.Language;
+import org.woehlke.simpleworklist.application.language.Language;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.account.UserAccountService;
 

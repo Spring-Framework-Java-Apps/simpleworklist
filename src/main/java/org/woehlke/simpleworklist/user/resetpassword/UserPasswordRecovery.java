@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.user.resetpassword;
 
 import javax.validation.constraints.Email;
 
-import org.woehlke.simpleworklist.common.AuditModel;
+import org.woehlke.simpleworklist.application.common.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

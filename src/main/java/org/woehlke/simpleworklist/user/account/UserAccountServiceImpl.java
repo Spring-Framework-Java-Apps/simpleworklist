@@ -4,7 +4,6 @@ package org.woehlke.simpleworklist.user.account;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.id.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.messages.User2UserMessage;
-import org.woehlke.simpleworklist.language.Language;
+import org.woehlke.simpleworklist.application.language.Language;
 import org.woehlke.simpleworklist.context.ContextRepository;
 import org.woehlke.simpleworklist.user.messages.User2UserMessageRepository;
 

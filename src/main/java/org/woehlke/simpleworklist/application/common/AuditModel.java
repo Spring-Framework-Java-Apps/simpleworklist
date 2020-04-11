@@ -1,7 +1,6 @@
-package org.woehlke.simpleworklist.common;
+package org.woehlke.simpleworklist.application.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.id.UUIDGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

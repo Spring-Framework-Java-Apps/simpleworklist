@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.woehlke.simpleworklist.common.AbstractController;
+import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.session.UserSessionBean;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

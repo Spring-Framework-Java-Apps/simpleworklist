@@ -15,14 +15,14 @@ set MY_CLASSPATH_APP=%JAVA_HOME%\jre\lib\rt.jar;%CD%\target\classes
 set CLASSPATH=%MY_CLASSPATH_APP%;%MY_CLASSPATH_DEPS%
 echo %CLASSPATH%
 cd target\classes
-serialver org.woehlke.simpleworklist.language.Language > ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.application.language.Language > ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskEnergy >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskState >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.TaskTime >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserRole >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.common.AuditModel >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.application.common.AuditModel >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.Context  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.project.Project  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.Task  >> ..\..\etc\serialversions.txt
@@ -38,7 +38,7 @@ serialver org.woehlke.simpleworklist.user.messages.User2UserMessageFormBean >> .
 serialver org.woehlke.simpleworklist.searchRequest.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.language.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.application.language.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> ..\..\etc\serialversions.txt
 @rem serialver org.woehlke.simpleworklist.user.account.UserDetailsBean >> ..\..\etc\serialversions.txt

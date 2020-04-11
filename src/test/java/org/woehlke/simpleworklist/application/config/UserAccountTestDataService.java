@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.config;
+package org.woehlke.simpleworklist.application.config;
 
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
