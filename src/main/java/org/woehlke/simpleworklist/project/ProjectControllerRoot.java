@@ -35,11 +35,13 @@ public class ProjectControllerRoot extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
+    private final TaskStateControllerService taskStateControllerService;
 
     @Autowired
-    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService) {
+    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService, TaskStateControllerService taskStateControllerService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
+        this.taskStateControllerService = taskStateControllerService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -479,11 +481,10 @@ public class ProjectControllerRoot extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession
     ) {
         log.info("transformTaskIntoProjectGet");
-        //return transformTaskIntoProjectGet(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return rootProjectUrl;
+        return taskStateControllerService.transformTaskIntoProjectGet(task);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)

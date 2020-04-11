@@ -98,3 +98,14 @@ https://github.com/thymeleaf/thymeleaf-testing
 
 # 2.3.16 
 Fixed #169, Fixed #170, Fixed #171, Fixed #172, Fixed #183 
+
+
+# 2.3.17
+#226 
+#227
+#228
+#229
+#230
+#231
+#232
+#233 
