@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.common.AbstractController;
@@ -208,7 +209,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("userSession",userSession);
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("areas", contexts);
+        model.addAttribute("contexts", contexts);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", thisProject);
@@ -368,7 +369,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("thisContext", thisContext);
         model.addAttribute("task", task);
-        model.addAttribute("areas", contexts);
+        model.addAttribute("contexts", contexts);
         return "project/id/task/edit";
     }
 
@@ -383,6 +384,18 @@ public class ProjectController extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
+
+        log.info("editTaskPost");
+        if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
+            String objectName="task";
+            String field="dueDate";
+            String defaultMessage="you need a due Date to schedule the Task";
+            FieldError error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+            field="taskState";
+            error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+        }
         if (result.hasErrors() ) {
             log.warn("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
@@ -399,7 +412,7 @@ public class ProjectController extends AbstractController {
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
-            model.addAttribute("areas", contexts);
+            model.addAttribute("contexts", contexts);
             userSession.setLastProjectId(thisProject.getId());
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());

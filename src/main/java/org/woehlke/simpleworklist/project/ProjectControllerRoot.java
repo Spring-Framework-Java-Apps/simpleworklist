@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
@@ -200,7 +201,7 @@ public class ProjectControllerRoot extends AbstractController {
         model.addAttribute("thisProject", thisProject); //TODO: remove?
         model.addAttribute("thisContext", thisContext);
         model.addAttribute("task", task);
-        model.addAttribute("areas", contexts);
+        model.addAttribute("contexts", contexts);
         return "project/root/task/edit";
     }
 
@@ -214,6 +215,18 @@ public class ProjectControllerRoot extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
+
+        log.info("editTaskPost");
+        if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
+            String objectName="task";
+            String field="dueDate";
+            String defaultMessage="you need a due Date to schedule the Task";
+            FieldError error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+            field="taskState";
+            error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+        }
         if (result.hasErrors() ) {
             log.warn("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
@@ -232,7 +245,7 @@ public class ProjectControllerRoot extends AbstractController {
             model.addAttribute("thisProject", thisProject); //TODO: remove?
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
-            model.addAttribute("areas", contexts);
+            model.addAttribute("contexts", contexts);
             userSession.setLastProjectId(thisProject.getId());
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());
