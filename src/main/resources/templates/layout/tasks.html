@@ -13,15 +13,14 @@
         </div>
     </div>
 
-    <!-- TODO #36 -->
-    <div th:fragment="tw-tasks-table(taskPage,myTaskState)" sec:authorize="isAuthenticated()">
+    <div th:fragment="tw-tasks-table(taskPage,myTaskState,myUrlPath)" sec:authorize="isAuthenticated()">
         <div class="container">
-            <div th:replace="this :: tw-tasks-page-table(taskPage=${taskPage},myTaskState=${myTaskState})"></div>
+            <div th:replace="this :: tw-tasks-page-table(taskPage=${taskPage},myTaskState=${myTaskState},myUrlPath=${myUrlPath})"></div>
             <div th:replace="this :: tw-tasks-pagination(page=${taskPage})"></div>
         </div>
     </div>
 
-    <div th:fragment="tw-tasks-page-table(taskPage,myTaskState)">
+    <div th:fragment="tw-tasks-page-table(taskPage,myTaskState,myUrlPath)">
         <div class="row">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -56,13 +55,13 @@
                         draggable="true" ondragstart="dragTask(event)"
                         ondrop="dropTask2Task(event)" ondragover="allowDropOfTask(event)">
                         <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
-                            <a th:href="@{/taskstate/task/{id}/complete(id=${task.id})}"
+                            <a th:href="@{${myUrlPath}/task/{id}/complete(id=${task.id},myUrlPath=${myUrlPath})}"
                                th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
                                class="task_col_content task_col_content_finish twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.finish.task}">
                                 <i class="far fa-square"></i>
                             </a>
-                            <a th:href="@{/taskstate/task/{id}/incomplete(id=${task.id})}"
+                            <a th:href="@{${myUrlPath}/task/{id}/incomplete(id=${task.id},myUrlPath=${myUrlPath})}"
                                th:if="${task.taskState.name() eq 'COMPLETED'}"
                                class="task_col_content task_col_content_unfinish twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.unfinish.task}">
@@ -72,13 +71,13 @@
                                th:if="${task.taskState.name() eq 'TRASHED'}"
                                th:alt-title="#{task.col.twtooltip.infoicons.trash}"
                                draggable="true" ondragstart="dragTask(event)" data-placement="bottom"></i>
-                            <a th:if="${task.focus}" th:href="@{/taskstate/task/{id}/unsetfocus(id=${task.id})}"
+                            <a th:if="${task.focus}" th:href="@{{myUrlPath}/task/{id}/unsetfocus(id=${task.id},myUrlPath=${myUrlPath})}"
                                class="task_col_content task_col_content_unsetfocus twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.unsetfocus}"
                                th:id="'task_' + ${task.id} + '_col_unsetfocus'" draggable="true" ondragstart="dragTask(event)">
                                 <i class="fas fa-star"></i>
                             </a>
-                            <a th:if="${not task.focus}" th:href="@{/taskstate/task/{id}/setfocus(id=${task.id})}"
+                            <a th:if="${not task.focus}" th:href="@{{myUrlPath}/task/{id}/setfocus(id=${task.id},myUrlPath=${myUrlPath})}"
                                class="task_col_content task_col_content_setfocus twtooltip"
                                th:alt-title="#{task.col.twtooltip.infoicons.setfocus}"
                                th:id="'task_' + ${task.id} + '_col_setfocus'" draggable="true" ondragstart="dragTask(event)">
@@ -86,7 +85,7 @@
                             </a>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
-                            <div th:replace="this :: tw-tasks-modal(task=${task})"></div>
+                            <div th:replace="this :: tw-tasks-modal(task=${task},myUrlPath=${myUrlPath})"></div>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date"
                             th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
@@ -161,7 +160,7 @@
         </div>
     </div>
 
-    <div th:fragment="tw-tasks-modal(task)">
+    <div th:fragment="tw-tasks-modal(task,myUrlPath)">
         <button type="button" data-toggle="modal"
                 class="btn btn-primary btn-sm task_col_content task_col_content_task_details twtooltip"
                 th:attr="data-target='#taskModalScrollable_'+${task.id}"
@@ -178,20 +177,20 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="taskModalScrollableTitle">
                             <a th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
-                               th:href="@{/taskstate/task/complete/{id}(id=${task.id})}">
+                               th:href="@{${myUrlPath}/task/complete/{id}(id=${task.id},myUrlPath=${myUrlPath})}">
                                 <i class="far fa-square"></i>
                             </a>
                             <a th:if="${task.taskState.name() eq 'COMPLETED'}"
-                               th:href="@{/taskstate/task/incomplete/{id}(id=${task.id})}" >
+                               th:href="@{${myUrlPath}/task/incomplete/{id}(id=${task.id},myUrlPath=${myUrlPath})}" >
                                 <i class="fas fa-check-square"></i>
                             </a>
                             <i class="fas fa-trash-alt" th:if="${task.taskState.name() eq 'TRASHED'}"></i>
                             <a th:if="${task.focus}"
-                               th:href="@{/taskstate/task/unsetfocus/{id}(id=${task.id})}">
+                               th:href="@{${myUrlPath}/task/unsetfocus/{id}(id=${task.id},myUrlPath=${myUrlPath})}">
                                 <i class="fas fa-star"></i>
                             </a>
                             <a th:if="${not task.focus}"
-                               th:href="@{/taskstate/task/setfocus/{id}(id=${task.id})}">
+                               th:href="@{${myUrlPath}/task/setfocus/{id}(id=${task.id},myUrlPath=${myUrlPath})}">
                                 <i class="far fa-star"></i>
                             </a>
                             <span th:text="${task.title}">Modal title</span>
@@ -261,7 +260,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
                                 th:utext="#{button.back}">Close</button>
-                        <a th:href="@{/taskstate/task/{id}/edit(id=${task.id})}" class="btn btn-secondary"
+                        <a th:href="@{{myUrlPath}/task/{id}/edit(id=${task.id},myUrlPath=${myUrlPath})}" class="btn btn-secondary"
                            role="button" th:id="'task_' + ${task.id}" th:utext="#{task.show.button.edit}">
                             task.show.button.edit
                         </a>

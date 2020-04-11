@@ -33,8 +33,7 @@
 	<div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
 	</div>
 	<div th:if="${taskPage.getTotalElements() gt 0}">
-		<!-- TODO: #34 -->
-		<div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='PROJECT')">
+		<div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='PROJECT',myUrlPath='/project/root')">
 		</div>
 	</div>
 	<div th:if="${taskPage.getTotalElements() eq 0}">
