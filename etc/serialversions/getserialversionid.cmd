@@ -26,7 +26,7 @@ serialver org.woehlke.simpleworklist.application.common.AuditModel >> ..\..\etc\
 serialver org.woehlke.simpleworklist.context.Context  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.project.Project  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.Task  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.messages.User2UserMessage  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.chat.User2UserMessage  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccount  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistration  >> ..\..\etc\serialversions.txt
@@ -34,7 +34,7 @@ serialver org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbItem  >> .
 serialver org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.NewContextForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.messages.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.chat.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.searchRequest.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
@@ -43,6 +43,6 @@ serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> ..\.
 serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> ..\..\etc\serialversions.txt
 @rem serialver org.woehlke.simpleworklist.user.account.UserDetailsBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.session.UserSessionBean >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.session.UserSessionBean >> ..\..\etc\serialversions.txt
 cd ..\..
 echo FINISHED

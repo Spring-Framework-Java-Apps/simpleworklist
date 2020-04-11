@@ -15,9 +15,9 @@ import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskTime;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.project.ProjectService;
-import org.woehlke.simpleworklist.user.messages.User2UserMessageService;
+import org.woehlke.simpleworklist.user.chat.User2UserMessageService;
 import org.woehlke.simpleworklist.user.account.UserAccountService;
-import org.woehlke.simpleworklist.session.UserSessionBean;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.account.UserAccountAccessService;

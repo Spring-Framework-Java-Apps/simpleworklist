@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.ProjectService;
-import org.woehlke.simpleworklist.session.UserSessionBean;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 import java.util.Locale;

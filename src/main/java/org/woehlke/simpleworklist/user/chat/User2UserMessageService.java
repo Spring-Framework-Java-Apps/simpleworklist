@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.messages;
+package org.woehlke.simpleworklist.user.chat;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
