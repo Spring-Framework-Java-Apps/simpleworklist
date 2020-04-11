@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import org.woehlke.simpleworklist.application.ApplicationProperties;
 import org.woehlke.simpleworklist.helper.TestHelperService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.account.UserAccountService;

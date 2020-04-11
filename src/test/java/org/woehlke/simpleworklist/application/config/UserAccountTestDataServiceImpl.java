@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.woehlke.simpleworklist.application.ApplicationProperties;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.context.ContextService;
 import org.woehlke.simpleworklist.context.NewContextForm;

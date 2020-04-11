@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.config;
+package org.woehlke.simpleworklist.application;
 
 import lombok.Getter;
 import lombok.Setter;
