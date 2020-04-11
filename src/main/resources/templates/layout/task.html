@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
-    <div th:fragment="tw-task-edit-form(task,listTaskState,listTaskEnergy,listTaskTime,contexts)">
+    <div th:fragment="tw-task-form(task,listTaskState,listTaskEnergy,listTaskTime,contexts)">
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:field="*{uuid}" />
         <input type="hidden" th:field="*{focus}" />
