@@ -9,103 +9,130 @@
         <input type="hidden" th:field="*{uuid}" />
         <input type="hidden" th:field="*{focus}" />
         <input type="hidden" th:field="*{rowCreatedAt.time}" />
-        <div class="form-group form-control-lg">
-            <label th:for="${#ids.next('title')}" class="control-label">
-                <span th:utext="#{task.show.title}">Title</span>
-            </label>
-            <input type="text" th:field="*{title}" class="form-control is-invalid" />
-            <div th:each="err : ${#fields.errors('title')}">
-                <div class="invalid-feedback" th:text="${err}" >err</div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div class="form-row">
+            <div class="col-md-12 mb-1">
+                <div class="form-group form-control-lg">
+                    <label th:for="${#ids.next('title')}" class="control-label">
+                        <span th:utext="#{task.show.title}">Title</span>
+                    </label>
+                    <input type="text" th:field="*{title}" class="form-control is-invalid" required/>
+                    <div th:each="err : ${#fields.errors('title')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <span class="form-group form-control-lg">
-            <label th:for="${#ids.next('listTaskState')}" class="control-label">
-                <span th:utext="#{tasks.col.taskState}">taskState</span>
-            </label>
-            <select th:field="*{taskState}" class="form-control is-invalid">
-                <option th:each="taskStateItem : ${listTaskState}"
-                        th:value="${taskStateItem.value}"
-                        th:text="${#messages.msgOrNull(taskStateItem.code)}">
-                    taskStateItem
-                </option>
-            </select>
-            <div th:each="err : ${#fields.errors('taskState')}">
-                <div class="invalid-feedback" th:text="${err}" >err</div>
-            </div>
-        </span>
-        <div class="form-group form-control-lg">
-            <label for="taskDueDate" class="control-label">
-                <span th:utext="#{task.show.dueDate}">dueDate</span>
-            </label>
-            <input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control is-invalid" />
-            <div th:each="err : ${#fields.errors('dueDate')}">
-                <div class="invalid-feedback" th:text="${err}" >err</div>
+        <div class="form-row">
+            <div class="col-md-12 mb-1">
+                <div class="form-group form-control-lg">
+                    <label th:for="${#ids.next('listTaskState')}" class="control-label">
+                        <span th:utext="#{tasks.col.taskState}">taskState</span>
+                    </label>
+                    <select th:field="*{taskState}" class="form-control is-invalid" required>
+                        <option th:each="taskStateItem : ${listTaskState}"
+                                th:value="${taskStateItem.value}"
+                                th:text="${#messages.msgOrNull(taskStateItem.code)}">
+                            taskStateItem
+                        </option>
+                    </select>
+                    <div th:each="err : ${#fields.errors('taskState')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group form-control-lg">
-            <label th:for="textEditor" class="control-label">
-                <span th:utext="#{task.show.text}">Text</span>
-            </label>
-            <textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control is-invalid"
-                      th:field="*{text}">Text
-            </textarea>
-            <div th:each="err : ${#fields.errors('text')}">
-                <div class="invalid-feedback" th:text="${err}" >err</div>
+        <div class="form-row">
+            <div class="col-md-12 mb-1">
+                <div class="form-group form-control-lg">
+                    <label for="taskDueDate" class="control-label">
+                        <span th:utext="#{task.show.dueDate}">dueDate</span>
+                    </label>
+                    <input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control is-invalid"/>
+                    <div th:each="err : ${#fields.errors('dueDate')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>
             </div>
-        <div>
-            <span class="form-group form-control-lg">
-                <label th:for="${#ids.next('taskEnergy')}" class="control-label">
-                    <span th:utext="#{task.show.taskEnergy}">taskEnergy</span>
-                </label>
-                <select th:field="*{taskEnergy}" class="form-control is-invalid">
-                    <option th:each="taskEnergyItem : ${listTaskEnergy}"
-                            th:value="${taskEnergyItem.value}"
-                            th:text="${#messages.msgOrNull(taskEnergyItem.code)}">
-                        taskEnergyItem
-                    </option>
-                </select>
-                <div th:each="err : ${#fields.errors('taskEnergy')}">
-                    <div class="invalid-feedback" th:text="${err}" >err</div>
-                </div>
-            </span>&nbsp;
-            <span class="form-group form-control-lg">
-                <label th:for="${#ids.next('taskTime')}" class="control-label">
-                    <span th:utext="#{task.show.taskTime}">Time</span>
-                </label>
-                <select th:field="*{taskTime}" class="form-control is-invalid">
-                    <option th:each="taskTimeItem : ${listTaskTime}"
-                            th:value="${taskTimeItem.value}"
-                            th:text="${#messages.msgOrNull(taskTimeItem.code)}">
-                        taskTimeItem
-                    </option>
-                </select>
-                <div th:each="err : ${#fields.errors('taskEnergy')}">
-                    <div class="invalid-feedback" th:text="${err}" >err</div>
-                </div>
-            </span>&nbsp;
-            <span class="form-group form-control-lg">
-                <label th:for="${#ids.next('context.id')}" class="control-label">
-                    <span th:utext="#{task.show.context}">Area</span>
-                </label>
-                <select th:field="*{context.id}" class="form-control is-invalid">
-                    <option th:each="contextOption : ${contexts}"
-                            th:value="${contextOption.id}"
-                            th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">
-                        contextOption
-                    </option>
-                </select>
-                <div th:each="err : ${#fields.errors('context.id')}">
-                    <div class="invalid-feedback" th:text="${err}" >err</div>
-                </div>
-            </span>
         </div>
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-        <button id="editDataLeaf" type="submit" class="btn btn-primary">
-            <i class="fas fa-save"></i>
-            <span th:utext="#{task.show.button}">Save Task</span>
-        </button>
+        <div class="form-row">
+            <div class="col-md-12 mb-1">
+                <div class="form-group form-control-lg">
+                    <label th:for="textEditor" class="control-label">
+                        <span th:utext="#{task.show.text}">Text</span>
+                    </label>
+                    <textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control is-invalid"
+                              th:field="*{text}">Text
+                    </textarea>
+                    <div th:each="err : ${#fields.errors('text')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-2">
+                <div class="form-group form-control-lg">
+                    <label th:for="${#ids.next('taskEnergy')}" class="control-label">
+                        <span th:utext="#{task.show.taskEnergy}">taskEnergy</span>
+                    </label>
+                    <select th:field="*{taskEnergy}" class="form-control is-invalid">
+                        <option th:each="taskEnergyItem : ${listTaskEnergy}"
+                                th:value="${taskEnergyItem.value}"
+                                th:text="${#messages.msgOrNull(taskEnergyItem.code)}">
+                            taskEnergyItem
+                        </option>
+                    </select>
+                    <div th:each="err : ${#fields.errors('taskEnergy')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-2">
+                <div class="form-group form-control-lg">
+                    <label th:for="${#ids.next('taskTime')}" class="control-label">
+                        <span th:utext="#{task.show.taskTime}">Time</span>
+                    </label>
+                    <select th:field="*{taskTime}" class="form-control is-invalid">
+                        <option th:each="taskTimeItem : ${listTaskTime}"
+                                th:value="${taskTimeItem.value}"
+                                th:text="${#messages.msgOrNull(taskTimeItem.code)}">
+                            taskTimeItem
+                        </option>
+                    </select>
+                    <div th:each="err : ${#fields.errors('taskEnergy')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>&nbsp;
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 mb-1">
+                <div class="form-group form-control-lg">
+                    <label th:for="${#ids.next('context.id')}" class="control-label">
+                        <span th:utext="#{task.show.context}">Context</span>
+                    </label>
+                    <select th:field="*{context.id}" class="form-control is-invalid">
+                        <option th:each="contextOption : ${contexts}"
+                                th:value="${contextOption.id}"
+                                th:text="${locale == 'de' ? contextOption.nameDe : contextOption.nameEn}">
+                            contextOption
+                        </option>
+                    </select>
+                    <div th:each="err : ${#fields.errors('context.id')}">
+                        <div class="invalid-feedback" th:text="${err}" >err</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 mb-1">
+                <button id="editTaskSubmit" type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span th:utext="#{task.show.button}">Save Task</span>
+                </button>
+            </div>
+        </div>
     </div>
 
 </html>
