@@ -364,7 +364,7 @@ public class ProjectController extends AbstractController {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = task.getContext();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("thisContext", thisContext);
@@ -398,7 +398,7 @@ public class ProjectController extends AbstractController {
             thisProject.setId(0L);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject); //TODO: remove?
+            model.addAttribute("thisProject", thisProject);
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("areas", contexts);
