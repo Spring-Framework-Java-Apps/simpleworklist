@@ -72,7 +72,7 @@ public class ProjectControllerRoot extends AbstractController {
     ){
         log.info("/project/root/project/add (GET)");
         Context context = super.getContext(userSession);
-        projectControllerService.addNewProjectToRoot(userSession, context, locale, model);
+        projectControllerService.addNewProjectToProjectRootForm(userSession, context, locale, model);
         return "project/root/project/add";
     }
 
@@ -89,7 +89,7 @@ public class ProjectControllerRoot extends AbstractController {
             return "project/root/project/add";
         } else {
             project.setUuid(UUID.randomUUID().toString());
-            return projectControllerService.addNewProjectToRootPersist(
+            return projectControllerService.addNewProjectToProjectRootPersist(
                 userSession,
                 project,
                 context,

@@ -156,7 +156,7 @@ public class ProjectController extends AbstractController {
     ) {
         log.info("private addNewProjectGet (GET) projectId="+projectId);
         Context context = super.getContext(userSession);
-        projectControllerService.addNewProject(projectId, userSession, context, locale, model);
+        projectControllerService.addNewProjectToProjectIdForm(projectId, userSession, context, locale, model);
         return "project/id/project/add";
     }
 
@@ -169,15 +169,14 @@ public class ProjectController extends AbstractController {
         Locale locale, Model model) {
         log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
         Context context = super.getContext(userSession);
-        return projectControllerService.addNewProjectPersist(
+        return projectControllerService.addNewProjectToProjectIdPersist(
             projectId,
             userSession,
             project,
             context,
             result,
             locale,
-            model ,
-            "project/id/project/add"
+            model
         );
     }
 
@@ -375,6 +374,7 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.POST)
     public final String editTaskPost(
+        @PathVariable("projectId") Project thisProject,
         @PathVariable long taskId,
         @Valid Task task,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -394,8 +394,6 @@ public class ProjectController extends AbstractController {
             persistentTask.merge(task);
             task = persistentTask;
             Context thisContext = task.getContext();
-            Project thisProject = new Project();
-            thisProject.setId(0L);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
@@ -409,14 +407,14 @@ public class ProjectController extends AbstractController {
             return "project/id/task/edit";
         } else {
             task.unsetFocus();
-            task.setRootProject();
+            task.setProject(thisProject);
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);
             task = taskService.updatedViaProject(persistentTask);
             userSession.setLastProjectId(rootProjectId);
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());
-            return task.getTaskState().getUrl();
+            return thisProject.getUrl();
         }
     }
 
@@ -455,13 +453,9 @@ public class ProjectController extends AbstractController {
         @PathVariable("taskId") Task task,
         @RequestParam(required=false) String back
     ){
-        if(task !=null) {
-            task.setFocus();
-            task = taskService.updatedViaTaskstate(task);
-            return task.getUrl();
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
+        task.setFocus();
+        task = taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
     }
 
     @RequestMapping(path = "/task/{taskId}/unsetfocus", method = RequestMethod.GET)
@@ -471,13 +465,9 @@ public class ProjectController extends AbstractController {
         @PathVariable("taskId") Task task,
         @RequestParam(required=false) String back
     ){
-        if(task !=null) {
-            task.unsetFocus();
-            task = taskService.updatedViaTaskstate(task);
-            return task.getUrl();
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
+        task.unsetFocus();
+        task = taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/project/root", method = RequestMethod.GET)

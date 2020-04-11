@@ -36,7 +36,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         this.breadcrumbService = breadcrumbService;
     }
 
-    public void addNewProject(
+    public void addNewProjectToProjectIdForm(
         long projectId,
         UserSessionBean userSession,
         Context context,
@@ -69,14 +69,14 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         model.addAttribute("project", project);
     }
 
-    public String addNewProjectPersist(
+    public String addNewProjectToProjectIdPersist(
         long projectId,
         UserSessionBean userSession,
         Project project,
         Context context,
         BindingResult result,
-        Locale locale, Model model,
-        String template
+        Locale locale,
+        Model model
     ){
         log.info("private addNewProjectPersist projectId="+projectId+" "+project.toString());
         UserAccount userAccount = context.getUserAccount();
@@ -94,7 +94,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
-            return template;
+            return "project/id/show";
         } else {
             if (projectId == 0) {
                 if(userSession.getLastContextId()>0) {
@@ -136,7 +136,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    public void addNewProjectToRoot(
+    public void addNewProjectToProjectRootForm(
         UserSessionBean userSession,
         Context context,
         Locale locale,
@@ -155,7 +155,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    public String addNewProjectToRootPersist(
+    public String addNewProjectToProjectRootPersist(
         UserSessionBean userSession,
         Project project,
         Context context,

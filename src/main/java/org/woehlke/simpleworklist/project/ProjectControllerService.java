@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public interface ProjectControllerService {
 
-    void addNewProject(
+    void addNewProjectToProjectIdForm(
         long projectId,
         UserSessionBean userSession,
         Context context,
@@ -18,37 +18,36 @@ public interface ProjectControllerService {
         Model model
     );
 
-    String addNewProjectPersist(
+    void addNewProjectToProjectRootForm(
+        UserSessionBean userSession,
+        Context context,
+        Locale locale,
+        Model model
+    );
+
+    String addNewProjectToProjectIdPersist(
         long projectId,
         UserSessionBean userSession,
         Project project,
         Context context,
         BindingResult result,
         Locale locale,
-        Model model,
-        String template
+        Model model
+    );
+
+    String addNewProjectToProjectRootPersist(
+        UserSessionBean userSession,
+        Project project,
+        Context context,
+        BindingResult result,
+        Locale locale,
+        Model model
     );
 
     Project getProject(
         long projectId,
         UserAccount userAccount,
         UserSessionBean userSession
-    );
-
-    void addNewProjectToRoot(
-        UserSessionBean userSession,
-        Context context,
-        Locale locale,
-        Model model
-    );
-
-    String addNewProjectToRootPersist(
-        UserSessionBean userSession,
-        Project project,
-        Context context,
-        BindingResult result,
-        Locale locale,
-        Model model
     );
 
 }
