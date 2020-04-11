@@ -11,15 +11,20 @@
 
     <div th:fragment="mytwtitle">
         <div id="tw-content-title">
-            <h1>
-                <i class="fas fa-trash-alt"></i>
-                <span th:utext="#{tasks.trash.h1}">Trash</span>
-            </h1>
-            <div id="tw-content-title-actionbuttons">
-                <a th:href="@{/task/move/trash/to/void}" class="btn btn-sm btn-primary" role="button">
+            <div class="row">
+                <h1 class="col-md-12 mb-12">
                     <i class="fas fa-trash-alt"></i>
-                    <span th:utext="#{tasks.trash.empty}">Empty Trash</span>
-                </a>
+                    <span th:utext="#{tasks.trash.h1}">Trash</span>
+                </h1>
+            </div>
+            </div>
+            <div class="row">
+                <div id="tw-content-title-actionbuttons" class="col-md-3 mb-3">
+                    <a th:href="@{/task/move/trash/to/void}" class="btn btn-block btn-primary" role="button">
+                        <i class="fas fa-trash-alt"></i>
+                        <span th:utext="#{tasks.trash.empty}">Empty Trash</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
