@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.common.ComparableById;
 import org.woehlke.simpleworklist.user.account.UserAccount;
@@ -64,13 +64,13 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     @LazyToOne(PROXY)
     private UserAccount userAccount;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_de", nullable = false)
     private String nameDe;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_en", nullable = false)

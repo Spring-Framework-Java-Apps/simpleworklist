@@ -15,7 +15,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.common.ComparableById;
@@ -76,7 +76,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name", nullable = false)

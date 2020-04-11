@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.user.messages;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.common.AuditModel;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 

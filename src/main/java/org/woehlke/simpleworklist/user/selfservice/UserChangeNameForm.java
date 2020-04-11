@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.user.selfservice;
 import javax.validation.constraints.NotBlank;
 
 import lombok.*;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

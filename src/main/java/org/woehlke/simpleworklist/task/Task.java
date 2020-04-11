@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.task;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -20,10 +19,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+//import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
@@ -100,7 +96,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     private Context context;
 
 
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
     @Column(name = "title", nullable = false)
@@ -148,7 +144,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     private long orderIdTaskState;
 
     @Transient
-    public String getTextShortened(){
+    public String getTeaser(){
         StringBuilder sb = new StringBuilder(this.getText());
         if(sb.length() > 50){
             sb.setLength(50);
@@ -156,16 +152,6 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
             sb.append("...");
         }
         return sb.toString();
-    }
-
-    /**
-     * performs 'history back' for taskState
-     */
-    @Transient
-    public void switchToLastFocusType() {
-        TaskState old = this.taskState;
-        this.taskState = this.lastTaskState;
-        this.lastTaskState = old;
     }
 
     public void delete(){
@@ -380,9 +366,5 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         this.setDueDate(task.dueDate);
         this.setTaskEnergy(task.taskEnergy);
         this.setTaskTime(task.taskTime);
-    }
-
-    public static Page<Task> getEmptyPage(Pageable request){
-        return new PageImpl<Task>(new ArrayList<Task>(),request,0L);
     }
 }
