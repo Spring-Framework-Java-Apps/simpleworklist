@@ -1,10 +1,9 @@
-package org.woehlke.simpleworklist.breadcrumb;
+package org.woehlke.simpleworklist.application.breadcrumb;
 
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter

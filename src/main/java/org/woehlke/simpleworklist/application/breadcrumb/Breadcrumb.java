@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.breadcrumb;
+package org.woehlke.simpleworklist.application.breadcrumb;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
