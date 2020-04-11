@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.puppycrawl.tools:checkstyle:8.29">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/puppycrawl/tools/checkstyle/8.29/checkstyle-8.29.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/puppycrawl/tools/checkstyle/8.29/checkstyle-8.29-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/puppycrawl/tools/checkstyle/8.29/checkstyle-8.29-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
