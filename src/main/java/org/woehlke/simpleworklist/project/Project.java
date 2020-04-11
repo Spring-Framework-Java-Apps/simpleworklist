@@ -140,24 +140,19 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return super.equalsByMyUuid(otherObject);
     }
 
-    public static Project newProjectFactory(Project parent) {
-        Project n = new Project();
-        n.setParent(parent);
-        n.setContext(parent.getContext());
-        return n;
-    }
-
-    public static Project newRootProjectFactory(UserAccount userAccount) {
-        Project n = new Project();
-        n.setParent(null);
-        return n;
+    public static Project newProjectFactoryForParentProject(Project parent) {
+        Project thisProject = new Project();
+        //thisProject.setName("name");
+        thisProject.setParent(parent);
+        thisProject.setContext(parent.getContext());
+        return thisProject;
     }
 
     public static Project newRootProjectFactory(Context context) {
-        Project n = new Project();
-        n.setParent(null);
-        n.setContext(context);
-        return n;
+        Project thisProject = new Project();
+        thisProject.setParent(null);
+        thisProject.setContext(context);
+        return thisProject;
     }
 
 
@@ -167,5 +162,10 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return newRootProjectFactory(context);
     }
 
+    public Project addOtherProjectToChildren(Project project) {
+        children.add(project);
+        project.setParent(this);
+        return project;
+    }
 }
 

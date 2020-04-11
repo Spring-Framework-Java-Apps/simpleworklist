@@ -1,5 +1,6 @@
 package org.woehlke.simpleworklist.testdata;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,17 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
-
+@Slf4j
 @Service
 public class TestDataServiceImpl implements TestDataService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestDataServiceImpl.class);
-
     private final ProjectRepository projectRepository;
-
     private final TaskRepository taskRepository;
-
     private final ContextRepository contextRepository;
 
     @Autowired
@@ -45,9 +43,9 @@ public class TestDataServiceImpl implements TestDataService {
         List<Context> contexts = contextRepository.findByUserAccount(userAccount);
         Iterator<Context> iterator = contexts.iterator();
         Context contextWork = iterator.next();
-        LOGGER.info("----------------------------------------------");
-        LOGGER.info("createTestCategoryTreeForUserAccount");
-        LOGGER.info("----------------------------------------------");
+        log.info("----------------------------------------------");
+        log.info("createTestCategoryTreeForUserAccount");
+        log.info("----------------------------------------------");
         Date nowDate = new Date();
         long now = nowDate.getTime();
         String name01 = "test01_" + now;
@@ -62,18 +60,28 @@ public class TestDataServiceImpl implements TestDataService {
         String name02020301 = "test02020301_" + now;
         String name02020302 = "test02020302_" + now;
         String name02020303 = "test02020303_" + now;
-        Project c01 = Project.newRootProjectFactory(userAccount, contextWork);
-        Project c02 = Project.newRootProjectFactory(userAccount, contextWork);
+        Project c01 = Project.newRootProjectFactory(contextWork);
+        Project c02 = Project.newRootProjectFactory(contextWork);
+        c01.setUuid(UUID.randomUUID().toString());
+        c02.setUuid(UUID.randomUUID().toString());
         c01.setName(name01);
         c02.setName(name02);
-        c01.setDescription("description01 for " + name01 + loremIpsumProject);
-        c02.setDescription("description02 for " + name02 + loremIpsumProject);
+        c01.setDescription("description01 for " + name01 + " " + loremIpsumProject);
+        c02.setDescription("description02 for " + name02 + " " + loremIpsumProject);
         c01 = projectRepository.saveAndFlush(c01);
         c02 = projectRepository.saveAndFlush(c02);
-        Project c0101 = Project.newProjectFactory(c01);
-        Project c0102 = Project.newProjectFactory(c01);
-        Project c0201 = Project.newProjectFactory(c02);
-        Project c0202 = Project.newProjectFactory(c02);
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c01.toString());
+        log.info("persisted: "+ c02.toString());
+        log.info("----------------------------------------------");
+        Project c0101 = Project.newProjectFactoryForParentProject(c01);
+        Project c0102 = Project.newProjectFactoryForParentProject(c01);
+        Project c0201 = Project.newProjectFactoryForParentProject(c02);
+        Project c0202 = Project.newProjectFactoryForParentProject(c02);
+        c0101.setUuid(UUID.randomUUID().toString());
+        c0102.setUuid(UUID.randomUUID().toString());
+        c0201.setUuid(UUID.randomUUID().toString());
+        c0202.setUuid(UUID.randomUUID().toString());
         c0101.setName(name0101);
         c0102.setName(name0102);
         c0201.setName(name0201);
@@ -82,32 +90,50 @@ public class TestDataServiceImpl implements TestDataService {
         c01.getChildren().add(c0102);
         c02.getChildren().add(c0201);
         c02.getChildren().add(c0202);
-        c0101.setDescription("description0101 for " + name0101 + loremIpsumProject);
-        c0102.setDescription("description0102 for " + name0102 + loremIpsumProject);
-        c0201.setDescription("description0201 for " + name0201 + loremIpsumProject);
-        c0202.setDescription("description0202 for " + name0202 + loremIpsumProject);
+        c0101.setDescription("description0101 for " + name0101 + " " + loremIpsumProject);
+        c0102.setDescription("description0102 for " + name0102 + " " + loremIpsumProject);
+        c0201.setDescription("description0201 for " + name0201 + " " + loremIpsumProject);
+        c0202.setDescription("description0202 for " + name0202 + " " + loremIpsumProject);
         c0101 = projectRepository.saveAndFlush(c0101);
         c0102 = projectRepository.saveAndFlush(c0102);
         c0201 = projectRepository.saveAndFlush(c0201);
         c0202 = projectRepository.saveAndFlush(c0202);
-        Project c020201 = Project.newProjectFactory(c0202);
-        Project c020202 = Project.newProjectFactory(c0202);
-        Project c020203 = Project.newProjectFactory(c0202);
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c0101.toString());
+        log.info("persisted: "+ c0102.toString());
+        log.info("persisted: "+ c0201.toString());
+        log.info("persisted: "+ c0202.toString());
+        log.info("----------------------------------------------");
+        Project c020201 = Project.newProjectFactoryForParentProject(c0202);
+        Project c020202 = Project.newProjectFactoryForParentProject(c0202);
+        Project c020203 = Project.newProjectFactoryForParentProject(c0202);
+        c020201.setUuid(UUID.randomUUID().toString());
+        c020202.setUuid(UUID.randomUUID().toString());
+        c020203.setUuid(UUID.randomUUID().toString());
         c020201.setName(name020201);
         c020202.setName(name020202);
         c020203.setName(name020203);
         c0202.getChildren().add(c020201);
         c0202.getChildren().add(c020202);
         c0202.getChildren().add(c020203);
-        c020201.setDescription("description for " + name020201);
-        c020202.setDescription("description for " + name020202);
-        c020203.setDescription("description for " + name020203);
+        c020201.setDescription("description for " + name020201 + " " + loremIpsumProject);
+        c020202.setDescription("description for " + name020202 + " " + loremIpsumProject);
+        c020203.setDescription("description for " + name020203 + " " + loremIpsumProject);
         c020201 = projectRepository.saveAndFlush(c020201);
         c020202 = projectRepository.saveAndFlush(c020202);
         c020203 = projectRepository.saveAndFlush(c020203);
-        Project c02020301 = Project.newProjectFactory(c020203);
-        Project c02020302 = Project.newProjectFactory(c020203);
-        Project c02020303 = Project.newProjectFactory(c020203);
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c020201.toString());
+        log.info("persisted: "+ c020202.toString());
+        log.info("persisted: "+ c020202.toString());
+        log.info("persisted: "+ c020203.toString());
+        log.info("----------------------------------------------");
+        Project c02020301 = Project.newProjectFactoryForParentProject(c020203);
+        Project c02020302 = Project.newProjectFactoryForParentProject(c020203);
+        Project c02020303 = Project.newProjectFactoryForParentProject(c020203);
+        c02020301.setUuid(UUID.randomUUID().toString());
+        c02020302.setUuid(UUID.randomUUID().toString());
+        c02020303.setUuid(UUID.randomUUID().toString());
         c02020301.setName(name02020301);
         c02020302.setName(name02020302);
         c02020303.setName(name02020303);
@@ -120,37 +146,53 @@ public class TestDataServiceImpl implements TestDataService {
         c02020301 = projectRepository.saveAndFlush(c02020301);
         c02020302 = projectRepository.saveAndFlush(c02020302);
         c02020303 = projectRepository.saveAndFlush(c02020303);
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c02020301.toString());
+        log.info("persisted: "+ c02020302.toString());
+        log.info("persisted: "+ c02020303.toString());
+        log.info("----------------------------------------------");
+        /* add 100 Tasks with Project c02020303 */
         for (int i = 10; i < 111; i++) {
-            String title = "t_" + i;
-            String text = "d_" + i + loremIpsumTask;
-            Task d = new Task();
-            d.setText(text);
-            d.setTitle(title);
-            d.setProject(c02020303);
-            d.setTaskState(TaskState.INBOX);
-            d.setFocus(false);
-            d.setTaskEnergy(TaskEnergy.NONE);
-            d.setTaskTime(TaskTime.NONE);
-            d.setContext(contextWork);
-            d.setOrderIdProject(i);
-            d.setOrderIdTaskState(i);
-            taskRepository.saveAndFlush(d);
+            String title = "title_" + i;
+            String text = "desc_" + i + " "+ loremIpsumTask;
+            Task task = new Task();
+            task.setUuid(UUID.randomUUID().toString());
+            task.setText(text);
+            task.setTitle(title);
+            task.setProject(c02020303);
+            task.setTaskState(TaskState.INBOX);
+            task.setFocus(false);
+            task.setTaskEnergy(TaskEnergy.NONE);
+            task.setTaskTime(TaskTime.NONE);
+            task.setContext(contextWork);
+            task.setOrderIdProject(i);
+            task.setOrderIdTaskState(i);
+            taskRepository.saveAndFlush(task);
+            log.info("----------------------------------------------");
+            log.info("persisted: "+ task.toString());
+            log.info("----------------------------------------------");
         }
-        /* without Project for Main INBOX */
+        log.info("----------------------------------------------");
+        /* add 20 Tasks with Project Root */
         for (int i = 10; i <30; i++) {
             String title = "title_" + i;
-            String text = "desc_" + i;
-            Task d = new Task();
-            d.setText(text);
-            d.setTitle(title);
-            d.setTaskState(TaskState.INBOX);
-            d.setFocus(false);
-            d.setTaskEnergy(TaskEnergy.NONE);
-            d.setTaskTime(TaskTime.NONE);
-            d.setContext(contextWork);
-            d.setOrderIdProject(i);
-            d.setOrderIdTaskState(i+111);
-            taskRepository.saveAndFlush(d);
+            String text = "desc_" + i + " "+ loremIpsumTask;
+            Task task = new Task();
+            task.setUuid(UUID.randomUUID().toString());
+            task.setText(text);
+            task.setTitle(title);
+            task.setProject(null);
+            task.setTaskState(TaskState.INBOX);
+            task.setFocus(false);
+            task.setTaskEnergy(TaskEnergy.NONE);
+            task.setTaskTime(TaskTime.NONE);
+            task.setContext(contextWork);
+            task.setOrderIdProject(i);
+            task.setOrderIdTaskState(i+111);
+            taskRepository.saveAndFlush(task);
+            log.info("----------------------------------------------");
+            log.info("persisted: "+ task.toString());
+            log.info("----------------------------------------------");
         }
     }
 
@@ -335,6 +377,8 @@ public class TestDataServiceImpl implements TestDataService {
             "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat. \n" +
             "\n" +
             "Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus";
+
+
     private final String loremIpsumProject = " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n" +
             "\n" +
             "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \n" +

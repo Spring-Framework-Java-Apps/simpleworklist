@@ -39,6 +39,10 @@ public enum TaskState implements Serializable {
         return this.name();
     }
 
+    public String getType(){
+        return this.name().toLowerCase();
+    }
+
     public String getCode(){
         return "layout.page."+this.name().toLowerCase();
     }

@@ -13,6 +13,7 @@ import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.ProjectService;
 import org.woehlke.simpleworklist.session.UserSessionBean;
 
+import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
 @Slf4j
@@ -27,7 +28,8 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
     public TaskStateControllerServiceImpl(
         BreadcrumbService breadcrumbService,
         TaskService taskService,
-        ProjectService projectService) {
+        ProjectService projectService)
+    {
         this.breadcrumbService = breadcrumbService;
         this.taskService = taskService;
         this.projectService = projectService;
@@ -35,12 +37,12 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
 
     @Override
     public String getTaskStatePage(
-        TaskState taskState,
-        Context context,
-        Pageable pageRequest,
-        UserSessionBean userSession,
-        Locale locale,
-        Model model
+        @NotNull TaskState taskState,
+        @NotNull Context context,
+        @NotNull Pageable pageRequest,
+        @NotNull UserSessionBean userSession,
+        @NotNull Locale locale,
+        @NotNull Model model
     ){
         log.info("getTaskStatePage");
         userSession.setLastTaskState(taskState);
@@ -48,13 +50,13 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
-        model.addAttribute("taskstateType", taskState.name().toLowerCase());
+        model.addAttribute("taskstateType", taskState.getType() );
         model.addAttribute("userSession", userSession);
         return taskState.getTemplate();
     }
 
     @Override
-    public String transformTaskIntoProjectGet(Task task) {
+    public String transformTaskIntoProjectGet(@NotNull Task task) {
         Project thisProject = new Project();
         thisProject.setName(task.getTitle());
         thisProject.setDescription(task.getText());
