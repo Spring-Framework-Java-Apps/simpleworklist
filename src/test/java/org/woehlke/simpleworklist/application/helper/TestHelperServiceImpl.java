@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.helper;
+package org.woehlke.simpleworklist.application.helper;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -8,7 +8,6 @@ import org.woehlke.simpleworklist.project.ProjectRepository;
 import org.woehlke.simpleworklist.user.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.register.UserRegistration;
-import org.woehlke.simpleworklist.helper.TestHelperService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.task.TaskRepository;

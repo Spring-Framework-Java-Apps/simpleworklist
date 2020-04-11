@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.helper;
+package org.woehlke.simpleworklist.application.helper;
 
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.register.UserRegistration;
