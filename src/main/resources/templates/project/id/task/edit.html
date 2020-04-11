@@ -22,11 +22,21 @@
 		<form id="formId" th:object="${task}" method="post" class="was-validated"
               th:action="@{/project/{projectId}/task/{taskId}/edit(taskId=${task.id},projectId=${thisProject.id})}" >
             <div th:replace="layout/taskedit :: tw-task-edit-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
-			<a class="btn btn-secondary" role="button"
-               th:href="@{/project/{projectId}/task/{id}/transform(id=${task.id},projectId=${thisProject.id})}">
-				<i class="fas fa-project-diagram"></i>
-				<span th:utext="#{task.show.transform}">Transform into Project</span>
-			</a>
+            <div class="form-row">
+                <div class="col-md-6 mb-6">
+                    <button id="editTaskSubmit" type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span th:utext="#{task.show.button}">Save Task</span>
+                    </button>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <a class="btn btn-secondary" role="button"
+                       th:href="@{/project/{projectId}/task/{id}/transform(id=${task.id},projectId=${thisProject.id})}">
+                        <i class="fas fa-project-diagram"></i>
+                        <span th:utext="#{task.show.transform}">Transform into Project</span>
+                    </a>
+                </div>
+            </div>
 		</form>
 	</div>
 </div>
