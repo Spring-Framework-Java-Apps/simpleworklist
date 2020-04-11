@@ -101,11 +101,4 @@ Fixed #169, Fixed #170, Fixed #171, Fixed #172, Fixed #183
 
 
 # 2.3.17
-#226 
-#227
-#228
-#229
-#230
-#231
-#232
-#233 
+Fixed #223, Fixed #224, Fixed #225, Fixed #226, Fixed #227, Fixed #228, Fixed #229, Fixed #230, Fixed #231, Fixed #232, Fixed #233 
