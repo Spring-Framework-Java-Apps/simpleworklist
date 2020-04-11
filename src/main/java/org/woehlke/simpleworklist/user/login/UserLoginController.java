@@ -28,7 +28,10 @@ public class UserLoginController {
     private final UserAccountAccessService userAccountAccessService;
 
     @Autowired
-    public UserLoginController(UserAccountLoginSuccessService userAccountLoginSuccessService, UserAccountAccessService userAccountAccessService) {
+    public UserLoginController(
+        UserAccountLoginSuccessService userAccountLoginSuccessService,
+        UserAccountAccessService userAccountAccessService
+    ) {
         this.userAccountLoginSuccessService = userAccountLoginSuccessService;
         this.userAccountAccessService = userAccountAccessService;
     }
@@ -41,7 +44,7 @@ public class UserLoginController {
      * @return Login Screen.
      */
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public final String loginForm(Model model) {
+    public final String loginGet(Model model) {
         log.info("loginForm");
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
@@ -57,7 +60,7 @@ public class UserLoginController {
      * @return Shows Root Project after successful login or login form with error messages.
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public final String loginPerform(
+    public final String loginPost(
         @Valid LoginForm loginForm,
         BindingResult result,
         Model model
@@ -68,13 +71,16 @@ public class UserLoginController {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
             userAccountLoginSuccessService.updateLastLoginTimestamp(user);
             log.info("logged in");
-            return "redirect:/";
+            return "redirect:/home";
         } else {
             String objectName = "loginForm";
             String field = "userEmail";
             String defaultMessage = "Email or Password wrong.";
-            FieldError e = new FieldError(objectName, field, defaultMessage);
-            result.addError(e);
+            FieldError fieldError = new FieldError(objectName, field, defaultMessage);
+            result.addError(fieldError);
+            field = "userPassword";
+            fieldError = new FieldError(objectName, field, defaultMessage);
+            result.addError(fieldError);
             log.info("not logged in");
             return "user/login/loginForm";
         }
@@ -92,6 +98,6 @@ public class UserLoginController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         status.setComplete();
-        return "redirect:/";
+        return "redirect:/home";
     }
 }

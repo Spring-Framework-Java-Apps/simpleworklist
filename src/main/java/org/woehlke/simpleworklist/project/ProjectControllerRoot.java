@@ -9,13 +9,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.common.AbstractController;
+import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
+import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.*;
-import org.woehlke.simpleworklist.session.UserSessionBean;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import javax.validation.Valid;
@@ -34,11 +35,13 @@ public class ProjectControllerRoot extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
+    private final TaskStateControllerService taskStateControllerService;
 
     @Autowired
-    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService) {
+    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService, TaskStateControllerService taskStateControllerService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
+        this.taskStateControllerService = taskStateControllerService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -72,7 +75,7 @@ public class ProjectControllerRoot extends AbstractController {
     ){
         log.info("/project/root/project/add (GET)");
         Context context = super.getContext(userSession);
-        projectControllerService.addNewProjectToRoot(userSession, context, locale, model);
+        projectControllerService.addNewProjectToProjectRootForm(userSession, context, locale, model);
         return "project/root/project/add";
     }
 
@@ -89,7 +92,7 @@ public class ProjectControllerRoot extends AbstractController {
             return "project/root/project/add";
         } else {
             project.setUuid(UUID.randomUUID().toString());
-            return projectControllerService.addNewProjectToRootPersist(
+            return projectControllerService.addNewProjectToProjectRootPersist(
                 userSession,
                 project,
                 context,
@@ -200,7 +203,7 @@ public class ProjectControllerRoot extends AbstractController {
         model.addAttribute("thisProject", thisProject); //TODO: remove?
         model.addAttribute("thisContext", thisContext);
         model.addAttribute("task", task);
-        model.addAttribute("areas", contexts);
+        model.addAttribute("contexts", contexts);
         return "project/root/task/edit";
     }
 
@@ -214,6 +217,18 @@ public class ProjectControllerRoot extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
+
+        log.info("editTaskPost");
+        if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
+            String objectName="task";
+            String field="dueDate";
+            String defaultMessage="you need a due Date to schedule the Task";
+            FieldError error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+            field="taskState";
+            error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+        }
         if (result.hasErrors() ) {
             log.warn("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
@@ -232,7 +247,7 @@ public class ProjectControllerRoot extends AbstractController {
             model.addAttribute("thisProject", thisProject); //TODO: remove?
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
-            model.addAttribute("areas", contexts);
+            model.addAttribute("contexts", contexts);
             userSession.setLastProjectId(thisProject.getId());
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());
@@ -466,11 +481,10 @@ public class ProjectControllerRoot extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession
     ) {
         log.info("transformTaskIntoProjectGet");
-        //return transformTaskIntoProjectGet(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return rootProjectUrl;
+        return taskStateControllerService.transformTaskIntoProjectGet(task);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)

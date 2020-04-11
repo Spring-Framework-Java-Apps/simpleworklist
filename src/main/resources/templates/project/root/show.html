@@ -15,15 +15,19 @@
 			<i class="fas fa-folder-open"></i>
 			<span th:text="#{project.show.h1}">Project</span>
 		</h1>
-		<div id="tw-content-title-actionbuttons">
-			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/root/project/add}">
-				<i class="fas fa-plus-square"></i>
-				<span th:text="#{layout.page.addProject}">Add a Project</span>
-			</a>
-			<a class="btn btn-sm btn-secondary" role="button" th:href="@{/project/root/task/add}" href="#">
-				<i class="fas fa-plus-square"></i>
-				<span th:text="#{project.show.addTask}">Add a Task</span>
-			</a>
+		<div id="tw-content-title-actionbuttons" class="row">
+            <div class="col-md-3 mb-3">
+                <a class="btn btn-block btn-primary" role="button" th:href="@{/project/root/task/add}">
+                    <i class="fas fa-plus-square"></i>
+                    <span th:text="#{project.show.addTask}">Add a Task</span>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a class="btn btn-block btn-secondary" role="button" th:href="@{/project/root/project/add}">
+                    <i class="fas fa-plus-square"></i>
+                    <span th:text="#{layout.page.addProject}">Add a Project</span>
+                </a>
+            </div>
 		</div>
 	</div>
 </div>
@@ -33,8 +37,7 @@
 	<div th:replace="layout/tasks :: tw-tasks-message(message=${message})">
 	</div>
 	<div th:if="${taskPage.getTotalElements() gt 0}">
-		<!-- TODO: #34 -->
-		<div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='PROJECT')">
+		<div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='PROJECT',myUrlPath='/project/root')">
 		</div>
 	</div>
 	<div th:if="${taskPage.getTotalElements() eq 0}">

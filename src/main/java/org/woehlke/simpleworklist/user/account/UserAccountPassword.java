@@ -2,8 +2,8 @@ package org.woehlke.simpleworklist.user.account;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.woehlke.simpleworklist.common.AuditModel;
-import org.woehlke.simpleworklist.common.ComparableById;
+import org.woehlke.simpleworklist.application.common.AuditModel;
+import org.woehlke.simpleworklist.application.common.ComparableById;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

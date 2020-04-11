@@ -18,95 +18,21 @@
 </div>
 
 <div th:fragment="mytwcontent">
-	<form id="formId" th:action="@{/project/{projectId}/task/add(projectId=${thisProject.id})}" th:object="${task}" method="post">
-		<input type="hidden" th:field="*{taskState}" />
-		<input type="hidden" th:field="*{context.id}" />
-		<input type="hidden" th:field="*{rowCreatedAt.time}" />
-		<div class="form-group">
-			<label th:for="${#ids.next('title')}" class="control-label">
-				<span th:utext="#{task.show.title}">Title</span>
-			</label>
-			<input type="text" th:field="*{title}" class="form-control" />
-			<div>
-				<div th:each="err : ${#fields.errors('title')}" th:text="${err}" class="alert alert-danger" >
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="taskDueDate" class="control-label">
-				<span th:utext="#{task.show.dueDate}">Due Date</span>
-			</label>
-			<input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control" />
-			<div>
-				<div th:each="err : ${#fields.errors('dueDate')}" th:text="${err}" class="alert alert-danger">
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label th:for="textEditor" class="control-label">
-				<span th:utext="#{task.show.text}">Text</span>
-			</label>
-			<textarea id="textEditor" name="textEditor" rows="10" cols="50" th:field="*{text}" class="form-control" ></textarea>
-			<div>
-				<div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger">
-				</div>
-			</div>
-		</div>
-		<div>
-			<span class="form-group">
-				<label th:for="${#ids.next('taskEnergy')}" class="control-label">
-					<span th:utext="#{task.show.taskEnergy}">Energy</span>
-				</label>
-				<select th:field="*{taskEnergy}">
-					<option th:each="taskEnergyItem : ${listTaskEnergy}"
-							th:value="${taskEnergyItem.value}"
-							th:text="${#messages.msgOrNull(taskEnergyItem.code)}">Wireframe</option>
-				</select>
-				<div>
-					<div th:each="err : ${#fields.errors('taskEnergy')}" th:text="${err}" class="alert alert-danger">
-					</div>
-				</div>
-			</span>&nbsp;
-			<span class="form-group">
-				<label th:for="${#ids.next('taskTime')}" class="control-label">
-					<span th:utext="#{task.show.taskTime}">Time</span>
-				</label>
-				<select th:field="*{taskTime}">
-					<option th:each="taskTimeItem : ${listTaskTime}"
-							th:value="${taskTimeItem.value}"
-							th:text="${#messages.msgOrNull(taskTimeItem.code)}">Wireframe</option>
-				</select>
-				<div>
-					<div th:each="err : ${#fields.errors('taskTime')}" th:text="${err}" class="alert alert-danger">
-					</div>
-				</div>
-			</span>&nbsp;
-			<span class="form-group">
-				<label th:for="${#ids.next('context.id')}" class="control-label">
-					<span th:utext="#{task.show.context}">Area</span>
-				</label>
-				<select th:field="*{context.id}">
-					<option th:each="areaOption : ${contexts}"
-							th:value="${areaOption.id}"
-							th:text="${locale == 'de' ? areaOption.nameDe : areaOption.nameEn}">Wireframe</option>
-				</select>
-				<div>
-					<div th:each="err : ${#fields.errors('context.id')}" th:text="${err}" class="alert alert-danger">
-					</div>
-				</div>
-			</span>
-		</div>
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-		<button id="createNewTask" type="submit" class="btn btn-primary">
-			<i class="fas fa-save"></i>
-			<span th:utext="#{task.add.button}">Add Task</span>
-		</button>
+	<form id="formId" class="was-validated" method="post"
+          th:action="@{/project/{projectId}/task/add(projectId=${thisProject.id})}" th:object="${task}">
+        <div th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
+        <div class="form-row">
+            <div class="col-md-12 mb-12">
+                <button id="createNewTask" type="submit" class="btn btn-block btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span th:utext="#{task.add.button}">Add Task</span>
+                </button>
+            </div>
+        </div>
 	</form>
 </div>
 
-	<script th:src="@{/webjars/ckeditor/4.11.3/full/ckeditor.js}"></script>
+	<script th:src="@{/webjars/ckeditor/4.14.0/full/ckeditor.js}"></script>
 	<script th:inline="javascript">
 		CKEDITOR.replace( 'textEditor' );
 	</script>

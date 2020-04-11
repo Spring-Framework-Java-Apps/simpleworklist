@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.task;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.session.UserSessionBean;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import java.util.Locale;
 

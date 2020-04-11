@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.resetpassword;
 
-import org.woehlke.simpleworklist.config.AbstractTest;
+import org.woehlke.simpleworklist.application.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,7 +39,7 @@ public class UserPasswordRecoveryControllerTest extends AbstractTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        UserPasswordRecovery o = testHelperService.findByEmailPasswordRecovery(emails[0]);
+        UserPasswordRecovery o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
         assertNotNull(o);
         boolean result = o.getDoubleOptInStatus()== UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL
                 || o.getDoubleOptInStatus()== UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL;

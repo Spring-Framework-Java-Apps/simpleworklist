@@ -8,19 +8,22 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.common.AbstractController;
+import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.session.UserSessionBean;
+import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
+
+import static org.woehlke.simpleworklist.project.Project.rootProjectId;
 
 /**
  * Created by tw on 14.02.16.
@@ -32,11 +35,13 @@ public class ProjectController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
+    private final TaskStateControllerService taskStateControllerService;
 
     @Autowired
-    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService) {
+    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService, TaskStateControllerService taskStateControllerService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
+        this.taskStateControllerService = taskStateControllerService;
     }
 
     @RequestMapping(path = "/task/add", method = RequestMethod.GET)
@@ -51,6 +56,7 @@ public class ProjectController extends AbstractController {
         task.setTaskEnergy(TaskEnergy.NONE);
         task.setTaskTime(TaskTime.NONE);
         task.setProject(thisProject);
+        task.unsetFocus();
         Boolean mustChooseArea = false;
         if(userSession.getLastContextId() == 0L){
             mustChooseArea = true;
@@ -154,7 +160,7 @@ public class ProjectController extends AbstractController {
     ) {
         log.info("private addNewProjectGet (GET) projectId="+projectId);
         Context context = super.getContext(userSession);
-        projectControllerService.addNewProject(projectId, userSession, context, locale, model);
+        projectControllerService.addNewProjectToProjectIdForm(projectId, userSession, context, locale, model);
         return "project/id/project/add";
     }
 
@@ -167,15 +173,14 @@ public class ProjectController extends AbstractController {
         Locale locale, Model model) {
         log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
         Context context = super.getContext(userSession);
-        return projectControllerService.addNewProjectPersist(
+        return projectControllerService.addNewProjectToProjectIdPersist(
             projectId,
             userSession,
             project,
             context,
             result,
             locale,
-            model ,
-            "project/id/project/add"
+            model
         );
     }
 
@@ -207,7 +212,7 @@ public class ProjectController extends AbstractController {
         model.addAttribute("userSession",userSession);
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
-        model.addAttribute("areas", contexts);
+        model.addAttribute("contexts", contexts);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", thisProject);
@@ -351,6 +356,81 @@ public class ProjectController extends AbstractController {
     }
 
 
+    @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.GET)
+    public final String editTaskGet(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable("taskId") Task task,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Locale locale, Model model
+    ) {
+        log.info("editTaskGet");
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        List<Context> contexts = contextService.getAllForUser(userAccount);
+        Context thisContext = task.getContext();
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("thisContext", thisContext);
+        model.addAttribute("task", task);
+        model.addAttribute("contexts", contexts);
+        return "project/id/task/edit";
+    }
+
+    @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.POST)
+    public final String editTaskPost(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable long taskId,
+        @Valid Task task,
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        BindingResult result,
+        Locale locale,
+        Model model
+    ) {
+        log.info("editTaskPost");
+        if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
+            String objectName="task";
+            String field="dueDate";
+            String defaultMessage="you need a due Date to schedule the Task";
+            FieldError error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+            field="taskState";
+            error = new FieldError(objectName,field,defaultMessage);
+            result.addError(error);
+        }
+        if (result.hasErrors() ) {
+            log.warn("result.hasErrors");
+            for (ObjectError e : result.getAllErrors()) {
+                log.error(e.toString());
+            }
+            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            List<Context> contexts = contextService.getAllForUser(userAccount);
+            Task persistentTask = taskService.findOne(taskId);
+            persistentTask.merge(task);
+            task = persistentTask;
+            Context thisContext = task.getContext();
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            model.addAttribute("breadcrumb", breadcrumb);
+            model.addAttribute("thisProject", thisProject);
+            model.addAttribute("thisContext", thisContext);
+            model.addAttribute("task", task);
+            model.addAttribute("contexts", contexts);
+            userSession.setLastProjectId(thisProject.getId());
+            userSession.setLastTaskState(task.getTaskState());
+            userSession.setLastTaskId(task.getId());
+            userSession.setLastContextId(thisContext.getId());
+            return "project/id/task/edit";
+        } else {
+            task.setProject(thisProject);
+            Task persistentTask = taskService.findOne(task.getId());
+            persistentTask.merge(task);
+            task = taskService.updatedViaProject(persistentTask);
+            userSession.setLastProjectId(rootProjectId);
+            userSession.setLastTaskState(task.getTaskState());
+            userSession.setLastTaskId(task.getId());
+            return thisProject.getUrl();
+        }
+    }
+
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
     public final String setDoneTaskGet(
         @PathVariable("projectId") Project thisProject,
@@ -386,13 +466,9 @@ public class ProjectController extends AbstractController {
         @PathVariable("taskId") Task task,
         @RequestParam(required=false) String back
     ){
-        if(task !=null) {
-            task.setFocus();
-            task = taskService.updatedViaTaskstate(task);
-            return task.getUrl();
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
+        task.setFocus();
+        task = taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
     }
 
     @RequestMapping(path = "/task/{taskId}/unsetfocus", method = RequestMethod.GET)
@@ -402,13 +478,9 @@ public class ProjectController extends AbstractController {
         @PathVariable("taskId") Task task,
         @RequestParam(required=false) String back
     ){
-        if(task !=null) {
-            task.unsetFocus();
-            task = taskService.updatedViaTaskstate(task);
-            return task.getUrl();
-        } else {
-            return "redirect:/taskstate/inbox";
-        }
+        task.unsetFocus();
+        task = taskService.updatedViaTaskstate(task);
+        return thisProject.getUrl();
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/project/root", method = RequestMethod.GET)
@@ -531,4 +603,16 @@ public class ProjectController extends AbstractController {
         return thisProject.getUrl();
     }
 
+    @RequestMapping(path = "/task/{taskId}/transform", method = RequestMethod.GET)
+    public final String transformTaskIntoProjectGet(
+        @PathVariable("projectId") Project thisProject,
+        @PathVariable("taskId") Task task,
+        @ModelAttribute("userSession") UserSessionBean userSession
+    ) {
+        log.info("transformTaskIntoProjectGet");
+        userSession.setLastProjectId(thisProject.getId());
+        userSession.setLastTaskState(task.getTaskState());
+        userSession.setLastTaskId(task.getId());
+        return taskStateControllerService.transformTaskIntoProjectGet(task);
+    }
 }

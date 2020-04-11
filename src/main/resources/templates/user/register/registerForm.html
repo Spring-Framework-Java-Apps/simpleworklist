@@ -18,7 +18,7 @@
 	<div th:fragment="mytwcontent">
 		<div class="card card-body">
 			<form id="formId" th:action="@{/user/register}" th:object="${userRegistrationForm}" method="post">
-				<div class="form-group">
+				<div class="form-group form-control-lg">
 					<label th:for="${#ids.next('email')}" class="control-label">Email</label>
 					<input type="email" th:field="*{email}" class="form-control" />
 					<div>

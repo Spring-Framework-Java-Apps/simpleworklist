@@ -21,13 +21,17 @@ import java.util.Locale;
  */
 @Slf4j
 @Component
-public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
+    implements AuthenticationSuccessHandler {
 
     private final UserAccountLoginSuccessService userAccountLoginSuccessService;
     private final LocaleResolver localeResolver;
 
     @Autowired
-    public LoginSuccessHandler(UserAccountLoginSuccessService userAccountLoginSuccessService, LocaleResolver localeResolver) {
+    public LoginSuccessHandler(
+        UserAccountLoginSuccessService userAccountLoginSuccessService,
+        LocaleResolver localeResolver
+    ) {
         super();
         this.userAccountLoginSuccessService = userAccountLoginSuccessService;
         this.localeResolver = localeResolver;

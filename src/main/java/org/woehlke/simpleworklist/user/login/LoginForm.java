@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.*;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ public class LoginForm implements Serializable {
     private String userEmail;
 
     //TODO: Messages i18n
-    @SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotNull(message = "Password is compulsory")
     @NotBlank(message = "Password is compulsory")
     private String userPassword;

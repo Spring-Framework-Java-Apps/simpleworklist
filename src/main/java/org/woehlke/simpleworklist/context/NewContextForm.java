@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.context;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 
 import java.io.Serializable;
 
@@ -20,12 +20,12 @@ public class NewContextForm implements Serializable {
 
     private static final long serialVersionUID = -937143305653156981L;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
     private String nameDe;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
     private String nameEn;

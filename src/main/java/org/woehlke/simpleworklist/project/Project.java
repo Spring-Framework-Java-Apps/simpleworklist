@@ -15,10 +15,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.common.AuditModel;
-import org.woehlke.simpleworklist.common.ComparableById;
+import org.woehlke.simpleworklist.application.common.AuditModel;
+import org.woehlke.simpleworklist.application.common.ComparableById;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 @Entity
@@ -76,7 +76,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name", nullable = false)
@@ -140,24 +140,19 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return super.equalsByMyUuid(otherObject);
     }
 
-    public static Project newProjectFactory(Project parent) {
-        Project n = new Project();
-        n.setParent(parent);
-        n.setContext(parent.getContext());
-        return n;
-    }
-
-    public static Project newRootProjectFactory(UserAccount userAccount) {
-        Project n = new Project();
-        n.setParent(null);
-        return n;
+    public static Project newProjectFactoryForParentProject(Project parent) {
+        Project thisProject = new Project();
+        //thisProject.setName("name");
+        thisProject.setParent(parent);
+        thisProject.setContext(parent.getContext());
+        return thisProject;
     }
 
     public static Project newRootProjectFactory(Context context) {
-        Project n = new Project();
-        n.setParent(null);
-        n.setContext(context);
-        return n;
+        Project thisProject = new Project();
+        thisProject.setParent(null);
+        thisProject.setContext(context);
+        return thisProject;
     }
 
 
@@ -167,5 +162,10 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return newRootProjectFactory(context);
     }
 
+    public Project addOtherProjectToChildren(Project project) {
+        children.add(project);
+        project.setParent(this);
+        return project;
+    }
 }
 

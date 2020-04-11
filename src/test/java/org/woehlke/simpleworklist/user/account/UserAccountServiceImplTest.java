@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.woehlke.simpleworklist.config.AbstractTest;
+import org.woehlke.simpleworklist.application.config.AbstractTest;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
 import org.woehlke.simpleworklist.user.register.UserRegistrationService;
 import org.woehlke.simpleworklist.user.login.LoginForm;

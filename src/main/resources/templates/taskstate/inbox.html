@@ -11,15 +11,19 @@
 
     <div th:fragment="mytwtitle">
         <div id="tw-content-title">
-            <h1>
-                <i class="fas fa-inbox"></i>
-                <span th:utext="#{tasks.inbox.h1}">Inbox</span>
-            </h1>
-            <div id="tw-content-title-actionbuttons">
-                <a class="btn btn-sm btn-primary" role="button" th:href="@{/taskstate/task/add}">
-                    <i class="fas fa-plus-square"></i>
-                    <span th:utext="#{tasks.inbox.addTask}">Add Task</span>
-                </a>
+            <div class="row">
+                <h1 class="col-md-12 mb-12">
+                    <i class="fas fa-inbox"></i>
+                    <span th:utext="#{tasks.inbox.h1}">Inbox</span>
+                </h1>
+            </div>
+            <div class="row">
+                <div id="tw-content-title-actionbuttons" class="col-md-3 mb-3">
+                    <a class="btn btn-block btn-primary" role="button" th:href="@{/taskstate/task/add}">
+                        <i class="fas fa-plus-square"></i>
+                        <span th:utext="#{tasks.inbox.addTask}">Add Task</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -28,7 +32,7 @@
         <div th:replace="layout/tasks :: tw-tasks-message(message=${message})" th:if="${message} != null" id="mytwcontent-message">
         </div>
         <div th:if="${taskPage.getTotalElements() gt 0}" id="mytwcontent-taskpage">
-            <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='INBOX')">
+            <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='INBOX', myUrlPath='/taskstate')">
             </div>
         </div>
         <div th:if="${taskPage.getTotalElements() eq 0}" id="mytwcontent-no-taskpage">

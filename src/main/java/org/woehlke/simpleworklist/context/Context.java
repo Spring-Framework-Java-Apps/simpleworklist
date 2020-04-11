@@ -4,17 +4,14 @@ import lombok.*;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.woehlke.simpleworklist.common.AuditModel;
-import org.woehlke.simpleworklist.common.ComparableById;
+//import org.hibernate.validator.constraints.SafeHtml;
+import org.woehlke.simpleworklist.application.common.AuditModel;
+import org.woehlke.simpleworklist.application.common.ComparableById;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 import javax.persistence.*;
 import javax.persistence.Index;
 import java.io.Serializable;
-import java.util.Objects;
 
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
@@ -64,13 +61,13 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     @LazyToOne(PROXY)
     private UserAccount userAccount;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_de", nullable = false)
     private String nameDe;
 
-    @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_en", nullable = false)

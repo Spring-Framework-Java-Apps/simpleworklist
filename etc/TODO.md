@@ -56,7 +56,7 @@ Errorpage - Refer to logfile:
 2020-04-03 14:30:58.586  WARN 2864 --- [nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]
 2020-04-03 14:30:58.586 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 405 METHOD_NOT_ALLOWED
 2020-04-03 14:30:58.590 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/fehler", parameters={masked}
-2020-04-03 14:30:58.590 DEBUG 2864 --- [nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.woehlke.simpleworklist.error.MyErrorController#handleError(HttpServletRequest, Model)
+2020-04-03 14:30:58.590 DEBUG 2864 --- [nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.woehlke.simpleworklist.application.error.MyErrorController#handleError(HttpServletRequest, Model)
 2020-04-03 14:30:58.591  WARN 2864 --- [nio-8080-exec-8] o.w.s.error.MyErrorController            : errorMessage :Request method 'POST' not supported
 2020-04-03 14:30:58.591  WARN 2864 --- [nio-8080-exec-8] o.w.s.error.MyErrorController            : 405Method Not Allowed
 2020-04-03 14:30:58.593 DEBUG 2864 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 405
@@ -98,3 +98,11 @@ https://github.com/thymeleaf/thymeleaf-testing
 
 # 2.3.16 
 Fixed #169, Fixed #170, Fixed #171, Fixed #172, Fixed #183 
+
+
+# 2.3.17
+Fixed #223, Fixed #224, Fixed #225, Fixed #226, Fixed #227, Fixed #228, Fixed #229, Fixed #230, Fixed #231, Fixed #232, Fixed #233 
+
+Fixed #201, Fixed #202, Fixed #203, Fixed #204, Fixed #205, Fixed #206, Fixed #207, Fixed #208, Fixed #209, Fixed #210, Fixed #211, Fixed #212, Fixed #213, Fixed #214, Fixed #215, Fixed #216, Fixed #217, Fixed #218, Fixed #219 
+
+Fixed #220, Fixed #221, Fixed #222 

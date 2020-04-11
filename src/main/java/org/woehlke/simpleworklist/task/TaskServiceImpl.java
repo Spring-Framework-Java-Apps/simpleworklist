@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +37,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request) {
+    public Page<Task> findbyTaskstate(
+        @NotNull TaskState taskState,
+        @NotNull Context context,
+        @NotNull Pageable request
+    ) {
         if(taskState == TaskState.FOCUS){
             return taskRepository.findByFocusAndContext(true,context,request);
         }else {
@@ -45,32 +51,26 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> findByProject(Project thisProject, Pageable request) {
+    public Page<Task> findByProject(
+        @NotNull Project thisProject, @NotNull Pageable request
+    ) {
         log.info("findByProject: ");
         log.info("---------------------------------");
         log.info("thisProject: "+thisProject);
         log.info("---------------------------------");
-        if(thisProject == null){
-            return Task.getEmptyPage(request);
-        } else {
-            return taskRepository.findByProject(thisProject,request);
-        }
+        return taskRepository.findByProject(thisProject,request);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> findByRootProject(Context context, Pageable request) {
+    public Page<Task> findByRootProject(@NotNull Context context, @NotNull Pageable request) {
         log.info("findByRootProject: ");
-        if(context == null){
-            return Task.getEmptyPage(request);
-        } else {
-            return taskRepository.findByProjectIsNullAndContext(context, request);
-        }
+        return taskRepository.findByProjectIsNullAndContext(context, request);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Task findOne(long taskId) {
+    public Task findOne(@Min(1L) long taskId) {
         log.info("findOne: ");
         if(taskRepository.existsById(taskId)) {
             return taskRepository.getOne(taskId);
@@ -81,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task updatedViaTaskstate(Task task) {
+    public Task updatedViaTaskstate(@NotNull Task task) {
         log.info("updatedViaTaskstate");
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.getId());
@@ -90,16 +90,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task updatedViaProject(Task task) {
+    public Task updatedViaProject(@NotNull Task task) {
         log.info("updatedViaProject");
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.getId());
+        log.info("persisted Task: " + task.getId());
         return task;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task addToProject(Task task) {
+    public Task addToProject(@NotNull Task task) {
         log.info("addToProject");
         task.setUuid(UUID.randomUUID().toString());
         task = taskRepository.saveAndFlush(task);
@@ -109,7 +109,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task addToRootProject(Task task) {
+    public Task addToRootProject(@NotNull Task task) {
         log.info("addToRootProject");
         task.setUuid(UUID.randomUUID().toString());
         task.unsetFocus();
@@ -120,7 +120,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToRootProject(Task task) {
+    public Task moveTaskToRootProject(@NotNull Task task) {
         task.setRootProject();
         long maxOrderIdProject = this.getMaxOrderIdProject(
                 task.getProject(), task.getContext()
@@ -131,7 +131,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToAnotherProject(Task task, Project project) {
+    public Task moveTaskToAnotherProject(@NotNull Task task, @NotNull Project project) {
         boolean okContext = task.hasSameContextAs(project);
         if(okContext) {
             task.setProject(project);
@@ -146,7 +146,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToInbox(Task task) {
+    public Task moveTaskToInbox(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.INBOX,
             task.getContext()
@@ -159,7 +159,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToToday(Task task) {
+    public Task moveTaskToToday(@NotNull Task task) {
         Date now = new Date();
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.TODAY,
@@ -174,7 +174,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToNext(Task task) {
+    public Task moveTaskToNext(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.NEXT,
             task.getContext()
@@ -187,7 +187,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToWaiting(Task task) {
+    public Task moveTaskToWaiting(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.WAITING,
             task.getContext()
@@ -201,7 +201,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToSomeday(Task task) {
+    public Task moveTaskToSomeday(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.SOMEDAY,
             task.getContext()
@@ -214,7 +214,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToFocus(Task task) {
+    public Task moveTaskToFocus(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.FOCUS,
             task.getContext()
@@ -227,7 +227,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToCompleted(Task task) {
+    public Task moveTaskToCompleted(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.COMPLETED,
             task.getContext()
@@ -241,7 +241,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToTrash(Task task) {
+    public Task moveTaskToTrash(@NotNull Task task) {
         long newOrderIdTaskState = this.getMaxOrderIdTaskState(
             TaskState.TRASH,
             task.getContext()
@@ -255,7 +255,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveAllCompletedToTrash(Context context) {
+    public void moveAllCompletedToTrash(@NotNull Context context) {
         long maxOrderIdTaskState = this.getMaxOrderIdTaskStateFor(
             TaskState.TRASH,
             context
@@ -275,7 +275,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void emptyTrash(Context context) {
+    public void emptyTrash(@NotNull Context context) {
         List<Task> taskList = taskRepository.findByTaskStateAndContext(
             TaskState.TRASH,
             context
@@ -290,7 +290,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long getMaxOrderIdTaskState(TaskState taskState, Context context) {
+    public long getMaxOrderIdTaskState(@NotNull TaskState taskState, @NotNull Context context) {
         Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
             taskState,
             context
@@ -300,7 +300,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long getMaxOrderIdProject(Project project, Context context) {
+    public long getMaxOrderIdProject(@NotNull Project project, @NotNull Context context) {
         Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(
             project,
             context
@@ -310,7 +310,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdTaskState( Task sourceTask, Task destinationTask ) {
+    public void moveOrderIdTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         boolean notEqualsId = ! sourceTask.equalsById(destinationTask);
         boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -330,7 +330,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdRootProject( Task sourceTask, Task destinationTask ) {
+    public void moveOrderIdRootProject(@NotNull Task sourceTask,@NotNull Task destinationTask ) {
         boolean sourceTaskRoot = destinationTask.isInRootProject();
         boolean destinationTaskRoot = destinationTask.isInRootProject();
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -347,7 +347,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long getMaxOrderIdRootProject(Context context) {
+    public long getMaxOrderIdRootProject(@NotNull Context context) {
         Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(
             null,
             context
@@ -357,7 +357,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdProject( Task sourceTask, Task destinationTask ) {
+    public void moveOrderIdProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();
         boolean okProject = destinationTask.hasProject(project);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -379,7 +379,7 @@ public class TaskServiceImpl implements TaskService {
      * @param sourceTask
      * @param destinationTask
      */
-    private void moveTasksUpByTaskState( Task sourceTask, Task destinationTask ) {
+    private void moveTasksUpByTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         TaskState taskState = sourceTask.getTaskState();
         Context context = sourceTask.getContext();
         long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
@@ -401,7 +401,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
-    private long getMaxOrderIdTaskStateFor(TaskState taskState, Context context ){
+    private long getMaxOrderIdTaskStateFor(@NotNull TaskState taskState, @NotNull Context context ){
         Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
             taskState,
             context
@@ -416,7 +416,7 @@ public class TaskServiceImpl implements TaskService {
      * @param sourceTask
      * @param destinationTask
      */
-    private void moveTasksDownByTaskState( Task sourceTask, Task destinationTask ) {
+    private void moveTasksDownByTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         TaskState taskState = sourceTask.getTaskState();
         Context context = sourceTask.getContext();
         long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
@@ -437,7 +437,7 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.saveAll(tasks);
     }
 
-    private void moveTasksUpByProject( Task sourceTask, Task destinationTask ) {
+    private void moveTasksUpByProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
@@ -458,7 +458,7 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.saveAll(tasks);
     }
 
-    private void moveTasksDownByProject( Task sourceTask, Task destinationTask ) {
+    private void moveTasksDownByProject(@NotNull Task sourceTask, @NotNull Task destinationTask) {
         Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
         long lowerOrderIdProject = sourceTask.getOrderIdProject();
@@ -481,7 +481,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task addToInbox(Task task) {
+    public Task addToInbox(@NotNull Task task) {
         log.info("addToInbox");
         task.setUuid(UUID.randomUUID().toString());
         task.setRootProject();

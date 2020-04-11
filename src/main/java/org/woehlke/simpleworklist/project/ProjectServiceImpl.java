@@ -7,14 +7,15 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskRepository;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Service
@@ -25,39 +26,28 @@ public class ProjectServiceImpl implements ProjectService {
     private final TaskRepository taskRepository;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
+    public ProjectServiceImpl(
+        ProjectRepository projectRepository,
+        TaskRepository taskRepository
+    ) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
-    /*
-    @Deprecated
     @Override
-    public List<Project> findRootProjectsByUserAccount(UserAccount userAccount) {
-        return projectRepository.findByParentIsNullAndUserAccount(userAccount);
-    }
-
-    @Deprecated
-    @Override
-    public List<Project> findAllProjectsByUserAccount(UserAccount userAccount) {
-        return projectRepository.findByUserAccount(userAccount);
-    }
-     */
-
-    @Override
-    public List<Project> findRootProjectsByContext(Context context) {
+    public List<Project> findRootProjectsByContext(@NotNull Context context) {
         log.info("findRootProjectsByContext");
         return projectRepository.findByParentIsNullAndContext(context);
     }
 
     @Override
-    public List<Project> findAllProjectsByContext(Context context) {
+    public List<Project> findAllProjectsByContext(@NotNull Context context) {
         log.info("findAllProjectsByContext");
         return projectRepository.findByContext(context);
     }
 
     @Override
-    public Project findByProjectId(long projectId) {
+    public Project findByProjectId(@Min(1L) long projectId) {
         log.info("findByProjectId");
         if(projectRepository.existsById(projectId)){
             return projectRepository.getOne(projectId);
@@ -68,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project add(Project entity) {
+    public Project add(@NotNull Project entity) {
         log.info("saveAndFlush");
         entity.setUuid(UUID.randomUUID().toString());
         return projectRepository.saveAndFlush(entity);
@@ -76,14 +66,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project update(Project entity) {
+    public Project update(@NotNull Project entity) {
         log.info("saveAndFlush");
         return projectRepository.saveAndFlush(entity);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project delete(Project thisProject) {
+    public Project delete(@NotNull Project thisProject) {
         log.info("delete");
         Project oldParent = thisProject.getParent();
         if (oldParent != null) {
@@ -96,7 +86,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project moveProjectToAnotherContext(Project thisProject, Context newContext) {
+    public Project moveProjectToAnotherContext(@NotNull Project thisProject, @NotNull Context newContext) {
         log.info("----------------------------------------------------");
         log.info("moveProjectToAnotherContext: Project: "+ thisProject.toString());
         log.info("----------------------------------------------------");
@@ -117,7 +107,7 @@ public class ProjectServiceImpl implements ProjectService {
         return thisProject;
     }
 
-    private List<Project> getAllChildrenOfProject(Project thisProject) {
+    private List<Project> getAllChildrenOfProject(@NotNull Project thisProject) {
         log.info("getAllChildrenOfProject");
         List<Project> retVal = new ArrayList<>();
         retVal.add(thisProject);
@@ -131,8 +121,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Project moveProjectToAnotherProject(
-        Project thisProject,
-        Project targetProject
+        @NotNull Project thisProject,
+        @NotNull Project targetProject
     ) {
         log.info("moveProjectToAnotherProject");
         Project oldParent = thisProject.getParent();

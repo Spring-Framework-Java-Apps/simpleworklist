@@ -1,12 +1,9 @@
 package org.woehlke.simpleworklist;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -19,12 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.woehlke.simpleworklist.config.ApplicationProperties;
-import org.woehlke.simpleworklist.config.UserAccountTestDataService;
-import org.woehlke.simpleworklist.config.di.WebMvcConfig;
-import org.woehlke.simpleworklist.config.di.WebSecurityConfig;
+import org.woehlke.simpleworklist.application.config.UserAccountTestDataService;
 
 import java.net.URL;
 
@@ -34,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.woehlke.simpleworklist.config.Requirements.*;
+import static org.woehlke.simpleworklist.application.config.Requirements.*;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

@@ -20,7 +20,7 @@
 <div th:fragment="mytwcontent">
 	<div>
 		<form id="formId" th:action="@{/project/{id}/edit(id=${thisProject.id})}" th:object="${project}" method="post">
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="${#ids.next('name')}" class="control-label">Name</label>
 				<input type="text" th:field="*{name}" class="form-control" />
 				<div>
@@ -28,7 +28,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-control-lg">
 				<label th:for="textEditor" class="control-label">
 					<span th:utext="#{project.add.description}">Description</span>
 				</label>
@@ -39,9 +39,9 @@
 				</div>
 			</div>
 			<div>
-				<div class="form-group">
+				<div class="form-group form-control-lg">
 					<label th:for="${#ids.next('context.id')}" class="control-label">
-						<span th:utext="#{project.edit.context}">Area</span>
+						<span th:utext="#{project.edit.context}">context</span>
 					</label>
 					<select th:field="*{context.id}">
 						<option th:each="context : ${contexts}"
@@ -66,7 +66,7 @@
 	<!-- Document Window End -->
 </div>
 
-	<script th:src="@{/webjars/ckeditor/4.11.3/full/ckeditor.js}"></script>
+	<script th:src="@{/webjars/ckeditor/4.14.0/full/ckeditor.js}"></script>
 	<script th:inline="javascript">
 		CKEDITOR.replace( 'textEditor' );
 	</script>
