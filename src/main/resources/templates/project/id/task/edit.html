@@ -21,7 +21,7 @@
 	<div>
 		<form id="formId" th:object="${task}" method="post" class="was-validated"
               th:action="@{/project/{projectId}/task/{taskId}/edit(taskId=${task.id},projectId=${thisProject.id})}" >
-            <div th:replace="layout/taskedit :: tw-task-edit-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
+            <div th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
             <div class="form-row">
                 <div class="col-md-6 mb-6">
                     <button id="editTaskSubmit" type="submit" class="btn btn-primary btn-block">

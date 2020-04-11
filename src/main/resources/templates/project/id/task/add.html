@@ -20,7 +20,7 @@
 <div th:fragment="mytwcontent">
 	<form id="formId" class="was-validated" method="post"
           th:action="@{/project/{projectId}/task/add(projectId=${thisProject.id})}" th:object="${task}">
-        <div th:replace="layout/taskedit :: tw-task-edit-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
+        <div th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
         <div class="form-row">
             <div class="col-md-12 mb-12">
                 <button id="createNewTask" type="submit" class="btn btn-block btn-primary">
