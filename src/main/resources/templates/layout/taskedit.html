@@ -48,7 +48,8 @@
                     <label for="taskDueDate" class="control-label">
                         <span th:utext="#{task.show.dueDate}">dueDate</span>
                     </label>
-                    <input id="taskDueDate" type="text" th:field="*{dueDate}" class="form-control form-control-lg is-invalid"/>
+                    <input id="taskDueDate" type="text" th:field="*{dueDate}"
+                           class="form-control form-control-lg is-invalid"/>
                     <div th:each="err : ${#fields.errors('dueDate')}">
                         <div class="invalid-feedback" th:text="${err}" >err</div>
                     </div>
@@ -61,7 +62,8 @@
                     <label th:for="textEditor" class="control-label">
                         <span th:utext="#{task.show.text}">Text</span>
                     </label>
-                    <textarea id="textEditor" name="textEditor" rows="10" cols="50" class="form-control form-control-lg is-invalid"
+                    <textarea id="textEditor" name="textEditor" rows="10" cols="50"
+                              class="form-control form-control-lg is-invalid"
                               th:field="*{text}">Text
                     </textarea>
                     <div th:each="err : ${#fields.errors('text')}">
