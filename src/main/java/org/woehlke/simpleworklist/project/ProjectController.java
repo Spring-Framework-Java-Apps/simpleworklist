@@ -184,8 +184,7 @@ public class ProjectController extends AbstractController {
         );
     }
 
-
-    @RequestMapping(path = "/project/move/{targetProjectId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/project/move/to/project/{targetProjectId}", method = RequestMethod.GET)
     public final String projectMoveToProjectGet(
             @PathVariable("projectId") Project thisProject,
             @PathVariable long targetProjectId,

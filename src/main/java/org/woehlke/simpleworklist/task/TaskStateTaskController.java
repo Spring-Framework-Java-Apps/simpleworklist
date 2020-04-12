@@ -265,7 +265,7 @@ public class TaskStateTaskController extends AbstractController {
         return task.getTaskState().getUrl();
     }
 
-    @RequestMapping(path = "/{taskId}/move/to/trash", method = RequestMethod.GET)
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task.moveToTrash();

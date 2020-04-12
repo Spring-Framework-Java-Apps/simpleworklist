@@ -90,56 +90,56 @@
 		function drop2inbox(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/inbox';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/inbox';
 			window.location.replace(myUrl);
 		}
 
 		function drop2today(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/today';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/today';
 			window.location.replace(myUrl);
 		}
 
 		function drop2next(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/next';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/next';
 			window.location.replace(myUrl);
 		}
 
 		function drop2waiting(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/waiting';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/waiting';
 			window.location.replace(myUrl);
 		}
 
 		function drop2someday(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/someday';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/someday';
 			window.location.replace(myUrl);
 		}
 
 		function drop2focus(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/focus';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/focus';
 			window.location.replace(myUrl);
 		}
 
 		function drop2completed(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/completed';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/completed';
 			window.location.replace(myUrl);
 		}
 
 		function drop2trash(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/move/})]'+taskId+'/to/trash';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/trash';
 			window.location.replace(myUrl);
 		}
 
@@ -153,7 +153,7 @@
 				var myUrl = '[(@{/taskstate/task/move/})]' + srcId + '/to/project/' + targetProjectId;
 				window.location.replace(myUrl);
 			} else if(srcType == 'project') {
-				var myUrl = '[(@{/project/})]' + srcId + '/move/to/' + targetProjectId;
+				var myUrl = '[(@{/project/})]' + srcId + '/project/move/to/project/' + targetProjectId;
 				window.location.replace(myUrl);
 			}
 		}
