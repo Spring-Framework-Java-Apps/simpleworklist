@@ -29,6 +29,9 @@
 
 ## F029 Drag and Drop: Task move to Project
 ## F030 Drag and Drop: Project move to Project
+## F030 Drag and Drop: Move Task to Change Task-Order in Taskstate
+## F030 Drag and Drop: Move Task to Change Task-Order in Project/Root
+## F030 Drag and Drop: Move Task to Change Task-Order in Project/id
 
 ## F040 Taskstate: Add Task to Inbox
 ## F041 Taskstate: Add Task to Inbox again
