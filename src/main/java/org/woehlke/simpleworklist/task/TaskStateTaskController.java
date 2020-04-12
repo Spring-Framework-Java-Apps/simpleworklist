@@ -196,7 +196,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("---------------------------------------------");
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
-        taskService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
+        taskStateControllerService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
         return sourceTask.getTaskState().getUrl();
     }
 
@@ -212,64 +212,56 @@ public class TaskStateTaskController extends AbstractController {
     @RequestMapping(path = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
-        task.moveToInbox();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToInbox(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
     public final String moveTaskToToday(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to today");
-        task.moveToToday();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToToday(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/next", method = RequestMethod.GET)
     public final String moveTaskToNext(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to next");
-        task.moveToNext();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToNext(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
-        task.moveToWaiting();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToWaiting(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to someday");
-        task.moveToSomeday();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToSomeday(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
     public final String moveTaskToFocus(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to focus");
-        task.moveToFocus();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToFocus(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to completed");
-        task.moveToCompletedTasks();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToCompleted(task);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(@NotNull @PathVariable("taskId") Task task) {
         log.info("dragged and dropped "+task.getId()+" to trash");
-        task.moveToTrash();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToTrash(task);
         return task.getTaskState().getUrl();
     }
 

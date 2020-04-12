@@ -167,5 +167,9 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         project.setParent(this);
         return project;
     }
+
+    public String out(){
+        return "Project: "+name+" ("+id+")";
+    }
 }
 

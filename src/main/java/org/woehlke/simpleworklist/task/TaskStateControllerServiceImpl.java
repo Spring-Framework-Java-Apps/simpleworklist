@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbService;
@@ -14,6 +16,9 @@ import org.woehlke.simpleworklist.project.ProjectService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Slf4j
@@ -75,4 +80,33 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
         log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
         return thisProject.getUrl();
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveTaskToTaskAndChangeTaskOrderInTaskstate(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
+        log.info("        "+sourceTask.getTaskState().name());
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
+        boolean notEqualsId = ! sourceTask.equalsById(destinationTask);
+        boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
+        boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
+        boolean sameTaskType = sourceTask.hasSameTaskTypetAs(destinationTask);
+        boolean go = notEqualsId && notEquals && sameContext && sameTaskType;
+        if ( go ) {
+            boolean srcIsBelowDestinationTask  = sourceTask.isBelowByTaskState(destinationTask);
+            if (srcIsBelowDestinationTask) {
+                this.taskService.moveTasksDownByTaskState( sourceTask, destinationTask );
+            } else {
+                this.taskService.moveTasksUpByTaskState( sourceTask, destinationTask );
+            }
+        }
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTaskToTask AndChangeTaskOrder In Taskstate ");
+        log.info("        "+sourceTask.getTaskState().name());
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
+    }
+
 }

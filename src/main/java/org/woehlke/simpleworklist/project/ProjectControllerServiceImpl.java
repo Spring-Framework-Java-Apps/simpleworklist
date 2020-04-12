@@ -3,11 +3,15 @@ package org.woehlke.simpleworklist.project;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.task.Task;
+import org.woehlke.simpleworklist.task.TaskService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
@@ -23,14 +27,16 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
 
     private final ProjectService projectService;
     private final BreadcrumbService breadcrumbService;
+    private final TaskService taskService;
 
     @Autowired
     public ProjectControllerServiceImpl(
         ProjectService projectService,
-        BreadcrumbService breadcrumbService
-    ) {
+        BreadcrumbService breadcrumbService,
+        TaskService taskService) {
         this.projectService = projectService;
         this.breadcrumbService = breadcrumbService;
+        this.taskService = taskService;
     }
 
     public void addNewProjectToProjectIdForm(
@@ -123,5 +129,63 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
         return project.getUrl();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveTaskToTaskAndChangeTaskOrderInProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+        Project project = sourceTask.getProject();
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" START: moveTaskToTaskAndChangeTaskOrderInProject ");
+        log.info("        "+project.out()+":");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
+        boolean okProject = destinationTask.hasProject(project);
+        boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
+        boolean sameProject = sourceTask.hasSameProjectAs(destinationTask);
+        boolean go = sameContext && sameProject && okProject;
+        if (go) {
+            boolean srcIsBelowDestinationTask  = sourceTask.isBelowByProject(destinationTask);
+            log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
+            log.info("-------------------------------------------------------------------------------");
+            if (srcIsBelowDestinationTask) {
+                this.taskService.moveTasksDownByProject(sourceTask, destinationTask);
+            } else {
+                this.taskService.moveTasksUpByProject(sourceTask, destinationTask);
+            }
+        }
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTaskToTaskAndChangeTaskOrderInProject ");
+        log.info("        "+project.out()+":");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveTaskToTaskAndChangeTaskOrderInProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" START: moveTaskToTaskAndChangeTaskOrderIn Project Root");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
+        boolean sourceTaskRoot = destinationTask.isInRootProject();
+        boolean destinationTaskRoot = destinationTask.isInRootProject();
+        boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
+        boolean sameProject = sourceTask.hasSameProjectAs(destinationTask);
+        boolean go = sameContext && sameProject && sourceTaskRoot && destinationTaskRoot;
+        if ( go ) {
+            boolean srcIsBelowDestinationTask  = sourceTask.isBelowByProject(destinationTask);
+            log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
+            log.info("-------------------------------------------------------------------------------");
+            if (srcIsBelowDestinationTask) {
+                this.taskService.moveTasksDownByProjectRoot(sourceTask, destinationTask);
+            } else {
+                this.taskService.moveTasksUpByProjectRoot(sourceTask, destinationTask);
+            }
+        }
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTaskToTaskAndChangeTaskOrderIn Project Root");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
     }
 }

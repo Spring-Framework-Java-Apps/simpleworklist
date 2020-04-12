@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.project;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
@@ -50,4 +51,6 @@ public interface ProjectControllerService {
         UserSessionBean userSession
     );
 
+    void moveTaskToTaskAndChangeTaskOrderInProject(Task sourceTask, Task destinationTask);
+    void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask);
 }

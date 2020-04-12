@@ -19,4 +19,6 @@ public interface TaskStateControllerService {
     );
 
     String transformTaskIntoProjectGet(Task task);
+
+    void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask);
 }

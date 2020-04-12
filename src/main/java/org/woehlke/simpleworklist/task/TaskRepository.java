@@ -26,6 +26,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState inbox, Context context);
 
+    Task findTopByProjectAndContextOrderByOrderIdProjectIsNullDesc(Context context);
+
     Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context);
 
     Page<Task> findByTaskStateAndContext(TaskState taskState, Context context, Pageable request);

@@ -7,33 +7,61 @@ import org.woehlke.simpleworklist.project.Project;
 
 public interface TaskService {
 
-    Task findOne(long taskId);
-    boolean projectHasNoTasks(Project project);
+    Task moveTaskToInbox(Task task);
+    Task moveTaskToToday(Task task);
+    Task moveTaskToNext(Task task);
+    Task moveTaskToWaiting(Task task);
+    Task moveTaskToSomeday(Task task);
+    Task moveTaskToFocus(Task task);
+    Task moveTaskToCompleted(Task task);
+    Task moveTaskToTrash(Task task);
 
-    Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
-
-    Page<Task> findByProject(Project thisProject, Pageable request);
-    Page<Task> findByRootProject(Context context, Pageable request);
-
-    long getMaxOrderIdTaskState(TaskState taskState, Context context);
-    long getMaxOrderIdRootProject(Context context);
-    long getMaxOrderIdProject(Project project, Context context);
-
-
-
-    Task addToInbox(Task task);
-    Task addToRootProject(Task task);
-    Task addToProject(Task task);
-
-    Task updatedViaTaskstate(Task task);
-    Task updatedViaProject(Task task);
-
-    Task moveTaskToRootProject(Task task);
-    Task moveTaskToAnotherProject(Task task, Project project);
     void moveAllCompletedToTrash(Context context);
     void emptyTrash(Context context);
 
-    void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask);
-    void moveTaskToTaskAndChangeTaskOrderInProject(Task sourceTask, Task destinationTask);
-    void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask);
+    Task moveTaskToRootProject(Task task);
+    Task moveTaskToAnotherProject(Task task, Project project);
+
+    Task addToInbox(Task task);
+    Task addToProject(Task task);
+    Task addToRootProject(Task task);
+
+    Task updatedViaTaskstate(Task task);
+    Task updatedViaProject(Task task);
+    Task updatedViaProjectRoot(Task task);
+
+    Task findOne(long taskId);
+    Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
+    Page<Task> findByProject(Project thisProject, Pageable request);
+    Page<Task> findByRootProject(Context context, Pageable request);
+
+    boolean projectHasNoTasks(Project project);
+
+    long getMaxOrderIdTaskState(TaskState taskState, Context context);
+    long getMaxOrderIdProject(Project project, Context context);
+    long getMaxOrderIdProjectRoot(Context context);
+
+    /**
+     * Before: sourceTask is dragged from above down to destinationTask, so sourceTask is above destinationTask.
+     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
+     * and destinationTask are moved one position up; destinationTask is the next Task above sourceTask.
+     * @param sourceTask Task
+     * @param destinationTask Task
+     */
+    void moveTasksUpByTaskState(Task sourceTask, Task destinationTask);
+
+    /**
+     * Before: sourceTask is dragged from below up to destinationTask, so sourceTask is below destinationTask.
+     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
+     * are moved one position down; destinationTask is the next Task below sourceTask.
+     * @param sourceTask Task
+     * @param destinationTask Task
+     */
+    void moveTasksDownByTaskState(Task sourceTask, Task destinationTask);
+
+    void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask);
+    void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask);
+
+    void moveTasksUpByProject(Task sourceTask, Task destinationTask);
+    void moveTasksDownByProject(Task sourceTask, Task destinationTask);
 }
