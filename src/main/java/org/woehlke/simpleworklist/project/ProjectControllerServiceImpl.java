@@ -49,13 +49,13 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         log.info("addNewProject projectId="+projectId);
         UserAccount userAccount = context.getUserAccount();
         userSession.setLastProjectId(projectId);
-        model.addAttribute("userSession",userSession);
         Project thisProject = projectService.findByProjectId(projectId);
         Project project = Project.newProjectFactoryForParentProject(thisProject);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
+        model.addAttribute("userSession", userSession);
     }
 
     public String addNewProjectToProjectIdPersist(
@@ -76,6 +76,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
+            model.addAttribute("userSession", userSession);
             return "project/id/show";
         } else {
             Project thisProject = projectService.findByProjectId(projectId);
@@ -84,6 +85,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             thisProject = projectService.update(thisProject);
             log.info("project:     "+ project.toString());
             log.info("thisProject: "+ thisProject.toString());
+            model.addAttribute("userSession", userSession);
             return thisProject.getUrl();
         }
     }
@@ -114,6 +116,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         model.addAttribute("thisProjectId", project.getId());
         model.addAttribute("breadcrumb", breadcrumb);
         userSession.setLastProjectId(rootProjectId);
+        model.addAttribute("userSession", userSession);
     }
 
     @Override
@@ -128,6 +131,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         log.info("addNewProjectToRootPersist");
         project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
+        model.addAttribute("userSession", userSession);
         return project.getUrl();
     }
 

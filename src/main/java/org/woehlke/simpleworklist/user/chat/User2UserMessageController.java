@@ -51,6 +51,7 @@ public class User2UserMessageController extends AbstractController {
         model.addAttribute("refreshMessages",true);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
         model.addAttribute("breadcrumb",breadcrumb);
+        model.addAttribute("userSession", userSession);
         return "user/messages/all";
     }
 
@@ -78,9 +79,11 @@ public class User2UserMessageController extends AbstractController {
             Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
             model.addAttribute("otherUser", otherUser);
             model.addAttribute("user2UserMessagePage", user2UserMessagePage);
+            model.addAttribute("userSession", userSession);
             return "user/messages/all";
         } else {
             user2UserMessageService.sendNewUserMessage(thisUser, otherUser, user2UserMessageFormBean);
+            model.addAttribute("userSession", userSession);
             return "redirect:/user/messages/" + otherUser.getId();
         }
     }

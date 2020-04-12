@@ -67,6 +67,7 @@ public class TaskStateTaskController extends AbstractController {
         model.addAttribute("mustChooseArea", mustChooseContext);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
+        model.addAttribute("userSession", userSession);
         return "taskstate/task/add";
     }
 
@@ -90,10 +91,12 @@ public class TaskStateTaskController extends AbstractController {
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
+            model.addAttribute("userSession", userSession);
             return "taskstate/task/add";
         } else {
             task = taskService.addToInbox(task);
             log.info(task.toString());
+            model.addAttribute("userSession", userSession);
             return "redirect:/taskstate/" + task.getTaskState().name().toLowerCase();
         }
     }
@@ -105,27 +108,24 @@ public class TaskStateTaskController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
-        if(task != null) {
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-            List<Context> contexts = contextService.getAllForUser(userAccount);
-            Project thisProject;
-            if (task.getContext() == null) {
-                thisProject = new Project();
-                thisProject.setId(0L);
-            } else {
-                thisProject = task.getProject();
-            }
-            Context thisContext = task.getContext();
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject);
-            model.addAttribute("thisContext", thisContext);
-            model.addAttribute("task", task);
-            model.addAttribute("contextss", contexts);
-            return "taskstate/task/edit";
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        List<Context> contexts = contextService.getAllForUser(userAccount);
+        Project thisProject;
+        if (task.getContext() == null) {
+            thisProject = new Project();
+            thisProject.setId(0L);
         } else {
-            return "redirect:/taskstate/inbox";
+            thisProject = task.getProject();
         }
+        Context thisContext = task.getContext();
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("thisContext", thisContext);
+        model.addAttribute("task", task);
+        model.addAttribute("contexts", contexts);
+        model.addAttribute("userSession", userSession);
+        return "taskstate/task/edit";
     }
 
     @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.POST)
@@ -172,6 +172,7 @@ public class TaskStateTaskController extends AbstractController {
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("contexts", contexts);
+            model.addAttribute("userSession", userSession);
             return "taskstate/task/edit";
         } else {
             task.unsetFocus();
@@ -179,6 +180,7 @@ public class TaskStateTaskController extends AbstractController {
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);
             task = taskService.updatedViaTaskstate(persistentTask);
+            model.addAttribute("userSession", userSession);
             return task.getTaskState().getUrl();
         }
     }
@@ -222,6 +224,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
         task = taskService.moveTaskToInbox(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -233,6 +236,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to today");
         task = taskService.moveTaskToToday(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -244,6 +248,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to next");
         task = taskService.moveTaskToNext(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -255,6 +260,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
         task = taskService.moveTaskToWaiting(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -266,6 +272,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to someday");
         task = taskService.moveTaskToSomeday(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -277,6 +284,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to focus");
         task = taskService.moveTaskToFocus(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -288,6 +296,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to completed");
         task = taskService.moveTaskToCompleted(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -299,6 +308,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task = taskService.moveTaskToTrash(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
@@ -309,6 +319,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         Context context = super.getContext(userSession);
         taskService.moveAllCompletedToTrash(context);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/trash";
     }
 
@@ -319,6 +330,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         Context context = super.getContext(userSession);
         taskService.emptyTrash(context);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/trash";
     }
 
@@ -330,10 +342,9 @@ public class TaskStateTaskController extends AbstractController {
         Model model
     ) {
         log.info("deleteTaskGet");
-        if(task!= null){
-            task.delete();
-            taskService.updatedViaTaskstate(task);
-        }
+        task.delete();
+        taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/trash";
     }
 
@@ -346,6 +357,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("undeleteTaskGet");
         task.undelete();
         taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/completed";
     }
 
@@ -356,7 +368,7 @@ public class TaskStateTaskController extends AbstractController {
         Model model
     ) {
         log.info("transformTaskIntoProjectGet");
-        return taskProjektService.transformTaskIntoProjectGet(task);
+        return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
@@ -369,6 +381,7 @@ public class TaskStateTaskController extends AbstractController {
         long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return task.getUrl();
     }
 
@@ -382,6 +395,7 @@ public class TaskStateTaskController extends AbstractController {
         long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return task.getUrl();
     }
 
@@ -393,6 +407,7 @@ public class TaskStateTaskController extends AbstractController {
     ){
         task.setFocus();
         task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return task.getUrl();
     }
 
@@ -404,6 +419,7 @@ public class TaskStateTaskController extends AbstractController {
     ){
       task.unsetFocus();
       task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
       return task.getUrl();
     }
 }

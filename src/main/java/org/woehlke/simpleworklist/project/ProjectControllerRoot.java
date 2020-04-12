@@ -65,6 +65,7 @@ public class ProjectControllerRoot extends AbstractController {
             model.addAttribute("isDeleted",isDeleted);
             model.addAttribute("myTaskState","PROJECT");
         }
+        model.addAttribute("userSession", userSession);
         return "project/root/show";
     }
 
@@ -76,6 +77,7 @@ public class ProjectControllerRoot extends AbstractController {
         log.info("/project/root/project/add (GET)");
         Context context = super.getContext(userSession);
         projectControllerService.addNewProjectToProjectRootForm(userSession, context, locale, model);
+        model.addAttribute("userSession", userSession);
         return "project/root/project/add";
     }
 
@@ -89,6 +91,7 @@ public class ProjectControllerRoot extends AbstractController {
         log.info("/project/root/add/project (POST)");
         Context context = super.getContext(userSession);
         if (result.hasErrors()) {
+            model.addAttribute("userSession", userSession);
             return "project/root/project/add";
         } else {
             project.setUuid(UUID.randomUUID().toString());
@@ -135,6 +138,7 @@ public class ProjectControllerRoot extends AbstractController {
         model.addAttribute("thisProjectId", thisProject.getId());
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
+        model.addAttribute("userSession", userSession);
         return "project/root/task/add";
     }
 
@@ -158,11 +162,13 @@ public class ProjectControllerRoot extends AbstractController {
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
+            model.addAttribute("userSession", userSession);
             return "project/root/task/add";
         } else {
             task.setContext(context);
             task = taskService.addToRootProject(task);
             log.info(task.toString());
+            model.addAttribute("userSession", userSession);
             return rootProjectUrl;
         }
     }
@@ -191,6 +197,7 @@ public class ProjectControllerRoot extends AbstractController {
         model.addAttribute("thisContext", thisContext);
         model.addAttribute("task", task);
         model.addAttribute("contexts", contexts);
+        model.addAttribute("userSession", userSession);
         return "project/root/task/edit";
     }
 
@@ -203,8 +210,6 @@ public class ProjectControllerRoot extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.info("editTaskPost");
-
         log.info("editTaskPost");
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
@@ -239,6 +244,7 @@ public class ProjectControllerRoot extends AbstractController {
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());
             userSession.setLastContextId(thisContext.getId());
+            model.addAttribute("userSession", userSession);
             return "project/root/task/edit";
         } else {
             //task.unsetFocus();
@@ -249,6 +255,7 @@ public class ProjectControllerRoot extends AbstractController {
             userSession.setLastProjectId(rootProjectId);
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());
+            model.addAttribute("userSession", userSession);
             return task.getTaskState().getUrl();
         }
     }
@@ -270,18 +277,21 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(sourceTask.getTaskState());
         userSession.setLastTaskId(sourceTask.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/project/root", method = RequestMethod.GET)
     public final String moveTaskToProjectRoot(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         task = taskService.moveTaskToRootProject(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
@@ -289,19 +299,22 @@ public class ProjectControllerRoot extends AbstractController {
     public final String moveTaskToProject(
         @PathVariable("taskId") Task task,
         @PathVariable("projectId") Project targetProject,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         task = taskService.moveTaskToAnotherProject(task,targetProject);
         userSession.setLastProjectId(targetProject.getId());
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return targetProject.getUrl();
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
         task.moveToInbox();
@@ -309,13 +322,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
     public final String moveTaskToToday(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to today");
         task.moveToToday();
@@ -323,13 +338,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/next", method = RequestMethod.GET)
     public final String moveTaskToNext(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to next");
         task.moveToNext();
@@ -337,13 +354,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
     public final String moveTaskToWaiting(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
         task.moveToWaiting();
@@ -351,13 +370,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/someday", method = RequestMethod.GET)
     public final String moveTaskToSomeday(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to someday");
         task.moveToSomeday();
@@ -365,13 +386,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
     public final String moveTaskToFocus(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to focus");
         task.moveToFocus();
@@ -379,13 +402,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
     public final String moveTaskToCompleted(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to completed");
         task.moveToCompletedTasks();
@@ -393,13 +418,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/trash", method = RequestMethod.GET)
     public final String moveTaskToTrash(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task.moveToTrash();
@@ -407,35 +434,41 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/completed/move/to/trash", method = RequestMethod.GET)
     public final String moveAllCompletedToTrash(
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         Context context = super.getContext(userSession);
         taskService.moveAllCompletedToTrash(context);
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(rootProjectId);
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/trash/empty", method = RequestMethod.GET)
     public final String emptyTrash(
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         Context context = super.getContext(userSession);
         taskService.emptyTrash(context);
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(rootProjectId);
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/delete", method = RequestMethod.GET)
     public final String deleteTaskGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("deleteTaskGet");
         if(task!= null){
@@ -445,13 +478,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/undelete", method = RequestMethod.GET)
     public final String undeleteTaskGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("undeleteTaskGet");
         task.undelete();
@@ -459,25 +494,28 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/transform", method = RequestMethod.GET)
     public final String transformTaskIntoProjectGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         log.info("transformTaskIntoProjectGet");
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return taskProjektService.transformTaskIntoProjectGet(task);
+        return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
     public final String setDoneTaskGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         task.complete();
         long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
@@ -486,13 +524,15 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/incomplete", method = RequestMethod.GET)
     public final String unsetDoneTaskGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
        task.incomplete();
        long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
@@ -501,32 +541,37 @@ public class ProjectControllerRoot extends AbstractController {
        userSession.setLastProjectId(rootProjectId);
        userSession.setLastTaskState(task.getTaskState());
        userSession.setLastTaskId(task.getId());
+       model.addAttribute("userSession", userSession);
        return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/setfocus", method = RequestMethod.GET)
     public final String setFocusGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ){
         task.setFocus();
         task = taskService.updatedViaProject(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/unsetfocus", method = RequestMethod.GET)
     public final String unsetFocusGet(
         @PathVariable("taskId") Task task,
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ){
         task.unsetFocus();
         task = taskService.updatedViaProject(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+        model.addAttribute("userSession", userSession);
         return rootProjectUrl;
     }
 }

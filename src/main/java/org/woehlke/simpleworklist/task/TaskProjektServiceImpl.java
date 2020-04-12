@@ -4,8 +4,10 @@ package org.woehlke.simpleworklist.task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.ProjectService;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +25,9 @@ public class TaskProjektServiceImpl implements TaskProjektService {
     }
 
     @Override
-    public String transformTaskIntoProjectGet(@NotNull Task task) {
+    public String transformTaskIntoProjectGet(
+        @NotNull Task task, @NotNull UserSessionBean userSession, @NotNull Model model
+    ) {
         log.info("transformTaskIntoProjectGet");
         Project thisProject = new Project();
         thisProject.setName(task.getTitle());
@@ -39,8 +43,9 @@ public class TaskProjektServiceImpl implements TaskProjektService {
         task.setProject(null);
         task.moveToTrash();
         task.emptyTrash();
-        taskService.updatedViaTaskstate(task);
+        task = taskService.updatedViaTaskstate(task);
         log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
+        model.addAttribute("userSession", userSession);
         return thisProject.getUrl();
     }
 }

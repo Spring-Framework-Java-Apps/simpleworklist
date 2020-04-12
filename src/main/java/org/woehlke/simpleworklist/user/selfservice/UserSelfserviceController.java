@@ -66,6 +66,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
         model.addAttribute("thisUser", user);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/profile";
     }
 
@@ -83,6 +84,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("username", bean);
         model.addAttribute("thisUser", user);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/name";
     }
 
@@ -102,10 +104,12 @@ public class UserSelfserviceController extends AbstractController {
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("username", username);
             model.addAttribute("thisUser", user);
+            model.addAttribute("userSession", userSession);
             return "user/selfservice/name";
         } else {
             user.setUserFullname(username.getUserFullname());
             userAccountService.saveAndFlush(user);
+            model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/profile";
         }
     }
@@ -124,6 +128,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
         model.addAttribute("userChangePasswordForm", userChangePasswordForm);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/password";
     }
 
@@ -149,6 +154,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 log.info(error.toString());
             }
+            model.addAttribute("userSession", userSession);
             return "user/selfservice/password";
         } else {
             if(! userChangePasswordForm.passwordsAreTheSame()){
@@ -161,6 +167,7 @@ public class UserSelfserviceController extends AbstractController {
                 for(ObjectError error : result.getAllErrors()){
                     log.info(error.toString());
                 }
+                model.addAttribute("userSession", userSession);
                 return "user/selfservice/password";
             }
             if(!userAccountAccessService.confirmUserByLoginAndPassword(
@@ -175,10 +182,12 @@ public class UserSelfserviceController extends AbstractController {
                 for(ObjectError error : result.getAllErrors()){
                     log.info(error.toString());
                 }
+                model.addAttribute("userSession", userSession);
                 return "user/selfservice/password";
             }
             log.info("OK");
             userAccountAccessService.changeUsersPassword(userChangePasswordForm,user);
+            model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/profile";
         }
     }
@@ -200,6 +209,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("contexts", contexts);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale);
         model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/context/all";
     }
 
@@ -223,6 +233,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 log.info(error.toString());
             }
+            model.addAttribute("userSession", userSession);
             return "user/selfservice/context/all";
         } else {
             if(user.getId() == thisUser.getId()){
@@ -231,6 +242,7 @@ public class UserSelfserviceController extends AbstractController {
                 userSession.setLastContextId(thisUser.getDefaultContext().getId());
                 model.addAttribute("userSession", userSession);
             }
+            model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/contexts";
         }
     }
@@ -249,6 +261,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("newContext", newContext);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale);
         model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/context/add";
     }
 
@@ -271,9 +284,11 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 log.info(error.toString());
             }
+            model.addAttribute("userSession", userSession);
             return "user/selfservice/context/add";
         } else {
             contextService.createNewContext(newContext,user);
+            model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/contexts";
         }
     }
@@ -295,6 +310,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("editContext", editContext);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context);
         model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/context/edit";
     }
 
@@ -315,11 +331,13 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 log.info(error.toString());
             }
+            model.addAttribute("userSession", userSession);
             return "user/selfservice/context/edit";
         } else {
             context.setNameDe(editContext.getNameDe());
             context.setNameEn(editContext.getNameEn());
             contextService.updateContext(context);
+            model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/contexts";
         }
     }
@@ -355,6 +373,7 @@ public class UserSelfserviceController extends AbstractController {
                 }
             }
         }
+        model.addAttribute("userSession", userSession);
         return "redirect:/user/selfservice/contexts";
     }
 
@@ -371,6 +390,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("userChangeLanguageForm",new UserChangeLanguageForm(user.getDefaultLanguage()));
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale);
         model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("userSession", userSession);
         return "user/selfservice/language";
     }
 
@@ -391,6 +411,7 @@ public class UserSelfserviceController extends AbstractController {
             for(ObjectError error : result.getAllErrors()){
                 log.info(error.toString());
             }
+            model.addAttribute("userSession", userSession);
             return "user/selfservice/language";
         } else {
             user.setDefaultLanguage(userChangeLanguageForm.getDefaultLanguage());
@@ -400,6 +421,7 @@ public class UserSelfserviceController extends AbstractController {
                 case DE: returnUrl="redirect:/user/selfservice/profile?lang=de"; break;
                 default: returnUrl="redirect:/user/selfservice/profile?lang=en"; break;
             }
+            model.addAttribute("userSession", userSession);
             return returnUrl;
         }
     }
