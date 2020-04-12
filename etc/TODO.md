@@ -104,3 +104,6 @@ Fixed #220, Fixed #221, Fixed #222
 
 #2.3.18
 Fixed #128, Fixed #192, Fixed #193, Fixed #194, Fixed #195, Fixed #196, Fixed #197, Fixed #198, Fixed #199, Fixed #200, Fixed #239, Fixed #240
+
+#2.3.19
+Fixed #252
