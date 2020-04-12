@@ -10,6 +10,7 @@ import org.woehlke.simpleworklist.project.ProjectService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -32,13 +33,13 @@ public class TaskProjektServiceImpl implements TaskProjektService {
         Project thisProject = new Project();
         thisProject.setName(task.getTitle());
         thisProject.setDescription(task.getText());
-        thisProject.setUuid(task.getUuid());
         thisProject.setContext(task.getContext());
         if (task.getProject() != null) {
             long projectId = task.getProject().getId();
             Project parentProject = projectService.findByProjectId(projectId);
             thisProject.setParent(parentProject);
         }
+        thisProject.setContext(task.getContext());
         thisProject = projectService.add(thisProject);
         task.setProject(null);
         task.moveToTrash();

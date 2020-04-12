@@ -81,6 +81,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         } else {
             Project thisProject = projectService.findByProjectId(projectId);
             project = thisProject.addOtherProjectToChildren(project);
+            project.setContext(context);
             project = projectService.add(project);
             thisProject = projectService.update(thisProject);
             log.info("project:     "+ project.toString());
@@ -129,6 +130,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Model model
     ) {
         log.info("addNewProjectToRootPersist");
+        project.setContext(context);
         project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
         model.addAttribute("userSession", userSession);
