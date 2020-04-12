@@ -51,6 +51,8 @@ public interface ProjectControllerService {
         UserSessionBean userSession
     );
 
+    String transformTaskIntoProjectGet(Task task);
+
     void moveTaskToTaskAndChangeTaskOrderInProject(Task sourceTask, Task destinationTask);
     void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask);
 }

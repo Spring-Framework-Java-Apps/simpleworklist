@@ -11,14 +11,10 @@ import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.ProjectService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 @Slf4j
@@ -27,17 +23,14 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
 
     private final BreadcrumbService breadcrumbService;
     private final TaskService taskService;
-    private final ProjectService projectService;
 
     @Autowired
     public TaskStateControllerServiceImpl(
         BreadcrumbService breadcrumbService,
-        TaskService taskService,
-        ProjectService projectService)
-    {
+        TaskService taskService
+    ) {
         this.breadcrumbService = breadcrumbService;
         this.taskService = taskService;
-        this.projectService = projectService;
     }
 
     @Override
@@ -58,27 +51,6 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
         model.addAttribute("taskstateType", taskState.getType() );
         model.addAttribute("userSession", userSession);
         return taskState.getTemplate();
-    }
-
-    @Override
-    public String transformTaskIntoProjectGet(@NotNull Task task) {
-        Project thisProject = new Project();
-        thisProject.setName(task.getTitle());
-        thisProject.setDescription(task.getText());
-        thisProject.setUuid(task.getUuid());
-        thisProject.setContext(task.getContext());
-        if (task.getProject() != null) {
-            long projectId = task.getProject().getId();
-            Project parentProject = projectService.findByProjectId(projectId);
-            thisProject.setParent(parentProject);
-        }
-        thisProject = projectService.add(thisProject);
-        task.setProject(null);
-        task.moveToTrash();
-        task.emptyTrash();
-        taskService.updatedViaTaskstate(task);
-        log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
-        return thisProject.getUrl();
     }
 
     @Override

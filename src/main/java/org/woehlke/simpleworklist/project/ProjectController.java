@@ -35,13 +35,11 @@ public class ProjectController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
-    private final TaskStateControllerService taskStateControllerService;
 
     @Autowired
-    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService, TaskStateControllerService taskStateControllerService) {
+    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
-        this.taskStateControllerService = taskStateControllerService;
     }
 
     @RequestMapping(path = "/task/add", method = RequestMethod.GET)
@@ -189,9 +187,8 @@ public class ProjectController extends AbstractController {
             @PathVariable("projectId") Project thisProject,
             @PathVariable long targetProjectId,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            Locale locale, Model model
+            Model model
     ) {
-        Context context = super.getContext(userSession);
         userSession.setLastProjectId(thisProject.getId());
         model.addAttribute("userSession",userSession);
         Project targetProject = projectService.findByProjectId(targetProjectId);
@@ -266,9 +263,8 @@ public class ProjectController extends AbstractController {
             Locale locale,
             Model model
     ) {
-        //Context context = super.getContext(userSession);
         userSession.setLastProjectId(project.getId());
-        //model.addAttribute("userSession", userSession);//TODO: really?
+        model.addAttribute("userSession", userSession);
         boolean hasNoData = taskService.projectHasNoTasks(project);
         boolean hasNoChildren = project.hasNoChildren();
         boolean delete = hasNoData && hasNoChildren;
@@ -326,7 +322,7 @@ public class ProjectController extends AbstractController {
         log.info("-------------------------------------------------");
         log.info("  destination Task: "+destinationTask.toString());
         log.info("-------------------------------------------------");
-        taskService.moveTaskToTaskAndChangeTaskOrderInProject(sourceTask, destinationTask);
+        projectControllerService.moveTaskToTaskAndChangeTaskOrderInProject(sourceTask, destinationTask);
         log.info("  DONE: taskMoveService.moveOrderIdProject");
         log.info("-------------------------------------------------");
         return thisProject.getUrl();
@@ -612,6 +608,6 @@ public class ProjectController extends AbstractController {
         userSession.setLastProjectId(thisProject.getId());
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return taskStateControllerService.transformTaskIntoProjectGet(task);
+        return projectControllerService.transformTaskIntoProjectGet(task);
     }
 }

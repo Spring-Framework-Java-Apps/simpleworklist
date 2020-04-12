@@ -35,13 +35,11 @@ public class ProjectControllerRoot extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
-    private final TaskStateControllerService taskStateControllerService;
 
     @Autowired
-    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService, TaskStateControllerService taskStateControllerService) {
+    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
-        this.taskStateControllerService = taskStateControllerService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -160,20 +158,7 @@ public class ProjectControllerRoot extends AbstractController {
             model.addAttribute("task", task);
             return "project/root/task/add";
         } else {
-            task.setRootProject();
-            /*
-            if(task.getDueDate()==null){
-                task.setTaskState(TaskState.INBOX);
-            } else {
-                task.setTaskState(TaskState.SCHEDULED);
-            }
-            */
-            task.unsetFocus();
             task.setContext(context);
-            long maxOrderIdProject = taskService.getMaxOrderIdRootProject(context);
-            task.setOrderIdProject(++maxOrderIdProject);
-            long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-            task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.addToRootProject(task);
             log.info(task.toString());
             return rootProjectUrl;
@@ -254,7 +239,7 @@ public class ProjectControllerRoot extends AbstractController {
             userSession.setLastContextId(thisContext.getId());
             return "project/root/task/edit";
         } else {
-            task.unsetFocus();
+            //task.unsetFocus();
             task.setRootProject();
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);
@@ -279,7 +264,7 @@ public class ProjectControllerRoot extends AbstractController {
         log.info("---------------------------------------------");
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
-        taskService.moveTaskToTaskAndChangeTaskOrderInProjectRoot(sourceTask, destinationTask);
+        projectControllerService.moveTaskToTaskAndChangeTaskOrderInProjectRoot(sourceTask, destinationTask);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(sourceTask.getTaskState());
         userSession.setLastTaskId(sourceTask.getId());
@@ -484,7 +469,7 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return taskStateControllerService.transformTaskIntoProjectGet(task);
+        return projectControllerService.transformTaskIntoProjectGet(task);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
