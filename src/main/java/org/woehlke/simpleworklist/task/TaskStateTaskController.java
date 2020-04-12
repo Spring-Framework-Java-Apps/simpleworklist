@@ -196,7 +196,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("---------------------------------------------");
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
-        taskService.moveOrderIdTaskState(sourceTask, destinationTask);
+        taskService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
         return sourceTask.getTaskState().getUrl();
     }
 

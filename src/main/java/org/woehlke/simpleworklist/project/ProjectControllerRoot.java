@@ -279,7 +279,7 @@ public class ProjectControllerRoot extends AbstractController {
         log.info("---------------------------------------------");
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
-        taskService.moveOrderIdTaskState(sourceTask, destinationTask);
+        taskService.moveTaskToTaskAndChangeTaskOrderInProjectRoot(sourceTask, destinationTask);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(sourceTask.getTaskState());
         userSession.setLastTaskId(sourceTask.getId());

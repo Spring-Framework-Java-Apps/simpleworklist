@@ -310,7 +310,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+    public void moveTaskToTaskAndChangeTaskOrderInTaskstate(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         boolean notEqualsId = ! sourceTask.equalsById(destinationTask);
         boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -330,7 +330,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdRootProject(@NotNull Task sourceTask,@NotNull Task destinationTask ) {
+    public void moveTaskToTaskAndChangeTaskOrderInProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         boolean sourceTaskRoot = destinationTask.isInRootProject();
         boolean destinationTaskRoot = destinationTask.isInRootProject();
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -357,7 +357,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveOrderIdProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+    public void moveTaskToTaskAndChangeTaskOrderInProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();
         boolean okProject = destinationTask.hasProject(project);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);

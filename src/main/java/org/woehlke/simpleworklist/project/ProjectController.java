@@ -310,7 +310,7 @@ public class ProjectController extends AbstractController {
     }
 
     @RequestMapping(path = "/task/{taskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String projectTaskChangeOrderToTaskGet(
+    public String moveTaskToTaskAndChangeTaskOrderInProject(
         @PathVariable("projectId") Project thisProject,
         @PathVariable("taskId") Task sourceTask,
         @PathVariable("destinationTaskId") Task destinationTask,
@@ -326,7 +326,7 @@ public class ProjectController extends AbstractController {
         log.info("-------------------------------------------------");
         log.info("  destination Task: "+destinationTask.toString());
         log.info("-------------------------------------------------");
-        taskService.moveOrderIdProject(sourceTask, destinationTask);
+        taskService.moveTaskToTaskAndChangeTaskOrderInProject(sourceTask, destinationTask);
         log.info("  DONE: taskMoveService.moveOrderIdProject");
         log.info("-------------------------------------------------");
         return thisProject.getUrl();
