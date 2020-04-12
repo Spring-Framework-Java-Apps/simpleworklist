@@ -147,9 +147,9 @@ public abstract class AbstractController {
         UserAccount thisUser = this.getUser();
         if(userSession == null){
             userSession = new UserSessionBean();
-            long defaultContextId = thisUser.getDefaultContext().getId();
-            userSession.setLastContextId(defaultContextId);
         }
+        long defaultContextId = thisUser.getDefaultContext().getId();
+        userSession.setLastContextId(defaultContextId);
         Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), thisUser);
         userSession.setLastContextId(context.getId());
         userSession.setUserAccountid(thisUser.getId());
