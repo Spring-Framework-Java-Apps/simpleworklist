@@ -54,4 +54,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("context") Context context
     );
 
+    @Query("select t from Task t"
+        + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+        + " and t.project is null and t.context = :context ")
+    List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
+        @Param("lowerOrderIdProject") long lowerOrderIdProject,
+        @Param("higherOrderIdProject") long higherOrderIdProject,
+        @Param("context") Context context
+    );
+
 }

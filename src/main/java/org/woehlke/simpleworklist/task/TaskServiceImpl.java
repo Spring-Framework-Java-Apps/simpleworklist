@@ -315,11 +315,9 @@ public class TaskServiceImpl implements TaskService {
         boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
         boolean sameTaskType = sourceTask.hasSameTaskTypetAs(destinationTask);
-        boolean srcIsBelowDestinationTask  = sourceTask.isBelowByTaskState(destinationTask);
-        if (
-                notEqualsId && notEquals &&
-                sameContext && sameTaskType
-        ) {
+        boolean go = notEqualsId && notEquals && sameContext && sameTaskType;
+        if ( go ) {
+            boolean srcIsBelowDestinationTask  = sourceTask.isBelowByTaskState(destinationTask);
             if (srcIsBelowDestinationTask) {
                 this.moveTasksDownByTaskState( sourceTask, destinationTask );
             } else {
@@ -335,12 +333,13 @@ public class TaskServiceImpl implements TaskService {
         boolean destinationTaskRoot = destinationTask.isInRootProject();
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
         boolean sameProject = sourceTask.hasSameProjectAs(destinationTask);
-        boolean srcIsBelowDestinationTask  = sourceTask.isBelowByProject(destinationTask);
-        if (sameContext && sameProject && sourceTaskRoot && destinationTaskRoot) {
+        boolean go = sameContext && sameProject && sourceTaskRoot && destinationTaskRoot;
+        if ( go ) {
+            boolean srcIsBelowDestinationTask  = sourceTask.isBelowByProject(destinationTask);
             if (srcIsBelowDestinationTask) {
-                this.moveTasksDownByProject(sourceTask, destinationTask);
+                this.moveTasksDownByProjectRoot(sourceTask, destinationTask);
             } else {
-                this.moveTasksUpByProject(sourceTask, destinationTask);
+                this.moveTasksUpByProjectRoot(sourceTask, destinationTask);
             }
         }
     }
@@ -432,6 +431,44 @@ public class TaskServiceImpl implements TaskService {
         }
         sourceTask.setOrderIdTaskState(destinationTask.getOrderIdProject());
         destinationTask.moveDownByTaskState();
+        tasks.add(sourceTask);
+        tasks.add(destinationTask);
+        taskRepository.saveAll(tasks);
+    }
+
+    private void moveTasksUpByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+        Context context = sourceTask.getContext();
+        long lowerOrderIdProject = destinationTask.getOrderIdProject();
+        long higherOrderIdProject = sourceTask.getOrderIdProject();
+        List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
+            lowerOrderIdProject,
+            higherOrderIdProject,
+            context
+        );
+        for(Task task:tasks){
+            task.moveUpByProject();
+        }
+        sourceTask.setOrderIdProject(destinationTask.getOrderIdProject());
+        destinationTask.moveUpByProject();
+        tasks.add(sourceTask);
+        tasks.add(destinationTask);
+        taskRepository.saveAll(tasks);
+    }
+
+    private void moveTasksDownByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask) {
+        Context context = sourceTask.getContext();
+        long lowerOrderIdProject = sourceTask.getOrderIdProject();
+        long higherOrderIdProject = destinationTask.getOrderIdProject();
+        List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
+            lowerOrderIdProject,
+            higherOrderIdProject,
+            context
+        );
+        for(Task task:tasks){
+            task.moveDownByProject();
+        }
+        sourceTask.setOrderIdProject(destinationTask.getOrderIdProject());
+        destinationTask.moveDownByProject();
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);

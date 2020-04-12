@@ -33,7 +33,6 @@ public interface TaskService {
     void moveAllCompletedToTrash(Context context);
     void emptyTrash(Context context);
 
-
     void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask);
     void moveTaskToTaskAndChangeTaskOrderInProject(Task sourceTask, Task destinationTask);
     void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask);
