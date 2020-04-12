@@ -416,6 +416,9 @@ public class TaskServiceImpl implements TaskService {
      * @param destinationTask
      */
     private void moveTasksDownByTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
         TaskState taskState = sourceTask.getTaskState();
         Context context = sourceTask.getContext();
         long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
@@ -434,9 +437,15 @@ public class TaskServiceImpl implements TaskService {
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTasks DOWN By TaskState("+taskState.name()+"): "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
     }
 
     private void moveTasksUpByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
         Context context = sourceTask.getContext();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
@@ -453,9 +462,15 @@ public class TaskServiceImpl implements TaskService {
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
     }
 
     private void moveTasksDownByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask) {
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks DOWN By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
         Context context = sourceTask.getContext();
         long lowerOrderIdProject = sourceTask.getOrderIdProject();
         long higherOrderIdProject = destinationTask.getOrderIdProject();
@@ -472,11 +487,17 @@ public class TaskServiceImpl implements TaskService {
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks DOWN By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
     }
 
     private void moveTasksUpByProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
-        Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks UP By Project("+project.getId()+"):" +sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
+        Context context = sourceTask.getContext();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
@@ -493,11 +514,18 @@ public class TaskServiceImpl implements TaskService {
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTasks UP By Project("+project.getId()+"):" +sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
+
     }
 
     private void moveTasksDownByProject(@NotNull Task sourceTask, @NotNull Task destinationTask) {
         Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks DOWN By Project("+project.getId()+"):" +sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
         long lowerOrderIdProject = sourceTask.getOrderIdProject();
         long higherOrderIdProject = destinationTask.getOrderIdProject();
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
@@ -514,6 +542,9 @@ public class TaskServiceImpl implements TaskService {
         tasks.add(sourceTask);
         tasks.add(destinationTask);
         taskRepository.saveAll(tasks);
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" moveTasks DOWN By Project("+project.getId()+"):" +sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.info("-------------------------------------------------------------------------------");
     }
 
     @Override
