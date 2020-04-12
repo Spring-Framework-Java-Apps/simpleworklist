@@ -251,7 +251,7 @@ public class ProjectControllerRoot extends AbstractController {
             task.setRootProject();
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);
-            task = taskService.updatedViaProject(persistentTask);
+            task = taskService.updatedViaProjectRoot(persistentTask);
             userSession.setLastProjectId(rootProjectId);
             userSession.setLastTaskState(task.getTaskState());
             userSession.setLastTaskId(task.getId());
@@ -318,7 +318,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
         task.moveToInbox();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -334,7 +334,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to today");
         task.moveToToday();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -350,7 +350,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to next");
         task.moveToNext();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -366,7 +366,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
         task.moveToWaiting();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -382,7 +382,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to someday");
         task.moveToSomeday();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -398,7 +398,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to focus");
         task.moveToFocus();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -414,7 +414,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to completed");
         task.moveToCompletedTasks();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -430,7 +430,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task.moveToTrash();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -473,7 +473,7 @@ public class ProjectControllerRoot extends AbstractController {
         log.info("deleteTaskGet");
         if(task!= null){
             task.delete();
-            taskService.updatedViaProject(task);
+            taskService.updatedViaProjectRoot(task);
         }
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
@@ -490,7 +490,7 @@ public class ProjectControllerRoot extends AbstractController {
     ) {
         log.info("undeleteTaskGet");
         task.undelete();
-        taskService.updatedViaProject(task);
+        taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -518,9 +518,9 @@ public class ProjectControllerRoot extends AbstractController {
         Model model
     ) {
         task.complete();
-        long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
-        task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskService.updatedViaProject(task);
+        //long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
+        //task.setOrderIdTaskState(++maxOrderIdTaskState);
+        task = taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -535,9 +535,9 @@ public class ProjectControllerRoot extends AbstractController {
         Model model
     ) {
        task.incomplete();
-       long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-       task.setOrderIdTaskState(++maxOrderIdTaskState);
-       task = taskService.updatedViaProject(task);
+       //long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+       //task.setOrderIdTaskState(++maxOrderIdTaskState);
+       task = taskService.updatedViaProjectRoot(task);
        userSession.setLastProjectId(rootProjectId);
        userSession.setLastTaskState(task.getTaskState());
        userSession.setLastTaskId(task.getId());
@@ -552,7 +552,7 @@ public class ProjectControllerRoot extends AbstractController {
         Model model
     ){
         task.setFocus();
-        task = taskService.updatedViaProject(task);
+        task = taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -567,7 +567,7 @@ public class ProjectControllerRoot extends AbstractController {
         Model model
     ){
         task.unsetFocus();
-        task = taskService.updatedViaProject(task);
+        task = taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());

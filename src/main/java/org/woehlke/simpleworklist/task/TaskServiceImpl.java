@@ -106,8 +106,8 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProjectRoot(@NotNull Task task) {
         log.info("updatedViaProject");
-        long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
-        task.setOrderIdProject(++maxOrderIdProject);
+        //long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
+        //task.setOrderIdProject(++maxOrderIdProject);
         task = taskRepository.saveAndFlush(task);
         log.info("persisted Task: " + task.outProject());
         return task;
