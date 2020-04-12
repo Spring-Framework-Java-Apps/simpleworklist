@@ -88,8 +88,6 @@ https://www.baeldung.com/maven-enforcer-plugin
 # 2.3.14
 Fixed #122, Fixed #123, Fixed #127, Fixed #130, Fixed #152, Fixed #153, Fixed #154, Fixed #155, Fixed #156, Fixed #157, Fixed #158, Fixed #159, Fixed #160, Fixed #161, Fixed #162, Fixed #163, Fixed #164, Fixed #165, Fixed #166, Fixed #167
 
- 
-
 https://developer.okta.com/blog/2019/03/28/test-java-spring-boot-junit5
 
 # 2.3.15
@@ -99,10 +97,10 @@ https://github.com/thymeleaf/thymeleaf-testing
 # 2.3.16 
 Fixed #169, Fixed #170, Fixed #171, Fixed #172, Fixed #183 
 
-
 # 2.3.17
 Fixed #223, Fixed #224, Fixed #225, Fixed #226, Fixed #227, Fixed #228, Fixed #229, Fixed #230, Fixed #231, Fixed #232, Fixed #233 
-
 Fixed #201, Fixed #202, Fixed #203, Fixed #204, Fixed #205, Fixed #206, Fixed #207, Fixed #208, Fixed #209, Fixed #210, Fixed #211, Fixed #212, Fixed #213, Fixed #214, Fixed #215, Fixed #216, Fixed #217, Fixed #218, Fixed #219 
-
 Fixed #220, Fixed #221, Fixed #222 
+
+#2.3.18
+Fixed #128, Fixed #192, Fixed #193, Fixed #194, Fixed #195, Fixed #196, Fixed #197, Fixed #198, Fixed #199, Fixed #200
