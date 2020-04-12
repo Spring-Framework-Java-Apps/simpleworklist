@@ -90,56 +90,56 @@
 		function drop2inbox(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/inbox';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/inbox';
 			window.location.replace(myUrl);
 		}
 
 		function drop2today(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/today';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/today';
 			window.location.replace(myUrl);
 		}
 
 		function drop2next(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/next';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/next';
 			window.location.replace(myUrl);
 		}
 
 		function drop2waiting(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/waiting';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/waiting';
 			window.location.replace(myUrl);
 		}
 
 		function drop2someday(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/someday';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/someday';
 			window.location.replace(myUrl);
 		}
 
 		function drop2focus(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/focus';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/focus';
 			window.location.replace(myUrl);
 		}
 
 		function drop2completed(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/completed';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/completed';
 			window.location.replace(myUrl);
 		}
 
 		function drop2trash(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/task/move/})]'+taskId+'/to/trash';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/trash';
 			window.location.replace(myUrl);
 		}
 
@@ -150,10 +150,10 @@
 			var targetProjectIdInfo = ev.target.id;
 			var targetProjectId = targetProjectIdInfo.split("_")[1];
 			if(srcType == 'task') {
-				var myUrl = '[(@{/task/move/})]' + srcId + '/to/project/' + targetProjectId;
+				var myUrl = '[(@{/taskstate/task/})]' + srcId + '/move/to/project/' + targetProjectId;
 				window.location.replace(myUrl);
 			} else if(srcType == 'project') {
-				var myUrl = '[(@{/project/})]' + srcId + '/move/to/' + targetProjectId;
+				var myUrl = '[(@{/project/})]' + srcId + '/project/move/to/project/' + targetProjectId;
 				window.location.replace(myUrl);
 			}
 		}
@@ -163,16 +163,17 @@
 			var myUrl = '';
 			var requestPath = '[(@{{url}(url=${#request.getRequestURI()})})]';
 			var requestPathFirst = requestPath.split("/")[1];
+            var requestPathSecond = requestPath.split("/")[2];
 			var srcType = ev.dataTransfer.getData("task").split("_")[0];
 			var sourceTaskId = ev.dataTransfer.getData("task").split("_")[1];
 			var destinationTaskIdInfo = ev.target.id;
 			var destinationTaskId = destinationTaskIdInfo.split("_")[1];
 			if(srcType === 'task') {
 				if(requestPathFirst === 'taskstate'){
-					myUrl = '[(@{/taskstate/})]' + sourceTaskId + '/changeorderto/' + destinationTaskId;
+					myUrl = '[(@{/taskstate/task/})]' + sourceTaskId + '/changeorderto/' + destinationTaskId;
 					window.location.replace(myUrl);
 				} else if(requestPathFirst === 'project'){
-					myUrl = '[(@{/project/task/})]' + sourceTaskId + '/changeorderto/' + destinationTaskId;
+					myUrl = '[(@{/project/})]' + requestPathSecond + "/task/"+ sourceTaskId + '/changeorderto/' + destinationTaskId;
 					window.location.replace(myUrl);
 				}
 			}

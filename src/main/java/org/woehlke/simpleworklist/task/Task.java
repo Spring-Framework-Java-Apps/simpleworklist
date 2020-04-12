@@ -56,7 +56,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude="text")
 public class Task extends AuditModel implements Serializable, ComparableById<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
@@ -81,6 +81,18 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @JoinColumn(name = "project_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project project;
+
+    @ManyToOne(
+        fetch = FetchType.LAZY,
+        optional = true,
+        cascade = {
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+        }
+    )
+    @JoinColumn(name = "project_last_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Project lastProject;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -190,6 +202,11 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     private void pushTaskstate(TaskState newState){
         this.lastTaskState = this.taskState;
         this.taskState = newState;
+    }
+
+    private void pushProject(Project newProject){
+        this.lastProject = this.project;
+        this.project = newProject;
     }
 
     //TODO: delete Due Date
@@ -312,7 +329,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
 
     @Transient
     public void setRootProject() {
-        this.setProject(null);
+        this.pushProject(null);
     }
 
     @Transient
@@ -358,6 +375,14 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         }
     }
 
+    public String outProject(){
+        return "Task "+title+" (id:"+id+",orderIdProject:"+orderIdProject+")";
+    }
+
+    public String outTaskstate(){
+        return "Task "+title+" (id:"+id+",orderIdTaskState:"+orderIdTaskState+")";
+    }
+
     public void merge(Task task) {
         this.setTitle(task.title);
         this.setText(task.text);
@@ -366,5 +391,13 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         this.setDueDate(task.dueDate);
         this.setTaskEnergy(task.taskEnergy);
         this.setTaskTime(task.taskTime);
+    }
+
+    public void moveTaskToRootProject() {
+        pushProject(null);
+    }
+
+    public void moveTaskToAnotherProject(Project project) {
+        pushProject(project);
     }
 }

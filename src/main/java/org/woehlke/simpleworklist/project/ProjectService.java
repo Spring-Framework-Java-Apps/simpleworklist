@@ -2,13 +2,21 @@ package org.woehlke.simpleworklist.project;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.context.Context;
 
 public interface ProjectService {
 
+    //TODO: #245 change List<Project> to Page<Project>
+    @Deprecated
     List<Project> findRootProjectsByContext(Context context);
+    Page<Project> findRootProjectsByContext(Context context, Pageable pageRequest);
 
+    //TODO: #245 change List<Project> to Page<Project>
+    @Deprecated
     List<Project> findAllProjectsByContext(Context context);
+    Page<Project> findAllProjectsByContext(Context context, Pageable pageRequest);
 
     Project moveProjectToAnotherProject(Project thisProject, Project targetProject);
 

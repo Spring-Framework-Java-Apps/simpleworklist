@@ -17,51 +17,58 @@
 ## F017 show /taskstate/completed
 ## F018 show /taskstate/trash
 
-## F020 Task move to /taskstate/inbox
-## F021 Task move to /taskstate/today
-## F022 Task move to /taskstate/next
-## F023 Task move to /taskstate/waiting
-## F024 Task move to /taskstate/scheduled
-## F025 Task move to /taskstate/someday
-## F026 Task move to /taskstate/focus
-## F027 Task move to /taskstate/completed
-## F028 Task move to /taskstate/trash
+## F020 Drag and Drop: Task move to /taskstate/inbox
+## F021 Drag and Drop: Task move to /taskstate/today
+## F022 Drag and Drop: Task move to /taskstate/next
+## F023 Drag and Drop: Task move to /taskstate/waiting
+## F024 Drag and Drop: Task move to /taskstate/scheduled
+## F025 Drag and Drop: Task move to /taskstate/someday
+## F026 Drag and Drop: Task move to /taskstate/focus
+## F027 Drag and Drop: Task move to /taskstate/completed
+## F028 Drag and Drop: Task move to /taskstate/trash
 
-## F030 Taskstate: Add Task to Inbox
-## F031 Taskstate: Add Task to Inbox again
-## F032 Taskstate: Task Edit
-## F033 Taskstate: Task Edit Form -> change Taskstate via DropDown
-## F054 Taskstate: Task Edit Form -> change Project via DropDown
-## F035 Taskstate: Task Edit Form -> transform to Project
-## F036 Taskstate: Task setFocus
-## F037 Taskstate: Task unSetFocus 
-## F038 Taskstate: Task complete
-## F039 Taskstate: Task incomplete
-## F040 Taskstate: Task delete
-## F041 Taskstate: Task undelete
+## F029 Drag and Drop: Task move to Project
+## F030 Drag and Drop: Project move to Project
 
-## F050 Project/Root: Add Task
-## F051 Project/Root: Add SubProject
-## F052 Project/Root: Task Edit
-## F053 Project/Root: Task Edit Form -> change Taskstate via DropDown
-## F054 Project/Root: Task Edit Form -> change Project via DropDown
-## F055 Project/Root: Task Edit Form -> transform to Project
-## F056 Project/Root: Task setFocus
-## F057 Project/Root: Task unSetFocus
-## F058 Project/Root: Task complete
-## F059 Project/Root: Task incomplete
-## F060 Project/Root: Task delete
-## F061 Project/Root: Task undelete
+## F031 Drag and Drop: Move Task to Change Task-Order in Taskstate
+## F032 Drag and Drop: Move Task to Change Task-Order in Project/Root
+## F033 Drag and Drop: Move Task to Change Task-Order in Project/id
 
-## F070 Project/id: Add Task
-## F071 Project/id: Add SubProject
-## F072 Project/id: Task Edit
-## F073 Project/id: Task Edit Form -> change Taskstate via DropDown
-## F074 Project/id: Task Edit Form -> change Project via DropDown
-## F075 Project/id: Task Edit Form -> transform to Project
-## F076 Project/id: Task setFocus
-## F077 Project/id: Task unSetFocus
-## F078 Project/id: Task complete
-## F079 Project/id: Task incomplete
-## F080 Project/id: Task delete 
-## F081 Project/id: Task undelete
+## F040 Taskstate: Add Task to Inbox
+## F041 Taskstate: Add Task to Inbox again
+## F042 Taskstate: Task Edit
+## F043 Taskstate: Task Edit Form -> change Taskstate via DropDown
+## F044 Taskstate: Task Edit Form -> change Project via DropDown
+## F045 Taskstate: Task Edit Form -> transform to Project
+## F046 Taskstate: Task setFocus
+## F047 Taskstate: Task unSetFocus 
+## F048 Taskstate: Task complete
+## F049 Taskstate: Task incomplete
+## F050 Taskstate: Task delete
+## F051 Taskstate: Task undelete
+
+## F060 Project/Root: Add Task
+## F061 Project/Root: Add SubProject
+## F062 Project/Root: Task Edit
+## F063 Project/Root: Task Edit Form -> change Taskstate via DropDown
+## F064 Project/Root: Task Edit Form -> change Project via DropDown
+## F065 Project/Root: Task Edit Form -> transform to Project
+## F066 Project/Root: Task setFocus
+## F067 Project/Root: Task unSetFocus
+## F068 Project/Root: Task complete
+## F069 Project/Root: Task incomplete
+## F070 Project/Root: Task delete
+## F071 Project/Root: Task undelete
+
+## F080 Project/id: Add Task
+## F081 Project/id: Add SubProject
+## F082 Project/id: Task Edit
+## F083 Project/id: Task Edit Form -> change Taskstate via DropDown
+## F084 Project/id: Task Edit Form -> change Project via DropDown
+## F085 Project/id: Task Edit Form -> transform to Project
+## F086 Project/id: Task setFocus
+## F087 Project/id: Task unSetFocus
+## F088 Project/id: Task complete
+## F089 Project/id: Task incomplete
+## F090 Project/id: Task delete 
+## F091 Project/id: Task undelete

@@ -18,5 +18,5 @@ public interface TaskStateControllerService {
         Model model
     );
 
-    String transformTaskIntoProjectGet(Task task);
+    void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask);
 }

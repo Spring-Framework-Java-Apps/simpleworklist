@@ -32,7 +32,7 @@ public class UserRegistrationController {
      * Register as new user by entering the email-address which is
      * unique and the login identifier.
      *
-     * @param model
+     * @param model Model
      * @return Formular for entering Email-Address for Registration
      */
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -46,9 +46,9 @@ public class UserRegistrationController {
     /**
      * Register new User: Store the Request and send Email for Verification.
      *
-     * @param userRegistrationForm
-     * @param result
-     * @param model
+     * @param userRegistrationForm UserRegistrationForm
+     * @param result BindingResult
+     * @param model Model
      * @return info page at success or return to form with error messages.
      */
     @RequestMapping(path = "", method = RequestMethod.POST)
@@ -88,8 +88,8 @@ public class UserRegistrationController {
     /**
      * Register as new user: The URL in the Verification Email clicked by User.
      *
-     * @param confirmId
-     * @param model
+     * @param confirmId String
+     * @param model Model
      * @return Formular for Entering Account Task or Error Messages.
      */
     @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
@@ -114,10 +114,10 @@ public class UserRegistrationController {
     /**
      * Saving Account Task from Formular and forward to login page.
      *
-     * @param userAccountForm
-     * @param result
-     * @param confirmId
-     * @param model
+     * @param userAccountForm UserAccountForm
+     * @param result BindingResult
+     * @param confirmId String
+     * @param model Model
      * @return login page at success or page with error messages.
      */
     @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)

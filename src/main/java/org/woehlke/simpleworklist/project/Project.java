@@ -36,8 +36,8 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 )
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true, exclude = "children")
+@EqualsAndHashCode(callSuper = true, exclude = {"children","parent"})
+@ToString(callSuper = true, exclude = {"children","parent","description"})
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
@@ -166,6 +166,10 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         children.add(project);
         project.setParent(this);
         return project;
+    }
+
+    public String out(){
+        return "Project: "+name+" ("+id+")";
     }
 }
 

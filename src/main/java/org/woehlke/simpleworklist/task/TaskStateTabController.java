@@ -14,6 +14,7 @@ import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
+import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
 @Slf4j
@@ -42,7 +43,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/today", method = RequestMethod.GET)
     public final String today(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -53,7 +54,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/next", method = RequestMethod.GET)
     public final String next(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -64,7 +65,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/waiting", method = RequestMethod.GET)
     public final String waiting(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -75,7 +76,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/scheduled", method = RequestMethod.GET)
     public final String scheduled(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -86,7 +87,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/someday", method = RequestMethod.GET)
     public final String someday(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -97,7 +98,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/completed", method = RequestMethod.GET)
     public final String completed(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -108,7 +109,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/trash", method = RequestMethod.GET)
     public final String trash(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {
@@ -119,7 +120,7 @@ public class TaskStateTabController extends AbstractController {
     @RequestMapping(path = "/focus", method = RequestMethod.GET)
     public final String focus(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale,
         Model model
     ) {

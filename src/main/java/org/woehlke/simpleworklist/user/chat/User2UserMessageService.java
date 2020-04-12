@@ -9,10 +9,16 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
  */
 public interface User2UserMessageService {
 
-    void sendNewUserMessage(UserAccount thisUser, UserAccount otherUser, User2UserMessageFormBean user2UserMessageFormBean);
+    User2UserMessage sendNewUserMessage(
+        UserAccount thisUser,
+        UserAccount otherUser,
+        User2UserMessageFormBean user2UserMessageFormBean
+    );
 
     int getNumberOfNewIncomingMessagesForUser(UserAccount user);
 
-    Page<User2UserMessage> readAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver, UserAccount sender, Pageable request);
+    Page<User2UserMessage> readAllMessagesBetweenCurrentAndOtherUser(
+        UserAccount receiver, UserAccount sender, Pageable request
+    );
 
 }

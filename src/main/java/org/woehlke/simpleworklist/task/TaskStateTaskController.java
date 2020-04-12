@@ -29,21 +29,22 @@ import java.util.Locale;
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {
 
-
     private final TaskStateControllerService taskStateControllerService;
     private final TaskService taskService;
+    private final TaskProjektService taskProjektService;
 
     @Autowired
     public TaskStateTaskController(
-        TaskStateControllerService taskStateControllerService, TaskService taskService
-    ) {
+        TaskStateControllerService taskStateControllerService, TaskService taskService,
+        TaskProjektService taskProjektService) {
         this.taskStateControllerService = taskStateControllerService;
         this.taskService = taskService;
+        this.taskProjektService = taskProjektService;
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
     public final String addNewTaskToInboxGet(
-        @ModelAttribute("userSession") UserSessionBean userSession,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
         log.info("addNewTaskToInboxGet");
@@ -66,6 +67,7 @@ public class TaskStateTaskController extends AbstractController {
         model.addAttribute("mustChooseArea", mustChooseContext);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
+        model.addAttribute("userSession", userSession);
         return "taskstate/task/add";
     }
 
@@ -89,10 +91,12 @@ public class TaskStateTaskController extends AbstractController {
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);
+            model.addAttribute("userSession", userSession);
             return "taskstate/task/add";
         } else {
             task = taskService.addToInbox(task);
             log.info(task.toString());
+            model.addAttribute("userSession", userSession);
             return "redirect:/taskstate/" + task.getTaskState().name().toLowerCase();
         }
     }
@@ -104,27 +108,24 @@ public class TaskStateTaskController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
-        if(task != null) {
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
-            List<Context> contexts = contextService.getAllForUser(userAccount);
-            Project thisProject;
-            if (task.getContext() == null) {
-                thisProject = new Project();
-                thisProject.setId(0L);
-            } else {
-                thisProject = task.getProject();
-            }
-            Context thisContext = task.getContext();
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
-            model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject);
-            model.addAttribute("thisContext", thisContext);
-            model.addAttribute("task", task);
-            model.addAttribute("contextss", contexts);
-            return "taskstate/task/edit";
+        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        List<Context> contexts = contextService.getAllForUser(userAccount);
+        Project thisProject;
+        if (task.getContext() == null) {
+            thisProject = new Project();
+            thisProject.setId(0L);
         } else {
-            return "redirect:/taskstate/inbox";
+            thisProject = task.getProject();
         }
+        Context thisContext = task.getContext();
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale);
+        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute("thisProject", thisProject);
+        model.addAttribute("thisContext", thisContext);
+        model.addAttribute("task", task);
+        model.addAttribute("contexts", contexts);
+        model.addAttribute("userSession", userSession);
+        return "taskstate/task/edit";
     }
 
     @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.POST)
@@ -171,6 +172,7 @@ public class TaskStateTaskController extends AbstractController {
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("contexts", contexts);
+            model.addAttribute("userSession", userSession);
             return "taskstate/task/edit";
         } else {
             task.unsetFocus();
@@ -178,6 +180,7 @@ public class TaskStateTaskController extends AbstractController {
             Task persistentTask = taskService.findOne(task.getId());
             persistentTask.merge(task);
             task = taskService.updatedViaTaskstate(persistentTask);
+            model.addAttribute("userSession", userSession);
             return task.getTaskState().getUrl();
         }
     }
@@ -189,170 +192,234 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ){
-        userSession.setLastTaskState(sourceTask.getTaskState());
-        model.addAttribute("userSession", userSession);
         log.info("------------- changeTaskOrderId -------------");
         log.info("source Task:      "+sourceTask.toString());
         log.info("---------------------------------------------");
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
-        taskService.moveOrderIdTaskState(sourceTask, destinationTask);
+        taskStateControllerService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
+        userSession.setLastTaskState(sourceTask.getTaskState());
+        model.addAttribute("userSession", userSession);
         return sourceTask.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
     public final String moveTaskToAnotherProject(
         @NotNull @PathVariable("taskId") Task task,
-        @NotNull @PathVariable("projectId") Project project
+        @NotNull @PathVariable("projectId") Project project,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         task = taskService.moveTaskToAnotherProject(task,project);
+        userSession.setLastProjectId(project.getId());
+        model.addAttribute("userSession",userSession);
         return project.getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
-    public final String moveTaskToInbox(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToInbox(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
-        task.moveToInbox();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToInbox(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
-    public final String moveTaskToToday(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToToday(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to today");
-        task.moveToToday();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToToday(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/next", method = RequestMethod.GET)
-    public final String moveTaskToNext(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToNext(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to next");
-        task.moveToNext();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToNext(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
-    public final String moveTaskToWaiting(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToWaiting(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
-        task.moveToWaiting();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToWaiting(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/someday", method = RequestMethod.GET)
-    public final String moveTaskToSomeday(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToSomeday(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to someday");
-        task.moveToSomeday();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToSomeday(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
-    public final String moveTaskToFocus(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToFocus(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to focus");
-        task.moveToFocus();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToFocus(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
-    public final String moveTaskToCompleted(@NotNull @PathVariable("taskId") Task task) {
+    public final String moveTaskToCompleted(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to completed");
-        task.moveToCompletedTasks();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToCompleted(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
-    @RequestMapping(path = "/{taskId}/move/to/trash", method = RequestMethod.GET)
-    public final String moveTaskToTrash(@NotNull @PathVariable("taskId") Task task) {
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
+    public final String moveTaskToTrash(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("dragged and dropped "+task.getId()+" to trash");
-        task.moveToTrash();
-        task = taskService.updatedViaTaskstate(task);
+        task = taskService.moveTaskToTrash(task);
+        model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
     }
 
     @RequestMapping(path = "/completed/move/to/trash", method = RequestMethod.GET)
     public final String moveAllCompletedToTrash(
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         Context context = super.getContext(userSession);
         taskService.moveAllCompletedToTrash(context);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/trash";
     }
 
     @RequestMapping(path = "/trash/empty", method = RequestMethod.GET)
     public final String emptyTrash(
-        @ModelAttribute("userSession") UserSessionBean userSession
+        @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         Context context = super.getContext(userSession);
         taskService.emptyTrash(context);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/trash";
     }
 
 
     @RequestMapping(path = "/{taskId}/delete", method = RequestMethod.GET)
-    public final String deleteTaskGet(@NotNull @PathVariable("taskId") Task task) {
+    public final String deleteTaskGet(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("deleteTaskGet");
-        if(task!= null){
-            task.delete();
-            taskService.updatedViaTaskstate(task);
-        }
+        task.delete();
+        taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/trash";
     }
 
     @RequestMapping(path = "/{taskId}/undelete", method = RequestMethod.GET)
-    public final String undeleteTaskGet(@NotNull @PathVariable("taskId") Task task) {
+    public final String undeleteTaskGet(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("undeleteTaskGet");
         task.undelete();
         taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return "redirect:/taskstate/completed";
     }
 
     @RequestMapping(path = "/{taskId}/transform", method = RequestMethod.GET)
-    public final String transformTaskIntoProjectGet(@NotNull @PathVariable("taskId") Task task) {
+    public final String transformTaskIntoProjectGet(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
         log.info("transformTaskIntoProjectGet");
-        return taskStateControllerService.transformTaskIntoProjectGet(task);
+        return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
     public final String setDoneTaskGet(
-        @NotNull @PathVariable("taskId") Task task
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         task.complete();
         long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return task.getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/incomplete", method = RequestMethod.GET)
     public final String unsetDoneTaskGet(
-        @NotNull @PathVariable("taskId") Task task
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ) {
         task.incomplete();
         long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return task.getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/setfocus", method = RequestMethod.GET)
     public final String setFocusGet(
-        @NotNull @PathVariable("taskId") Task task
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ){
         task.setFocus();
         task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
         return task.getUrl();
     }
 
     @RequestMapping(path = "/{taskId}/unsetfocus", method = RequestMethod.GET)
     public final String unsetFocusGet(
-        @NotNull @PathVariable("taskId") Task task
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
     ){
       task.unsetFocus();
       task = taskService.updatedViaTaskstate(task);
+        model.addAttribute("userSession", userSession);
       return task.getUrl();
     }
 }
