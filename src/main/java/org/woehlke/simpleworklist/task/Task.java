@@ -90,7 +90,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
             CascadeType.REFRESH
         }
     )
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_last_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project lastProject;
 
