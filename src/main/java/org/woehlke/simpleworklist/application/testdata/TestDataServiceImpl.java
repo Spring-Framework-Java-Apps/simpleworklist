@@ -38,11 +38,13 @@ public class TestDataServiceImpl implements TestDataService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
-        List<Context> contexts = contextRepository.findByUserAccount(userAccount);
-        Iterator<Context> iterator = contexts.iterator();
-        Context contextWork = iterator.next();
         log.info("----------------------------------------------");
         log.info("createTestCategoryTreeForUserAccount");
+        log.info("----------------------------------------------");
+        log.info("userAccount: "+userAccount.toString());
+        log.info("----------------------------------------------");
+        Context contextWork = userAccount.getDefaultContext();
+        log.info("contextWork: "+contextWork.toString());
         log.info("----------------------------------------------");
         Date nowDate = new Date();
         long now = nowDate.getTime();

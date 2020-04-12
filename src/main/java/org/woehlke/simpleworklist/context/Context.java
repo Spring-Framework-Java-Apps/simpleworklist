@@ -35,7 +35,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "userAccount")
 @ToString(callSuper = true, exclude = "userAccount")
 public class Context extends AuditModel implements Serializable, ComparableById<Context> {
 
