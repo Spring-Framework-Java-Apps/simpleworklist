@@ -150,7 +150,7 @@
 			var targetProjectIdInfo = ev.target.id;
 			var targetProjectId = targetProjectIdInfo.split("_")[1];
 			if(srcType == 'task') {
-				var myUrl = '[(@{/taskstate/task/move/})]' + srcId + '/to/project/' + targetProjectId;
+				var myUrl = '[(@{/taskstate/task/})]' + srcId + '/move/to/project/' + targetProjectId;
 				window.location.replace(myUrl);
 			} else if(srcType == 'project') {
 				var myUrl = '[(@{/project/})]' + srcId + '/project/move/to/project/' + targetProjectId;
