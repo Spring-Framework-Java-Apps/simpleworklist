@@ -244,7 +244,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public long getMaxOrderIdProjectRoot(@NotNull Context context) {
-        Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectIsNullDesc(
+        Task task = taskRepository.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(
             context
         );
         return (task==null) ? 0 : task.getOrderIdProject();
@@ -382,14 +382,12 @@ public class TaskServiceImpl implements TaskService {
         log.info(" START moveTasks UP By Project("+project.out()+"):");
         log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
         log.info("-------------------------------------------------------------------------------");
-        Context context = sourceTask.getContext();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
-            project,
-            context
+            project
         );
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
@@ -412,7 +410,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByProject(@NotNull Task sourceTask, @NotNull Task destinationTask) {
-        Context context = sourceTask.getContext();
         Project project = sourceTask.getProject();
         log.info("-------------------------------------------------------------------------------");
         log.info(" START moveTasks DOWN By Project("+project.out()+"):");
@@ -423,8 +420,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
-            project,
-            context
+            project
         );
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
