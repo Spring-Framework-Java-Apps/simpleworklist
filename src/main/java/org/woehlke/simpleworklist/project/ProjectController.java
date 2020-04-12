@@ -35,11 +35,17 @@ public class ProjectController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
+    private final TaskProjektService taskProjektService;
 
     @Autowired
-    public ProjectController(ProjectControllerService projectControllerService, TaskService taskService) {
+    public ProjectController(
+        ProjectControllerService projectControllerService,
+        TaskService taskService,
+        TaskProjektService taskProjektService
+    ) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
+        this.taskProjektService = taskProjektService;
     }
 
     @RequestMapping(path = "/task/add", method = RequestMethod.GET)
@@ -270,7 +276,8 @@ public class ProjectController extends AbstractController {
         boolean delete = hasNoData && hasNoChildren;
         if (delete) {
             Project parent = projectService.delete(project);
-            String message = "Project is deleted. You see its parent project now."; //TODO: message to message_properties
+            //TODO: message to message_properties
+            String message = "Project is deleted. You see its parent project now.";
             //TODO: message to UserSessionBean userSession
             model.addAttribute("message", message );
             //TODO: isDeleted as message to UserSessionBean userSession
@@ -608,6 +615,6 @@ public class ProjectController extends AbstractController {
         userSession.setLastProjectId(thisProject.getId());
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return projectControllerService.transformTaskIntoProjectGet(task);
+        return taskProjektService.transformTaskIntoProjectGet(task);
     }
 }

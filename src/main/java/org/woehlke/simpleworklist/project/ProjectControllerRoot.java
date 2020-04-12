@@ -35,11 +35,13 @@ public class ProjectControllerRoot extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
+    private final TaskProjektService taskProjektService;
 
     @Autowired
-    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService) {
+    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService, TaskProjektService taskProjektService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
+        this.taskProjektService = taskProjektService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -469,7 +471,7 @@ public class ProjectControllerRoot extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return projectControllerService.transformTaskIntoProjectGet(task);
+        return taskProjektService.transformTaskIntoProjectGet(task);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)

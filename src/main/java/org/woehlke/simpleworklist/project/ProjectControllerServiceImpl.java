@@ -132,28 +132,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    public String transformTaskIntoProjectGet(@NotNull Task task) {
-        log.info("transformTaskIntoProjectGet");
-        Project thisProject = new Project();
-        thisProject.setName(task.getTitle());
-        thisProject.setDescription(task.getText());
-        thisProject.setUuid(task.getUuid());
-        thisProject.setContext(task.getContext());
-        if (task.getProject() != null) {
-            long projectId = task.getProject().getId();
-            Project parentProject = projectService.findByProjectId(projectId);
-            thisProject.setParent(parentProject);
-        }
-        thisProject = projectService.add(thisProject);
-        task.setProject(null);
-        task.moveToTrash();
-        task.emptyTrash();
-        taskService.updatedViaTaskstate(task);
-        log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
-        return thisProject.getUrl();
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTaskToTaskAndChangeTaskOrderInProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();

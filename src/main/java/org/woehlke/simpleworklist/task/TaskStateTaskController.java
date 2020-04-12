@@ -29,16 +29,17 @@ import java.util.Locale;
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {
 
-
     private final TaskStateControllerService taskStateControllerService;
     private final TaskService taskService;
+    private final TaskProjektService taskProjektService;
 
     @Autowired
     public TaskStateTaskController(
-        TaskStateControllerService taskStateControllerService, TaskService taskService
-    ) {
+        TaskStateControllerService taskStateControllerService, TaskService taskService,
+        TaskProjektService taskProjektService) {
         this.taskStateControllerService = taskStateControllerService;
         this.taskService = taskService;
+        this.taskProjektService = taskProjektService;
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
@@ -305,7 +306,7 @@ public class TaskStateTaskController extends AbstractController {
     @RequestMapping(path = "/{taskId}/transform", method = RequestMethod.GET)
     public final String transformTaskIntoProjectGet(@NotNull @PathVariable("taskId") Task task) {
         log.info("transformTaskIntoProjectGet");
-        return taskStateControllerService.transformTaskIntoProjectGet(task);
+        return taskProjektService.transformTaskIntoProjectGet(task);
     }
 
     @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
