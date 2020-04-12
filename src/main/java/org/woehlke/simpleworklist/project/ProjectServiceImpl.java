@@ -81,13 +81,6 @@ public class ProjectServiceImpl implements ProjectService {
     public Project add(@NotNull Project entity) {
         log.info("saveAndFlush");
         entity.setUuid(UUID.randomUUID().toString());
-        /*
-        if(entity.getContext()!=null){
-            if(entity.getContext().getUuid() == null){
-                entity.getContext().setUuid(UUID.randomUUID().toString());
-            }
-        }
-        */
         return projectRepository.saveAndFlush(entity);
     }
 
