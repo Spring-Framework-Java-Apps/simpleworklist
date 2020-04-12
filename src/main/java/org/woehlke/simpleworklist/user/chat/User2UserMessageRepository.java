@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface User2UserMessageRepository extends JpaRepository<User2UserMessage, Long> {
 
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #247 move the JQL Query-String to Entity as Prepared Statement
     String JQL = "select m from User2UserMessage m "
     + "where (m.sender = :thisUser and m.receiver = :otherUser) "
     + "or (m.sender = :otherUser and m.receiver = :thisUser)";
@@ -28,7 +28,7 @@ public interface User2UserMessageRepository extends JpaRepository<User2UserMessa
             Pageable request
     );
 
-    //TODO:  change List<Project> to Page<Project>
+    //TODO: #246 change List<Project> to Page<Project>
     @Deprecated
     List<User2UserMessage> findByReceiverAndReadByReceiver(
             UserAccount receiver,
@@ -40,7 +40,7 @@ public interface User2UserMessageRepository extends JpaRepository<User2UserMessa
         Pageable request
     );
 
-    //TODO: change List<User2UserMessage> to Page<User2UserMessage>
+    //TODO: #246 change List<User2UserMessage> to Page<User2UserMessage>
     @Deprecated
     List<User2UserMessage> findBySenderAndReceiverAndReadByReceiver(
             UserAccount sender, UserAccount receiver, boolean readByReceiver

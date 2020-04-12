@@ -30,9 +30,11 @@ public interface TaskService {
     Task updatedViaProject(Task task);
     Task updatedViaProjectRoot(Task task);
 
+    //TODO: rename to findById
     Task findOne(long taskId);
     Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
     Page<Task> findByProject(Project thisProject, Pageable request);
+    //TODO: rename to findByProjectRoot
     Page<Task> findByRootProject(Context context, Pageable request);
 
     boolean projectHasNoTasks(Project project);

@@ -45,7 +45,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     );
 
     //TODO: #244 change List<Task> to Page<Task>
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Deprecated
     @Query("select t from Task t"
             + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
@@ -56,7 +56,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("taskState") TaskState taskState,
         @Param("context") Context context
     );
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Query("select t from Task t"
         + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
         + " and t.taskState = :taskState and t.context = :context")
@@ -69,7 +69,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     );
 
     //TODO: #244 change List<Task> to Page<Task>
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Deprecated
     @Query("select t from Task t"
             + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
@@ -79,7 +79,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("higherOrderIdProject") long higherOrderIdProject,
         @Param("project") Project project
     );
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Query("select t from Task t"
         + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
         + " and t.project = :project")
@@ -90,8 +90,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         Pageable request
     );
 
-    //TODO: move from List<Task> to Page<Task>
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #244 move from List<Task> to Page<Task>
+    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Deprecated
     @Query("select t from Task t"
         + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
@@ -101,7 +101,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("higherOrderIdProject") long higherOrderIdProject,
         @Param("context") Context context
     );
-    //TODO: move the JQL Query-String to Entity as Prepared Statement
+    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Query("select t from Task t"
         + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
         + " and t.project is null and t.context = :context ")

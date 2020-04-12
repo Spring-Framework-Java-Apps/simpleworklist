@@ -28,7 +28,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void sendNewUserMessage(
+    public User2UserMessage sendNewUserMessage(
         UserAccount thisUser,
         UserAccount otherUser,
         User2UserMessageFormBean user2UserMessageFormBean
@@ -39,7 +39,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         m.setReceiver(otherUser);
         m.setReadByReceiver(false);
         m.setMessageText(user2UserMessageFormBean.getMessageText());
-        userMessageRepository.saveAndFlush(m);
+        return userMessageRepository.saveAndFlush(m);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
     ) {
         log.info("getNumberOfNewIncomingMessagesForUser");
         boolean readByReceiver = false;
+        //TODO: #246 change List<Project> to Page<Project>
         List<User2UserMessage> user2UserMessageList =
                 userMessageRepository.findByReceiverAndReadByReceiver(receiver, readByReceiver);
         return user2UserMessageList.size();

@@ -7,6 +7,8 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,16 +36,34 @@ public class ProjectServiceImpl implements ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    @Override
+    //TODO: #245 change List<Project> to Page<Project>
+    @Deprecated
+    //@Override
     public List<Project> findRootProjectsByContext(@NotNull Context context) {
         log.info("findRootProjectsByContext");
+        //TODO: #245 change List<Project> to Page<Project>
         return projectRepository.findByParentIsNullAndContext(context);
     }
 
     @Override
+    public Page<Project> findRootProjectsByContext(@NotNull Context context, Pageable pageRequest) {
+        log.info("findRootProjectsByContext");
+        return projectRepository.findByParentIsNullAndContext(context,pageRequest);
+    }
+
+    //TODO: #245 change List<Project> to Page<Project>
+    @Deprecated
+    //@Override
     public List<Project> findAllProjectsByContext(@NotNull Context context) {
         log.info("findAllProjectsByContext");
+        //TODO: #245 change List<Project> to Page<Project>
         return projectRepository.findByContext(context);
+    }
+
+    @Override
+    public Page<Project> findAllProjectsByContext(Context context, Pageable pageRequest) {
+        log.info("findAllProjectsByContext");
+        return projectRepository.findByContext(context,pageRequest);
     }
 
     @Override
@@ -94,6 +114,7 @@ public class ProjectServiceImpl implements ProjectService {
         log.info("----------------------------------------------------");
         thisProject.setParent(null);
         thisProject = projectRepository.saveAndFlush(thisProject);
+        //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
         List<Project> listProject = getAllChildrenOfProject(thisProject);
         for(Project childProject : listProject){
             List<Task> tasksOfChildProject = taskRepository.findByProject(childProject);
@@ -107,15 +128,18 @@ public class ProjectServiceImpl implements ProjectService {
         return thisProject;
     }
 
+    //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
+    @Deprecated
     private List<Project> getAllChildrenOfProject(@NotNull Project thisProject) {
         log.info("getAllChildrenOfProject");
-        List<Project> retVal = new ArrayList<>();
-        retVal.add(thisProject);
+        List<Project> childrenOfProject = new ArrayList<>();
+        childrenOfProject.add(thisProject);
         for(Project p : thisProject.getChildren()){
+            //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
             List<Project> getNextGeneration = getAllChildrenOfProject(p);
-            retVal.addAll(getNextGeneration);
+            childrenOfProject.addAll(getNextGeneration);
         }
-        return retVal;
+        return childrenOfProject;
     }
 
     @Override
