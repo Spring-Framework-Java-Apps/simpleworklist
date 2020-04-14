@@ -342,6 +342,11 @@
                 <version>${maven-changes-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
+            <dependency>
+                <groupId>org.apache.maven.doxia</groupId>
+                <artifactId>doxia-module-markdown</artifactId>
+                <version>1.3</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -587,6 +592,10 @@
             <artifactId>maven-changes-plugin</artifactId>
             <type>maven-plugin</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -638,6 +647,18 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-report-plugin</artifactId>
                     <version>${maven-surefire-report-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.3</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -745,26 +766,6 @@
                     <addResources>true</addResources>
                 </configuration>
                 <executions>
-                    <!--
-                    <execution>
-                        <id>pre-integration-test</id>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${skipTests}</skip>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>post-integration-test</id>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${skipTests}</skip>
-                        </configuration>
-                    </execution>
-                    -->
                     <execution>
                         <id>id-build-info</id>
                         <goals>
