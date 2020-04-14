@@ -1,10 +1,10 @@
 # Functional Requirements
 
 ## F001 Server Starts
-## F002 Public Home Page rendered
-## F003 User Self Registration
-## F004 User Password Recovery
-## F005 User Login
+## F002 Home Page rendered
+## F003 Registration
+## F004 Password Recovery
+## F005 Login
 ## F006 Page after first successful Login
 
 ## F010 show /taskstate/inbox

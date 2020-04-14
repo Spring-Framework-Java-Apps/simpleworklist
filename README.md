@@ -22,8 +22,8 @@ SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 * [spring-framework-java-apps.github.io/simpleworklist](http://spring-framework-java-apps.github.io/simpleworklist/)
 
 ## Development
-* [Requirements](etc/requirements/Requirements.md)
-* [Nonfunctional_Requirements](etc/requirements/Nonfunctional_Requirements.md)
+* [Requirements](src/site/markdown/Requirements.md)
+* [Nonfunctional_Requirements](src/site/markdown/Nonfunctional_Requirements.md)
 * [HOWTO](etc/development/HOWTO.md)
 * [Maven_Plugins](etc/development/Maven_Plugins.md)
 * [Primesfaces_JSF](etc/development/Primesfaces_JSF.md)
