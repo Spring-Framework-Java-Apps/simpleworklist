@@ -1,7 +1,9 @@
-## SimpleWorklist
+# SimpleWorklist
 Your Todo-List for Getting Things Done
 
-
+## Getting Things Done
+GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. 
+SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 
 ## Software-Stack: 
 * [Spring-Boot](https://spring.io/projects/spring-boot/)
@@ -16,11 +18,14 @@ Your Todo-List for Getting Things Done
 
 ## Development
 * [Code Repository on Github](https://github.com/Spring-Framework-Java-Apps/simpleworklist)
-* [Demo Deployment on Heroku](https://simpleworklist.herokuapp.com/)
+* [Live Deployment on Heroku](https://simpleworklist.herokuapp.com/)
 
-## Requirements
+## TODO: Requirements
+* See Files [Requirements.md](./Requirements.md) and [Nonfunctional_Requirements.md](./Nonfunctional_Requirements.md)
 
-### Use Cases
+## Legacy Documentation: Requirements
+
+### Legacy Documentation: Use Cases
 
 #### User Selfservice
 ![Figure Use Cases User](../resources/img/Use_Cases_User.jpg)
