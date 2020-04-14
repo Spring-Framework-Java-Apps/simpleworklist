@@ -641,6 +641,31 @@
                             <artifactId>doxia-module-xdoc</artifactId>
                             <version>1.9.1</version>
                         </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-sitetools</artifactId>
+                            <version>1.9.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-modules</artifactId>
+                            <version>1.9.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-skin-model</artifactId>
+                            <version>1.9.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-site-renderer</artifactId>
+                            <version>1.9.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-test-docs</artifactId>
+                            <version>1.9.1</version>
+                        </dependency>
                     </dependencies>
                 </plugin>
             </plugins>
