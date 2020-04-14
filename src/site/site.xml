@@ -3,17 +3,38 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0
     http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+
+    <!-- https://maven.apache.org/plugins/maven-site-plugin/examples/sitedescriptor.html -->
     <bannerLeft>
         <name>SimpleWorklist</name>
         <src>/img/phasenraum_logo.gif</src>
-        <href>https://woehlke.org</href>
+        <href>https://woehlke.org/p/simpleworklist</href>
     </bannerLeft>
     <body>
+        <links>
+            <item name="Apache" href="http://www.apache.org"/>
+            <item name="Maven" href="https://maven.apache.org"/>
+        </links>
+        <breadcrumbs>
+            <item name="Doxia" href="https://maven.apache.org/doxia/index.html"/>
+            <item name="Trunk" href="https://maven.apache.org/doxia/doxia/index.html"/>
+        </breadcrumbs>
+        <menu name="Requirements">
+            <item name="Requirements" href="Requirements.html" />
+            <item name="Requirements Nonfunctional" href="Requirements_Nonfunctional.html" />
+        </menu>
+        <menu name="Development">
+            <item name="Development" href="Development.html" />
+            <item name="Maven Plugins" href="Maven_Plugins.html" />
+            <item name="HOWTO" href="HOWTO.html" />
+            <item name="Primesfaces JSF" href="Primesfaces_JSF.html" />
+        </menu>
         <menu ref="parent"/>
         <menu ref="modules"/>
         <menu ref="reports"/>
     </body>
-    <publishDate position="navigation-bottom"/>
+    <publishDate position="left"/>
+    <version position="left"/>
     <poweredBy>
         <logo name="Maven" href="http://maven.apache.org/"
               img="http://maven.apache.org/images/logos/maven-feather.png"/>
