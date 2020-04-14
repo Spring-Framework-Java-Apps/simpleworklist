@@ -80,6 +80,16 @@
             <name>JBossEA Repository</name>
             <url>https://repository.jboss.org/nexus/content/repositories/ea/</url>
         </repository>
+        <repository>
+            <id>wso2-public</id>
+            <name>WSO2 Public Repository</name>
+            <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
+        </repository>
+        <repository>
+            <id>hortonworks-releases</id>
+            <name>Hortonworks Repository</name>
+            <url>https://repo.hortonworks.com/content/repositories/releases/</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -127,6 +137,16 @@
             <name>JBossEA Repository</name>
             <url>https://repository.jboss.org/nexus/content/repositories/ea/</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>wso2-public</id>
+            <name>WSO2 Public Repository</name>
+            <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>hortonworks-releases</id>
+            <name>Hortonworks Repository</name>
+            <url>https://repo.hortonworks.com/content/repositories/releases/</url>
+        </pluginRepository>
     </pluginRepositories>
 
     <scm>
@@ -173,7 +193,6 @@
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-shade-plugin.version>3.2.2</maven-shade-plugin.version>
-        <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
@@ -192,6 +211,7 @@
         <doxia-module-markdown.version>1.3</doxia-module-markdown.version>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0-M4</maven-surefire-report-plugin.version>
+        <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
         <doxia-module.version>1.9.1</doxia-module.version>
 
         <!-- Docker -->
@@ -751,16 +771,6 @@
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
-                            <artifactId>doxia-sitetools</artifactId>
-                            <version>${doxia-module.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.apache.maven.doxia</groupId>
-                            <artifactId>doxia-modules</artifactId>
-                            <version>${doxia-module.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-skin-model</artifactId>
                             <version>${doxia-module.version}</version>
                         </dependency>
@@ -986,8 +996,8 @@
                         </goals>
                         <configuration>
                             <classifier>sources</classifier>
-                            <excludeGroupIds>org.webjars</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core</excludeArtifactIds>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.velocity</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
                         </configuration>
