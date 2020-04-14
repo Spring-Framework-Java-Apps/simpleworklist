@@ -984,6 +984,26 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>get-dependency-classes</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                            <goal>resolve-plugins</goal>
+                            <goal>collect</goal>
+                            <goal>copy-dependencies</goal>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <type>jar</type>
+                            <!--
+                            <excludeGroupIds></excludeGroupIds>
+                            <excludeArtifactIds></excludeArtifactIds>
+                            -->
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                            <outputDirectory>${project.build.directory}/dependency-classes/</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>get-dependency-sources</id>
                         <phase>site</phase>
                         <goals>
