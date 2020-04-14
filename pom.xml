@@ -665,7 +665,7 @@
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
                                         <file>${project.basedir}/src/site/markdown/Requirements.md</file>
-                                        <file>${project.basedir}/src/site/markdown/Nonfunctional_Requirements.md</file>
+                                        <file>${project.basedir}/src/site/markdown/Requirements_Nonfunctional.md</file>
                                         <file>${project.basedir}/src/site/markdown/index.md</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
                                         <file>${project.basedir}/run.sh</file>
