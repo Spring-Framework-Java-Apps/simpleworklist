@@ -11,14 +11,16 @@
         <href>https://woehlke.org/p/simpleworklist</href>
     </bannerLeft>
     <body>
-        <links>
-            <item name="Apache" href="http://www.apache.org"/>
-            <item name="Maven" href="https://maven.apache.org"/>
-        </links>
         <breadcrumbs>
-            <item name="Doxia" href="https://maven.apache.org/doxia/index.html"/>
-            <item name="Trunk" href="https://maven.apache.org/doxia/doxia/index.html"/>
+            <item name="Thomas Wöhlke" href="https://github.com/thomaswoehlke"/>
+            <item name="Spring-Framework-Java-Apps" href="https://github.com/Spring-Framework-Java-Apps"/>
+            <item name="Simpleworklist" href="https://github.com/Spring-Framework-Java-Apps/simpleworklist"/>
         </breadcrumbs>
+        <menu name="Overview">
+            <item name="Introduction" href="index.html"/>
+            <item name="JavaDocs" href="apidocs/index.html"/>
+            <item name="Source Xref" href="xref/index.html"/>
+        </menu>
         <menu name="Requirements">
             <item name="Requirements" href="Requirements.html" />
             <item name="Requirements Nonfunctional" href="Requirements_Nonfunctional.html" />
@@ -29,8 +31,6 @@
             <item name="HOWTO" href="HOWTO.html" />
             <item name="Primesfaces JSF" href="Primesfaces_JSF.html" />
         </menu>
-        <menu ref="parent"/>
-        <menu ref="modules"/>
         <menu ref="reports"/>
     </body>
     <publishDate position="left"/>
