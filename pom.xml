@@ -34,6 +34,101 @@
         </developer>
     </developers>
 
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>JCenter Repository</name>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>sonatype-releases</id>
+            <name>Sonatype Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>springio-plugins-release</id>
+            <name>Spring Plugins Repository</name>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </repository>
+        <repository>
+            <id>springio-libs-release</id>
+            <name>Spring Lib Release Repository</name>
+            <url>https://repo.spring.io/libs-release/</url>
+        </repository>
+        <repository>
+            <id>spring-libs-milestone</id>
+            <name>Spring Lib M Repository</name>
+            <url>https://repo.spring.io/libs-milestone/</url>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <name>Atlassian Repository</name>
+            <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
+        </repository>
+        <repository>
+            <id>jboss-releases</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>jboss-ea</id>
+            <name>JBossEA Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/ea/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter Repository</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>central</id>
+            <name>Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>sonatype-releases</id>
+            <name>Sonatype Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>springio-plugins-release</id>
+            <name>Spring Plugins Repository</name>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>springio-libs-release</id>
+            <name>Spring Lib Release Repository</name>
+            <url>https://repo.spring.io/libs-release/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-libs-milestone</id>
+            <name>Spring Lib M Repository</name>
+            <url>https://repo.spring.io/libs-milestone/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>atlassian-public</id>
+            <name>Atlassian Repository</name>
+            <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-releases</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-ea</id>
+            <name>JBossEA Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/ea/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <scm>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist.git</url>
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
