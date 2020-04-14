@@ -90,6 +90,11 @@
             <name>Hortonworks Repository</name>
             <url>https://repo.hortonworks.com/content/repositories/releases/</url>
         </repository>
+        <repository>
+            <id>adobe-public</id>
+            <name>AdobePublic Repository</name>
+            <url>https://repo.adobe.com/nexus/content/repositories/public/</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -146,6 +151,11 @@
             <id>hortonworks-releases</id>
             <name>Hortonworks Repository</name>
             <url>https://repo.hortonworks.com/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>adobe-public</id>
+            <name>AdobePublic Repository</name>
+            <url>https://repo.adobe.com/nexus/content/repositories/public/</url>
         </pluginRepository>
     </pluginRepositories>
 
