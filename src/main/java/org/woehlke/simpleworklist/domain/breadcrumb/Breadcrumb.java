@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.domain.breadcrumb;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.task.Task;
 
 import java.io.Serializable;

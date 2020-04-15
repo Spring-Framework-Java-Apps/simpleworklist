@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbService;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
@@ -19,7 +19,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
-import static org.woehlke.simpleworklist.project.Project.rootProjectId;
+import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
 @Slf4j
 @Service

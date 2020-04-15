@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.domain.services.ProjectControllerService;
 import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.domain.services.TaskProjektService;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import static org.woehlke.simpleworklist.project.Project.rootProjectId;
+import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
 @Slf4j
 @Controller

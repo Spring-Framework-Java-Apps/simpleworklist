@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.application.common.AuditModel;
 import org.woehlke.simpleworklist.application.common.ComparableById;

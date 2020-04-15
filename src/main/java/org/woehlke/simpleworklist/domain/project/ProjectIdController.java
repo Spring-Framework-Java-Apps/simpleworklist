@@ -13,7 +13,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.domain.services.ProjectControllerService;
 import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.domain.services.TaskProjektService;
@@ -27,7 +26,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
-import static org.woehlke.simpleworklist.project.Project.rootProjectId;
+import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
 /**
  * Created by tw on 14.02.16.
