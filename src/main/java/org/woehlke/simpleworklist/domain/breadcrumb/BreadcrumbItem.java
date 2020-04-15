@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.breadcrumb;
+package org.woehlke.simpleworklist.domain.breadcrumb;
 
 import lombok.*;
 

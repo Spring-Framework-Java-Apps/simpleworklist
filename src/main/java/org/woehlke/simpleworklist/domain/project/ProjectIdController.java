@@ -19,7 +19,7 @@ import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.task.services.TaskProjektService;
 import org.woehlke.simpleworklist.task.services.TaskService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
+import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;

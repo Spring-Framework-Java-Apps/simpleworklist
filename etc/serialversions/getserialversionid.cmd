@@ -30,8 +30,8 @@ serialver org.woehlke.simpleworklist.user.chat.User2UserMessage  >> ..\..\etc\se
 serialver org.woehlke.simpleworklist.user.account.UserAccount  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistration  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbItem  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbItem  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.context.NewContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.chat.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
