@@ -1,12 +1,15 @@
 # Functional Requirements
 
+# Functional Requirements 001
 ## F001 Server Starts
 ## F002 Home Page rendered
 ## F003 Registration
 ## F004 Password Recovery
 ## F005 Login
 ## F006 Page after first successful Login
+## F007 Logout
 
+# Functional Requirements 002
 ## F010 show /taskstate/inbox
 ## F011 show /taskstate/today
 ## F012 show /taskstate/next
@@ -17,23 +20,7 @@
 ## F017 show /taskstate/completed
 ## F018 show /taskstate/trash
 
-## F020 Drag and Drop: Task move to /taskstate/inbox
-## F021 Drag and Drop: Task move to /taskstate/today
-## F022 Drag and Drop: Task move to /taskstate/next
-## F023 Drag and Drop: Task move to /taskstate/waiting
-## F024 Drag and Drop: Task move to /taskstate/scheduled
-## F025 Drag and Drop: Task move to /taskstate/someday
-## F026 Drag and Drop: Task move to /taskstate/focus
-## F027 Drag and Drop: Task move to /taskstate/completed
-## F028 Drag and Drop: Task move to /taskstate/trash
-
-## F029 Drag and Drop: Task move to Project
-## F030 Drag and Drop: Project move to Project
-
-## F031 Drag and Drop: Move Task to Change Task-Order in Taskstate
-## F032 Drag and Drop: Move Task to Change Task-Order in Project/Root
-## F033 Drag and Drop: Move Task to Change Task-Order in Project/id
-
+# Functional Requirements 003
 ## F040 Taskstate: Add Task to Inbox
 ## F041 Taskstate: Add Task to Inbox again
 ## F042 Taskstate: Task Edit
@@ -47,6 +34,7 @@
 ## F050 Taskstate: Task delete
 ## F051 Taskstate: Task undelete
 
+# Functional Requirements 004
 ## F060 Project/Root: Add Task
 ## F061 Project/Root: Add SubProject
 ## F062 Project/Root: Task Edit
@@ -60,6 +48,7 @@
 ## F070 Project/Root: Task delete
 ## F071 Project/Root: Task undelete
 
+# Functional Requirements 005
 ## F080 Project/id: Add Task
 ## F081 Project/id: Add SubProject
 ## F082 Project/id: Task Edit
@@ -72,3 +61,23 @@
 ## F089 Project/id: Task incomplete
 ## F090 Project/id: Task delete 
 ## F091 Project/id: Task undelete
+
+# Functional Requirements 006
+## F020 Drag and Drop: Task move to /taskstate/inbox
+## F021 Drag and Drop: Task move to /taskstate/today
+## F022 Drag and Drop: Task move to /taskstate/next
+## F023 Drag and Drop: Task move to /taskstate/waiting
+## F024 Drag and Drop: Task move to /taskstate/scheduled
+## F025 Drag and Drop: Task move to /taskstate/someday
+## F026 Drag and Drop: Task move to /taskstate/focus
+## F027 Drag and Drop: Task move to /taskstate/completed
+## F028 Drag and Drop: Task move to /taskstate/trash
+
+# Functional Requirements 007
+## F029 Drag and Drop: Task move to Project
+## F030 Drag and Drop: Project move to Project
+
+# Functional Requirements 008
+## F031 Drag and Drop: Move Task to Change Task-Order in Taskstate
+## F032 Drag and Drop: Move Task to Change Task-Order in Project/Root
+## F033 Drag and Drop: Move Task to Change Task-Order in Project/id
