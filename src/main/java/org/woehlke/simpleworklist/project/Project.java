@@ -155,17 +155,10 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return thisProject;
     }
 
-
-    //TODO: use newRootProjectFactory(Context context);
-    @Deprecated
-    public static Project newRootProjectFactory(UserAccount userAccount, Context context) {
-        return newRootProjectFactory(context);
-    }
-
-    public Project addOtherProjectToChildren(Project project) {
-        children.add(project);
-        project.setParent(this);
-        return project;
+    public Project addOtherProjectToChildren(Project otherProject) {
+        children.add(otherProject);
+        otherProject.setParent(this);
+        return otherProject;
     }
 
     public String out(){

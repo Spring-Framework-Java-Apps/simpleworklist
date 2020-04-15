@@ -3,9 +3,11 @@ package org.woehlke.simpleworklist.user.register;
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.application.config.AbstractTest;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.user.services.UserRegistrationService;
+
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;

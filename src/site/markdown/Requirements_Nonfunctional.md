@@ -45,6 +45,9 @@
 
 ## T0006 Development Systems: Local Developer Machine
 ### T0006_1 OS: Linux, Windows10
+### T0006_1_1 OS: Linux
+### T0006_1_2 OS: Windows10
+### T0006_1_3 OS: LmacOS
 ### T0006_2 bash
 ### T0006_3 git
 ### T0006_4 java

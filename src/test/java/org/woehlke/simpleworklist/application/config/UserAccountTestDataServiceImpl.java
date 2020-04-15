@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.woehlke.simpleworklist.application.ApplicationProperties;
 import org.woehlke.simpleworklist.context.Context;
-import org.woehlke.simpleworklist.context.ContextService;
+import org.woehlke.simpleworklist.context.services.ContextService;
 import org.woehlke.simpleworklist.context.NewContextForm;
 import org.woehlke.simpleworklist.application.language.Language;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserAccountService;
+import org.woehlke.simpleworklist.user.services.UserAccountService;
 
 import java.util.Date;
 
