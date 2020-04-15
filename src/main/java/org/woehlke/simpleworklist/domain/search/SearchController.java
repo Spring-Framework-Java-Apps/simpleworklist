@@ -12,7 +12,7 @@ import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.search.SearchResult;
 import org.woehlke.simpleworklist.domain.services.SearchService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
-import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.domain.context.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

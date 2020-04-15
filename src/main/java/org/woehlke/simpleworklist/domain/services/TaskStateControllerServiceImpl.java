@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbService;
-import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;

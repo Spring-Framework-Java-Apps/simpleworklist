@@ -23,7 +23,7 @@ serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStat
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserRole >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.application.common.AuditModel >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.context.Context  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.context.Context  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.project.Project  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.task.Task  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.chat.User2UserMessage  >> ..\..\etc\serialversions.txt

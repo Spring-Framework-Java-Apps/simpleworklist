@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbService;
-import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;

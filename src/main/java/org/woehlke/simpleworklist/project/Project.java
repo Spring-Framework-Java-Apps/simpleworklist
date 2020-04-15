@@ -16,7 +16,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 //import org.hibernate.validator.constraints.SafeHtml;
-import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.application.common.AuditModel;
 import org.woehlke.simpleworklist.application.common.ComparableById;
 import org.woehlke.simpleworklist.user.account.UserAccount;

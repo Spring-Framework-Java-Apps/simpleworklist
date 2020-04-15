@@ -5,7 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.woehlke.simpleworklist.application.common.AuditModel;
 import org.woehlke.simpleworklist.application.common.ComparableById;
-import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.domain.context.Context;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
