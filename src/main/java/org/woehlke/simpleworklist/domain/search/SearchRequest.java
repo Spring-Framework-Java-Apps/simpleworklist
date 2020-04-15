@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.search;
+package org.woehlke.simpleworklist.domain.search;
 
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

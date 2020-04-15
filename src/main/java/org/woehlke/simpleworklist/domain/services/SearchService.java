@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.domain.services;
 
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.search.SearchRequest;
+import org.woehlke.simpleworklist.domain.search.SearchRequest;
 import org.woehlke.simpleworklist.domain.search.SearchResult;
 
 /**

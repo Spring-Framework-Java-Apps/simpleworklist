@@ -7,7 +7,6 @@ import org.woehlke.simpleworklist.application.common.AuditModel;
 import org.woehlke.simpleworklist.application.common.ComparableById;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.search.SearchRequest;
 
 import javax.persistence.*;
 import java.io.Serializable;
