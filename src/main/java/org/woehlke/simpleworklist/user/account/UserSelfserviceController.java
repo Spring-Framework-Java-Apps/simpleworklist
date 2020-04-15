@@ -22,7 +22,6 @@ import org.woehlke.simpleworklist.context.UserChangeDefaultContextForm;
 import org.woehlke.simpleworklist.application.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.application.language.Language;
-import org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
