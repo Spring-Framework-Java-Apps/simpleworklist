@@ -32,7 +32,7 @@ import static org.woehlke.simpleworklist.project.Project.rootProjectId;
 @Slf4j
 @Controller
 @RequestMapping(path = "/project/root")
-public class ProjectControllerRoot extends AbstractController {
+public class ProjectRootController extends AbstractController {
 
     public final static String rootProjectUrl = "redirect:/project/root";
 
@@ -41,7 +41,7 @@ public class ProjectControllerRoot extends AbstractController {
     private final TaskProjektService taskProjektService;
 
     @Autowired
-    public ProjectControllerRoot(ProjectControllerService projectControllerService, TaskService taskService, TaskProjektService taskProjektService) {
+    public ProjectRootController(ProjectControllerService projectControllerService, TaskService taskService, TaskProjektService taskProjektService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
         this.taskProjektService = taskProjektService;

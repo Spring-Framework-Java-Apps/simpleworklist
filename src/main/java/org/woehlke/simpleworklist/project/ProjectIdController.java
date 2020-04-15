@@ -34,14 +34,14 @@ import static org.woehlke.simpleworklist.project.Project.rootProjectId;
 @Slf4j
 @Controller
 @RequestMapping(path = "/project/{projectId}")
-public class ProjectController extends AbstractController {
+public class ProjectIdController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
     private final TaskProjektService taskProjektService;
 
     @Autowired
-    public ProjectController(
+    public ProjectIdController(
         ProjectControllerService projectControllerService,
         TaskService taskService,
         TaskProjektService taskProjektService
