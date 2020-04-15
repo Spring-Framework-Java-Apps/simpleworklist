@@ -20,7 +20,7 @@ org.woehlke.simpleworklist.context.NewContextForm:    private static final long 
 org.woehlke.simpleworklist.user.chat.User2UserMessageFormBean:    private static final long serialVersionUID = 1576610181966480168L;
 org.woehlke.simpleworklist.searchRequest.SearchResult:    private static final long serialVersionUID = 1682809351146047764L;
 org.woehlke.simpleworklist.user.account.UserAccountForm:    private static final long serialVersionUID = 9180383385243540190L;
-org.woehlke.simpleworklist.context.UserChangeDefaultContextForm:    private static final long serialVersionUID = -8592295563275083292L;
+org.woehlke.simpleworklist.user.account.UserChangeDefaultContextForm:    private static final long serialVersionUID = -8592295563275083292L;
 org.woehlke.simpleworklist.application.language.UserChangeLanguageForm:    private static final long serialVersionUID = 2201123162578113187L;
 org.woehlke.simpleworklist.user.account.UserChangeNameForm:    private static final long serialVersionUID = 5120488382888268418L;
 org.woehlke.simpleworklist.user.account.UserChangePasswordForm:    private static final long serialVersionUID = 9149342594823222054L;

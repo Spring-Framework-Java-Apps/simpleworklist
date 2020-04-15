@@ -37,7 +37,7 @@ serialver org.woehlke.simpleworklist.context.NewContextForm >> ..\..\etc\serialv
 serialver org.woehlke.simpleworklist.user.chat.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.searchRequest.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.account.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.application.language.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserChangeNameForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserChangePasswordForm >> ..\..\etc\serialversions.txt

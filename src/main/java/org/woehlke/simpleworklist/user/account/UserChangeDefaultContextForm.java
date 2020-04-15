@@ -1,6 +1,7 @@
-package org.woehlke.simpleworklist.context;
+package org.woehlke.simpleworklist.user.account;
 
 import lombok.*;
+import org.woehlke.simpleworklist.context.Context;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
