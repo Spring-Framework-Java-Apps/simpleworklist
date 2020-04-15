@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.task;
+package org.woehlke.simpleworklist.domain.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,10 @@ import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
+import org.woehlke.simpleworklist.task.Task;
+import org.woehlke.simpleworklist.task.TaskEnergy;
+import org.woehlke.simpleworklist.task.TaskState;
+import org.woehlke.simpleworklist.task.TaskTime;
 import org.woehlke.simpleworklist.task.services.TaskProjektService;
 import org.woehlke.simpleworklist.task.services.TaskService;
 import org.woehlke.simpleworklist.task.services.TaskStateControllerService;

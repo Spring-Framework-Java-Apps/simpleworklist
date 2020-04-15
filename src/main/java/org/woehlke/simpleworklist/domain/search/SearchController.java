@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.search;
+package org.woehlke.simpleworklist.domain.search;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb;
+import org.woehlke.simpleworklist.search.SearchResult;
 import org.woehlke.simpleworklist.search.services.SearchService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.context.Context;

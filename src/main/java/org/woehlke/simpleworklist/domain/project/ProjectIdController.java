@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.project;
+package org.woehlke.simpleworklist.domain.project;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
+import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.services.ProjectControllerService;
 import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.task.services.TaskProjektService;
