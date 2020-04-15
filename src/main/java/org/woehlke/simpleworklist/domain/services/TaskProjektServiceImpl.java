@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.services.ProjectService;
 import org.woehlke.simpleworklist.task.Task;
-import org.woehlke.simpleworklist.task.services.TaskProjektService;
-import org.woehlke.simpleworklist.task.services.TaskService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
