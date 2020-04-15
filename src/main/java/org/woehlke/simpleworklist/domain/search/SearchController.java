@@ -33,7 +33,7 @@ public class SearchController extends AbstractController {
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public final String searchResults(
+    public final String searchGet(
             @RequestParam String searchterm,
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
