@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
 import org.woehlke.simpleworklist.project.ProjectRepository;
-import org.woehlke.simpleworklist.project.services.ProjectService;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskRepository;
 

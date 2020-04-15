@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.project.services.ProjectService;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 

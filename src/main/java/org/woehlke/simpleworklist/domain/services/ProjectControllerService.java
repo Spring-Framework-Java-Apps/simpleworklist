@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.project.services;
+package org.woehlke.simpleworklist.domain.services;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

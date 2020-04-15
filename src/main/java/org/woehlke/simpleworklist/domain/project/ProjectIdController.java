@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.project.services.ProjectControllerService;
+import org.woehlke.simpleworklist.domain.services.ProjectControllerService;
 import org.woehlke.simpleworklist.task.*;
 import org.woehlke.simpleworklist.domain.services.TaskProjektService;
 import org.woehlke.simpleworklist.domain.services.TaskService;
