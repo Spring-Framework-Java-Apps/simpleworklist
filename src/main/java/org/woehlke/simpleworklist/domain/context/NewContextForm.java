@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.context;
+package org.woehlke.simpleworklist.domain.context;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;

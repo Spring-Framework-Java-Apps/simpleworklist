@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.common.AbstractController;
-import org.woehlke.simpleworklist.context.NewContextForm;
+import org.woehlke.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.simpleworklist.application.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.application.language.Language;
