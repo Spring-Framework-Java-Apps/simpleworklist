@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbService;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.task.Task;
+import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
