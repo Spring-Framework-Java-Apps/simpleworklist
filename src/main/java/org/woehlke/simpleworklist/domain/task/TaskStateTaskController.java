@@ -11,9 +11,9 @@ import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.application.common.AbstractController;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.domain.services.TaskProjektService;
-import org.woehlke.simpleworklist.domain.services.TaskService;
-import org.woehlke.simpleworklist.domain.services.TaskStateControllerService;
+import org.woehlke.simpleworklist.services.TaskProjektService;
+import org.woehlke.simpleworklist.services.TaskService;
+import org.woehlke.simpleworklist.services.TaskStateControllerService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;

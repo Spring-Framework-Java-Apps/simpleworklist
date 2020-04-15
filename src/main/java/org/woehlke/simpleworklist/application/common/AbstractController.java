@@ -8,13 +8,13 @@ import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbServ
 import org.woehlke.simpleworklist.application.ApplicationProperties;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.domain.services.TaskService;
+import org.woehlke.simpleworklist.services.TaskService;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
-import org.woehlke.simpleworklist.domain.services.ContextService;
-import org.woehlke.simpleworklist.domain.services.ProjectService;
+import org.woehlke.simpleworklist.services.ContextService;
+import org.woehlke.simpleworklist.services.ProjectService;
 import org.woehlke.simpleworklist.user.services.User2UserMessageService;
 import org.woehlke.simpleworklist.user.services.UserAccountService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;

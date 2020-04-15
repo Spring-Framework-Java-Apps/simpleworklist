@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.services;
+package org.woehlke.simpleworklist.services;
 
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.search.SearchRequest;

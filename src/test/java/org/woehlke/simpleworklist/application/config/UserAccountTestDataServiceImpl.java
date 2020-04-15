@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.woehlke.simpleworklist.application.ApplicationProperties;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.domain.services.ContextService;
+import org.woehlke.simpleworklist.services.ContextService;
 import org.woehlke.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.simpleworklist.application.language.Language;
 import org.woehlke.simpleworklist.user.account.UserAccount;
