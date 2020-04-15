@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.search.SearchResult;
 import org.woehlke.simpleworklist.search.SearchResultRepository;
-import org.woehlke.simpleworklist.search.services.SearchResultService;
 
 import java.util.UUID;
 

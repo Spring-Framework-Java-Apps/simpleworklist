@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
-import org.woehlke.simpleworklist.search.services.SearchService;
+import org.woehlke.simpleworklist.domain.services.SearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

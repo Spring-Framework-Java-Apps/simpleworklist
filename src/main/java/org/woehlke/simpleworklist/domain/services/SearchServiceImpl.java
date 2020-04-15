@@ -7,9 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.search.SearchRequest;
 import org.woehlke.simpleworklist.search.SearchResult;
-import org.woehlke.simpleworklist.search.services.SearchRequestService;
-import org.woehlke.simpleworklist.search.services.SearchResultService;
-import org.woehlke.simpleworklist.search.services.SearchService;
 
 
 /**

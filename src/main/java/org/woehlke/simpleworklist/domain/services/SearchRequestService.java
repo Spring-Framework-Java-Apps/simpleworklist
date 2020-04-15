@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.search.services;
+package org.woehlke.simpleworklist.domain.services;
 
 import org.woehlke.simpleworklist.search.SearchRequest;
 
