@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.register.UserRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.task.TaskRepository;
+import org.woehlke.simpleworklist.domain.task.TaskRepository;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryRepository;
 

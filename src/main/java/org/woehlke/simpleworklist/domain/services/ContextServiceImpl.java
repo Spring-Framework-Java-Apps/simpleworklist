@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.context.ContextRepository;
 import org.woehlke.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.project.ProjectRepository;
-import org.woehlke.simpleworklist.task.TaskRepository;
+import org.woehlke.simpleworklist.domain.task.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;

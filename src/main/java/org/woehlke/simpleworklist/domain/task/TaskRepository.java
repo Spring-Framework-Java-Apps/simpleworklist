@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.task;
+package org.woehlke.simpleworklist.domain.task;
 
 import java.util.List;
 
