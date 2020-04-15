@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.project.Project;
-import org.woehlke.simpleworklist.project.ProjectRepository;
+import org.woehlke.simpleworklist.domain.project.ProjectRepository;
 import org.woehlke.simpleworklist.user.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.register.UserRegistration;
