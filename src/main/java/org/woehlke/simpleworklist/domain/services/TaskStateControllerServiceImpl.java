@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.task.services;
+package org.woehlke.simpleworklist.domain.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbServ
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.task.Task;
 import org.woehlke.simpleworklist.task.TaskState;
+import org.woehlke.simpleworklist.task.services.TaskService;
+import org.woehlke.simpleworklist.task.services.TaskStateControllerService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;

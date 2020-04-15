@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.task.services;
+package org.woehlke.simpleworklist.domain.services;
 
 
 import lombok.extern.slf4j.Slf4j;
