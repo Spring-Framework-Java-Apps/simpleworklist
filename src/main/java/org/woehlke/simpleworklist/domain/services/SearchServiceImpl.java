@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.search.SearchRequest;
-import org.woehlke.simpleworklist.search.SearchResult;
+import org.woehlke.simpleworklist.domain.search.SearchResult;
 
 
 /**

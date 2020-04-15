@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.domain.services;
 
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.search.SearchRequest;
-import org.woehlke.simpleworklist.search.SearchResult;
+import org.woehlke.simpleworklist.domain.search.SearchResult;
 
 /**
  * Created by tw on 14.02.16.

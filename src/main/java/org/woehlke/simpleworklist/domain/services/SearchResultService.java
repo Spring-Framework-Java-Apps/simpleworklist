@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.services;
 
-import org.woehlke.simpleworklist.search.SearchResult;
+import org.woehlke.simpleworklist.domain.search.SearchResult;
 
 public interface SearchResultService {
 
