@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.task.TaskEnergy;
 import org.woehlke.simpleworklist.task.TaskState;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.task.TaskTime;
-import org.woehlke.simpleworklist.context.ContextRepository;
+import org.woehlke.simpleworklist.domain.context.ContextRepository;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
 import org.woehlke.simpleworklist.domain.project.ProjectRepository;
 

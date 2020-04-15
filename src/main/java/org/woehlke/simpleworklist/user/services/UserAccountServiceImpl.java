@@ -19,7 +19,7 @@ import org.woehlke.simpleworklist.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.chat.User2UserMessage;
 import org.woehlke.simpleworklist.application.language.Language;
-import org.woehlke.simpleworklist.context.ContextRepository;
+import org.woehlke.simpleworklist.domain.context.ContextRepository;
 import org.woehlke.simpleworklist.user.chat.User2UserMessageRepository;
 
 @Slf4j
