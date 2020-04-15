@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.search.services;
+package org.woehlke.simpleworklist.domain.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.search.SearchRequest;
 import org.woehlke.simpleworklist.search.SearchRequestRepository;
+import org.woehlke.simpleworklist.search.services.SearchRequestService;
 
 import java.util.UUID;
 
