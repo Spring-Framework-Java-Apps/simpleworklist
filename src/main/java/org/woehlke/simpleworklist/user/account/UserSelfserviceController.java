@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.selfservice;
+package org.woehlke.simpleworklist.user.account;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,8 @@ import org.woehlke.simpleworklist.application.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.context.Context;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.application.language.Language;
+import org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm;
+import org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
