@@ -827,11 +827,11 @@
                                         (http://maven.apache.org/plugins/maven-invoker-plugin/)!
                                     </message>
                                 </bannedPlugins>
-                                <!--
+
                                 <requireMavenVersion>
                                     <version>${version.maven}</version>
                                 </requireMavenVersion>
-                                -->
+
                                 <requireJavaVersion>
                                     <version>${java.version}</version>
                                 </requireJavaVersion>
@@ -851,7 +851,9 @@
                                         <file>${project.basedir}/src/site/markdown/About.md</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
                                         <file>${project.basedir}/run.sh</file>
+                                        <!--
                                         <file>${project.basedir}/etc/setenv.sh</file>
+                                        -->
                                         <file>${project.basedir}/etc/psql.sh</file>
                                         <file>${project.basedir}/etc/docker-start.sh</file>
                                         <file>${project.basedir}/etc/docker-stop.sh</file>
