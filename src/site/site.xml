@@ -12,9 +12,10 @@
     </bannerLeft>
     <body>
         <breadcrumbs>
-            <item name="Thomas Wöhlke" href="https://github.com/thomaswoehlke"/>
-            <item name="Spring-Framework-Java-Apps" href="https://github.com/Spring-Framework-Java-Apps"/>
-            <item name="Simpleworklist" href="https://github.com/Spring-Framework-Java-Apps/simpleworklist"/>
+            <item name="Thomas Wöhlke (Github)" href="https://github.com/thomaswoehlke"/>
+            <item name="Spring-Framework-Java-Apps (Github)" href="https://github.com/Spring-Framework-Java-Apps"/>
+            <item name="Simpleworklist (Github)" href="https://github.com/Spring-Framework-Java-Apps/simpleworklist"/>
+            <item name="Simpleworklist" href="https://woehlke.org/p/simpleworklist"/>
         </breadcrumbs>
         <menu name="Overview">
             <item name="Introduction" href="index.html"/>
