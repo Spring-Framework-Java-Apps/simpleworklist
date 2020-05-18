@@ -10,7 +10,7 @@
 
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.3.21-SNAPSHOT</version>
+    <version>2.3.21</version>
 	<packaging>jar</packaging>
 
     <name>simpleworklist</name>
@@ -168,7 +168,7 @@
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
         <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
-        <tag>master</tag>
+        <tag>v2.3.21</tag>
     </scm>
 
     <issueManagement>
