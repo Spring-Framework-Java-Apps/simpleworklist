@@ -981,12 +981,15 @@
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <outputFile>${project.build.outputDirectory}/classpath.txt</outputFile>
                             <failOnWarning>false</failOnWarning>
+                            <type>java-source,jar</type>
                             <ignoredDependencies>
                                 <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
+                                <!--
                                 <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
                                 <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
                                 <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
                                 <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
+                                -->
                                 <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
                             </ignoredDependencies>
                             <ignoredUsedUndeclaredDependencies>
