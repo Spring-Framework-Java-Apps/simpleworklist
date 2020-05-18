@@ -54,7 +54,7 @@ function run() {
 }
 
 function release() {
-    ./mvnw -B -DskipTests release:prepare release:perform release:clean --file pom.xml
+    ./mvnw -B -DskipTests release:prepare && ./mvnw -B -DskipTests release:perform && ./mvnw -B -DskipTests release:clean
 }
 
 function main() {
