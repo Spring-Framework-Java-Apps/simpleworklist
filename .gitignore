@@ -36,3 +36,4 @@ setenv.cmd
 /src/main/java/org/woehlke/simpleworklist/application/error/x.txt
 /src/main/java/org/woehlke/simpleworklist/searchRequest/x.txt
 
+/simpleworklist.diff
