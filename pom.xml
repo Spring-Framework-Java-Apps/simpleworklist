@@ -182,8 +182,8 @@
             <url>file://${user.home}/public_html/p/simpleworklist</url>
         </site>
         <repository>
-            <id>local</id>
-            <name>local</name>
+            <id>localrepo</id>
+            <name>localrepo</name>
 	        <url>file://home/tw/.m2/repository</url>
         </repository>
     </distributionManagement>
@@ -194,11 +194,8 @@
 
         <!-- SCM and Releasing with Maven -->
 		<maven.scm.version>1.11.2</maven.scm.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <!--
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        -->
 
         <!-- Maven plugins -->
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
