@@ -57,11 +57,6 @@
       <option name="url" value="https://repo1.maven.org/maven2/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Central Repository" />
-      <option name="url" value="https://repo.maven.apache.org/maven2" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="spring-libs-milestone" />
       <option name="name" value="Spring Lib M Repository" />
       <option name="url" value="https://repo.spring.io/libs-milestone/" />
@@ -70,6 +65,16 @@
       <option name="id" value="github" />
       <option name="name" value="GitHub OWNER Apache Maven Packages" />
       <option name="url" value="https://maven.pkg.github.com/OWNER/REPOSITORY" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-milestones" />
+      <option name="name" value="spring-milestones" />
+      <option name="url" value="https://repo.spring.io/milestone" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-snapshots" />
+      <option name="name" value="spring-snapshots" />
+      <option name="url" value="https://repo.spring.io/snapshot" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss-ea" />
