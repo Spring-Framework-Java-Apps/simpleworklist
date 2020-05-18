@@ -58,6 +58,7 @@ function release() {
 }
 
 function main() {
+    release
     #build
     run
 }
