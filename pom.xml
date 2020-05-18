@@ -184,7 +184,7 @@
     </distributionManagement>
 
     <properties>
-        <java.version>14</java.version>
+        <java.version>13</java.version>
         <version.maven>3.6.3</version.maven>
 
         <!-- SCM and Releasing with Maven -->
