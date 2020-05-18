@@ -1047,10 +1047,6 @@
                         </goals>
                         <configuration>
                             <type>jar</type>
-                            <!--
-                            <excludeGroupIds></excludeGroupIds>
-                            <excludeArtifactIds></excludeArtifactIds>
-                            -->
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <outputDirectory>${project.build.directory}/dependency-classes/</outputDirectory>
                         </configuration>
@@ -1067,7 +1063,7 @@
                             <goal>unpack-dependencies</goal>
                         </goals>
                         <configuration>
-                            <classifier>sources</classifier>
+                            <type>java-source</type>
                             <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.velocity</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
