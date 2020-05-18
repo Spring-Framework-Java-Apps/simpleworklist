@@ -190,7 +190,10 @@
         <!-- SCM and Releasing with Maven -->
 		<maven.scm.version>1.11.2</maven.scm.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <!--
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        -->
 
         <!-- Maven plugins -->
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
@@ -198,7 +201,6 @@
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
         <maven-help-plugin.version>3.2.0</maven-help-plugin.version>
@@ -216,6 +218,7 @@
         <dependency-management-plugin.version>1.0.9.RELEASE</dependency-management-plugin.version>
         <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
         <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
+
 
         <!-- Maven Reports and Site -->
         <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
@@ -446,6 +449,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
                 <version>${maven-changes-plugin.version}</version>
+                <type>maven-plugin</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
             <dependency>
@@ -699,6 +708,11 @@
             <type>maven-plugin</type>
         </dependency>
         <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <type>maven-plugin</type>
+        </dependency>
+        <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-markdown</artifactId>
         </dependency>
@@ -753,6 +767,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-report-plugin</artifactId>
                     <version>${maven-surefire-report-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1092,6 +1111,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
