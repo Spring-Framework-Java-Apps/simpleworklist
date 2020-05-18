@@ -53,6 +53,11 @@ function run() {
     runDev
 }
 
+function release() {
+    ./mvnw -B -DskipTests clean
+
+}
+
 function main() {
     #build
     run
