@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -12,7 +10,7 @@
 
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.3.20-SNAPSHOT</version>
+    <version>2.3.20</version>
 	<packaging>jar</packaging>
 
     <name>simpleworklist</name>
@@ -170,7 +168,7 @@
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist.git</url>
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
         <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v2.3.20</tag>
     </scm>
 
     <issueManagement>
