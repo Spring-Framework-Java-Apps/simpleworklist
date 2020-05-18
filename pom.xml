@@ -181,6 +181,11 @@
             <id>simpleworklist.public_html</id>
             <url>file://${user.home}/public_html/p/simpleworklist</url>
         </site>
+        <repository>
+            <id>local</id>
+            <name>local</name>
+	        <url>file://home/tw/.m2/repository</url>
+        </repository>
     </distributionManagement>
 
     <properties>
