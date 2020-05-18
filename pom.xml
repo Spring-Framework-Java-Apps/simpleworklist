@@ -251,10 +251,10 @@
 
         <!-- Spring Boot and Spring Frameworks -->
         <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
-        <spring-session-bom.version>Corn-SR2</spring-session-bom.version>
-        <spring-data-releasetrain.version>Moore-SR6</spring-data-releasetrain.version>
-        <spring-framework.version>5.2.5.RELEASE</spring-framework.version>
-        <spring-security.version>5.2.2.RELEASE</spring-security.version>
+        <spring-session-bom.version>Dragonfruit-RELEASE</spring-session-bom.version>
+        <spring-data-releasetrain.version>Neumann-RELEASE</spring-data-releasetrain.version>
+        <spring-framework.version>5.2.6.RELEASE</spring-framework.version>
+        <spring-security.version>5.3.2.RELEASE</spring-security.version>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
 
         <!-- Unit and Integration Testing -->
