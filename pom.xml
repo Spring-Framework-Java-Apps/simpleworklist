@@ -258,12 +258,13 @@
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
 
         <!-- Unit and Integration Testing -->
-        <junit-jupiter.version>5.5.2</junit-jupiter.version>
+        <junit-jupiter.version>5.6.2</junit-jupiter.version>
         <xmlunit2.version>2.6.4</xmlunit2.version>
-        <htmlunit.version>2.36.0</htmlunit.version>
-        <hamcrest.version>2.1</hamcrest.version>
+        <xmlunit.version>2.6.4</xmlunit.version>
+        <htmlunit.version>2.40.0</htmlunit.version>
+        <hamcrest.version>2.2</hamcrest.version>
         <lombok.version>1.18.12</lombok.version>
-        <jsoup.version>1.8.3</jsoup.version>
+        <jsoup.version>1.13.1</jsoup.version>
 
         <skipTests>true</skipTests>
     </properties>
@@ -457,6 +458,22 @@
                 <groupId>org.apache.maven.doxia</groupId>
                 <artifactId>doxia-module-markdown</artifactId>
                 <version>${doxia-module-markdown.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-core</artifactId>
+                <version>${xmlunit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.htmlunit</groupId>
+                <artifactId>htmlunit</artifactId>
+                <version>${htmlunit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest</artifactId>
+                <version>${hamcrest.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
