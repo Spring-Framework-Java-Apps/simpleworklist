@@ -165,10 +165,10 @@
     </pluginRepositories>
 
     <scm>
-        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist.git</url>
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
         <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
-        <tag>HEAD</tag>
+        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
+        <tag>master</tag>
     </scm>
 
     <issueManagement>
