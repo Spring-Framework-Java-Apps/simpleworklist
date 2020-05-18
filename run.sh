@@ -58,8 +58,8 @@ function release() {
 }
 
 function main() {
-    release
-    #build
+    #release
+    build
     run
 }
 
