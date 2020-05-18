@@ -110,4 +110,5 @@ Fixed #241, Fixed #242, Fixed #243, Fixed #252
 
 #2.3.20
 Update Spring-Boot to 2.3.0 #255
+Fixed #255 - working on: Update Spring-Boot to 2.3.0
 
