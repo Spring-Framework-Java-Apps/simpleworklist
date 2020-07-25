@@ -2,24 +2,9 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="jcenter" />
-      <option name="name" value="JCenter Repository" />
-      <option name="url" value="https://jcenter.bintray.com/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="jboss-releases" />
-      <option name="name" value="JBoss Releases Repository" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/releases/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="sonatype-releases" />
-      <option name="name" value="Sonatype Repository" />
-      <option name="url" value="https://oss.sonatype.org/content/repositories/releases/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="hortonworks-releases" />
-      <option name="name" value="Hortonworks Repository" />
-      <option name="url" value="https://repo.hortonworks.com/content/repositories/releases/" />
+      <option name="id" value="spring-snapshots" />
+      <option name="name" value="spring-snapshots" />
+      <option name="url" value="https://repo.spring.io/snapshot" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="springio-plugins-release" />
@@ -27,39 +12,9 @@
       <option name="url" value="https://repo.spring.io/plugins-release/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Maven Central repository" />
-      <option name="url" value="https://repo1.maven.org/maven2" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="wso2-public" />
       <option name="name" value="WSO2 Public Repository" />
       <option name="url" value="https://maven.wso2.org/nexus/content/repositories/public/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="springio-libs-release" />
-      <option name="name" value="Spring Lib Release Repository" />
-      <option name="url" value="https://repo.spring.io/libs-release/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="adobe-public" />
-      <option name="name" value="AdobePublic Repository" />
-      <option name="url" value="https://repo.adobe.com/nexus/content/repositories/public/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="jboss.community" />
-      <option name="name" value="JBoss Community repository" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Central" />
-      <option name="url" value="https://repo1.maven.org/maven2/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="spring-libs-milestone" />
-      <option name="name" value="Spring Lib M Repository" />
-      <option name="url" value="https://repo.spring.io/libs-milestone/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="github" />
@@ -67,14 +22,9 @@
       <option name="url" value="https://maven.pkg.github.com/OWNER/REPOSITORY" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="spring-milestones" />
-      <option name="name" value="spring-milestones" />
-      <option name="url" value="https://repo.spring.io/milestone" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="spring-snapshots" />
-      <option name="name" value="spring-snapshots" />
-      <option name="url" value="https://repo.spring.io/snapshot" />
+      <option name="id" value="jcenter" />
+      <option name="name" value="JCenter Repository" />
+      <option name="url" value="https://jcenter.bintray.com/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss-ea" />
@@ -82,9 +32,59 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/ea/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="atlassian-public" />
       <option name="name" value="Atlassian Repository" />
       <option name="url" value="https://maven.atlassian.com/content/repositories/atlassian-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central" />
+      <option name="url" value="https://repo1.maven.org/maven2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sonatype-releases" />
+      <option name="name" value="Sonatype Repository" />
+      <option name="url" value="https://oss.sonatype.org/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-libs-milestone" />
+      <option name="name" value="Spring Lib M Repository" />
+      <option name="url" value="https://repo.spring.io/libs-milestone/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="springio-libs-release" />
+      <option name="name" value="Spring Lib Release Repository" />
+      <option name="url" value="https://repo.spring.io/libs-release/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss-releases" />
+      <option name="name" value="JBoss Releases Repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="hortonworks-releases" />
+      <option name="name" value="Hortonworks Repository" />
+      <option name="url" value="https://repo.hortonworks.com/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="adobe-public" />
+      <option name="name" value="AdobePublic Repository" />
+      <option name="url" value="https://repo.adobe.com/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-milestones" />
+      <option name="name" value="spring-milestones" />
+      <option name="url" value="https://repo.spring.io/milestone" />
     </remote-repository>
   </component>
 </project>

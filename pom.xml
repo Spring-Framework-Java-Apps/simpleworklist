@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
+        <version>2.3.2.RELEASE</version>
     </parent>
 
     <groupId>org.woehlke</groupId>
@@ -59,7 +59,7 @@
     </distributionManagement>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>14</java.version>
         <version.maven>3.6.3</version.maven>
 
         <!-- SCM and Releasing with Maven -->

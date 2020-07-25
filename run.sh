@@ -2,6 +2,14 @@
 
 source etc/setenv.sh
 
+function composeUp() {
+    ./mvnw docker-compose:up
+}
+
+function composeDown() {
+    ./mvnw docker-compose:down
+}
+
 function runDev() {
     ./mvnw
 }
