@@ -100,7 +100,7 @@
         <doxia-module-markdown.version>1.3</doxia-module-markdown.version>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0-M4</maven-surefire-report-plugin.version>
-        <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <doxia-module.version>1.9.1</doxia-module.version>
 
         <!-- Docker -->
