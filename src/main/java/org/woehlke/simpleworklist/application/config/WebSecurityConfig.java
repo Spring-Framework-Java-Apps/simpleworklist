@@ -20,9 +20,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.woehlke.simpleworklist.application.ApplicationProperties;
-import org.woehlke.simpleworklist.application.config.WebMvcConfig;
 import org.woehlke.simpleworklist.user.login.LoginSuccessHandler;
-import org.woehlke.simpleworklist.user.account.UserAccountSecurityService;
+import org.woehlke.simpleworklist.user.services.UserAccountSecurityService;
 
 
 @Configuration

@@ -16,31 +16,31 @@ set CLASSPATH=%MY_CLASSPATH_APP%;%MY_CLASSPATH_DEPS%
 echo %CLASSPATH%
 cd target\classes
 serialver org.woehlke.simpleworklist.application.language.Language > ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.task.TaskEnergy >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.task.TaskState >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.task.TaskTime >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.task.TaskEnergy >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.task.TaskState >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.task.TaskTime >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserRole >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.application.common.AuditModel >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.context.Context  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.project.Project  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.task.Task  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.context.Context  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.project.Project  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.task.Task  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.chat.User2UserMessage  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccount  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistration  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.application.breadcrumb.BreadcrumbItem  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.application.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbItem  >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb  >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.login.LoginForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.context.NewContextForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.context.NewContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.chat.User2UserMessageFormBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.searchRequest.SearchResult >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.account.UserAccountForm  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.context.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.account.UserChangeDefaultContextForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.application.language.UserChangeLanguageForm  >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.selfservice.UserChangeNameForm >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.account.UserChangeNameForm >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.user.account.UserChangePasswordForm >> ..\..\etc\serialversions.txt
 @rem serialver org.woehlke.simpleworklist.user.account.UserDetailsBean >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationForm >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.session.UserSessionBean >> ..\..\etc\serialversions.txt

@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
+import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
 @Slf4j
 @Controller

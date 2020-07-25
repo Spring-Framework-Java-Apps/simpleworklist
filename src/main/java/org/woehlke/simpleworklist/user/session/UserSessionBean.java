@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.woehlke.simpleworklist.task.TaskState;
+import org.woehlke.simpleworklist.domain.task.TaskState;
 
 import java.io.Serializable;
 

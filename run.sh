@@ -2,6 +2,14 @@
 
 source etc/setenv.sh
 
+function composeUp() {
+    ./mvnw docker-compose:up
+}
+
+function composeDown() {
+    ./mvnw docker-compose:down
+}
+
 function runDev() {
     ./mvnw
 }
@@ -53,8 +61,13 @@ function run() {
     runDev
 }
 
+function release() {
+    ./mvnw -B -DskipTests release:prepare && ./mvnw -B -DskipTests release:perform && ./mvnw -B -DskipTests release:clean
+}
+
 function main() {
-    #build
+    #release
+    build
     run
 }
 

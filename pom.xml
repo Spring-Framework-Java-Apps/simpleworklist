@@ -2,18 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.woehlke</groupId>
-    <artifactId>simpleworklist</artifactId>
-    <version>2.3.20-SNAPSHOT</version>
-	<packaging>jar</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.3.2.RELEASE</version>
     </parent>
+
+    <groupId>org.woehlke</groupId>
+    <artifactId>simpleworklist</artifactId>
+    <version>2.3.23-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
+
     <url>https://woehlke.org/p/simpleworklist</url>
     <inceptionYear>2012</inceptionYear>
 
@@ -21,6 +23,7 @@
         <name>Spring-Framework-Java-Apps</name>
         <url>https://github.com/Spring-Framework-Java-Apps/</url>
     </organization>
+
     <developers>
         <developer>
             <name>Thomas Wöhlke</name>
@@ -29,16 +32,25 @@
         </developer>
     </developers>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
     <scm>
-        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist.git</url>
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
         <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
-        <tag>HEAD</tag>
+        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
+        <tag>master</tag>
     </scm>
+
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/issues</url>
     </issueManagement>
+
     <distributionManagement>
         <site>
             <id>simpleworklist.public_html</id>
@@ -46,67 +58,50 @@
         </site>
     </distributionManagement>
 
-
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <version.maven>3.6.3</version.maven>
-        <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
-        <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
-        <!-- SCM and Releasing -->
-		<maven.scm.version>1.11.2</maven.scm.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+
+        <!-- SCM and Releasing with Maven -->
+        <maven.scm.version>1.11.2</maven.scm.version>
+        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+
         <!-- Maven plugins -->
         <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
-        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
         <maven-help-plugin.version>3.2.0</maven-help-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <maven-invoker-plugin.version>3.2.1</maven-invoker-plugin.version>
-        <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-shade-plugin.version>3.2.2</maven-shade-plugin.version>
-        <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
-        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <xml-maven-plugin.version>1.0.2</xml-maven-plugin.version>
-        <dependency-management-plugin.version>1.0.9.RELEASE</dependency-management-plugin.version>
+        <dependency-management-plugin.version>1.2.1.RELEASE</dependency-management-plugin.version>
         <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
         <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
 
-        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
-        <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
-        <thymeleaf-extras-springsecurity.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity.version>
-        <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
-
-        <spring-data-releasetrain.version>Moore-SR6</spring-data-releasetrain.version>
-        <spring-framework.version>5.2.5.RELEASE</spring-framework.version>
-        <spring-security.version>5.2.2.RELEASE</spring-security.version>
-        <spring-session-bom.version>Corn-SR2</spring-session-bom.version>
-
-        <junit-jupiter.version>5.5.2</junit-jupiter.version>
-        <xmlunit2.version>2.6.4</xmlunit2.version>
-        <htmlunit.version>2.36.0</htmlunit.version>
-        <hamcrest.version>2.1</hamcrest.version>
-        <lombok.version>1.18.12</lombok.version>
-
         <!-- Maven Reports and Site -->
-        <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
+        <maven-project-info-reports-plugin.version>3.1.0</maven-project-info-reports-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-jxr-plugin.version>3.0.0</maven-jxr-plugin.version>
-        <maven-pmd-plugin.version>3.11.0</maven-pmd-plugin.version>
-        <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <maven-surefire-report-plugin.version>3.0.0-M4</maven-surefire-report-plugin.version>
+        <spotbugs-maven-plugin.version>4.0.4</spotbugs-maven-plugin.version>
+        <doxia-module-markdown.version>1.9.1</doxia-module-markdown.version>
+        <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
+        <maven-surefire-report-plugin.version>3.0.0-M5</maven-surefire-report-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <doxia-module.version>1.9.1</doxia-module.version>
 
         <!-- Docker -->
         <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
@@ -114,8 +109,173 @@
         <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
         <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
 
+        <!-- Frontend Client Site -->
+        <webjars.jquery.version>3.4.1</webjars.jquery.version>
+        <webjars.bootstrap.version>4.4.1-1</webjars.bootstrap.version>
+        <webjars.font-awesome.version>5.13.0</webjars.font-awesome.version>
+        <webjars.ckeditor.version>4.14.0</webjars.ckeditor.version>
+
+        <!-- Frontend Server Site: Thymeleaf Templates -->
+        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+        <thymeleaf-spring-data-dialect.version>3.4.0</thymeleaf-spring-data-dialect.version>
+        <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
+        <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
+        <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
+        <thymeleaf-extras-springsecurity.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity.version>
+        <thymeleaf-testing.version>3.0.4.RELEASE</thymeleaf-testing.version>
+
+        <!-- Spring Boot and Spring Frameworks -->
+        <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
+        <spring-session-bom.version>Dragonfruit-RELEASE</spring-session-bom.version>
+        <spring-data-releasetrain.version>Neumann-RELEASE</spring-data-releasetrain.version>
+        <spring-framework.version>5.2.6.RELEASE</spring-framework.version>
+        <spring-security.version>5.3.2.RELEASE</spring-security.version>
+        <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
+
+        <!-- Unit and Integration Testing -->
+        <junit-jupiter.version>5.6.2</junit-jupiter.version>
+        <xmlunit2.version>2.6.4</xmlunit2.version>
+        <xmlunit.version>2.6.4</xmlunit.version>
+        <htmlunit.version>2.40.0</htmlunit.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <lombok.version>1.18.12</lombok.version>
+        <jsoup.version>1.13.1</jsoup.version>
+
         <skipTests>true</skipTests>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>JCenter Repository</name>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>sonatype-releases</id>
+            <name>Sonatype Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>springio-plugins-release</id>
+            <name>Spring Plugins Repository</name>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </repository>
+        <repository>
+            <id>springio-libs-release</id>
+            <name>Spring Lib Release Repository</name>
+            <url>https://repo.spring.io/libs-release/</url>
+        </repository>
+        <repository>
+            <id>spring-libs-milestone</id>
+            <name>Spring Lib M Repository</name>
+            <url>https://repo.spring.io/libs-milestone/</url>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <name>Atlassian Repository</name>
+            <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
+        </repository>
+        <repository>
+            <id>jboss-releases</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>jboss-ea</id>
+            <name>JBossEA Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/ea/</url>
+        </repository>
+        <repository>
+            <id>wso2-public</id>
+            <name>WSO2 Public Repository</name>
+            <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
+        </repository>
+        <repository>
+            <id>hortonworks-releases</id>
+            <name>Hortonworks Repository</name>
+            <url>https://repo.hortonworks.com/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>adobe-public</id>
+            <name>AdobePublic Repository</name>
+            <url>https://repo.adobe.com/nexus/content/repositories/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter Repository</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>central</id>
+            <name>Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>sonatype-releases</id>
+            <name>Sonatype Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>springio-plugins-release</id>
+            <name>Spring Plugins Repository</name>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>springio-libs-release</id>
+            <name>Spring Lib Release Repository</name>
+            <url>https://repo.spring.io/libs-release/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-libs-milestone</id>
+            <name>Spring Lib M Repository</name>
+            <url>https://repo.spring.io/libs-milestone/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>atlassian-public</id>
+            <name>Atlassian Repository</name>
+            <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-releases</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-ea</id>
+            <name>JBossEA Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/ea/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>wso2-public</id>
+            <name>WSO2 Public Repository</name>
+            <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>hortonworks-releases</id>
+            <name>Hortonworks Repository</name>
+            <url>https://repo.hortonworks.com/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>adobe-public</id>
+            <name>AdobePublic Repository</name>
+            <url>https://repo.adobe.com/nexus/content/repositories/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencyManagement>
         <dependencies>
@@ -126,29 +286,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--
-       <dependency>
-           <groupId>org.springframework</groupId>
-           <artifactId>spring-framework-bom</artifactId>
-           <version>${spring-framework.version}</version>
-           <type>pom</type>
-           <scope>import</scope>
-       </dependency>
-       <dependency>
-           <groupId>org.springframework.data</groupId>
-           <artifactId>spring-data-releasetrain</artifactId>
-           <version>${spring-data-releasetrain.version}</version>
-           <type>pom</type>
-           <scope>import</scope>
-       </dependency>
-       <dependency>
-           <groupId>org.springframework.security</groupId>
-           <artifactId>spring-security-bom</artifactId>
-           <version>${spring-security.version}</version>
-           <type>pom</type>
-           <scope>import</scope>
-       </dependency>
-       -->
             <dependency>
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-bom</artifactId>
@@ -156,63 +293,40 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <!-- webjars -->
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery</artifactId>
-                <version>3.4.1</version>
+                <version>${webjars.jquery.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap</artifactId>
-                <version>4.4.1-1</version>
+                <version>${webjars.bootstrap.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>font-awesome</artifactId>
-                <version>5.13.0</version>
+                <version>${webjars.font-awesome.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>ckeditor</artifactId>
-                <version>4.14.0</version>
+                <version>${webjars.ckeditor.version}</version>
             </dependency>
-<!--
-            <dependency>
-                <groupId>org.thymeleaf</groupId>
-                <artifactId>thymeleaf</artifactId>
-                <version>${thymeleaf.version}</version>
-            </dependency>
-            -->
+            <!-- Thymeleaf -->
             <dependency>
                 <groupId>org.thymeleaf</groupId>
                 <artifactId>thymeleaf-testing</artifactId>
-                <version>3.0.4.RELEASE</version>
+                <version>${thymeleaf-testing.version}</version>
                 <scope>test</scope>
             </dependency>
-            <!--
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>${thymeleaf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-java8time</artifactId>
-            <version>${thymeleaf-extras-java8time.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            <version>${thymeleaf-extras-springsecurity.version}</version>
-        </dependency>
-        -->
             <dependency>
                 <groupId>io.github.jpenren</groupId>
                 <artifactId>thymeleaf-spring-data-dialect</artifactId>
-                <version>3.4.0</version>
+                <version>${thymeleaf-spring-data-dialect.version}</version>
             </dependency>
-
+            <!-- compile -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -223,7 +337,7 @@
             <dependency>
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
-                <version>1.8.3</version>
+                <version>${jsoup.version}</version>
             </dependency>
 
             <dependency>
@@ -341,6 +455,27 @@
                 <artifactId>maven-changes-plugin</artifactId>
                 <version>${maven-changes-plugin.version}</version>
                 <type>maven-plugin</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <type>maven-plugin</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.doxia</groupId>
+                <artifactId>doxia-module-markdown</artifactId>
+                <version>${doxia-module-markdown.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-core</artifactId>
+                <version>${xmlunit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.htmlunit</groupId>
+                <artifactId>htmlunit</artifactId>
+                <version>${htmlunit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -587,6 +722,15 @@
             <artifactId>maven-changes-plugin</artifactId>
             <type>maven-plugin</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -639,6 +783,63 @@
                     <artifactId>maven-surefire-report-plugin</artifactId>
                     <version>${maven-surefire-report-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-itext</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-latex</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-rtf</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-xdoc</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-skin-model</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-site-renderer</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-test-docs</artifactId>
+                            <version>${doxia-module.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -658,25 +859,45 @@
                                     <excludes>
                                         <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
                                     </excludes>
-                                    <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
+                                    <message>
+                                        Please consider using the maven-invoker-plugin
+                                        (http://maven.apache.org/plugins/maven-invoker-plugin/)!
+                                    </message>
                                 </bannedPlugins>
+
                                 <requireMavenVersion>
                                     <version>${version.maven}</version>
                                 </requireMavenVersion>
+
                                 <requireJavaVersion>
                                     <version>${java.version}</version>
                                 </requireJavaVersion>
-                                <!--
                                 <requireOS>
                                     <family>unix</family>
                                 </requireOS>
                                 <requireFilesExist>
                                     <files>
+                                        <file>${project.basedir}/README.md</file>
+                                        <file>${project.basedir}/LICENSE</file>
                                         <file>${project.basedir}/docker-compose.yml</file>
+                                        <file>${project.basedir}/app.json</file>
+                                        <file>${project.basedir}/_config.yml</file>
+                                        <file>${project.basedir}/Procfile</file>
+                                        <file>${project.basedir}/src/site/markdown/Requirements.md</file>
+                                        <file>${project.basedir}/src/site/markdown/Requirements_Nonfunctional.md</file>
+                                        <file>${project.basedir}/src/site/markdown/About.md</file>
+                                        <file>${project.basedir}/src/site/site.xml</file>
+                                        <file>${project.basedir}/run.sh</file>
+                                        <!--
                                         <file>${project.basedir}/etc/setenv.sh</file>
+                                        -->
+                                        <file>${project.basedir}/etc/psql.sh</file>
+                                        <file>${project.basedir}/etc/docker-start.sh</file>
+                                        <file>${project.basedir}/etc/docker-stop.sh</file>
+                                        <file>${project.basedir}/etc/db/db-createdb-and-user-linux.sql</file>
+                                        <file>${project.basedir}/etc/db/db-createdb-and-user-win10.sql</file>
                                     </files>
                                 </requireFilesExist>
-                                -->
                             </rules>
                         </configuration>
                     </execution>
@@ -702,69 +923,12 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.dkanejs.maven.plugins</groupId>
-                <artifactId>docker-compose-maven-plugin</artifactId>
-                <configuration>
-                    <composeFile>${project.basedir}/docker-compose.yml</composeFile>
-                    <verbose>${docker-compose-maven-plugin.verbose}</verbose>
-                    <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
-                    <removeVolumes>true</removeVolumes>
-                    <ignorePullFailures>true</ignorePullFailures>
-                    <detachedMode>true</detachedMode>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-help-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <linksource>true</linksource>
-                    <maxmemory>1024m</maxmemory>
-                    <source>${java.version}</source>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <addResources>true</addResources>
                 </configuration>
                 <executions>
-                    <!--
-                    <execution>
-                        <id>pre-integration-test</id>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${skipTests}</skip>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>post-integration-test</id>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${skipTests}</skip>
-                        </configuration>
-                    </execution>
-                    -->
                     <execution>
                         <id>id-build-info</id>
                         <goals>
@@ -780,6 +944,18 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.dkanejs.maven.plugins</groupId>
+                <artifactId>docker-compose-maven-plugin</artifactId>
+                <configuration>
+                    <composeFile>${project.basedir}/docker-compose.yml</composeFile>
+                    <verbose>${docker-compose-maven-plugin.verbose}</verbose>
+                    <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
+                    <removeVolumes>true</removeVolumes>
+                    <ignorePullFailures>true</ignorePullFailures>
+                    <detachedMode>true</detachedMode>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -805,15 +981,9 @@
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <outputFile>${project.build.outputDirectory}/classpath.txt</outputFile>
                             <failOnWarning>false</failOnWarning>
+                            <type>java-source,jar</type>
                             <ignoredDependencies>
                                 <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
-                                <!--
-                                <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
-                                -->
                             </ignoredDependencies>
                             <ignoredUsedUndeclaredDependencies>
                                 <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
@@ -866,6 +1036,22 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>get-dependency-classes</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                            <goal>resolve-plugins</goal>
+                            <goal>collect</goal>
+                            <goal>copy-dependencies</goal>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <type>jar</type>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                            <outputDirectory>${project.build.directory}/dependency-classes/</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>get-dependency-sources</id>
                         <phase>site</phase>
                         <goals>
@@ -877,9 +1063,9 @@
                             <goal>unpack-dependencies</goal>
                         </goals>
                         <configuration>
-                            <classifier>sources</classifier>
-                            <excludeGroupIds>org.webjars</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core</excludeArtifactIds>
+                            <type>java-source</type>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.velocity</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
                         </configuration>
@@ -898,6 +1084,56 @@
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <linksource>true</linksource>
+                    <maxmemory>1024m</maxmemory>
+                    <source>${java.version}</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <configuration>
+                    <linkJavadoc>true</linkJavadoc>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
@@ -927,33 +1163,36 @@
 
     <reporting>
         <plugins>
+            <!-- Same like Build or Inherited from Build -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <inherited>true</inherited>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-invoker-plugin</artifactId>
-                <configuration>
-                    <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                    <settingsFile>src/it/settings.xml</settingsFile>
-                    <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
-                    <postBuildHookScript>verify</postBuildHookScript> <!-- no extension required -->
-                </configuration>
+                <inherited>true</inherited>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <inherited>true</inherited>
                 <configuration>
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <groupId>com.dkanejs.maven.plugins</groupId>
+                <artifactId>docker-compose-maven-plugin</artifactId>
+                <inherited>true</inherited>
                 <configuration>
-                    <skipEmptyReport>true</skipEmptyReport>
-                    <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+                    <composeFile>${project.basedir}/docker-compose.yml</composeFile>
+                    <verbose>${docker-compose-maven-plugin.verbose}</verbose>
+                    <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
+                    <removeVolumes>true</removeVolumes>
+                    <ignorePullFailures>true</ignorePullFailures>
+                    <detachedMode>true</detachedMode>
                 </configuration>
             </plugin>
             <plugin>
@@ -963,23 +1202,17 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changes-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <githubAPIScheme>https</githubAPIScheme>
-                    <githubAPIPort>443</githubAPIPort>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArgs>
+                        <arg>-Xlint:all,-options,-path</arg>
+                    </compilerArgs>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
-                <reportSets>
-                    <reportSet>
-                        <id>id-github-report</id>
-                        <reports>
-                            <report>github-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -996,6 +1229,80 @@
                 <configuration>
                     <linkJavadoc>true</linkJavadoc>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <includes>
+                        <include>**/*Tests.java</include>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/Abstract*.java</exclude>
+                    </excludes>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>default</spring.profiles.active>
+                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>default</spring.profiles.active>
+                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <!-- Site Reports -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <configuration>
+                    <skipEmptyReport>true</skipEmptyReport>
+                    <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <configuration>
+                    <githubAPIScheme>https</githubAPIScheme>
+                    <githubAPIPort>443</githubAPIPort>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>id-github-report</id>
+                        <reports>
+                            <report>github-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1027,39 +1334,6 @@
                         <excludeRoot>target</excludeRoot>
                     </excludeRoots>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>${skipTests}</skipTests>
-                    <includes>
-                        <include>**/*Tests.java</include>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/Abstract*.java</exclude>
-                    </excludes>
-                    <systemPropertyVariables>
-                        <spring.profiles.active>default</spring.profiles.active>
-                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <skipTests>${skipTests}</skipTests>
-                    <systemPropertyVariables>
-                        <spring.profiles.active>default</spring.profiles.active>
-                        <skipIntegrationTests>${skipTests}</skipIntegrationTests>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

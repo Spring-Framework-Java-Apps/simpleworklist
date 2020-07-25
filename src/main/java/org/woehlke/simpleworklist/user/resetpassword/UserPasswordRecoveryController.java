@@ -1,8 +1,6 @@
 package org.woehlke.simpleworklist.user.resetpassword;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.register.UserRegistrationForm;
-import org.woehlke.simpleworklist.user.account.UserAccountService;
+import org.woehlke.simpleworklist.user.services.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
+
 import javax.validation.Valid;
 
 @Slf4j
