@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="postgres@127.0.0.1">
-  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.17">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.19">
     <root id="1">
-      <ServerVersion>10.12</ServerVersion>
+      <ServerVersion>12.3</ServerVersion>
     </root>
-    <database id="2" parent="1" name="postgres">
+    <database id="2" parent="1" name="artifactory"/>
+    <database id="3" parent="1" name="bloodmoney"/>
+    <database id="4" parent="1" name="postgres">
       <Current>1</Current>
     </database>
-    <database id="3" parent="1" name="simpleworklist"/>
-    <database id="4" parent="1" name="simpleworklist_branch_master"/>
-    <database id="5" parent="1" name="simpleworklist_default"/>
-    <database id="6" parent="1" name="simpleworklist_heroku"/>
-    <database id="7" parent="1" name="simpleworklist_qa"/>
-    <database id="8" parent="1" name="simpleworklist_testing"/>
-    <database id="9" parent="1" name="tw"/>
   </database-model>
 </dataSource>
