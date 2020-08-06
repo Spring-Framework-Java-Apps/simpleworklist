@@ -65,10 +65,15 @@ function release() {
     ./mvnw -B -DskipTests release:prepare && ./mvnw -B -DskipTests release:perform && ./mvnw -B -DskipTests release:clean
 }
 
+function firstSetup() {
+    ./mvnw clean install site -DskipTests=true
+}
+
 function main() {
-    #release
-    build
-    run
+    ##release
+    #build
+    #run
+    firstSetup
 }
 
 main
