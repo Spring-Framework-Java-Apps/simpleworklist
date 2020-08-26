@@ -13,7 +13,7 @@
 * Fixed #79, Fixed #80, Fixed #81, Fixed #100, Fixed #101
 
 ## BUGS:
-*  #101 ERROR: relation "spring_session" does not exist
+*  Issue #101 ERROR: relation "spring_session" does not exist
 ````
  Unexpected error occurred in scheduled task
 

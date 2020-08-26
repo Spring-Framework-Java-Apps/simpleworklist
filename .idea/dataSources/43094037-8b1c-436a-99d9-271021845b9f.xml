@@ -2,12 +2,56 @@
 <dataSource name="postgres@127.0.0.1">
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.19">
     <root id="1">
-      <ServerVersion>12.3</ServerVersion>
+      <ServerVersion>12.4</ServerVersion>
     </root>
     <database id="2" parent="1" name="artifactory"/>
     <database id="3" parent="1" name="bloodmoney"/>
-    <database id="4" parent="1" name="postgres">
+    <database id="4" parent="1" name="bloodmoneyref"/>
+    <database id="5" parent="1" name="kandidaten"/>
+    <database id="6" parent="1" name="postgres">
       <Current>1</Current>
     </database>
+    <database id="7" parent="1" name="simpleworklist"/>
+    <database id="8" parent="1" name="simpleworklist_branch_master"/>
+    <database id="9" parent="1" name="simpleworklist_default"/>
+    <database id="10" parent="1" name="simpleworklist_heroku"/>
+    <database id="11" parent="1" name="simpleworklist_qa"/>
+    <database id="12" parent="1" name="simpleworklist_testing"/>
+    <database id="13" parent="1" name="tw"/>
+    <schema id="14" parent="6" name="information_schema"/>
+    <schema id="15" parent="6" name="pg_catalog"/>
+    <schema id="16" parent="6" name="public">
+      <Current>1</Current>
+    </schema>
+    <schema id="17" parent="7" name="information_schema"/>
+    <schema id="18" parent="7" name="pg_catalog"/>
+    <schema id="19" parent="7" name="public">
+      <Current>1</Current>
+    </schema>
+    <schema id="20" parent="8" name="information_schema"/>
+    <schema id="21" parent="8" name="pg_catalog"/>
+    <schema id="22" parent="8" name="public">
+      <Current>1</Current>
+    </schema>
+    <schema id="23" parent="9" name="information_schema"/>
+    <schema id="24" parent="9" name="pg_catalog"/>
+    <schema id="25" parent="9" name="public">
+      <Current>1</Current>
+    </schema>
+    <schema id="26" parent="10" name="information_schema"/>
+    <schema id="27" parent="10" name="pg_catalog"/>
+    <schema id="28" parent="10" name="public">
+      <Current>1</Current>
+    </schema>
+    <schema id="29" parent="11" name="information_schema"/>
+    <schema id="30" parent="11" name="pg_catalog"/>
+    <schema id="31" parent="11" name="public">
+      <Current>1</Current>
+    </schema>
+    <schema id="32" parent="12" name="information_schema"/>
+    <schema id="33" parent="12" name="pg_catalog"/>
+    <schema id="34" parent="12" name="public">
+      <Current>1</Current>
+    </schema>
   </database-model>
 </dataSource>
