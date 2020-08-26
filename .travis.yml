@@ -13,7 +13,7 @@ script:
   - # ./mvnw -e -DskipTests=true -B -V docker-compose:up
   - # docker ps
   - ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage
-  - # ./mvnw -e -DskipTests=true -B -V site
+  - ./mvnw -e -DskipTests=true -B -V site
   - # ./mvnw docker-compose:down
   - # docker ps
 notifications:
