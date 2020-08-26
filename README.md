@@ -31,7 +31,7 @@ SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 
 ## URLs:
 * Heroku Deployment: [simpleworklist.herokuapp.com/](https://simpleworklist.herokuapp.com/)
-* For Developers: [localhost:5000](http://localhost:5000/)
+* For Developers: [localhost:8080](http://localhost:8080/)
 
 ## Up and Running - Deployment
 * A Java Web App, which can easily be deployed to Heroku.
