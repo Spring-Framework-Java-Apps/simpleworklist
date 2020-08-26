@@ -117,19 +117,20 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #259 Update Spring-Boot to current Version 2.3.3 
 
 ## 2.3.23
-* Issue #274 add Annotations to suppress Deprecation Warnings
+* fixed #274 add Annotations to suppress Deprecation Warnings
 * fixed #273 resort Issues, Milestones and Releases
 * Issue #272 prepare Release 2.3.23
-* Issue #271 Milestone Burndown: Update Spring-Boot to current Version 2.3.3
+* fixed #271 Milestone Burndown: Update Spring-Boot to current Version 2.3.3
 * fixed #270 Update to Spring Framework for Spring-Boot 2.3.3
-* Issue #269 mvnw docker-compose:up
+* fixed #269 mvnw docker-compose:up
 * fixed #268 update webjars
 * fixed #267 Update to Spring Security xyz for Spring-Boot 2.3.3
 * fixed #266 Update to Spring Data Bom Neumann-SR3 for Spring-Boot 2.3.3
-* Issue #265 make release with maven plugin
 * fixed #264 setup travis-ci
 * fixed #263 setup github-ci
 * fixed #262 setup on my current Linux Machines
 * fixed #260 Compare pom.xml and others to bloodmoney spring-webapp
 * fixed #259 Update Spring-Boot to current Version 2.3.3 
+
+* Issue #265 make release with maven plugin
 
