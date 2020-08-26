@@ -104,9 +104,14 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * Update Spring-Boot to 2.3.0 #255
 * Fixed #255 - working on: Update Spring-Boot to 2.3.0
 
+## 26.08.2020
+* fixed #273 resort Issues, Milestones and Releases
+* Issue #268 update webjars
+* Issue #262 setup on my current Linux Machines
+
 ## 2.3.23
 * Issue #274 add Annotations to suppress Deprecation Warnings
-* Issue #273 resort Issues, Milestones and Releases
+* fixed #273 resort Issues, Milestones and Releases
 * Issue #272 prepare Release 2.3.23
 * Issue #271 Milestone Burndown: Update Spring-Boot to current Version 2.3.3
 * Issue #270 Update to Spring Framework for Spring-Boot 2.3.3

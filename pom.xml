@@ -2,28 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.woehlke</groupId>
+    <artifactId>simpleworklist</artifactId>
+    <version>2.3.23-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.2.RELEASE</version>
     </parent>
 
-    <groupId>org.woehlke</groupId>
-    <artifactId>simpleworklist</artifactId>
-    <version>2.3.23-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <scm>
+        <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
+        <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
+        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
+        <tag>master</tag>
+    </scm>
 
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
-
-    <url>https://woehlke.org/p/simpleworklist</url>
+    <url>https://woehlke.org/java/simpleworklist</url>
     <inceptionYear>2012</inceptionYear>
 
     <organization>
         <name>Spring-Framework-Java-Apps</name>
         <url>https://github.com/Spring-Framework-Java-Apps/</url>
     </organization>
-
     <developers>
         <developer>
             <name>Thomas Wöhlke</name>
@@ -39,13 +44,6 @@
         </license>
     </licenses>
 
-    <scm>
-        <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
-        <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
-        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
-        <tag>master</tag>
-    </scm>
-
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/issues</url>
@@ -54,8 +52,18 @@
     <distributionManagement>
         <site>
             <id>simpleworklist.public_html</id>
-            <url>file://${user.home}/public_html/p/simpleworklist</url>
+            <url>file://${user.home}/public_html/java/simpleworklist</url>
         </site>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>tw-thinkpad-snapshots</name>
+            <url>file://${user.home}/public_html/java/libs-snapshot-local</url>
+        </snapshotRepository>
+        <repository>
+            <id>central</id>
+            <name>tw-thinkpad-releases</name>
+            <url>file://${user.home}/public_html/java/libs-release-local</url>
+        </repository>
     </distributionManagement>
 
     <properties>
@@ -102,16 +110,27 @@
         <doxia-module.version>1.9.1</doxia-module.version>
 
         <!-- Docker -->
-        <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
+        <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
         <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
         <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
         <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
+        <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
+        <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
+
+        <!-- Webjars -->
+        <webjars.bootstrap.version>4.5.2</webjars.bootstrap.version>
+        <webjars.jquery.version>3.5.1</webjars.jquery.version>
+        <webjars.popper.js.version>1.16.0</webjars.popper.js.version>
+        <webjars.font-awesome.version>5.14.0</webjars.font-awesome.version>
+        <webjars.ckeditor.version>18.0.0</webjars.ckeditor.version>
 
         <!-- Frontend Client Site -->
+        <!--
         <webjars.jquery.version>3.4.1</webjars.jquery.version>
         <webjars.bootstrap.version>4.4.1-1</webjars.bootstrap.version>
         <webjars.font-awesome.version>5.13.0</webjars.font-awesome.version>
         <webjars.ckeditor.version>4.14.0</webjars.ckeditor.version>
+        -->
 
         <!-- Frontend Server Site: Thymeleaf Templates -->
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
@@ -124,11 +143,14 @@
 
         <!-- Spring Boot and Spring Frameworks -->
         <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
-        <spring-session-bom.version>Dragonfruit-RELEASE</spring-session-bom.version>
+
         <spring-data-releasetrain.version>Neumann-SR2</spring-data-releasetrain.version>
-        <spring-framework.version>5.2.6.RELEASE</spring-framework.version>
+        <spring-session-bom.version>Dragonfruit-RELEASE</spring-session-bom.version>
+        <spring-framework.version>5.2.8.RELEASE</spring-framework.version>
         <spring-security.version>5.3.2.RELEASE</spring-security.version>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
+
+        <opencsv.version>5.2</opencsv.version>
 
         <!-- Unit and Integration Testing -->
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
@@ -846,11 +868,9 @@
                                         (http://maven.apache.org/plugins/maven-invoker-plugin/)!
                                     </message>
                                 </bannedPlugins>
-
                                 <requireMavenVersion>
                                     <version>${version.maven}</version>
                                 </requireMavenVersion>
-
                                 <requireJavaVersion>
                                     <version>${java.version}</version>
                                 </requireJavaVersion>
@@ -863,7 +883,7 @@
                                     <files>
                                         <file>${project.basedir}/README.md</file>
                                         <file>${project.basedir}/LICENSE</file>
-                                        <file>${project.basedir}/docker-compose.yml</file>
+                                        <file>${project.basedir}/src/main/docker/docker-compose.yml</file>
                                         <file>${project.basedir}/app.json</file>
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
@@ -871,15 +891,13 @@
                                         <file>${project.basedir}/src/site/markdown/Requirements_Nonfunctional.md</file>
                                         <file>${project.basedir}/src/site/markdown/About.md</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
+                                        <file>${project.basedir}/build.sh</file>
                                         <file>${project.basedir}/run.sh</file>
-                                        <!--
-                                        <file>${project.basedir}/etc/setenv.sh</file>
-                                        -->
-                                        <file>${project.basedir}/etc/psql.sh</file>
-                                        <file>${project.basedir}/etc/docker-start.sh</file>
-                                        <file>${project.basedir}/etc/docker-stop.sh</file>
-                                        <file>${project.basedir}/etc/db/db-createdb-and-user-linux.sql</file>
-                                        <file>${project.basedir}/etc/db/db-createdb-and-user-win10.sql</file>
+                                        <file>${project.basedir}/src/main/bash/psql.sh</file>
+                                        <file>${project.basedir}/docker-start.sh</file>
+                                        <file>${project.basedir}/docker-stop.sh</file>
+                                        <file>${project.basedir}/src/main/sql/db-createdb-and-user-linux.sql</file>
+                                        <file>${project.basedir}/src/main/sql/db-createdb-and-user-win10.sql</file>
                                     </files>
                                 </requireFilesExist>
                             </rules>
@@ -933,12 +951,12 @@
                 <groupId>com.dkanejs.maven.plugins</groupId>
                 <artifactId>docker-compose-maven-plugin</artifactId>
                 <configuration>
-                    <composeFile>${project.basedir}/docker-compose.yml</composeFile>
+                    <composeFile>${project.basedir}/src/main/docker/docker-compose.yml</composeFile>
                     <verbose>${docker-compose-maven-plugin.verbose}</verbose>
                     <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
-                    <removeVolumes>true</removeVolumes>
-                    <ignorePullFailures>true</ignorePullFailures>
-                    <detachedMode>true</detachedMode>
+                    <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
+                    <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
+                    <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
                 </configuration>
             </plugin>
             <plugin>
