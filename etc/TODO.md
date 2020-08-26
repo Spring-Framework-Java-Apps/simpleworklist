@@ -119,8 +119,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #260 Compare pom.xml and others to bloodmoney spring-webapp
 * fixed #259 Update Spring-Boot to current Version 2.3.3 
 * fixed #275 setup dev Databases enhancement
-
-* Issue #272 prepare Release 2.3.23
+* fixed #272 prepare Release 2.3.23
 * Issue #265 make release with maven plugin
 
 
