@@ -10,10 +10,6 @@ function composeDown() {
     ./mvnw docker-compose:down
 }
 
-function runDev() {
-    ./mvnw
-}
-
 function runTest() {
     ./mvnw -B -DskipTests=false clean dependency:list install --file pom.xml
 }
@@ -46,14 +42,12 @@ function setup() {
    setupHeroku
 }
 
-function build() {
-    buildLikeHerokuWithSite
-    #buildLikeHeroku
-    #runGithubTestBuild
-}
-
 function testing() {
    runTest
+}
+
+function runDev() {
+    ./mvnw
 }
 
 function run() {
@@ -61,19 +55,9 @@ function run() {
     runDev
 }
 
-function release() {
-    ./mvnw -B -DskipTests release:prepare && ./mvnw -B -DskipTests release:perform && ./mvnw -B -DskipTests release:clean
-}
-
-function firstSetup() {
-    ./mvnw clean install site -DskipTests=true
-}
-
 function main() {
     ##release
-    #build
-    #run
-    firstSetup
+    run
 }
 
 main
