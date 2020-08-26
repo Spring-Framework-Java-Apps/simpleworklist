@@ -27,7 +27,7 @@ function setupTravis() {
     ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources
     ./mvnw -e -DskipTests=true -B -V dependency:tree
     ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage
-    ./mvnw -e -DskipTests=true -B -V site
+    #./mvnw -e -DskipTests=true -B -V site
 }
 
 function main() {
