@@ -2,17 +2,22 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="postgres@127.0.0.1" uuid="43094037-8b1c-436a-99d9-271021845b9f">
-      <database-info product="PostgreSQL" version="10.12" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="10.12" exact-driver-version="42.2">
+      <database-info product="PostgreSQL" version="12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="12.4" exact-driver-version="42.2">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>postgres</user-name>
-      <schema-mapping />
-      <legacy-introspector>true</legacy-introspector>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" negative="1">
+            <node kind="schema" negative="1" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
     <data-source name="tw@localhost" uuid="fd6f0687-39ef-4c57-af79-68255e44c16a">
-      <database-info product="PostgreSQL" version="10.12" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="10.12" exact-driver-version="42.2">
+      <database-info product="PostgreSQL" version="12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="12.4" exact-driver-version="42.2">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
@@ -20,17 +25,38 @@
       <user-name>tw</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="database" qname="@">
+          <node kind="database">
+            <name qname="@" />
+            <name qname="tw" />
             <node kind="schema" qname="@" />
           </node>
         </introspection-scope>
       </schema-mapping>
     </data-source>
     <data-source name="simpleworklist@localhost" uuid="a4579979-885b-41d4-b0b0-f3b5b3d5c6f2">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
+      <database-info product="PostgreSQL" version="12.4 (Ubuntu 12.4-0ubuntu0.20.04.1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="12.4" exact-driver-version="42.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>simpleworklist</user-name>
-      <schema-mapping />
+      <schema-mapping>
+        <introspection-scope>
+          <node negative="1">
+            <node kind="database" qname="@">
+              <node kind="schema" qname="@" />
+            </node>
+            <node kind="database">
+              <name qname="simpleworklist" />
+              <name qname="simpleworklist_branch_master" />
+              <name qname="simpleworklist_default" />
+              <name qname="simpleworklist_heroku" />
+              <name qname="simpleworklist_qa" />
+              <name qname="simpleworklist_testing" />
+            </node>
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
   </component>
 </project>

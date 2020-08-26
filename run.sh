@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source etc/setenv.sh
+source src/main/bash/setenv.sh
 
 function composeUp() {
     ./mvnw docker-compose:up
@@ -8,10 +8,6 @@ function composeUp() {
 
 function composeDown() {
     ./mvnw docker-compose:down
-}
-
-function runDev() {
-    ./mvnw
 }
 
 function runTest() {
@@ -46,14 +42,12 @@ function setup() {
    setupHeroku
 }
 
-function build() {
-    buildLikeHerokuWithSite
-    #buildLikeHeroku
-    #runGithubTestBuild
-}
-
 function testing() {
    runTest
+}
+
+function runDev() {
+    ./mvnw
 }
 
 function run() {
@@ -61,13 +55,8 @@ function run() {
     runDev
 }
 
-function release() {
-    ./mvnw -B -DskipTests release:prepare && ./mvnw -B -DskipTests release:perform && ./mvnw -B -DskipTests release:clean
-}
-
 function main() {
-    #release
-    build
+    ##release
     run
 }
 

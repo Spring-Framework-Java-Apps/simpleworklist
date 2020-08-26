@@ -92,6 +92,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return this.userAccountSecurityService;
     }
 
+    /**
+     * https://bcrypt-generator.com/
+     * @return PasswordEncoder encoder
+     */
     @Bean
     public PasswordEncoder encoder(){
         int strength = applicationProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();

@@ -2,28 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.woehlke</groupId>
+    <artifactId>simpleworklist</artifactId>
+    <version>2.3.24-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.2.RELEASE</version>
+        <version>2.3.3.RELEASE</version>
     </parent>
 
-    <groupId>org.woehlke</groupId>
-    <artifactId>simpleworklist</artifactId>
-    <version>2.3.23-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <scm>
+        <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
+        <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
+        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
+        <tag>master</tag>
+    </scm>
 
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
-
-    <url>https://woehlke.org/p/simpleworklist</url>
+    <url>https://woehlke.org/java/simpleworklist</url>
     <inceptionYear>2012</inceptionYear>
 
     <organization>
         <name>Spring-Framework-Java-Apps</name>
         <url>https://github.com/Spring-Framework-Java-Apps/</url>
     </organization>
-
     <developers>
         <developer>
             <name>Thomas Wöhlke</name>
@@ -39,13 +44,6 @@
         </license>
     </licenses>
 
-    <scm>
-        <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
-        <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
-        <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
-        <tag>master</tag>
-    </scm>
-
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/issues</url>
@@ -54,12 +52,22 @@
     <distributionManagement>
         <site>
             <id>simpleworklist.public_html</id>
-            <url>file://${user.home}/public_html/p/simpleworklist</url>
+            <url>file://${user.home}/public_html/java/simpleworklist</url>
         </site>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>tw-thinkpad-snapshots</name>
+            <url>file://${user.home}/public_html/java/libs-snapshot-local</url>
+        </snapshotRepository>
+        <repository>
+            <id>central</id>
+            <name>tw-thinkpad-releases</name>
+            <url>file://${user.home}/public_html/java/libs-release-local</url>
+        </repository>
     </distributionManagement>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>13</java.version>
         <version.maven>3.6.3</version.maven>
 
         <!-- SCM and Releasing with Maven -->
@@ -68,28 +76,26 @@
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
 
         <!-- Maven plugins -->
-        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-help-plugin.version>3.2.0</maven-help-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
         <maven-invoker-plugin.version>3.2.1</maven-invoker-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-shade-plugin.version>3.2.2</maven-shade-plugin.version>
+        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
         <xml-maven-plugin.version>1.0.2</xml-maven-plugin.version>
-        <dependency-management-plugin.version>1.2.1.RELEASE</dependency-management-plugin.version>
-        <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>
-        <maven-changes-plugin.version>2.12.1</maven-changes-plugin.version>
+        <git-commit-id-plugin.version>4.0.1</git-commit-id-plugin.version>
 
         <!-- Maven Reports and Site -->
         <maven-project-info-reports-plugin.version>3.1.0</maven-project-info-reports-plugin.version>
@@ -104,16 +110,19 @@
         <doxia-module.version>1.9.1</doxia-module.version>
 
         <!-- Docker -->
-        <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
+        <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
         <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
         <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
         <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
+        <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
+        <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
 
-        <!-- Frontend Client Site -->
-        <webjars.jquery.version>3.4.1</webjars.jquery.version>
-        <webjars.bootstrap.version>4.4.1-1</webjars.bootstrap.version>
-        <webjars.font-awesome.version>5.13.0</webjars.font-awesome.version>
-        <webjars.ckeditor.version>4.14.0</webjars.ckeditor.version>
+        <!-- Webjars -->
+        <webjars.bootstrap.version>4.5.2</webjars.bootstrap.version>
+        <webjars.jquery.version>3.5.1</webjars.jquery.version>
+        <webjars.popper.js.version>1.16.0</webjars.popper.js.version>
+        <webjars.font-awesome.version>5.14.0</webjars.font-awesome.version>
+        <webjars.ckeditor.version>18.0.0</webjars.ckeditor.version>
 
         <!-- Frontend Server Site: Thymeleaf Templates -->
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
@@ -122,15 +131,19 @@
         <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
         <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
         <thymeleaf-extras-springsecurity.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity.version>
+        <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
         <thymeleaf-testing.version>3.0.4.RELEASE</thymeleaf-testing.version>
 
         <!-- Spring Boot and Spring Frameworks -->
         <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
+
+        <spring-data-releasetrain.version>Neumann-SR3</spring-data-releasetrain.version>
         <spring-session-bom.version>Dragonfruit-RELEASE</spring-session-bom.version>
-        <spring-data-releasetrain.version>Neumann-RELEASE</spring-data-releasetrain.version>
-        <spring-framework.version>5.2.6.RELEASE</spring-framework.version>
+        <spring-framework.version>5.2.8.RELEASE</spring-framework.version>
         <spring-security.version>5.3.2.RELEASE</spring-security.version>
         <spring-boot-admin.version>2.2.1</spring-boot-admin.version>
+
+        <opencsv.version>5.2</opencsv.version>
 
         <!-- Unit and Integration Testing -->
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
@@ -374,7 +387,7 @@
             <dependency>
                 <groupId>com.dkanejs.maven.plugins</groupId>
                 <artifactId>docker-compose-maven-plugin</artifactId>
-                <version>${version.docker-compose-maven-plugin}</version>
+                <version>${docker-compose-maven-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
             <dependency>
@@ -448,12 +461,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>${maven-surefire-report-plugin.version}</version>
-                <type>maven-plugin</type>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changes-plugin</artifactId>
-                <version>${maven-changes-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
             <dependency>
@@ -719,11 +726,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changes-plugin</artifactId>
-            <type>maven-plugin</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-release-plugin</artifactId>
             <type>maven-plugin</type>
         </dependency>
@@ -735,7 +737,7 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <defaultGoal>clean dependency:list install spring-boot:run</defaultGoal>
+        <defaultGoal>clean dependency:list package spring-boot:repackage spring-boot:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -746,17 +748,12 @@
                 <plugin>
                     <groupId>com.dkanejs.maven.plugins</groupId>
                     <artifactId>docker-compose-maven-plugin</artifactId>
-                    <version>${version.docker-compose-maven-plugin}</version>
+                    <version>${docker-compose-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>${maven-project-info-reports-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-changes-plugin</artifactId>
-                    <version>${maven-changes-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -864,22 +861,22 @@
                                         (http://maven.apache.org/plugins/maven-invoker-plugin/)!
                                     </message>
                                 </bannedPlugins>
-
                                 <requireMavenVersion>
                                     <version>${version.maven}</version>
                                 </requireMavenVersion>
-
                                 <requireJavaVersion>
                                     <version>${java.version}</version>
                                 </requireJavaVersion>
+                                <!--
                                 <requireOS>
                                     <family>unix</family>
                                 </requireOS>
+                                -->
                                 <requireFilesExist>
                                     <files>
                                         <file>${project.basedir}/README.md</file>
                                         <file>${project.basedir}/LICENSE</file>
-                                        <file>${project.basedir}/docker-compose.yml</file>
+                                        <file>${project.basedir}/src/main/docker/docker-compose.yml</file>
                                         <file>${project.basedir}/app.json</file>
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
@@ -887,15 +884,13 @@
                                         <file>${project.basedir}/src/site/markdown/Requirements_Nonfunctional.md</file>
                                         <file>${project.basedir}/src/site/markdown/About.md</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
+                                        <file>${project.basedir}/build.sh</file>
                                         <file>${project.basedir}/run.sh</file>
-                                        <!--
-                                        <file>${project.basedir}/etc/setenv.sh</file>
-                                        -->
-                                        <file>${project.basedir}/etc/psql.sh</file>
-                                        <file>${project.basedir}/etc/docker-start.sh</file>
-                                        <file>${project.basedir}/etc/docker-stop.sh</file>
-                                        <file>${project.basedir}/etc/db/db-createdb-and-user-linux.sql</file>
-                                        <file>${project.basedir}/etc/db/db-createdb-and-user-win10.sql</file>
+                                        <file>${project.basedir}/src/main/bash/psql.sh</file>
+                                        <file>${project.basedir}/docker-start.sh</file>
+                                        <file>${project.basedir}/docker-stop.sh</file>
+                                        <file>${project.basedir}/src/main/sql/db-createdb-and-user-linux.sql</file>
+                                        <file>${project.basedir}/src/main/sql/db-createdb-and-user-win10.sql</file>
                                     </files>
                                 </requireFilesExist>
                             </rules>
@@ -949,14 +944,165 @@
                 <groupId>com.dkanejs.maven.plugins</groupId>
                 <artifactId>docker-compose-maven-plugin</artifactId>
                 <configuration>
-                    <composeFile>${project.basedir}/docker-compose.yml</composeFile>
+                    <composeFile>${project.basedir}/src/main/docker/docker-compose.yml</composeFile>
                     <verbose>${docker-compose-maven-plugin.verbose}</verbose>
                     <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
-                    <removeVolumes>true</removeVolumes>
-                    <ignorePullFailures>true</ignorePullFailures>
-                    <detachedMode>true</detachedMode>
+                    <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
+                    <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
+                    <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-dependency-classes-install</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                            <goal>collect</goal>
+                            <goal>copy-dependencies</goal>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <outputFile>${project.build.outputDirectory}/classes/</outputFile>
+                            <excludeTypes>pom,maven-plugin</excludeTypes>
+                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-dependency-classes-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                            <goal>collect</goal>
+                            <goal>copy-dependencies</goal>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <outputFile>${project.build.outputDirectory}/classes/</outputFile>
+                            <excludeTypes>pom,maven-plugin</excludeTypes>
+                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-dependencies-classpath</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>analyze-only</goal>
+                            <goal>analyze-dep-mgt</goal>
+                            <goal>analyze-report</goal>
+                            <goal>sources</goal>
+                            <goal>resolve</goal>
+                            <goal>resolve-plugins</goal>
+                            <goal>collect</goal>
+                            <goal>copy-dependencies</goal>
+                            <goal>unpack-dependencies</goal>
+                            <goal>build-classpath</goal>
+                        </goals>
+                        <configuration>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <outputFile>${project.build.outputDirectory}/classpath.txt</outputFile>
+                            <failOnWarning>false</failOnWarning>
+                            <ignoreNonCompile>true</ignoreNonCompile>
+                            <excludeTypes>pom</excludeTypes>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <ignoredDependencies>
+                                <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
+                                <!--
+                                <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
+                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
+                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
+                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
+                                <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
+                                -->
+                            </ignoredDependencies>
+                            <ignoredUsedUndeclaredDependencies>
+                                <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
+                            </ignoredUsedUndeclaredDependencies>
+                            <ignoredUnusedDeclaredDependencies>
+                                <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>check-dependencies-1</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>list</goal>
+                            <goal>list-repositories</goal>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>check-dependencies-2</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>analyze</goal>
+                            <goal>analyze-dep-mgt</goal>
+                            <goal>analyze-duplicate</goal>
+                            <goal>analyze-report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>check-dependencies-3</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>tree</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>site</phase>
+                        <configuration>
+                            <excludeGroupIds>org.webjars</excludeGroupIds>
+                            <excludeGroupIds>org.webjars,org.jclouds,org.jboss.as,xml-resolver,commons-configuration,org.codehaus.plexus,commons-digester,junit,log4j,io.openliberty.features,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,commons-configuration,jdk.tools,maven-antrun-plugin,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                            <reportSets>
+                                <reportSet>
+                                    <reports>
+                                        <report>analyze-report</report>
+                                    </reports>
+                                </reportSet>
+                            </reportSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>get-dependency-sources</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>sources</goal>
+                            <goal>resolve</goal>
+                            <goal>resolve-plugins</goal>
+                            <goal>collect</goal>
+                            <goal>copy-dependencies</goal>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>sources</classifier>
+                            <excludeTypes>pom,maven-plugin</excludeTypes>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                            <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -1072,6 +1218,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -1288,6 +1435,7 @@
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
@@ -1304,6 +1452,7 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>

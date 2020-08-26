@@ -37,3 +37,5 @@ setenv.cmd
 /src/main/java/org/woehlke/simpleworklist/searchRequest/x.txt
 
 /simpleworklist.diff
+target
+.idea
