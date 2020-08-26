@@ -394,7 +394,7 @@
             <dependency>
                 <groupId>com.dkanejs.maven.plugins</groupId>
                 <artifactId>docker-compose-maven-plugin</artifactId>
-                <version>${version.docker-compose-maven-plugin}</version>
+                <version>${docker-compose-maven-plugin.version}</version>
                 <type>maven-plugin</type>
             </dependency>
             <dependency>
@@ -755,7 +755,7 @@
                 <plugin>
                     <groupId>com.dkanejs.maven.plugins</groupId>
                     <artifactId>docker-compose-maven-plugin</artifactId>
-                    <version>${version.docker-compose-maven-plugin}</version>
+                    <version>${docker-compose-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
