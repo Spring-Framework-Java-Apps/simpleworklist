@@ -107,7 +107,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 ## 26.08.2020
 * fixed #273 resort Issues, Milestones and Releases
 * Issue #268 update webjars
-* Issue #262 setup on my current Linux Machines
+* fixed #262 setup on my current Linux Machines
 
 ## 2.3.23
 * Issue #274 add Annotations to suppress Deprecation Warnings
