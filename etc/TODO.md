@@ -120,6 +120,6 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #259 Update Spring-Boot to current Version 2.3.3 
 * fixed #275 setup dev Databases enhancement
 * fixed #272 prepare Release 2.3.23
-* Issue #265 make release with maven plugin
+* fixed #265 make release with maven plugin
 
 
