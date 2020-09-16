@@ -16,44 +16,76 @@
 </div>
 
 <div th:fragment="mytwcontent">
-	<div class="card card-body">
-		<form id="formId" th:action="@{/user/register/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountForm}" method="post">
-			<input type="hidden" th:field="*{userEmail}" />
-			<div class="form-group form-control-lg">
-				<label th:for="${#ids.next('userFullname')}" class="control-label">
-					<span th:utext="#{user.registerConfirmed.userFullname}">Full Name</span>
-				</label>
-				<input type="text" th:field="*{userFullname}" class="form-control" />
-				<div>
-					<div th:each="err : ${#fields.errors('userFullname')}" th:text="${err}" class="alert alert-danger" >
-					</div>
-				</div>
-			</div>
-			<div class="form-group form-control-lg">
-				<label th:for="${#ids.next('userPassword')}" class="control-label">
-					<span th:utext="#{user.registerConfirmed.userPassword}">Password</span>
-				</label>
-				<input type="password" th:field="*{userPassword}" class="form-control" />
-				<div>
-					<div th:each="err : ${#fields.errors('userPassword')}" th:text="${err}" class="alert alert-danger" >
-					</div>
-				</div>
-			</div>
-			<div class="form-group form-control-lg">
-				<label th:for="${#ids.next('userPasswordConfirmation')}" class="control-label">
-					<span th:utext="#{user.registerConfirmed.userPasswordConfirmation}">Password again</span>
-				</label>
-				<input type="password" th:field="*{userPasswordConfirmation}" class="form-control" />
-				<div>
-					<div th:each="err : ${#fields.errors('userPasswordConfirmation')}" th:text="${err}" class="alert alert-danger" >
-					</div>
-				</div>
-			</div>
-			<button id="confirmRegistration" type="submit" class="btn btn-primary">
-				<span th:utext="#{user.registerConfirmed.button}">Confirm Registration</span>
-			</button>
-		</form>
-	</div>
+    <form id="formId" th:action="@{/user/register/confirm/{confirmId}(confirmId=${confirmId})}" th:object="${userAccountForm}" method="post">
+        <div class="card">
+            <div class="card-header">
+                <span th:utext="#{user.registerConfirmed.h1}">Register as new User</span>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-12 mb-12">
+                        <div class="form-group">
+                            <label th:for="${#ids.next('userEmail')}" class="control-label">Email</label>
+                            <input type="email" th:field="*{userEmail}" class="form-control form-control-lg" />
+                            <div>
+                                <div th:each="err : ${#fields.errors('userEmail')}" th:text="${err}" class="alert alert-danger" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 mb-12">
+                        <div class="form-group">
+                            <label th:for="${#ids.next('userFullname')}" class="control-label">
+                                <span th:utext="#{user.registerConfirmed.userFullname}">Full Name</span>
+                            </label>
+                            <input type="text" th:field="*{userFullname}" class="form-control form-control-lg" />
+                            <div>
+                                <div th:each="err : ${#fields.errors('userFullname')}" th:text="${err}" class="alert alert-danger" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 mb-12">
+                        <div class="form-group">
+                            <label th:for="${#ids.next('userPassword')}" class="control-label">
+                                <span th:utext="#{user.registerConfirmed.userPassword}">Password</span>
+                            </label>
+                            <input type="password" th:field="*{userPassword}" class="form-control form-control-lg" />
+                            <div>
+                                <div th:each="err : ${#fields.errors('userPassword')}" th:text="${err}" class="alert alert-danger" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 mb-12">
+                        <div class="form-group">
+                            <label th:for="${#ids.next('userPasswordConfirmation')}" class="control-label">
+                                <span th:utext="#{user.registerConfirmed.userPasswordConfirmation}">Password again</span>
+                            </label>
+                            <input type="password" th:field="*{userPasswordConfirmation}" class="form-control form-control-lg" />
+                            <div>
+                                <div th:each="err : ${#fields.errors('userPasswordConfirmation')}" th:text="${err}" class="alert alert-danger" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="form-row">
+                    <button id="confirmRegistration" type="submit" class="btn btn-primary">
+                        <span th:utext="#{user.registerConfirmed.button}">Confirm Registration</span>
+                    </button>
+                </div>
+            </div>
+	    </div>
+    </form>
 </div>
 
 
