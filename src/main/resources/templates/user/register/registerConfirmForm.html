@@ -26,7 +26,7 @@
                     <div class="col-md-12 mb-12">
                         <div class="form-group">
                             <label th:for="${#ids.next('userEmail')}" class="control-label">Email</label>
-                            <input type="email" th:field="*{userEmail}" class="form-control form-control-lg" />
+                            <input type="email" th:field="*{userEmail}" class="form-control form-control-lg" readonly/>
                             <div>
                                 <div th:each="err : ${#fields.errors('userEmail')}" th:text="${err}" class="alert alert-danger" >
                                 </div>
