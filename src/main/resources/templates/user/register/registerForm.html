@@ -16,21 +16,34 @@
 	</div>
 
 	<div th:fragment="mytwcontent">
-		<div class="card card-body">
-			<form id="formId" th:action="@{/user/register}" th:object="${userRegistrationForm}" method="post">
-				<div class="form-group form-control-lg">
-					<label th:for="${#ids.next('email')}" class="control-label">Email</label>
-					<input type="email" th:field="*{email}" class="form-control" />
-					<div>
-						<div th:each="err : ${#fields.errors('email')}" th:text="${err}" class="alert alert-danger" >
-						</div>
-					</div>
-				</div>
-				<button id="registerButton" type="submit" class="btn btn-primary">
-					<span th:utext="#{user.registerForm.button}">Register</span>
-				</button>
-			</form>
-		</div>
+        <form id="formId" th:action="@{/user/register}" th:object="${userRegistrationForm}" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <span th:utext="#{user.loginForm.register}">register as new user</span>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-12 mb-12">
+                            <div class="form-group">
+                                <label th:for="${#ids.next('email')}" class="control-label">Email</label>
+                                <input type="email" th:field="*{email}" class="form-control form-control-lg" />
+                                <div>
+                                    <div th:each="err : ${#fields.errors('email')}" th:text="${err}" class="alert alert-danger" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="form-row">
+                        <button id="registerButton" type="submit" class="btn btn-primary">
+                            <span th:utext="#{user.registerForm.button}">Register</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
 	</div>
 
 
