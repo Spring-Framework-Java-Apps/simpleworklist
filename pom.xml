@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.woehlke</groupId>
@@ -738,7 +740,7 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <defaultGoal>clean dependency:list package spring-boot:repackage spring-boot:run</defaultGoal>
+        <defaultGoal>clean dependency:list install spring-boot:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -926,7 +928,15 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>unpack-dependency-classes-install</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>id-build-info</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>build-info</goal>
                         </goals>
@@ -960,7 +970,7 @@
                 <executions>
                     <execution>
                         <id>unpack-dependency-classes-install</id>
-                        <phase>install</phase>
+                        <phase>pre-site</phase>
                         <goals>
                             <goal>resolve</goal>
                             <goal>collect</goal>
@@ -979,7 +989,7 @@
                     </execution>
                     <execution>
                         <id>unpack-dependency-classes-deploy</id>
-                        <phase>deploy</phase>
+                        <phase>pre-site</phase>
                         <goals>
                             <goal>resolve</goal>
                             <goal>collect</goal>
