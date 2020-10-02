@@ -2,6 +2,7 @@
 
 ![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 [![Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
+![OSSAR](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/OSSAR/badge.svg)
 
 Your Todo List for Getting Things Done
 
