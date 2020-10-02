@@ -64,11 +64,11 @@ jobs:
     #    uses a compiled language
 
     - run: |
-      ./mvnw -e -DskipTests=true -B -V install -Dmaven.javadoc.skip=true && \
-      ./mvnw -e -DskipTests=true -B -V dependency:purge-local-repository && \
-      ./mvnw -e -DskipTests=true -B -V clean && \
-      ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree && \
-      ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage
+      mvn -e -DskipTests=true -B -V install -Dmaven.javadoc.skip=true && \
+      mvn -e -DskipTests=true -B -V dependency:purge-local-repository && \
+      mvn -e -DskipTests=true -B -V clean dependency:resolve dependency:resolve-plugins && \
+      mvn -e -DskipTests=true -B -V  dependency:sources dependency:tree && \
+      mvn -e -DskipTests=true -B -V clean package spring-boot:repackage
     #  ./mvnw -e -DskipTests=true -B -V site
     #   make bootstrap
     #   make release
