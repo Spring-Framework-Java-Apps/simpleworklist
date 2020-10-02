@@ -125,8 +125,8 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 ## 2.3.24
 * fixed #277 heroku: Compiled slug size: 617.9M is too large (max is 500M)
 * fixed #279 Formular Layout Errors
-* Issue #283 prepare Release 2.3.24 
-* Issue #284 make release with maven plugin
+* fixed #283 prepare Release 2.3.24 
+* fixed #284 make release with maven plugin
 
 ## 2.3.245
 * Issue #285 Update spring-boot 2.3.3 to 2.3.4
