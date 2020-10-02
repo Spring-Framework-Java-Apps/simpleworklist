@@ -512,13 +512,6 @@
                 <artifactId>htmlunit</artifactId>
                 <version>${htmlunit.version}</version>
             </dependency>
-
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>8.0</version>
-        </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -790,6 +783,11 @@
         <dependency>
             <groupId>org.joinfaces</groupId>
             <artifactId>primefaces-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.joinfaces</groupId>
+            <artifactId>joinfaces-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

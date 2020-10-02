@@ -217,6 +217,11 @@
       <option name="url" value="http://localhost:8081/artifactory/all" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="apache-releases" />
+      <option name="name" value="Apache Releases" />
+      <option name="url" value="http://tw-thinkpad:8081/artifactory/all" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="adobe-public" />
       <option name="name" value="AdobePublic Repository" />
       <option name="url" value="https://repo.adobe.com/nexus/content/repositories/public/" />
