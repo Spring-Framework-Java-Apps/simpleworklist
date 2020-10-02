@@ -1,18 +1,12 @@
 # simpleworklist
 
-## CI
-
-### Github CI
-![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg)
-![OSSAR](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/OSSAR/badge.svg)
-![Codacy Security Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Codacy%20Security%20Scan/badge.svg)
-![CodeQL](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/CodeQL/badge.svg)
-![Fortify on Demand Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Fortify%20on%20Demand%20Scan/badge.svg)
-![Veracode Static Analysis Pipeline Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Veracode%20Static%20Analysis%20Pipeline%20Scan/badge.svg)
-![Xanitizer Security Analysis](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Xanitizer%20Security%20Analysis/badge.svg)
-
-
-### Travis CI
+[![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![OSSAR](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/OSSAR/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![Codacy Security Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Codacy%20Security%20Scan/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![CodeQL](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/CodeQL/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![Fortify on Demand Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Fortify%20on%20Demand%20Scan/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![Veracode Static Analysis Pipeline Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Veracode%20Static%20Analysis%20Pipeline%20Scan/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![Xanitizer Security Analysis](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Xanitizer%20Security%20Analysis/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
 [![Travis CI Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
 
 ## About SimpleWorklist
