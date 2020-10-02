@@ -12,7 +12,7 @@ function composeDown() {
 
 function firstSetup() {
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
-    showSettings
+    # showSettings
     ./mvnw dependency:purge-local-repository
     ./mvnw -e -DskipTests=true clean dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree
     ./mvnw -e -DskipTests=true clean package spring-boot:repackage site
@@ -20,7 +20,7 @@ function firstSetup() {
 
 function setupTravis() {
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
-    showSettings
+    # showSettings
     ./mvnw -e -DskipTests=true -B -V install -Dmaven.javadoc.skip=true && \
     ./mvnw -e -DskipTests=true -B -V dependency:purge-local-repository && \
     ./mvnw -e -DskipTests=true -B -V clean && \
@@ -31,8 +31,8 @@ function setupTravis() {
 }
 
 function main() {
-    # firstSetup
-    setupTravis
+    firstSetup
+    # setupTravis
 }
 
 main

@@ -101,8 +101,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * Fixed #241, Fixed #242, Fixed #243, Fixed #252
 
 ## 2.3.20
-* Update Spring-Boot to 2.3.0 #255
-* Fixed #255 - working on: Update Spring-Boot to 2.3.0
+* fixed #255 Update Spring-Boot to 2.3.0
 
 ## 2.3.23
 * fixed #274 add Annotations to suppress Deprecation Warnings
@@ -125,3 +124,20 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 ## 2.3.24
 * fixed #277 heroku: Compiled slug size: 617.9M is too large (max is 500M)
 * fixed #279 Formular Layout Errors
+* fixed #283 prepare Release 2.3.24 
+* fixed #284 make release with maven plugin
+
+## 2.3.25
+* fixed #285 Update spring-boot 2.3.3 to 2.3.4
+* fixed #286 Update spring-data-releasetrain to Neumann-SR4
+* fixed #287 Update spring-session-bom to Dragonfruit-SR1
+
+## 2.3.26
+* fixed #249 TaskRepository: move the JQL Query-String to Entity as Prepared Statement
+
+## 2.3.27
+* Issue #234 Taskstate: Task Edit Form -> change Project via DropDown 
+* Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
+* Issue #236 Project/id: Task Edit Form -> change Project via DropDown
+
+

@@ -4,22 +4,32 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
-import javax.persistence.Index;
 
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+//simport org.hibernate.annotations.*;
+//import org.hibernate.annotations.CascadeType;
+//import org.hibernate.annotations.NamedQueries;
+//import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 //import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.data.jpa.repository.*;
+//import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
@@ -27,6 +37,7 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.application.common.AuditModel;
 import org.woehlke.simpleworklist.application.common.ComparableById;
 
+import static javax.persistence.TemporalType.*;
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
 //TODO: test all three UniqueConstraints
@@ -53,6 +64,29 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         @Index(name = "ix_task_title", columnList = "title")
     }
 )
+@NamedQueries({
+    @NamedQuery(
+        name = "queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask",
+        query = "select t from Task t"
+            + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
+            + " and t.taskState = :taskState and t.context = :context",
+        lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+        name = "queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask",
+        query = "select t from Task t"
+            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+            + " and t.project = :project",
+        lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+        name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask",
+        query = "select t from Task t"
+            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+            + " and t.project is null and t.context = :context ",
+        lockMode = LockModeType.READ
+    )
+})
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -144,7 +178,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     @Enumerated(EnumType.STRING)
     private TaskTime taskTime;
 
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(DATE)
     @Column(name = "due_date", nullable = true)
     @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date dueDate;
