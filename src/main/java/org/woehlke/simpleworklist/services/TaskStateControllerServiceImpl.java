@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
-@Slf4j
+@Log
 @Service
 public class TaskStateControllerServiceImpl implements TaskStateControllerService {
 

@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/testdata")
 public class TestDataController {

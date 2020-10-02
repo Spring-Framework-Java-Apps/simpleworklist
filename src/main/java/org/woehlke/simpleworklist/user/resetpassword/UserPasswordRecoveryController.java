@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
 
 import javax.validation.Valid;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user")
 public class UserPasswordRecoveryController {

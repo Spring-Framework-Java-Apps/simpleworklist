@@ -1,6 +1,5 @@
 package org.woehlke.simpleworklist.domain.task;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,7 +17,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/taskstate")
 public class TaskStateTabController extends AbstractController {

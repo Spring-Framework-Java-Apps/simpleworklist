@@ -143,7 +143,10 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #93 add JSF JavaxFaces Spring Boot AutoConfigure
 * fixed #92 try jars
 * fixed #288 create Branch JSF_Version from Release 2.3.26
-* Issue #291Evaluate Joinfaces
+* Issue #291 Evaluate Joinfaces
+* Issue #292 app starts with joinfaces 
+* Issue #293 app run with joinfaces but with MVC Templates
+* Issue #294 Logging with logback only 
 
 ## Joinfaces
 * https://github.com/joinfaces/joinfaces

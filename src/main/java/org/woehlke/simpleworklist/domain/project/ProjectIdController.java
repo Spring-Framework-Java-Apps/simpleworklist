@@ -34,7 +34,7 @@ import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 /**
  * Created by tw on 14.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/project/{projectId}")
 public class ProjectIdController extends AbstractController {

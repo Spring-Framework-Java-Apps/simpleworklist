@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by tw on 16.02.2016.
  */
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class User2UserMessageServiceImpl implements User2UserMessageService {

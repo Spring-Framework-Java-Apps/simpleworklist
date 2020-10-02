@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by tw on 14.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/search")
 public class SearchController extends AbstractController {

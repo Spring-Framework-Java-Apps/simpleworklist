@@ -21,7 +21,7 @@ import org.woehlke.simpleworklist.domain.task.TaskRepository;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ProjectServiceImpl implements ProjectService {

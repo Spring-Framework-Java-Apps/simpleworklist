@@ -32,7 +32,7 @@ import java.util.UUID;
 
 import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/project/root")
 public class ProjectRootController extends AbstractController {

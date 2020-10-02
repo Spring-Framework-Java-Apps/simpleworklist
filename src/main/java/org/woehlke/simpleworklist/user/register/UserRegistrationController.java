@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.services.UserRegistrationService;
 
 import javax.validation.Valid;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user/register")
 public class UserRegistrationController {

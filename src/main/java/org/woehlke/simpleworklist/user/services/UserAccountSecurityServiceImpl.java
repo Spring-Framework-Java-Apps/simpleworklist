@@ -12,7 +12,7 @@ import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.account.UserDetailsBean;
 import org.woehlke.simpleworklist.user.services.UserAccountSecurityService;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountSecurityServiceImpl implements UserAccountSecurityService {

@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 public class TestDataServiceImpl implements TestDataService {
 

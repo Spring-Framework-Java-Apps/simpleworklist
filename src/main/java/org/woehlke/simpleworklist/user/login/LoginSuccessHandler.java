@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by tw on 19.02.16.
  */
-@Slf4j
+@Log
 @Component
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
     implements AuthenticationSuccessHandler {

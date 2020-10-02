@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.task;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Created by tw on 21.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {

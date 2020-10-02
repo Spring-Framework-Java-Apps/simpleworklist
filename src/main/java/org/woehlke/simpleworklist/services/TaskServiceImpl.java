@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 public class TaskServiceImpl implements TaskService {
 
