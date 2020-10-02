@@ -135,9 +135,25 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 ## 2.3.26
 * fixed #249 TaskRepository: move the JQL Query-String to Entity as Prepared Statement
 
-## 2.3.27
-* Issue #234 Taskstate: Task Edit Form -> change Project via DropDown 
-* Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
-* Issue #236 Project/id: Task Edit Form -> change Project via DropDown
+## 3.0.0
+* fixed #97 evaluate JSF PrimeFaces Spring Boot AutoConfigure
+* fixed #96 add JSF PrimeFaces Spring Boot AutoConfigure
+* fixed #95 evaluate JSF JavaxFaces Spring Boot AutoConfigure
+* fixed #94 add JSF JavaxFaces Spring Boot AutoConfigure
+* fixed #93 add JSF JavaxFaces Spring Boot AutoConfigure
+* fixed #92 try jars
+* fixed #288 create Branch JSF_Version from Release 2.3.26
+* Issue #291 Evaluate Joinfaces
+* Issue #292 app starts with joinfaces 
+* Issue #293 app run with joinfaces but with MVC Templates
+* Issue #294 Logging with logback only 
+
+## Joinfaces
+* https://github.com/joinfaces/joinfaces
+* http://joinfaces.org/
+* https://docs.joinfaces.org/4.3.4/reference/
+* https://docs.joinfaces.org/current/reference/
+
+
 
 
