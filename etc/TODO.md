@@ -128,6 +128,9 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #283 prepare Release 2.3.24 
 * fixed #284 make release with maven plugin
 
-## 2.3.245
-* Issue #285 Update spring-boot 2.3.3 to 2.3.4
+## 2.3.25
+* fixed #285 Update spring-boot 2.3.3 to 2.3.4
+* fixed #286 Update spring-data-releasetrain to Neumann-SR4
+* fixed #287 Update spring-session-bom to Dragonfruit-SR1
+
 
