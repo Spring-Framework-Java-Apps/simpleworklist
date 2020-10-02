@@ -788,12 +788,8 @@
             <artifactId>doxia-module-markdown</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.joinfaces</groupId>
-            <artifactId>jsf-spring-boot-starter</artifactId>
+            <artifactId>primefaces-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 
