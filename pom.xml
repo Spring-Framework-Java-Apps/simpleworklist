@@ -1064,7 +1064,7 @@
                             <outputFile>${project.build.outputDirectory}/classes/</outputFile>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
                             <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                         </configuration>
                     </execution>
                     <execution>
@@ -1090,16 +1090,9 @@
                             <ignoreNonCompile>true</ignoreNonCompile>
                             <excludeTypes>pom</excludeTypes>
                             <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <ignoredDependencies>
                                 <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
-                                <!--
-                                <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
-                                -->
                             </ignoredDependencies>
                             <ignoredUsedUndeclaredDependencies>
                                 <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
@@ -1174,123 +1167,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-dependencies-classpath</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>analyze-only</goal>
-                            <goal>analyze-dep-mgt</goal>
-                            <goal>analyze-report</goal>
-                            <goal>sources</goal>
-                            <goal>resolve</goal>
-                            <goal>resolve-plugins</goal>
-                            <goal>collect</goal>
-                            <goal>copy-dependencies</goal>
-                            <goal>unpack-dependencies</goal>
-                            <goal>build-classpath</goal>
-                        </goals>
-                        <configuration>
-                            <overWriteReleases>true</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                            <outputFile>${project.build.outputDirectory}/classpath.txt</outputFile>
-                            <failOnWarning>false</failOnWarning>
-                            <type>java-source,jar</type>
-                            <ignoredDependencies>
-                                <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
-                            </ignoredDependencies>
-                            <ignoredUsedUndeclaredDependencies>
-                                <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
-                            </ignoredUsedUndeclaredDependencies>
-                            <ignoredUnusedDeclaredDependencies>
-                                <ignoredUnusedDeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUnusedDeclaredDependency>
-                            </ignoredUnusedDeclaredDependencies>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>check-dependencies-1</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>list</goal>
-                            <goal>list-repositories</goal>
-                            <goal>properties</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check-dependencies-2</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>analyze</goal>
-                            <goal>analyze-dep-mgt</goal>
-                            <goal>analyze-duplicate</goal>
-                            <goal>analyze-report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>check-dependencies-3</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>tree</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>site</phase>
-                        <configuration>
-                            <excludeGroupIds>org.webjars,org.jclouds,org.jboss.as,xml-resolver,commons-configuration,org.codehaus.plexus,commons-digester,junit,log4j,io.openliberty.features</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,commons-configuration,jdk.tools,maven-antrun-plugin</excludeArtifactIds>
-                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-                            <reportSets>
-                                <reportSet>
-                                    <reports>
-                                        <report>analyze-report</report>
-                                    </reports>
-                                </reportSet>
-                            </reportSets>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>get-dependency-classes</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>resolve</goal>
-                            <goal>resolve-plugins</goal>
-                            <goal>collect</goal>
-                            <goal>copy-dependencies</goal>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <type>jar</type>
-                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-                            <outputDirectory>${project.build.directory}/dependency-classes/</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>get-dependency-sources</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>sources</goal>
-                            <goal>resolve</goal>
-                            <goal>resolve-plugins</goal>
-                            <goal>collect</goal>
-                            <goal>copy-dependencies</goal>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <type>java-source</type>
-                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.velocity</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools</excludeArtifactIds>
-                            <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-                            <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
