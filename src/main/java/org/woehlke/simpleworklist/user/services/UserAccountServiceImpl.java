@@ -22,7 +22,7 @@ import org.woehlke.simpleworklist.application.language.Language;
 import org.woehlke.simpleworklist.domain.context.ContextRepository;
 import org.woehlke.simpleworklist.user.chat.User2UserMessageRepository;
 
-@Log
+@Slf4j
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountServiceImpl implements UserAccountService {

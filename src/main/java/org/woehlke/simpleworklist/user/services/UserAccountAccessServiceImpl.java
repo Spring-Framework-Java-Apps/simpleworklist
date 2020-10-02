@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.login.LoginForm;
 import org.woehlke.simpleworklist.user.account.UserChangePasswordForm;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountAccessServiceImpl implements UserAccountAccessService {

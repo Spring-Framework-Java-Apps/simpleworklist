@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
 import java.util.Date;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSuccessService {

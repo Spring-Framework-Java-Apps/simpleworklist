@@ -14,10 +14,11 @@ import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.services.TaskStateControllerService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
+import lombok.extern.slf4j.Slf4j;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/taskstate")
 public class TaskStateTabController extends AbstractController {

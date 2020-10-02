@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.domain.search.SearchRequestRepository;
 
 import java.util.UUID;
 
-@Log
+@Slf4j
 @Service
 public class SearchRequestServiceImpl implements SearchRequestService {
 

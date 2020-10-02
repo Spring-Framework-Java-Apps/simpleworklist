@@ -12,7 +12,7 @@ import org.woehlke.simpleworklist.domain.search.SearchResult;
 /**
  * Created by tw on 14.02.16.
  */
-@Log
+@Slf4j
 @Service
 public class SearchServiceImpl implements SearchService {
 

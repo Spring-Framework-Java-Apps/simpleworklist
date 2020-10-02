@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tw on 13.03.16.
  */
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/context")
 public class ContextController extends AbstractController {

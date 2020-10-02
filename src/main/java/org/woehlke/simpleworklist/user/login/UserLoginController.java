@@ -20,7 +20,7 @@ import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/user")
 public class UserLoginController {

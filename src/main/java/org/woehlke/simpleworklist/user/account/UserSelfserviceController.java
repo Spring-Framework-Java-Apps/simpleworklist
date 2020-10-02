@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Created by Fert on 14.03.2016.
  */
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/user/selfservice")
 public class UserSelfserviceController extends AbstractController {

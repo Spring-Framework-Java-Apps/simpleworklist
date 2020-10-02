@@ -16,7 +16,7 @@ import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
 
 import java.util.Date;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {

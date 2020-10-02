@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by tw on 13.03.16.
  */
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ContextServiceImpl implements ContextService {

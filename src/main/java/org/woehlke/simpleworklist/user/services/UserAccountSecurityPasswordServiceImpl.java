@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +16,7 @@ import org.woehlke.simpleworklist.user.account.UserDetailsBean;
 import org.woehlke.simpleworklist.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.services.UserAccountSecurityPasswordService;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountSecurityPasswordServiceImpl implements UserAccountSecurityPasswordService {

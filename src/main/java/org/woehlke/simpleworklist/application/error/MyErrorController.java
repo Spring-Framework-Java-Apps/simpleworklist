@@ -14,7 +14,7 @@ import static javax.servlet.RequestDispatcher.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path="/fehler")
 public class MyErrorController implements ErrorController {

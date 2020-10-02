@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
-@Log
+@Slf4j
 @Service
 public class ProjectControllerServiceImpl implements ProjectControllerService {
 

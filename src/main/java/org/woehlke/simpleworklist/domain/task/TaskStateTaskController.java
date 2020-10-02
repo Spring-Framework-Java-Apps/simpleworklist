@@ -19,6 +19,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
+import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Locale;
 /**
  * Created by tw on 21.02.16.
  */
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {

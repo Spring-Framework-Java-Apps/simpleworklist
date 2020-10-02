@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.domain.task.TaskState;
 import java.util.Locale;
 import java.util.Stack;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class BreadcrumbServiceImpl implements BreadcrumbService {

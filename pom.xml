@@ -141,8 +141,10 @@
 
         <spring-data-releasetrain.version>Neumann-SR4</spring-data-releasetrain.version>
         <spring-session-bom.version>Dragonfruit-SR1</spring-session-bom.version>
+        <!--
         <spring-framework.version>5.2.9.RELEASE</spring-framework.version>
         <spring-security.version>5.3.4.RELEASE</spring-security.version>
+        -->
 
         <!-- Unit and Integration Testing -->
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
@@ -150,7 +152,9 @@
         <xmlunit.version>2.6.4</xmlunit.version>
         <htmlunit.version>2.43.0</htmlunit.version>
         <hamcrest.version>2.2</hamcrest.version>
+        <!--
         <lombok.version>1.18.12</lombok.version>
+        -->
         <jsoup.version>1.13.1</jsoup.version>
 
         <skipTests>true</skipTests>
@@ -292,6 +296,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.joinfaces</groupId>
+                <artifactId>joinfaces-dependencies</artifactId>
+                <version>${joinfaces.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
                 <version>${junit-jupiter.version}</version>
@@ -302,6 +313,13 @@
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-bom</artifactId>
                 <version>${spring-session-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring-security.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -344,6 +362,7 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <optional>false</optional>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
@@ -489,13 +508,7 @@
             <artifactId>primefaces</artifactId>
             <version>8.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.joinfaces</groupId>
-            <artifactId>joinfaces-dependencies</artifactId>
-            <version>${joinfaces.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -558,6 +571,10 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
@@ -594,7 +611,18 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>false</optional>
+            <scope>provided</scope>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
@@ -1403,6 +1431,13 @@
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>

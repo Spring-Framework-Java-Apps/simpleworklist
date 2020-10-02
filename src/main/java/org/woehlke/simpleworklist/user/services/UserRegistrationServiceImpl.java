@@ -20,7 +20,7 @@ import org.woehlke.simpleworklist.user.register.UserRegistrationStatus;
 import org.woehlke.simpleworklist.user.services.TokenGeneratorService;
 import org.woehlke.simpleworklist.user.services.UserRegistrationService;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserRegistrationServiceImpl implements UserRegistrationService {

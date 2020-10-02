@@ -26,7 +26,7 @@ import java.util.Locale;
  * Created by
  * on 16.02.2016.
  */
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/user/messages/")
 public class User2UserMessageController extends AbstractController {

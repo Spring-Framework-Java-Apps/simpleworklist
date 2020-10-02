@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 
-@Log
+@Slf4j
 @Service
 public class TaskProjektServiceImpl implements TaskProjektService {
 
