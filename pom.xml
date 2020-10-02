@@ -137,9 +137,9 @@
         <!-- Spring Boot and Spring Frameworks -->
         <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
 
-        <spring-data-releasetrain.version>Neumann-SR3</spring-data-releasetrain.version>
-        <spring-session-bom.version>Dragonfruit-RELEASE</spring-session-bom.version>
-        <spring-framework.version>5.2.8.RELEASE</spring-framework.version>
+        <spring-data-releasetrain.version>Neumann-SR4</spring-data-releasetrain.version>
+        <spring-session-bom.version>Dragonfruit-SR1</spring-session-bom.version>
+        <spring-framework.version>5.2.9.RELEASE</spring-framework.version>
         <spring-security.version>5.3.2.RELEASE</spring-security.version>
 
         <!-- Unit and Integration Testing -->
