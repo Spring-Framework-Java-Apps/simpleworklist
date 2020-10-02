@@ -496,10 +496,6 @@
             <type>pom</type>
             <scope>import</scope>
         </dependency>
-            <dependency>
-                <groupId>org.joinfaces</groupId>
-                <artifactId>jsf-spring-boot-starter</artifactId>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -758,19 +754,8 @@
             <artifactId>primefaces</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>8.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.2.20</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>2.2.20</version>
+            <groupId>org.joinfaces</groupId>
+            <artifactId>jsf-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 
