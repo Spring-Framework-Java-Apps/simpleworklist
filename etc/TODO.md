@@ -148,6 +148,9 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * Issue #293 app run with joinfaces but with MVC Templates
 * Issue #294 Logging with logback only 
 
+## 3.0.1
+* Issue #295 try to remove dependencies and version-properties from pom.xml 
+
 ## Joinfaces
 * https://github.com/joinfaces/joinfaces
 * http://joinfaces.org/
