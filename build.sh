@@ -31,8 +31,8 @@ function setupTravis() {
 }
 
 function main() {
-    # firstSetup
-    setupTravis
+    firstSetup
+    # setupTravis
 }
 
 main

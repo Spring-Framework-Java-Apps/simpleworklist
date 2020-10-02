@@ -11,15 +11,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 //import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
@@ -53,6 +52,29 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         @Index(name = "ix_task_title", columnList = "title")
     }
 )
+@NamedQueries({
+    @NamedQuery(
+        name = "queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask",
+        query = "select t from Task t"
+            + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
+            + " and t.taskState = :taskState and t.context = :context",
+        readOnly = true
+    ),
+    @NamedQuery(
+        name = "queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask",
+        query = "select t from Task t"
+            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+            + " and t.project = :project",
+        readOnly = true
+    ),
+    @NamedQuery(
+        name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask",
+        query = "select t from Task t"
+            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+            + " and t.project is null and t.context = :context ",
+        readOnly = true
+    )
+})
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)

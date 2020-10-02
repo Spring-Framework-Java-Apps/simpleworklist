@@ -2,6 +2,7 @@ package org.woehlke.simpleworklist.domain.task;
 
 import java.util.List;
 
+import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,19 +48,19 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     //TODO: #244 change List<Task> to Page<Task>
     //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Deprecated
-    @Query("select t from Task t"
-            + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
-            + " and t.taskState = :taskState and t.context = :context")
+    //@Query("select t from Task t"
+    //        + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
+    //        + " and t.taskState = :taskState and t.context = :context")
+    @Query(name="queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask")
     List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdTaskState") long lowerOrderIdTaskState,
         @Param("higherOrderIdTaskState") long higherOrderIdTaskState,
         @Param("taskState") TaskState taskState,
         @Param("context") Context context
     );
+
     //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    @Query("select t from Task t"
-        + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
-        + " and t.taskState = :taskState and t.context = :context")
+    @Query(name="queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask")
     Page<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdTaskState") long lowerOrderIdTaskState,
         @Param("higherOrderIdTaskState") long higherOrderIdTaskState,
@@ -71,18 +72,17 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     //TODO: #244 change List<Task> to Page<Task>
     //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Deprecated
-    @Query("select t from Task t"
-            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-            + " and t.project = :project")
+    @Query(name="queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask")
     List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdProject") long lowerOrderIdProject,
         @Param("higherOrderIdProject") long higherOrderIdProject,
         @Param("project") Project project
     );
     //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    @Query("select t from Task t"
-        + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-        + " and t.project = :project")
+    //@Query("select t from Task t"
+    //    + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+    //    + " and t.project = :project")
+    @Query(name="queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask")
     Page<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdProject") long lowerOrderIdProject,
         @Param("higherOrderIdProject") long higherOrderIdProject,
@@ -93,18 +93,20 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     //TODO: #244 move from List<Task> to Page<Task>
     //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Deprecated
-    @Query("select t from Task t"
-        + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-        + " and t.project is null and t.context = :context ")
+    //@Query("select t from Task t"
+    //    + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+    //    + " and t.project is null and t.context = :context ")
+    @Query(name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask")
     List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdProject") long lowerOrderIdProject,
         @Param("higherOrderIdProject") long higherOrderIdProject,
         @Param("context") Context context
     );
     //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    @Query("select t from Task t"
-        + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-        + " and t.project is null and t.context = :context ")
+    //@Query("select t from Task t"
+    //    + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
+    //    + " and t.project is null and t.context = :context ")
+    @Query(name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask")
     Page<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdProject") long lowerOrderIdProject,
         @Param("higherOrderIdProject") long higherOrderIdProject,
