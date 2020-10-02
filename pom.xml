@@ -140,7 +140,7 @@
         <spring-data-releasetrain.version>Neumann-SR4</spring-data-releasetrain.version>
         <spring-session-bom.version>Dragonfruit-SR1</spring-session-bom.version>
         <spring-framework.version>5.2.9.RELEASE</spring-framework.version>
-        <spring-security.version>5.3.2.RELEASE</spring-security.version>
+        <spring-security.version>5.3.4.RELEASE</spring-security.version>
 
         <!-- Unit and Integration Testing -->
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
