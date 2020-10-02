@@ -28,7 +28,8 @@ function buildLikeHerokuWithSite() {
 }
 
 function buildLikeHeroku() {
-   ./mvnw -DskipTests clean dependency:list install
+   #./mvnw -DskipTests clean dependency:list install
+   ./mvnw clean dependency:list install
 }
 
 function runHerokuLocal() {
