@@ -52,6 +52,7 @@ function runDev() {
 }
 
 function run() {
+    setupHeroku
     runHerokuLocal
     #runDev
 }
