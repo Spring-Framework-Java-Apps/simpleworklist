@@ -1,8 +1,9 @@
 # simpleworklist
 
-![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
-[![Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
-
+[![Java CI with Maven](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![OSSAR](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/OSSAR/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![Codacy Security Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Codacy%20Security%20Scan/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
+[![Travis CI Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
 Your Todo List for Getting Things Done
 
 ## Getting Things Done
@@ -10,13 +11,12 @@ GTD&reg; and Getting Things Done&reg; are registered trademarks of the David All
 SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 
 ## Requirements
-* [Functional Requirements](etc/requirements/Requirements.md)
-* [Nonfunctional Requirements](etc/requirements/Nonfunctional_Requirements.md)
+* [Functional Requirements](src/site/markdown/REQUIREMENTS_FUNCTIONAL.md)
+* [Nonfunctional Requirements](src/site/markdown/REQUIREMENTS_NONFUNCTIONAL.md)
 
 ## Development
-* [Requirements](src/site/markdown/REQUIREMENTS_FUNCTIONAL.md)
-* [Nonfunctional_Requirements](src/site/markdown/Nonfunctional_Requirements.md)
-* [HOWTO](src/site/markdown/TODO.md)
+* [CHANGELOG](src/site/markdown/CHANGELOG.md)
+* [TODO](src/site/markdown/TODO.md)
 
 ## URLs:
 * Heroku Deployment: [simpleworklist.herokuapp.com/](https://simpleworklist.herokuapp.com/)

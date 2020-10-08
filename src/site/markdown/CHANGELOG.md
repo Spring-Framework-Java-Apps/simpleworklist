@@ -128,13 +128,11 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 
 ## 2.3.26
 * fixed #249 TaskRepository: move the JQL Query-String to Entity as Prepared Statement
+
+## 2.3.27
+* fixed  #298 try out java15
+
+## 2.3.28
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown 
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
-
-## 2.3.27
-* Issue  #298 try out java15
-
-
-
-
