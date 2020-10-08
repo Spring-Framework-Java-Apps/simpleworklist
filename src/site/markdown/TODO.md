@@ -8,7 +8,7 @@
 * fixed #249 TaskRepository: move the JQL Query-String to Entity as Prepared Statement
 
 ## 2.3.27
-* Issue  #298 try out java15
+* fixed #298 try out java15
 
 ## 2.3.28
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown 

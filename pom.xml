@@ -459,13 +459,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-properties-migrator</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -842,11 +835,6 @@
                                 <requireJavaVersion>
                                     <version>${java.version}</version>
                                 </requireJavaVersion>
-                                <!--
-                                <requireOS>
-                                    <family>unix</family>
-                                </requireOS>
-                                -->
                                 <requireFilesExist>
                                     <files>
                                         <file>${project.basedir}/README.md</file>
@@ -855,9 +843,15 @@
                                         <file>${project.basedir}/app.json</file>
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
-                                        <file>${project.basedir}/src/site/markdown/Requirements.md</file>
-                                        <file>${project.basedir}/src/site/markdown/Requirements_Nonfunctional.md</file>
-                                        <file>${project.basedir}/src/site/markdown/About.md</file>
+                                        <file>${project.basedir}/src/site/markdown/ABOUT.md</file>
+                                        <file>${project.basedir}/src/site/markdown/CHANGELOG.md</file>
+                                        <file>${project.basedir}/src/site/markdown/CLOUD_DEPLOYMENT.md</file>
+                                        <file>${project.basedir}/src/site/markdown/DEVELOPMENT.md</file>
+                                        <file>${project.basedir}/src/site/markdown/HOWTO.md</file>
+                                        <file>${project.basedir}/src/site/markdown/MAVEN_PLUGINS.md</file>
+                                        <file>${project.basedir}/src/site/markdown/REQUIREMENTS_FUNCTIONAL.md</file>
+                                        <file>${project.basedir}/src/site/markdown/REQUIREMENTS_NONFUNCTIONAL.md</file>
+                                        <file>${project.basedir}/src/site/markdown/TODO.md</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
                                         <file>${project.basedir}/build.sh</file>
                                         <file>${project.basedir}/run.sh</file>
