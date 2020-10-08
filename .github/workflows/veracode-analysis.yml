@@ -6,9 +6,9 @@ name: Veracode Static Analysis Pipeline Scan
 # events but only for the master branch
 on:
   push:
-    branches: [  'master', 'heroku-deployment', 'branch-2.3.27-SNAPSHOT' ]
+    branches: [  'master', 'heroku-deployment', 'branch-2.3-MVC' ]
   pull_request:
-    branches: [  'master', 'heroku-deployment', 'branch-2.3.27-SNAPSHOT' ]
+    branches: [  'master', 'heroku-deployment', 'branch-2.3-MVC' ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

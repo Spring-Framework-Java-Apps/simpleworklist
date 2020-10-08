@@ -17,10 +17,10 @@ name: Fortify on Demand Scan
 on:
   workflow_dispatch:
   push:
-    branches: [ 'master', 'heroku-deployment', 'branch-2.3.27-SNAPSHOT' ]
+    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ 'master', 'heroku-deployment', 'branch-2.3.27-SNAPSHOT' ]
+    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
 
 jobs:
   FoD-SAST-Scan:
