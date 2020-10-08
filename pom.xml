@@ -1083,7 +1083,7 @@
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <outputFile>${project.build.outputDirectory}/classes/</outputFile>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
-                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
                         </configuration>
                     </execution>
@@ -1102,7 +1102,7 @@
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <outputFile>${project.build.outputDirectory}/classes/</outputFile>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
-                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                         </configuration>
                     </execution>
@@ -1128,7 +1128,7 @@
                             <failOnWarning>false</failOnWarning>
                             <ignoreNonCompile>true</ignoreNonCompile>
                             <excludeTypes>pom</excludeTypes>
-                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <ignoredDependencies>
                                 <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
@@ -1172,7 +1172,7 @@
                         <phase>site</phase>
                         <configuration>
                             <excludeGroupIds>org.webjars</excludeGroupIds>
-                            <excludeGroupIds>org.webjars,org.jclouds,org.jboss.as,xml-resolver,commons-configuration,org.codehaus.plexus,commons-digester,junit,log4j,io.openliberty.features,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeGroupIds>org.webjars,org.jclouds,org.jboss.as,xml-resolver,commons-configuration,org.codehaus.plexus,commons-digester,junit,log4j,io.openliberty.features,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,commons-configuration,jdk.tools,maven-antrun-plugin,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <reportSets>
@@ -1198,7 +1198,7 @@
                         <configuration>
                             <classifier>sources</classifier>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
-                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
