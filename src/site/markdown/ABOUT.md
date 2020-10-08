@@ -21,7 +21,7 @@ SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 * [Live Deployment on Heroku](https://simpleworklist.herokuapp.com/)
 
 ## TODO: Requirements
-* See Files [Requirements.md](./Requirements.md) and [Nonfunctional_Requirements.md](./Nonfunctional_Requirements.md)
+* See Files [Requirements.md](./REQUIREMENTS_FUNCTIONAL.md) and [Nonfunctional_Requirements.md](./Nonfunctional_Requirements.md)
 
 ## Legacy Documentation: Requirements
 

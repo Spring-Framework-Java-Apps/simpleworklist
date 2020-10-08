@@ -1,4 +1,4 @@
-################################################################################################################################################ 
+################################################################################################################################################
 # Fortify lets you build secure software fast with an appsec platform that automates testing throughout the DevSecOps pipeline. Fortify static,#
 # dynamic, interactive, and runtime security testing is available on premises or as a service. To learn more about Fortify, start a free trial #
 # or contact our sales team, visit microfocus.com/appsecurity.                                                                                 #
@@ -14,17 +14,17 @@
 name: Fortify on Demand Scan
 
 # TODO: Customize trigger events based on your DevSecOps processes and typical FoD SAST scan time
-on: 
+on:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [master]
-  
+    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
+
 jobs:
   FoD-SAST-Scan:
-    # Use the appropriate runner for building your source code. 
+    # Use the appropriate runner for building your source code.
     # TODO: Use a Windows runner for .NET projects that use msbuild. Additional changes to RUN commands will be required to switch to Windows syntax.
     runs-on: ubuntu-latest
 
@@ -37,27 +37,27 @@ jobs:
           fetch-depth: 2
       # If this run was triggered by a pull request event, then checkout the head of the pull request instead of the merge commit.
       - run: git checkout HEAD^2
-        if: ${{ github.event_name == 'pull_request' }}      
+        if: ${{ github.event_name == 'pull_request' }}
       # Java 8 required by ScanCentral Client and FoD Uploader(Univeral CI Tool)
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: 13
-      
+          java-version: 15
+
       # Prepare source+dependencies for upload. The default example is for a Maven project that uses pom.xml.
       # TODO: Update PACKAGE_OPTS based on the ScanCentral Client documentation for your project's included tech stack(s). Helpful hints:
       #   ScanCentral Client will download dependencies for maven (-bt mvn) and gradle (-bt gradle).
       #   ScanCentral Client can download dependencies for msbuild projects (-bt msbuild); however, you must convert the workflow to use a Windows runner.
       #   ScanCentral has additional options that should be set for PHP and Python projects
       #   For other build tools, add your build commands to download necessary dependencies and prepare according to Fortify on Demand Packaging documentation.
-      #   ScanCentral Client documentation is located at https://www.microfocus.com/documentation/fortify-software-security-center/ 
+      #   ScanCentral Client documentation is located at https://www.microfocus.com/documentation/fortify-software-security-center/
       - name: Download Fortify ScanCentral Client
         uses: fortify/gha-setup-scancentral-client@v1
       - name: Package Code + Dependencies
         run: scancentral package $PACKAGE_OPTS -o package.zip
         env:
           PACKAGE_OPTS: "-bt mvn"
-      
+
       # Start Fortify on Demand SAST scan and wait until results complete. For more information on FoDUploader commands, see https://github.com/fod-dev/fod-uploader-java
       # TODO: Update ENV variables for your application and create the necessary GitHub Secrets.  Helpful hints:
       #   Credentials and release ID should be obtained from your FoD tenant (either Personal Access Token or API Key can be used).
@@ -66,8 +66,8 @@ jobs:
         uses: fortify/gha-setup-fod-uploader@v1
       - name: Perform SAST Scan
         run: java -jar $FOD_UPLOAD_JAR -z package.zip -aurl $FOD_API_URL -purl $FOD_URL -rid "$FOD_RELEASE_ID" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" $FOD_UPLOADER_OPTS -n "$FOD_UPLOADER_NOTES"
-        env: 
-          FOD_TENANT: ${{ secrets.FOD_TENANT }}  
+        env:
+          FOD_TENANT: ${{ secrets.FOD_TENANT }}
           FOD_USER: ${{ secrets.FOD_USER }}
           FOD_PAT: ${{ secrets.FOD_PAT }}
           FOD_RELEASE_ID: ${{ secrets.FOD_RELEASE_ID }}
@@ -75,7 +75,7 @@ jobs:
           FOD_API_URL: "https://api.ams.fortify.com/"
           FOD_UPLOADER_OPTS: "-ep 2 -pp 0 -I 1 -apf"
           FOD_UPLOADER_NOTES: 'Triggered by GitHub Actions (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})'
-      
+
       # Once scan completes, pull SAST issues from Fortify on Demand and generate SARIF output.
       # TODO: Review Action inputs. For most users, these will be the same as used in the Perform SAST Scan step.
       - name: Download Results
@@ -87,7 +87,7 @@ jobs:
           password: ${{ secrets.FOD_PAT }}
           release-id: ${{ secrets.FOD_RELEASE_ID }}
           output: ./sarif/output.sarif
-      
+
       # Import Fortify on Demand results to GitHub Security Code Scanning
       - name: Import Results
         uses: github/codeql-action/upload-sarif@v1
