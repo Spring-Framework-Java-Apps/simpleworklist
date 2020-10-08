@@ -63,8 +63,8 @@ jobs:
     #    and modify them (or add more) to build your code if your project
     #    uses a compiled language
 
-    #- run: |
-    #   make bootstrap
+    - run: |
+        ./mvnw -B -DskipTests clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree package spring-boot:repackage site --file pom.xml
     #   make release
 
     - name: Perform CodeQL Analysis
