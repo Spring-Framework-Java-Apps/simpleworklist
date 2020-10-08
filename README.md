@@ -4,6 +4,7 @@
 [![OSSAR](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/OSSAR/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
 [![Codacy Security Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Codacy%20Security%20Scan/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
 [![Travis CI Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
+
 Your Todo List for Getting Things Done
 
 ## Getting Things Done
