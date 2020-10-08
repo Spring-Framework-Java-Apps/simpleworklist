@@ -5,9 +5,9 @@ name: OSSAR
 
 on:
   push:
-    branches: [ master ]
+    branches: [  'master', 'heroku-deployment', 'branch-2.3.27-SNAPSHOT' ]
   pull_request:
-    branches: [ master ]
+    branches: [  'master', 'heroku-deployment', 'branch-2.3.27-SNAPSHOT' ]
 
 jobs:
   OSSAR-Scan:

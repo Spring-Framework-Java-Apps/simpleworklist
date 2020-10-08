@@ -1,13 +1,13 @@
 # This workflow downloads and installs the latest version of Xanitizer, builds your project, runs a Xanitizer security analysis on it,
-# and then archives the findings list reports and uploads the findings into the GitHub code scanning alert section of your repository. 
+# and then archives the findings list reports and uploads the findings into the GitHub code scanning alert section of your repository.
 #
 # Documentation for the `RIGS-IT/xanitizer-action` is located here: https://github.com/RIGS-IT/xanitizer-action
 #
 # To use this basic workflow, you will need to complete the following setup steps:
 #
 # 1. The underlying Xanitizer, used in this workflow, needs a separate license file.
-#    Licenses are free of charge for open source projects and for educational usage. 
-#    To get more information about the Xanitizer licenses and how to obtain a license file, 
+#    Licenses are free of charge for open source projects and for educational usage.
+#    To get more information about the Xanitizer licenses and how to obtain a license file,
 #    please consult https://www.xanitizer.com/xanitizer-pricing/.
 #
 # 2. The content of the license file has to be stored as a GitHub secret (e.g. XANITIZER_LICENSE) on this repository.
@@ -40,7 +40,7 @@ jobs:
   xanitizer-security-analysis:
     # Xanitizer runs on ubuntu-latest and windows-latest.
     runs-on: ubuntu-latest
-  
+
     steps:
       # Check out the repository
       - name: Checkout
@@ -48,16 +48,16 @@ jobs:
 
       # Set up the correct Java version for your project
       # Please comment out, if your project does not contain Java source code.
-      - name: Set up JDK 13
+      - name: Set up JDK 15
         uses: actions/setup-java@v1
         with:
-          java-version: 13
+          java-version: 15
 
       # Compile the code for Java projects and get all libraries, e.g. via Maven
       # Please adapt, if your project uses another build system to compile Java source code.
       # Please comment out, if your project does not contain Java source code.
       - name: Compile Java code
-        run: mvn -B compile
+        run: ./mvnw -B -DskipTests clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree package spring-boot:repackage site --file pom.xml
 
       # Install all dependent libraries for JavaScript/TypeScript projects, e.g. via npm
       # Please adapt to run `npm install` in the correct directories.
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Xanitizer-Reports
-          path: | 
+          path: |
             *-Findings-List.pdf
             *-Findings-List.sarif
 
