@@ -4,21 +4,21 @@
 
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.1</version>
 	<packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.4.RELEASE</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <scm>
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
         <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
-        <tag>master</tag>
+        <tag>v3.0.1</tag>
     </scm>
 
     <name>simpleworklist</name>
