@@ -17,7 +17,7 @@
         <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
         <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
         <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
-        <tag>branch-2.3.27-SNAPSHOT</tag>
+        <tag>branch-2.3-MVC</tag>
     </scm>
 
     <name>simpleworklist</name>
