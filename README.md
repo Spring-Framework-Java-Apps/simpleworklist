@@ -5,7 +5,7 @@
 [![Codacy Security Scan](https://github.com/Spring-Framework-Java-Apps/simpleworklist/workflows/Codacy%20Security%20Scan/badge.svg)](https://github.com/Spring-Framework-Java-Apps/simpleworklist/actions)
 [![Travis CI Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
 
-Heroku Deployment: [simpleworklist.herokuapp.com/](https://simpleworklist.herokuapp.com
+Heroku Deployment: [simpleworklist.herokuapp.com/](https://simpleworklist.herokuapp.com)
 
 ## About SimpleWorklist
 
