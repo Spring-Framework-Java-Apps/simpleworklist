@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source src/main/bash/setenv.sh
+#source src/main/bash/setenv.sh
 
 function composeUp() {
     ./mvnw docker-compose:up
