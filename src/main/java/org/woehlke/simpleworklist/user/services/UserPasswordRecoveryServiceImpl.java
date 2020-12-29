@@ -1,7 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.id.UUIDGenerationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
