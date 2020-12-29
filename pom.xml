@@ -89,9 +89,6 @@
         <doxia-module-markdown.version>1.9.1</doxia-module-markdown.version>
         <doxia-module.version>1.9.1</doxia-module.version>
 
-
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-
         <!-- Docker -->
         <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
         <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
@@ -188,11 +185,13 @@
             <name>WSO2 Public Repository</name>
             <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
         </repository>
+        <!--
         <repository>
             <id>hortonworks-releases</id>
             <name>Hortonworks Repository</name>
             <url>https://repo.hortonworks.com/content/repositories/releases/</url>
         </repository>
+        -->
         <repository>
             <id>adobe-public</id>
             <name>AdobePublic Repository</name>
@@ -263,11 +262,13 @@
             <name>WSO2 Public Repository</name>
             <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
         </pluginRepository>
+        <!--
         <pluginRepository>
             <id>hortonworks-releases</id>
             <name>Hortonworks Repository</name>
             <url>https://repo.hortonworks.com/content/repositories/releases/</url>
         </pluginRepository>
+        -->
         <pluginRepository>
             <id>adobe-public</id>
             <name>AdobePublic Repository</name>
