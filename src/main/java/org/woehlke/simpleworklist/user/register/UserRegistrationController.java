@@ -36,7 +36,7 @@ public class UserRegistrationController {
      * @param model Model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String registerGet(Model model) {
         log.info("registerGet");
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
@@ -52,7 +52,7 @@ public class UserRegistrationController {
      * @param model Model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(path = "", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     public final String registerPost(
             @Valid UserRegistrationForm userRegistrationForm,
             BindingResult result,
@@ -73,7 +73,7 @@ public class UserRegistrationController {
                     return "user/register/registerForm";
                 } else {
                     userRegistrationService.registrationSendEmailTo(userRegistrationForm.getEmail());
-                    return "\"user/register/registerConfirmSentMail";
+                    return "user/register/registerConfirmSentMail";
                 }
             } else {
                 String objectName = "userRegistrationForm";
