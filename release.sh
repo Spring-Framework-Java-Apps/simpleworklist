@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 #source src/main/bash/setenv.sh
+source ~/.bash_aliases_simpleworklist
 
 function releaseMe(){
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
