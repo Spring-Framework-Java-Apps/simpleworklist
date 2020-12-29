@@ -52,8 +52,8 @@ function runDev() {
 }
 
 function run() {
-    runHerokuLocal
-    #runDev
+    #runHerokuLocal
+    runDev
 }
 
 function main() {
