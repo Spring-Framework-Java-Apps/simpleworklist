@@ -301,6 +301,7 @@
             </dependency>
             <dependency>
                 <groupId>org.webjars.npm</groupId>
+                <artifactId>popper.js</artifactId>
                 <version>${webjars.popper.js.version}</version>
             </dependency>
             <dependency>
@@ -574,11 +575,11 @@
 			<artifactId>jquery</artifactId>
 		</dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
+            <groupId>org.webjars.npm</groupId>
             <artifactId>popper.js</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
+            <groupId>org.webjars.npm</groupId>
             <artifactId>bootstrap</artifactId>
         </dependency>
         <dependency>
