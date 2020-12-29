@@ -7,10 +7,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
+    branches: [  'master', 'heroku-deployment', 'simpleworklist-jsf-spring' ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
+    branches: [  'master', 'heroku-deployment', 'simpleworklist-jsf-spring' ]
   schedule:
     - cron: '0 19 * * 2'
 
@@ -64,7 +64,7 @@ jobs:
     #    uses a compiled language
 
     - run: |
-        ./mvnw -B -DskipTests clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree package spring-boot:repackage site --file pom.xml
+        ./mvnw -B -DskipTests clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree package spring-boot:repackage --file pom.xml
     #   make release
 
     - name: Perform CodeQL Analysis
