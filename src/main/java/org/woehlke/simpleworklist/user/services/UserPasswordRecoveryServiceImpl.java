@@ -74,9 +74,9 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        log.info("To be saved: " + o.toString());
+        log.debug("To be saved: " + o.toString());
         o = userPasswordRecoveryRepository.saveAndFlush(o);
-        log.info("Saved: " + o.toString());
+        log.debug("Saved: " + o.toString());
         this.sendEmailForPasswordReset(o);
     }
 
@@ -84,7 +84,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySentEmail(UserPasswordRecovery o) {
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL);
-        log.info("about to save: " + o.toString());
+        log.debug("about to save: " + o.toString());
         userPasswordRecoveryRepository.saveAndFlush(o);
     }
 
@@ -125,6 +125,6 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         if (success) {
             this.passwordRecoverySentEmail(o);
         }
-        log.info("Sent MAIL: " + o.toString());
+        log.debug("Sent MAIL: " + o.toString());
     }
 }

@@ -29,7 +29,7 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
 
     @Override
     public String retrieveUsername() {
-        log.info("retrieveUsername");
+        log.debug("retrieveUsername");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null) return " ";
         Object principal = authentication.getPrincipal();
@@ -42,7 +42,7 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
 
     @Override
     public UserAccount retrieveCurrentUser() throws UsernameNotFoundException {
-        log.info("retrieveCurrentUser");
+        log.debug("retrieveCurrentUser");
         String username = this.retrieveUsername();
         UserAccount account = userAccountRepository.findByUserEmail(username);
         if (account == null) throw new UsernameNotFoundException(username);
@@ -52,7 +52,7 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void updateLastLoginTimestamp(UserAccount user) {
-        log.info("updateLastLoginTimestamp");
+        log.debug("updateLastLoginTimestamp");
         user.setLastLoginTimestamp(new Date());
         userAccountRepository.saveAndFlush(user);
     }

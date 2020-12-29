@@ -60,7 +60,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         u.setAccountNonLocked(true);
         u.setCredentialsNonExpired(true);
         u.setEnabled(true);
-        log.info("About to save " + u.toString());
+        log.debug("About to save " + u.toString());
         u = userAccountRepository.save(u);
         Context workContext = new Context("Arbeit","Work");
         Context privContext = new Context("Privat","Private");
@@ -68,13 +68,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         privContext.setUuid(UUID.randomUUID().toString());
         workContext.setUserAccount(u);
         privContext.setUserAccount(u);
-        log.info("About to save " + workContext.toString());
+        log.debug("About to save " + workContext.toString());
         contextRepository.save(workContext);
-        log.info("About to save " + privContext.toString());
+        log.debug("About to save " + privContext.toString());
         contextRepository.save(privContext);
         u.setDefaultContext(workContext);
         u = userAccountRepository.save(u);
-        log.info("Saved " + u.toString());
+        log.debug("Saved " + u.toString());
     }
 
     @Override

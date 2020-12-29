@@ -44,7 +44,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             HttpServletResponse response,
             Authentication authentication
     ) throws ServletException, IOException {
-        log.info("onAuthenticationSuccess");
+        log.debug("onAuthenticationSuccess");
         super.onAuthenticationSuccess(request, response, authentication);
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         userAccountLoginSuccessService.updateLastLoginTimestamp(user);
@@ -54,7 +54,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             default: locale = Locale.ENGLISH; break;
         }
         localeResolver.setLocale(request,response,locale);
-        log.info("successful logged in "+user.getUserEmail());
+        log.debug("successful logged in "+user.getUserEmail());
     }
 
 }

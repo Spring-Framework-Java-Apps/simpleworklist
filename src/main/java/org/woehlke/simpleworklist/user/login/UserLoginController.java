@@ -46,7 +46,7 @@ public class UserLoginController {
      */
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public final String loginGet(Model model) {
-        log.info("loginForm");
+        log.debug("loginForm");
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
         return "user/login/loginForm";
@@ -66,12 +66,12 @@ public class UserLoginController {
         BindingResult result,
         Model model
     ) {
-        log.info("loginPerform");
+        log.debug("loginPerform");
         boolean authorized = userAccountAccessService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
             userAccountLoginSuccessService.updateLastLoginTimestamp(user);
-            log.info("logged in");
+            log.debug("logged in");
             return "redirect:/home";
         } else {
             String objectName = "loginForm";
@@ -82,7 +82,7 @@ public class UserLoginController {
             field = "userPassword";
             fieldError = new FieldError(objectName, field, defaultMessage);
             result.addError(fieldError);
-            log.info("not logged in");
+            log.debug("not logged in");
             return "user/login/loginForm";
         }
     }
@@ -93,7 +93,7 @@ public class UserLoginController {
         HttpServletRequest request,
         HttpServletResponse response
     ) {
-        log.info("logoutPages");
+        log.debug("logoutPages");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);

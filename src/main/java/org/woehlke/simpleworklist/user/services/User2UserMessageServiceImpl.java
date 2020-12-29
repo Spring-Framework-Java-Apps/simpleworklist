@@ -38,7 +38,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         UserAccount otherUser,
         User2UserMessageFormBean user2UserMessageFormBean
     ) {
-        log.info("sendNewUserMessage");
+        log.debug("sendNewUserMessage");
         User2UserMessage m = new User2UserMessage();
         m.setSender(thisUser);
         m.setReceiver(otherUser);
@@ -51,7 +51,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
     public int getNumberOfNewIncomingMessagesForUser(
         UserAccount receiver
     ) {
-        log.info("getNumberOfNewIncomingMessagesForUser");
+        log.debug("getNumberOfNewIncomingMessagesForUser");
         boolean readByReceiver = false;
         //TODO: #246 change List<Project> to Page<Project>
         List<User2UserMessage> user2UserMessageList =
@@ -66,7 +66,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         UserAccount sender,
         Pageable request
     ) {
-        log.info("readAllMessagesBetweenCurrentAndOtherUser");
+        log.debug("readAllMessagesBetweenCurrentAndOtherUser");
         Page<User2UserMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
         for(User2UserMessage user2UserMessage : user2UserMessagePage){
             if((!user2UserMessage.getReadByReceiver()) && (receiver.getId().longValue()== user2UserMessage.getReceiver().getId().longValue())){

@@ -39,7 +39,7 @@ public class User2UserMessageController extends AbstractController {
             Locale locale,
             Model model
     ) {
-        log.info("getLastMessagesBetweenCurrentAndOtherUser");
+        log.debug("getLastMessagesBetweenCurrentAndOtherUser");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
@@ -65,16 +65,16 @@ public class User2UserMessageController extends AbstractController {
             Locale locale,
             Model model
     ) {
-        log.info("sendNewMessageToOtherUser");
+        log.debug("sendNewMessageToOtherUser");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
         model.addAttribute("breadcrumb",breadcrumb);
         if(result.hasErrors()){
-            log.info("result.hasErrors");
+            log.debug("result.hasErrors");
             for(ObjectError objectError:result.getAllErrors()){
-                log.info("result.hasErrors: "+objectError.toString());
+                log.debug("result.hasErrors: "+objectError.toString());
             }
             Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
             model.addAttribute("otherUser", otherUser);

@@ -61,16 +61,16 @@ public class UserPasswordRecoveryController {
         Model model
     ) {
         if (result.hasErrors()) {
-            log.info("----------------------");
-            log.info(userRegistrationForm.toString());
-            log.info(result.toString());
-            log.info(model.toString());
-            log.info("----------------------");
+            log.debug("----------------------");
+            log.debug(userRegistrationForm.toString());
+            log.debug(result.toString());
+            log.debug(model.toString());
+            log.debug("----------------------");
             return "user/resetPassword/resetPasswordForm";
         } else {
-            log.info(userRegistrationForm.toString());
-            log.info(result.toString());
-            log.info(model.toString());
+            log.debug(userRegistrationForm.toString());
+            log.debug(result.toString());
+            log.debug(model.toString());
             if (userAccountService.findByUserEmail(userRegistrationForm.getEmail()) == null) {
                 String objectName = "userRegistrationForm";
                 String field = "email";

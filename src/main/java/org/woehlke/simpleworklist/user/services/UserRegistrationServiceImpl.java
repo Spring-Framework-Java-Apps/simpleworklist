@@ -71,9 +71,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        log.info("To be saved: " + o.toString());
+        log.debug("To be saved: " + o.toString());
         o = userRegistrationRepository.saveAndFlush(o);
-        log.info("Saved: " + o.toString());
+        log.debug("Saved: " + o.toString());
         this.sendEmailToRegisterNewUser(o);
     }
 
@@ -86,7 +86,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void registrationSentEmail(UserRegistration o) {
         o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_SENT_MAIL);
-        log.info("about to save: " + o.toString());
+        log.debug("about to save: " + o.toString());
         userRegistrationRepository.saveAndFlush(o);
     }
 
@@ -127,7 +127,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         if (success) {
             this.registrationSentEmail(o);
         }
-        log.info("Sent MAIL: " + o.toString());
+        log.debug("Sent MAIL: " + o.toString());
     }
 
 

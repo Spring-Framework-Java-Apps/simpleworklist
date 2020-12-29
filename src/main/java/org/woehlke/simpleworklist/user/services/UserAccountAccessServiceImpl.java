@@ -67,7 +67,7 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
         );
         Authentication authenticationResult = authenticationManager.authenticate(token);
         String oldPwEncoded = this.encoder.encode(oldUserPassword);
-        log.info(userEmail+", "+oldPwEncoded);
+        log.debug(userEmail+", "+oldPwEncoded);
         return authenticationResult.isAuthenticated();
     }
 
