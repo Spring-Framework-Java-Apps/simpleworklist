@@ -300,7 +300,11 @@
                 <version>${webjars.jquery.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars</groupId>
+                <groupId>org.webjars.npm</groupId>
+                <version>${webjars.popper.js.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.npm</groupId>
                 <artifactId>bootstrap</artifactId>
                 <version>${webjars.bootstrap.version}</version>
             </dependency>
@@ -569,6 +573,10 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>popper.js</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
