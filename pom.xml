@@ -98,10 +98,10 @@
         <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
 
         <!-- Webjars -->
-        <webjars.bootstrap.version>4.5.2</webjars.bootstrap.version>
+        <webjars.bootstrap.version>4.5.3</webjars.bootstrap.version>
         <webjars.jquery.version>3.5.1</webjars.jquery.version>
-        <webjars.popper.js.version>1.16.0</webjars.popper.js.version>
-        <webjars.font-awesome.version>5.14.0</webjars.font-awesome.version>
+        <webjars.popper.js.version>1.16.1</webjars.popper.js.version>
+        <webjars.font-awesome.version>5.15.1</webjars.font-awesome.version>
         <webjars.ckeditor.version>18.0.0</webjars.ckeditor.version>
 
         <!-- Frontend Server Site: Thymeleaf Templates -->
