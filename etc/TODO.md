@@ -171,7 +171,8 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #310 change devops actions
 
 ## 2.3.31
-* Issue #311 User Selfservice is broken
+* fixed #311 User Selfservice is broken
+* Issue #312 User2UserMessage Chat is broken  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown

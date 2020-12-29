@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.account;
+package org.woehlke.simpleworklist.user.selfservice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,10 @@ import org.woehlke.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.simpleworklist.application.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.application.language.Language;
+import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.account.UserChangeDefaultContextForm;
+import org.woehlke.simpleworklist.user.account.UserChangeNameForm;
+import org.woehlke.simpleworklist.user.account.UserChangePasswordForm;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
@@ -46,9 +50,11 @@ public class UserSelfserviceController extends AbstractController {
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
     public String userProfileAndMenu(
-        @PageableDefault(sort = "userFullname", direction = Sort.Direction.DESC) Pageable request,
+        @PageableDefault(
+            sort = "userFullname",
+            direction = Sort.Direction.DESC) Pageable request,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userProfileAndMenu");
@@ -71,7 +77,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/name", method = RequestMethod.GET)
     public String userNameForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userNameForm");
@@ -91,7 +97,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid UserChangeNameForm username,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userNameStore");
@@ -115,7 +121,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/password", method = RequestMethod.GET)
     public String userPasswordForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userPasswordForm");
@@ -135,7 +141,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid UserChangePasswordForm userChangePasswordForm,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ) {
         log.debug("userPasswordStore");
@@ -193,7 +199,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/contexts", method = RequestMethod.GET)
     public String userContextsForm(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userContextsForm");
@@ -216,7 +222,7 @@ public class UserSelfserviceController extends AbstractController {
             @Valid @ModelAttribute("thisUser") UserChangeDefaultContextForm thisUser,
             BindingResult result,
             @ModelAttribute("userSession") UserSessionBean userSession,
-            @ModelAttribute("locale") Locale locale,
+            Locale locale,
             Model model
     ){
         log.debug("userContextsSave");
@@ -248,7 +254,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/context/add", method = RequestMethod.GET)
     public String userNewContextGet(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userNewContextGet");
@@ -268,7 +274,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid NewContextForm newContext,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userNewContextPost");
@@ -295,7 +301,7 @@ public class UserSelfserviceController extends AbstractController {
     public String userContextEditGet(
         @PathVariable("id") Context context,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userContextEditGet");
@@ -318,7 +324,7 @@ public class UserSelfserviceController extends AbstractController {
         @PathVariable("id") Context context,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userContextEditPost");
@@ -346,7 +352,7 @@ public class UserSelfserviceController extends AbstractController {
     public String userDeleteContextGet(
         @PathVariable("id") Context context,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userDeleteContextGet");
@@ -378,7 +384,7 @@ public class UserSelfserviceController extends AbstractController {
     @RequestMapping(path = "/language", method = RequestMethod.GET)
     public String userLanguageGet(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userLanguageGet");
@@ -397,7 +403,7 @@ public class UserSelfserviceController extends AbstractController {
         @Valid UserChangeLanguageForm userChangeLanguageForm,
         BindingResult result,
         @ModelAttribute("userSession") UserSessionBean userSession,
-        @ModelAttribute("locale") Locale locale,
+        Locale locale,
         Model model
     ){
         log.debug("userLanguagePost");
