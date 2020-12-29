@@ -10,9 +10,9 @@ name: Codacy Security Scan
 
 on:
   push:
-    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
+    branches: [ "master", "heroku-deployment" ]
   pull_request:
-    branches: [ 'master', 'heroku-deployment', 'branch-2.3-MVC' ]
+    branches: [ "master", "heroku-deployment" ]
 
 jobs:
   codacy-security-scan:

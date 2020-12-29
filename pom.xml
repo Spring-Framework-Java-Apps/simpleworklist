@@ -22,7 +22,7 @@
 
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
-    <url>https://woehlke.org/java/simpleworklist</url>
+    <url>https://homepage.ruhr-uni-bochum.de/Thomas.Woehlke/java/simpleworklist</url>
     <inceptionYear>2012</inceptionYear>
 
     <organization>
@@ -68,7 +68,7 @@
 
     <properties>
         <java.version>15</java.version>
-        <version.maven>3.6.2</version.maven>
+        <version.maven>3.6.3</version.maven>
         <pmdVersion>6.28.0</pmdVersion>
 
         <!-- SCM and Releasing with Maven -->
@@ -160,6 +160,11 @@
             <url>https://repo.spring.io/libs-milestone/</url>
         </repository>
         <repository>
+            <id>apache-releases</id>
+            <name>Apache Releases</name>
+            <url>https://repository.apache.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
             <id>atlassian-public</id>
             <name>Atlassian Repository</name>
             <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
@@ -230,6 +235,11 @@
             <url>https://repo.spring.io/milestone</url>
         </pluginRepository>
         <pluginRepository>
+            <id>apache-releases</id>
+            <name>Apache Releases</name>
+            <url>https://repository.apache.org/content/repositories/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
             <id>atlassian-public</id>
             <name>Atlassian Repository</name>
             <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
@@ -274,6 +284,13 @@
                 <groupId>org.springframework.session</groupId>
                 <artifactId>spring-session-bom</artifactId>
                 <version>${spring-session-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring-security.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -510,6 +527,10 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
@@ -531,7 +552,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.joinfaces</groupId>
+            <artifactId>security-spring-boot-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -546,6 +570,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>false</optional>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -971,7 +996,7 @@
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <outputFile>${project.build.outputDirectory}/classes/</outputFile>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
-                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
+                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
                             <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
                         </configuration>
                     </execution>
@@ -990,8 +1015,8 @@
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <outputFile>${project.build.outputDirectory}/classes/</outputFile>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
-                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                         </configuration>
                     </execution>
                     <execution>
@@ -1016,17 +1041,10 @@
                             <failOnWarning>false</failOnWarning>
                             <ignoreNonCompile>true</ignoreNonCompile>
                             <excludeTypes>pom</excludeTypes>
-                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <ignoredDependencies>
                                 <ignoredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredDependency>
-                                <!--
-                                <ignoredDependency>org.apache.maven.scm:maven-scm</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-git</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers-standard</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-providers</ignoredDependency>
-                                <ignoredDependency>org.apache.maven.scm:maven-scm-managers</ignoredDependency>
-                                -->
                             </ignoredDependencies>
                             <ignoredUsedUndeclaredDependencies>
                                 <ignoredUsedUndeclaredDependency>org.apache.maven.plugins:maven-surefire-plugin</ignoredUsedUndeclaredDependency>
@@ -1067,8 +1085,8 @@
                         <phase>site</phase>
                         <configuration>
                             <excludeGroupIds>org.webjars</excludeGroupIds>
-                            <excludeGroupIds>org.webjars,org.jclouds,org.jboss.as,xml-resolver,commons-configuration,org.codehaus.plexus,commons-digester,junit,log4j,io.openliberty.features,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,commons-configuration,jdk.tools,maven-antrun-plugin,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <excludeGroupIds>org.webjars,org.jclouds,org.jboss.as,xml-resolver,commons-configuration,org.codehaus.plexus,commons-digester,junit,log4j,io.openliberty.features,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,commons-configuration,jdk.tools,maven-antrun-plugin,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <reportSets>
                                 <reportSet>
@@ -1093,8 +1111,8 @@
                         <configuration>
                             <classifier>sources</classifier>
                             <excludeTypes>pom,maven-plugin</excludeTypes>
-                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm</excludeGroupIds>
-                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete</excludeArtifactIds>
+                            <excludeGroupIds>org.webjars,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby</excludeGroupIds>
+                            <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api</excludeArtifactIds>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
                             <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
                         </configuration>
@@ -1205,7 +1223,6 @@
 
     <reporting>
         <plugins>
-            <!-- Same like Build or Inherited from Build -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>

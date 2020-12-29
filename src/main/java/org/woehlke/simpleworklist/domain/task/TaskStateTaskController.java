@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.task;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +19,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
+import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
