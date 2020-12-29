@@ -5,9 +5,9 @@ name: OSSAR
 
 on:
   push:
-    branches: [  'master', 'heroku-deployment', 'simpleworklist-jsf-spring' ]
+    branches: [  'master' ]
   pull_request:
-    branches: [  'master', 'heroku-deployment', 'simpleworklist-jsf-spring' ]
+    branches: [  'master' ]
 
 jobs:
   OSSAR-Scan:
