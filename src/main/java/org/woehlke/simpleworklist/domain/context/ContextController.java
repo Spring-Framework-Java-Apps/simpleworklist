@@ -34,7 +34,7 @@ public class ContextController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ){
-        log.info("switchContxt");
+        log.debug("switchContxt");
         Context oldContext = super.getContext(userSession);
         if (newContext != null) {
             userSession.setLastContextId(newContext.getId());

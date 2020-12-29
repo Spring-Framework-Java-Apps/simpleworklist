@@ -24,7 +24,7 @@ public class MyErrorController implements ErrorController {
     public String handleError(
         HttpServletRequest request
     ) {
-        log.info("handleError");
+        log.debug("handleError");
         String errorMessage = (String) request.getAttribute(ERROR_MESSAGE);
         if(errorMessage!=null){
             log.warn("errorMessage :"+errorMessage);

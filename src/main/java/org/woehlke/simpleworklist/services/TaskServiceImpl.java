@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public boolean projectHasNoTasks(Project project) {
-        log.info("projectHasNoTasks");
+        log.debug("projectHasNoTasks");
         //TODO: #244 change List<Task> to Page<Task>
         return taskRepository.findByProject(project).isEmpty();
     }
@@ -58,24 +58,24 @@ public class TaskServiceImpl implements TaskService {
     public Page<Task> findByProject(
         @NotNull Project thisProject, @NotNull Pageable request
     ) {
-        log.info("findByProject: ");
-        log.info("---------------------------------");
-        log.info("thisProject: "+thisProject);
-        log.info("---------------------------------");
+        log.debug("findByProject: ");
+        log.debug("---------------------------------");
+        log.debug("thisProject: "+thisProject);
+        log.debug("---------------------------------");
         return taskRepository.findByProject(thisProject,request);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Page<Task> findByRootProject(@NotNull Context context, @NotNull Pageable request) {
-        log.info("findByRootProject: ");
+        log.debug("findByRootProject: ");
         return taskRepository.findByProjectIsNullAndContext(context, request);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Task findOne(@Min(1L) long taskId) {
-        log.info("findOne: ");
+        log.debug("findOne: ");
         if(taskRepository.existsById(taskId)) {
             return taskRepository.getOne(taskId);
         } else {
@@ -86,40 +86,40 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaTaskstate(@NotNull Task task) {
-        log.info("updatedViaTaskstate");
+        log.debug("updatedViaTaskstate");
         long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outTaskstate());
+        log.debug("persisted: " + task.outTaskstate());
         return task;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProject(@NotNull Task task) {
-        log.info("updatedViaProject");
+        log.debug("updatedViaProject");
         long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(), task.getContext());
         task.setOrderIdProject(++maxOrderIdProject);
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted Task: " + task.outProject());
+        log.debug("persisted Task: " + task.outProject());
         return task;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProjectRoot(@NotNull Task task) {
-        log.info("updatedViaProject");
+        log.debug("updatedViaProject");
         //long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
         //task.setOrderIdProject(++maxOrderIdProject);
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted Task: " + task.outProject());
+        log.debug("persisted Task: " + task.outProject());
         return task;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToInbox(@NotNull Task task) {
-        log.info("addToInbox");
+        log.debug("addToInbox");
         task.setUuid(UUID.randomUUID().toString());
         task.setRootProject();
         task.unsetFocus();
@@ -129,14 +129,14 @@ public class TaskServiceImpl implements TaskService {
         long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outTaskstate());
+        log.debug("persisted: " + task.outTaskstate());
         return task;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToProject(@NotNull Task task) {
-        log.info("addToProject");
+        log.debug("addToProject");
         task.setUuid(UUID.randomUUID().toString());
         task.unsetFocus();
         long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(),task.getContext());
@@ -144,14 +144,14 @@ public class TaskServiceImpl implements TaskService {
         long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outProject());
+        log.debug("persisted: " + task.outProject());
         return task;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToRootProject(@NotNull Task task) {
-        log.info("addToRootProject");
+        log.debug("addToRootProject");
         task.setUuid(UUID.randomUUID().toString());
         task.setRootProject();
         task.unsetFocus();
@@ -161,7 +161,7 @@ public class TaskServiceImpl implements TaskService {
         long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outProject());
+        log.debug("persisted: " + task.outProject());
         return task;
     }
 
@@ -275,14 +275,14 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveUpByTaskState();
-            log.info(task.outTaskstate());
+            log.debug(task.outTaskstate());
             tasksMoved.add(task);
         }
         destinationTask.moveUpByTaskState();
-        log.info(destinationTask.outTaskstate());
+        log.debug(destinationTask.outTaskstate());
         tasksMoved.add(destinationTask);
         sourceTask.setOrderIdTaskState( lowerOrderIdTaskState );
-        log.info(sourceTask.outTaskstate());
+        log.debug(sourceTask.outTaskstate());
         tasksMoved.add(sourceTask);
         taskRepository.saveAll(tasksMoved);
     }
@@ -291,9 +291,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.debug("-------------------------------------------------------------------------------");
         TaskState taskState = sourceTask.getTaskState();
         Context context = sourceTask.getContext();
         long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
@@ -309,7 +309,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveDownByTaskState();
-            log.info(task.outProject());
+            log.debug(task.outProject());
             tasksMoved.add(task);
         }
         sourceTask.setOrderIdTaskState(higherOrderIdTaskState);
@@ -317,18 +317,18 @@ public class TaskServiceImpl implements TaskService {
         tasksMoved.add(sourceTask);
         tasksMoved.add(destinationTask);
         taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE: moveTasks DOWN By TaskState("+taskState.name()+"): "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" DONE: moveTasks DOWN By TaskState("+taskState.name()+"): "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.debug("-------------------------------------------------------------------------------");
     }
 
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksUpByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.debug("-------------------------------------------------------------------------------");
         Context context = sourceTask.getContext();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
@@ -342,7 +342,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveUpByProject();
-            log.info(task.outProject());
+            log.debug(task.outProject());
             tasksMoved.add(task);
         }
         sourceTask.setOrderIdProject(lowerOrderIdProject);
@@ -350,18 +350,18 @@ public class TaskServiceImpl implements TaskService {
         tasksMoved.add(sourceTask);
         tasksMoved.add(destinationTask);
         taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE: moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" DONE: moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+        log.debug("-------------------------------------------------------------------------------");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START moveTasks UP By Project Root");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" START moveTasks UP By Project Root");
+        log.debug(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
         Context context = sourceTask.getContext();
         final long lowerOrderIdProject = sourceTask.getOrderIdProject();
         final long higherOrderIdProject = destinationTask.getOrderIdProject();
@@ -375,7 +375,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveDownByProject();
-            log.info(task.outProject());
+            log.debug(task.outProject());
             tasksMoved.add(task);
         }
         sourceTask.setOrderIdProject(higherOrderIdProject);
@@ -383,20 +383,20 @@ public class TaskServiceImpl implements TaskService {
         tasksMoved.add(sourceTask);
         tasksMoved.add(destinationTask);
         taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE moveTasks UP By Project Root");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" DONE moveTasks UP By Project Root");
+        log.debug(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksUpByProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START moveTasks UP By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" START moveTasks UP By Project("+project.out()+"):");
+        log.debug(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
         //TODO: #244 change List<Task> to Page<Task>
@@ -409,7 +409,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveUpByProject();
-            log.info(task.outProject());
+            log.debug(task.outProject());
             tasksMoved.add(task);
         }
         sourceTask.setOrderIdProject(lowerOrderIdProject);
@@ -417,10 +417,10 @@ public class TaskServiceImpl implements TaskService {
         tasksMoved.add(sourceTask);
         tasksMoved.add(destinationTask);
         taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE moveTasks UP By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" DONE moveTasks UP By Project("+project.out()+"):");
+        log.debug(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
 
     }
 
@@ -428,10 +428,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByProject(@NotNull Task sourceTask, @NotNull Task destinationTask) {
         Project project = sourceTask.getProject();
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START moveTasks DOWN By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" START moveTasks DOWN By Project("+project.out()+"):");
+        log.debug(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
         final long lowerOrderIdProject = sourceTask.getOrderIdProject();
         final long higherOrderIdProject = destinationTask.getOrderIdProject();
         //TODO: #244 change List<Task> to Page<Task>
@@ -444,7 +444,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveDownByProject();
-            log.info(task.outProject());
+            log.debug(task.outProject());
             tasksMoved.add(task);
         }
         sourceTask.setOrderIdProject(higherOrderIdProject);
@@ -452,10 +452,10 @@ public class TaskServiceImpl implements TaskService {
         tasksMoved.add(sourceTask);
         tasksMoved.add(destinationTask);
         taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE smoveTasks DOWN By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" DONE smoveTasks DOWN By Project("+project.out()+"):");
+        log.debug(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
     }
 
     @Override
@@ -468,7 +468,7 @@ public class TaskServiceImpl implements TaskService {
         task.moveToInbox();
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("moved to inbox: " + task.outTaskstate());
+        log.debug("moved to inbox: " + task.outTaskstate());
         return task;
     }
 
@@ -483,7 +483,7 @@ public class TaskServiceImpl implements TaskService {
         task.moveToToday();
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("moved to today: " + task.outTaskstate());
+        log.debug("moved to today: " + task.outTaskstate());
         return task;
     }
 
@@ -497,7 +497,7 @@ public class TaskServiceImpl implements TaskService {
         task.moveToNext();
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("moved to next: " + task.outTaskstate());
+        log.debug("moved to next: " + task.outTaskstate());
         return task;
     }
 
@@ -511,7 +511,7 @@ public class TaskServiceImpl implements TaskService {
         task.moveToWaiting();
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("moved to next: " + task.outTaskstate());
+        log.debug("moved to next: " + task.outTaskstate());
         return task;
     }
 
@@ -525,7 +525,7 @@ public class TaskServiceImpl implements TaskService {
         task.moveToSomeday();
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("moved to someday: " + task.outTaskstate());
+        log.debug("moved to someday: " + task.outTaskstate());
         return task;
     }
 
@@ -539,7 +539,7 @@ public class TaskServiceImpl implements TaskService {
         task.moveToFocus();
         task.setOrderIdTaskState(++newOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
-        log.info("moved to focus: " + task.outTaskstate());
+        log.debug("moved to focus: " + task.outTaskstate());
         return task;
     }
 

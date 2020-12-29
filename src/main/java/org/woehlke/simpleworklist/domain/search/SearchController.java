@@ -38,13 +38,13 @@ public class SearchController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
-        log.info("searchResults");
+        log.debug("searchResults");
         Context context = super.getContext(userSession);
         userSession.setLastSearchterm(searchterm);
         model.addAttribute("userSession", userSession);
-        log.info("Search: "+ searchterm);
+        log.debug("Search: "+ searchterm);
         SearchResult searchResult = searchService.search(searchterm, context);
-        log.info("found: "+ searchResult.toString());
+        log.debug("found: "+ searchResult.toString());
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale);
         model.addAttribute("searchResult",searchResult);
         model.addAttribute("breadcrumb",breadcrumb);

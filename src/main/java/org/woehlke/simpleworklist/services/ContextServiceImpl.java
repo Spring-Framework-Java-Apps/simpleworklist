@@ -35,13 +35,13 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public List<Context> getAllForUser(UserAccount user) {
-        log.info("getAllForUser");
+        log.debug("getAllForUser");
         return contextRepository.findByUserAccount(user);
     }
 
     @Override
     public Context findByIdAndUserAccount(long newContextId, UserAccount userAccount) {
-        log.info("findByIdAndUserAccount");
+        log.debug("findByIdAndUserAccount");
         if(newContextId == 0){
             newContextId =  userAccount.getDefaultContext().getId();
         }
@@ -51,7 +51,7 @@ public class ContextServiceImpl implements ContextService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Context createNewContext(NewContextForm newContext, UserAccount user) {
-        log.info("createNewContext");
+        log.debug("createNewContext");
         Context context = new Context();
         context.setNameEn(newContext.getNameEn());
         context.setNameDe(newContext.getNameDe());
@@ -62,14 +62,14 @@ public class ContextServiceImpl implements ContextService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Context updateContext(Context context) {
-        log.info("updateContext");
+        log.debug("updateContext");
         return contextRepository.saveAndFlush(context);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public boolean delete(Context context) {
-        log.info("delete");
+        log.debug("delete");
         long contextId = context.getId();
         contextRepository.delete(context);
         return (!contextRepository.existsById(contextId));
@@ -77,7 +77,7 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public boolean contextHasItems(Context context) {
-        log.info("contextHasItems");
+        log.debug("contextHasItems");
         long numberOfTasks = taskRepository.findByContext(context).size();
         int numberOfProjects = projectRepository.findByContext(context).size();
         return ((numberOfTasks + numberOfProjects) > 0);

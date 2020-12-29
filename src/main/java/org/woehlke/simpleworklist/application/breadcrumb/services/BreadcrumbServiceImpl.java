@@ -29,7 +29,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForShowRootProject(Locale locale) {
-        log.info("getBreadcrumbForShowRootProject");
+        log.debug("getBreadcrumbForShowRootProject");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         breadcrumb.addProjectRoot();
         return breadcrumb;
@@ -37,7 +37,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale) {
-        log.info("getBreadcrumbForShowOneProject");
+        log.debug("getBreadcrumbForShowOneProject");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         breadcrumb.addProjectRoot();
         if(thisProject == null){
@@ -60,7 +60,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale) {
-        log.info("getBreadcrumbForTaskstate");
+        log.debug("getBreadcrumbForTaskstate");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code = taskstate.getCode();
         String name = messageSource.getMessage(code,null,locale);
@@ -70,7 +70,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale) {
-        log.info("getBreadcrumbForTaskInTaskstate");
+        log.debug("getBreadcrumbForTaskInTaskstate");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         breadcrumb.addTaskstate(taskstate);
         breadcrumb.addTask(task);
@@ -79,7 +79,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskstateAll(Locale locale) {
-        log.info("getBreadcrumbForTaskstateAll");
+        log.debug("getBreadcrumbForTaskstateAll");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="layout.page.all";
         String name= messageSource.getMessage(code,null,locale);
@@ -90,7 +90,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale locale) {
-        log.info("getBreadcrumbForTaskInProject");
+        log.debug("getBreadcrumbForTaskInProject");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         breadcrumb.addProject(thisProject);
         breadcrumb.addTask(task);
@@ -99,7 +99,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale) {
-        log.info("getBreadcrumbForUserProfileAndMenu");
+        log.debug("getBreadcrumbForUserProfileAndMenu");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -110,7 +110,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangeName(Locale locale) {
-        log.info("getBreadcrumbForUserChangeName");
+        log.debug("getBreadcrumbForUserChangeName");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -125,7 +125,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangePassword(Locale locale) {
-        log.info("getBreadcrumbForUserChangePassword");
+        log.debug("getBreadcrumbForUserChangePassword");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -140,7 +140,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContexts(Locale locale) {
-        log.info("getBreadcrumbForUserContexts");
+        log.debug("getBreadcrumbForUserContexts");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -155,7 +155,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextAdd(Locale locale) {
-        log.info("getBreadcrumbForUserContextAdd");
+        log.debug("getBreadcrumbForUserContextAdd");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -170,7 +170,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context) {
-        log.info("getBreadcrumbForUserContextEdit");
+        log.debug("getBreadcrumbForUserContextEdit");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -185,7 +185,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextDelete(Locale locale, Context context) {
-        log.info("getBreadcrumbForUserContextDelete");
+        log.debug("getBreadcrumbForUserContextDelete");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -200,7 +200,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale) {
-        log.info("getBreadcrumbForUserChangeLanguage");
+        log.debug("getBreadcrumbForUserChangeLanguage");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -215,7 +215,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale) {
-        log.info("getBreadcrumbForMessagesBetweenCurrentAndOtherUser");
+        log.debug("getBreadcrumbForMessagesBetweenCurrentAndOtherUser");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
@@ -230,7 +230,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForSearchResults(Locale locale) {
-        log.info("getBreadcrumbForSearchResults");
+        log.debug("getBreadcrumbForSearchResults");
         Breadcrumb breadcrumb = new Breadcrumb(locale);
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);

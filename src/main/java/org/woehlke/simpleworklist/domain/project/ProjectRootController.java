@@ -58,7 +58,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.info("/project/root");
+        log.debug("/project/root");
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(0L);
         model.addAttribute("userSession",userSession);
@@ -80,7 +80,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ){
-        log.info("/project/root/project/add (GET)");
+        log.debug("/project/root/project/add (GET)");
         Context context = super.getContext(userSession);
         projectControllerService.addNewProjectToProjectRootForm(userSession, context, locale, model);
         model.addAttribute("userSession", userSession);
@@ -94,7 +94,7 @@ public class ProjectRootController extends AbstractController {
         BindingResult result,
         Locale locale, Model model
     ) {
-        log.info("/project/root/add/project (POST)");
+        log.debug("/project/root/add/project (POST)");
         Context context = super.getContext(userSession);
         if (result.hasErrors()) {
             model.addAttribute("userSession", userSession);
@@ -117,7 +117,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.info("/project/root/add/task (GET)");
+        log.debug("/project/root/add/task (GET)");
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
         Task task = new Task();
@@ -156,11 +156,11 @@ public class ProjectRootController extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.info("/project/root/task/add (POST)");
+        log.debug("/project/root/task/add (POST)");
         Context context = super.getContext(userSession);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
-                log.info(e.toString());
+                log.debug(e.toString());
             }
             Boolean mustChooseArea = false;
             task.setContext(context);
@@ -173,7 +173,7 @@ public class ProjectRootController extends AbstractController {
         } else {
             task.setContext(context);
             task = taskService.addToRootProject(task);
-            log.info(task.toString());
+            log.debug(task.toString());
             model.addAttribute("userSession", userSession);
             return rootProjectUrl;
         }
@@ -186,7 +186,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.info("editTaskGet");
+        log.debug("editTaskGet");
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Project thisProject;
@@ -216,7 +216,7 @@ public class ProjectRootController extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.info("editTaskPost");
+        log.debug("editTaskPost");
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -274,11 +274,11 @@ public class ProjectRootController extends AbstractController {
         Model model
     ){
         model.addAttribute("userSession", userSession);
-        log.info("------------- changeTaskOrderId -------------");
-        log.info("source Task:      "+sourceTask.toString());
-        log.info("---------------------------------------------");
-        log.info("destination Task: "+destinationTask.toString());
-        log.info("---------------------------------------------");
+        log.debug("------------- changeTaskOrderId -------------");
+        log.debug("source Task:      "+sourceTask.toString());
+        log.debug("---------------------------------------------");
+        log.debug("destination Task: "+destinationTask.toString());
+        log.debug("---------------------------------------------");
         projectControllerService.moveTaskToTaskAndChangeTaskOrderInProjectRoot(sourceTask, destinationTask);
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(sourceTask.getTaskState());
@@ -322,7 +322,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to inbox");
+        log.debug("dragged and dropped "+task.getId()+" to inbox");
         task.moveToInbox();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -338,7 +338,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to today");
+        log.debug("dragged and dropped "+task.getId()+" to today");
         task.moveToToday();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -354,7 +354,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to next");
+        log.debug("dragged and dropped "+task.getId()+" to next");
         task.moveToNext();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -370,7 +370,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to waiting");
+        log.debug("dragged and dropped "+task.getId()+" to waiting");
         task.moveToWaiting();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -386,7 +386,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to someday");
+        log.debug("dragged and dropped "+task.getId()+" to someday");
         task.moveToSomeday();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -402,7 +402,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to focus");
+        log.debug("dragged and dropped "+task.getId()+" to focus");
         task.moveToFocus();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -418,7 +418,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to completed");
+        log.debug("dragged and dropped "+task.getId()+" to completed");
         task.moveToCompletedTasks();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -434,7 +434,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to trash");
+        log.debug("dragged and dropped "+task.getId()+" to trash");
         task.moveToTrash();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -476,7 +476,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("deleteTaskGet");
+        log.debug("deleteTaskGet");
         if(task!= null){
             task.delete();
             taskService.updatedViaProjectRoot(task);
@@ -494,7 +494,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("undeleteTaskGet");
+        log.debug("undeleteTaskGet");
         task.undelete();
         taskService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(rootProjectId);
@@ -510,7 +510,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("transformTaskIntoProjectGet");
+        log.debug("transformTaskIntoProjectGet");
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());

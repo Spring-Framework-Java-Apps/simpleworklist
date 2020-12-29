@@ -27,7 +27,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public SearchResult search(SearchRequest searchRequest) {
-        log.info("search");
+        log.debug("search");
         searchRequest = searchRequestService.update(searchRequest);
         SearchResult result = new SearchResult();
         result.setSearchRequest(searchRequest);
@@ -37,7 +37,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public SearchResult search(String searchterm, Context context) {
-        log.info("search");
+        log.debug("search");
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.setSearchterm(searchterm);
         searchRequest.setContext(context);
@@ -50,7 +50,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void resetSearchIndex() {
-        log.info("resetSearchIndex");
+        log.debug("resetSearchIndex");
         searchResultService.resetSearchIndex();
     }
 }
