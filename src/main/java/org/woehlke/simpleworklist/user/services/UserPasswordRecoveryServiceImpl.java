@@ -1,6 +1,7 @@
 package org.woehlke.simpleworklist.user.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.id.UUIDGenerationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,6 +16,7 @@ import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryReposit
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -65,6 +67,8 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         if (earlierOptIn != null) {
             o = earlierOptIn;
             o.increaseNumberOfRetries();
+        } else {
+            o.setUuid(UUID.randomUUID().toString());
         }
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
         o.setEmail(email);
