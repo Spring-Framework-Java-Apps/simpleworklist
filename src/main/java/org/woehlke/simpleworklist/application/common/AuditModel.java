@@ -1,6 +1,10 @@
 package org.woehlke.simpleworklist.application.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,6 +20,10 @@ import java.util.Objects;
     value = {"rowCreatedAt", "rowUpdatedAt"},
     allowGetters = true
 )
+@ToString
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper=false)
 public class AuditModel implements Serializable {
 
     private static final long serialVersionUID = 4399373914714726911L;
@@ -33,6 +41,7 @@ public class AuditModel implements Serializable {
     @Column(name = "row_updated_at", nullable = false)
     protected Date rowUpdatedAt;
 
+    /*
     public String getUuid() {
         return uuid;
     }
@@ -56,7 +65,9 @@ public class AuditModel implements Serializable {
     public void setRowUpdatedAt(Date rowUpdatedAt) {
         this.rowUpdatedAt = rowUpdatedAt;
     }
+    */
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,6 +82,7 @@ public class AuditModel implements Serializable {
     public int hashCode() {
         return Objects.hash(getUuid(), getRowCreatedAt(), getRowUpdatedAt());
     }
+    */
 
     @Override
     public String toString() {

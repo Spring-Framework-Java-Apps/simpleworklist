@@ -28,10 +28,10 @@ import java.util.Locale;
  */
 @Slf4j
 @Controller
-@RequestMapping(path = "/user/messages/")
+@RequestMapping(path = "/user2user")
 public class User2UserMessageController extends AbstractController {
 
-    @RequestMapping(path = "/{userId}/", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}/messages", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
