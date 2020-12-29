@@ -168,6 +168,9 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #303 update Spring-Boot to Version to 2.4.1
 
 ## 2.3.30
+* fixed #310 change devops actions
+
+## 2.3.31
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
