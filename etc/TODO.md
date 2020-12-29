@@ -165,7 +165,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #308 Password Recovery is broken
 
 ## 2.3.29
-* Issue #303 update Spring-Boot to Version to 2.4.1
+* fixed #303 update Spring-Boot to Version to 2.4.1
 
 ## 2.3.30
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
