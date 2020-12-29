@@ -287,11 +287,6 @@
       <option name="url" value="http://localhost:8081/artifactory/all" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="apache-releases" />
-      <option name="name" value="Apache Releases" />
-      <option name="url" value="http://tw-asus7:8081/artifactory/all" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="jboss-releases" />
       <option name="name" value="JBoss Releases Repository" />
       <option name="url" value="http://tw-asus7:8081/artifactory/all" />

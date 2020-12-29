@@ -36,7 +36,7 @@ public class UserRegistrationController {
      * @param model Model
      * @return Formular for entering Email-Address for Registration
      */
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String registerGet(Model model) {
         log.info("registerGet");
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
@@ -52,7 +52,7 @@ public class UserRegistrationController {
      * @param model Model
      * @return info page at success or return to form with error messages.
      */
-    @RequestMapping(path = "", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     public final String registerPost(
             @Valid UserRegistrationForm userRegistrationForm,
             BindingResult result,
@@ -73,7 +73,7 @@ public class UserRegistrationController {
                     return "user/register/registerForm";
                 } else {
                     userRegistrationService.registrationSendEmailTo(userRegistrationForm.getEmail());
-                    return "registerConfirmSentMail";
+                    return "user/register/registerConfirmSentMail";
                 }
             } else {
                 String objectName = "userRegistrationForm";
@@ -106,9 +106,9 @@ public class UserRegistrationController {
             UserAccountForm userAccountForm = new UserAccountForm();
             userAccountForm.setUserEmail(o.getEmail());
             model.addAttribute("userAccountForm", userAccountForm);
-            return "registerConfirmForm";
+            return "user/register/registerConfirmForm";
         } else {
-            return "registerConfirmFailed";
+            return "user/register/registerConfirmFailed";
         }
     }
 
@@ -137,7 +137,7 @@ public class UserRegistrationController {
             if (!result.hasErrors() && passwordsMatch) {
                 userAccountService.createUser(userAccountForm);
                 userRegistrationService.registrationUserCreated(oUserRegistration);
-                return "registerConfirmFinished";
+                return "user/register/registerConfirmFinished";
             } else {
                 if (!passwordsMatch) {
                     String objectName = "userAccountForm";
@@ -146,10 +146,10 @@ public class UserRegistrationController {
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
                 }
-                return "registerConfirmForm";
+                return "user/register/registerConfirmForm";
             }
         } else {
-            return "registerConfirmFailed";
+            return "user/register/registerConfirmFailed";
         }
     }
 }

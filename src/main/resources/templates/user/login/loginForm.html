@@ -19,7 +19,7 @@
 			<div class="card">
 				<div class="card-header">
 					<span th:utext="#{user.loginForm.login}">Please login or</span>
-					<a th:href="@{/user/register}">
+					<a th:href="@{/user/register/}">
 						<span th:utext="#{user.loginForm.register}">register as new user</span>
 					</a>.
 				</div>
@@ -65,7 +65,7 @@
                             </a>
                         </div>
                         <div class="col-md-4 mb-4">
-                            <a id="registerButton" th:href="@{/user/register}" role="button"
+                            <a id="registerButton" th:href="@{/user/register/}" role="button"
                                class="btn btn-block btn-secondary">
                                 <i class="fas fa-user"></i>
                                 <span th:utext="#{user.loginForm.register}">register as new user</span>
