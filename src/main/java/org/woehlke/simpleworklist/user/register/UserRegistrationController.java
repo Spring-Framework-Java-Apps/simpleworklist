@@ -73,7 +73,7 @@ public class UserRegistrationController {
                     return "user/register/registerForm";
                 } else {
                     userRegistrationService.registrationSendEmailTo(userRegistrationForm.getEmail());
-                    return "registerConfirmSentMail";
+                    return "\"user/register/registerConfirmSentMail";
                 }
             } else {
                 String objectName = "userRegistrationForm";
@@ -106,9 +106,9 @@ public class UserRegistrationController {
             UserAccountForm userAccountForm = new UserAccountForm();
             userAccountForm.setUserEmail(o.getEmail());
             model.addAttribute("userAccountForm", userAccountForm);
-            return "registerConfirmForm";
+            return "user/register/registerConfirmForm";
         } else {
-            return "registerConfirmFailed";
+            return "user/register/registerConfirmFailed";
         }
     }
 
@@ -137,7 +137,7 @@ public class UserRegistrationController {
             if (!result.hasErrors() && passwordsMatch) {
                 userAccountService.createUser(userAccountForm);
                 userRegistrationService.registrationUserCreated(oUserRegistration);
-                return "registerConfirmFinished";
+                return "user/register/registerConfirmFinished";
             } else {
                 if (!passwordsMatch) {
                     String objectName = "userAccountForm";
@@ -146,10 +146,10 @@ public class UserRegistrationController {
                     FieldError e = new FieldError(objectName, field, defaultMessage);
                     result.addError(e);
                 }
-                return "registerConfirmForm";
+                return "user/register/registerConfirmForm";
             }
         } else {
-            return "registerConfirmFailed";
+            return "user/register/registerConfirmFailed";
         }
     }
 }
