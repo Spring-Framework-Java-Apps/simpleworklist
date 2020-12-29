@@ -89,6 +89,9 @@
         <doxia-module-markdown.version>1.9.1</doxia-module-markdown.version>
         <doxia-module.version>1.9.1</doxia-module.version>
 
+
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+
         <!-- Docker -->
         <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
         <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
