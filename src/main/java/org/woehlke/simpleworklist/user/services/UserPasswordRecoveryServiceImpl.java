@@ -112,7 +112,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         msg.setText(
                 "Dear User, "
                         + "for Password Reset at SimpleWorklist, "
-                        + "Please go to URL: \nhttp://" + urlHost + "/passwordResetConfirm/" + o.getToken()
+                        + "Please go to URL: \nhttp://" + urlHost + "/user/resetPassword/confirm/" + o.getToken()
                         + "\n\nSincerely Yours, The Team");
         msg.setSubject("Password Reset at Simple Worklist");
         msg.setFrom(mailFrom);

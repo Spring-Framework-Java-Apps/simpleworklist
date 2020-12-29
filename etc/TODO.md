@@ -157,13 +157,12 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * https://docs.joinfaces.org/4.3.4/reference/
 * https://docs.joinfaces.org/current/reference/
 
-
-
 ## 2.3.28
 * fixed #302 update Spring-Boot to Version to 2.3.7
-* Issue #303 update Spring-Boot to Version to 2.4.1
 * Issue #304 update webjars for bootstrap et al.
 * fixed #305 Update spring-data-releasetrain to latest GA
 * fixed #306 Update spring-session-bom to latest GA
+* fixed #308 Password Recovery is broken
 
-
+## 2.3.29
+* Issue #303 update Spring-Boot to Version to 2.4.1
