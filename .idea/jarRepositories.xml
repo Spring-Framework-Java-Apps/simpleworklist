@@ -277,6 +277,11 @@
       <option name="url" value="http://localhost:8081/artifactory/all" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="jcenter" />
+      <option name="name" value="JCenter Repository" />
+      <option name="url" value="http://tw-thinkpad:8081/artifactory/all" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="atlassian-public" />
       <option name="name" value="Atlassian Repository" />
       <option name="url" value="http://localhost:8081/artifactory/all" />
