@@ -139,3 +139,5 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * fixed #306 Update spring-session-bom to latest GA
 * fixed #308 Password Recovery is broken
 
+## 2.3.29
+* fixed #303 update Spring-Boot to Version to 2.4.1
