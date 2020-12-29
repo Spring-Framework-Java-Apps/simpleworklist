@@ -140,4 +140,11 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
 
+## 2.3.28
+* fixed #302 update Spring-Boot to Version to 2.3.7
+* Issue #303 update Spring-Boot to Version to 2.4.1
+* Issue #304 update webjars for bootstrap et al.
+* Issue #305 Update spring-data-releasetrain to latest GA
+* Issue #306 Update spring-session-bom to latest GA
+
 
