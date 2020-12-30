@@ -1,6 +1,6 @@
 @echo off
 
-call etc\setenv.cmd
+rem call etc\setenv.cmd
 
 goto :main
 
@@ -29,7 +29,7 @@ goto :end
 mvnw -DskipTests=true clean dependency:list install site site:deploy
 goto :end
 
-:runHerokuLocal	
+:runHerokuLocal
 rem heroku login
 heroku ps -a simpleworklist
 mvnw -DskipTests clean dependency:list install
