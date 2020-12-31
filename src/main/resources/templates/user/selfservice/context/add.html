@@ -48,6 +48,9 @@
                 </div>
             </td>
             <td>
+                <a th:href="@{/user/selfservice/profile}" class="btn btn-secondary" role="button">
+                    <span th:utext="#{button.back}">back</span>
+                </a>
                 <button id="createNewProject" type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i>
                     <span th:utext="#{user.selfservice.contexts.add.button}">Add Area</span>
