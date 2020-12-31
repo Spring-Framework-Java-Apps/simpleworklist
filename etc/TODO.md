@@ -173,10 +173,10 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 ## 2.3.31
 * fixed #311 User Selfservice is broken
 * Issue #312 User2UserMessage Chat is broken
-* Issue #313 Change Password - update HTML Layout to current Bootstrap Version
-* Issue #314 Set Default Language - update HTML Layout to current Bootstrap Version
-* Issue #315 Add Context - update HTML Layout to current Bootstrap Version
-* Issue #316 Add Context - add Back Button
+* fixed #313 Change Password - update HTML Layout to current Bootstrap Version
+* fixed #314 Set Default Language - update HTML Layout to current Bootstrap Version
+* fixed #315 Add Context - update HTML Layout to current Bootstrap Version
+* fixed #316 Add Context - add Back Button
 * Issue #317 switch Context is broken
 * Issue #318 Broken: http://localhost:8080/taskstate/task/1153/changeorderto/1051
 
