@@ -734,7 +734,7 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <defaultGoal>clean dependency:list install spring-boot:run</defaultGoal>
+        <defaultGoal>clean dependency:tree install spring-boot:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
