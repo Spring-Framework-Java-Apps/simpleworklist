@@ -31,9 +31,17 @@ function setupTravis() {
     ./mvnw -e -DskipTests=true -B -V site site:deploy
 }
 
+function buildJar() {
+    export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
+    # showSettings
+    ./mvnw dependency:purge-local-repository
+    ./mvnw -e -DskipTests=true clean dependency:tree package spring-boot:repackage
+}
+
 function main() {
-    firstSetup
+    # firstSetup
     # setupTravis
+    buildJar
 }
 
 main
