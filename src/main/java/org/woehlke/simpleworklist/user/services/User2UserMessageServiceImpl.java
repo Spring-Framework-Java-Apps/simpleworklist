@@ -15,6 +15,7 @@ import org.woehlke.simpleworklist.user.chat.User2UserMessageRepository;
 import org.woehlke.simpleworklist.user.services.User2UserMessageService;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tw on 16.02.2016.
@@ -43,6 +44,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         m.setSender(thisUser);
         m.setReceiver(otherUser);
         m.setReadByReceiver(false);
+        m.setUuid(UUID.randomUUID().toString());
         m.setMessageText(user2UserMessageFormBean.getMessageText());
         return userMessageRepository.saveAndFlush(m);
     }

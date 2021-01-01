@@ -31,7 +31,7 @@ import java.util.Locale;
 @RequestMapping(path = "/user2user")
 public class User2UserMessageController extends AbstractController {
 
-    @RequestMapping(path = "/{userId}/messages", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.GET)
     public final String getLastMessagesBetweenCurrentAndOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @PageableDefault(sort = "rowCreatedAt", direction = Sort.Direction.DESC) Pageable request,
@@ -55,7 +55,7 @@ public class User2UserMessageController extends AbstractController {
         return "user/messages/all";
     }
 
-    @RequestMapping(path = "/{userId}/", method = RequestMethod.POST)
+    @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.POST)
     public final String sendNewMessageToOtherUser(
             @PathVariable("userId") UserAccount otherUser,
             @Valid @ModelAttribute("newUser2UserMessage") User2UserMessageFormBean user2UserMessageFormBean,
@@ -84,7 +84,7 @@ public class User2UserMessageController extends AbstractController {
         } else {
             user2UserMessageService.sendNewUserMessage(thisUser, otherUser, user2UserMessageFormBean);
             model.addAttribute("userSession", userSession);
-            return "redirect:/user/messages/" + otherUser.getId();
+            return "redirect:/user2user/" + otherUser.getId() + "/messages/";
         }
     }
 
