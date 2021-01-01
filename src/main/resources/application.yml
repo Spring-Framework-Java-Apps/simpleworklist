@@ -84,21 +84,22 @@ org:
         strengthBCryptPasswordEncoder: 10
 ---
 spring:
-  profile: default
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist
+  profiles:
+    active: default
 ---
 spring:
-  profile: developing
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist_developing
   jpa:
     hibernate:
       ddl-auto: update
       #ddl-auto: create-drop
+  profiles:
+    active: developing
 ---
 spring:
-  profile: travis
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist_travis
     continue-on-error: true
@@ -107,12 +108,13 @@ spring:
     hibernate:
       ddl-auto: update
       #ddl-auto: create-drop
+  profiles:
+    active: travis
 server:
   compression:
     enabled: false
 ---
 spring:
-  profile: testing
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist_testing
   jpa:
@@ -120,6 +122,8 @@ spring:
     hibernate:
       ddl-auto: update
       #ddl-auto: create-drop
+  profiles:
+    active: testing
 server:
   compression:
     enabled: false
@@ -147,7 +151,6 @@ logging:
               impl: DEBUG
 ---
 spring:
-  profile: qa
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist_qa
     continue-on-error: true
@@ -156,6 +159,8 @@ spring:
     hibernate:
       ddl-auto: update
       #ddl-auto: create-drop
+  profiles:
+    active: qa
 server:
   compression:
     enabled: false
@@ -183,7 +188,6 @@ logging:
             impl: DEBUG
 ---
 spring:
-  profile: heroku
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist_heroku
     continue-on-error: true
@@ -205,6 +209,8 @@ spring:
   application:
     admin:
       enabled: false
+  profiles:
+    active: heroku
 server:
   compression:
     enabled: true

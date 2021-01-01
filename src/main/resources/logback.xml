@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.woehlke.simpleworklist.application" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.application.config" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.control.admin" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.control.anonymous" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.application.common" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.control.user" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.model.beans" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.model.dao" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.model.services" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.oodm.entities" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.oodm.repository" level="DEBUG" />
-    <logger name="org.woehlke.simpleworklist.oodm.services" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.application" level="INFO" />
+    <logger name="org.woehlke.simpleworklist.domain" level="DEBUG" />
+    <logger name="org.woehlke.simpleworklist.services" level="INFO" />
+    <logger name="org.woehlke.simpleworklist.user" level="INFO" />
     <logger name="org.woehlke.simpleworklist" level="INFO" />
     <logger name="org.apache.http" level="WARN" />
     <logger name="org.apache.tomcat" level="WARN" />
