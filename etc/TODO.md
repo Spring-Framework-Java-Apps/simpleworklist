@@ -181,6 +181,8 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 ## 2.3.32
 * Issue #317 switch Context is broken
 * Issue #318 Broken: http://localhost:8080/taskstate/task/1153/changeorderto/1051
+* Issue #319 groovy-all Warning during startup
+* Issue #320 warning: SLF4J: Class path contains multiple SLF4J bindings.
 
 ## 2.3.33  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
