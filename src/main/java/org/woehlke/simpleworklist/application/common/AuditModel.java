@@ -20,10 +20,10 @@ import java.util.Objects;
     value = {"rowCreatedAt", "rowUpdatedAt"},
     allowGetters = true
 )
-@ToString
+//@ToString
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper=false)
+//@EqualsAndHashCode(callSuper=false)
 public class AuditModel implements Serializable {
 
     private static final long serialVersionUID = 4399373914714726911L;
@@ -67,7 +67,7 @@ public class AuditModel implements Serializable {
     }
     */
 
-    /*
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,7 +82,6 @@ public class AuditModel implements Serializable {
     public int hashCode() {
         return Objects.hash(getUuid(), getRowCreatedAt(), getRowUpdatedAt());
     }
-    */
 
     @Override
     public String toString() {
