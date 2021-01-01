@@ -172,15 +172,17 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 
 ## 2.3.31
 * fixed #311 User Selfservice is broken
-* Issue #312 User2UserMessage Chat is broken
+* fixed #312 User2UserMessage Chat is broken
 * fixed #313 Change Password - update HTML Layout to current Bootstrap Version
 * fixed #314 Set Default Language - update HTML Layout to current Bootstrap Version
 * fixed #315 Add Context - update HTML Layout to current Bootstrap Version
 * fixed #316 Add Context - add Back Button
+
+## 2.3.32
 * Issue #317 switch Context is broken
 * Issue #318 Broken: http://localhost:8080/taskstate/task/1153/changeorderto/1051
 
-## 2.3.32  
+## 2.3.33  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
