@@ -375,42 +375,49 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${maven-enforcer-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-invoker-plugin</artifactId>
                 <version>${maven-invoker-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>com.dkanejs.maven.plugins</groupId>
                 <artifactId>docker-compose-maven-plugin</artifactId>
                 <version>${docker-compose-maven-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>${maven-clean-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>${maven-dependency-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-maven-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
 
             <dependency>
@@ -418,69 +425,81 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>${maven-project-info-reports-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${maven-jxr-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven-checkstyle-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>${spotbugs-maven-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>${maven-pmd-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>${maven-surefire-report-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
                 <type>maven-plugin</type>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.doxia</groupId>
                 <artifactId>doxia-module-markdown</artifactId>
                 <version>${doxia-module-markdown.version}</version>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.xmlunit</groupId>
                 <artifactId>xmlunit-core</artifactId>
                 <version>${xmlunit.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>net.sourceforge.htmlunit</groupId>
                 <artifactId>htmlunit</artifactId>
                 <version>${htmlunit.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -645,91 +664,110 @@
             <scope>test</scope>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-invoker-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.dkanejs.maven.plugins</groupId>
             <artifactId>docker-compose-maven-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-clean-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jxr-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-maven-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-release-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-markdown</artifactId>
+            <scope>compile</scope>
         </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -776,21 +814,25 @@
                             <groupId>net.sourceforge.pmd</groupId>
                             <artifactId>pmd-core</artifactId>
                             <version>${pmdVersion}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>net.sourceforge.pmd</groupId>
                             <artifactId>pmd-java</artifactId>
                             <version>${pmdVersion}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>net.sourceforge.pmd</groupId>
                             <artifactId>pmd-javascript</artifactId>
                             <version>${pmdVersion}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>net.sourceforge.pmd</groupId>
                             <artifactId>pmd-jsp</artifactId>
                             <version>${pmdVersion}</version>
+                            <scope>compile</scope>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -818,41 +860,49 @@
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-markdown</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-itext</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-latex</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-rtf</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-xdoc</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-skin-model</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-site-renderer</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-test-docs</artifactId>
                             <version>${doxia-module.version}</version>
+                            <scope>compile</scope>
                         </dependency>
                     </dependencies>
                 </plugin>
