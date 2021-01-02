@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
-import org.woehlke.simpleworklist.user.login.UserDetailsBean;
+import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
 
 @Slf4j
 @Service

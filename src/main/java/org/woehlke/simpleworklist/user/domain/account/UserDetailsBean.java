@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.login;
+package org.woehlke.simpleworklist.user.domain.account;
 
 import java.util.ArrayList;
 import java.util.Collection;

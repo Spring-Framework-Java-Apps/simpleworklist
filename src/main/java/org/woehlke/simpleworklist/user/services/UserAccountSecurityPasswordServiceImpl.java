@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
-import org.woehlke.simpleworklist.user.login.UserDetailsBean;
+import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
 import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 
 @Slf4j
