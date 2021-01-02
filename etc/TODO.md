@@ -56,6 +56,9 @@
 
 # 2.3.33
 * Issue #322 small refactoring of packages
+* Issue #323 add version for optimistic locking to org.woehlke.simpleworklist.domain.project.Project
+* Issue #324 add version for optimistic locking to org.woehlke.simpleworklist.domain.context.Context
+* Issue #325 add version for optimistic locking to org.woehlke.simpleworklist.domain.task.Task
 
 ## 2.3.34
 * Issue #317 switch Context is broken
