@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.services;
+package org.woehlke.simpleworklist.domain.context;
 
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.context.NewContextForm;

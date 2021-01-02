@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.services;
+package org.woehlke.simpleworklist.domain.project;
 
 import java.util.List;
 

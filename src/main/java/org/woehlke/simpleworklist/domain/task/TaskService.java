@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.services;
+package org.woehlke.simpleworklist.domain.task;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

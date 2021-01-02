@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.breadcrumb.services;
+package org.woehlke.simpleworklist.domain.breadcrumb;
 
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.domain.context.Context;

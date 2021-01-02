@@ -19,7 +19,7 @@ import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.services.TaskProjektService;
-import org.woehlke.simpleworklist.services.TaskService;
+import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;

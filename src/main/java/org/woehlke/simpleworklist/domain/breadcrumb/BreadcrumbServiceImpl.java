@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.breadcrumb.services;
+package org.woehlke.simpleworklist.domain.breadcrumb;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
+import org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;

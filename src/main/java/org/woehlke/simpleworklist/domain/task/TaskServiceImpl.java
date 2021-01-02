@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.services;
+package org.woehlke.simpleworklist.domain.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
+import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 
 import javax.validation.constraints.Min;
