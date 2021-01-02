@@ -50,9 +50,6 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     )
     private Long id;
 
-    @Version
-    private Long version;
-
     @ManyToOne(
         fetch = FetchType.LAZY,
         optional = false,
