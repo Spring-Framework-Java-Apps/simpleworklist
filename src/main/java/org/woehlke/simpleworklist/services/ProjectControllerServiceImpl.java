@@ -113,6 +113,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Project project;
         project = new Project();
         project.setId(rootProjectId);
+        project.setContext(context);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("project", project);
