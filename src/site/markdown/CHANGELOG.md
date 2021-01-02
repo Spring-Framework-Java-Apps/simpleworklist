@@ -147,14 +147,25 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 
 ## 2.3.31
 * fixed #311 User Selfservice is broken
-* Issue #312 User2UserMessage Chat is broken
-* Issue #313 Change Password - update HTML Layout to current Bootstrap Version
-* Issue #314 Set Default Language - update HTML Layout to current Bootstrap Version
-* Issue #315 Add Context - update HTML Layout to current Bootstrap Version
-* Issue #316 Add Context - add Back Button
-* Issue #317 switch Context is broken
+* fixed #312 User2UserMessage Chat is broken
+* fixed #313 Change Password - update HTML Layout to current Bootstrap Version
+* fixed #314 Set Default Language - update HTML Layout to current Bootstrap Version
+* fixed #315 Add Context - update HTML Layout to current Bootstrap Version
+* fixed #316 Add Context - add Back Button
 
 ## 2.3.32
+* fixed #318 Broken: http://localhost:8080/taskstate/task/1153/changeorderto/1051
+* fixed #319 groovy-all Warning during startup
+* fixed #320 warning: SLF4J: Class path contains multiple SLF4J bindings.
+* fixed #321 jar is too fat for deployment on heroku
+
+# 2.3.33
+* Issue #322 small refactoring of packages
+
+## 2.3.34
+* Issue #317 switch Context is broken
+
+## 2.3.35
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
