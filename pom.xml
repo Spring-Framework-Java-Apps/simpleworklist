@@ -68,7 +68,7 @@
 
     <properties>
         <java.version>15</java.version>
-        <version.maven>3.6.2</version.maven>
+        <version.maven>3.6.3</version.maven>
         <pmdVersion>6.28.0</pmdVersion>
 
         <!-- SCM and Releasing with Maven -->
