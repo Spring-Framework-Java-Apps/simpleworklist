@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.error;
+package org.woehlke.simpleworklist.common.error;
 
 
 import lombok.extern.slf4j.Slf4j;

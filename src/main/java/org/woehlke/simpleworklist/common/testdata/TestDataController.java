@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.test.testdata;
+package org.woehlke.simpleworklist.common.testdata;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

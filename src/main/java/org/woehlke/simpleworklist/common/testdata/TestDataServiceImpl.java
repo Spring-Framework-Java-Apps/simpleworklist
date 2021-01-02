@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.test.testdata;
+package org.woehlke.simpleworklist.common.testdata;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,6 @@ import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskState;
-import org.woehlke.simpleworklist.test.testdata.TestDataService;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.domain.context.ContextRepository;
