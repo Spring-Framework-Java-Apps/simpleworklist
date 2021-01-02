@@ -55,13 +55,14 @@
 * fixed #321 jar is too fat for deployment on heroku
 
 # 2.3.33
-* Issue #322 small refactoring of packages
-* Issue #323 add version for optimistic locking to org.woehlke.simpleworklist.domain.project.Project
-* Issue #324 add version for optimistic locking to org.woehlke.simpleworklist.domain.context.Context
-* Issue #325 add version for optimistic locking to org.woehlke.simpleworklist.domain.task.Task
+* fixed #322 small refactoring of packages
+* fixed #323 check version for optimistic locking to org.woehlke.simpleworklist.domain.project.Project
+* fixed #324 removed version for optimistic locking to org.woehlke.simpleworklist.domain.context.Context
+* fixed #325 add version for optimistic locking to org.woehlke.simpleworklist.domain.task.Task
 
 ## 2.3.34
 * Issue #317 switch Context is broken
+* Issue add Context to Breadcrumb
 
 ## 2.3.35  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
