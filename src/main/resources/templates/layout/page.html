@@ -33,7 +33,7 @@
 		</div>
 	</header>
 
-	<section th:replace="layout/taskstates :: navigation-taskstates(rootCategories=${rootCategories},thisProject=${thisProject})">
+	<section th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})">
 	</section>
 
 	<!-- Breadcrumb -->
@@ -55,7 +55,7 @@
 					<th:block th:replace="${twcontent}" />
 				</div>
 				<div class="col-md-4">
-					<div th:replace="layout/projects :: navigation-projects(rootCategories=${rootCategories},thisProject=${thisProject})">
+					<div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})">
 					</div>
 				</div>
 			</div>

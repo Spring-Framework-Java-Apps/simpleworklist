@@ -64,7 +64,7 @@ public abstract class AbstractController {
     protected BreadcrumbService breadcrumbService;
 
     //TODO: rename allCategories to allProjects
-    @ModelAttribute("allCategories")
+    @ModelAttribute("allProjects")
     public final List<Project> getAllCategories(
         @ModelAttribute("userSession") UserSessionBean userSession,
         BindingResult result, //TODO: remove
@@ -75,7 +75,7 @@ public abstract class AbstractController {
     }
 
     //TODO: rename rootCategories to rootProjects
-    @ModelAttribute("rootCategories")
+    @ModelAttribute("rootProjects")
     public final List<Project> getRootCategories(
         @ModelAttribute("userSession") UserSessionBean userSession
     ) {

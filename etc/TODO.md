@@ -63,8 +63,8 @@
 ## 2.3.34
 * fixed #317 switch Context is broken
 * fixed #326 add Context to Breadcrumb
-* Issue #327 AbstractController: rename rootCategories to rootProjects (line 77)
-* Issue #328 AbstractController: rename allCategories to allProjects (line 66)
+* fixed #327 AbstractController: rename rootCategories to rootProjects (line 77)
+* fixed #328 AbstractController: rename allCategories to allProjects (line 66)
 * fixed #329 AbstractController: remove side effects from getContext (line 145, 159) 
 * fixed #330 Add Project to Root Project: preset correct Context 
 * fixed #331 Edit Project: update HTML Layout to current Bootstrap Version
