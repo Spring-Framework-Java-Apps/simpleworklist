@@ -66,6 +66,7 @@
 * Issue #327 AbstractController: rename rootCategories to rootProjects (line 77)
 * Issue #328 AbstractController: rename allCategories to allProjects (line 66)
 * Issue #329 AbstractController: remove side effects from getContext (line 145, 159) 
+* Issue #330 Add Project to Root Project: preset correct Context 
 
 ## 2.3.35  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
