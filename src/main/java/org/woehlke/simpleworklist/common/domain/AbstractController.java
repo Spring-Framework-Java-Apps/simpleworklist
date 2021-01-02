@@ -144,14 +144,13 @@ public abstract class AbstractController {
 
     protected Context getContext(@NotNull final UserSessionBean userSession){
         UserAccount thisUser = this.getUser();
-        //if(userSession == null){
-        //    userSession = new UserSessionBean();
-        //}
         long defaultContextId = thisUser.getDefaultContext().getId();
-        //userSession.setLastContextId(defaultContextId);
-        Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), thisUser);
-        //userSession.setLastContextId(context.getId());
-        //userSession.setUserAccountid(thisUser.getId());
+        long userSessionLastContextId = userSession.getLastContextId();
+        long newContextId = userSessionLastContextId;
+        if(userSessionLastContextId == 0L){
+            newContextId = defaultContextId;
+        }
+        Context context = contextService.findByIdAndUserAccount(newContextId, thisUser);
         return context;
     }
 
