@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.domain.account;
+package org.woehlke.simpleworklist.user.selfservice;
 
 import javax.validation.constraints.NotBlank;
 

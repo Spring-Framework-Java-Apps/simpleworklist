@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.resetpassword;
+package org.woehlke.simpleworklist.user.domain.resetpassword;
 
 import org.woehlke.simpleworklist.application.config.AbstractTest;
 

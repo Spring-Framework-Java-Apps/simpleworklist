@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.chat.User2UserMessage;
-import org.woehlke.simpleworklist.user.chat.User2UserMessageFormBean;
-import org.woehlke.simpleworklist.user.chat.User2UserMessageRepository;
+import org.woehlke.simpleworklist.user.domain.chat.User2UserMessage;
+import org.woehlke.simpleworklist.user.domain.chat.User2UserMessageFormBean;
+import org.woehlke.simpleworklist.user.domain.chat.User2UserMessageRepository;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import org.woehlke.simpleworklist.user.domain.account.UserChangePasswordForm;
+import org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.user.login.LoginForm;
 

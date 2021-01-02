@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.application.helper;
 
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
 
 public interface TestHelperService {

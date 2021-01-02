@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.login.LoginForm;
-import org.woehlke.simpleworklist.user.domain.account.UserChangePasswordForm;
+import org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm;
 
 @Slf4j
 @Service

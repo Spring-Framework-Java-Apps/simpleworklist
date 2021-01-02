@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.chat;
+package org.woehlke.simpleworklist.user.domain.chat;
 
 
 import lombok.*;

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.domain.account;
+package org.woehlke.simpleworklist.user.selfservice;
 
 import lombok.*;
 import org.woehlke.simpleworklist.domain.context.Context;

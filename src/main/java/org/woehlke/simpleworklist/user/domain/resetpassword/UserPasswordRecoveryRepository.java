@@ -1,8 +1,7 @@
-package org.woehlke.simpleworklist.user.resetpassword;
+package org.woehlke.simpleworklist.user.domain.resetpassword;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
 
 @Repository
 public interface UserPasswordRecoveryRepository extends JpaRepository<UserPasswordRecovery, Long> {

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.application.ApplicationProperties;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryRepository;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryRepository;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryStatus;
 
 import java.util.Date;
 import java.util.UUID;

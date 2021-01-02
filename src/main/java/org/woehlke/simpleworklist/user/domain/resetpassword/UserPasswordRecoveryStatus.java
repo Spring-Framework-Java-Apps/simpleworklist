@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.resetpassword;
+package org.woehlke.simpleworklist.user.domain.resetpassword;
 
 import javax.persistence.Enumerated;
 import java.io.Serializable;
