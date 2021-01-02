@@ -61,8 +61,11 @@
 * fixed #325 add version for optimistic locking to org.woehlke.simpleworklist.domain.task.Task
 
 ## 2.3.34
-* Issue #317 switch Context is broken
+* fixed #317 switch Context is broken
 * fixed #326 add Context to Breadcrumb
+* Issue #327 AbstractController: rename rootCategories to rootProjects (line 77)
+* Issue #328 AbstractController: rename allCategories to allProjects (line 66)
+* Issue #329 AbstractController: remove side effects from getContext (line 145, 159) 
 
 ## 2.3.35  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown

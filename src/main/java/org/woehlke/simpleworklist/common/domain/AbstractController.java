@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -76,9 +77,7 @@ public abstract class AbstractController {
     //TODO: rename rootCategories to rootProjects
     @ModelAttribute("rootCategories")
     public final List<Project> getRootCategories(
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        BindingResult result,  //TODO: remove
-        Model model  //TODO: remove
+        @ModelAttribute("userSession") UserSessionBean userSession
     ) {
         Context context = this.getContext(userSession);
         return projectService.findRootProjectsByContext(context);
@@ -143,6 +142,20 @@ public abstract class AbstractController {
         return this.userAccountLoginSuccessService.retrieveCurrentUser();
     }
 
+    protected Context getContext(@NotNull final UserSessionBean userSession){
+        UserAccount thisUser = this.getUser();
+        //if(userSession == null){
+        //    userSession = new UserSessionBean();
+        //}
+        long defaultContextId = thisUser.getDefaultContext().getId();
+        //userSession.setLastContextId(defaultContextId);
+        Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), thisUser);
+        //userSession.setLastContextId(context.getId());
+        //userSession.setUserAccountid(thisUser.getId());
+        return context;
+    }
+
+    /*
     protected Context getContext(UserSessionBean userSession){
         UserAccount thisUser = this.getUser();
         if(userSession == null){
@@ -155,5 +168,6 @@ public abstract class AbstractController {
         userSession.setUserAccountid(thisUser.getId());
         return context;
     }
+    */
 
 }
