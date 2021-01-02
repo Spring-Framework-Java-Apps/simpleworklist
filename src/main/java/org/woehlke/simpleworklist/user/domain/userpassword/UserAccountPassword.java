@@ -1,9 +1,10 @@
-package org.woehlke.simpleworklist.user.domain.account;
+package org.woehlke.simpleworklist.user.domain.userpassword;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.woehlke.simpleworklist.common.domain.AuditModel;
 import org.woehlke.simpleworklist.common.domain.ComparableById;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

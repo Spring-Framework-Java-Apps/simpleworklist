@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.register;
+package org.woehlke.simpleworklist.user.domain.register;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.application.config.AbstractTest;

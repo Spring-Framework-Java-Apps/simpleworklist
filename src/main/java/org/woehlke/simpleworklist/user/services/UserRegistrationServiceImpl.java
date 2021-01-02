@@ -14,11 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.application.ApplicationProperties;
-import org.woehlke.simpleworklist.user.register.UserRegistration;
-import org.woehlke.simpleworklist.user.register.UserRegistrationRepository;
-import org.woehlke.simpleworklist.user.register.UserRegistrationStatus;
-import org.woehlke.simpleworklist.user.services.TokenGeneratorService;
-import org.woehlke.simpleworklist.user.services.UserRegistrationService;
+import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
+import org.woehlke.simpleworklist.user.domain.register.UserRegistrationRepository;
+import org.woehlke.simpleworklist.user.domain.register.UserRegistrationStatus;
 
 @Slf4j
 @Service
