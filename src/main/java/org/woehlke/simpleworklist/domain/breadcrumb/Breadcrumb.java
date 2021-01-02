@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.domain.breadcrumb;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;
 
@@ -21,17 +22,22 @@ public class Breadcrumb implements Serializable {
     private List<BreadcrumbItem> breadcrumb;
     private final Locale locale;
 
-    public Breadcrumb(Locale locale) {
+    public Breadcrumb(Locale locale, Context context) {
         this.locale = locale;
         List<BreadcrumbItem> breadcrumb = new ArrayList<>();
-        String homeString;
+        String homeString,contextItemString;
         if(locale == Locale.GERMAN){
             homeString =  "Start";
+            contextItemString = context.getNameDe();
         } else {
             homeString =  "Home";
+            contextItemString =context.getNameEn();
         }
+        contextItemString =  " [ " + contextItemString + " ] ";
         BreadcrumbItem home = new BreadcrumbItem(homeString,"/");
         breadcrumb.add(home);
+        BreadcrumbItem contextItem = new BreadcrumbItem(contextItemString,"/");
+        breadcrumb.add(contextItem);
         this.breadcrumb = breadcrumb;
     }
 

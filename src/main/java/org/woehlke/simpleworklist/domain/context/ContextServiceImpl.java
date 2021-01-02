@@ -9,7 +9,10 @@ import org.woehlke.simpleworklist.domain.project.ProjectRepository;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
+
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by tw on 13.03.16.
@@ -78,5 +81,11 @@ public class ContextServiceImpl implements ContextService {
         long numberOfTasks = taskRepository.findByContext(context).size();
         int numberOfProjects = projectRepository.findByContext(context).size();
         return ((numberOfTasks + numberOfProjects) > 0);
+    }
+
+    @Override
+    public Optional<Context> getContextFor(UserSessionBean userSession) {
+        Long id = userSession.getLastContextId();
+        return contextRepository.findById(id);
     }
 }

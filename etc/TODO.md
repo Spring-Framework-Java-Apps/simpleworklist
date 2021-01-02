@@ -62,7 +62,7 @@
 
 ## 2.3.34
 * Issue #317 switch Context is broken
-* Issue add Context to Breadcrumb
+* fixed #326 add Context to Breadcrumb
 
 ## 2.3.35  
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown

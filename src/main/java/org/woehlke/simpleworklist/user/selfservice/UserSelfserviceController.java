@@ -62,7 +62,7 @@ public class UserSelfserviceController extends AbstractController {
             log.debug(u.getUserFullname()+": "+u.getUserEmail());
         }
         Map<Long,Integer> usersToNewMessages = userAccountService.getNewIncomingMessagesForEachOtherUser(user);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserProfileAndMenu(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserProfileAndMenu(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("usersToNewMessages", usersToNewMessages);
         model.addAttribute("users", users);
@@ -81,7 +81,7 @@ public class UserSelfserviceController extends AbstractController {
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         UserChangeNameForm bean = new UserChangeNameForm(user.getUserFullname());
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeName(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeName(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("username", bean);
         model.addAttribute("thisUser", user);
@@ -101,7 +101,7 @@ public class UserSelfserviceController extends AbstractController {
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         if(result.hasErrors()) {
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeName(locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeName(locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("username", username);
             model.addAttribute("thisUser", user);
@@ -125,7 +125,7 @@ public class UserSelfserviceController extends AbstractController {
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         UserChangePasswordForm userChangePasswordForm = new UserChangePasswordForm();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
         model.addAttribute("userChangePasswordForm", userChangePasswordForm);
@@ -146,7 +146,7 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = context.getUserAccount();
         log.debug("---------------------------------------------------------");
         log.debug("userPasswordStore");
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
         model.addAttribute("userChangePasswordForm", userChangePasswordForm);
@@ -208,7 +208,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", bean);
         List<Context> contexts = contextService.getAllForUser(user);
         model.addAttribute("contexts", contexts);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("userSession", userSession);
         return "user/selfservice/context/all";
@@ -227,7 +227,7 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount user = context.getUserAccount();
         List<Context> contexts = contextService.getAllForUser(user);
         model.addAttribute("contexts", contexts);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
             log.debug("userContextsSave: result has Errors");
@@ -260,7 +260,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", user);
         NewContextForm newContext = new NewContextForm();
         model.addAttribute("newContext", newContext);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("userSession", userSession);
         return "user/selfservice/context/add";
@@ -277,7 +277,7 @@ public class UserSelfserviceController extends AbstractController {
         log.debug("userNewContextPost");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
         if(result.hasErrors()){
@@ -309,7 +309,7 @@ public class UserSelfserviceController extends AbstractController {
         editContext.setNameDe(context.getNameDe());
         editContext.setNameEn(context.getNameEn());
         model.addAttribute("editContext", editContext);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("userSession", userSession);
         return "user/selfservice/context/edit";
@@ -325,7 +325,7 @@ public class UserSelfserviceController extends AbstractController {
         Model model
     ){
         log.debug("userContextEditPost");
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
             log.debug("userContextEditPost: result has Errors");
@@ -356,7 +356,7 @@ public class UserSelfserviceController extends AbstractController {
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
         model.addAttribute("thisUser", thisUser);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale,context);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale,context,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(userSession.getLastContextId() == context.getId()){
             log.debug("context is active in session: "+ context);
@@ -389,7 +389,7 @@ public class UserSelfserviceController extends AbstractController {
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
         model.addAttribute("userChangeLanguageForm",new UserChangeLanguageForm(user.getDefaultLanguage()));
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("userSession", userSession);
         return "user/selfservice/language";
@@ -405,7 +405,7 @@ public class UserSelfserviceController extends AbstractController {
     ){
         log.debug("userLanguagePost");
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
             log.debug("userLanguagePost: result has Errors");

@@ -6,14 +6,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.domain.context.Context;
+import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskState;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Stack;
 
 @Slf4j
@@ -22,24 +23,28 @@ import java.util.Stack;
 public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     private final MessageSource messageSource;
+    private final ContextService contextService;
 
     @Autowired
-    public BreadcrumbServiceImpl(MessageSource messageSource) {
+    public BreadcrumbServiceImpl(MessageSource messageSource, ContextService contextService) {
         this.messageSource=messageSource;
+        this.contextService = contextService;
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowRootProject(Locale locale) {
+    public Breadcrumb getBreadcrumbForShowRootProject(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForShowRootProject");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         breadcrumb.addProjectRoot();
         return breadcrumb;
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale) {
+    public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForShowOneProject");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         breadcrumb.addProjectRoot();
         if(thisProject == null){
             return breadcrumb;
@@ -60,9 +65,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale) {
+    public Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForTaskstate");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code = taskstate.getCode();
         String name = messageSource.getMessage(code,null,locale);
         breadcrumb.addTaskstate(name,taskstate.getUrl());
@@ -70,18 +76,20 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale) {
+    public Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForTaskInTaskstate");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         breadcrumb.addTaskstate(taskstate);
         breadcrumb.addTask(task);
         return breadcrumb;
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForTaskstateAll(Locale locale) {
+    public Breadcrumb getBreadcrumbForTaskstateAll(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForTaskstateAll");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="layout.page.all";
         String name= messageSource.getMessage(code,null,locale);
         String url="/taskstate/all";
@@ -90,18 +98,19 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale locale) {
+    public Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForTaskInProject");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Breadcrumb breadcrumb = new Breadcrumb(locale,thisProject.getContext());
         breadcrumb.addProject(thisProject);
         breadcrumb.addTask(task);
         return breadcrumb;
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale) {
+    public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserProfileAndMenu");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -110,9 +119,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserChangeName(Locale locale) {
+    public Breadcrumb getBreadcrumbForUserChangeName(Locale locale,UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserChangeName");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -125,9 +135,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserChangePassword(Locale locale) {
+    public Breadcrumb getBreadcrumbForUserChangePassword(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserChangePassword");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -140,9 +151,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserContexts(Locale locale) {
+    public Breadcrumb getBreadcrumbForUserContexts(Locale locale,UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserContexts");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -155,9 +167,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserContextAdd(Locale locale) {
+    public Breadcrumb getBreadcrumbForUserContextAdd(Locale locale,UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserContextAdd");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> context = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -170,9 +183,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context) {
+    public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context, UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserContextEdit");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> contextFromSession = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -185,9 +199,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserContextDelete(Locale locale, Context context) {
+    public Breadcrumb getBreadcrumbForUserContextDelete(Locale locale, Context context, UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserContextDelete");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> contextFromSession = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -200,9 +215,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale) {
+    public Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForUserChangeLanguage");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> contextFromSession = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -215,9 +231,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale) {
+    public Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForMessagesBetweenCurrentAndOtherUser");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> contextFromSession = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";
@@ -230,9 +247,10 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForSearchResults(Locale locale) {
+    public Breadcrumb getBreadcrumbForSearchResults(Locale locale, UserSessionBean userSession) {
         log.debug("getBreadcrumbForSearchResults");
-        Breadcrumb breadcrumb = new Breadcrumb(locale);
+        Optional<Context> contextFromSession = contextService.getContextFor(userSession);
+        Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
         String name= messageSource.getMessage(code,null,locale);
         String url="/user/selfservice/profile";

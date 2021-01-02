@@ -45,7 +45,7 @@ public class SearchController extends AbstractController {
         log.debug("Search: "+ searchterm);
         SearchResult searchResult = searchService.search(searchterm, context);
         log.debug("found: "+ searchResult.toString());
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale,userSession);
         model.addAttribute("searchResult",searchResult);
         model.addAttribute("breadcrumb",breadcrumb);
         return "search/resultlist";

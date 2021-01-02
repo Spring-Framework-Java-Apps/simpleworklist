@@ -49,7 +49,7 @@ public class User2UserMessageController extends AbstractController {
         model.addAttribute("otherUser", otherUser);
         model.addAttribute("user2UserMessagePage", user2UserMessagePage);
         model.addAttribute("refreshMessages",true);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale,userSession);
         model.addAttribute("breadcrumb",breadcrumb);
         model.addAttribute("userSession", userSession);
         return "user/messages/all";
@@ -69,7 +69,7 @@ public class User2UserMessageController extends AbstractController {
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale,userSession);
         model.addAttribute("breadcrumb",breadcrumb);
         if(result.hasErrors()){
             log.debug("result.hasErrors");

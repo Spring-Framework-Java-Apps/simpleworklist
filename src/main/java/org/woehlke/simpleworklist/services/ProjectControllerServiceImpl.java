@@ -53,7 +53,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         userSession.setLastProjectId(projectId);
         Project thisProject = projectService.findByProjectId(projectId);
         Project project = Project.newProjectFactoryForParentProject(thisProject);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
@@ -74,7 +74,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         model.addAttribute("userSession",userSession);
         if(result.hasErrors()){
             Project thisProject = projectService.findByProjectId(projectId);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
@@ -113,7 +113,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Project project;
         project = new Project();
         project.setId(rootProjectId);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("project", project);
         model.addAttribute("thisProjectId", project.getId());

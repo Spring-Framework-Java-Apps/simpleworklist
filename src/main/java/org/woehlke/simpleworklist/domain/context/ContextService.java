@@ -1,8 +1,10 @@
 package org.woehlke.simpleworklist.domain.context;
 
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by tw on 13.03.16.
@@ -24,4 +26,6 @@ public interface ContextService {
     boolean delete(Context context);
 
     boolean contextHasItems(Context context);
+
+    Optional<Context> getContextFor(UserSessionBean userSession);
 }

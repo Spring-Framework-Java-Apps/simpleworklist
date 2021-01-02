@@ -38,7 +38,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.INBOX, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.INBOX,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/today", method = RequestMethod.GET)
@@ -49,7 +51,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.TODAY, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.TODAY,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/next", method = RequestMethod.GET)
@@ -60,7 +64,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.NEXT, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.NEXT,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/waiting", method = RequestMethod.GET)
@@ -71,7 +77,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.WAITING, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.WAITING,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/scheduled", method = RequestMethod.GET)
@@ -93,7 +101,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.SOMEDAY, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.SOMEDAY,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/completed", method = RequestMethod.GET)
@@ -104,7 +114,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.COMPLETED, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.COMPLETED,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/trash", method = RequestMethod.GET)
@@ -115,7 +127,9 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.TRASH, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.TRASH,
+            context, pageable, userSession, locale, model);
     }
 
     @RequestMapping(path = "/focus", method = RequestMethod.GET)
@@ -126,6 +140,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateControllerService.getTaskStatePage(TaskState.FOCUS, context, pageable, userSession, locale, model);
+        return taskStateControllerService.getTaskStatePage(
+            TaskState.FOCUS,
+            context, pageable, userSession, locale, model);
     }
 }

@@ -75,7 +75,7 @@ public class ProjectIdController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), userAccount);
             task.setContext(context);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale, userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProject", thisProject);
@@ -103,7 +103,7 @@ public class ProjectIdController extends AbstractController {
             Boolean mustChooseArea = false;
             task.setProject(thisProject);
             task.setContext(thisProject.getContext());
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
@@ -156,7 +156,7 @@ public class ProjectIdController extends AbstractController {
             thisProject.setContext(context);
             taskPage = taskService.findByRootProject(context, pageable);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
@@ -229,7 +229,7 @@ public class ProjectIdController extends AbstractController {
         userSession.setLastProjectId(thisProject.getId());
         model.addAttribute("userSession",userSession);
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("contexts", contexts);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
@@ -254,7 +254,7 @@ public class ProjectIdController extends AbstractController {
                 log.debug(e.toString());
             }
             thisProject = projectService.findByProjectId(projectId);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("userSession", userSession);
             return "project/id/edit";
@@ -319,7 +319,7 @@ public class ProjectIdController extends AbstractController {
                 log.debug("Project " + project.getId() + " has children");
                 s.append("Project has child categories.");
             }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale,userSession);
             Page<Task> taskPage = taskService.findByProject(project, request);
             model.addAttribute("message",s.toString());
             model.addAttribute("isDeleted",false);
@@ -393,7 +393,7 @@ public class ProjectIdController extends AbstractController {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = task.getContext();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("thisContext", thisContext);
@@ -435,7 +435,7 @@ public class ProjectIdController extends AbstractController {
             persistentTask.merge(task);
             task = persistentTask;
             Context thisContext = task.getContext();
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("thisContext", thisContext);

@@ -47,7 +47,7 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
         log.debug("getTaskStatePage");
         userSession.setLastTaskState(taskState);
         Page<Task> taskPage = taskService.findbyTaskstate(taskState, context, pageRequest);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", taskState.getType() );
