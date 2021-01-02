@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.context.listener;
+package org.woehlke.simpleworklist.application.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,21 +13,23 @@ import org.woehlke.simpleworklist.services.SearchService;
  * Created by tw on 14.02.16.
  */
 @Component
-public class ContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent> {
+public class ApplicationContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextRefreshedListener.class);
 
     private final SearchService searchService;
 
     @Autowired
-    public ContextRefreshedListener(SearchService searchService) {
+    public ApplicationContextRefreshedListener(SearchService searchService) {
         this.searchService = searchService;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         LOGGER.info("----------------------------------------------------");
-        LOGGER.info("onApplicationEvent: "+event.toString());
+        LOGGER.info("   Spring Context Refreshed Listener                ");
+        LOGGER.info("----------------------------------------------------");
+        LOGGER.info("   onApplicationEvent: "+event.toString());
         LOGGER.info("----------------------------------------------------");
         searchService.resetSearchIndex();
         LOGGER.info("----------------------------------------------------");

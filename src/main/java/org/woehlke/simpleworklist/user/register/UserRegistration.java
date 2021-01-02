@@ -2,7 +2,7 @@ package org.woehlke.simpleworklist.user.register;
 
 import javax.validation.constraints.Email;
 
-import org.woehlke.simpleworklist.application.common.AuditModel;
+import org.woehlke.simpleworklist.common.domain.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

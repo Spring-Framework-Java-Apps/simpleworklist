@@ -17,8 +17,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.application.common.AuditModel;
-import org.woehlke.simpleworklist.application.common.ComparableById;
+import org.woehlke.simpleworklist.common.domain.AuditModel;
+import org.woehlke.simpleworklist.common.domain.ComparableById;
 import org.woehlke.simpleworklist.user.account.UserAccount;
 
 @Entity
@@ -51,6 +51,9 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         initialValue = 1000
     )
     private Long id;
+
+    @Version
+    private Long version;
 
     @ManyToOne(
         fetch = FetchType.LAZY,

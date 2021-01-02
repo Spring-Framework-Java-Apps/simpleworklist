@@ -28,14 +28,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 //import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.data.jpa.repository.*;
 //import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.application.common.AuditModel;
-import org.woehlke.simpleworklist.application.common.ComparableById;
+import org.woehlke.simpleworklist.common.domain.AuditModel;
+import org.woehlke.simpleworklist.common.domain.ComparableById;
 
 import static javax.persistence.TemporalType.*;
 import static org.hibernate.annotations.LazyToOneOption.PROXY;

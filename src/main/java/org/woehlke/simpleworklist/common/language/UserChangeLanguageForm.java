@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.language;
+package org.woehlke.simpleworklist.common.language;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.testdata.services;
+package org.woehlke.simpleworklist.test.testdata;
 
 import org.woehlke.simpleworklist.user.account.UserAccount;
 

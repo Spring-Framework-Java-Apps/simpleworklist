@@ -17,7 +17,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Slf4j
 @Controller
 @RequestMapping(path="/fehler")
-public class MyErrorController implements ErrorController {
+public class ApplicationErrorController implements ErrorController {
 
     @ExceptionHandler
     @RequestMapping(path="/", method={ GET, POST, PUT,  HEAD, PATCH, DELETE, OPTIONS, TRACE  })
