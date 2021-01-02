@@ -259,7 +259,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void moveTasksUpByTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         TaskState taskState = sourceTask.getTaskState();
         Context context = sourceTask.getContext();
@@ -290,7 +290,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void moveTasksDownByTaskState(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         log.debug("-------------------------------------------------------------------------------");
         log.debug(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
@@ -325,7 +325,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void moveTasksUpByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         log.debug("-------------------------------------------------------------------------------");
         log.debug(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
@@ -357,7 +357,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void moveTasksDownByProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask) {
         log.debug("-------------------------------------------------------------------------------");
         log.debug(" START moveTasks UP By Project Root");
@@ -391,7 +391,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void moveTasksUpByProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();
         log.debug("-------------------------------------------------------------------------------");
@@ -426,7 +426,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void moveTasksDownByProject(@NotNull Task sourceTask, @NotNull Task destinationTask) {
         Project project = sourceTask.getProject();
         log.debug("-------------------------------------------------------------------------------");
