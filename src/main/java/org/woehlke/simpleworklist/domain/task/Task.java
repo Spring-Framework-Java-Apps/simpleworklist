@@ -104,6 +104,9 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     )
     private Long id;
 
+    @Version
+    private Long version;
+
     @ManyToOne(
             fetch = FetchType.LAZY,
             optional = true,

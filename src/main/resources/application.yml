@@ -12,6 +12,7 @@ spring:
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
     platform: postgresql
+    continue-on-error: true
   jpa:
     show-sql: true
     open-in-view: true
@@ -23,6 +24,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         temp:
           use_jdbc_metadata_defaults: false
+        search:
+          default:
+            indexBase: /tmp/simpleworklistsearch
   session:
     store-type: jdbc
     jdbc:
@@ -46,7 +50,7 @@ org:
       registration:
         maxRetries: 5
         ttlEmailVerificationRequest: 86400000
-        urlHost: ${MAIL_URL_APP_HOST}
+        urlHost: ${URL_APP_HOST}
         mailFrom: ${MAIL_FROM}
       webMvc:
         controllerPageSize: 10
@@ -86,149 +90,9 @@ org:
 spring:
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist
+  jpa:
+    hibernate:
+      #ddl-auto: update
+      ddl-auto: create-drop
   profiles:
     active: default
----
-spring:
-  datasource:
-    url: jdbc:postgresql://localdbhost:5432/simpleworklist_developing
-  jpa:
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-  profiles:
-    active: developing
----
-spring:
-  datasource:
-    url: jdbc:postgresql://localdbhost:5432/simpleworklist_travis
-    continue-on-error: true
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-  profiles:
-    active: travis
-server:
-  compression:
-    enabled: false
----
-spring:
-  datasource:
-    url: jdbc:postgresql://localdbhost:5432/simpleworklist_testing
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-  profiles:
-    active: testing
-server:
-  compression:
-    enabled: false
-logging:
-  config: classpath:logback.xml
-  level:
-    org:
-      woehlke:
-          simpleworklist: DEBUG
-          application: DEBUG
-          config: DEBUG
-          control:
-            admin: DEBUG
-            anonymous: DEBUG
-            common: DEBUG
-            user: DEBUG
-          model:
-            beans: DEBUG
-            dao: DEBUG
-            services: DEBUG
-          oodm:
-            entities: DEBUG
-            repository: DEBUG
-            services:
-              impl: DEBUG
----
-spring:
-  datasource:
-    url: jdbc:postgresql://localdbhost:5432/simpleworklist_qa
-    continue-on-error: true
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-  profiles:
-    active: qa
-server:
-  compression:
-    enabled: false
-logging:
-  config: classpath:logback.xml
-  level:
-    org:
-      woehlke:
-        simpleworklist: DEBUG
-        application: DEBUG
-        config: DEBUG
-        control:
-          admin: DEBUG
-          anonymous: DEBUG
-          common: DEBUG
-          user: DEBUG
-        model:
-          beans: DEBUG
-          dao: DEBUG
-          services: DEBUG
-        oodm:
-          entities: DEBUG
-          repository: DEBUG
-          services:
-            impl: DEBUG
----
-spring:
-  datasource:
-    url: jdbc:postgresql://localdbhost:5432/simpleworklist_heroku
-    continue-on-error: true
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-    properties:
-      hibernate:
-        search:
-          default:
-            indexBase : /tmp/simpleworklistsearch
-  thymeleaf:
-    cache: true
-  devtools:
-    livereload:
-      enabled: false
-  application:
-    admin:
-      enabled: false
-  profiles:
-    active: heroku
-server:
-  compression:
-    enabled: true
-org:
-  woehlke:
-    simpleworklist:
-      registration:
-        urlHost: simpleworklist.herokuapp.com
-logging:
-  config: classpath:logback.xml
-  level:
-    org:
-      woehlke:
-        simpleworklist: WARN
-      apache: WARN
-      springframework: WARN
-      thymeleaf: WARN
-      hibernate: WARN
-      hibernate.SQL: WARN
-    ch:
-      qos: WARN
