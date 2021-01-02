@@ -11,10 +11,20 @@
 
     <div th:fragment="mytwtitle">
         <div id="tw-content-title">
-            <h1>
-                <i class="fas fa-hourglass-half"></i>
-                <span th:utext="#{tasks.waiting.h1}">Waiting</span>
-            </h1>
+            <div class="row">
+                <h1 class="col-md-12 mb-12">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span th:utext="#{tasks.waiting.h1}">Waiting</span>
+                </h1>
+            </div>
+            <div class="row">
+                <div id="tw-content-title-actionbuttons" class="col-md-3 mb-3">
+                    <a class="btn btn-block btn-primary" role="button" th:href="@{/taskstate/task/add}">
+                        <i class="fas fa-plus-square"></i>
+                        <span th:utext="#{tasks.inbox.addTask}">Add Task</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

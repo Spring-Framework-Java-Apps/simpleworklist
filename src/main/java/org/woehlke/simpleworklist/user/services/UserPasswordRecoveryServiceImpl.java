@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.application.ApplicationProperties;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryRepository;
-import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryRepository;
+import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryStatus;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -65,14 +66,16 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         if (earlierOptIn != null) {
             o = earlierOptIn;
             o.increaseNumberOfRetries();
+        } else {
+            o.setUuid(UUID.randomUUID().toString());
         }
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        log.info("To be saved: " + o.toString());
+        log.debug("To be saved: " + o.toString());
         o = userPasswordRecoveryRepository.saveAndFlush(o);
-        log.info("Saved: " + o.toString());
+        log.debug("Saved: " + o.toString());
         this.sendEmailForPasswordReset(o);
     }
 
@@ -80,7 +83,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySentEmail(UserPasswordRecovery o) {
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL);
-        log.info("about to save: " + o.toString());
+        log.debug("about to save: " + o.toString());
         userPasswordRecoveryRepository.saveAndFlush(o);
     }
 
@@ -108,7 +111,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         msg.setText(
                 "Dear User, "
                         + "for Password Reset at SimpleWorklist, "
-                        + "Please go to URL: \nhttp://" + urlHost + "/passwordResetConfirm/" + o.getToken()
+                        + "Please go to URL: \nhttp://" + urlHost + "/user/resetPassword/confirm/" + o.getToken()
                         + "\n\nSincerely Yours, The Team");
         msg.setSubject("Password Reset at Simple Worklist");
         msg.setFrom(mailFrom);
@@ -121,6 +124,6 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         if (success) {
             this.passwordRecoverySentEmail(o);
         }
-        log.info("Sent MAIL: " + o.toString());
+        log.debug("Sent MAIL: " + o.toString());
     }
 }

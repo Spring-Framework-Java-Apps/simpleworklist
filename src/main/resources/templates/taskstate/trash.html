@@ -17,13 +17,14 @@
                     <span th:utext="#{tasks.trash.h1}">Trash</span>
                 </h1>
             </div>
-            </div>
             <div class="row">
                 <div id="tw-content-title-actionbuttons" class="col-md-3 mb-3">
                     <a th:href="@{/taskstate/task/trash/empty}" class="btn btn-block btn-primary" role="button">
                         <i class="fas fa-trash-alt"></i>
                         <span th:utext="#{tasks.trash.empty}">Empty Trash</span>
                     </a>
+                </div>
+                <div class="col-md-9 mb-9">
                 </div>
             </div>
         </div>

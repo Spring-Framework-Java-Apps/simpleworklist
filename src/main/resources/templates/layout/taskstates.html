@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
-    <section th:fragment="navigation-taskstates(rootCategories,thisProject)">
+    <section th:fragment="navigation-taskstates(rootProjects,thisProject)">
         <div class="container" id="taskStateNavigationContainer" sec:authorize="isAuthenticated()">
             <ul id="taskStateNavigation" class="nav nav-tabs">
                 <li class="nav-item" ondrop="drop2inbox(event)" ondragover="allowDropOfTask(event)">

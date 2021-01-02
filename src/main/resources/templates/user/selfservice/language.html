@@ -24,11 +24,11 @@
 
     <div th:fragment="mytwcontent">
         <form id="formId" th:action="@{/user/selfservice/language}" th:object="${userChangeLanguageForm}" method="post">
-            <div class="form-group form-control-lg">
+            <div class="form-group">
                 <label th:for="${#ids.next('defaultLanguage')}" class="control-label">
                     <span th:text="#{user.selfservice.language.defaultLanguage}">Language</span>
                 </label>
-                <select th:field="*{defaultLanguage}" class="form-control">
+                <select th:field="*{defaultLanguage}" class="form-control form-control-lg">
                     <option th:each="language : ${languages}"
                             th:value="${language.value}"
                             th:text="${#messages.msg(language.code)}">language.code</option>
@@ -38,13 +38,15 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+            <a th:href="@{/user/selfservice/profile}" class="btn btn-secondary" role="button">
+                <span th:utext="#{button.back}">back</span>
+            </a>
             <button id="saveLanguageButton" type="submit" class="btn btn-primary">
                 <i class="fas fa-save"></i>
                 <span th:utext="#{user.selfservice.language.button}">Save Language</span>
             </button>
-            <a th:href="@{/user/selfservice/profile}" class="btn btn-secondary" role="button">
-                <span th:utext="#{button.back}">back</span>
-            </a>
+            </div>
         </form>
     </div>
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source src/main/bash/setenv.sh
+#source src/main/bash/setenv.sh
+source ~/.bash_aliases_simpleworklist
 
 function composeUp() {
     ./mvnw docker-compose:up
@@ -15,7 +16,7 @@ function firstSetup() {
     # showSettings
     ./mvnw dependency:purge-local-repository
     ./mvnw -e -DskipTests=true clean dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree
-    ./mvnw -e -DskipTests=true clean package spring-boot:repackage site
+    ./mvnw -e -DskipTests=true clean package spring-boot:repackage site site:deploy
 }
 
 function setupTravis() {
@@ -27,12 +28,20 @@ function setupTravis() {
     ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources && \
     ./mvnw -e -DskipTests=true -B -V dependency:tree && \
     ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage && \
-    ./mvnw -e -DskipTests=true -B -V site
+    ./mvnw -e -DskipTests=true -B -V site site:deploy
+}
+
+function buildJar() {
+    export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
+    # showSettings
+    ./mvnw dependency:purge-local-repository
+    ./mvnw -e -DskipTests=true clean dependency:tree package spring-boot:repackage
 }
 
 function main() {
-    firstSetup
+    # firstSetup
     # setupTravis
+    buildJar
 }
 
 main

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.woehlke.simpleworklist.application.common.AbstractController;
+import org.woehlke.simpleworklist.common.domain.AbstractController;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.services.SearchService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
@@ -38,14 +38,14 @@ public class SearchController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
-        log.info("searchResults");
+        log.debug("searchResults");
         Context context = super.getContext(userSession);
         userSession.setLastSearchterm(searchterm);
         model.addAttribute("userSession", userSession);
-        log.info("Search: "+ searchterm);
+        log.debug("Search: "+ searchterm);
         SearchResult searchResult = searchService.search(searchterm, context);
-        log.info("found: "+ searchResult.toString());
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale);
+        log.debug("found: "+ searchResult.toString());
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale,userSession);
         model.addAttribute("searchResult",searchResult);
         model.addAttribute("breadcrumb",breadcrumb);
         return "search/resultlist";

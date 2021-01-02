@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.simpleworklist.application.common.AbstractController;
+import org.woehlke.simpleworklist.common.domain.AbstractController;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.services.ProjectControllerService;
 import org.woehlke.simpleworklist.domain.task.Task;
@@ -19,8 +19,8 @@ import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.services.TaskProjektService;
-import org.woehlke.simpleworklist.services.TaskService;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.task.TaskService;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
@@ -75,7 +75,7 @@ public class ProjectIdController extends AbstractController {
             Context context = contextService.findByIdAndUserAccount(userSession.getLastContextId(), userAccount);
             task.setContext(context);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale, userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("mustChooseArea", mustChooseArea);
         model.addAttribute("thisProject", thisProject);
@@ -97,13 +97,13 @@ public class ProjectIdController extends AbstractController {
         UserAccount userAccount = context.getUserAccount();
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
-                log.info(e.toString());
+                log.debug(e.toString());
             }
             Project thisProject = projectControllerService.getProject(projectId, userAccount, userSession);
             Boolean mustChooseArea = false;
             task.setProject(thisProject);
             task.setContext(thisProject.getContext());
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("breadcrumb", breadcrumb);
@@ -126,7 +126,7 @@ public class ProjectIdController extends AbstractController {
             long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
             task.setOrderIdTaskState(++maxOrderIdTaskState);
             task = taskService.addToProject(task);
-            log.info(task.toString());
+            log.debug(task.toString());
             model.addAttribute("userSession", userSession);
             return thisProject.getUrl();
         }
@@ -141,7 +141,7 @@ public class ProjectIdController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
-        log.info("/project/"+projectId);
+        log.debug("/project/"+projectId);
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(projectId);
         model.addAttribute("userSession",userSession);
@@ -156,7 +156,7 @@ public class ProjectIdController extends AbstractController {
             thisProject.setContext(context);
             taskPage = taskService.findByRootProject(context, pageable);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("taskPage", taskPage);
@@ -175,7 +175,7 @@ public class ProjectIdController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.info("private addNewProjectGet (GET) projectId="+projectId);
+        log.debug("private addNewProjectGet (GET) projectId="+projectId);
         Context context = super.getContext(userSession);
         projectControllerService.addNewProjectToProjectIdForm(projectId, userSession, context, locale, model);
         model.addAttribute("userSession", userSession);
@@ -190,7 +190,7 @@ public class ProjectIdController extends AbstractController {
         BindingResult result,
         Locale locale, Model model
     ) {
-        log.info("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
+        log.debug("private addNewProjectPost (POST) projectId="+projectId+" "+project.toString());
         Context context = super.getContext(userSession);
         return projectControllerService.addNewProjectToProjectIdPersist(
             projectId,
@@ -229,7 +229,7 @@ public class ProjectIdController extends AbstractController {
         userSession.setLastProjectId(thisProject.getId());
         model.addAttribute("userSession",userSession);
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("contexts", contexts);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
@@ -251,10 +251,10 @@ public class ProjectIdController extends AbstractController {
         Project thisProject;
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
-                log.info(e.toString());
+                log.debug(e.toString());
             }
             thisProject = projectService.findByProjectId(projectId);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("userSession", userSession);
             return "project/id/edit";
@@ -308,7 +308,7 @@ public class ProjectIdController extends AbstractController {
         } else {
             //TODO: message to message_properties
             StringBuilder s = new StringBuilder("Deletion rejected for this Project, because ");
-            log.info("Deletion rejected for Project " + project.getId());
+            log.debug("Deletion rejected for Project " + project.getId());
             if (!hasNoData) {
                 //TODO: message to message_properties
                 log.warn("Project " + project.getId() + " has actionItem");
@@ -316,10 +316,10 @@ public class ProjectIdController extends AbstractController {
             }
             if (!hasNoChildren) {
                 //TODO: message to message_properties
-                log.info("Project " + project.getId() + " has children");
+                log.debug("Project " + project.getId() + " has children");
                 s.append("Project has child categories.");
             }
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(project,locale,userSession);
             Page<Task> taskPage = taskService.findByProject(project, request);
             model.addAttribute("message",s.toString());
             model.addAttribute("isDeleted",false);
@@ -341,16 +341,16 @@ public class ProjectIdController extends AbstractController {
     ){
         userSession.setLastProjectId(thisProject.getId());
         model.addAttribute("userSession",userSession);
-        log.info("-------------------------------------------------");
-        log.info("  projectTaskChangeOrderToTaskGet");
-        log.info("-------------------------------------------------");
-        log.info("  source Task:      "+sourceTask.toString());
-        log.info("-------------------------------------------------");
-        log.info("  destination Task: "+destinationTask.toString());
-        log.info("-------------------------------------------------");
+        log.debug("-------------------------------------------------");
+        log.debug("  projectTaskChangeOrderToTaskGet");
+        log.debug("-------------------------------------------------");
+        log.debug("  source Task:      "+sourceTask.toString());
+        log.debug("-------------------------------------------------");
+        log.debug("  destination Task: "+destinationTask.toString());
+        log.debug("-------------------------------------------------");
         projectControllerService.moveTaskToTaskAndChangeTaskOrderInProject(sourceTask, destinationTask);
-        log.info("  DONE: taskMoveService.moveOrderIdProject");
-        log.info("-------------------------------------------------");
+        log.debug("  DONE: taskMoveService.moveOrderIdProject");
+        log.debug("-------------------------------------------------");
         model.addAttribute("userSession", userSession);
         return thisProject.getUrl();
     }
@@ -389,11 +389,11 @@ public class ProjectIdController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.info("editTaskGet");
+        log.debug("editTaskGet");
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = task.getContext();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("thisContext", thisContext);
@@ -413,7 +413,7 @@ public class ProjectIdController extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.info("editTaskPost");
+        log.debug("editTaskPost");
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -435,7 +435,7 @@ public class ProjectIdController extends AbstractController {
             persistentTask.merge(task);
             task = persistentTask;
             Context thisContext = task.getContext();
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("thisContext", thisContext);
@@ -552,7 +552,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to inbox");
+        log.debug("dragged and dropped "+task.getId()+" to inbox");
         task.moveToInbox();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -566,7 +566,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to today");
+        log.debug("dragged and dropped "+task.getId()+" to today");
         task.moveToToday();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -580,7 +580,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to next");
+        log.debug("dragged and dropped "+task.getId()+" to next");
         task.moveToNext();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -594,7 +594,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to waiting");
+        log.debug("dragged and dropped "+task.getId()+" to waiting");
         task.moveToWaiting();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -608,7 +608,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to someday");
+        log.debug("dragged and dropped "+task.getId()+" to someday");
         task.moveToSomeday();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -622,7 +622,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to focus");
+        log.debug("dragged and dropped "+task.getId()+" to focus");
         task.moveToFocus();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -636,7 +636,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to completed");
+        log.debug("dragged and dropped "+task.getId()+" to completed");
         task.moveToCompletedTasks();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -650,7 +650,7 @@ public class ProjectIdController extends AbstractController {
         @PathVariable("taskId") Task task,
         Model model
     ) {
-        log.info("dragged and dropped "+task.getId()+" to trash");
+        log.debug("dragged and dropped "+task.getId()+" to trash");
         task.moveToTrash();
         task = taskService.updatedViaProject(task);
         userSession.setLastProjectId(thisProject.getId());
@@ -667,7 +667,7 @@ public class ProjectIdController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.info("transformTaskIntoProjectGet");
+        log.debug("transformTaskIntoProjectGet");
         userSession.setLastProjectId(thisProject.getId());
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());

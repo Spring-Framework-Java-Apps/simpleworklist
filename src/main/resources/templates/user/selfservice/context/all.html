@@ -76,7 +76,8 @@
                                 th:text="${locale == 'de' ? context.nameDe : context.nameEn}">Wireframe</option>
                     </select>
                     <div>
-                        <div th:each="err : ${#fields.errors('defaultContext.id')}" th:text="${err}" class="alert alert-danger" />
+                        <div th:each="err : ${#fields.errors('defaultContext.id')}"
+                             th:text="${err}" class="alert alert-danger" />
                     </div>
                 </div>
                 <input type="hidden" th:field="*{id}" />
@@ -87,10 +88,9 @@
             </form>
         </div>
         <br/>
-        <a th:href="@{/user/selfservice/profile}">
+        <a th:href="@{/user/selfservice/profile}" class="btn btn-secondary" role="button">
             <span th:utext="#{button.back}">back</span>
         </a>
-
     </div>
 
 </body>

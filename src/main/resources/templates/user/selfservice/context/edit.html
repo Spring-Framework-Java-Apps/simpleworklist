@@ -24,36 +24,37 @@
 
     <div th:fragment="mytwcontent">
         <div>
-            <form id="formId" th:action="@{/user/selfservice/context/edit/{id}(id=${contextId})}" th:object="${editContext}" method="post">
-                <td>
-                    <div class="form-group form-control-lg">
+            <form id="formId" th:action="@{/user/selfservice/context/edit/{id}(id=${contextId})}"
+                  th:object="${editContext}" method="post">
+                <div class="form-group">
                         <label th:for="${#ids.next('nameEn')}" class="control-label">
                             <span th:utext="#{enum.language.en}">Englisch</span>
                         </label>
-                        <input type="text" th:field="*{nameEn}" class="form-control" />
+                        <input type="text" th:field="*{nameEn}" class="form-control form-control-lg" />
                         <div>
-                            <div th:each="err : ${#fields.errors('nameEn')}" th:text="${err}" class="alert alert-danger" />
+                            <div th:each="err : ${#fields.errors('nameEn')}"
+                                 th:text="${err}" class="alert alert-danger" />
                         </div>
                     </div>
-                </td>
-                <td>
-                    <div class="form-group form-control-lg">
+                    <div class="form-group">
                         <label th:for="${#ids.next('nameDe')}" class="control-label">
                             <span th:utext="#{enum.language.de}">Deutsch</span>
                         </label>
-                        <input type="text" th:field="*{nameDe}" class="form-control" />
+                        <input type="text" th:field="*{nameDe}" class="form-control form-control-lg" />
                         <div>
-                            <div th:each="err : ${#fields.errors('nameDe')}" th:text="${err}" class="alert alert-danger" />
+                            <div th:each="err : ${#fields.errors('nameDe')}"
+                                 th:text="${err}" class="alert alert-danger" />
                         </div>
                     </div>
-                </td>
-                <td>
-                    <button id="editContextButton" type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i>
-                        <span th:utext="#{user.selfservice.contexts.edit.button}">Edit Area</span>
-                    </button>
-                </td>
-                <td>&nbsp;</td>
+                    <div class="form-group">
+                        <a th:href="@{/user/selfservice/profile}" class="btn btn-secondary" role="button">
+                            <span th:utext="#{button.back}">back</span>
+                        </a>
+                        <button id="editContextButton" type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span th:utext="#{user.selfservice.contexts.edit.button}">Edit Area</span>
+                        </button>
+                    </div>
             </form>
         </div>
     </div>

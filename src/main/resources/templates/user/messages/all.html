@@ -22,7 +22,8 @@
         <div th:each="m : ${user2UserMessagePage}">
             <div class="row">
                 <div class="col">
-                    <div class="alert alert-info" role="alert" th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
+                    <div class="alert alert-info" role="alert"
+                         th:style="${m.sender.id == otherUser.id ? 'width: 66%; float:right' : 'width: 66%; float:left'}">
                         <span th:text="${m.messageText}" ></span>
                         <span style="float:right">
                             <small>
@@ -37,19 +38,20 @@
         <div class="row" id="newUser2UserMessageForm">
             <div class="col">
                 <div class="card card-body">
-                    <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}" th:object="${user2UserMessageFormBean}" method="post">
-                        <div class="form-group form-control-lg">
+                    <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}"
+                          th:object="${newUser2UserMessage}" method="post">
+                        <div class="form-group">
                             <label for="textEditor" class="control-label">
                                 <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>
                             </label>
                             <textarea id="textEditor" rows="3" cols="50"
-                                      th:field="*{messageText}" class="form-control" />
+                                      th:field="*{messageText}" class="form-control form-control-lg" />
                             <div>
                                 <div th:each="err : ${#fields.errors('messageText')}"
                                      th:text="${err}" class="invalid-feedback" />
                             </div>
                         </div>
-                        <div class="form-group form-control-lg">
+                        <div class="form-group">
                         </div>
                         <button id="newUserMessageButton" type="submit" class="btn btn-primary">
                             <i class="fas fa-envelope"></i>
@@ -66,9 +68,13 @@
         </div>
     </div>
 
-    <script th:src="@{/webjars/ckeditor/4.11.3/full/ckeditor.js}"></script>
+    <script th:src="@{/webjars/ckeditor/18.0.0/inline/ckeditor.js}"></script>
     <script th:inline="javascript">
-        CKEDITOR.replace( 'textEditor' );
+        InlineEditor
+            .create( document.querySelector( '#textEditor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
 </body>
 </html>

@@ -9,9 +9,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.application.breadcrumb.services.BreadcrumbService;
+import org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.task.Task;
+import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
@@ -43,10 +44,10 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
         @NotNull Locale locale,
         @NotNull Model model
     ){
-        log.info("getTaskStatePage");
+        log.debug("getTaskStatePage");
         userSession.setLastTaskState(taskState);
         Page<Task> taskPage = taskService.findbyTaskstate(taskState, context, pageRequest);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", taskState.getType() );
@@ -57,11 +58,11 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTaskToTaskAndChangeTaskOrderInTaskstate(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
-        log.info("        "+sourceTask.getTaskState().name());
-        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
+        log.debug("        "+sourceTask.getTaskState().name());
+        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
         boolean notEqualsId = ! sourceTask.equalsById(destinationTask);
         boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -75,11 +76,11 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
                 this.taskService.moveTasksUpByTaskState( sourceTask, destinationTask );
             }
         }
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE: moveTaskToTask AndChangeTaskOrder In Taskstate ");
-        log.info("        "+sourceTask.getTaskState().name());
-        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
+        log.debug("-------------------------------------------------------------------------------");
+        log.debug(" DONE: moveTaskToTask AndChangeTaskOrder In Taskstate ");
+        log.debug("        "+sourceTask.getTaskState().name());
+        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.debug("-------------------------------------------------------------------------------");
     }
 
 }

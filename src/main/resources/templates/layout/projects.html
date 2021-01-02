@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
-    <section th:fragment="navigation-projects(rootCategories,thisProject)">
+    <section th:fragment="navigation-projects(rootProjects,thisProject)">
         <div class="border-top" id="projectNavigationWell" sec:authorize="isAuthenticated()">
             <div class="row col" id="tw-project-submenu-col">
             <nav>
@@ -18,8 +18,8 @@
                                 Projects
                             </a>
                         </span>
-                        <span th:if="${rootCategories != null and rootCategories.size() gt 0}">
-                            <ul th:include="this :: tw-project-submenu(projectList=${rootCategories},thisProject=${thisProject})"></ul>
+                        <span th:if="${rootProjects != null and rootProjects.size() gt 0}">
+                            <ul th:include="this :: tw-project-submenu(projectList=${rootProjects},thisProject=${thisProject})"></ul>
                         </span>
                     </li>
                 </ul>

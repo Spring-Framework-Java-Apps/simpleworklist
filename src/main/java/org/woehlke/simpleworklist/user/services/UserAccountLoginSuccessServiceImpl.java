@@ -9,9 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserAccountRepository;
-import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 
 import java.util.Date;
 
@@ -29,7 +28,7 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
 
     @Override
     public String retrieveUsername() {
-        log.info("retrieveUsername");
+        log.debug("retrieveUsername");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null) return " ";
         Object principal = authentication.getPrincipal();
@@ -42,7 +41,7 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
 
     @Override
     public UserAccount retrieveCurrentUser() throws UsernameNotFoundException {
-        log.info("retrieveCurrentUser");
+        log.debug("retrieveCurrentUser");
         String username = this.retrieveUsername();
         UserAccount account = userAccountRepository.findByUserEmail(username);
         if (account == null) throw new UsernameNotFoundException(username);
@@ -52,7 +51,7 @@ public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSucce
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void updateLastLoginTimestamp(UserAccount user) {
-        log.info("updateLastLoginTimestamp");
+        log.debug("updateLastLoginTimestamp");
         user.setLastLoginTimestamp(new Date());
         userAccountRepository.saveAndFlush(user);
     }

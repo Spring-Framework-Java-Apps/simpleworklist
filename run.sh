@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source src/main/bash/setenv.sh
+#source src/main/bash/setenv.sh
+source ~/.bash_aliases_simpleworklist
 
 function composeUp() {
     ./mvnw docker-compose:up
@@ -28,7 +29,8 @@ function buildLikeHerokuWithSite() {
 }
 
 function buildLikeHeroku() {
-   ./mvnw -DskipTests clean dependency:list install
+   #./mvnw -DskipTests clean dependency:list install
+   ./mvnw clean dependency:list install
 }
 
 function runHerokuLocal() {
@@ -51,8 +53,8 @@ function runDev() {
 }
 
 function run() {
-    runHerokuLocal
-    #runDev
+    #runHerokuLocal
+    runDev
 }
 
 function main() {
