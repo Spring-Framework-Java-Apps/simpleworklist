@@ -180,7 +180,7 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "spring_session" d
 
 ## 2.3.32
 * Issue #317 switch Context is broken
-* Issue #318 Broken: http://localhost:8080/taskstate/task/1153/changeorderto/1051
+* fixed #318 Broken: http://localhost:8080/taskstate/task/1153/changeorderto/1051
 * fixed #319 groovy-all Warning during startup
 * fixed #320 warning: SLF4J: Class path contains multiple SLF4J bindings.
 * fixed #321 jar is too fat for deployment on heroku
