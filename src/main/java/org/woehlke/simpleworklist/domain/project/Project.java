@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.common.domain.AuditModel;
 import org.woehlke.simpleworklist.common.domain.ComparableById;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 @Entity
 @Table(

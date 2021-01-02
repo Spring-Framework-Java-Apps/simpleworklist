@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.application.config.UserAccountTestDataService;
 import org.woehlke.simpleworklist.common.testdata.TestDataService;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import java.net.URL;
 

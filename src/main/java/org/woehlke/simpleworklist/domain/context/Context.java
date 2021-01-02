@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.common.domain.AuditModel;
 import org.woehlke.simpleworklist.common.domain.ComparableById;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import javax.persistence.*;
 import javax.persistence.Index;

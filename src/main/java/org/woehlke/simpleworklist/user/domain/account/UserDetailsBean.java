@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.account;
+package org.woehlke.simpleworklist.user.domain.account;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.woehlke.simpleworklist.user.account.UserAccount;
 
 
 @Getter

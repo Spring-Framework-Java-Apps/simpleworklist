@@ -1,38 +1,31 @@
-package org.woehlke.simpleworklist.user.account;
+package org.woehlke.simpleworklist.user.domain.account;
 
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.*;
 //import org.hibernate.validator.constraints.SafeHtml;
 
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-
+/**
+ * Created by tw on 15.03.16.
+ */
 @Getter
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"userPassword"})
-public class UserAccountForm implements Serializable {
+public class UserChangePasswordForm implements Serializable {
 
-    private static final long serialVersionUID = 9180383385243540190L;
-
-    //TODO: Messages i18n
-    @NotNull(message = "Email Address is compulsory")
-    @NotBlank(message = "Email Address is compulsory")
-    @Email(message = "Email Address is not a valid format")
-    private String userEmail;
+    private static final long serialVersionUID = 9149342594823222054L;
 
     //TODO: Messages i18n
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
-    @NotNull(message = "Fullname is compulsory")
-    @NotBlank(message = "Fullname is compulsory")
-    private String userFullname;
+    @NotNull(message = "Password is compulsory")
+    @NotBlank(message = "Password is compulsory")
+    private String oldUserPassword;
 
     //TODO: Messages i18n
     //@SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)

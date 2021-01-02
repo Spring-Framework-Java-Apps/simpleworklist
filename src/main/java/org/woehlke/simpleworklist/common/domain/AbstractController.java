@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.domain.task.TaskState;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.domain.context.ContextService;

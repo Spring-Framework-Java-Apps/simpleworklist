@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.user.account;
+package org.woehlke.simpleworklist.user.domain.account;
 
 import javax.persistence.Enumerated;
 import java.io.Serializable;

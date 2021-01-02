@@ -16,7 +16,7 @@ import org.woehlke.simpleworklist.services.TaskStateControllerService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;

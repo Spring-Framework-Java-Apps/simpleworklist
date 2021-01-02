@@ -21,10 +21,10 @@ import org.woehlke.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.simpleworklist.common.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.common.language.Language;
-import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserChangeDefaultContextForm;
-import org.woehlke.simpleworklist.user.account.UserChangeNameForm;
-import org.woehlke.simpleworklist.user.account.UserChangePasswordForm;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserChangeDefaultContextForm;
+import org.woehlke.simpleworklist.user.domain.account.UserChangeNameForm;
+import org.woehlke.simpleworklist.user.domain.account.UserChangePasswordForm;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 

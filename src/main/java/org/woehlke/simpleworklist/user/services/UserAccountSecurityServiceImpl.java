@@ -7,10 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserAccountRepository;
-import org.woehlke.simpleworklist.user.account.UserDetailsBean;
-import org.woehlke.simpleworklist.user.services.UserAccountSecurityService;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
+import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
 
 @Slf4j
 @Service

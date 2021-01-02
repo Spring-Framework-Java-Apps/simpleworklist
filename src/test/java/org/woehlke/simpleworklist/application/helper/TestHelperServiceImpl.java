@@ -11,7 +11,7 @@ import org.woehlke.simpleworklist.user.register.UserRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
-import org.woehlke.simpleworklist.user.account.UserAccountRepository;
+import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryRepository;
 
 import javax.validation.constraints.Email;

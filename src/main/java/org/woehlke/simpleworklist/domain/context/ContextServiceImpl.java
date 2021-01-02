@@ -4,11 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.domain.context.ContextRepository;
-import org.woehlke.simpleworklist.domain.context.ContextService;
-import org.woehlke.simpleworklist.domain.context.NewContextForm;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.domain.project.ProjectRepository;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
 

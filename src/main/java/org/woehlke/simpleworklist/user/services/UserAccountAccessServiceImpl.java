@@ -10,10 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.account.UserAccountRepository;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.login.LoginForm;
-import org.woehlke.simpleworklist.user.account.UserChangePasswordForm;
+import org.woehlke.simpleworklist.user.domain.account.UserChangePasswordForm;
 
 @Slf4j
 @Service

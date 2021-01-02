@@ -23,7 +23,7 @@ import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.services.TaskProjektService;
 import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import javax.validation.Valid;
 import java.util.List;

@@ -1,8 +1,6 @@
 package org.woehlke.simpleworklist.domain.context;
 
-import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.domain.context.NewContextForm;
-import org.woehlke.simpleworklist.user.account.UserAccount;
+import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
 import java.util.List;
 
