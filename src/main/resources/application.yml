@@ -90,9 +90,5 @@ org:
 spring:
   datasource:
     url: jdbc:postgresql://localdbhost:5432/simpleworklist
-  #jpa:
-  #  hibernate:
-  #    ddl-auto: update
-  #    #ddl-auto: create-drop
   profiles:
     active: default
