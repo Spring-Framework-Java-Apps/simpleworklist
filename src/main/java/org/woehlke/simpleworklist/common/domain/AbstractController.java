@@ -63,22 +63,22 @@ public abstract class AbstractController {
     @Autowired
     protected BreadcrumbService breadcrumbService;
 
-    //TODO: rename allCategories to allProjects
     @ModelAttribute("allProjects")
     public final List<Project> getAllCategories(
         @ModelAttribute("userSession") UserSessionBean userSession,
         BindingResult result, //TODO: remove
         Model model  //TODO: remove
     ) {
+        userSession = updateUserSession(userSession);
         Context context = this.getContext(userSession);
         return projectService.findAllProjectsByContext(context);
     }
 
-    //TODO: rename rootCategories to rootProjects
     @ModelAttribute("rootProjects")
     public final List<Project> getRootCategories(
         @ModelAttribute("userSession") UserSessionBean userSession
     ) {
+        userSession = updateUserSession(userSession);
         Context context = this.getContext(userSession);
         return projectService.findRootProjectsByContext(context);
     }
@@ -117,11 +117,10 @@ public abstract class AbstractController {
     @ModelAttribute("context")
     public final String getCurrentContext(
         @ModelAttribute("userSession") UserSessionBean userSession,
-        Locale locale
+        Locale locale,
+        Model model
     ){
-        if(userSession == null){
-            userSession = new UserSessionBean();
-        }
+        userSession = updateUserSession(userSession);
         Context context = getContext(userSession);
         if(locale == null){
             locale = Locale.ENGLISH;
@@ -152,6 +151,26 @@ public abstract class AbstractController {
         }
         Context context = contextService.findByIdAndUserAccount(newContextId, thisUser);
         return context;
+    }
+
+    protected UserSessionBean getNewUserSession(){
+        UserAccount thisUser = this.getUser();
+        long userAccountid = thisUser.getId();
+        long contextId = thisUser.getDefaultContext().getId();
+        UserSessionBean userSession = new UserSessionBean(userAccountid,contextId);
+        return userSession;
+    }
+
+    protected UserSessionBean updateUserSession(UserSessionBean userSession){
+        if(userSession == null){
+            userSession = getNewUserSession();
+        } else {
+            UserAccount thisUser = this.getUser();
+            long contextId = thisUser.getDefaultContext().getId();
+            long userAccountid = thisUser.getId();
+            userSession.update(userAccountid,contextId);
+        }
+        return userSession;
     }
 
     /*

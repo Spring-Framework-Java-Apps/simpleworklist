@@ -27,12 +27,21 @@ public class UserSessionBean implements Serializable {
     private String lastSearchterm; //TODO: Make SearchRequest to Entity
 
     public UserSessionBean(){
-        lastSearchterm=""; //TODO: Make SearchRequest to Entity
-        lastTaskState=TaskState.INBOX;
-        lastProjectId=0L;
-        lastContextId=0L;
-        lastTaskId=0L;
-        userAccountid=0L;
+        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
+        this.lastTaskState=TaskState.INBOX;
+        this.lastProjectId=0L;
+        this.lastContextId=0L;
+        this.lastTaskId=0L;
+        this.userAccountid=0L;
+    }
+
+    public UserSessionBean(long userAccountid, long lastContextId){
+        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
+        this.lastTaskState=TaskState.INBOX;
+        this.lastProjectId=0L;
+        this.lastTaskId=0L;
+        this.userAccountid=userAccountid;
+        this.lastContextId=lastContextId;
     }
 
     @Deprecated
@@ -45,4 +54,10 @@ public class UserSessionBean implements Serializable {
         userAccountid=0L;
     }
 
+    public void update(long userAccountid, long contextId) {
+        this.userAccountid=userAccountid;
+        if(this.lastContextId == 0L ){
+            this.lastContextId=contextId;
+        }
+    }
 }

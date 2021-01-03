@@ -65,10 +65,20 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale, UserSessionBean userSession) {
+    public Breadcrumb getBreadcrumbForTaskstate(
+        TaskState taskstate,
+        Locale locale,
+        UserSessionBean userSession
+    ) {
         log.debug("getBreadcrumbForTaskstate");
-        Optional<Context> context = contextService.getContextFor(userSession);
-        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
+        Optional<Context> contextResult = contextService.getContextFor(userSession);
+        Context context;
+        if(contextResult.isEmpty()){
+            context = null;
+        } else {
+            context = contextResult.get();
+        }
+        Breadcrumb breadcrumb = new Breadcrumb(locale, context);
         String code = taskstate.getCode();
         String name = messageSource.getMessage(code,null,locale);
         breadcrumb.addTaskstate(name,taskstate.getUrl());
