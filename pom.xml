@@ -75,13 +75,11 @@
         <maven.scm.version>1.11.2</maven.scm.version>
 
         <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
-        <liquibase-maven-plugin.version>4.4.3</liquibase-maven-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
 
         <!-- Maven Reports for Site -->
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-jxr-plugin.version>3.1.1</maven-jxr-plugin.version>
         <maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
         <spotbugs-maven-plugin.version>4.3.0</spotbugs-maven-plugin.version>
@@ -89,6 +87,7 @@
         <asciidoctor-maven-plugin.version>2.2.1</asciidoctor-maven-plugin.version>
         <doxia-module-markdown.version>1.10</doxia-module-markdown.version>
         <doxia-module.version>1.10</doxia-module.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
 
         <!-- Docker -->
         <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
@@ -198,6 +197,11 @@
             <name>AdobePublic Repository</name>
             <url>https://repo.adobe.com/nexus/content/repositories/public/</url>
         </repository>
+        <repository>
+            <id>atlassian-3rdparty</id>
+            <name>Atlassian 3rd-P Old Repository</name>
+            <url>https://packages.atlassian.com/3rdparty/</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -232,11 +236,11 @@
         </pluginRepository>
         <pluginRepository>
             <id>spring-snapshots</id>
-            <url>https://repo.spring.io/snapshot</url>
+            <url>https://repo.spring.io/snapshot/</url>
         </pluginRepository>
         <pluginRepository>
             <id>spring-milestones</id>
-            <url>https://repo.spring.io/milestone</url>
+            <url>https://repo.spring.io/milestone/</url>
         </pluginRepository>
         <pluginRepository>
             <id>apache-releases</id>
@@ -274,6 +278,11 @@
             <id>adobe-public</id>
             <name>AdobePublic Repository</name>
             <url>https://repo.adobe.com/nexus/content/repositories/public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>atlassian-3rdparty</id>
+            <name>Atlassian 3rd-P Old Repository</name>
+            <url>https://packages.atlassian.com/3rdparty/</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -487,6 +496,20 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
+                <type>maven-plugin</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor-maven-plugin.version}</version>
+                <type>maven-plugin</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
                 <type>maven-plugin</type>
                 <scope>compile</scope>
             </dependency>
@@ -981,6 +1004,16 @@
                     <artifactId>maven-surefire-report-plugin</artifactId>
                     <version>${maven-surefire-report-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${asciidoctor-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>${liquibase.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -1352,6 +1385,14 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
@@ -1512,6 +1553,14 @@
                     <skipFailsafeReport>${skipTests}</skipFailsafeReport>
                     <skipSurefireReport>${skipTests}</skipSurefireReport>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </reporting>

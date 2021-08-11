@@ -25,8 +25,8 @@ function setupTravis() {
     ./mvnw -e -DskipTests=true -B -V install -Dmaven.javadoc.skip=true && \
     ./mvnw -e -DskipTests=true -B -V dependency:purge-local-repository && \
     ./mvnw -e -DskipTests=true -B -V clean install && \
-    ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources && \
     ./mvnw -e -DskipTests=true -B -V dependency:tree && \
+    ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources && \
     ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage && \
     ./mvnw -e -DskipTests=true -B -V site site:deploy
 }
@@ -40,7 +40,7 @@ function buildJar() {
 
 function main() {
     # firstSetup
-    # setupTravis
+    setupTravis
     buildJar
 }
 
