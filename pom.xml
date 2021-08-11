@@ -74,7 +74,7 @@
         <!-- SCM and Releasing with Maven -->
         <maven.scm.version>1.11.2</maven.scm.version>
 
-        <maven-release-plugin.version>3.0.0-M5</maven-release-plugin.version>
+        <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
         <liquibase-maven-plugin.version>4.4.3</liquibase-maven-plugin.version>
 
         <!-- Maven Reports for Site -->
