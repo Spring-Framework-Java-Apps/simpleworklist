@@ -76,6 +76,7 @@
 
         <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
         <liquibase-maven-plugin.version>4.4.3</liquibase-maven-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
 
         <!-- Maven Reports for Site -->
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
