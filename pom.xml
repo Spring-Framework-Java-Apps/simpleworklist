@@ -419,7 +419,13 @@
                 <type>maven-plugin</type>
                 <scope>compile</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>${maven-install-plugin.version}</version>
+                <type>maven-plugin</type>
+                <scope>compile</scope>
+            </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -666,6 +672,13 @@
 
         <!--
         <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        -->
+
+        <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
             <type>maven-plugin</type>
@@ -674,6 +687,12 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-invoker-plugin</artifactId>
+            <type>maven-plugin</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
             <type>maven-plugin</type>
             <scope>compile</scope>
         </dependency>
@@ -691,12 +710,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <type>maven-plugin</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <type>maven-plugin</type>
             <scope>compile</scope>
@@ -707,10 +720,15 @@
             <type>maven-plugin</type>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
+            <type>maven-plugin</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
             <type>maven-plugin</type>
             <scope>compile</scope>
         </dependency>
@@ -723,12 +741,6 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jxr-plugin</artifactId>
-            <type>maven-plugin</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
             <type>maven-plugin</type>
             <scope>compile</scope>
         </dependency>
@@ -763,11 +775,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.maven.doxia</groupId>
-            <artifactId>doxia-module-markdown</artifactId>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+            <type>maven-plugin</type>
             <scope>compile</scope>
         </dependency>
-        -->
     </dependencies>
 
     <build>

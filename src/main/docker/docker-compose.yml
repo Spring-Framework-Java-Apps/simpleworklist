@@ -3,7 +3,7 @@ version: '3.3'
 
 services:
   simpleworklist_dbmaster:
-    image: postgres:12.4
+    image: postgres:13.3
     restart: always
     networks:
       - net
@@ -13,27 +13,27 @@ services:
       POSTGRES_PASSWORD: simpleworklistpwd
       POSTGRES_USER: simpleworklist
       POSTGRES_DB: simpleworklist
-      CHARSET: UTF8
+      CHARSET: de_DE.UTF-8
       PGPORT: 5432
   simpleworklist_dbref:
-    image: postgres:12.4
+    image: postgres:13.3
     restart: always
     networks:
       - net
     ports:
-      - 5464:5432
+      - 5464:5464
     environment:
       POSTGRES_PASSWORD: simpleworklistrefpwd
       POSTGRES_USER: simpleworklistref
       POSTGRES_DB: simpleworklistref
-      CHARSET: UTF8
-      PGPORT: 5432
+      CHARSET: de_DE.UTF-8
+      PGPORT: 5464
   simpleworklist_adminer:
     image: adminer:4.7.4
     restart: always
     networks:
       - net
     ports:
-      - 4000:8080
+      - 4000:40003
 networks:
   net:
