@@ -13,7 +13,7 @@ function composeDown() {
 
 function firstSetup() {
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
-    # showSettings
+    showSettings
     ./mvnw dependency:purge-local-repository
     ./mvnw -e -DskipTests=true clean dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree
     ./mvnw -e -DskipTests=true clean package spring-boot:repackage site site:deploy
@@ -21,10 +21,10 @@ function firstSetup() {
 
 function setupTravis() {
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
-    # showSettings
+    showSettings
     ./mvnw -e -DskipTests=true -B -V install -Dmaven.javadoc.skip=true && \
     ./mvnw -e -DskipTests=true -B -V dependency:purge-local-repository && \
-    ./mvnw -e -DskipTests=true -B -V clean && \
+    ./mvnw -e -DskipTests=true -B -V clean install && \
     ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources && \
     ./mvnw -e -DskipTests=true -B -V dependency:tree && \
     ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage && \
@@ -33,9 +33,9 @@ function setupTravis() {
 
 function buildJar() {
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
-    # showSettings
+    showSettings
     ./mvnw dependency:purge-local-repository
-    ./mvnw -e -DskipTests=true clean dependency:tree package spring-boot:repackage
+    ./mvnw -e -DskipTests=true clean install dependency:tree spring-boot:repackage
 }
 
 function main() {
