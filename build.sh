@@ -50,10 +50,15 @@ function buildJar() {
     ./mvnw -e -DskipTests=true clean install dependency:tree spring-boot:repackage
 }
 
+function boot_run() {
+    ./mvnw clean install spring-boot:run
+}
+
 function main() {
     # firstSetup
-    setupTravis
-    buildJar
+    #setupTravis
+    #buildJar
+    boot_run
 }
 
 main
