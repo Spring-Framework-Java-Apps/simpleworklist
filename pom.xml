@@ -72,13 +72,13 @@
         <pmdVersion>6.28.0</pmdVersion>
 
         <!-- SCM and Releasing with Maven -->
-        <maven.scm.version>1.11.2</maven.scm.version>
+        <maven.scm.version>1.13.0</maven.scm.version>
 
-        <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
+        <maven-release-plugin.version>3.0.0-M5</maven-release-plugin.version>
 
         <!-- Maven Reports for Site -->
-        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
-        <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
+        <maven-site-plugin.version>3.12.0</maven-site-plugin.version>
+        <maven-project-info-reports-plugin.version>3.3.0</maven-project-info-reports-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-jxr-plugin.version>3.1.1</maven-jxr-plugin.version>
         <maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
@@ -106,26 +106,23 @@
 
         <!-- Frontend Server Site: Thymeleaf Templates -->
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
-        <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
-        <thymeleaf-extras-springsecurity.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity.version>
-        <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
-        <thymeleaf-spring-data-dialect.version>3.4.0</thymeleaf-spring-data-dialect.version>
-        <thymeleaf-testing.version>3.0.4.RELEASE</thymeleaf-testing.version>
+        <!--
+         <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
+         <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
+         <thymeleaf-layout-dialect.version>3.10</thymeleaf-layout-dialect.version>
+         -->
+        <thymeleaf-spring-data-dialect.version>3.5.0</thymeleaf-spring-data-dialect.version>
+        <thymeleaf-testing.version>3.1.0.M2</thymeleaf-testing.version>
 
         <!-- Spring Boot and Spring Frameworks -->
         <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
-        <!--
-        <spring-data-releasetrain.version>2020.0.2</spring-data-releasetrain.version>
-        <spring-session-bom.version>2020.0.1</spring-session-bom.version>
-        -->
 
         <!-- Unit and Integration Testing -->
-        <xmlunit.version>2.6.4</xmlunit.version>
-        <xmlunit2.version>2.7.0</xmlunit2.version>
-        <htmlunit.version>2.45.0</htmlunit.version>
+        <xmlunit.version>2.9.0</xmlunit.version>
+        <xmlunit2.version>2.9.0</xmlunit2.version>
+        <htmlunit.version>2.62.0</htmlunit.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <jsoup.version>1.13.1</jsoup.version>
+        <jsoup.version>1.15.1</jsoup.version>
         <skipTests>true</skipTests>
     </properties>
 
