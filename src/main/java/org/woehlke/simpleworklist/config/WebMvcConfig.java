@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.config;
+package org.woehlke.simpleworklist.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,7 +18,6 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
 
 import java.util.Locale;
 import java.util.Properties;
@@ -33,15 +32,15 @@ import java.util.Properties;
     "org.woehlke.simpleworklist"
 })
 @EnableConfigurationProperties({
-    ApplicationProperties.class
+    SimpleworklistProperties.class
 })
 public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {
 
-    private final ApplicationProperties applicationProperties;
+    private final SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
-    public WebMvcConfig(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
+    public WebMvcConfig(SimpleworklistProperties simpleworklistProperties) {
+        this.simpleworklistProperties = simpleworklistProperties;
     }
 
     @Bean
@@ -49,26 +48,26 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
         Properties javaMailProperties = new Properties();
         javaMailProperties.setProperty(
             "mail.smtp.auth",
-            applicationProperties.getMail().getAuth().toString()
+            simpleworklistProperties.getMail().getAuth().toString()
         );
         javaMailProperties.setProperty(
             "mail.smtp.ssl.enable",
-            applicationProperties.getMail().getSslEnable().toString()
+            simpleworklistProperties.getMail().getSslEnable().toString()
         );
         javaMailProperties.setProperty(
             "mail.smtp.socketFactory.port",
-            applicationProperties.getMail().getSocketFactoryPort()
+            simpleworklistProperties.getMail().getSocketFactoryPort()
         );
         javaMailProperties.setProperty(
             "mail.smtp.socketFactory.class",
-            applicationProperties.getMail().getSocketFactoryClass()
+            simpleworklistProperties.getMail().getSocketFactoryClass()
         );
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setJavaMailProperties(javaMailProperties);
-        mailSender.setHost(applicationProperties.getMail().getHost());
-        mailSender.setPort(applicationProperties.getMail().getPort());
-        mailSender.setUsername(applicationProperties.getMail().getUsername());
-        mailSender.setPassword(applicationProperties.getMail().getPassword());
+        mailSender.setHost(simpleworklistProperties.getMail().getHost());
+        mailSender.setPort(simpleworklistProperties.getMail().getPort());
+        mailSender.setUsername(simpleworklistProperties.getMail().getUsername());
+        mailSender.setPassword(simpleworklistProperties.getMail().getPassword());
         return mailSender;
     }
 
@@ -113,12 +112,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        for(String h :applicationProperties.getWebMvc().getStaticResourceHandler()){
+        for(String h : simpleworklistProperties.getWebMvc().getStaticResourceHandler()){
             String location = "classpath:/static"+h+"/";
             registry.addResourceHandler(h+"/*").addResourceLocations(location);
             registry.addResourceHandler(h+"/**").addResourceLocations(location);
         }
-        for(String h :applicationProperties.getWebMvc().getDynaicResourceHandler()){
+        for(String h : simpleworklistProperties.getWebMvc().getDynaicResourceHandler()){
             String location = h+"/";
             registry.addResourceHandler(h+"/*").addResourceLocations(location);
             registry.addResourceHandler(h+"/**").addResourceLocations(location);

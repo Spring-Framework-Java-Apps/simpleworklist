@@ -28,7 +28,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
     public void testStartSecondOptIn() throws Exception {
         int zeroNumberOfAllRegistrations = 0;
         deleteAll();
-        String email = applicationProperties.getRegistration().getMailFrom();
+        String email = simpleworklistProperties.getRegistration().getMailFrom();
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         assertNotNull(email);
         assertTrue(userAccountService.isEmailAvailable(email));
@@ -103,11 +103,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
     //@Test
     public void testLoadUserByUsername(){
         for(String email:emails){
-            UserDetails userDetails = userAccountSecurityService.loadUserByUsername(email);
+            UserDetails userDetails = simpleworklistUserAccountSecurityService.loadUserByUsername(email);
             assertTrue(userDetails.getUsername().compareTo(email) == 0);
         }
         try {
-            UserDetails userDetails = userAccountSecurityService.loadUserByUsername(username_email);
+            UserDetails userDetails = simpleworklistUserAccountSecurityService.loadUserByUsername(username_email);
         } catch (UsernameNotFoundException e){
             assertNotNull(e.getMessage());
             assertTrue(username_email.compareTo(e.getMessage())==0);

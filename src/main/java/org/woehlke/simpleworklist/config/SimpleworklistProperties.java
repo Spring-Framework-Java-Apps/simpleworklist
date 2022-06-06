@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application;
+package org.woehlke.simpleworklist.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Component
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ConfigurationProperties(prefix="org.woehlke.simpleworklist")
 @Validated
-public class ApplicationProperties {
+public class SimpleworklistProperties {
 
     @Valid
     private Mail mail = new Mail();
@@ -122,8 +123,17 @@ public class ApplicationProperties {
 
         private String[] antPatternsPublic;
 
+        //@NotNull
+        //private Integer strengthBCryptPasswordEncoder;
+
+        @NotBlank
+        private String secret;
+
         @NotNull
-        private Integer strengthBCryptPasswordEncoder;
+        private Integer iterations;
+
+        @NotNull
+        private Integer hashWidth;
     }
 
 }

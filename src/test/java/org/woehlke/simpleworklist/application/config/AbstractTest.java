@@ -7,12 +7,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
 import org.woehlke.simpleworklist.application.helper.TestHelperService;
+import org.woehlke.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.user.services.UserAccountService;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
-import org.woehlke.simpleworklist.user.services.UserAccountSecurityService;
+import org.woehlke.simpleworklist.user.services.SimpleworklistUserAccountSecurityService;
 import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
 
@@ -29,7 +29,7 @@ public abstract class AbstractTest {
     protected URL base;
 
     //@Autowired
-    protected ApplicationProperties applicationProperties;
+    protected SimpleworklistProperties simpleworklistProperties;
 
     //@Autowired
     protected WebApplicationContext wac;
@@ -80,7 +80,7 @@ public abstract class AbstractTest {
     }
 
     protected void makeActiveUser(String username) {
-        UserDetails ud = userAccountSecurityService.loadUserByUsername(username);
+        UserDetails ud = simpleworklistUserAccountSecurityService.loadUserByUsername(username);
         Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authRequest);
     }
@@ -99,7 +99,7 @@ public abstract class AbstractTest {
     protected UserAccountService userAccountService;
 
     @Autowired
-    protected UserAccountSecurityService userAccountSecurityService;
+    protected SimpleworklistUserAccountSecurityService simpleworklistUserAccountSecurityService;
 
     @Autowired
     protected UserAccountAccessService userAccountAccessService;

@@ -14,12 +14,12 @@ import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserAccountSecurityServiceImpl implements UserAccountSecurityService {
+public class SimpleworklistUserAccountSecurityServiceImpl implements SimpleworklistUserAccountSecurityService {
 
     private final UserAccountRepository userAccountRepository;
 
     @Autowired
-    public UserAccountSecurityServiceImpl(UserAccountRepository userAccountRepository) {
+    public SimpleworklistUserAccountSecurityServiceImpl(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 

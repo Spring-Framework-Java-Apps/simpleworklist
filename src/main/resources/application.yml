@@ -73,6 +73,9 @@ org:
         dynaicResourceHandler:
           - "/webjars"
       webSecurity:
+        iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
+        hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
+        secret: ${SIMPLEWORKLIST_USER_SECRET}
         loginProcessingUrl: "/j_spring_security_check"
         logoutUrl: "/user/logout"
         cookieNamesToClear:

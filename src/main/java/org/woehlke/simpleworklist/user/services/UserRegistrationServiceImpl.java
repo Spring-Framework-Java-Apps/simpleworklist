@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
+import org.woehlke.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationStatus;
@@ -23,14 +23,14 @@ import org.woehlke.simpleworklist.user.domain.register.UserRegistrationStatus;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
-    private final ApplicationProperties applicationProperties;
+    private final SimpleworklistProperties simpleworklistProperties;
     private final UserRegistrationRepository userRegistrationRepository;
     private final TokenGeneratorService tokenGeneratorService;
     private final JavaMailSender mailSender;
 
     @Autowired
-    public UserRegistrationServiceImpl(ApplicationProperties applicationProperties, UserRegistrationRepository userRegistrationRepository, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
-        this.applicationProperties = applicationProperties;
+    public UserRegistrationServiceImpl(SimpleworklistProperties simpleworklistProperties, UserRegistrationRepository userRegistrationRepository, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
+        this.simpleworklistProperties = simpleworklistProperties;
         this.userRegistrationRepository = userRegistrationRepository;
         this.tokenGeneratorService = tokenGeneratorService;
         this.mailSender = mailSender;
@@ -39,7 +39,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Override
     public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
-        return earlierOptIn == null?false:(earlierOptIn.getNumberOfRetries() >= applicationProperties.getRegistration().getMaxRetries());
+        return earlierOptIn == null?false:(earlierOptIn.getNumberOfRetries() >= simpleworklistProperties.getRegistration().getMaxRetries());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
+            if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
                 userRegistrationRepository.delete(earlierOptIn);
             }
         }
@@ -104,8 +104,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     private void sendEmailToRegisterNewUser(UserRegistration o) {
-        String urlHost = applicationProperties.getRegistration().getUrlHost();
-        String mailFrom= applicationProperties.getRegistration().getMailFrom();
+        String urlHost = simpleworklistProperties.getRegistration().getUrlHost();
+        String mailFrom= simpleworklistProperties.getRegistration().getMailFrom();
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
