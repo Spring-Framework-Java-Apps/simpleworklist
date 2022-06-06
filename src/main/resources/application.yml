@@ -10,11 +10,14 @@ server:
 spring:
   config:
     name: simpleworklist
-    liquibase:
-      enabled: false
-    devtools:
-      livereload:
-        enabled: ${SIMPLEWORKLIST_DEV_TESTING}
+  liquibase:
+    enabled: false
+  devtools:
+    livereload:
+      enabled: ${SIMPLEWORKLIST_DEV_TESTING}
+  application:
+    admin:
+      enabled: ${SIMPLEWORKLIST_DEV_TESTING}
   datasource:
     url: jdbc:postgresql://localhost:5432//simpleworklist
     username: simpleworklist
