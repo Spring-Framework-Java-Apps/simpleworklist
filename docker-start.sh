@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-./mvnw docker-compose:up
+systemctl stop postgresql
 
+./mvnw docker-compose:up

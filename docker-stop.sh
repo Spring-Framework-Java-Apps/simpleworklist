@@ -2,3 +2,4 @@
 
 ./mvnw docker-compose:down
 
+systemctl start postgresql
