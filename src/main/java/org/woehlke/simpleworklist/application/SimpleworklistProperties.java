@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Component
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ConfigurationProperties(prefix="org.woehlke.simpleworklist")
 @Validated
-public class ApplicationProperties {
+public class SimpleworklistProperties {
 
     @Valid
     private Mail mail = new Mail();
@@ -86,7 +87,7 @@ public class ApplicationProperties {
 
         private String[] staticResourceHandler;
 
-        private String[] dynaicResourceHandler;
+        private String[] dynamicResourceHandler;
     }
 
     @Getter
@@ -106,10 +107,10 @@ public class ApplicationProperties {
         private Boolean invalidateHttpSession;
 
         @NotNull
-        private String defaultSuccessUrl;
+        private String failureForwardUrl;
 
         @NotNull
-        private String failureForwardUrl;
+        private String defaultSuccessUrl;
 
         @NotNull
         private String usernameParameter;
@@ -124,6 +125,15 @@ public class ApplicationProperties {
 
         @NotNull
         private Integer strengthBCryptPasswordEncoder;
+
+        /*
+        @NotNull
+        private Integer hashWidth;
+
+        @NotBlank
+        private String secret;
+        */
+
     }
 
 }

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.config;
+package org.woehlke.simpleworklist.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -16,12 +16,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
-import org.woehlke.simpleworklist.user.login.LoginSuccessHandler;
-import org.woehlke.simpleworklist.user.services.UserAccountSecurityService;
+import org.woehlke.simpleworklist.application.SimpleworklistProperties;
+import org.woehlke.simpleworklist.user.services.SimpleworklistUserAccountSecurityService;
 
 
 @Configuration
@@ -34,25 +33,25 @@ import org.woehlke.simpleworklist.user.services.UserAccountSecurityService;
     WebMvcConfig.class
 })
 @EnableConfigurationProperties({
-    ApplicationProperties.class
+    SimpleworklistProperties.class
 })
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final AuthenticationSuccessHandler loginSuccessHandler;
-    private final UserAccountSecurityService userAccountSecurityService;
-    private final ApplicationProperties applicationProperties;
+    //private final AuthenticationSuccessHandler loginSuccessHandler;
+    private final SimpleworklistUserAccountSecurityService simpleworklistUserAccountSecurityService;
+    private final SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
     public WebSecurityConfig(
-        AuthenticationManagerBuilder authenticationManagerBuilder,
-        LoginSuccessHandler loginSuccessHandler,
-        UserAccountSecurityService userAccountSecurityService,
-        ApplicationProperties applicationProperties) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.loginSuccessHandler = loginSuccessHandler;
-        this.userAccountSecurityService = userAccountSecurityService;
-        this.applicationProperties = applicationProperties;
+        AuthenticationManagerBuilder auth,
+        //LoginSuccessHandler loginSuccessHandler,
+        SimpleworklistUserAccountSecurityService simpleworklistUserAccountSecurityService,
+        SimpleworklistProperties simpleworklistProperties) {
+        this.authenticationManagerBuilder = auth;
+        //this.loginSuccessHandler = loginSuccessHandler;
+        this.simpleworklistUserAccountSecurityService = simpleworklistUserAccountSecurityService;
+        this.simpleworklistProperties = simpleworklistProperties;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .headers()
             .disable()
             .authorizeRequests()
-            .antMatchers(applicationProperties.getWebSecurity().getAntPatternsPublic())
+            .antMatchers(simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
             .permitAll()
             .anyRequest()
             .fullyAuthenticated()
@@ -69,27 +68,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf()
             .and()
             .formLogin()
-            .loginPage(applicationProperties.getWebSecurity().getLoginPage())
-            .usernameParameter(applicationProperties.getWebSecurity().getUsernameParameter())
-            .passwordParameter(applicationProperties.getWebSecurity().getPasswordParameter())
-            .loginProcessingUrl(applicationProperties.getWebSecurity().getLoginProcessingUrl())
-            .failureForwardUrl(applicationProperties.getWebSecurity().getFailureForwardUrl())
-            .defaultSuccessUrl(applicationProperties.getWebSecurity().getDefaultSuccessUrl())
-            .successHandler(loginSuccessHandler)
+            .loginPage(simpleworklistProperties.getWebSecurity().getLoginPage())
+            .usernameParameter(simpleworklistProperties.getWebSecurity().getUsernameParameter())
+            .passwordParameter(simpleworklistProperties.getWebSecurity().getPasswordParameter())
+            .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
+            .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
+            .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
+            //.successHandler(loginSuccessHandler)
             .permitAll()
             .and()
             .csrf()
             .and()
             .logout()
-            .logoutUrl(applicationProperties.getWebSecurity().getLogoutUrl())
-            .deleteCookies(applicationProperties.getWebSecurity().getCookieNamesToClear())
-            .invalidateHttpSession(applicationProperties.getWebSecurity().getInvalidateHttpSession())
+            .logoutUrl(simpleworklistProperties.getWebSecurity().getLogoutUrl())
+            .deleteCookies(simpleworklistProperties.getWebSecurity().getCookieNamesToClear())
+            .invalidateHttpSession(simpleworklistProperties.getWebSecurity().getInvalidateHttpSession())
             .permitAll();
     }
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return this.userAccountSecurityService;
+        return this.simpleworklistUserAccountSecurityService;
     }
 
     /**
@@ -98,8 +97,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordEncoder encoder(){
-        int strength = applicationProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
+        int strength = simpleworklistProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
         return new BCryptPasswordEncoder(strength);
+        /*Ü
+        CharSequence secret=this.simpleworklistProperties.getWebSecurity().getSecret();
+        int iterations=this.simpleworklistProperties.getWebSecurity().getIterations();
+        int hashWidth=this.simpleworklistProperties.getWebSecurity().getHashWidth();
+        Pbkdf2PasswordEncoder encoder = (new Pbkdf2PasswordEncoder(secret,iterations,hashWidth));
+        encoder.setEncodeHashAsBase64(true);
+        return encoder;
+        */
     }
 
     @Bean
@@ -113,7 +120,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {
         UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
-        filter.setFilterProcessesUrl(applicationProperties.getWebSecurity().getLoginProcessingUrl());
+        filter.setFilterProcessesUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl());
         return filter;
     }
 }

@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
-import org.woehlke.simpleworklist.application.config.WebMvcConfig;
-import org.woehlke.simpleworklist.application.config.WebSecurityConfig;
+import org.woehlke.simpleworklist.application.SimpleworklistProperties;
+import org.woehlke.simpleworklist.config.WebMvcConfig;
+import org.woehlke.simpleworklist.config.WebSecurityConfig;
 
 
 @ImportAutoConfiguration({
@@ -14,7 +14,7 @@ import org.woehlke.simpleworklist.application.config.WebSecurityConfig;
     WebSecurityConfig.class
 })
 @EnableConfigurationProperties({
-    ApplicationProperties.class
+    SimpleworklistProperties.class
 })
 @SpringBootApplication
 public class SimpleworklistApplication {

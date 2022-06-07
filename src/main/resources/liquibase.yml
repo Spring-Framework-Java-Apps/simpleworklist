@@ -1,0 +1,10 @@
+changeLogFile: db/changelog/dbchangelog.xml
+driver: org.postgresql.Driver
+url: jdbc:postgresql://${SIMPLEWORKLIST_DS_HOST}:/${SIMPLEWORKLIST_DS_PORT}/${SIMPLEWORKLIST_DS_DB}
+username: ${SIMPLEWORKLIST_DS_USR}
+password:  ${SIMPLEWORKLIST_DS_PWD}
+referenceDriver: org.postgresql.Driver
+referenceUrl: jdbc:postgresql://${SIMPLEWORKLIST_DSREF_HOST}:/${SIMPLEWORKLIST_DSREF_PORT}/${SIMPLEWORKLIST_DSREF_DB}
+referenceUsername: ${SIMPLEWORKLIST_DSREF_USR}
+referencePassword: ${SIMPLEWORKLIST_DSREF_PWD}
+classpath: postgresql-42.2.10.jar

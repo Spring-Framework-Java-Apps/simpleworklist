@@ -19,12 +19,10 @@ spring:
     admin:
       enabled: ${SIMPLEWORKLIST_DEV_TESTING}
   datasource:
-    url: jdbc:postgresql://localhost:5432//simpleworklist
-    username: simpleworklist
-    password: simpleworklistpwd
+    url: jdbc:postgresql://${SIMPLEWORKLIST_DS_HOST}:${SIMPLEWORKLIST_DS_PORT}/${SIMPLEWORKLIST_DS_DB}
+    username:  ${SIMPLEWORKLIST_DS_USR}
+    password:  ${SIMPLEWORKLIST_DS_PWD}
     driverClassName: org.postgresql.Driver
-    platform: postgresql
-    continue-on-error: true
   jpa:
     show-sql: true
     open-in-view: true
@@ -47,6 +45,10 @@ spring:
     cache: false
   main:
     allow-bean-definition-overriding: true
+  sql:
+    init:
+      platform: postgresql
+      continue-on-error: true
 org:
   woehlke:
     simpleworklist:
@@ -70,9 +72,13 @@ org:
           - "/css"
           - "/img"
           - "/js"
-        dynaicResourceHandler:
+        dynamicResourceHandler:
           - "/webjars"
       webSecurity:
+        strengthBCryptPasswordEncoder: 10
+        # iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
+        # hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
+        # secret: ${SIMPLEWORKLIST_USER_SECRET}
         loginProcessingUrl: "/j_spring_security_check"
         logoutUrl: "/user/logout"
         cookieNamesToClear:
@@ -97,7 +103,6 @@ org:
           - "/user/resetPassword/**"
           - "/user/resetPassword/confirm/**"
           - "/error*"
-        strengthBCryptPasswordEncoder: 10
 ---
 spring:
   datasource:

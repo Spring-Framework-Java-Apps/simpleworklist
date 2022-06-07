@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
+import org.woehlke.simpleworklist.application.SimpleworklistProperties;
 import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
 import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryRepository;
 import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryStatus;
@@ -23,14 +23,14 @@ import java.util.UUID;
 public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {
 
     private final UserPasswordRecoveryRepository userPasswordRecoveryRepository;
-    private final ApplicationProperties applicationProperties;
+    private final SimpleworklistProperties simpleworklistProperties;
     private final TokenGeneratorService tokenGeneratorService;
     private final JavaMailSender mailSender;
 
     @Autowired
-    public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, ApplicationProperties applicationProperties, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
+    public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, SimpleworklistProperties simpleworklistProperties, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
         this.userPasswordRecoveryRepository = userPasswordRecoveryRepository;
-        this.applicationProperties = applicationProperties;
+        this.simpleworklistProperties = simpleworklistProperties;
         this.tokenGeneratorService = tokenGeneratorService;
         this.mailSender = mailSender;
     }
@@ -43,7 +43,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Override
     public boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email) {
         UserPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
-        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= applicationProperties.getRegistration().getMaxRetries();
+        return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= simpleworklistProperties.getRegistration().getMaxRetries();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         UserPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((applicationProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
+            if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
                 userPasswordRecoveryRepository.delete(earlierOptIn);
             }
         }
@@ -103,8 +103,8 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     }
 
     private void sendEmailForPasswordReset(UserPasswordRecovery o) {
-        String urlHost = applicationProperties.getRegistration().getUrlHost();
-        String mailFrom= applicationProperties.getRegistration().getMailFrom();
+        String urlHost = simpleworklistProperties.getRegistration().getUrlHost();
+        String mailFrom= simpleworklistProperties.getRegistration().getMailFrom();
         boolean success = true;
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());

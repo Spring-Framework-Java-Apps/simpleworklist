@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.woehlke.simpleworklist.application.ApplicationProperties;
+import org.woehlke.simpleworklist.application.SimpleworklistProperties;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.context.NewContextForm;
@@ -33,17 +33,17 @@ public class UserAccountTestDataServiceImpl implements UserAccountTestDataServic
 
     private final UserAccountService userAccountService;
     private final ContextService contextService;
-    private final ApplicationProperties applicationProperties;
+    private final SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
     public UserAccountTestDataServiceImpl(
         UserAccountService userAccountService,
         ContextService contextService,
-        ApplicationProperties applicationProperties
+        SimpleworklistProperties simpleworklistProperties
     ) {
         this.userAccountService = userAccountService;
         this.contextService = contextService;
-        this.applicationProperties = applicationProperties;
+        this.simpleworklistProperties = simpleworklistProperties;
         Date lastLoginTimestamp = new Date();
         testUser = new UserAccount[emails.length];
         newContext = new NewContextForm[emails.length];

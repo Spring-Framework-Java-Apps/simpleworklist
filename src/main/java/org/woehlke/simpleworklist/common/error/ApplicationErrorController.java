@@ -98,7 +98,6 @@ public class ApplicationErrorController implements ErrorController {
         return "error/error";
     }
 
-    @Override
     public String getErrorPath() {
         return "/fehler";
     }
