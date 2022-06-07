@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.config.SimpleworklistProperties;
+import org.woehlke.simpleworklist.application.SimpleworklistProperties;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationStatus;

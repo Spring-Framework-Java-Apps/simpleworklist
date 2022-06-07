@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.config;
+package org.woehlke.simpleworklist.application;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -125,7 +125,7 @@ public class SimpleworklistProperties {
 
         //@NotNull
         //private Integer strengthBCryptPasswordEncoder;
-        
+
         @NotNull
         private Integer iterations;
 

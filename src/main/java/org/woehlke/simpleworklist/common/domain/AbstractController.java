@@ -5,7 +5,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbService;
-import org.woehlke.simpleworklist.config.SimpleworklistProperties;
+import org.woehlke.simpleworklist.application.SimpleworklistProperties;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.TaskService;
