@@ -78,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
     public Task findOne(@Min(1L) long taskId) {
         log.debug("findOne: ");
         if(taskRepository.existsById(taskId)) {
-            return taskRepository.getOne(taskId);
+            return taskRepository.getReferenceById(taskId);
         } else {
             return null;
         }

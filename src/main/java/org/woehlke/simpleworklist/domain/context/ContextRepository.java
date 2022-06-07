@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by tw on 13.03.16.
  */
+@SuppressWarnings("Deprecation")
 @Repository
 public interface ContextRepository extends JpaRepository<Context, Long> {
 
