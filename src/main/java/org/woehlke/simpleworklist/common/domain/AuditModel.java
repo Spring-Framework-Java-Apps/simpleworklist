@@ -22,7 +22,7 @@ import java.util.Objects;
 @Getter
 @Setter
 //@EqualsAndHashCode(callSuper=false)
-public class AuditModel implements Serializable {
+public class AuditModel extends Object implements Serializable {
 
     private static final long serialVersionUID = 4399373914714726911L;
 
