@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -96,14 +97,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordEncoder encoder(){
-        //int strength = simpleworklistProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
-        //return new Pbkdf2PasswordEncoder(strength);
+        int strength = simpleworklistProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(strength);
+        /*Ü
         CharSequence secret=this.simpleworklistProperties.getWebSecurity().getSecret();
         int iterations=this.simpleworklistProperties.getWebSecurity().getIterations();
         int hashWidth=this.simpleworklistProperties.getWebSecurity().getHashWidth();
         Pbkdf2PasswordEncoder encoder = (new Pbkdf2PasswordEncoder(secret,iterations,hashWidth));
         encoder.setEncodeHashAsBase64(true);
         return encoder;
+        */
     }
 
     @Bean

@@ -19,9 +19,9 @@ spring:
     admin:
       enabled: ${SIMPLEWORKLIST_DEV_TESTING}
   datasource:
-    url: jdbc:postgresql://localhost:5432//simpleworklist
-    username: simpleworklist
-    password: simpleworklistpwd
+    url: jdbc:postgresql://${SIMPLEWORKLIST_DS_HOST}:${SIMPLEWORKLIST_DS_PORT}/${SIMPLEWORKLIST_DS_DB}
+    username:  ${SIMPLEWORKLIST_DS_USR}
+    password:  ${SIMPLEWORKLIST_DS_PWD}
     driverClassName: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -72,18 +72,19 @@ org:
           - "/css"
           - "/img"
           - "/js"
-        dynaicResourceHandler:
+        dynamicResourceHandler:
           - "/webjars"
       webSecurity:
-        iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
-        hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
-        secret: ${SIMPLEWORKLIST_USER_SECRET}
+        strengthBCryptPasswordEncoder: 10
+        # iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
+        # hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
+        # secret: ${SIMPLEWORKLIST_USER_SECRET}
         loginProcessingUrl: "/j_spring_security_check"
         logoutUrl: "/user/logout"
         cookieNamesToClear:
           - "JSESSIONID"
         invalidateHttpSession: true
-        # defaultSuccessUrl: "/"
+        defaultSuccessUrl: "/"
         failureForwardUrl: "/user/login?login_error=1"
         usernameParameter: "j_username"
         passwordParameter: "j_password"

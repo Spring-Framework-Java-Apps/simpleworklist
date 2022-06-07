@@ -118,7 +118,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
             registry.addResourceHandler(h+"/*").addResourceLocations(location);
             registry.addResourceHandler(h+"/**").addResourceLocations(location);
         }
-        for(String h : simpleworklistProperties.getWebMvc().getDynaicResourceHandler()){
+        for(String h : simpleworklistProperties.getWebMvc().getDynamicResourceHandler()){
             String location = h+"/";
             registry.addResourceHandler(h+"/*").addResourceLocations(location);
             registry.addResourceHandler(h+"/**").addResourceLocations(location);

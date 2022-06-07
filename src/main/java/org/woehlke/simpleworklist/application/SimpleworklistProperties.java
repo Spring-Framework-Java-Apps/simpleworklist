@@ -87,7 +87,7 @@ public class SimpleworklistProperties {
 
         private String[] staticResourceHandler;
 
-        private String[] dynaicResourceHandler;
+        private String[] dynamicResourceHandler;
     }
 
     @Getter
@@ -107,10 +107,10 @@ public class SimpleworklistProperties {
         private Boolean invalidateHttpSession;
 
         @NotNull
-        private String defaultSuccessUrl;
+        private String failureForwardUrl;
 
         @NotNull
-        private String failureForwardUrl;
+        private String defaultSuccessUrl;
 
         @NotNull
         private String usernameParameter;
@@ -123,17 +123,17 @@ public class SimpleworklistProperties {
 
         private String[] antPatternsPublic;
 
-        //@NotNull
-        //private Integer strengthBCryptPasswordEncoder;
-
         @NotNull
-        private Integer iterations;
+        private Integer strengthBCryptPasswordEncoder;
 
+        /*
         @NotNull
         private Integer hashWidth;
 
         @NotBlank
         private String secret;
+        */
+
     }
 
 }
