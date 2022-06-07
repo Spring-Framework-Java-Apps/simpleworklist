@@ -143,6 +143,7 @@
             <name>Sonatype Repository</name>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
+        <!--
         <repository>
             <id>springio-plugins-release</id>
             <name>Spring Plugins Repository</name>
@@ -158,6 +159,7 @@
             <name>Spring Lib M Repository</name>
             <url>https://repo.spring.io/libs-milestone/</url>
         </repository>
+        -->
         <repository>
             <id>apache-releases</id>
             <name>Apache Releases</name>
@@ -217,6 +219,7 @@
             <name>Sonatype Repository</name>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </pluginRepository>
+        <!--
         <pluginRepository>
             <id>springio-plugins-release</id>
             <name>Spring Plugins Repository</name>
@@ -240,6 +243,7 @@
             <id>spring-milestones</id>
             <url>https://repo.spring.io/milestone/</url>
         </pluginRepository>
+        -->
         <pluginRepository>
             <id>apache-releases</id>
             <name>Apache Releases</name>
