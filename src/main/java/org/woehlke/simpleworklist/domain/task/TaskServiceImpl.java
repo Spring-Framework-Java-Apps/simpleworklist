@@ -200,6 +200,7 @@ public class TaskServiceImpl implements TaskService {
         );
         long newOrderIdTaskState = maxOrderIdTaskState;
         //TODO: #244 change List<Task> to Page<Task>
+        //noinspection deprecation
         List<Task> taskListCompleted = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
             TaskState.COMPLETED,
             context
@@ -266,6 +267,7 @@ public class TaskServiceImpl implements TaskService {
         final long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
         final long higherOrderIdTaskState = sourceTask.getOrderIdTaskState();
         //TODO: #244 change List<Task> to Page<Task>
+        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
             lowerOrderIdTaskState,
             higherOrderIdTaskState,
@@ -300,6 +302,7 @@ public class TaskServiceImpl implements TaskService {
         long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
         long higherOrderIdTaskState = destinationTask.getOrderIdTaskState();
         //TODO: #244 change List<Task> to Page<Task>
+        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
             lowerOrderIdTaskState,
             higherOrderIdTaskState,
@@ -334,6 +337,7 @@ public class TaskServiceImpl implements TaskService {
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
         //TODO: #244 change List<Task> to Page<Task>
+        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
@@ -367,6 +371,7 @@ public class TaskServiceImpl implements TaskService {
         final long lowerOrderIdProject = sourceTask.getOrderIdProject();
         final long higherOrderIdProject = destinationTask.getOrderIdProject();
         //TODO: #244 change List<Task> to Page<Task>
+        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
@@ -401,6 +406,7 @@ public class TaskServiceImpl implements TaskService {
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
         //TODO: #244 change List<Task> to Page<Task>
+        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
 
-@SuppressWarnings("Deprecation")
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 

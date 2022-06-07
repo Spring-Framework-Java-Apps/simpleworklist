@@ -36,6 +36,7 @@ public class ContextServiceImpl implements ContextService {
     @Override
     public List<Context> getAllForUser(UserAccount user) {
         log.debug("getAllForUser");
+        //noinspection deprecation
         return contextRepository.findByUserAccount(user);
     }
 
@@ -78,7 +79,9 @@ public class ContextServiceImpl implements ContextService {
     @Override
     public boolean contextHasItems(Context context) {
         log.debug("contextHasItems");
+        //noinspection deprecation
         long numberOfTasks = taskRepository.findByContext(context).size();
+        //noinspection deprecation
         int numberOfProjects = projectRepository.findByContext(context).size();
         return ((numberOfTasks + numberOfProjects) > 0);
     }

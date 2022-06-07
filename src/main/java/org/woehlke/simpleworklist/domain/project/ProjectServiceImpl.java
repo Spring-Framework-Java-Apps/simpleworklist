@@ -73,7 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
     public Project findByProjectId(@Min(1L) long projectId) {
         log.debug("findByProjectId");
         if(projectRepository.existsById(projectId)){
-            return projectRepository.getOne(projectId);
+            return projectRepository.getReferenceById(projectId);
         } else {
             return null;
         }
@@ -120,6 +120,7 @@ public class ProjectServiceImpl implements ProjectService {
         //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
         List<Project> listProject = getAllChildrenOfProject(thisProject);
         for(Project childProject : listProject){
+            //noinspection deprecation
             List<Task> tasksOfChildProject = taskRepository.findByProject(childProject);
             for(Task task:tasksOfChildProject){
                 task.setContext(newContext);
