@@ -23,8 +23,6 @@ spring:
     username: simpleworklist
     password: simpleworklistpwd
     driverClassName: org.postgresql.Driver
-    platform: postgresql
-    continue-on-error: true
   jpa:
     show-sql: true
     open-in-view: true
@@ -47,6 +45,10 @@ spring:
     cache: false
   main:
     allow-bean-definition-overriding: true
+  sql:
+    init:
+      platform: postgresql
+      continue-on-error: true
 org:
   woehlke:
     simpleworklist:
@@ -81,7 +83,7 @@ org:
         cookieNamesToClear:
           - "JSESSIONID"
         invalidateHttpSession: true
-        defaultSuccessUrl: "/"
+        # defaultSuccessUrl: "/"
         failureForwardUrl: "/user/login?login_error=1"
         usernameParameter: "j_username"
         passwordParameter: "j_password"

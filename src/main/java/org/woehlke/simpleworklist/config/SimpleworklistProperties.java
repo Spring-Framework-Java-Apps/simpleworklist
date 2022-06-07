@@ -125,15 +125,15 @@ public class SimpleworklistProperties {
 
         //@NotNull
         //private Integer strengthBCryptPasswordEncoder;
-
-        @NotBlank
-        private String secret;
-
+        
         @NotNull
         private Integer iterations;
 
         @NotNull
         private Integer hashWidth;
+
+        @NotBlank
+        private String secret;
     }
 
 }
