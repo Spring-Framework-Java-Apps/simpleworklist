@@ -43,6 +43,7 @@ public class SmokeTests {
     @Autowired
     private MockMvc mockMvc;
 
+    @SuppressWarnings("deprecation")
     @LocalServerPort
     private int port;
 

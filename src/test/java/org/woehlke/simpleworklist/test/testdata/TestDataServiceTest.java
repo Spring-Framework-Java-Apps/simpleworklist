@@ -25,6 +25,7 @@ public class TestDataServiceTest {
     @Autowired
     ServletWebServerApplicationContext server;
 
+    @SuppressWarnings("deprecation")
     @LocalServerPort
     int port;
 
