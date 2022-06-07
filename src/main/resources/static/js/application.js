@@ -1,1 +1,1 @@
-/* application.js  - (c) 2019 Thomas Woehlke */
+/* application.js  - (c) 2022 Thomas Woehlke */

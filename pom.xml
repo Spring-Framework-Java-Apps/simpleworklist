@@ -327,7 +327,7 @@
                 <version>${webjars.jquery.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars.npm</groupId>
+                <groupId>org.webjars</groupId>
                 <artifactId>popper.js</artifactId>
                 <version>${webjars.popper.js.version}</version>
             </dependency>
@@ -641,7 +641,7 @@
 			<artifactId>jquery</artifactId>
 		</dependency>
         <dependency>
-            <groupId>org.webjars.npm</groupId>
+            <groupId>org.webjars</groupId>
             <artifactId>popper.js</artifactId>
         </dependency>
         <dependency>
