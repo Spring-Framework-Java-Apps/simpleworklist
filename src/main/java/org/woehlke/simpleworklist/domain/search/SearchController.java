@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.search;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by tw on 14.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/search")
 public class SearchController extends AbstractController {
@@ -38,13 +38,13 @@ public class SearchController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
-        log.debug("searchResults");
+        log.info("searchResults");
         Context context = super.getContext(userSession);
         userSession.setLastSearchterm(searchterm);
         model.addAttribute("userSession", userSession);
-        log.debug("Search: "+ searchterm);
+        log.info("Search: "+ searchterm);
         SearchResult searchResult = searchService.search(searchterm, context);
-        log.debug("found: "+ searchResult.toString());
+        log.info("found: "+ searchResult.toString());
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale,userSession);
         model.addAttribute("searchResult",searchResult);
         model.addAttribute("breadcrumb",breadcrumb);

@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Created by tw on 21.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {
@@ -50,7 +50,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.debug("addNewTaskToInboxGet");
+        log.info("addNewTaskToInboxGet");
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
@@ -82,11 +82,11 @@ public class TaskStateTaskController extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.debug("addNewTaskToInboxPost");
+        log.info("addNewTaskToInboxPost");
         Context context = super.getContext(userSession);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
-                log.debug(e.toString());
+                log.info(e.toString());
             }
             Boolean mustChooseArea = false;
             task.setContext(context);
@@ -98,7 +98,7 @@ public class TaskStateTaskController extends AbstractController {
             return "taskstate/task/add";
         } else {
             task = taskService.addToInbox(task);
-            log.debug(task.toString());
+            log.info(task.toString());
             model.addAttribute("userSession", userSession);
             return "redirect:/taskstate/" + task.getTaskState().name().toLowerCase();
         }
@@ -110,7 +110,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        log.debug("editTaskGet");
+        log.info("editTaskGet");
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Project thisProject;
@@ -140,7 +140,7 @@ public class TaskStateTaskController extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.debug("editTaskPost");
+        log.info("editTaskPost");
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -152,9 +152,9 @@ public class TaskStateTaskController extends AbstractController {
             result.addError(error);
         }
         if (result.hasErrors() ) {
-            log.warn("result.hasErrors");
+            log.warning("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
-                log.error(e.toString());
+                log.warning(e.toString());
             }
             Task persistentTask = taskService.findOne(taskId);
             persistentTask.merge(task);
@@ -195,11 +195,11 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ){
-        log.debug("------------- changeTaskOrderId -------------");
-        log.debug("source Task:      "+sourceTask.toString());
-        log.debug("---------------------------------------------");
-        log.debug("destination Task: "+destinationTask.toString());
-        log.debug("---------------------------------------------");
+        log.info("------------- changeTaskOrderId -------------");
+        log.info("source Task:      "+sourceTask.toString());
+        log.info("---------------------------------------------");
+        log.info("destination Task: "+destinationTask.toString());
+        log.info("---------------------------------------------");
         taskStateControllerService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
         userSession.setLastTaskState(sourceTask.getTaskState());
         model.addAttribute("userSession", userSession);
@@ -225,7 +225,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to inbox");
+        log.info("dragged and dropped "+task.getId()+" to inbox");
         task = taskService.moveTaskToInbox(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -237,7 +237,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to today");
+        log.info("dragged and dropped "+task.getId()+" to today");
         task = taskService.moveTaskToToday(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -249,7 +249,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to next");
+        log.info("dragged and dropped "+task.getId()+" to next");
         task = taskService.moveTaskToNext(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -261,7 +261,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to waiting");
+        log.info("dragged and dropped "+task.getId()+" to waiting");
         task = taskService.moveTaskToWaiting(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -273,7 +273,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to someday");
+        log.info("dragged and dropped "+task.getId()+" to someday");
         task = taskService.moveTaskToSomeday(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -285,7 +285,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to focus");
+        log.info("dragged and dropped "+task.getId()+" to focus");
         task = taskService.moveTaskToFocus(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -297,7 +297,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to completed");
+        log.info("dragged and dropped "+task.getId()+" to completed");
         task = taskService.moveTaskToCompleted(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -309,7 +309,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("dragged and dropped "+task.getId()+" to trash");
+        log.info("dragged and dropped "+task.getId()+" to trash");
         task = taskService.moveTaskToTrash(task);
         model.addAttribute("userSession", userSession);
         return task.getTaskState().getUrl();
@@ -344,7 +344,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("deleteTaskGet");
+        log.info("deleteTaskGet");
         task.delete();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -357,7 +357,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("undeleteTaskGet");
+        log.info("undeleteTaskGet");
         task.undelete();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -370,7 +370,7 @@ public class TaskStateTaskController extends AbstractController {
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        log.debug("transformTaskIntoProjectGet");
+        log.info("transformTaskIntoProjectGet");
         return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 

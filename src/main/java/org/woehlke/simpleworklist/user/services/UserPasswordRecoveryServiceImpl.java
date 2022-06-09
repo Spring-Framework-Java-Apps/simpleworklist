@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,7 +17,7 @@ import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery
 import java.util.Date;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {
@@ -73,9 +73,9 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        log.debug("To be saved: " + o.toString());
+        log.info("To be saved: " + o.toString());
         o = userPasswordRecoveryRepository.saveAndFlush(o);
-        log.debug("Saved: " + o.toString());
+        log.info("Saved: " + o.toString());
         this.sendEmailForPasswordReset(o);
     }
 
@@ -83,7 +83,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySentEmail(UserPasswordRecovery o) {
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL);
-        log.debug("about to save: " + o.toString());
+        log.info("about to save: " + o.toString());
         userPasswordRecoveryRepository.saveAndFlush(o);
     }
 
@@ -118,12 +118,12 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            log.warn(ex.getMessage() + " for " + o.toString());
+            log.warning(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
             this.passwordRecoverySentEmail(o);
         }
-        log.debug("Sent MAIL: " + o.toString());
+        log.info("Sent MAIL: " + o.toString());
     }
 }

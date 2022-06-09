@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.services;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
-@Slf4j
+@Log
 @Service
 public class ProjectControllerServiceImpl implements ProjectControllerService {
 
@@ -48,7 +48,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         @NotNull Locale locale,
         @NotNull Model model
     ) {
-        log.debug("addNewProject projectId="+projectId);
+        log.info("addNewProject projectId="+projectId);
         UserAccount userAccount = context.getUserAccount();
         userSession.setLastProjectId(projectId);
         Project thisProject = projectService.findByProjectId(projectId);
@@ -69,7 +69,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Locale locale,
         Model model
     ){
-        log.debug("private addNewProjectPersist projectId="+projectId+" "+project.toString());
+        log.info("private addNewProjectPersist projectId="+projectId+" "+project.toString());
         userSession.setLastProjectId(projectId);
         model.addAttribute("userSession",userSession);
         if(result.hasErrors()){
@@ -86,8 +86,8 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             project.setContext(context);
             project = projectService.add(project);
             thisProject = projectService.update(thisProject);
-            log.debug("project:     "+ project.toString());
-            log.debug("thisProject: "+ thisProject.toString());
+            log.info("project:     "+ project.toString());
+            log.info("thisProject: "+ thisProject.toString());
             model.addAttribute("userSession", userSession);
             return thisProject.getUrl();
         }
@@ -98,7 +98,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         @NotNull UserAccount userAccount,
         @NotNull UserSessionBean userSession
     ){
-        log.debug("getProject");
+        log.info("getProject");
         return projectService.findByProjectId(projectId);
     }
 
@@ -109,7 +109,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Locale locale,
         Model model
     ) {
-        log.debug("addNewProjectToRoot");
+        log.info("addNewProjectToRoot");
         Project project;
         project = new Project();
         project.setId(rootProjectId);
@@ -132,7 +132,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         Locale locale,
         Model model
     ) {
-        log.debug("addNewProjectToRootPersist");
+        log.info("addNewProjectToRootPersist");
         project.setContext(context);
         project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
@@ -144,39 +144,39 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTaskToTaskAndChangeTaskOrderInProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();
-        log.debug("-------------------------------------------------------------------------------");
-        log.debug(" START: moveTaskToTaskAndChangeTaskOrderInProject ");
-        log.debug("        "+project.out()+":");
-        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.debug("-------------------------------------------------------------------------------");
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" START: moveTaskToTaskAndChangeTaskOrderInProject ");
+        log.info("        "+project.out()+":");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
         boolean okProject = destinationTask.hasProject(project);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
         boolean sameProject = sourceTask.hasSameProjectAs(destinationTask);
         boolean go = sameContext && sameProject && okProject;
         if (go) {
             boolean srcIsBelowDestinationTask  = sourceTask.isBelowByProject(destinationTask);
-            log.debug(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
-            log.debug("-------------------------------------------------------------------------------");
+            log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
+            log.info("-------------------------------------------------------------------------------");
             if (srcIsBelowDestinationTask) {
                 this.taskService.moveTasksDownByProject(sourceTask, destinationTask);
             } else {
                 this.taskService.moveTasksUpByProject(sourceTask, destinationTask);
             }
         }
-        log.debug("-------------------------------------------------------------------------------");
-        log.debug(" DONE: moveTaskToTaskAndChangeTaskOrderInProject ");
-        log.debug("        "+project.out()+":");
-        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.debug("-------------------------------------------------------------------------------");
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTaskToTaskAndChangeTaskOrderInProject ");
+        log.info("        "+project.out()+":");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTaskToTaskAndChangeTaskOrderInProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
-        log.debug("-------------------------------------------------------------------------------");
-        log.debug(" START: moveTaskToTaskAndChangeTaskOrderIn Project Root");
-        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.debug("-------------------------------------------------------------------------------");
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" START: moveTaskToTaskAndChangeTaskOrderIn Project Root");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
         boolean sourceTaskRoot = destinationTask.isInRootProject();
         boolean destinationTaskRoot = destinationTask.isInRootProject();
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -184,17 +184,17 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         boolean go = sameContext && sameProject && sourceTaskRoot && destinationTaskRoot;
         if ( go ) {
             boolean srcIsBelowDestinationTask  = sourceTask.isBelowByProject(destinationTask);
-            log.debug(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
-            log.debug("-------------------------------------------------------------------------------");
+            log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
+            log.info("-------------------------------------------------------------------------------");
             if (srcIsBelowDestinationTask) {
                 this.taskService.moveTasksDownByProjectRoot(sourceTask, destinationTask);
             } else {
                 this.taskService.moveTasksUpByProjectRoot(sourceTask, destinationTask);
             }
         }
-        log.debug("-------------------------------------------------------------------------------");
-        log.debug(" DONE: moveTaskToTaskAndChangeTaskOrderIn Project Root");
-        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.debug("-------------------------------------------------------------------------------");
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTaskToTaskAndChangeTaskOrderIn Project Root");
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
     }
 }

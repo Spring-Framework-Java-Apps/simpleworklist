@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.context;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import java.util.Optional;
 /**
  * Created by tw on 13.03.16.
  */
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ContextServiceImpl implements ContextService {
@@ -35,14 +35,14 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public List<Context> getAllForUser(UserAccount user) {
-        log.debug("getAllForUser");
+        log.info("getAllForUser");
         //noinspection deprecation
         return contextRepository.findByUserAccount(user);
     }
 
     @Override
     public Context findByIdAndUserAccount(long newContextId, UserAccount userAccount) {
-        log.debug("findByIdAndUserAccount");
+        log.info("findByIdAndUserAccount");
         if(newContextId == 0){
             newContextId =  userAccount.getDefaultContext().getId();
         }
@@ -52,7 +52,7 @@ public class ContextServiceImpl implements ContextService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Context createNewContext(NewContextForm newContext, UserAccount user) {
-        log.debug("createNewContext");
+        log.info("createNewContext");
         Context context = new Context();
         context.setNameEn(newContext.getNameEn());
         context.setNameDe(newContext.getNameDe());
@@ -63,14 +63,14 @@ public class ContextServiceImpl implements ContextService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Context updateContext(Context context) {
-        log.debug("updateContext");
+        log.info("updateContext");
         return contextRepository.saveAndFlush(context);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public boolean delete(Context context) {
-        log.debug("delete");
+        log.info("delete");
         long contextId = context.getId();
         contextRepository.delete(context);
         return (!contextRepository.existsById(contextId));
@@ -78,7 +78,7 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public boolean contextHasItems(Context context) {
-        log.debug("contextHasItems");
+        log.info("contextHasItems");
         //noinspection deprecation
         long numberOfTasks = taskRepository.findByContext(context).size();
         //noinspection deprecation

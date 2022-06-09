@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.login.LoginForm;
 import org.woehlke.simpleworklist.user.selfservice.UserChangePasswordForm;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountAccessServiceImpl implements UserAccountAccessService {
@@ -67,7 +67,7 @@ public class UserAccountAccessServiceImpl implements UserAccountAccessService {
         );
         Authentication authenticationResult = authenticationManager.authenticate(token);
         String oldPwEncoded = this.encoder.encode(oldUserPassword);
-        log.debug(userEmail+", "+oldPwEncoded);
+        log.info(userEmail+", "+oldPwEncoded);
         return authenticationResult.isAuthenticated();
     }
 

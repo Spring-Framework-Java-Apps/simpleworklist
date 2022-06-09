@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.user.services;
 
 import java.util.*;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ import org.woehlke.simpleworklist.common.language.Language;
 import org.woehlke.simpleworklist.domain.context.ContextRepository;
 import org.woehlke.simpleworklist.user.domain.chat.User2UserMessageRepository;
 
-@Slf4j
+@Log
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountServiceImpl implements UserAccountService {
@@ -60,7 +60,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         u.setAccountNonLocked(true);
         u.setCredentialsNonExpired(true);
         u.setEnabled(true);
-        log.debug("About to save " + u.toString());
+        log.info("About to save " + u.toString());
         u = userAccountRepository.save(u);
         Context workContext = new Context("Arbeit","Work");
         Context privContext = new Context("Privat","Private");
@@ -68,13 +68,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         privContext.setUuid(UUID.randomUUID().toString());
         workContext.setUserAccount(u);
         privContext.setUserAccount(u);
-        log.debug("About to save " + workContext.toString());
+        log.info("About to save " + workContext.toString());
         contextRepository.save(workContext);
-        log.debug("About to save " + privContext.toString());
+        log.info("About to save " + privContext.toString());
         contextRepository.save(privContext);
         u.setDefaultContext(workContext);
         u = userAccountRepository.save(u);
-        log.debug("Saved " + u.toString());
+        log.info("Saved " + u.toString());
     }
 
     @Override

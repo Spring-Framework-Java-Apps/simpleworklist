@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.services;
 
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 
-@Slf4j
+@Log
 @Service
 public class TaskProjektServiceImpl implements TaskProjektService {
 
@@ -30,7 +30,7 @@ public class TaskProjektServiceImpl implements TaskProjektService {
     public String transformTaskIntoProjectGet(
         @NotNull Task task, @NotNull UserSessionBean userSession, @NotNull Model model
     ) {
-        log.debug("transformTaskIntoProjectGet");
+        log.info("transformTaskIntoProjectGet");
         Project thisProject = new Project();
         thisProject.setName(task.getTitle());
         thisProject.setDescription(task.getText());
@@ -46,7 +46,7 @@ public class TaskProjektServiceImpl implements TaskProjektService {
         task.moveToTrash();
         task.emptyTrash();
         task = taskService.updatedViaTaskstate(task);
-        log.debug("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
+        log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
         model.addAttribute("userSession", userSession);
         return thisProject.getUrl();
     }

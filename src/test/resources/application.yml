@@ -1,28 +1,42 @@
 server:
-  port: ${PORT}
+  port: ${SIMPLEWORKLIST_PORT}
   error:
     path: /fehler
   compression:
     enabled: false
     min-response-size: 2048
+  servlet:
+    context-path: "/simpleworklist"
 spring:
+  config:
+    name: simpleworklist
+  liquibase:
+    enabled: false
+  devtools:
+    livereload:
+      enabled: ${SIMPLEWORKLIST_DEV_TESTING}
+  application:
+    admin:
+      enabled: ${SIMPLEWORKLIST_DEV_TESTING}
   datasource:
-    url: jdbc:postgresql://localhost:5432//simpleworklist
-    username: simpleworklist
-    password: simpleworklistpwd
+    url: jdbc:postgresql://${SIMPLEWORKLIST_DS_HOST}:${SIMPLEWORKLIST_DS_PORT}/${SIMPLEWORKLIST_DS_DB}
+    username:  ${SIMPLEWORKLIST_DS_USR}
+    password:  ${SIMPLEWORKLIST_DS_PWD}
     driverClassName: org.postgresql.Driver
-    platform: postgresql
   jpa:
     show-sql: true
     open-in-view: true
     generate-ddl: true
     hibernate:
-      ddl-auto: ${JPA_DLL_AUTO}
+      ddl-auto: ${SIMPLEWORKLIST_JPA_DLL_AUTO}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         temp:
           use_jdbc_metadata_defaults: false
+        search:
+          default:
+            indexBase: ~/.config/simpleworklist
   session:
     store-type: jdbc
     jdbc:
@@ -31,14 +45,18 @@ spring:
     cache: false
   main:
     allow-bean-definition-overriding: true
+  sql:
+    init:
+      platform: postgresql
+      continue-on-error: true
 org:
   woehlke:
     simpleworklist:
       mail:
-        host: ${MAIL_SMTP_HOST}
-        port: ${MAIL_SMTP_PORT}
-        username: ${MAIL_SMTP_USERNAME}
-        password: ${MAIL_SMTP_PASSWORD}
+        host: ${SIMPLEWORKLIST_MAIL_SMTP_HOST}
+        port: ${SIMPLEWORKLIST_MAIL_SMTP_PORT}
+        username: ${SIMPLEWORKLIST_MAIL_SMTP_USERNAME}
+        password: ${SIMPLEWORKLIST_MAIL_SMTP_PASSWORD}
         auth: true
         sslEnable: true
         socketFactoryPort: 465
@@ -46,17 +64,21 @@ org:
       registration:
         maxRetries: 5
         ttlEmailVerificationRequest: 86400000
-        urlHost: ${MAIL_URL_APP_HOST}
-        mailFrom: ${MAIL_FROM}
+        urlHost: ${SIMPLEWORKLIST_URL_APP_HOST}
+        mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
       webMvc:
         controllerPageSize: 10
         staticResourceHandler:
           - "/css"
           - "/img"
           - "/js"
-        dynaicResourceHandler:
+        dynamicResourceHandler:
           - "/webjars"
       webSecurity:
+        strengthBCryptPasswordEncoder: 10
+        # iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
+        # hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
+        # secret: ${SIMPLEWORKLIST_USER_SECRET}
         loginProcessingUrl: "/j_spring_security_check"
         logoutUrl: "/user/logout"
         cookieNamesToClear:
@@ -75,154 +97,85 @@ org:
           - "/favicon.ico"
           - "/user/login*"
           - "/user/register*"
+          - "/user/register/**"
           - "/user/register/confirm/**"
           - "/user/resetPassword*"
+          - "/user/resetPassword/**"
           - "/user/resetPassword/confirm/**"
           - "/error*"
-        strengthBCryptPasswordEncoder: 10
+logging:
+  level:
+    root: INFO
+    javax: INFO
+    jakartaee: INFO
+    com:
+      atomikos: INFO
+    org:
+      thymeleaf:
+        dialect:
+          springdata: INFO
+      apache:
+        commons:
+          logging: WARN
+      h2: INFO
+      springframework:
+        data:
+          jdbc: INFO
+          jpa: INFO
+          relational: INFO
+        security:
+          web: INFO
+          context: INFO
+        boot: INFO
+        beans: INFO
+        jdbc: INFO
+        orm: INFO
+        session: WARN
+        test: INFO
+        mock: WARN
+        transaction: INFO
+        jca: INFO
+        web: INFO
+        remoting: INFO
+        http: INFO
+        expression: INFO
+        util: INFO
+        lang: INFO
+        core: INFO
+        cglib: WARN
+      hibernate:
+        sql: INFO
+        query: INFO
+        mapping: INFO
+        jpa: INFO
+        id: INFO
+        graph: INFO
+        cfg: INFO
+        service: INFO
+        result: INFO
+        engine:
+          internal: WARN
+      ch:
+        qos: WARN
+      woehlke:
+        simpleworklist: INFO
 ---
 spring:
-  profiles: default
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
----
-spring:
-  profiles: developing
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_developing
-  jpa:
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
----
-spring:
-  profiles: travis
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_travis
-    continue-on-error: true
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-server:
-  compression:
-    enabled: false
----
-spring:
-  profiles: testing
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_testing
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-server:
-  compression:
-    enabled: false
+  profiles:
+    active: default
 logging:
-  config: classpath:logback.xml
-  file: logging-test.log
   level:
+    root: INFO
     org:
-      woehlke:
-          simpleworklist: DEBUG
-          application: DEBUG
-          config: DEBUG
-          control:
-            admin: DEBUG
-            anonymous: DEBUG
-            common: DEBUG
-            user: DEBUG
-          model:
-            beans: DEBUG
-            dao: DEBUG
-            services: DEBUG
-          oodm:
-            entities: DEBUG
-            repository: DEBUG
-            services:
-              impl: DEBUG
----
-spring:
-  profiles: qa
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_qa
-    continue-on-error: true
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-server:
-  compression:
-    enabled: false
-logging:
-  config: classpath:logback.xml
-  file: logging-qa.log
-  level:
-    org:
-      woehlke:
-        simpleworklist: DEBUG
-        application: DEBUG
-        config: DEBUG
-        control:
-          admin: DEBUG
-          anonymous: DEBUG
-          common: DEBUG
-          user: DEBUG
-        model:
-          beans: DEBUG
-          dao: DEBUG
-          services: DEBUG
-        oodm:
-          entities: DEBUG
-          repository: DEBUG
-          services:
-            impl: DEBUG
----
-spring:
-  profiles: heroku
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist_heroku
-    continue-on-error: true
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
-    properties:
+      springframework: INFO
       hibernate:
-        search:
-          default:
-            indexBase : /tmp/simpleworklistsearch
-  thymeleaf:
-    cache: true
-  devtools:
-    livereload:
-      enabled: false
-  application:
-    admin:
-      enabled: false
-server:
-  compression:
-    enabled: true
-org:
-  woehlke:
-    simpleworklist:
-      registration:
-        urlHost: simpleworklist.herokuapp.com
-logging:
-  config: classpath:logback.xml
-  level:
-    org:
+        SQL: INFO
+        engine:
+          internal: WARN
+      ch:
+        qos: WARN
+      postgresql: WARN
       woehlke:
-        simpleworklist: WARN
-      apache: WARN
-      springframework: WARN
-      thymeleaf: WARN
-      hibernate: WARN
-      hibernate.SQL: WARN
-    ch:
-      qos: WARN
+        simpleworklist: INFO

@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.UUID;
 /**
  * Created by tw on 16.02.2016.
  */
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class User2UserMessageServiceImpl implements User2UserMessageService {
@@ -38,7 +38,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         UserAccount otherUser,
         User2UserMessageFormBean user2UserMessageFormBean
     ) {
-        log.debug("sendNewUserMessage");
+        log.info("sendNewUserMessage");
         User2UserMessage m = new User2UserMessage();
         m.setSender(thisUser);
         m.setReceiver(otherUser);
@@ -52,7 +52,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
     public int getNumberOfNewIncomingMessagesForUser(
         UserAccount receiver
     ) {
-        log.debug("getNumberOfNewIncomingMessagesForUser");
+        log.info("getNumberOfNewIncomingMessagesForUser");
         boolean readByReceiver = false;
         //TODO: #246 change List<Project> to Page<Project>
         List<User2UserMessage> user2UserMessageList =
@@ -67,7 +67,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         UserAccount sender,
         Pageable request
     ) {
-        log.debug("readAllMessagesBetweenCurrentAndOtherUser");
+        log.info("readAllMessagesBetweenCurrentAndOtherUser");
         Page<User2UserMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
         for(User2UserMessage user2UserMessage : user2UserMessagePage){
             if((!user2UserMessage.getReadByReceiver()) && (receiver.getId().longValue()== user2UserMessage.getReceiver().getId().longValue())){

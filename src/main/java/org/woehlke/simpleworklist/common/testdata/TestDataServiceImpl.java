@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.common.testdata;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 public class TestDataServiceImpl implements TestDataService {
 
@@ -36,14 +36,14 @@ public class TestDataServiceImpl implements TestDataService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
-        log.debug("----------------------------------------------");
-        log.debug("createTestCategoryTreeForUserAccount");
-        log.debug("----------------------------------------------");
-        log.debug("userAccount: "+userAccount.toString());
-        log.debug("----------------------------------------------");
+        log.info("----------------------------------------------");
+        log.info("createTestCategoryTreeForUserAccount");
+        log.info("----------------------------------------------");
+        log.info("userAccount: "+userAccount.toString());
+        log.info("----------------------------------------------");
         Context contextWork = userAccount.getDefaultContext();
-        log.debug("contextWork: "+contextWork.toString());
-        log.debug("----------------------------------------------");
+        log.info("contextWork: "+contextWork.toString());
+        log.info("----------------------------------------------");
         Date nowDate = new Date();
         long now = nowDate.getTime();
         String name01 = "test01_" + now;
@@ -68,10 +68,10 @@ public class TestDataServiceImpl implements TestDataService {
         c02.setDescription("description02 for " + name02 + " " + loremIpsumProject);
         c01 = projectRepository.saveAndFlush(c01);
         c02 = projectRepository.saveAndFlush(c02);
-        log.debug("----------------------------------------------");
-        log.debug("persisted: "+ c01.toString());
-        log.debug("persisted: "+ c02.toString());
-        log.debug("----------------------------------------------");
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c01.toString());
+        log.info("persisted: "+ c02.toString());
+        log.info("----------------------------------------------");
         Project c0101 = Project.newProjectFactoryForParentProject(c01);
         Project c0102 = Project.newProjectFactoryForParentProject(c01);
         Project c0201 = Project.newProjectFactoryForParentProject(c02);
@@ -96,12 +96,12 @@ public class TestDataServiceImpl implements TestDataService {
         c0102 = projectRepository.saveAndFlush(c0102);
         c0201 = projectRepository.saveAndFlush(c0201);
         c0202 = projectRepository.saveAndFlush(c0202);
-        log.debug("----------------------------------------------");
-        log.debug("persisted: "+ c0101.toString());
-        log.debug("persisted: "+ c0102.toString());
-        log.debug("persisted: "+ c0201.toString());
-        log.debug("persisted: "+ c0202.toString());
-        log.debug("----------------------------------------------");
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c0101.toString());
+        log.info("persisted: "+ c0102.toString());
+        log.info("persisted: "+ c0201.toString());
+        log.info("persisted: "+ c0202.toString());
+        log.info("----------------------------------------------");
         Project c020201 = Project.newProjectFactoryForParentProject(c0202);
         Project c020202 = Project.newProjectFactoryForParentProject(c0202);
         Project c020203 = Project.newProjectFactoryForParentProject(c0202);
@@ -120,12 +120,12 @@ public class TestDataServiceImpl implements TestDataService {
         c020201 = projectRepository.saveAndFlush(c020201);
         c020202 = projectRepository.saveAndFlush(c020202);
         c020203 = projectRepository.saveAndFlush(c020203);
-        log.debug("----------------------------------------------");
-        log.debug("persisted: "+ c020201.toString());
-        log.debug("persisted: "+ c020202.toString());
-        log.debug("persisted: "+ c020202.toString());
-        log.debug("persisted: "+ c020203.toString());
-        log.debug("----------------------------------------------");
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c020201.toString());
+        log.info("persisted: "+ c020202.toString());
+        log.info("persisted: "+ c020202.toString());
+        log.info("persisted: "+ c020203.toString());
+        log.info("----------------------------------------------");
         Project c02020301 = Project.newProjectFactoryForParentProject(c020203);
         Project c02020302 = Project.newProjectFactoryForParentProject(c020203);
         Project c02020303 = Project.newProjectFactoryForParentProject(c020203);
@@ -144,11 +144,11 @@ public class TestDataServiceImpl implements TestDataService {
         c02020301 = projectRepository.saveAndFlush(c02020301);
         c02020302 = projectRepository.saveAndFlush(c02020302);
         c02020303 = projectRepository.saveAndFlush(c02020303);
-        log.debug("----------------------------------------------");
-        log.debug("persisted: "+ c02020301.toString());
-        log.debug("persisted: "+ c02020302.toString());
-        log.debug("persisted: "+ c02020303.toString());
-        log.debug("----------------------------------------------");
+        log.info("----------------------------------------------");
+        log.info("persisted: "+ c02020301.toString());
+        log.info("persisted: "+ c02020302.toString());
+        log.info("persisted: "+ c02020303.toString());
+        log.info("----------------------------------------------");
         /* add 100 Tasks with Project c02020303 */
         for (int i = 10; i < 111; i++) {
             String title = "title_" + i;
@@ -166,11 +166,11 @@ public class TestDataServiceImpl implements TestDataService {
             task.setOrderIdProject(i);
             task.setOrderIdTaskState(i);
             taskRepository.saveAndFlush(task);
-            log.debug("----------------------------------------------");
-            log.debug("persisted: "+ task.toString());
-            log.debug("----------------------------------------------");
+            log.info("----------------------------------------------");
+            log.info("persisted: "+ task.toString());
+            log.info("----------------------------------------------");
         }
-        log.debug("----------------------------------------------");
+        log.info("----------------------------------------------");
         /* add 20 Tasks with Project Root */
         for (int i = 10; i <30; i++) {
             String title = "title_" + i;
@@ -188,9 +188,9 @@ public class TestDataServiceImpl implements TestDataService {
             task.setOrderIdProject(i);
             task.setOrderIdTaskState(i+111);
             taskRepository.saveAndFlush(task);
-            log.debug("----------------------------------------------");
-            log.debug("persisted: "+ task.toString());
-            log.debug("----------------------------------------------");
+            log.info("----------------------------------------------");
+            log.info("persisted: "+ task.toString());
+            log.info("----------------------------------------------");
         }
     }
 

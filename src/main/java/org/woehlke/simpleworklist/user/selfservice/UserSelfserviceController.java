@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.selfservice;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * Created by Fert on 14.03.2016.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user/selfservice")
 public class UserSelfserviceController extends AbstractController {
@@ -54,12 +54,12 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userProfileAndMenu");
+        log.info("userProfileAndMenu");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         Page<UserAccount> users = userAccountService.findAll(request);
         for(UserAccount u:users){
-            log.debug(u.getUserFullname()+": "+u.getUserEmail());
+            log.info(u.getUserFullname()+": "+u.getUserEmail());
         }
         Map<Long,Integer> usersToNewMessages = userAccountService.getNewIncomingMessagesForEachOtherUser(user);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserProfileAndMenu(locale,userSession);
@@ -77,7 +77,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userNameForm");
+        log.info("userNameForm");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         UserChangeNameForm bean = new UserChangeNameForm(user.getUserFullname());
@@ -97,7 +97,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userNameStore");
+        log.info("userNameStore");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         if(result.hasErrors()) {
@@ -121,7 +121,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userPasswordForm");
+        log.info("userPasswordForm");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         UserChangePasswordForm userChangePasswordForm = new UserChangePasswordForm();
@@ -141,32 +141,32 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ) {
-        log.debug("userPasswordStore");
+        log.info("userPasswordStore");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
-        log.debug("---------------------------------------------------------");
-        log.debug("userPasswordStore");
+        log.info("---------------------------------------------------------");
+        log.info("userPasswordStore");
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangePassword(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
         model.addAttribute("userChangePasswordForm", userChangePasswordForm);
         if(result.hasErrors()) {
-            log.debug("result has Errors");
+            log.info("result has Errors");
             for(ObjectError error : result.getAllErrors()){
-                log.debug(error.toString());
+                log.info(error.toString());
             }
             model.addAttribute("userSession", userSession);
             return "user/selfservice/password";
         } else {
             if(! userChangePasswordForm.passwordsAreTheSame()){
-                log.debug("passwords Are Not The Same");
+                log.info("passwords Are Not The Same");
                 String objectName = "userChangePasswordForm";
                 String field = "userPassword";
                 String defaultMessage = "Passwords aren't the same.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
                 result.addError(e);
                 for(ObjectError error : result.getAllErrors()){
-                    log.debug(error.toString());
+                    log.info(error.toString());
                 }
                 model.addAttribute("userSession", userSession);
                 return "user/selfservice/password";
@@ -174,19 +174,19 @@ public class UserSelfserviceController extends AbstractController {
             if(!userAccountAccessService.confirmUserByLoginAndPassword(
                 user.getUserEmail(), userChangePasswordForm.getOldUserPassword())
             ){
-                log.debug("old Password is wrong");
+                log.info("old Password is wrong");
                 String objectName = "userChangePasswordForm";
                 String field = "oldUserPassword";
                 String defaultMessage = "Password is incorrect";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
                 result.addError(e);
                 for(ObjectError error : result.getAllErrors()){
-                    log.debug(error.toString());
+                    log.info(error.toString());
                 }
                 model.addAttribute("userSession", userSession);
                 return "user/selfservice/password";
             }
-            log.debug("OK");
+            log.info("OK");
             userAccountAccessService.changeUsersPassword(userChangePasswordForm,user);
             model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/profile";
@@ -199,7 +199,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userContextsForm");
+        log.info("userContextsForm");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         UserChangeDefaultContextForm bean = new UserChangeDefaultContextForm();
@@ -222,7 +222,7 @@ public class UserSelfserviceController extends AbstractController {
             Locale locale,
             Model model
     ){
-        log.debug("userContextsSave");
+        log.info("userContextsSave");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         List<Context> contexts = contextService.getAllForUser(user);
@@ -230,9 +230,9 @@ public class UserSelfserviceController extends AbstractController {
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
-            log.debug("userContextsSave: result has Errors");
+            log.info("userContextsSave: result has Errors");
             for(ObjectError error : result.getAllErrors()){
-                log.debug(error.toString());
+                log.info(error.toString());
             }
             model.addAttribute("userSession", userSession);
             return "user/selfservice/context/all";
@@ -254,7 +254,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userNewContextGet");
+        log.info("userNewContextGet");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         model.addAttribute("thisUser", user);
@@ -274,16 +274,16 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userNewContextPost");
+        log.info("userNewContextPost");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextAdd(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisUser", user);
         if(result.hasErrors()){
-            log.debug("userNewAreaStore: result has Errors");
+            log.info("userNewAreaStore: result has Errors");
             for(ObjectError error : result.getAllErrors()){
-                log.debug(error.toString());
+                log.info(error.toString());
             }
             model.addAttribute("userSession", userSession);
             return "user/selfservice/context/add";
@@ -301,7 +301,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userContextEditGet");
+        log.info("userContextEditGet");
         Context contextFromSession = super.getContext(userSession);
         UserAccount user = contextFromSession.getUserAccount();
         model.addAttribute("thisUser", user);
@@ -324,13 +324,13 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userContextEditPost");
+        log.info("userContextEditPost");
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextEdit(locale, context,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
-            log.debug("userContextEditPost: result has Errors");
+            log.info("userContextEditPost: result has Errors");
             for(ObjectError error : result.getAllErrors()){
-                log.debug(error.toString());
+                log.info(error.toString());
             }
             model.addAttribute("userSession", userSession);
             return "user/selfservice/context/edit";
@@ -352,24 +352,24 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userDeleteContextGet");
+        log.info("userDeleteContextGet");
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
         model.addAttribute("thisUser", thisUser);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContextDelete(locale,context,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(userSession.getLastContextId() == context.getId()){
-            log.debug("context is active in session: "+ context);
+            log.info("context is active in session: "+ context);
         } else {
             if(thisUser.getDefaultContext().getId() == context.getId()){
-                log.debug("context is default context of this user: "+ context);
+                log.info("context is default context of this user: "+ context);
             } else {
                 if(contextService.contextHasItems(context)){
-                    log.debug("context has items: "+ context);
+                    log.info("context has items: "+ context);
                 } else {
                     boolean deleted = contextService.delete(context);
                     if(!deleted){
-                        log.debug("context not deleted: "+ context);
+                        log.info("context not deleted: "+ context);
                     }
                 }
             }
@@ -384,7 +384,7 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userLanguageGet");
+        log.info("userLanguageGet");
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
@@ -403,14 +403,14 @@ public class UserSelfserviceController extends AbstractController {
         Locale locale,
         Model model
     ){
-        log.debug("userLanguagePost");
+        log.info("userLanguagePost");
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){
-            log.debug("userLanguagePost: result has Errors");
+            log.info("userLanguagePost: result has Errors");
             for(ObjectError error : result.getAllErrors()){
-                log.debug(error.toString());
+                log.info(error.toString());
             }
             model.addAttribute("userSession", userSession);
             return "user/selfservice/language";

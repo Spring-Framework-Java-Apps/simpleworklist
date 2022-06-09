@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.domain.resetpassword;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
 
 import javax.validation.Valid;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user")
 public class UserPasswordRecoveryController {
@@ -61,16 +61,16 @@ public class UserPasswordRecoveryController {
         Model model
     ) {
         if (result.hasErrors()) {
-            log.debug("----------------------");
-            log.debug(userRegistrationForm.toString());
-            log.debug(result.toString());
-            log.debug(model.toString());
-            log.debug("----------------------");
+            log.info("----------------------");
+            log.info(userRegistrationForm.toString());
+            log.info(result.toString());
+            log.info(model.toString());
+            log.info("----------------------");
             return "user/resetPassword/resetPasswordForm";
         } else {
-            log.debug(userRegistrationForm.toString());
-            log.debug(result.toString());
-            log.debug(model.toString());
+            log.info(userRegistrationForm.toString());
+            log.info(result.toString());
+            log.info(model.toString());
             if (userAccountService.findByUserEmail(userRegistrationForm.getEmail()) == null) {
                 String objectName = "userRegistrationForm";
                 String field = "email";

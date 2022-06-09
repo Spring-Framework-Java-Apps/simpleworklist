@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.domain.chat;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,7 +26,7 @@ import java.util.Locale;
  * Created by
  * on 16.02.2016.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user2user")
 public class User2UserMessageController extends AbstractController {
@@ -39,7 +39,7 @@ public class User2UserMessageController extends AbstractController {
             Locale locale,
             Model model
     ) {
-        log.debug("getLastMessagesBetweenCurrentAndOtherUser");
+        log.info("getLastMessagesBetweenCurrentAndOtherUser");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
@@ -65,16 +65,16 @@ public class User2UserMessageController extends AbstractController {
             Locale locale,
             Model model
     ) {
-        log.debug("sendNewMessageToOtherUser");
+        log.info("sendNewMessageToOtherUser");
         Context context = super.getContext(userSession);
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForMessagesBetweenCurrentAndOtherUser(locale,userSession);
         model.addAttribute("breadcrumb",breadcrumb);
         if(result.hasErrors()){
-            log.debug("result.hasErrors");
+            log.info("result.hasErrors");
             for(ObjectError objectError:result.getAllErrors()){
-                log.debug("result.hasErrors: "+objectError.toString());
+                log.info("result.hasErrors: "+objectError.toString());
             }
             Page<User2UserMessage> user2UserMessagePage = user2UserMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
             model.addAttribute("otherUser", otherUser);

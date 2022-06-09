@@ -1,8 +1,7 @@
 package org.woehlke.simpleworklist;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.junit.jupiter.api.*;
-//import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -28,11 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.woehlke.simpleworklist.application.config.Requirements.*;
 
-@Slf4j
+@Log
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
-//@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(SimpleworklistApplication.class)
 public class SmokeTests {
@@ -240,11 +237,11 @@ public class SmokeTests {
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (UsernameNotFoundException e) {
-            log.error("UsernameNotFoundException: "+e.getLocalizedMessage());
+            log.warning("UsernameNotFoundException: "+e.getLocalizedMessage());
         } catch (NullPointerException npe){
-            log.error("NullPointerException: "+npe.getLocalizedMessage());
+            log.warning("NullPointerException: "+npe.getLocalizedMessage());
             for(StackTraceElement e:npe.getStackTrace()){
-                log.error(e.getClassName()+"."+e.getMethodName()+"in: "+e.getFileName()+" line: "+e.getLineNumber());
+                log.warning(e.getClassName()+"."+e.getMethodName()+"in: "+e.getFileName()+" line: "+e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);

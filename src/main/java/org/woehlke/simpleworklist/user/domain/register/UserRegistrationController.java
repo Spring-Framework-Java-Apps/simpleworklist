@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.domain.register;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.services.UserRegistrationService;
 
 import javax.validation.Valid;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user/register")
 public class UserRegistrationController {
@@ -38,7 +38,7 @@ public class UserRegistrationController {
      */
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String registerGet(Model model) {
-        log.debug("registerGet");
+        log.info("registerGet");
         UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("userRegistrationForm", userRegistrationForm);
         return "user/register/registerForm";
@@ -58,7 +58,7 @@ public class UserRegistrationController {
             BindingResult result,
             Model model
     ) {
-        log.debug("registerPost");
+        log.info("registerPost");
         if (result.hasErrors()) {
             return "user/register/registerForm";
         } else {
@@ -98,8 +98,8 @@ public class UserRegistrationController {
         @PathVariable String confirmId,
         Model model
     ) {
-        log.debug("registerConfirmGet");
-        log.debug("GET /confirm/" + confirmId);
+        log.info("registerConfirmGet");
+        log.info("GET /confirm/" + confirmId);
         UserRegistration o = userRegistrationService.findByToken(confirmId);
         if (o != null) {
             userRegistrationService.registrationClickedInEmail(o);
@@ -128,8 +128,8 @@ public class UserRegistrationController {
         BindingResult result,
         Model model
     ) {
-        log.debug("registerConfirmPost");
-        log.debug("POST /confirm/" + confirmId + " : " + userAccountForm.toString());
+        log.info("registerConfirmPost");
+        log.info("POST /confirm/" + confirmId + " : " + userAccountForm.toString());
         userRegistrationService.registrationCheckIfResponseIsInTime(userAccountForm.getUserEmail());
         UserRegistration oUserRegistration = userRegistrationService.findByToken(confirmId);
         if (oUserRegistration != null) {

@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.user.services;
 import java.util.Date;
 import java.util.UUID;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.MailException;
@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationStatus;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserRegistrationServiceImpl implements UserRegistrationService {
@@ -69,9 +69,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
-        log.debug("To be saved: " + o.toString());
+        log.info("To be saved: " + o.toString());
         o = userRegistrationRepository.saveAndFlush(o);
-        log.debug("Saved: " + o.toString());
+        log.info("Saved: " + o.toString());
         this.sendEmailToRegisterNewUser(o);
     }
 
@@ -84,7 +84,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void registrationSentEmail(UserRegistration o) {
         o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_SENT_MAIL);
-        log.debug("about to save: " + o.toString());
+        log.info("about to save: " + o.toString());
         userRegistrationRepository.saveAndFlush(o);
     }
 
@@ -119,13 +119,13 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            log.warn(ex.getMessage() + " for " + o.toString());
+            log.warning(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
             this.registrationSentEmail(o);
         }
-        log.debug("Sent MAIL: " + o.toString());
+        log.info("Sent MAIL: " + o.toString());
     }
 
 

@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.login;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by tw on 19.02.16.
  */
-@Slf4j
+@Log
 @Component
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
     implements AuthenticationSuccessHandler {
@@ -44,7 +44,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             HttpServletResponse response,
             Authentication authentication
     ) throws ServletException, IOException {
-        log.debug("onAuthenticationSuccess");
+        log.info("onAuthenticationSuccess");
         super.onAuthenticationSuccess(request, response, authentication);
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
         userAccountLoginSuccessService.updateLastLoginTimestamp(user);
@@ -54,7 +54,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             default: locale = Locale.ENGLISH; break;
         }
         localeResolver.setLocale(request,response,locale);
-        log.debug("successful logged in "+user.getUserEmail());
+        log.info("successful logged in "+user.getUserEmail());
     }
 
 }

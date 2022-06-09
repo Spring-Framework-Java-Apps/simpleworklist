@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.login;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
 import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user")
 public class UserLoginController {
@@ -46,7 +46,7 @@ public class UserLoginController {
      */
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public final String loginGet(Model model) {
-        log.debug("loginForm");
+        log.info("loginForm");
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
         return "user/login/loginForm";
@@ -66,12 +66,12 @@ public class UserLoginController {
         BindingResult result,
         Model model
     ) {
-        log.debug("loginPerform");
+        log.info("loginPerform");
         boolean authorized = userAccountAccessService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
             userAccountLoginSuccessService.updateLastLoginTimestamp(user);
-            log.debug("logged in");
+            log.info("logged in");
             return "redirect:/home";
         } else {
             String objectName = "loginForm";
@@ -82,7 +82,7 @@ public class UserLoginController {
             field = "userPassword";
             fieldError = new FieldError(objectName, field, defaultMessage);
             result.addError(fieldError);
-            log.debug("not logged in");
+            log.info("not logged in");
             return "user/login/loginForm";
         }
     }
@@ -93,7 +93,7 @@ public class UserLoginController {
         HttpServletRequest request,
         HttpServletResponse response
     ) {
-        log.debug("logoutPages");
+        log.info("logoutPages");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);

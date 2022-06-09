@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.test.testdata;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import java.net.URL;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@Slf4j
+@Log
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestDataServiceTest {
 

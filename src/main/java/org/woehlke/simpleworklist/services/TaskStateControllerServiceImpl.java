@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.services;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
-@Slf4j
+@Log
 @Service
 public class TaskStateControllerServiceImpl implements TaskStateControllerService {
 
@@ -44,7 +44,7 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
         @NotNull Locale locale,
         @NotNull Model model
     ){
-        log.debug("getTaskStatePage");
+        log.info("getTaskStatePage");
         userSession.setLastTaskState(taskState);
         Page<Task> taskPage = taskService.findbyTaskstate(taskState, context, pageRequest);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
@@ -58,11 +58,11 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTaskToTaskAndChangeTaskOrderInTaskstate(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
-        log.debug("-------------------------------------------------------------------------------");
-        log.debug(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
-        log.debug("        "+sourceTask.getTaskState().name());
-        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.debug("-------------------------------------------------------------------------------");
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
+        log.info("        "+sourceTask.getTaskState().name());
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
         boolean notEqualsId = ! sourceTask.equalsById(destinationTask);
         boolean notEquals = ! sourceTask.equalsByUniqueConstraint(destinationTask);
         boolean sameContext = sourceTask.hasSameContextAs(destinationTask);
@@ -76,11 +76,11 @@ public class TaskStateControllerServiceImpl implements TaskStateControllerServic
                 this.taskService.moveTasksUpByTaskState( sourceTask, destinationTask );
             }
         }
-        log.debug("-------------------------------------------------------------------------------");
-        log.debug(" DONE: moveTaskToTask AndChangeTaskOrder In Taskstate ");
-        log.debug("        "+sourceTask.getTaskState().name());
-        log.debug("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
-        log.debug("-------------------------------------------------------------------------------");
+        log.info("-------------------------------------------------------------------------------");
+        log.info(" DONE: moveTaskToTask AndChangeTaskOrder In Taskstate ");
+        log.info("        "+sourceTask.getTaskState().name());
+        log.info("        "+sourceTask.outProject()+" -> "+destinationTask.outProject());
+        log.info("-------------------------------------------------------------------------------");
     }
 
 }

@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.application.config;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.woehlke.simpleworklist.application.SimpleworklistProperties;
@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.services.UserAccountService;
 import java.util.Date;
 
 
-@Slf4j
+@Log
 @Getter
 @Service
 public class UserAccountTestDataServiceImpl implements UserAccountTestDataService {
