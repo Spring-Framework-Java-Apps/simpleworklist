@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.domain.resetpassword;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
 
 import javax.validation.Valid;
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/user")
 public class UserPasswordRecoveryController {

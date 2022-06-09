@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.project;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +32,7 @@ import java.util.UUID;
 
 import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/project/root")
 public class ProjectRootController extends AbstractController {
@@ -228,9 +228,9 @@ public class ProjectRootController extends AbstractController {
             result.addError(error);
         }
         if (result.hasErrors() ) {
-            log.warning("result.hasErrors");
+            log.warn("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
-                log.warning(e.toString());
+                log.warn(e.toString());
             }
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);

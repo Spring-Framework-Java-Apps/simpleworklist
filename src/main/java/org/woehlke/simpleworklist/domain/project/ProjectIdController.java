@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.project;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,7 +34,7 @@ import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 /**
  * Created by tw on 14.02.16.
  */
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/project/{projectId}")
 public class ProjectIdController extends AbstractController {
@@ -311,7 +311,7 @@ public class ProjectIdController extends AbstractController {
             log.info("Deletion rejected for Project " + project.getId());
             if (!hasNoData) {
                 //TODO: message to message_properties
-                log.warning("Project " + project.getId() + " has actionItem");
+                log.warn("Project " + project.getId() + " has actionItem");
                 s.append("Project has actionItems.");
             }
             if (!hasNoChildren) {
@@ -425,9 +425,9 @@ public class ProjectIdController extends AbstractController {
             result.addError(error);
         }
         if (result.hasErrors() ) {
-            log.warning("result.hasErrors");
+            log.warn("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
-                log.warning(e.toString());
+                log.warn(e.toString());
             }
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);

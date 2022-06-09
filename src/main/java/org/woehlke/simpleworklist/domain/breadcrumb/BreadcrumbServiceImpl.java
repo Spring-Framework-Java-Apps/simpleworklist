@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.breadcrumb;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Stack;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class BreadcrumbServiceImpl implements BreadcrumbService {

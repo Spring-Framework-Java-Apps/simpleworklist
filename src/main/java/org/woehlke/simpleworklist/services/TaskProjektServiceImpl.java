@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.services;
 
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 
-@Log
+@Slf4j
 @Service
 public class TaskProjektServiceImpl implements TaskProjektService {
 

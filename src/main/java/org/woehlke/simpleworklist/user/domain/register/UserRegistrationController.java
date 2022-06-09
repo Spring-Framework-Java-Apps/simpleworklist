@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.domain.register;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import org.woehlke.simpleworklist.user.services.UserRegistrationService;
 
 import javax.validation.Valid;
 
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/user/register")
 public class UserRegistrationController {

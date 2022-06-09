@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.woehlke.simpleworklist.application.config.Requirements.*;
 
-@Log
+@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
@@ -237,11 +237,11 @@ public class SmokeTests {
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (UsernameNotFoundException e) {
-            log.warning("UsernameNotFoundException: "+e.getLocalizedMessage());
+            log.warn("UsernameNotFoundException: "+e.getLocalizedMessage());
         } catch (NullPointerException npe){
-            log.warning("NullPointerException: "+npe.getLocalizedMessage());
+            log.warn("NullPointerException: "+npe.getLocalizedMessage());
             for(StackTraceElement e:npe.getStackTrace()){
-                log.warning(e.getClassName()+"."+e.getMethodName()+"in: "+e.getFileName()+" line: "+e.getLineNumber());
+                log.warn(e.getClassName()+"."+e.getMethodName()+"in: "+e.getFileName()+" line: "+e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);

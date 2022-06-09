@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.login;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by tw on 19.02.16.
  */
-@Log
+@Slf4j
 @Component
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
     implements AuthenticationSuccessHandler {

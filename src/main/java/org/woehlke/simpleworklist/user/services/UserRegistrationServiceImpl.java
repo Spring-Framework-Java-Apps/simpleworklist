@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.user.services;
 import java.util.Date;
 import java.util.UUID;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.MailException;
@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationRepository;
 import org.woehlke.simpleworklist.user.domain.register.UserRegistrationStatus;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserRegistrationServiceImpl implements UserRegistrationService {
@@ -119,7 +119,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            log.warning(ex.getMessage() + " for " + o.toString());
+            log.warn(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {

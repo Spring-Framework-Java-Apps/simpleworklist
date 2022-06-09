@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.common.testdata;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.UUID;
 
-@Log
+@Slf4j
 @Service
 public class TestDataServiceImpl implements TestDataService {
 

@@ -3,7 +3,7 @@ package org.woehlke.simpleworklist.user.services;
 
 import java.util.*;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ import org.woehlke.simpleworklist.common.language.Language;
 import org.woehlke.simpleworklist.domain.context.ContextRepository;
 import org.woehlke.simpleworklist.user.domain.chat.User2UserMessageRepository;
 
-@Log
+@Slf4j
 @Service("userAccountService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountServiceImpl implements UserAccountService {

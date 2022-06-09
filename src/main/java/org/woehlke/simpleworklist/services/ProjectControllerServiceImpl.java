@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.services;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import static org.woehlke.simpleworklist.domain.project.Project.rootProjectId;
 
-@Log
+@Slf4j
 @Service
 public class ProjectControllerServiceImpl implements ProjectControllerService {
 

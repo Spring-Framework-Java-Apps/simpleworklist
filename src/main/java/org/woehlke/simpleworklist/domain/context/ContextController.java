@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.context;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by tw on 13.03.16.
  */
-@Log
+@Slf4j
 @Controller
 @RequestMapping(path = "/context")
 public class ContextController extends AbstractController {

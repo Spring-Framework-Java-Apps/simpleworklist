@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.domain.task;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Log
+@Slf4j
 @Service
 public class TaskServiceImpl implements TaskService {
 

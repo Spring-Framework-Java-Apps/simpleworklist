@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,7 +17,7 @@ import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery
 import java.util.Date;
 import java.util.UUID;
 
-@Log
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {
@@ -118,7 +118,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            log.warning(ex.getMessage() + " for " + o.toString());
+            log.warn(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
