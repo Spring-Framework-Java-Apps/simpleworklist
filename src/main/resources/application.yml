@@ -116,7 +116,7 @@ logging:
           springdata: INFO
       apache:
         commons:
-          logging: WARN
+          logging: INFO
       h2: INFO
       springframework:
         data:
@@ -161,21 +161,14 @@ logging:
         simpleworklist: INFO
 ---
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
   profiles:
     active: default
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpleworklist
 logging:
   level:
     root: INFO
-    org:
-      springframework: INFO
-      hibernate:
-        SQL: INFO
-        engine:
-          internal: WARN
-      ch:
-        qos: WARN
-      postgresql: WARN
-      woehlke:
-        simpleworklist: INFO
+    javax: INFO
+    jakartaee: INFO
+    com: INFO
+    org: INFO
