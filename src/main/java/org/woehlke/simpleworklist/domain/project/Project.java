@@ -38,6 +38,7 @@ import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 @Setter
 @EqualsAndHashCode(callSuper = true, exclude = {"children","parent"})
 @ToString(callSuper = true, exclude = {"children","parent","description"})
+@org.springframework.data.relational.core.mapping.Table("project")
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;

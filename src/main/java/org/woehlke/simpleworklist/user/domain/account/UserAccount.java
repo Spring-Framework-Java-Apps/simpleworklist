@@ -36,6 +36,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude = {"userPassword","defaultLanguage","defaultContext","lastLoginTimestamp"})
+@org.springframework.data.relational.core.mapping.Table("user_account")
 public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount> {
 
     private static final long serialVersionUID = 7860692526488291439L;

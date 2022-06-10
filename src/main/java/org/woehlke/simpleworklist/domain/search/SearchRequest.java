@@ -31,6 +31,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@org.springframework.data.relational.core.mapping.Table("search_request")
 public class SearchRequest extends AuditModel implements Serializable, ComparableById<SearchRequest> {
 
     private static final long serialVersionUID = 7860692526488291439L;

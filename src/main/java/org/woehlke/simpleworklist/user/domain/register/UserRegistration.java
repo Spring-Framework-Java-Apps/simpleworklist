@@ -28,6 +28,7 @@ import java.util.Objects;
         @Index(name = "ix_user_registration_row_created_at", columnList = "row_created_at")
     }
 )
+@org.springframework.data.relational.core.mapping.Table("user_registration")
 public class UserRegistration extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = -1955967514018161878L;

@@ -34,6 +34,7 @@ import java.io.Serializable;
 @ToString(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
+@org.springframework.data.relational.core.mapping.Table("user_message")
 public class User2UserMessage extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 4263078228257938175L;

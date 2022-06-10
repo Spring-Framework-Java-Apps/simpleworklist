@@ -37,6 +37,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, exclude = "userAccount")
 @ToString(callSuper = true, exclude = "userAccount")
+@org.springframework.data.relational.core.mapping.Table("context")
 public class Context extends AuditModel implements Serializable, ComparableById<Context> {
 
     private static final long serialVersionUID = -5035732370606951871L;

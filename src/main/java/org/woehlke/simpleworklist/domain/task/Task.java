@@ -90,6 +90,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude="text")
+@org.springframework.data.relational.core.mapping.Table("task")
 public class Task extends AuditModel implements Serializable, ComparableById<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
