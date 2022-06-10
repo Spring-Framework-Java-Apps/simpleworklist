@@ -5,7 +5,7 @@
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
     <version>2.3.40-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -151,7 +151,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <spring-boot.repackage.layout>WAR</spring-boot.repackage.layout>
+        <spring-boot.repackage.layout>JAR</spring-boot.repackage.layout>
 
         <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version>
 

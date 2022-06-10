@@ -185,6 +185,9 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
   jta:
+    atomikos:
+      properties:
+        transaction-manager-unique-name: tx-manager-simpleworklist
     transaction-manager-id: tx-manager-simpleworklist
     log-dir: transaction-logs/tx-logs-simpleworklist
   jpa:
