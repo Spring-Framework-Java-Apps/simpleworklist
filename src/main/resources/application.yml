@@ -27,8 +27,6 @@ spring:
     atomikos:
       connectionfactory:
         xa-connection-factory-class-name: org.postgresql.xa.PGXADataSource
-    log-dir: transaction-logs/transaction-logs-simpleworklist
-    transaction-manager-id: transaction-manager-simpleworklist
   jpa:
     open-in-view: true
     show-sql: true
@@ -48,7 +46,7 @@ spring:
         generate_statistics: true
         search:
           default:
-            indexBase: ~/.config/simpleworklist
+            index-base: ~/.config/simpleworklist
   session:
     store-type: jdbc
     jdbc:
@@ -186,8 +184,14 @@ spring:
     active: default
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
+  jta:
+    transaction-manager-id: transaction-manager-simpleworklist
+    log-dir: transaction-logs/transaction-logs-simpleworklist
+  jpa:
+    hibernate:
+      ddl-auto: update
 server:
-  port: 9000
+  port: 9010
   compression:
     enabled: true
 logging:
