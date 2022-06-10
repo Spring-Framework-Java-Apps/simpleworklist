@@ -40,3 +40,4 @@ setenv.cmd
 target
 .idea
 /x.txt
+/transaction-logs/

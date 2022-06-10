@@ -49,6 +49,9 @@ spring:
     init:
       platform: postgresql
       continue-on-error: true
+  jta:
+    log-dir: transaction-logs/transaction-logs-simpleworklist
+    transaction-manager-id: transaction-manager-simpleworklist
 org:
   woehlke:
     simpleworklist:
