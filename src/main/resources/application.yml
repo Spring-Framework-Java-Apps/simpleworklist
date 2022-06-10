@@ -185,8 +185,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
   jta:
-    transaction-manager-id: transaction-manager-simpleworklist
-    log-dir: transaction-logs/transaction-logs-simpleworklist
+    transaction-manager-id: tx-manager-simpleworklist
   jpa:
     hibernate:
       ddl-auto: update
