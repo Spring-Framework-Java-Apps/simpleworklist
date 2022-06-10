@@ -26,7 +26,6 @@ import java.io.Serializable;
 )
 @Getter
 @Setter
-@org.springframework.data.relational.core.mapping.Table("user_account_password")
 public class UserAccountPassword extends AuditModel implements Serializable, ComparableById<UserAccountPassword> {
 
     private static final long serialVersionUID = 7860692526488291439L;

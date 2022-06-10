@@ -27,7 +27,6 @@ import java.util.Objects;
         @Index(name = "ix_user_password_recovery_row_created_at", columnList = "row_created_at")
     }
 )
-@org.springframework.data.relational.core.mapping.Table("user_password_recovery")
 public class UserPasswordRecovery extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 6860716425733119940L;
