@@ -23,17 +23,29 @@ spring:
     username:  ${SIMPLEWORKLIST_DS_USR}
     password:  ${SIMPLEWORKLIST_DS_PWD}
     driverClassName: org.postgresql.Driver
+  jta:
+    atomikos:
+      connectionfactory:
+        xa-connection-factory-class-name: org.postgresql.xa.PGXADataSource
+    log-dir: transaction-logs/transaction-logs-simpleworklist
+    transaction-manager-id: transaction-manager-simpleworklist
   jpa:
-    show-sql: true
     open-in-view: true
+    show-sql: true
     generate-ddl: true
+    database-platform: POSTGRESQL
     hibernate:
-      ddl-auto: ${SIMPLEWORKLIST_JPA_DLL_AUTO}
+      #ddl-auto: create-drop update
+      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         temp:
           use_jdbc_metadata_defaults: false
+        generate_statistics: true
         search:
           default:
             indexBase: ~/.config/simpleworklist
@@ -48,10 +60,8 @@ spring:
   sql:
     init:
       platform: postgresql
+      mode: ALWAYS
       continue-on-error: true
-  jta:
-    log-dir: transaction-logs/transaction-logs-simpleworklist
-    transaction-manager-id: transaction-manager-simpleworklist
 org:
   woehlke:
     simpleworklist:
@@ -176,6 +186,10 @@ spring:
     active: default
   datasource:
     url: jdbc:postgresql://localhost:5432/simpleworklist
+server:
+  port: 9000
+  compression:
+    enabled: true
 logging:
   level:
     root: INFO
