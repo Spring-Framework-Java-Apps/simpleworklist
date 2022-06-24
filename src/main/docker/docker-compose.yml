@@ -3,7 +3,7 @@ version: '3.3'
 
 services:
   simpleworklist_dbmaster:
-    image: postgres:13.3
+    image: postgres:latest
     restart: always
     networks:
       - net
@@ -16,7 +16,7 @@ services:
       CHARSET: de_DE.UTF-8
       PGPORT: 5432
   simpleworklist_dbref:
-    image: postgres:13.3
+    image: postgres:latest
     restart: always
     networks:
       - net
@@ -29,7 +29,7 @@ services:
       CHARSET: de_DE.UTF-8
       PGPORT: 5464
   simpleworklist_adminer:
-    image: adminer:4.7.4
+    image: adminer:latest
     restart: always
     networks:
       - net
