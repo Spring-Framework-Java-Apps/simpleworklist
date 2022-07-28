@@ -73,3 +73,7 @@
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
+
+
+
+wontfix #251, wontfix #224, wontfix #245, wontfix #246 

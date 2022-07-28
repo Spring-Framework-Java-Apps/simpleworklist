@@ -28,23 +28,21 @@ public interface User2UserMessageRepository extends JpaRepository<User2UserMessa
             Pageable request
     );
 
-    //TODO: #246 change List<Project> to Page<Project>
-    @Deprecated
     List<User2UserMessage> findByReceiverAndReadByReceiver(
             UserAccount receiver,
             boolean readByReceiver
     );
+
     Page<User2UserMessage> findByReceiverAndReadByReceiver(
         UserAccount receiver,
         boolean readByReceiver,
         Pageable request
     );
 
-    //TODO: #246 change List<User2UserMessage> to Page<User2UserMessage>
-    @Deprecated
     List<User2UserMessage> findBySenderAndReceiverAndReadByReceiver(
             UserAccount sender, UserAccount receiver, boolean readByReceiver
     );
+
     Page<User2UserMessage> findBySenderAndReceiverAndReadByReceiver(
         UserAccount sender, UserAccount receiver, boolean readByReceiver, Pageable request
     );

@@ -199,8 +199,6 @@ public class TaskServiceImpl implements TaskService {
             context
         );
         long newOrderIdTaskState = maxOrderIdTaskState;
-        //TODO: #244 change List<Task> to Page<Task>
-        //noinspection deprecation
         List<Task> taskListCompleted = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
             TaskState.COMPLETED,
             context
@@ -216,12 +214,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void emptyTrash(@NotNull Context context) {
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> taskList = taskRepository.findByTaskStateAndContext(
             TaskState.TRASH,
             context
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> taskListChanged = new ArrayList<>(taskList.size());
         for(Task task: taskList){
             task.emptyTrash();
@@ -266,15 +262,12 @@ public class TaskServiceImpl implements TaskService {
         Context context = sourceTask.getContext();
         final long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
         final long higherOrderIdTaskState = sourceTask.getOrderIdTaskState();
-        //TODO: #244 change List<Task> to Page<Task>
-        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
             lowerOrderIdTaskState,
             higherOrderIdTaskState,
             taskState,
             context
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveUpByTaskState();
@@ -301,15 +294,12 @@ public class TaskServiceImpl implements TaskService {
         Context context = sourceTask.getContext();
         long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
         long higherOrderIdTaskState = destinationTask.getOrderIdTaskState();
-        //TODO: #244 change List<Task> to Page<Task>
-        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
             lowerOrderIdTaskState,
             higherOrderIdTaskState,
             taskState,
             context
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveDownByTaskState();

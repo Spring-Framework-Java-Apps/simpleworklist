@@ -36,9 +36,7 @@ public class ProjectServiceImpl implements ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    //TODO: #245 change List<Project> to Page<Project>
-    @Deprecated
-    //@Override
+    @Override
     public List<Project> findRootProjectsByContext(@NotNull Context context) {
         log.info("findRootProjectsByContext");
         //TODO: #245 change List<Project> to Page<Project>
@@ -51,9 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findByParentIsNullAndContext(context,pageRequest);
     }
 
-    //TODO: #245 change List<Project> to Page<Project>
-    @Deprecated
-    //@Override
+    @Override
     public List<Project> findAllProjectsByContext(@NotNull Context context) {
         log.info("findAllProjectsByContext");
         //TODO: #245 change List<Project> to Page<Project>
@@ -117,7 +113,6 @@ public class ProjectServiceImpl implements ProjectService {
         //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
         List<Project> listProject = getAllChildrenOfProject(thisProject);
         for(Project childProject : listProject){
-            //noinspection deprecation
             List<Task> tasksOfChildProject = taskRepository.findByProject(childProject);
             for(Task task:tasksOfChildProject){
                 task.setContext(newContext);

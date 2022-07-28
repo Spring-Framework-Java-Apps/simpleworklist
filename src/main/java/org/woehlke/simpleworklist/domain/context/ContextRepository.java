@@ -11,12 +11,9 @@ import java.util.List;
 /**
  * Created by tw on 13.03.16.
  */
-@SuppressWarnings("Deprecation")
 @Repository
 public interface ContextRepository extends JpaRepository<Context, Long> {
 
-    //TODO: #251 change List<Context> to Page<Context>
-    @Deprecated
     List<Context> findByUserAccount(UserAccount user);
     Page<Context> findByUserAccount(UserAccount user, Pageable pageRequest);
 

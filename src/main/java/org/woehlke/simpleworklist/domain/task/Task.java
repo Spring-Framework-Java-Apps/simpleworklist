@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-//simport org.hibernate.annotations.*;
+//import org.hibernate.annotations.*;
 //import org.hibernate.annotations.CascadeType;
 //import org.hibernate.annotations.NamedQueries;
 //import org.hibernate.annotations.NamedQuery;

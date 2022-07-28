@@ -11,7 +11,6 @@ import java.util.Optional;
  */
 public interface ContextService {
 
-    //TODO: #251 change List<Context> to Page<Context>
     //TODO: rename to findByUser
     List<Context> getAllForUser(UserAccount user);
 
