@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>2.7.2</version>
     </parent>
 
     <scm>
@@ -67,83 +67,6 @@
     </distributionManagement>
 
     <properties>
-        <!--
-        <java.version>11</java.version>
-        <version.maven>3.6.3</version.maven>
-        <pmdVersion>6.28.0</pmdVersion>
-
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-
-        <spring-boot.repackage.layout>WAR</spring-boot.repackage.layout> -->
-
-        <!-- Spring Boot and Spring Frameworks
-        <spring-boot-maven-plugin.version>${project.parent.version}</spring-boot-maven-plugin.version> -->
-
-        <!-- SCM and Releasing with Maven
-        <maven.scm.version>1.13.0</maven.scm.version>
-
-        <thymeleaf-testing.version>3.1.0.M2</thymeleaf-testing.version>
-        <thymeleaf-spring-data-dialect.version>3.5.0</thymeleaf-spring-data-dialect.version> -->
-
-        <!-- Webjars
-        <webjars.jquery.version>3.6.0</webjars.jquery.version>
-        <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
-        <webjars.bootstrap.version>5.1.3</webjars.bootstrap.version>
-        <webjars.font-awesome.version>6.1.0</webjars.font-awesome.version>
-        <webjars.ckeditor.version>31.0.0</webjars.ckeditor.version>
-
-        <maven-release-plugin.version>3.0.0-M5</maven-release-plugin.version>
-        <liquibase-maven-plugin.version>4.4.3</liquibase-maven-plugin.version> -->
-
-        <!-- Maven Reports for Site
-        <maven-site-plugin.version>3.12.0</maven-site-plugin.version>
-        <maven-project-info-reports-plugin.version>3.3.0</maven-project-info-reports-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-jxr-plugin.version>3.1.1</maven-jxr-plugin.version>
-        <maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
-        <spotbugs-maven-plugin.version>4.3.0</spotbugs-maven-plugin.version>
-        <maven-surefire-report-plugin.version>3.0.0-M5</maven-surefire-report-plugin.version>
-        <asciidoctor-maven-plugin.version>2.2.1</asciidoctor-maven-plugin.version>
-
-        <doxia-module-markdown.version>1.10</doxia-module-markdown.version>
-        <doxia-module.version>1.10</doxia-module.version>
-
-
-        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version> -->
-
-        <!-- Docker
-        <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
-        <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
-        <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
-        <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
-        <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
-        <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode> -->
-
-        <!-- Frontend Server Site: Thymeleaf Templates
-        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <thymeleaf-spring-data-dialect.version>3.5.0</thymeleaf-spring-data-dialect.version>
-        <thymeleaf-testing.version>3.1.0.M2</thymeleaf-testing.version> -->
-
-        <!--
-        <thymeleaf-extras-data-attribute.version>2.0.1</thymeleaf-extras-data-attribute.version>
-        <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
-        <thymeleaf-layout-dialect.version>3.10</thymeleaf-layout-dialect.version>
-        -->
-
-        <!-- Unit and Integration Testing
-        <skipTests>true</skipTests>
-        <xmlunit2.version>2.6.4</xmlunit2.version>
-        <xmlunit.version>2.6.4</xmlunit.version>
-        <htmlunit.version>2.43.0</htmlunit.version>
-        <hamcrest.version>2.2</hamcrest.version>
-        <jsoup.version>1.14.2</jsoup.version> -->
-
-
-
-
-
-
         <java.version>11</java.version>
         <version.maven>3.6.3</version.maven>
         <pmdVersion>6.46.0</pmdVersion>
@@ -162,7 +85,7 @@
         <webjars.jquery.version>3.6.0</webjars.jquery.version>
         <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
         <webjars.bootstrap.version>5.1.3</webjars.bootstrap.version>
-        <webjars.font-awesome.version>6.1.0</webjars.font-awesome.version>
+        <webjars.font-awesome.version>6.1.1</webjars.font-awesome.version>
         <webjars.ckeditor.version>31.0.0</webjars.ckeditor.version>
         <opencsv.version>5.3</opencsv.version>
 
