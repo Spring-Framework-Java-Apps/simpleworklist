@@ -5,9 +5,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.project.ProjectRepository;
-import org.woehlke.simpleworklist.domain.user.register.UserRegistrationRepository;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistrationRepository;
 import org.woehlke.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
-import org.woehlke.simpleworklist.domain.user.register.UserRegistration;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;

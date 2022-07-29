@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.register;
+package org.woehlke.simpleworklist.domain.user.signup;
 
 import lombok.*;
 

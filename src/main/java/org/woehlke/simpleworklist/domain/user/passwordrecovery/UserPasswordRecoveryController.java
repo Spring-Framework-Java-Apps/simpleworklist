@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.domain.user.register.UserRegistrationForm;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistrationForm;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;

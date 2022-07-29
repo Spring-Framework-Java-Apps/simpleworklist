@@ -12,7 +12,7 @@ import org.woehlke.simpleworklist.application.config.AbstractTest;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.domain.user.register.UserRegistrationService;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistrationService;
 import org.woehlke.simpleworklist.application.login.login.LoginForm;
 
 import static org.junit.jupiter.api.Assertions.*;

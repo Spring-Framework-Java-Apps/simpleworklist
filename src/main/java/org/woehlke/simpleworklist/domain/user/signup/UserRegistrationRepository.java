@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.register;
+package org.woehlke.simpleworklist.domain.user.signup;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
