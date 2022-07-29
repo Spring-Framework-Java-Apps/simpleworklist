@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.security.account;
+package org.woehlke.simpleworklist.domain.user.access;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.woehlke.simpleworklist.domain.user.access.SimpleworklistUserAccountSecurityService;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountRepository;
 import org.woehlke.simpleworklist.domain.user.account.UserDetailsBean;

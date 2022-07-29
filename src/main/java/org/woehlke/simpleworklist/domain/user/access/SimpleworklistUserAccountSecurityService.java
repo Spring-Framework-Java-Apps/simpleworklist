@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.security.account;
+package org.woehlke.simpleworklist.domain.user.access;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

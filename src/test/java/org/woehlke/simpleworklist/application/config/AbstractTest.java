@@ -11,9 +11,9 @@ import org.woehlke.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
-import org.woehlke.simpleworklist.application.security.access.UserAccountAccessService;
-import org.woehlke.simpleworklist.application.security.account.SimpleworklistUserAccountSecurityService;
-import org.woehlke.simpleworklist.application.security.login.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.domain.user.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.domain.user.access.SimpleworklistUserAccountSecurityService;
+import org.woehlke.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
 
 
 import java.net.URL;

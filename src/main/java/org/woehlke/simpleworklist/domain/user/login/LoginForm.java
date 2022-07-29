@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.security.login;
+package org.woehlke.simpleworklist.domain.user.login;
 
 import javax.validation.constraints.NotNull;
 

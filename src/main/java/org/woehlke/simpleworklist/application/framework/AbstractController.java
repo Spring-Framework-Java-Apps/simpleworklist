@@ -20,8 +20,8 @@ import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.application.security.access.UserAccountAccessService;
-import org.woehlke.simpleworklist.application.security.login.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.domain.user.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
