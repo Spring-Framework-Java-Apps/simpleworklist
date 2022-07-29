@@ -39,33 +39,6 @@ public class AuditModel extends Object implements Serializable {
     @Column(name = "row_updated_at", nullable = false)
     protected Date rowUpdatedAt;
 
-    /*
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Date getRowCreatedAt() {
-        return rowCreatedAt;
-    }
-
-    public void setRowCreatedAt(Date rowCreatedAt) {
-        this.rowCreatedAt = rowCreatedAt;
-    }
-
-    public Date getRowUpdatedAt() {
-        return rowUpdatedAt;
-    }
-
-    public void setRowUpdatedAt(Date rowUpdatedAt) {
-        this.rowUpdatedAt = rowUpdatedAt;
-    }
-    */
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

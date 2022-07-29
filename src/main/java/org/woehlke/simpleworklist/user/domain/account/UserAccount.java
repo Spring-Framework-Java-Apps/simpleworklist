@@ -14,6 +14,7 @@ import org.woehlke.simpleworklist.common.language.Language;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.*;
 import javax.persistence.Index;
@@ -114,6 +115,26 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
     @Override
     public boolean equalsByUuid(UserAccount otherObject) {
         return super.equalsByMyUuid(otherObject);
+    }
+
+    public static UserAccount createUserAccount(final String userEmail, final String userFullname, final String userPassword, Context contexts[]){
+        Date now = new Date();
+        UserAccount u = new UserAccount();
+        u.setUserEmail(userEmail);
+        u.setUserFullname(userFullname);
+        u.setUserPassword(userPassword);
+        u.setUuid(UUID.randomUUID().toString());
+        u.setLastLoginTimestamp(now);
+        u.setAccountNonExpired(true);
+        u.setAccountNonLocked(true);
+        u.setCredentialsNonExpired(true);
+        u.setEnabled(true);
+        u.setDefaultLanguage(Language.EN);
+        u.setDefaultContext(contexts[0]);
+        for(Context context:contexts){
+            context.setUserAccount(u);
+        }
+        return u;
     }
 
 }

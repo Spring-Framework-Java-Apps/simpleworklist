@@ -12,6 +12,7 @@ import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import javax.persistence.*;
 import javax.persistence.Index;
 import java.io.Serializable;
+import java.util.UUID;
 
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
@@ -76,6 +77,7 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     public Context(String nameDe, String nameEn) {
         this.nameDe = nameDe;
         this.nameEn = nameEn;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     @Transient

@@ -18,7 +18,6 @@ import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.user.domain.account.UserAccountForm;
 import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
 import org.woehlke.simpleworklist.user.domain.chat.User2UserMessage;
-import org.woehlke.simpleworklist.common.language.Language;
 import org.woehlke.simpleworklist.domain.context.ContextRepository;
 import org.woehlke.simpleworklist.user.domain.chat.User2UserMessageRepository;
 
@@ -48,29 +47,18 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createUser(UserAccountForm userAccountForm) {
-        Date now = new Date();
-        UserAccount u = new UserAccount();
-        u.setUuid(UUID.randomUUID().toString());
-        u.setUserEmail(userAccountForm.getUserEmail());
-        u.setUserFullname(userAccountForm.getUserFullname());
-        u.setUserPassword(encoder.encode(userAccountForm.getUserPassword()));
-        u.setDefaultLanguage(Language.EN);
-        u.setLastLoginTimestamp(now);
-        u.setAccountNonExpired(true);
-        u.setAccountNonLocked(true);
-        u.setCredentialsNonExpired(true);
-        u.setEnabled(true);
-        log.info("About to save " + u.toString());
+        String userEmail = userAccountForm.getUserEmail();
+        String userFullname = userAccountForm.getUserFullname();
+        String userPassword = encoder.encode(userAccountForm.getUserPassword());
+        Context workContext = new Context("Arbeit", "Work");
+        Context privContext = new Context("Privat", "Private");
+        Context contexts[] = {workContext, privContext};
+        UserAccount u = UserAccount.createUserAccount(userEmail,userFullname,userPassword,contexts);
         u = userAccountRepository.save(u);
-        Context workContext = new Context("Arbeit","Work");
-        Context privContext = new Context("Privat","Private");
-        workContext.setUuid(UUID.randomUUID().toString());
-        privContext.setUuid(UUID.randomUUID().toString());
         workContext.setUserAccount(u);
         privContext.setUserAccount(u);
-        contextRepository.save(workContext);
-        contextRepository.save(privContext);
-        u.setDefaultContext(workContext);
+        workContext = contextRepository.save(workContext);
+        privContext = contextRepository.save(privContext);
         u = userAccountRepository.save(u);
         log.info("Saved " + u.toString());
         log.info("Saved " + workContext.toString());
