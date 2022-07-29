@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.woehlke.simpleworklist.domain.user.access.SimpleworklistUserAccountSecurityService;
+import org.woehlke.simpleworklist.domain.user.access.ApplicationUserDetailsService;
 
 
 @Configuration
@@ -39,18 +39,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     //private final AuthenticationSuccessHandler loginSuccessHandler;
-    private final SimpleworklistUserAccountSecurityService simpleworklistUserAccountSecurityService;
+    private final ApplicationUserDetailsService applicationUserDetailsService;
     private final SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
     public WebSecurityConfig(
         AuthenticationManagerBuilder auth,
         //LoginSuccessHandler loginSuccessHandler,
-        SimpleworklistUserAccountSecurityService simpleworklistUserAccountSecurityService,
+        ApplicationUserDetailsService applicationUserDetailsService,
         SimpleworklistProperties simpleworklistProperties) {
         this.authenticationManagerBuilder = auth;
         //this.loginSuccessHandler = loginSuccessHandler;
-        this.simpleworklistUserAccountSecurityService = simpleworklistUserAccountSecurityService;
+        this.applicationUserDetailsService = applicationUserDetailsService;
         this.simpleworklistProperties = simpleworklistProperties;
     }
 
@@ -98,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return this.simpleworklistUserAccountSecurityService;
+        return this.applicationUserDetailsService;
     }
 
     /**

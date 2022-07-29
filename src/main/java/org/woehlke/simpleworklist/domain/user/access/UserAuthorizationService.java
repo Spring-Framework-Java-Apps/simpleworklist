@@ -4,7 +4,7 @@ import org.woehlke.simpleworklist.domain.user.accountselfservice.UserChangePassw
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.login.LoginForm;
 
-public interface UserAccountAccessService {
+public interface UserAuthorizationService {
 
     void changeUsersPassword(UserChangePasswordForm userAccountFormBean, UserAccount user);
 

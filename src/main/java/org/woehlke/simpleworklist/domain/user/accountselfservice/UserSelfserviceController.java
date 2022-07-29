@@ -22,7 +22,7 @@ import org.woehlke.simpleworklist.domain.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.language.Language;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.domain.user.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.domain.user.access.UserAuthorizationService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import javax.validation.Valid;
@@ -38,11 +38,11 @@ import java.util.Map;
 @RequestMapping(path = "/user/selfservice")
 public class UserSelfserviceController extends AbstractController {
 
-    private final UserAccountAccessService userAccountAccessService;
+    private final UserAuthorizationService userAuthorizationService;
 
     @Autowired
-    public UserSelfserviceController(UserAccountAccessService userAccountAccessService) {
-        this.userAccountAccessService = userAccountAccessService;
+    public UserSelfserviceController(UserAuthorizationService userAuthorizationService) {
+        this.userAuthorizationService = userAuthorizationService;
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
@@ -171,7 +171,7 @@ public class UserSelfserviceController extends AbstractController {
                 model.addAttribute("userSession", userSession);
                 return "user/selfservice/password";
             }
-            if(!userAccountAccessService.confirmUserByLoginAndPassword(
+            if(!userAuthorizationService.confirmUserByLoginAndPassword(
                 user.getUserEmail(), userChangePasswordForm.getOldUserPassword())
             ){
                 log.info("old Password is wrong");
@@ -187,7 +187,7 @@ public class UserSelfserviceController extends AbstractController {
                 return "user/selfservice/password";
             }
             log.info("OK");
-            userAccountAccessService.changeUsersPassword(userChangePasswordForm,user);
+            userAuthorizationService.changeUsersPassword(userChangePasswordForm,user);
             model.addAttribute("userSession", userSession);
             return "redirect:/user/selfservice/profile";
         }

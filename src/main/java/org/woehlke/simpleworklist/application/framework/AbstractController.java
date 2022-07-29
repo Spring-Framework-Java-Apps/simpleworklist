@@ -20,7 +20,7 @@ import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.domain.user.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.domain.user.access.UserAuthorizationService;
 import org.woehlke.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
 
 import javax.validation.constraints.NotNull;
@@ -49,7 +49,7 @@ public abstract class AbstractController {
     protected UserAccountService userAccountService;
 
     @Autowired
-    protected UserAccountAccessService userAccountAccessService;
+    protected UserAuthorizationService userAuthorizationService;
 
     @Autowired
     protected ChatMessageService chatMessageService;

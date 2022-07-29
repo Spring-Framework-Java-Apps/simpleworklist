@@ -11,8 +11,8 @@ import org.woehlke.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
-import org.woehlke.simpleworklist.domain.user.access.UserAccountAccessService;
-import org.woehlke.simpleworklist.domain.user.access.SimpleworklistUserAccountSecurityService;
+import org.woehlke.simpleworklist.domain.user.access.UserAuthorizationService;
+import org.woehlke.simpleworklist.domain.user.access.ApplicationUserDetailsService;
 import org.woehlke.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
 
 
@@ -80,7 +80,7 @@ public abstract class AbstractTest {
     }
 
     protected void makeActiveUser(String username) {
-        UserDetails ud = simpleworklistUserAccountSecurityService.loadUserByUsername(username);
+        UserDetails ud = applicationUserDetailsService.loadUserByUsername(username);
         Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authRequest);
     }
@@ -99,10 +99,10 @@ public abstract class AbstractTest {
     protected UserAccountService userAccountService;
 
     @Autowired
-    protected SimpleworklistUserAccountSecurityService simpleworklistUserAccountSecurityService;
+    protected ApplicationUserDetailsService applicationUserDetailsService;
 
     @Autowired
-    protected UserAccountAccessService userAccountAccessService;
+    protected UserAuthorizationService userAuthorizationService;
 
     @Autowired
     protected UserAccountLoginSuccessService userAccountLoginSuccessService;

@@ -12,9 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.domain.user.account.UserDetailsBean;
+import org.woehlke.simpleworklist.domain.user.access.UserDetailsDto;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountRepository;
-import org.woehlke.simpleworklist.domain.user.accountpassword.UserAccountSecurityPasswordService;
 
 @Slf4j
 @Service
@@ -42,7 +41,7 @@ public class UserAccountSecurityPasswordServiceImpl implements UserAccountSecuri
             String pwEncoded = encoder.encode(newPassword);
             ua.setUserPassword(pwEncoded);
             userAccountRepository.saveAndFlush(ua);
-            return new UserDetailsBean(ua);
+            return new UserDetailsDto(ua);
         } else {
             return user;
         }

@@ -18,14 +18,14 @@ import org.woehlke.simpleworklist.domain.user.accountselfservice.UserChangePassw
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserAccountAccessServiceImpl implements UserAccountAccessService {
+public class UserAuthorizationServiceImpl implements UserAuthorizationService {
 
     private final UserAccountRepository userAccountRepository;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder encoder;
 
     @Autowired
-    public UserAccountAccessServiceImpl(
+    public UserAuthorizationServiceImpl(
         UserAccountRepository userAccountRepository,
         AuthenticationManager authenticationManager
     ) {

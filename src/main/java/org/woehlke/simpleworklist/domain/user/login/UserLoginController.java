@@ -16,7 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
-import org.woehlke.simpleworklist.domain.user.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.domain.user.access.UserAuthorizationService;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 @Slf4j
@@ -25,15 +25,15 @@ import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 public class UserLoginController {
 
     private final UserAccountLoginSuccessService userAccountLoginSuccessService;
-    private final UserAccountAccessService userAccountAccessService;
+    private final UserAuthorizationService userAuthorizationService;
 
     @Autowired
     public UserLoginController(
         UserAccountLoginSuccessService userAccountLoginSuccessService,
-        UserAccountAccessService userAccountAccessService
+        UserAuthorizationService userAuthorizationService
     ) {
         this.userAccountLoginSuccessService = userAccountLoginSuccessService;
-        this.userAccountAccessService = userAccountAccessService;
+        this.userAuthorizationService = userAuthorizationService;
     }
 
     /**
@@ -66,7 +66,7 @@ public class UserLoginController {
         Model model
     ) {
         log.info("loginPerform");
-        boolean authorized = userAccountAccessService.authorize(loginForm);
+        boolean authorized = userAuthorizationService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
             UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
             userAccountLoginSuccessService.updateLastLoginTimestamp(user);

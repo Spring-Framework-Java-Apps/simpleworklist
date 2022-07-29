@@ -105,11 +105,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
     //@Test
     public void testLoadUserByUsername(){
         for(String email:emails){
-            UserDetails userDetails = simpleworklistUserAccountSecurityService.loadUserByUsername(email);
+            UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(email);
             assertTrue(userDetails.getUsername().compareTo(email) == 0);
         }
         try {
-            UserDetails userDetails = simpleworklistUserAccountSecurityService.loadUserByUsername(username_email);
+            UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(username_email);
         } catch (UsernameNotFoundException e){
             assertNotNull(e.getMessage());
             assertTrue(username_email.compareTo(e.getMessage())==0);
@@ -121,11 +121,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
         loginForm.setUserPassword(passwords[0]);
-        assertTrue(userAccountAccessService.authorize(loginForm));
+        assertTrue(userAuthorizationService.authorize(loginForm));
         loginForm = new LoginForm();
         loginForm.setUserEmail(username_email);
         loginForm.setUserPassword(password);
-        assertFalse(userAccountAccessService.authorize(loginForm));
+        assertFalse(userAuthorizationService.authorize(loginForm));
     }
 
     //@Test

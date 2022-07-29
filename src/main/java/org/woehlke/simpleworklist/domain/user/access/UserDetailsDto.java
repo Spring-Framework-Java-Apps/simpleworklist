@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.account;
+package org.woehlke.simpleworklist.domain.user.access;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,12 +8,13 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 
 @Getter
 @EqualsAndHashCode
 @ToString(exclude = {"password"})
-public class UserDetailsBean implements UserDetails {
+public class UserDetailsDto implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +25,7 @@ public class UserDetailsBean implements UserDetails {
     private final boolean credentialsNonExpired;
     private final boolean enabled;
 
-    public UserDetailsBean(UserAccount account) {
+    public UserDetailsDto(UserAccount account) {
         this.username = account.getUserEmail();
         this.password = account.getUserPassword();
         /*
