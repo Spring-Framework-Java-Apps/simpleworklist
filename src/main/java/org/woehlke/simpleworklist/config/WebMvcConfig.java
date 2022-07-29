@@ -35,7 +35,7 @@ import java.util.Properties;
 @EnableConfigurationProperties({
     SimpleworklistProperties.class
 })
-public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
 
     private final SimpleworklistProperties simpleworklistProperties;
 

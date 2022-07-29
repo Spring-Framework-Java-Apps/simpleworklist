@@ -10,13 +10,14 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.woehlke.simpleworklist.application.SimpleworklistProperties;
@@ -35,7 +36,7 @@ import org.woehlke.simpleworklist.user.services.SimpleworklistUserAccountSecurit
 @EnableConfigurationProperties({
     SimpleworklistProperties.class
 })
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     //private final AuthenticationSuccessHandler loginSuccessHandler;
@@ -53,6 +54,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.simpleworklistUserAccountSecurityService = simpleworklistUserAccountSecurityService;
         this.simpleworklistProperties = simpleworklistProperties;
     }
+
+    /*
+    @Override
+    public void init(WebSecurity builder) throws Exception {
+
+    }
+    @Override
+    public void configure(WebSecurity builder) throws Exception {
+    }
+    */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -99,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder encoder(){
         int strength = simpleworklistProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
         return new BCryptPasswordEncoder(strength);
-        /*Ü
+        /*
         CharSequence secret=this.simpleworklistProperties.getWebSecurity().getSecret();
         int iterations=this.simpleworklistProperties.getWebSecurity().getIterations();
         int hashWidth=this.simpleworklistProperties.getWebSecurity().getHashWidth();

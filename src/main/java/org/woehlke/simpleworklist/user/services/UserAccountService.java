@@ -21,7 +21,7 @@ public interface UserAccountService {
 
     void changeUsersPassword(UserAccountForm userAccount);
 
-    UserAccount findUserById(long userId);
+    UserAccount findById(long userId);
 
     Map<Long,Integer> getNewIncomingMessagesForEachOtherUser(UserAccount receiver);
 

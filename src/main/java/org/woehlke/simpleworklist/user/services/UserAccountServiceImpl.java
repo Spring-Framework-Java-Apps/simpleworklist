@@ -47,14 +47,14 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void createUser(UserAccountForm userAccount) {
+    public void createUser(UserAccountForm userAccountForm) {
+        Date now = new Date();
         UserAccount u = new UserAccount();
         u.setUuid(UUID.randomUUID().toString());
-        u.setUserEmail(userAccount.getUserEmail());
-        u.setUserFullname(userAccount.getUserFullname());
-        u.setUserPassword(encoder.encode(userAccount.getUserPassword()));
+        u.setUserEmail(userAccountForm.getUserEmail());
+        u.setUserFullname(userAccountForm.getUserFullname());
+        u.setUserPassword(encoder.encode(userAccountForm.getUserPassword()));
         u.setDefaultLanguage(Language.EN);
-        Date now = new Date();
         u.setLastLoginTimestamp(now);
         u.setAccountNonExpired(true);
         u.setAccountNonLocked(true);
@@ -68,13 +68,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         privContext.setUuid(UUID.randomUUID().toString());
         workContext.setUserAccount(u);
         privContext.setUserAccount(u);
-        log.info("About to save " + workContext.toString());
         contextRepository.save(workContext);
-        log.info("About to save " + privContext.toString());
         contextRepository.save(privContext);
         u.setDefaultContext(workContext);
         u = userAccountRepository.save(u);
         log.info("Saved " + u.toString());
+        log.info("Saved " + workContext.toString());
+        log.info("Saved " + privContext.toString());
     }
 
     @Override
@@ -105,8 +105,8 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount findUserById(long userId) {
-        return userAccountRepository.getOne(userId);
+    public UserAccount findById(long userId) {
+        return userAccountRepository.getReferenceById(userId);
     }
 
     @Override
