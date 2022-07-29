@@ -17,7 +17,7 @@ import java.util.List;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
 
     //TODO: #247 move the JQL Query-String to Entity as Prepared Statement
-    String JQL = "select m from User2UserMessage m "
+    String JQL = "select m from ChatMessage m "
     + "where (m.sender = :thisUser and m.receiver = :otherUser) "
     + "or (m.sender = :otherUser and m.receiver = :thisUser)";
 

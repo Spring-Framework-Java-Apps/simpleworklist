@@ -92,7 +92,7 @@ public class TaskStateTaskController extends AbstractController {
             }
             Boolean mustChooseArea = false;
             task.setContext(context);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale, userSession);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX, locale, userSession);
             model.addAttribute("mustChooseArea", mustChooseArea);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("task", task);

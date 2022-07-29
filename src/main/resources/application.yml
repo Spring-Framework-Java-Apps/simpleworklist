@@ -6,7 +6,7 @@ server:
     enabled: false
     min-response-size: 2048
   servlet:
-    context-path: "/simpleworklist"
+    context-path: "/"
 spring:
   config:
     name: simpleworklist
