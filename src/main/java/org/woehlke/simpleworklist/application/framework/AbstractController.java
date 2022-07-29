@@ -15,13 +15,13 @@ import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.project.ProjectService;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessageService;
+import org.woehlke.simpleworklist.domain.chat.ChatMessageService;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.application.login.access.UserAccountAccessService;
-import org.woehlke.simpleworklist.application.login.login.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.application.security.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.application.security.login.UserAccountLoginSuccessService;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;

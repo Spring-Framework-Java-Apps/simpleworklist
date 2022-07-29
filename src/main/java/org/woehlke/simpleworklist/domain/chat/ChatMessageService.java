@@ -1,10 +1,8 @@
-package org.woehlke.simpleworklist.domain.user.chat;
+package org.woehlke.simpleworklist.domain.chat;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessage;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessageForm;
 
 /**
  * Created by tw on 16.02.2016.

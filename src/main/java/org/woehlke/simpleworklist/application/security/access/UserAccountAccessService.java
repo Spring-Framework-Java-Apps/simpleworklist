@@ -1,8 +1,8 @@
-package org.woehlke.simpleworklist.application.login.access;
+package org.woehlke.simpleworklist.application.security.access;
 
 import org.woehlke.simpleworklist.domain.user.accountselfservice.UserChangePasswordForm;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.application.login.login.LoginForm;
+import org.woehlke.simpleworklist.application.security.login.LoginForm;
 
 public interface UserAccountAccessService {
 

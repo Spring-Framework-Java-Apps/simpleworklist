@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.login.login;
+package org.woehlke.simpleworklist.application.security.login;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;

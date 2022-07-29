@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.chat;
+package org.woehlke.simpleworklist.domain.chat;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessage;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessageForm;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessageRepository;
-import org.woehlke.simpleworklist.domain.user.chat.ChatMessageService;
 
 import java.util.List;
 import java.util.UUID;

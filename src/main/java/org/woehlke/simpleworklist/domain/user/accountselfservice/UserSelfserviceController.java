@@ -22,7 +22,7 @@ import org.woehlke.simpleworklist.domain.language.UserChangeLanguageForm;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.language.Language;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.application.login.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.application.security.access.UserAccountAccessService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import javax.validation.Valid;

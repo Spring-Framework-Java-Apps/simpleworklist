@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.chat;
+package org.woehlke.simpleworklist.domain.chat;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;

@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.login.token;
+package org.woehlke.simpleworklist.application.security.token;
 
 public interface TokenGeneratorService {
 
