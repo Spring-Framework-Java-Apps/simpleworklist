@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.task;
+package org.woehlke.simpleworklist.domain.taskworkflow;
 
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.domain.task.Task;

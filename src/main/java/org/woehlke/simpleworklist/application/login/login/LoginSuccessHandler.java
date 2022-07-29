@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.application.login;
+package org.woehlke.simpleworklist.application.login.login;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

@@ -13,7 +13,7 @@ import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.simpleworklist.application.login.access.UserAccountAccessService;
 import org.woehlke.simpleworklist.application.login.account.SimpleworklistUserAccountSecurityService;
-import org.woehlke.simpleworklist.application.login.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.application.login.login.UserAccountLoginSuccessService;
 
 
 import java.net.URL;

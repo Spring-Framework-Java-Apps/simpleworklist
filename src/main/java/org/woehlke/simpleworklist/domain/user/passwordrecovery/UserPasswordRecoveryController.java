@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.resetpassword;
+package org.woehlke.simpleworklist.domain.user.passwordrecovery;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

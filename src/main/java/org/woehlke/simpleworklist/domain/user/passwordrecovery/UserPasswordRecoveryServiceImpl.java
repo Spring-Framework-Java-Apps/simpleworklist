@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.resetpassword;
+package org.woehlke.simpleworklist.domain.user.passwordrecovery;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.config.SimpleworklistProperties;
-import org.woehlke.simpleworklist.application.token.TokenGeneratorService;
+import org.woehlke.simpleworklist.application.login.token.TokenGeneratorService;
 
 import java.util.Date;
 import java.util.UUID;

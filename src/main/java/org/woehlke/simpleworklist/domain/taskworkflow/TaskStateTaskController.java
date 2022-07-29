@@ -15,7 +15,6 @@ import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
-import org.woehlke.simpleworklist.domain.task.TransformTaskIntoProjektService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;

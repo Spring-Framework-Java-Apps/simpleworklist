@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.user.resetpassword;
+package org.woehlke.simpleworklist.domain.user.passwordrecovery;
 
 import javax.validation.constraints.Email;
 

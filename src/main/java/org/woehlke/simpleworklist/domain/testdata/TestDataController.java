@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.application.login.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.application.login.login.UserAccountLoginSuccessService;
 
 @Slf4j
 @Controller

@@ -1,7 +1,6 @@
-package org.woehlke.simpleworklist.application.token;
+package org.woehlke.simpleworklist.application.login.token;
 
 import org.springframework.stereotype.Service;
-import org.woehlke.simpleworklist.application.token.TokenGeneratorService;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

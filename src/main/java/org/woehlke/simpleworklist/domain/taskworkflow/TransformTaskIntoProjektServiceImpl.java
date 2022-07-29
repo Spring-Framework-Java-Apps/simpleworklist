@@ -1,4 +1,4 @@
-package org.woehlke.simpleworklist.domain.task;
+package org.woehlke.simpleworklist.domain.taskworkflow;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.project.ProjectService;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskService;
-import org.woehlke.simpleworklist.application.session.UserSessionBean;
-import org.woehlke.simpleworklist.domain.task.TransformTaskIntoProjektService;
+import org.woehlke.simpleworklist.domain.taskworkflow.TransformTaskIntoProjektService;
 
 import javax.validation.constraints.NotNull;
 

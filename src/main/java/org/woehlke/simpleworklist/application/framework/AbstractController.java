@@ -21,7 +21,7 @@ import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.application.login.access.UserAccountAccessService;
-import org.woehlke.simpleworklist.application.login.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.application.login.login.UserAccountLoginSuccessService;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
