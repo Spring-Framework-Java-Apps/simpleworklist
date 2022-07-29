@@ -60,7 +60,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     public void registrationSendEmailTo(String email) {
         UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
         UserRegistration o = new UserRegistration();
-        o.setUuid(UUID.randomUUID().toString());
+        o.setUuid(UUID.randomUUID());
         if (earlierOptIn != null) {
             o = earlierOptIn;
             o.increaseNumberOfRetries();

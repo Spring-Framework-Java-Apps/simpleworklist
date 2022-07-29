@@ -11,8 +11,8 @@ import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.common.domain.AbstractController;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.services.TaskProjektService;
-import org.woehlke.simpleworklist.services.TaskStateControllerService;
+import org.woehlke.simpleworklist.services.TransformTaskIntoProjektService;
+import org.woehlke.simpleworklist.services.MoveTaskToTaskInTaskstateService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +32,17 @@ import java.util.Locale;
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {
 
-    private final TaskStateControllerService taskStateControllerService;
+    private final MoveTaskToTaskInTaskstateService moveTaskToTaskInTaskstateService;
     private final TaskService taskService;
-    private final TaskProjektService taskProjektService;
+    private final TransformTaskIntoProjektService transformTaskIntoProjektService;
 
     @Autowired
     public TaskStateTaskController(
-        TaskStateControllerService taskStateControllerService, TaskService taskService,
-        TaskProjektService taskProjektService) {
-        this.taskStateControllerService = taskStateControllerService;
+        MoveTaskToTaskInTaskstateService moveTaskToTaskInTaskstateService, TaskService taskService,
+        TransformTaskIntoProjektService transformTaskIntoProjektService) {
+        this.moveTaskToTaskInTaskstateService = moveTaskToTaskInTaskstateService;
         this.taskService = taskService;
-        this.taskProjektService = taskProjektService;
+        this.transformTaskIntoProjektService = transformTaskIntoProjektService;
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
@@ -200,7 +200,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("---------------------------------------------");
         log.info("destination Task: "+destinationTask.toString());
         log.info("---------------------------------------------");
-        taskStateControllerService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
+        moveTaskToTaskInTaskstateService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
         userSession.setLastTaskState(sourceTask.getTaskState());
         model.addAttribute("userSession", userSession);
         return sourceTask.getTaskState().getUrl();
@@ -371,7 +371,7 @@ public class TaskStateTaskController extends AbstractController {
         Model model
     ) {
         log.info("transformTaskIntoProjectGet");
-        return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
+        return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)

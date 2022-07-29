@@ -15,13 +15,13 @@ import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Service
-public class TaskProjektServiceImpl implements TaskProjektService {
+public class TransformTaskIntoProjektServiceImpl implements TransformTaskIntoProjektService {
 
     private final ProjectService projectService;
     private final TaskService taskService;
 
     @Autowired
-    public TaskProjektServiceImpl(ProjectService projectService, TaskService taskService) {
+    public TransformTaskIntoProjektServiceImpl(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
         this.taskService = taskService;
     }

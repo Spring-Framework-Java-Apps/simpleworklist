@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -27,7 +28,7 @@ public class AuditModel extends Object implements Serializable {
     private static final long serialVersionUID = 4399373914714726911L;
 
     @Column(name="uuid", nullable = false)
-    protected String uuid;
+    protected UUID uuid;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

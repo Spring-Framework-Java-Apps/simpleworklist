@@ -30,7 +30,7 @@ public class SearchResultServiceImpl implements SearchResultService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public SearchResult add(SearchResult searchResult) {
-        searchResult.setUuid(UUID.randomUUID().toString());
+        searchResult.setUuid(UUID.randomUUID());
         return searchResultRepository.saveAndFlush(searchResult);
     }
 

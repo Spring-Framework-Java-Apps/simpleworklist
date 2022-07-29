@@ -24,7 +24,7 @@ public class SearchRequestServiceImpl implements SearchRequestService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public SearchRequest add(SearchRequest searchRequest) {
-        searchRequest.setUuid(UUID.randomUUID().toString());
+        searchRequest.setUuid(UUID.randomUUID());
         return searchRequestRepository.saveAndFlush(searchRequest);
     }
 

@@ -20,7 +20,7 @@ import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
-import org.woehlke.simpleworklist.services.TaskProjektService;
+import org.woehlke.simpleworklist.services.TransformTaskIntoProjektService;
 import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.user.session.UserSessionBean;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
@@ -41,13 +41,13 @@ public class ProjectRootController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
-    private final TaskProjektService taskProjektService;
+    private final TransformTaskIntoProjektService transformTaskIntoProjektService;
 
     @Autowired
-    public ProjectRootController(ProjectControllerService projectControllerService, TaskService taskService, TaskProjektService taskProjektService) {
+    public ProjectRootController(ProjectControllerService projectControllerService, TaskService taskService, TransformTaskIntoProjektService transformTaskIntoProjektService) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
-        this.taskProjektService = taskProjektService;
+        this.transformTaskIntoProjektService = transformTaskIntoProjektService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -514,7 +514,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastProjectId(rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
+        return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)

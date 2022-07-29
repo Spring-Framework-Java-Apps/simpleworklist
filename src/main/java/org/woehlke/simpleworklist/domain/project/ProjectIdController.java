@@ -18,7 +18,7 @@ import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskState;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
-import org.woehlke.simpleworklist.services.TaskProjektService;
+import org.woehlke.simpleworklist.services.TransformTaskIntoProjektService;
 import org.woehlke.simpleworklist.domain.task.TaskService;
 import org.woehlke.simpleworklist.user.domain.account.UserAccount;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
@@ -41,17 +41,17 @@ public class ProjectIdController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
     private final TaskService taskService;
-    private final TaskProjektService taskProjektService;
+    private final TransformTaskIntoProjektService transformTaskIntoProjektService;
 
     @Autowired
     public ProjectIdController(
         ProjectControllerService projectControllerService,
         TaskService taskService,
-        TaskProjektService taskProjektService
+        TransformTaskIntoProjektService transformTaskIntoProjektService
     ) {
         this.projectControllerService = projectControllerService;
         this.taskService = taskService;
-        this.taskProjektService = taskProjektService;
+        this.transformTaskIntoProjektService = transformTaskIntoProjektService;
     }
 
     @RequestMapping(path = "/task/add", method = RequestMethod.GET)
@@ -671,6 +671,6 @@ public class ProjectIdController extends AbstractController {
         userSession.setLastProjectId(thisProject.getId());
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        return taskProjektService.transformTaskIntoProjectGet(task, userSession, model);
+        return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 }

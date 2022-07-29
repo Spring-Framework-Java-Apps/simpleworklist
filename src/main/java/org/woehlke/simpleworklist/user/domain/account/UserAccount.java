@@ -123,7 +123,7 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
         u.setUserEmail(userEmail);
         u.setUserFullname(userFullname);
         u.setUserPassword(userPassword);
-        u.setUuid(UUID.randomUUID().toString());
+        u.setUuid(UUID.randomUUID());
         u.setLastLoginTimestamp(now);
         u.setAccountNonExpired(true);
         u.setAccountNonLocked(true);

@@ -43,7 +43,7 @@ public class User2UserMessageServiceImpl implements User2UserMessageService {
         m.setSender(thisUser);
         m.setReceiver(otherUser);
         m.setReadByReceiver(false);
-        m.setUuid(UUID.randomUUID().toString());
+        m.setUuid(UUID.randomUUID());
         m.setMessageText(user2UserMessageFormBean.getMessageText());
         return userMessageRepository.saveAndFlush(m);
     }

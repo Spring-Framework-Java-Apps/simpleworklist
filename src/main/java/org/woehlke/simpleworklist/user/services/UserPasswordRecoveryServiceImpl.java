@@ -67,7 +67,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
             o = earlierOptIn;
             o.increaseNumberOfRetries();
         } else {
-            o.setUuid(UUID.randomUUID().toString());
+            o.setUuid(UUID.randomUUID());
         }
         o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
         o.setEmail(email);

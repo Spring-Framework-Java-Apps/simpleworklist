@@ -21,13 +21,13 @@ import java.util.Locale;
 
 @Slf4j
 @Service
-public class TaskStateControllerServiceImpl implements TaskStateControllerService {
+public class MoveTaskToTaskInTaskstateServiceImpl implements MoveTaskToTaskInTaskstateService {
 
     private final BreadcrumbService breadcrumbService;
     private final TaskService taskService;
 
     @Autowired
-    public TaskStateControllerServiceImpl(
+    public MoveTaskToTaskInTaskstateServiceImpl(
         BreadcrumbService breadcrumbService,
         TaskService taskService
     ) {

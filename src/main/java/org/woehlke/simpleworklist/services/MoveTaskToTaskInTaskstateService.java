@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.user.session.UserSessionBean;
 
 import java.util.Locale;
 
-public interface TaskStateControllerService {
+public interface MoveTaskToTaskInTaskstateService {
 
     String getTaskStatePage(
         TaskState taskState,
