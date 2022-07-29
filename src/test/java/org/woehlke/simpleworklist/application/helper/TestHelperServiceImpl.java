@@ -5,14 +5,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.project.ProjectRepository;
-import org.woehlke.simpleworklist.user.domain.register.UserRegistrationRepository;
-import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
+import org.woehlke.simpleworklist.domain.user.register.UserRegistrationRepository;
+import org.woehlke.simpleworklist.domain.user.resetpassword.UserPasswordRecovery;
+import org.woehlke.simpleworklist.domain.user.register.UserRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
-import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
-import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecoveryRepository;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountRepository;
+import org.woehlke.simpleworklist.domain.user.resetpassword.UserPasswordRecoveryRepository;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

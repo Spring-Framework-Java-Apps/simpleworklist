@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
-import org.woehlke.simpleworklist.user.domain.account.UserAccountForm;
-import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
-import org.woehlke.simpleworklist.user.domain.chat.User2UserMessage;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountRepository;
+import org.woehlke.simpleworklist.domain.user.chat.User2UserMessage;
 import org.woehlke.simpleworklist.domain.context.ContextRepository;
-import org.woehlke.simpleworklist.user.domain.chat.User2UserMessageRepository;
+import org.woehlke.simpleworklist.domain.user.chat.User2UserMessageRepository;
 
 @Slf4j
 @Service("userAccountService")

@@ -11,9 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
-import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
-import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserDetailsBean;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountRepository;
 
 @Slf4j
 @Service

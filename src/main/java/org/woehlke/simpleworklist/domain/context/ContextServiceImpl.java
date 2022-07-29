@@ -4,12 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.project.ProjectRepository;
 import org.woehlke.simpleworklist.domain.task.TaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import java.util.List;
 import java.util.Optional;

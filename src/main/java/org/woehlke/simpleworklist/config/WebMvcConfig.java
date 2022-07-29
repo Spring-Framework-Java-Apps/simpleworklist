@@ -18,7 +18,6 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
-import org.woehlke.simpleworklist.application.SimpleworklistProperties;
 
 import java.util.Locale;
 import java.util.Properties;

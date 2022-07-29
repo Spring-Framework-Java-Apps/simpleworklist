@@ -4,12 +4,12 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.woehlke.simpleworklist.application.SimpleworklistProperties;
+import org.woehlke.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.context.NewContextForm;
-import org.woehlke.simpleworklist.common.language.Language;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.domain.language.Language;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.user.services.UserAccountService;
 
 import java.util.Date;

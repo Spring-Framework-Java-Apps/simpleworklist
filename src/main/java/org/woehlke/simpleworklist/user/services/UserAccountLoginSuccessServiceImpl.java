@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
-import org.woehlke.simpleworklist.user.domain.account.UserAccountRepository;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountRepository;
 
 import java.util.Date;
 

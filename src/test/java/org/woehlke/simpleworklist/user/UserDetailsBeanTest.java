@@ -3,8 +3,8 @@ package org.woehlke.simpleworklist.user;
 
 
 import org.springframework.security.core.GrantedAuthority;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
-import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserDetailsBean;
 
 import java.util.Collection;
 

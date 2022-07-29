@@ -9,10 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.domain.task.Task;
-import org.woehlke.simpleworklist.domain.task.TaskRepository;
-import org.woehlke.simpleworklist.domain.task.TaskService;
-import org.woehlke.simpleworklist.domain.task.TaskState;
+import org.woehlke.simpleworklist.domain.taskworkflow.TaskState;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

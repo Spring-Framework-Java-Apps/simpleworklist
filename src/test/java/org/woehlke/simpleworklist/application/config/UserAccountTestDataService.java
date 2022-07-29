@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.application.config;
 
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 public interface UserAccountTestDataService {
 

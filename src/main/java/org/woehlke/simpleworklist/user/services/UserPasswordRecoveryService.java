@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
+import org.woehlke.simpleworklist.domain.user.resetpassword.UserPasswordRecovery;
 
 public interface UserPasswordRecoveryService {
 

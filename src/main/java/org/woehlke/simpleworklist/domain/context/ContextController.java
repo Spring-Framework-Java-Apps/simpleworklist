@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.simpleworklist.common.domain.AbstractController;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.application.framework.AbstractController;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.domain.search.SearchRequest;
-import org.woehlke.simpleworklist.domain.search.SearchResult;
+import org.woehlke.simpleworklist.domain.search.request.SearchRequest;
+import org.woehlke.simpleworklist.domain.search.request.SearchRequestService;
+import org.woehlke.simpleworklist.domain.search.result.SearchResult;
+import org.woehlke.simpleworklist.domain.search.result.SearchResultService;
 
 
 /**

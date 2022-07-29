@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.woehlke.simpleworklist.application.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

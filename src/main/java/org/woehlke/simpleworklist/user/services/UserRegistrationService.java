@@ -1,6 +1,6 @@
 package org.woehlke.simpleworklist.user.services;
 
-import org.woehlke.simpleworklist.user.domain.register.UserRegistration;
+import org.woehlke.simpleworklist.domain.user.register.UserRegistration;
 
 public interface UserRegistrationService {
 

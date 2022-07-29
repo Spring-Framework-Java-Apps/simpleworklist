@@ -2,7 +2,6 @@ package org.woehlke.simpleworklist.domain.task;
 
 import java.util.List;
 
-import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
+import org.woehlke.simpleworklist.domain.taskworkflow.TaskState;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {

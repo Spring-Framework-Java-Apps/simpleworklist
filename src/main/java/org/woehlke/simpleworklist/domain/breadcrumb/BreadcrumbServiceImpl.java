@@ -10,8 +10,8 @@ import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;
-import org.woehlke.simpleworklist.domain.task.TaskState;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.domain.taskworkflow.TaskState;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import java.util.Locale;
 import java.util.Optional;

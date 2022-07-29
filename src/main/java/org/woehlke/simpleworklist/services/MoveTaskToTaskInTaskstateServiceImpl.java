@@ -13,8 +13,8 @@ import org.woehlke.simpleworklist.domain.breadcrumb.BreadcrumbService;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskService;
-import org.woehlke.simpleworklist.domain.task.TaskState;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.domain.taskworkflow.TaskState;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 import java.util.Locale;

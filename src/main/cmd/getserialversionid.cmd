@@ -17,7 +17,7 @@ echo %CLASSPATH%
 cd target\classes
 serialver org.woehlke.simpleworklist.application.language.Language > ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.domain.task.TaskEnergy >> ..\..\etc\serialversions.txt
-serialver org.woehlke.simpleworklist.domain.task.TaskState >> ..\..\etc\serialversions.txt
+serialver org.woehlke.simpleworklist.domain.task.state.TaskState >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.domain.task.TaskTime >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.resetpassword.UserPasswordRecoveryStatus >> ..\..\etc\serialversions.txt
 serialver org.woehlke.simpleworklist.user.register.UserRegistrationStatus >> ..\..\etc\serialversions.txt

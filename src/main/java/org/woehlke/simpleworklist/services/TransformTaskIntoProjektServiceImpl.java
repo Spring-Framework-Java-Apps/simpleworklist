@@ -9,7 +9,7 @@ import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.project.ProjectService;
 import org.woehlke.simpleworklist.domain.task.Task;
 import org.woehlke.simpleworklist.domain.task.TaskService;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
 

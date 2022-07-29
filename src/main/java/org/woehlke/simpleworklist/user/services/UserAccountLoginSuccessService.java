@@ -1,7 +1,7 @@
 package org.woehlke.simpleworklist.user.services;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 public interface UserAccountLoginSuccessService {
 
