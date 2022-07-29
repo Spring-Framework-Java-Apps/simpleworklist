@@ -121,7 +121,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToInbox(@NotNull Task task) {
         log.info("addToInbox");
-        task.setUuid(UUID.randomUUID().toString());
+        task.setUuid(UUID.randomUUID());
         task.setRootProject();
         task.unsetFocus();
         task.setTaskState(TaskState.INBOX);
@@ -138,7 +138,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToProject(@NotNull Task task) {
         log.info("addToProject");
-        task.setUuid(UUID.randomUUID().toString());
+        task.setUuid(UUID.randomUUID());
         task.unsetFocus();
         long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(),task.getContext());
         task.setOrderIdProject(++maxOrderIdProject);
@@ -153,7 +153,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToRootProject(@NotNull Task task) {
         log.info("addToRootProject");
-        task.setUuid(UUID.randomUUID().toString());
+        task.setUuid(UUID.randomUUID());
         task.setRootProject();
         task.unsetFocus();
         task.moveToInbox();

@@ -29,7 +29,7 @@ public class TestDataController {
     @RequestMapping(path = "/createTree", method = RequestMethod.GET)
     public String createTestCategoryTree() {
         UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        testDataService.createTestCategoryTreeForUserAccount(user);
+        testDataService.createTestData(user);
         return "redirect:/home";
     }
 

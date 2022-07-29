@@ -100,7 +100,7 @@ public class ProjectRootController extends AbstractController {
             model.addAttribute("userSession", userSession);
             return "project/root/project/add";
         } else {
-            project.setUuid(UUID.randomUUID().toString());
+            project.setUuid(UUID.randomUUID());
             return projectControllerService.addNewProjectToProjectRootPersist(
                 userSession,
                 project,

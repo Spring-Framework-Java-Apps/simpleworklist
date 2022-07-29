@@ -76,7 +76,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Project add(@NotNull Project entity) {
         log.info("saveAndFlush");
-        entity.setUuid(UUID.randomUUID().toString());
+        entity.setUuid(UUID.randomUUID());
         return projectRepository.saveAndFlush(entity);
     }
 

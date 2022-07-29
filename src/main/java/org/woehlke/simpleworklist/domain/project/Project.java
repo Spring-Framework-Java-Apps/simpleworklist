@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.domain.project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
 import javax.persistence.Index;
@@ -145,6 +146,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     public static Project newProjectFactoryForParentProject(Project parent) {
         Project thisProject = new Project();
+        thisProject.setUuid(UUID.randomUUID());
         //thisProject.setName("name");
         thisProject.setParent(parent);
         thisProject.setContext(parent.getContext());
@@ -153,6 +155,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     public static Project newRootProjectFactory(Context context) {
         Project thisProject = new Project();
+        thisProject.setUuid(UUID.randomUUID());
         thisProject.setParent(null);
         thisProject.setContext(context);
         return thisProject;

@@ -15,6 +15,6 @@ public class TokenGeneratorServiceImpl implements TokenGeneratorService {
     public String getToken() {
         int base = 130;
         int strLength = 30;
-        return new BigInteger(base, random).toString(strLength) + UUID.randomUUID().toString();
+        return new BigInteger(base, random).toString(strLength) + UUID.randomUUID();
     }
 }

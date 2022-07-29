@@ -35,7 +35,7 @@ public class TestDataServiceImpl implements TestDataService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void createTestCategoryTreeForUserAccount(UserAccount userAccount) {
+    public void createTestData(UserAccount userAccount) {
         log.info("----------------------------------------------");
         log.info("createTestCategoryTreeForUserAccount");
         log.info("----------------------------------------------");
@@ -60,8 +60,6 @@ public class TestDataServiceImpl implements TestDataService {
         String name02020303 = "test02020303_" + now;
         Project c01 = Project.newRootProjectFactory(contextWork);
         Project c02 = Project.newRootProjectFactory(contextWork);
-        c01.setUuid(UUID.randomUUID().toString());
-        c02.setUuid(UUID.randomUUID().toString());
         c01.setName(name01);
         c02.setName(name02);
         c01.setDescription("description01 for " + name01 + " " + loremIpsumProject);
@@ -76,10 +74,6 @@ public class TestDataServiceImpl implements TestDataService {
         Project c0102 = Project.newProjectFactoryForParentProject(c01);
         Project c0201 = Project.newProjectFactoryForParentProject(c02);
         Project c0202 = Project.newProjectFactoryForParentProject(c02);
-        c0101.setUuid(UUID.randomUUID().toString());
-        c0102.setUuid(UUID.randomUUID().toString());
-        c0201.setUuid(UUID.randomUUID().toString());
-        c0202.setUuid(UUID.randomUUID().toString());
         c0101.setName(name0101);
         c0102.setName(name0102);
         c0201.setName(name0201);
@@ -105,9 +99,6 @@ public class TestDataServiceImpl implements TestDataService {
         Project c020201 = Project.newProjectFactoryForParentProject(c0202);
         Project c020202 = Project.newProjectFactoryForParentProject(c0202);
         Project c020203 = Project.newProjectFactoryForParentProject(c0202);
-        c020201.setUuid(UUID.randomUUID().toString());
-        c020202.setUuid(UUID.randomUUID().toString());
-        c020203.setUuid(UUID.randomUUID().toString());
         c020201.setName(name020201);
         c020202.setName(name020202);
         c020203.setName(name020203);
@@ -129,9 +120,6 @@ public class TestDataServiceImpl implements TestDataService {
         Project c02020301 = Project.newProjectFactoryForParentProject(c020203);
         Project c02020302 = Project.newProjectFactoryForParentProject(c020203);
         Project c02020303 = Project.newProjectFactoryForParentProject(c020203);
-        c02020301.setUuid(UUID.randomUUID().toString());
-        c02020302.setUuid(UUID.randomUUID().toString());
-        c02020303.setUuid(UUID.randomUUID().toString());
         c02020301.setName(name02020301);
         c02020302.setName(name02020302);
         c02020303.setName(name02020303);
@@ -154,7 +142,7 @@ public class TestDataServiceImpl implements TestDataService {
             String title = "title_" + i;
             String text = "desc_" + i + " "+ loremIpsumTask;
             Task task = new Task();
-            task.setUuid(UUID.randomUUID().toString());
+            task.setUuid(UUID.randomUUID());
             task.setText(text);
             task.setTitle(title);
             task.setProject(c02020303);
@@ -176,7 +164,7 @@ public class TestDataServiceImpl implements TestDataService {
             String title = "title_" + i;
             String text = "desc_" + i + " "+ loremIpsumTask;
             Task task = new Task();
-            task.setUuid(UUID.randomUUID().toString());
+            task.setUuid(UUID.randomUUID());
             task.setText(text);
             task.setTitle(title);
             task.setProject(null);

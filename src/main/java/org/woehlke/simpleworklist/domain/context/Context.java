@@ -77,7 +77,7 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     public Context(String nameDe, String nameEn) {
         this.nameDe = nameDe;
         this.nameEn = nameEn;
-        this.uuid = UUID.randomUUID().toString();
+        this.uuid = UUID.randomUUID();
     }
 
     @Transient

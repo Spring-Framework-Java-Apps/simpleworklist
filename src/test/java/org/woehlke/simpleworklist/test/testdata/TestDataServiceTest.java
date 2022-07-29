@@ -55,6 +55,6 @@ public class TestDataServiceTest {
         userAccountTestDataService.setUp();
         UserAccount userAccount = userAccountTestDataService.getFirstUserAccount();
         //TODO: #128
-        testDataService.createTestCategoryTreeForUserAccount(userAccount);
+        testDataService.createTestData(userAccount);
     }
 }
