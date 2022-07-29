@@ -1398,11 +1398,11 @@
                                         <file>${project.basedir}/src/site/markdown/REQUIREMENTS_NONFUNCTIONAL.md</file>
                                         <file>${project.basedir}/src/site/markdown/TODO.md</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
-                                        <file>${project.basedir}/build.sh</file>
-                                        <file>${project.basedir}/run.sh</file>
+                                        <file>${project.basedir}/etc/build.sh</file>
+                                        <file>${project.basedir}/etc/run.sh</file>
                                         <file>${project.basedir}/src/main/bash/psql.sh</file>
-                                        <file>${project.basedir}/docker-start.sh</file>
-                                        <file>${project.basedir}/docker-stop.sh</file>
+                                        <file>${project.basedir}/etc/docker-start.sh</file>
+                                        <file>${project.basedir}/etc/docker-stop.sh</file>
                                         <file>${project.basedir}/src/main/sql/db-createdb-and-user-linux.sql</file>
                                         <file>${project.basedir}/src/main/sql/db-createdb-and-user-win10.sql</file>
                                     </files>
