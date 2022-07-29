@@ -94,6 +94,7 @@
         <xmlunit2.version>2.6.4</xmlunit2.version>
         <xmlunit.version>2.6.4</xmlunit.version>
         <htmlunit.version>2.43.0</htmlunit.version>
+        <groovy-all.version>2.4.21</groovy-all.version>
         <hamcrest.version>2.2</hamcrest.version>
         <jsoup.version>1.14.2</jsoup.version>
 
@@ -289,7 +290,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -625,7 +625,7 @@
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>2.4.21</version>
+                <version>${groovy-all.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -648,7 +648,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
         <!-- spring-boot-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -737,7 +736,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-integration</artifactId>
         </dependency>
-
         <!-- org.springframework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -1333,23 +1331,6 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                 </plugin>
-                <!--
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${maven-install-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                </plugin>
-                -->
             </plugins>
         </pluginManagement>
         <plugins>
