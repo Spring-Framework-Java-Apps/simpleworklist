@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.application.framework.AbstractController;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.services.MoveTaskToTaskInTaskstateService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import lombok.extern.slf4j.Slf4j;

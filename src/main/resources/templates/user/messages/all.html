@@ -5,13 +5,13 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=true)">
-    <title th:text="'SimpleWorklist | ' + #{pages.user2UserMessages.h1}">Title</title>
+    <title th:text="'SimpleWorklist | ' + #{pages.chatMessages.h1}">Title</title>
 </head>
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
     <div th:fragment="mytwtitle">
         <h1>
-            <span th:utext="#{pages.user2UserMessages.h1}">Your Dialog with</span>
+            <span th:utext="#{pages.chatMessages.h1}">Your Dialog with</span>
             <small th:text="${otherUser.userFullname}">otherUser.userFullname</small>
         </h1>
     </div>
@@ -42,7 +42,7 @@
                           th:object="${newUser2UserMessage}" method="post">
                         <div class="form-group">
                             <label for="textEditor" class="control-label">
-                                <span th:utext="#{pages.user2UserMessages.newMessage}">New Message:</span>
+                                <span th:utext="#{pages.chatMessages.newMessage}">New Message:</span>
                             </label>
                             <textarea id="textEditor" rows="3" cols="50"
                                       th:field="*{messageText}" class="form-control form-control-lg" />
@@ -55,7 +55,7 @@
                         </div>
                         <button id="newUserMessageButton" type="submit" class="btn btn-primary">
                             <i class="fas fa-envelope"></i>
-                            <span th:utext="#{pages.user2UserMessages.newUserMessageButton}">Send Message</span>
+                            <span th:utext="#{pages.chatMessages.newUserMessageButton}">Send Message</span>
                         </button>
                     </form>
                 </div>

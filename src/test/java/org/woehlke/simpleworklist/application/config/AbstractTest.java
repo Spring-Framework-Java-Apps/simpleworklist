@@ -10,10 +10,10 @@ import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.services.UserAccountService;
-import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
-import org.woehlke.simpleworklist.user.services.SimpleworklistUserAccountSecurityService;
-import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
+import org.woehlke.simpleworklist.application.login.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.application.login.account.SimpleworklistUserAccountSecurityService;
+import org.woehlke.simpleworklist.application.login.UserAccountLoginSuccessService;
 
 
 import java.net.URL;

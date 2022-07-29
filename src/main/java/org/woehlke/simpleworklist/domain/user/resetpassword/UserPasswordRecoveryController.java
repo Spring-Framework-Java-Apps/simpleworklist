@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.register.UserRegistrationForm;
-import org.woehlke.simpleworklist.user.services.UserAccountService;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
 
 import javax.validation.Valid;
 

@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.application.config.AbstractTest;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
-import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.user.services.UserRegistrationService;
+import org.woehlke.simpleworklist.domain.user.resetpassword.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.domain.user.register.UserRegistrationService;
 import org.woehlke.simpleworklist.application.login.LoginForm;
 
 import static org.junit.jupiter.api.Assertions.*;

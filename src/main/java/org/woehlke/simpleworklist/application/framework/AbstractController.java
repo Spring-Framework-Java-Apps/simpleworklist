@@ -15,13 +15,13 @@ import org.woehlke.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.simpleworklist.domain.task.TaskTime;
 import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.project.ProjectService;
-import org.woehlke.simpleworklist.user.services.User2UserMessageService;
-import org.woehlke.simpleworklist.user.services.UserAccountService;
+import org.woehlke.simpleworklist.domain.user.chat.ChatMessageService;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.services.UserAccountAccessService;
-import org.woehlke.simpleworklist.user.services.UserAccountLoginSuccessService;
+import org.woehlke.simpleworklist.application.login.access.UserAccountAccessService;
+import org.woehlke.simpleworklist.application.login.UserAccountLoginSuccessService;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public abstract class AbstractController {
     protected UserAccountAccessService userAccountAccessService;
 
     @Autowired
-    protected User2UserMessageService user2UserMessageService;
+    protected ChatMessageService chatMessageService;
 
     @Autowired
     protected UserAccountLoginSuccessService userAccountLoginSuccessService;
@@ -86,7 +86,7 @@ public abstract class AbstractController {
     @ModelAttribute("numberOfNewIncomingMessages")
     public final int getNumberOfNewIncomingMessages(){
         UserAccount user = this.getUser();
-        return user2UserMessageService.getNumberOfNewIncomingMessagesForUser(user);
+        return chatMessageService.getNumberOfNewIncomingMessagesForUser(user);
     }
 
     @ModelAttribute("listTaskEnergy")

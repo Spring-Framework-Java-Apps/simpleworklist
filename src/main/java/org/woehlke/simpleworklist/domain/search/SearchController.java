@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.woehlke.simpleworklist.application.framework.AbstractController;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.simpleworklist.domain.search.result.SearchResult;
-import org.woehlke.simpleworklist.services.SearchService;
 import org.woehlke.simpleworklist.application.session.UserSessionBean;
 import org.woehlke.simpleworklist.domain.context.Context;
 

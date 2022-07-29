@@ -10,7 +10,7 @@ import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.simpleworklist.domain.language.Language;
 import org.woehlke.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.simpleworklist.user.services.UserAccountService;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountService;
 
 import java.util.Date;
 
