@@ -26,6 +26,7 @@
                     <thead>
                     <tr>
                         <th class="task_col task_col_info_icons" th:utext="#{tasks.col.info.icons}">&nbsp;</th>
+                        <th class="task_col task_col_info_icons" th:utext="#{tasks.col.focus}">Focus</th>
                         <th class="task_col task_col_title" th:text="#{tasks.col.title}">
                             Title
                         </th>
@@ -56,7 +57,6 @@
                         ondrop="dropTask2Task(event)" ondragover="allowDropOfTask(event)">
 
                         <td th:id="'task_' + ${task.id} + '_col_info_icons'" class="task_col task_col_info_icons">
-
                             <a th:href="@{{myUrlPath}/task/{id}/complete(id=${task.id},myUrlPath=${myUrlPath})}"
                                th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
                                class="task_col_content task_col_content_finish twtooltip" data-placement="bottom"
@@ -73,6 +73,8 @@
                                th:if="${task.taskState.name() eq 'TRASHED'}"
                                th:alt-title="#{task.col.twtooltip.infoicons.trash}"
                                draggable="true" ondragstart="dragTask(event)" data-placement="bottom"></i>
+                        </td>
+                        <td th:id="'task_' + ${task.id} + '_col_focus_icons'" class="task_col task_col_info_icons">
                             <a th:if="${task.focus}" th:href="@{{myUrlPath}/task/{id}/unsetfocus(id=${task.id},myUrlPath=${myUrlPath})}"
                                class="task_col_content task_col_content_unsetfocus twtooltip" data-placement="bottom"
                                th:alt-title="#{task.col.twtooltip.infoicons.unsetfocus}"
@@ -168,7 +170,8 @@
                 th:attr="data-bs-target='#taskModalScrollable_'+${task.id}"
                 th:id="'task_' + ${task.id} + '_col_button_modal'"
                 draggable="true" ondragstart="dragTask(event)"
-                th:alt-title="#{task.col.twtooltip.show.details}" th:text="${task.title}">
+                th:alt-title="#{task.col.twtooltip.show.details}"
+                th:text="${task.title}">
             Launch Task Modal
         </button>
         <!-- Modal -->
@@ -177,39 +180,39 @@
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="taskModalScrollableTitle">
-                            <a th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}"
-                               th:href="@{{myUrlPath}/task/{id}/complete(id=${task.id},myUrlPath=${myUrlPath})}">
-                                <i class="far fa-square"></i>
-                            </a>
-                            <a th:if="${task.taskState.name() eq 'COMPLETED'}"
-                               th:href="@{{myUrlPath}/task/{id}/incomplete(id=${task.id},myUrlPath=${myUrlPath})}" >
-                                <i class="fas fa-check-square"></i>
-                            </a>
-                            <i class="fas fa-trash-alt" th:if="${task.taskState.name() eq 'TRASHED'}"></i>
-                            <a th:if="${task.focus}"
-                               th:href="@{{myUrlPath}/task/{id}/unsetfocus(id=${task.id},myUrlPath=${myUrlPath})}">
-                                <i class="fas fa-star"></i>
-                            </a>
-                            <a th:if="${not task.focus}"
-                               th:href="@{{myUrlPath}/task/{id}/setfocus(id=${task.id},myUrlPath=${myUrlPath})}">
-                                <i class="far fa-star"></i>
-                            </a>
-                            <span th:text="${task.title}">Modal title</span>
-                            <span class="badge badge-pill badge-dark"
-                                  th:if="${task.taskEnergy.value ne 'NONE'}"
-                                  th:text="${#messages.msgOrNull(task.taskEnergy.code)}">
-                                task.taskEnergy.code
-                            </span>
-                            <span class="badge badge-pill badge-dark"
-                                  th:if="${task.taskTime.value ne 'NONE'}"
-                                  th:text="${#messages.msgOrNull(task.taskTime.code)}">
-                                task.taskTime.code
-                            </span>
-                        </h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                      <h5 class="modal-title" id="taskModalScrollableTitle">
+                        <span th:if="${task.taskState.name() ne 'COMPLETED' and task.taskState.name() ne 'TRASHED'}" class="me-2">
+                          <a th:href="@{{myUrlPath}/task/{id}/complete(id=${task.id},myUrlPath=${myUrlPath})}">
+                              <i class="far fa-square me-0"></i></a>
+                        </span>
+                        <span th:if="${task.taskState.name() eq 'COMPLETED'}" class="me-2">
+                          <a th:href="@{{myUrlPath}/task/{id}/incomplete(id=${task.id},myUrlPath=${myUrlPath})}">
+                              <i class="fas fa-check-square me-0"></i></a>
+                        </span>
+                          <span th:if="${task.taskState.name() eq 'TRASHED'}" class="me-2">
+                            <i class="fas fa-trash-alt"></i>
+                          </span>
+                          <span th:if="${task.focus}" class="me-2">
+                            <a th:href="@{{myUrlPath}/task/{id}/unsetfocus(id=${task.id},myUrlPath=${myUrlPath})}">
+                                <i class="fas fa-star"></i></a>
+                          </span>
+                          <span th:if="${not task.focus}" class="me-2">
+                            <a th:href="@{{myUrlPath}/task/{id}/setfocus(id=${task.id},myUrlPath=${myUrlPath})}">
+                                <i class="far fa-star"></i></a>
+                          </span>
+                          <span th:text="${task.title}" class="me-2">Modal title</span>
+                          <span class="badge badge-pill badge-dark me-2"
+                                th:if="${task.taskEnergy.value ne 'NONE'}"
+                                th:text="${#messages.msgOrNull(task.taskEnergy.code)}">
+                              task.taskEnergy.code
+                          </span>
+                          <span class="badge badge-pill badge-dark me-2"
+                                th:if="${task.taskTime.value ne 'NONE'}"
+                                th:text="${#messages.msgOrNull(task.taskTime.code)}">
+                              task.taskTime.code
+                          </span>
+                      </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div>
