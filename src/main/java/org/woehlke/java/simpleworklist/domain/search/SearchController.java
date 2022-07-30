@@ -11,7 +11,7 @@ import org.woehlke.java.simpleworklist.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.search.result.SearchResult;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.Breadcrumb;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,7 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.context;
 
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import java.util.List;
 import java.util.Optional;

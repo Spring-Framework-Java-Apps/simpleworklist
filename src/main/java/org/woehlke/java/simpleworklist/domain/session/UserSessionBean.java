@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.application.session;
+package org.woehlke.java.simpleworklist.domain.session;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class UserSessionBean implements Serializable {
     private Long lastContextId;
     private Long lastProjectId;
     private Long lastTaskId;
-    private TaskState lastTaskState;
+    private TaskState lastTaskState; //TODO: make it to String?
     private String lastSearchterm; //TODO: Make SearchRequest to Entity
 
     public UserSessionBean(){

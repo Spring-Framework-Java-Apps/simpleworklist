@@ -11,7 +11,7 @@ import org.woehlke.java.simpleworklist.domain.project.Project;
 import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.context.ContextService;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import java.util.Locale;
 import java.util.Optional;

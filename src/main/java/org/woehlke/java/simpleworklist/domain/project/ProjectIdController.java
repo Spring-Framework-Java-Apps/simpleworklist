@@ -21,7 +21,7 @@ import org.woehlke.java.simpleworklist.domain.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
