@@ -2,7 +2,7 @@ package org.woehlke.java.simpleworklist.domain.user.signup;
 
 import javax.validation.constraints.Email;
 
-import org.woehlke.java.simpleworklist.test.application.framework.AuditModel;
+import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

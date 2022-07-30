@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.test.application.session;
+package org.woehlke.java.simpleworklist.application.session;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

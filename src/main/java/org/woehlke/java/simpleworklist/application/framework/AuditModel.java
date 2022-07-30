@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.test.application.framework;
+package org.woehlke.java.simpleworklist.application.framework;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

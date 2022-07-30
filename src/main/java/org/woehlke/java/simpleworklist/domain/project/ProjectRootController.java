@@ -21,8 +21,8 @@ import org.woehlke.java.simpleworklist.domain.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.test.application.framework.AbstractController;
-import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.application.framework.AbstractController;
+import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
 
 import javax.validation.Valid;
 import java.util.List;

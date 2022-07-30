@@ -4,7 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 //import org.hibernate.validator.constraints.SafeHtml;
-import org.woehlke.java.simpleworklist.test.application.framework.AuditModel;
+import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 
 import javax.persistence.*;

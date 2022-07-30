@@ -4,7 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.task.Task;
-import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
 
 import java.util.Locale;
 

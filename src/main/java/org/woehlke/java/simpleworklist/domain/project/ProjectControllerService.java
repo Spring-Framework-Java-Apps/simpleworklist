@@ -5,7 +5,7 @@ import org.springframework.validation.BindingResult;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
 
 import java.util.Locale;
 

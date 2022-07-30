@@ -2,8 +2,8 @@ package org.woehlke.java.simpleworklist.domain.user.accountpassword;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.woehlke.java.simpleworklist.test.application.framework.AuditModel;
-import org.woehlke.java.simpleworklist.test.application.framework.ComparableById;
+import org.woehlke.java.simpleworklist.application.framework.AuditModel;
+import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 
 import javax.persistence.*;
