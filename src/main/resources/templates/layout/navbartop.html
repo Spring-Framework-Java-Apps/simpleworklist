@@ -4,103 +4,102 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
-    <div th:fragment="navbartop(contexts,locale,thisProject,numberOfNewIncomingMessages,ctx)" >
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" th:href="@{/}">
-                    <i class="fas fa-list-alt"></i>
-                    <span th:text="#{navbar.brand.name}">SimpleWorklist</span>
+  <div th:fragment="navbartop(contexts,locale,thisProject,numberOfNewIncomingMessages,ctx)">
+    <div class="container-fluid">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar"
+                  aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <a class="navbar-brand" th:href="@{/}">
+            <i class="fas fa-list-alt"></i>
+            <span th:text="#{navbar.brand.name}">SimpleWorklist</span>
+          </a>
+
+          <div id="mynavbar" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="contextMenu" role="button"
+                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="fas fa-cloud"></i>
+                  <span th:text="#{layout.page.contexts}">"Context</span>
+                  <span class="caret"></span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar"
-                        aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div id="mynavbar" class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="contextMenu" role="button"
-                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                                <i class="fas fa-cloud"></i>
-                                <span th:text="#{layout.page.contexts}">"Context</span>
-                                ( <span th:text="${context}"/> )
-                                <span class="caret"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="contextMenu">
-                                <a class="dropdown-item" th:each="context : ${contexts}"
-                                   th:href="@{/context/choose/{id}(id=${context.id})}">
-                                    <span th:if="${locale eq 'de'}" th:text="${context.nameDe}"></span>
-                                    <span th:if="${locale ne 'de'}" th:text="${context.nameEn}"></span>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/selfservice/profile}">
-                                <i class="fas fa-user"></i>
-                                <span th:text="#{layout.page.showUsers}">User</span>
-                                ( <span sec:authentication="name"></span> )
-                                <span class="badge badge-pill badge-light"
-                                      th:if="${numberOfNewIncomingMessages gt 0}"
-                                      th:text="${numberOfNewIncomingMessages}">
-                                    numberOfNewIncomingMessages
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/logout}">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span th:text="#{layout.page.logout}">Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav mr-auto" sec:authorize="isAnonymous()">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/register/}">
-                                <i class="fas fa-user"></i>
-                                <span th:text="#{layout.page.register}">Register as New User</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/login/}">
-                                <i class="fas fa-sign-in-alt"></i>
-                                <span th:text="#{layout.page.login}">Login</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/resetPassword/}">
-                                <i class="fas fa-question-circle"></i>
-                                <span th:text="#{layout.page.passwordForgotten}">Password forgotten?</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a id="languageMenu" class="nav-link dropdown-toggle"
-                               role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                                <i class="fas fa-globe"></i><b class="caret"></b>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="contextMenu">
-                                <a th:href="@{{url}(lang='de',url=${#request.getRequestURL()})}"
-                                   class="dropdown-item lang-switcher-de" >
-                                    <img class="lang-switcher-img" th:src="@{/img/de.png}"/>deutsch
-                                </a>
-                                <a th:href="@{{url}(lang='en',url=${#request.getRequestURL()})}"
-                                   class="dropdown-item lang-switcher-en">
-                                    <img class="lang-switcher-img" th:src="@{/img/gb.png}"/>english
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form th:action="@{/searchRequest}" class="form-inline my-2 my-lg-0" role="searchRequest" method="get"
-                          sec:authorize="isAuthenticated()">
-                        <input class="form-control mr-sm-2" type="searchRequest" name="searchterm" placeholder="Search"
-                               aria-label="Search">
-                        <button class="btn btn-outline-secondary btn-sm my-2 my-sm-0" type="submit">
-                            <i class="fas fa-searchRequest"></i>
-                        </button>
-                    </form>
+                <div class="dropdown-menu" aria-labelledby="contextMenu">
+                  <a class="dropdown-item" th:each="context : ${contexts}"
+                     th:href="@{/context/choose/{id}(id=${context.id})}">
+                    <span th:if="${locale eq 'de'}" th:text="${context.nameDe}"></span>
+                    <span th:if="${locale ne 'de'}" th:text="${context.nameEn}"></span>
+                  </a>
                 </div>
-            </div>
-        </nav>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/selfservice/profile}">
+                  <i class="fas fa-user"></i>
+                  <span th:text="#{layout.page.showUsers}">User</span>
+                  <span class="badge badge-pill badge-light"
+                        th:if="${numberOfNewIncomingMessages gt 0}"
+                        th:text="${numberOfNewIncomingMessages}">
+                                      numberOfNewIncomingMessages
+                                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/logout}">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span th:text="#{layout.page.logout}">Logout</span>
+                </a>
+              </li>
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAnonymous()">
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/register/}">
+                  <i class="fas fa-user"></i>
+                  <span th:text="#{layout.page.register}">Register as New User</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/login/}">
+                  <i class="fas fa-sign-in-alt"></i>
+                  <span th:text="#{layout.page.login}">Login</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/resetPassword/}">
+                  <i class="fas fa-question-circle"></i>
+                  <span th:text="#{layout.page.passwordForgotten}">Password forgotten?</span>
+                </a>
+              </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown">
+                <a id="languageMenu" class="nav-link dropdown-toggle"
+                   role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="fas fa-globe"></i><b class="caret"></b>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="contextMenu">
+                  <a th:href="@{{url}(lang='de',url=${#request.getRequestURL()})}"
+                     class="dropdown-item lang-switcher-de">
+                    <img class="lang-switcher-img" th:src="@{/img/de.png}"/>deutsch
+                  </a>
+                  <a th:href="@{{url}(lang='en',url=${#request.getRequestURL()})}"
+                     class="dropdown-item lang-switcher-en">
+                    <img class="lang-switcher-img" th:src="@{/img/gb.png}"/>english
+                  </a>
+                </div>
+              </li>
+            </ul>
+            <form class="d-flex" th:action="@{/searchRequest}" method="post" sec:authorize="isAuthenticated()">
+              <input class="form-control me-2 small" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </nav>
     </div>
+  </div>
 
 </html>
