@@ -50,7 +50,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         userAccountLoginSuccessService.updateLastLoginTimestamp(user);
         Locale locale;
         switch(user.getDefaultLanguage()){
-            case Language.DE: locale = Locale.GERMAN; break;
+            case DE: locale = Locale.GERMAN; break;
             default: locale = Locale.ENGLISH; break;
         }
         localeResolver.setLocale(request,response,locale);
