@@ -221,7 +221,11 @@ public class TaskServiceImpl implements TaskService {
             taskListChanged.add(task);
         }
         taskRepository.saveAll(taskListChanged);
-        taskRepository.deleteAll(taskListChanged);
+        List<Task> taskListDeleted = taskRepository.findByTaskStateAndContext(
+          TaskState.DELETED,
+          context
+        );
+        taskRepository.deleteAll(taskListDeleted);
     }
 
     @Override
