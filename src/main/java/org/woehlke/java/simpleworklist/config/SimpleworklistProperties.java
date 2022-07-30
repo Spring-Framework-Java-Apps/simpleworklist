@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Component
 @Getter
 @Setter
-@ConfigurationProperties(prefix="org.woehlke.simpleworklist")
+@ConfigurationProperties(prefix="org.woehlke.java.simpleworklist")
 @Validated
 public class SimpleworklistProperties {
 

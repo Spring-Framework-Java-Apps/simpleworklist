@@ -29,7 +29,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableJpaRepositories({
-    "org.woehlke.simpleworklist"
+    "org.woehlke.java.simpleworklist"
 })
 @EnableConfigurationProperties({
     SimpleworklistProperties.class
