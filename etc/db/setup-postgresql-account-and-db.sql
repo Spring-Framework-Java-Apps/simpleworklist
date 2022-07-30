@@ -20,6 +20,10 @@ CREATE TABLESPACE tablespace_simpleworklist
     OWNER tw
     LOCATION '/opt/postgresql/tablespace_simpleworklist';
 
+CREATE TABLESPACE tablespace_simpleworklist
+    OWNER tw
+    LOCATION 'C:\tablespace_pg\simpleworklist';
+
 ALTER TABLESPACE tablespace_simpleworklist
     OWNER TO simpleworklist;
 
@@ -34,38 +38,3 @@ CREATE DATABASE simpleworklistref
     ENCODING = 'UTF8'
     TABLESPACE = tablespace_simpleworklist
     CONNECTION LIMIT = -1;
-
-
-
-
-
-
-CREATE ROLE petclinic_jakartaee LOGIN
-    PASSWORD 'petclinic_jakartaeepwd'
-    SUPERUSER INHERIT CREATEDB CREATEROLE REPLICATION;
-GRANT pg_monitor TO petclinic_jakartaee;
-GRANT pg_read_all_settings TO petclinic_jakartaee;
-GRANT pg_read_all_stats TO petclinic_jakartaee;
-GRANT pg_signal_backend TO petclinic_jakartaee;
-GRANT pg_stat_scan_tables TO petclinic_jakartaee;
-
-
--- Database: petclinic_jakartaee
-
--- DROP DATABASE petclinic_jakartaee;
--- CONNECTION LIMIT = -1;
-
-CREATE TABLESPACE tablespace_petclinic_jakartae
-    OWNER tw
-    LOCATION '/opt/postgresql/tablespace_petclinic_jakartae';
-
-ALTER TABLESPACE tablespace_petclinic_jakartae
-    OWNER TO simpleworklist;
-
-CREATE DATABASE petclinic_jakartaee
-    WITH OWNER = petclinic_jakartaee
-    ENCODING = 'UTF8'
-    TABLESPACE = tablespace_petclinic_jakartae
-    CONNECTION LIMIT = -1;
-
-

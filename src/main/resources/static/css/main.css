@@ -1,101 +1,81 @@
 /* main.css  - (c) 2019 Thomas Woehlke */
+
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
-	font-family: 'Lato', sans-serif;
-	line-height: 1.5;
-	/*
-	font-family: 'Varela Round', sans-serif;
-	font-family: 'Roboto', sans-serif;
-	font-family: 'Open Sans', sans-serif;
-	font-family: 'Poppins', sans-serif;
-	font-family: 'Lato', sans-serif;
-	font-family: 'Montserrat', sans-serif;
-	*/
-	/*
-	font-family: 'Nunito', sans-serif;
-	font-family: 'Open Sans', sans-serif;
-	font-family: 'Montserrat', sans-serif;
-	font-family: 'Lato', sans-serif;
-	*/
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.5;
 }
 
-h1,h2,h3,h4,h5,h6 {
-	font-family: 'Varela Round', sans-serif;
-	font-weight:bold
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Varela Round', sans-serif;
+  font-weight: bold
 }
 
-tt,th,code,kbd,samp,pre{
-	font-family: 'Varela Round', sans-serif;
+tt, th, code, kbd, samp, pre {
+  font-family: 'Varela Round', sans-serif;
 }
-
 
 .jumbotron {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 div#tw-content-title-actionbuttons {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 div#collapseDescription {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
-@media (min-width: 576px){
-    .jumbotron {
-        padding: 2rem 1rem !important;
-    }
+@media (min-width: 576px) {
+  .jumbotron {
+    padding: 2rem 1rem !important;
+  }
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    /* height: 30px; */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  /* height: 30px; */
 }
-
-/*
-.navbar {
-    padding: .25rem .5rem !important;
-}
- */
 
 #taskStateNavigationContainer {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .navbar-text-footer {
-    display: inline-block;
+  display: inline-block;
 }
 
 .navbar-dark .navbar-text-footer {
-    color: rgba(255,255,255,.5);
+  color: rgba(255, 255, 255, .5);
 }
 
 .nav-list {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 #rootCategory {
-    padding-left: 0px !important;
+  padding-left: 0px !important;
 }
 
 #tw-main-section {
-    padding-bottom: 1rem !important;
-    margin-bottom: 1rem !important;
+  padding-bottom: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 
 #user-login-form {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 #user-login-form-more-information {
@@ -103,13 +83,13 @@ div#collapseDescription {
 }
 
 #newUser2UserMessageForm {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 #tw-project-submenu-col {
-    padding-top:  0.75rem;
+  padding-top: 0.75rem;
 }
 
 #tw-project-submenu-root {
-    margin-top: 0.75rem;
+  margin-top: 0.75rem;
 }

@@ -62,58 +62,59 @@ spring:
       continue-on-error: true
 org:
   woehlke:
-    simpleworklist:
-      mail:
-        host: ${SIMPLEWORKLIST_MAIL_SMTP_HOST}
-        port: ${SIMPLEWORKLIST_MAIL_SMTP_PORT}
-        username: ${SIMPLEWORKLIST_MAIL_SMTP_USERNAME}
-        password: ${SIMPLEWORKLIST_MAIL_SMTP_PASSWORD}
-        auth: true
-        sslEnable: true
-        socketFactoryPort: 465
-        socketFactoryClass: javax.net.ssl.SSLSocketFactory
-      registration:
-        maxRetries: 5
-        ttlEmailVerificationRequest: 86400000
-        urlHost: ${SIMPLEWORKLIST_URL_APP_HOST}
-        mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
-      webMvc:
-        controllerPageSize: 10
-        staticResourceHandler:
-          - "/css"
-          - "/img"
-          - "/js"
-        dynamicResourceHandler:
-          - "/webjars"
-      webSecurity:
-        strengthBCryptPasswordEncoder: 10
-        # iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
-        # hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
-        # secret: ${SIMPLEWORKLIST_USER_SECRET}
-        loginProcessingUrl: "/j_spring_security_check"
-        logoutUrl: "/user/logout"
-        cookieNamesToClear:
-          - "JSESSIONID"
-        invalidateHttpSession: true
-        defaultSuccessUrl: "/"
-        failureForwardUrl: "/user/login?login_error=1"
-        usernameParameter: "j_username"
-        passwordParameter: "j_password"
-        loginPage: "/user/login"
-        antPatternsPublic:
-          - "/webjars/**"
-          - "/css/**"
-          - "/img/**"
-          - "/js/**"
-          - "/favicon.ico"
-          - "/user/login*"
-          - "/user/register*"
-          - "/user/register/**"
-          - "/user/register/confirm/**"
-          - "/user/resetPassword*"
-          - "/user/resetPassword/**"
-          - "/user/resetPassword/confirm/**"
-          - "/error*"
+    java:
+      simpleworklist:
+        mail:
+          host: ${SIMPLEWORKLIST_MAIL_SMTP_HOST}
+          port: ${SIMPLEWORKLIST_MAIL_SMTP_PORT}
+          username: ${SIMPLEWORKLIST_MAIL_SMTP_USERNAME}
+          password: ${SIMPLEWORKLIST_MAIL_SMTP_PASSWORD}
+          auth: true
+          sslEnable: true
+          socketFactoryPort: 465
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+        registration:
+          maxRetries: 5
+          ttlEmailVerificationRequest: 86400000
+          urlHost: ${SIMPLEWORKLIST_URL_APP_HOST}
+          mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
+        webMvc:
+          controllerPageSize: 10
+          staticResourceHandler:
+            - "/css"
+            - "/img"
+            - "/js"
+          dynamicResourceHandler:
+            - "/webjars"
+        webSecurity:
+          strengthBCryptPasswordEncoder: 10
+          # iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
+          # hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
+          # secret: ${SIMPLEWORKLIST_USER_SECRET}
+          loginProcessingUrl: "/j_spring_security_check"
+          logoutUrl: "/user/logout"
+          cookieNamesToClear:
+            - "JSESSIONID"
+          invalidateHttpSession: true
+          defaultSuccessUrl: "/"
+          failureForwardUrl: "/user/login?login_error=1"
+          usernameParameter: "j_username"
+          passwordParameter: "j_password"
+          loginPage: "/user/login"
+          antPatternsPublic:
+            - "/webjars/**"
+            - "/css/**"
+            - "/img/**"
+            - "/js/**"
+            - "/favicon.ico"
+            - "/user/login*"
+            - "/user/register*"
+            - "/user/register/**"
+            - "/user/register/confirm/**"
+            - "/user/resetPassword*"
+            - "/user/resetPassword/**"
+            - "/user/resetPassword/confirm/**"
+            - "/error*"
 logging:
   level:
     root: INFO
@@ -169,14 +170,15 @@ logging:
       ch:
         qos: WARN
       woehlke:
-        simpleworklist:
-          application: DEBUG
-          config: DEBUG
-          measurements: DEBUG
-          user: DEBUG
-          domain: DEBUG
-          services: DEBUG
-          common: INFO
+        java:
+          simpleworklist:
+            application: DEBUG
+            config: DEBUG
+            measurements: DEBUG
+            user: DEBUG
+            domain: DEBUG
+            services: DEBUG
+            common: INFO
 debug: false
 ---
 spring:
@@ -210,12 +212,13 @@ logging:
         qos: WARN
       postgresql: WARN
       woehlke:
-        simpleworklist:
-          application: INFO
-          config: INFO
-          measurements: INFO
-          user: INFO
-          domain: INFO
-          services: INFO
-          common: INFO
+        java:
+          simpleworklist:
+            application: INFO
+            config: INFO
+            measurements: INFO
+            user: INFO
+            domain: INFO
+            services: INFO
+            common: INFO
 debug: false
