@@ -95,9 +95,8 @@
 
     <!-- Unit and Integration Testing -->
     <skipTests>true</skipTests>
-    <xmlunit2.version>2.6.4</xmlunit2.version>
-    <xmlunit.version>2.6.4</xmlunit.version>
-    <htmlunit.version>2.43.0</htmlunit.version>
+    <xmlunit.version>2.9.0</xmlunit.version>
+    <htmlunit.version>2.63.0</htmlunit.version>
     <groovy-all.version>2.4.21</groovy-all.version>
     <hamcrest.version>2.2</hamcrest.version>
     <jsoup.version>1.14.2</jsoup.version>
@@ -457,11 +456,23 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.3</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-invoker-plugin</artifactId>
         <version>${maven-invoker-plugin.version}</version>
         <type>maven-plugin</type>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>com.dkanejs.maven.plugins</groupId>
@@ -483,6 +494,12 @@
         <version>${maven-dependency-plugin.version}</version>
         <type>maven-plugin</type>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugins</groupId>
@@ -525,6 +542,12 @@
         <version>${maven-checkstyle-plugin.version}</version>
         <type>maven-plugin</type>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>com.github.spotbugs</groupId>
@@ -539,6 +562,12 @@
         <version>${maven-pmd-plugin.version}</version>
         <type>maven-plugin</type>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugins</groupId>
@@ -567,6 +596,12 @@
         <version>${maven-release-plugin.version}</version>
         <type>maven-plugin</type>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugins</groupId>
@@ -606,7 +641,7 @@
 
       <dependency>
         <groupId>org.xmlunit</groupId>
-        <artifactId>xmlunit-core</artifactId>
+        <artifactId>xmlunit-legacy</artifactId>
         <version>${xmlunit.version}</version>
         <scope>test</scope>
       </dependency>
@@ -655,6 +690,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-rest</artifactId>
@@ -667,6 +703,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jersey</artifactId>
     </dependency>
+    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -710,18 +747,17 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-logging</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web-services</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-    </dependency>
+    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-json</artifactId>
@@ -730,6 +766,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-integration</artifactId>
     </dependency>
+    -->
     <!-- org.springframework -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -772,6 +809,7 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-oxm</artifactId>
@@ -797,6 +835,7 @@
       <groupId>org.springframework.ws</groupId>
       <artifactId>spring-ws-support</artifactId>
     </dependency>
+    -->
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
@@ -904,11 +943,12 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
     </dependency>
-
+    -->
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
@@ -943,11 +983,13 @@
     </dependency>
     <dependency>
       <groupId>org.xmlunit</groupId>
-      <artifactId>xmlunit-core</artifactId>
+      <artifactId>xmlunit-legacy</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.htmlunit</groupId>
       <artifactId>htmlunit</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <!-- scm -->
@@ -987,6 +1029,12 @@
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-enforcer-plugin</artifactId>
       <type>maven-plugin</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
