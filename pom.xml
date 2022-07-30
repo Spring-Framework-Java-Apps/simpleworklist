@@ -1123,7 +1123,7 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <defaultGoal>clean dependency:tree package spring-boot:run</defaultGoal>
+    <defaultGoal>clean package spring-boot:run</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -1724,20 +1724,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
       </plugin>
-      <!--
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-      </plugin>
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      -->
     </plugins>
   </build>
 
@@ -1824,36 +1810,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <skipTests>${skipTests}</skipTests>
-          <includes>
-            <include>**/*Tests.java</include>
-            <include>**/*Test.java</include>
-          </includes>
-          <excludes>
-            <exclude>**/Abstract*.java</exclude>
-          </excludes>
-          <systemPropertyVariables>
-            <spring.profiles.active>default</spring.profiles.active>
-            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <configuration>
-          <skipTests>${skipTests}</skipTests>
-          <systemPropertyVariables>
-            <spring.profiles.active>default</spring.profiles.active>
-            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
-      <!-- Site Reports -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <configuration>
           <skipEmptyReport>true</skipEmptyReport>
@@ -1889,6 +1845,35 @@
           <excludeRoots>
             <excludeRoot>target</excludeRoot>
           </excludeRoots>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>${skipTests}</skipTests>
+          <includes>
+            <include>**/*Tests.java</include>
+            <include>**/*Test.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/Abstract*.java</exclude>
+          </excludes>
+          <systemPropertyVariables>
+            <spring.profiles.active>default</spring.profiles.active>
+            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <skipTests>${skipTests}</skipTests>
+          <systemPropertyVariables>
+            <spring.profiles.active>default</spring.profiles.active>
+            <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
