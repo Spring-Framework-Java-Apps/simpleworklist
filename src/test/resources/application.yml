@@ -159,7 +159,8 @@ logging:
       ch:
         qos: WARN
       woehlke:
-        simpleworklist: INFO
+        java:
+          simpleworklist: INFO
 ---
 spring:
   datasource:

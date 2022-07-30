@@ -2,7 +2,7 @@ package org.woehlke.java.simpleworklist.test.application.config;
 
 public interface Requirements {
 
-String Functional_Requirements = "Functional Requirements";
+    String Functional_Requirements = "Functional Requirements";
 
     String  F001 = "F001 Server Starts";
     String  F002 = "F002 Home Page rendered";
