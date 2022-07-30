@@ -54,21 +54,21 @@
   <distributionManagement>
     <site>
       <id>org.woehlke.java.simpleworklist</id>
-      <url>https://woehlke.org/java/simpleworklist</url>
-      <!--
       <url>file://${user.home}/public_html/java/simpleworklist</url>
+      <!--
+      <url>https://woehlke.org/java/simpleworklist</url>
       -->
     </site>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <name>tw-thinkpad-snapshots</name>
-      <url>file://${user.home}/public_html/java/libs-snapshot-local</url>
-    </snapshotRepository>
     <repository>
       <id>central</id>
       <name>tw-thinkpad-releases</name>
       <url>file://${user.home}/public_html/java/libs-release-local</url>
     </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>tw-thinkpad-snapshots</name>
+      <url>file://${user.home}/public_html/java/libs-snapshot-local</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <properties>
