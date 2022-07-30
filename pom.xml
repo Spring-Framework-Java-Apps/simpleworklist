@@ -53,10 +53,7 @@
   <distributionManagement>
     <site>
       <id>org.woehlke.java.simpleworklist</id>
-      <url>https://woehlke.org/java/simpleworklist</url>
-      <!--
       <url>file://${user.home}/public_html/java/simpleworklist</url>
-      -->
     </site>
     <snapshotRepository>
       <id>snapshots</id>
