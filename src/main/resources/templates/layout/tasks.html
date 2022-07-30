@@ -216,22 +216,21 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <b th:text="#{tasks.inbox.project}">Project</b>
-                            <a th:href="@{/project/{id}(id=${task.project.id})}"
-                               th:if="${task.project ne null}">
+                            <b th:text="#{tasks.inbox.project}" class="me-2">Project</b>
+                            <span th:if="${task.project ne null}">
+                              <a th:href="@{/project/{id}(id=${task.project.id})}">
+                                <i class="fas fa-folder-open"></i>
+                                <span th:text="${task.project.name}">task.project.name</span></a>
+                            </span>
+                            <span th:if="${task.project eq null}">
+                              <a th:href="@{/project/root}">
                                 <i class="fas fa-folder-open"></i>
                                 <b th:text="#{tasks.col.project}">tasks.col.project</b>
-                                <span th:text="${task.project.name}">task.project.name</span>
-                            </a>
-                            <a th:href="@{/project/root}"
-                               th:if="${task.project eq null}">
-                                <i class="fas fa-folder-open"></i>
-                                <b th:text="#{tasks.col.project}">tasks.col.project</b>
-                                <span th:text="#{tasks.col.projectroot}">tasks.col.projectroot</span>
-                            </a>
+                                <span th:text="#{tasks.col.projectroot}">tasks.col.projectroot</span></a>
+                            </span>
                         </div>
                         <div>
-                            <b th:utext="#{tasks.focus.taskState}">Task State</b>
+                            <b th:utext="#{tasks.focus.taskState}" class="me-2">Task State</b>
                             <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
                                 <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>

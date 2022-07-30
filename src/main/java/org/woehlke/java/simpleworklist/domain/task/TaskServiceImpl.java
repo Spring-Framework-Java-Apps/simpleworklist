@@ -221,6 +221,7 @@ public class TaskServiceImpl implements TaskService {
             taskListChanged.add(task);
         }
         taskRepository.saveAll(taskListChanged);
+        taskRepository.deleteAll(taskListChanged);
     }
 
     @Override
