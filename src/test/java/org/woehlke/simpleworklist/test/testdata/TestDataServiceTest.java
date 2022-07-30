@@ -11,8 +11,8 @@ import org.springframework.boot.web.servlet.context.ServletWebServerApplicationC
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.simpleworklist.application.config.UserAccountTestDataService;
-import org.woehlke.simpleworklist.common.testdata.TestDataService;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.domain.testdata.TestDataService;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 import java.net.URL;
 
@@ -25,6 +25,7 @@ public class TestDataServiceTest {
     @Autowired
     ServletWebServerApplicationContext server;
 
+    @SuppressWarnings("deprecation")
     @LocalServerPort
     int port;
 
@@ -54,6 +55,6 @@ public class TestDataServiceTest {
         userAccountTestDataService.setUp();
         UserAccount userAccount = userAccountTestDataService.getFirstUserAccount();
         //TODO: #128
-        testDataService.createTestCategoryTreeForUserAccount(userAccount);
+        testDataService.createTestData(userAccount);
     }
 }

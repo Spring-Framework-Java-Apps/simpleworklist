@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.woehlke.simpleworklist.common.domain.AbstractController;
+import org.woehlke.simpleworklist.application.framework.AbstractController;
 import org.woehlke.simpleworklist.domain.breadcrumb.Breadcrumb;
-import org.woehlke.simpleworklist.services.SearchService;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.domain.search.result.SearchResult;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 import org.woehlke.simpleworklist.domain.context.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +38,13 @@ public class SearchController extends AbstractController {
             @ModelAttribute("userSession") UserSessionBean userSession,
             Locale locale, Model model
     ) {
-        log.debug("searchResults");
+        log.info("searchResults");
         Context context = super.getContext(userSession);
         userSession.setLastSearchterm(searchterm);
         model.addAttribute("userSession", userSession);
-        log.debug("Search: "+ searchterm);
+        log.info("Search: "+ searchterm);
         SearchResult searchResult = searchService.search(searchterm, context);
-        log.debug("found: "+ searchResult.toString());
+        log.info("found: "+ searchResult.toString());
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForSearchResults(locale,userSession);
         model.addAttribute("searchResult",searchResult);
         model.addAttribute("breadcrumb",breadcrumb);

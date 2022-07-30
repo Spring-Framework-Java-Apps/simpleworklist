@@ -32,7 +32,7 @@
         <div th:replace="layout/tasks :: tw-tasks-message(message=${message})" th:if="${message} != null" id="mytwcontent-message">
         </div>
         <div th:if="${taskPage.getTotalElements() gt 0}" id="mytwcontent-taskpage">
-            <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='SCHEDULED', myUrlPath='/taskstate')">
+            <div th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage},myTaskState='SCHEDULED',myUrlPath=@{/taskstate})">
             </div>
         </div>
         <div th:if="${taskPage.getTotalElements() eq 0}" id="mytwcontent-no-taskpage">

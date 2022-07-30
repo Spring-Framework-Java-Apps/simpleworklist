@@ -10,8 +10,8 @@ import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.context.ContextService;
 import org.woehlke.simpleworklist.domain.project.Project;
 import org.woehlke.simpleworklist.domain.task.Task;
-import org.woehlke.simpleworklist.domain.task.TaskState;
-import org.woehlke.simpleworklist.user.session.UserSessionBean;
+import org.woehlke.simpleworklist.domain.taskworkflow.TaskState;
+import org.woehlke.simpleworklist.application.session.UserSessionBean;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForShowRootProject(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForShowRootProject");
+        log.info("getBreadcrumbForShowRootProject");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         breadcrumb.addProjectRoot();
@@ -42,7 +42,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForShowOneProject");
+        log.info("getBreadcrumbForShowOneProject");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         breadcrumb.addProjectRoot();
@@ -70,7 +70,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
         Locale locale,
         UserSessionBean userSession
     ) {
-        log.debug("getBreadcrumbForTaskstate");
+        log.info("getBreadcrumbForTaskstate");
         Optional<Context> contextResult = contextService.getContextFor(userSession);
         Context context;
         if(contextResult.isEmpty()){
@@ -87,7 +87,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForTaskInTaskstate");
+        log.info("getBreadcrumbForTaskInTaskstate");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         breadcrumb.addTaskstate(taskstate);
@@ -97,7 +97,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskstateAll(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForTaskstateAll");
+        log.info("getBreadcrumbForTaskstateAll");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="layout.page.all";
@@ -109,7 +109,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForTaskInProject");
+        log.info("getBreadcrumbForTaskInProject");
         Breadcrumb breadcrumb = new Breadcrumb(locale,thisProject.getContext());
         breadcrumb.addProject(thisProject);
         breadcrumb.addTask(task);
@@ -118,7 +118,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserProfileAndMenu");
+        log.info("getBreadcrumbForUserProfileAndMenu");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
@@ -130,7 +130,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangeName(Locale locale,UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserChangeName");
+        log.info("getBreadcrumbForUserChangeName");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
@@ -146,7 +146,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangePassword(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserChangePassword");
+        log.info("getBreadcrumbForUserChangePassword");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
@@ -162,7 +162,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContexts(Locale locale,UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserContexts");
+        log.info("getBreadcrumbForUserContexts");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
@@ -178,7 +178,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextAdd(Locale locale,UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserContextAdd");
+        log.info("getBreadcrumbForUserContextAdd");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
         String code="pages.user.profile";
@@ -194,7 +194,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserContextEdit");
+        log.info("getBreadcrumbForUserContextEdit");
         Optional<Context> contextFromSession = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
@@ -210,7 +210,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserContextDelete(Locale locale, Context context, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserContextDelete");
+        log.info("getBreadcrumbForUserContextDelete");
         Optional<Context> contextFromSession = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
@@ -226,7 +226,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForUserChangeLanguage");
+        log.info("getBreadcrumbForUserChangeLanguage");
         Optional<Context> contextFromSession = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
@@ -242,7 +242,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForMessagesBetweenCurrentAndOtherUser");
+        log.info("getBreadcrumbForMessagesBetweenCurrentAndOtherUser");
         Optional<Context> contextFromSession = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";
@@ -258,7 +258,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     @Override
     public Breadcrumb getBreadcrumbForSearchResults(Locale locale, UserSessionBean userSession) {
-        log.debug("getBreadcrumbForSearchResults");
+        log.info("getBreadcrumbForSearchResults");
         Optional<Context> contextFromSession = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, contextFromSession.get());
         String code="pages.user.profile";

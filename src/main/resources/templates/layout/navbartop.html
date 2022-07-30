@@ -11,7 +11,7 @@
                     <i class="fas fa-list-alt"></i>
                     <span th:text="#{navbar.brand.name}">SimpleWorklist</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar"
                         aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -19,7 +19,7 @@
                     <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="contextMenu" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
                                 <i class="fas fa-cloud"></i>
                                 <span th:text="#{layout.page.contexts}">"Context</span>
                                 ( <span th:text="${context}"/> )
@@ -54,19 +54,19 @@
                     </ul>
                     <ul class="navbar-nav mr-auto" sec:authorize="isAnonymous()">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/register}">
+                            <a class="nav-link" th:href="@{/user/register/}">
                                 <i class="fas fa-user"></i>
                                 <span th:text="#{layout.page.register}">Register as New User</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/login}">
+                            <a class="nav-link" th:href="@{/user/login/}">
                                 <i class="fas fa-sign-in-alt"></i>
                                 <span th:text="#{layout.page.login}">Login</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/resetPassword}">
+                            <a class="nav-link" th:href="@{/user/resetPassword/}">
                                 <i class="fas fa-question-circle"></i>
                                 <span th:text="#{layout.page.passwordForgotten}">Password forgotten?</span>
                             </a>
@@ -75,7 +75,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <a id="languageMenu" class="nav-link dropdown-toggle"
-                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                               role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
                                 <i class="fas fa-globe"></i><b class="caret"></b>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="contextMenu">

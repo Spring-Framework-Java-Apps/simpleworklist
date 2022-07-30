@@ -33,9 +33,11 @@ setenv.cmd
 /src/main/java/org/woehlke/simpleworklist/project/x.txt
 /src/main/java/org/woehlke/simpleworklist/task/x.txt
 /src/main/java/org/woehlke/simpleworklist/context/x.txt
-/src/main/java/org/woehlke/simpleworklist/common/error/x.txt
+/src/main/java/org/woehlke/simpleworklist/application/error/x.txt
 /src/main/java/org/woehlke/simpleworklist/searchRequest/x.txt
 
 /simpleworklist.diff
 target
 .idea
+/x.txt
+/transaction-logs/

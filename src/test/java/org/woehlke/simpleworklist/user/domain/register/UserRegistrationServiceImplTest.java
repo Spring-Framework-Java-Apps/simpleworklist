@@ -2,11 +2,12 @@ package org.woehlke.simpleworklist.user.domain.register;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.simpleworklist.application.config.AbstractTest;
-import org.woehlke.simpleworklist.user.domain.resetpassword.UserPasswordRecovery;
-import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistration;
+import org.woehlke.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
+import org.woehlke.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.simpleworklist.user.services.UserRegistrationService;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistrationService;
 
 import java.util.Date;
 

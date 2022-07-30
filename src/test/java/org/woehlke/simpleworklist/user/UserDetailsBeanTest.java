@@ -3,8 +3,8 @@ package org.woehlke.simpleworklist.user;
 
 
 import org.springframework.security.core.GrantedAuthority;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
-import org.woehlke.simpleworklist.user.domain.account.UserDetailsBean;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.access.UserDetailsDto;
 
 import java.util.Collection;
 
@@ -16,7 +16,7 @@ public class UserDetailsBeanTest {
     //@Test
     public void testGetAuthorities(){
         UserAccount account = new UserAccount();
-        UserDetailsBean b = new UserDetailsBean(account);
+        UserDetailsDto b = new UserDetailsDto(account);
         Collection<? extends GrantedAuthority> c = b.getAuthorities();
         assertTrue(c.size()==1);
         for(GrantedAuthority authority:c){
@@ -27,7 +27,7 @@ public class UserDetailsBeanTest {
     //@Test
     public void testDefaultBooleans(){
         UserAccount account = new UserAccount();
-        UserDetailsBean b = new UserDetailsBean(account);
+        UserDetailsDto b = new UserDetailsDto(account);
         assertTrue(b.isAccountNonExpired());
         assertTrue(b.isAccountNonLocked());
         assertTrue(b.isCredentialsNonExpired());
@@ -73,15 +73,15 @@ public class UserDetailsBeanTest {
         account9.setUserEmail("test04//@Test.de");
         account9.setUserPassword(null);
 
-        UserDetailsBean b1 = new UserDetailsBean(account1);
-        UserDetailsBean b2 = new UserDetailsBean(account2);
-        UserDetailsBean b3 = new UserDetailsBean(account3);
-        UserDetailsBean b4 = new UserDetailsBean(account4);
-        UserDetailsBean b5 = new UserDetailsBean(account5);
-        UserDetailsBean b6 = new UserDetailsBean(account6);
-        UserDetailsBean b7 = new UserDetailsBean(account7);
-        UserDetailsBean b8 = new UserDetailsBean(account8);
-        UserDetailsBean b9 = new UserDetailsBean(account9);
+        UserDetailsDto b1 = new UserDetailsDto(account1);
+        UserDetailsDto b2 = new UserDetailsDto(account2);
+        UserDetailsDto b3 = new UserDetailsDto(account3);
+        UserDetailsDto b4 = new UserDetailsDto(account4);
+        UserDetailsDto b5 = new UserDetailsDto(account5);
+        UserDetailsDto b6 = new UserDetailsDto(account6);
+        UserDetailsDto b7 = new UserDetailsDto(account7);
+        UserDetailsDto b8 = new UserDetailsDto(account8);
+        UserDetailsDto b9 = new UserDetailsDto(account9);
 
         assertEquals(b1.hashCode(),b2.hashCode());
         assertTrue(b1.hashCode()!=b3.hashCode());

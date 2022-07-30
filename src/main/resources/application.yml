@@ -1,32 +1,52 @@
 server:
-  port: ${PORT}
+  port: ${SIMPLEWORKLIST_PORT}
   error:
     path: /fehler
   compression:
     enabled: false
     min-response-size: 2048
+  servlet:
+    context-path: "/"
 spring:
+  config:
+    name: simpleworklist
+  liquibase:
+    enabled: false
+  devtools:
+    livereload:
+      enabled: ${SIMPLEWORKLIST_DEV_TESTING}
+  application:
+    admin:
+      enabled: ${SIMPLEWORKLIST_DEV_TESTING}
   datasource:
-    url: jdbc:postgresql://localdbhost:5432//simpleworklist
-    username: simpleworklist
-    password: simpleworklistpwd
+    url: jdbc:postgresql://${SIMPLEWORKLIST_DS_HOST}:${SIMPLEWORKLIST_DS_PORT}/${SIMPLEWORKLIST_DS_DB}
+    username:  ${SIMPLEWORKLIST_DS_USR}
+    password:  ${SIMPLEWORKLIST_DS_PWD}
     driverClassName: org.postgresql.Driver
-    platform: postgresql
-    continue-on-error: true
+  jta:
+    atomikos:
+      connectionfactory:
+        xa-connection-factory-class-name: org.postgresql.xa.PGXADataSource
   jpa:
-    show-sql: true
     open-in-view: true
+    show-sql: true
     generate-ddl: true
+    database-platform: POSTGRESQL
     hibernate:
-      ddl-auto: ${JPA_DLL_AUTO}
+      #ddl-auto: create-drop update
+      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         temp:
           use_jdbc_metadata_defaults: false
+        generate_statistics: true
         search:
           default:
-            indexBase: /tmp/simpleworklistsearch
+            index-base: ~/.config/simpleworklist
   session:
     store-type: jdbc
     jdbc:
@@ -35,14 +55,19 @@ spring:
     cache: false
   main:
     allow-bean-definition-overriding: true
+  sql:
+    init:
+      platform: postgresql
+      mode: ALWAYS
+      continue-on-error: true
 org:
   woehlke:
     simpleworklist:
       mail:
-        host: ${MAIL_SMTP_HOST}
-        port: ${MAIL_SMTP_PORT}
-        username: ${MAIL_SMTP_USERNAME}
-        password: ${MAIL_SMTP_PASSWORD}
+        host: ${SIMPLEWORKLIST_MAIL_SMTP_HOST}
+        port: ${SIMPLEWORKLIST_MAIL_SMTP_PORT}
+        username: ${SIMPLEWORKLIST_MAIL_SMTP_USERNAME}
+        password: ${SIMPLEWORKLIST_MAIL_SMTP_PASSWORD}
         auth: true
         sslEnable: true
         socketFactoryPort: 465
@@ -50,17 +75,21 @@ org:
       registration:
         maxRetries: 5
         ttlEmailVerificationRequest: 86400000
-        urlHost: ${URL_APP_HOST}
-        mailFrom: ${MAIL_FROM}
+        urlHost: ${SIMPLEWORKLIST_URL_APP_HOST}
+        mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
       webMvc:
         controllerPageSize: 10
         staticResourceHandler:
           - "/css"
           - "/img"
           - "/js"
-        dynaicResourceHandler:
+        dynamicResourceHandler:
           - "/webjars"
       webSecurity:
+        strengthBCryptPasswordEncoder: 10
+        # iterations: ${SIMPLEWORKLIST_USER_ITERATIONS}
+        # hashWidth: ${SIMPLEWORKLIST_USER_HASH_WIDTH}
+        # secret: ${SIMPLEWORKLIST_USER_SECRET}
         loginProcessingUrl: "/j_spring_security_check"
         logoutUrl: "/user/logout"
         cookieNamesToClear:
@@ -85,14 +114,108 @@ org:
           - "/user/resetPassword/**"
           - "/user/resetPassword/confirm/**"
           - "/error*"
-        strengthBCryptPasswordEncoder: 10
+logging:
+  level:
+    root: INFO
+    javax: INFO
+    jakartaee: INFO
+    com:
+      atomikos: INFO
+    org:
+      thymeleaf:
+        dialect:
+          springdata: INFO
+      apache:
+        commons:
+          logging: WARN
+      h2: INFO
+      springframework:
+        data:
+          jdbc: INFO
+          jpa: INFO
+          relational: INFO
+        security:
+          web: INFO
+          context: INFO
+        boot: INFO
+        beans: INFO
+        jdbc: INFO
+        orm: INFO
+        session: WARN
+        test: INFO
+        mock: WARN
+        transaction: INFO
+        jca: INFO
+        web: INFO
+        remoting: INFO
+        http: INFO
+        expression: INFO
+        util: INFO
+        lang: INFO
+        core: INFO
+        cglib: WARN
+      hibernate:
+        sql: INFO
+        query: INFO
+        mapping: INFO
+        jpa: INFO
+        id: INFO
+        graph: INFO
+        cfg: INFO
+        service: INFO
+        result: INFO
+        engine:
+          internal: WARN
+      ch:
+        qos: WARN
+      woehlke:
+        simpleworklist:
+          application: DEBUG
+          config: DEBUG
+          measurements: DEBUG
+          user: DEBUG
+          domain: DEBUG
+          services: DEBUG
+          common: INFO
+debug: false
 ---
 spring:
-  datasource:
-    url: jdbc:postgresql://localdbhost:5432/simpleworklist
-  #jpa:
-  #  hibernate:
-  #    ddl-auto: update
-  #    #ddl-auto: create-drop
   profiles:
     active: default
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpleworklist
+  jta:
+    atomikos:
+      properties:
+        transaction-manager-unique-name: tx-manager-simpleworklist
+    transaction-manager-id: tx-manager-simpleworklist
+    log-dir: transaction-logs/tx-logs-simpleworklist
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  port: 9010
+  compression:
+    enabled: true
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+      hibernate:
+        SQL: INFO
+        engine:
+          internal: WARN
+      ch:
+        qos: WARN
+      postgresql: WARN
+      woehlke:
+        simpleworklist:
+          application: INFO
+          config: INFO
+          measurements: INFO
+          user: INFO
+          domain: INFO
+          services: INFO
+          common: INFO
+debug: false

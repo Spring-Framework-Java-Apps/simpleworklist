@@ -9,9 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.simpleworklist.application.config.AbstractTest;
-import org.woehlke.simpleworklist.user.services.UserPasswordRecoveryService;
-import org.woehlke.simpleworklist.user.services.UserRegistrationService;
-import org.woehlke.simpleworklist.user.login.LoginForm;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.simpleworklist.domain.user.account.UserAccountForm;
+import org.woehlke.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
+import org.woehlke.simpleworklist.domain.user.signup.UserRegistrationService;
+import org.woehlke.simpleworklist.domain.user.login.LoginForm;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +30,7 @@ public class UserAccountServiceImplTest extends AbstractTest {
     public void testStartSecondOptIn() throws Exception {
         int zeroNumberOfAllRegistrations = 0;
         deleteAll();
-        String email = applicationProperties.getRegistration().getMailFrom();
+        String email = simpleworklistProperties.getRegistration().getMailFrom();
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         assertNotNull(email);
         assertTrue(userAccountService.isEmailAvailable(email));
@@ -103,11 +105,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
     //@Test
     public void testLoadUserByUsername(){
         for(String email:emails){
-            UserDetails userDetails = userAccountSecurityService.loadUserByUsername(email);
+            UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(email);
             assertTrue(userDetails.getUsername().compareTo(email) == 0);
         }
         try {
-            UserDetails userDetails = userAccountSecurityService.loadUserByUsername(username_email);
+            UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(username_email);
         } catch (UsernameNotFoundException e){
             assertNotNull(e.getMessage());
             assertTrue(username_email.compareTo(e.getMessage())==0);
@@ -119,11 +121,11 @@ public class UserAccountServiceImplTest extends AbstractTest {
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
         loginForm.setUserPassword(passwords[0]);
-        assertTrue(userAccountAccessService.authorize(loginForm));
+        assertTrue(userAuthorizationService.authorize(loginForm));
         loginForm = new LoginForm();
         loginForm.setUserEmail(username_email);
         loginForm.setUserPassword(password);
-        assertFalse(userAccountAccessService.authorize(loginForm));
+        assertFalse(userAuthorizationService.authorize(loginForm));
     }
 
     //@Test

@@ -1,6 +1,7 @@
+os: linux
 dist: bionic
 language: java
-jdk: openjdk15
+jdk: openjdk11
 services:
   - docker
 env:
@@ -10,12 +11,12 @@ script:
   - ./mvnw -e -DskipTests=true -B -V clean
   - ./mvnw -e -DskipTests=true -B -V dependency:resolve dependency:resolve-plugins dependency:sources
   - ./mvnw -e -DskipTests=true -B -V dependency:tree
-  - # ./mvnw -e -DskipTests=true -B -V docker-compose:up
-  - # docker ps
+  - ./mvnw -e -DskipTests=true -B -V docker-compose:up
+  - docker ps
   - ./mvnw -e -DskipTests=true -B -V clean package spring-boot:repackage
   - ./mvnw -e -DskipTests=true -B -V site
-  - # ./mvnw docker-compose:down
-  - # docker ps
+  - ./mvnw docker-compose:down
+  - docker ps
 notifications:
   email:
     - thomas.woehlke@gmail.com

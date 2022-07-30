@@ -4,8 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.woehlke.simpleworklist.domain.context.Context;
 import org.woehlke.simpleworklist.domain.project.Project;
-import org.woehlke.simpleworklist.domain.task.Task;
-import org.woehlke.simpleworklist.domain.task.TaskState;
+import org.woehlke.simpleworklist.domain.taskworkflow.TaskState;
 
 public interface TaskService {
 

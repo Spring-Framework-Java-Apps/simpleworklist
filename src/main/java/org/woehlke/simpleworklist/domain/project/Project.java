@@ -3,6 +3,7 @@ package org.woehlke.simpleworklist.domain.project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
 import javax.persistence.Index;
@@ -17,9 +18,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.simpleworklist.domain.context.Context;
-import org.woehlke.simpleworklist.common.domain.AuditModel;
-import org.woehlke.simpleworklist.common.domain.ComparableById;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.application.framework.AuditModel;
+import org.woehlke.simpleworklist.application.framework.ComparableById;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 @Entity
 @Table(
@@ -145,6 +146,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     public static Project newProjectFactoryForParentProject(Project parent) {
         Project thisProject = new Project();
+        thisProject.setUuid(UUID.randomUUID());
         //thisProject.setName("name");
         thisProject.setParent(parent);
         thisProject.setContext(parent.getContext());
@@ -153,6 +155,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     public static Project newRootProjectFactory(Context context) {
         Project thisProject = new Project();
+        thisProject.setUuid(UUID.randomUUID());
         thisProject.setParent(null);
         thisProject.setContext(context);
         return thisProject;

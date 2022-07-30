@@ -9,13 +9,9 @@ import org.woehlke.simpleworklist.domain.project.Project;
 
 public interface ProjectService {
 
-    //TODO: #245 change List<Project> to Page<Project>
-    @Deprecated
     List<Project> findRootProjectsByContext(Context context);
     Page<Project> findRootProjectsByContext(Context context, Pageable pageRequest);
 
-    //TODO: #245 change List<Project> to Page<Project>
-    @Deprecated
     List<Project> findAllProjectsByContext(Context context);
     Page<Project> findAllProjectsByContext(Context context, Pageable pageRequest);
 

@@ -5,13 +5,14 @@ import org.hibernate.annotations.LazyToOne;
 import org.hibernate.validator.constraints.Length;
 
 //import org.hibernate.validator.constraints.SafeHtml;
-import org.woehlke.simpleworklist.common.domain.AuditModel;
-import org.woehlke.simpleworklist.common.domain.ComparableById;
-import org.woehlke.simpleworklist.user.domain.account.UserAccount;
+import org.woehlke.simpleworklist.application.framework.AuditModel;
+import org.woehlke.simpleworklist.application.framework.ComparableById;
+import org.woehlke.simpleworklist.domain.user.account.UserAccount;
 
 import javax.persistence.*;
 import javax.persistence.Index;
 import java.io.Serializable;
+import java.util.UUID;
 
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
@@ -76,6 +77,7 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     public Context(String nameDe, String nameEn) {
         this.nameDe = nameDe;
         this.nameEn = nameEn;
+        this.uuid = UUID.randomUUID();
     }
 
     @Transient
