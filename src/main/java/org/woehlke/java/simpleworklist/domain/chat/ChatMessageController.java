@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.java.simpleworklist.application.framework.AbstractController;
+import org.woehlke.java.simpleworklist.test.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
 
 import javax.validation.Valid;
 import java.util.Locale;

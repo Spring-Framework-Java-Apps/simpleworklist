@@ -34,8 +34,8 @@ import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.project.Project;
-import org.woehlke.java.simpleworklist.application.framework.AuditModel;
-import org.woehlke.java.simpleworklist.application.framework.ComparableById;
+import org.woehlke.java.simpleworklist.test.application.framework.AuditModel;
+import org.woehlke.java.simpleworklist.test.application.framework.ComparableById;
 
 import static javax.persistence.TemporalType.*;
 import static org.hibernate.annotations.LazyToOneOption.PROXY;

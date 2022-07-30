@@ -15,8 +15,8 @@ import org.woehlke.java.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.application.framework.AbstractController;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.test.application.framework.AbstractController;
+import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

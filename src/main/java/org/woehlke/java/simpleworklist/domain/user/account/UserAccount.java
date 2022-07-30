@@ -9,8 +9,8 @@ import lombok.ToString;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.java.simpleworklist.domain.language.Language;
 import org.woehlke.java.simpleworklist.domain.context.Context;
-import org.woehlke.java.simpleworklist.application.framework.AuditModel;
-import org.woehlke.java.simpleworklist.application.framework.ComparableById;
+import org.woehlke.java.simpleworklist.test.application.framework.AuditModel;
+import org.woehlke.java.simpleworklist.test.application.framework.ComparableById;
 
 import java.io.Serializable;
 import java.util.Date;

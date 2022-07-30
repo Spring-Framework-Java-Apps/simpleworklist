@@ -19,8 +19,8 @@ import javax.validation.constraints.NotBlank;
 //import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.context.Context;
-import org.woehlke.java.simpleworklist.application.framework.AuditModel;
-import org.woehlke.java.simpleworklist.application.framework.ComparableById;
+import org.woehlke.java.simpleworklist.test.application.framework.AuditModel;
+import org.woehlke.java.simpleworklist.test.application.framework.ComparableById;
 
 @Entity
 @Table(

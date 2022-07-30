@@ -13,7 +13,7 @@ import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.BreadcrumbService;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

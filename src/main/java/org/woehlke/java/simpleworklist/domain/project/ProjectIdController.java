@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.java.simpleworklist.application.framework.AbstractController;
+import org.woehlke.java.simpleworklist.test.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.task.Task;
@@ -21,7 +21,7 @@ import org.woehlke.java.simpleworklist.domain.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.application.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.test.application.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
