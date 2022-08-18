@@ -18,7 +18,7 @@ package application {
     (Navigation) --> (UserInfo)
     (Navigation) --> (Logout)
 }
-package owner {
+package context {
     (Navigation) --> (Owner.list)
     (Owner.list) -> (Owner.search)
     (Owner.list) --> (Owner.addNew)
