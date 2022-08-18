@@ -125,6 +125,8 @@
     <version.asciidoctor-maven-plugin>2.2.2</version.asciidoctor-maven-plugin>
     <version.doxia-module-markdown>1.11.1</version.doxia-module-markdown>
     <version.maven-enforcer-plugin>3.1.0</version.maven-enforcer-plugin>
+    <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
+    <version.net.sourceforge.plantuml>1.2022.6</version.net.sourceforge.plantuml>
   </properties>
 
   <repositories>
@@ -1876,5 +1878,91 @@
       </plugin>
     </plugins>
   </reporting>
+
+
+  <profiles>
+
+      <profile>
+      <id>war</id>
+      <properties>
+        <skip.unit.tests>false</skip.unit.tests>
+        <skip.integration.tests>true</skip.integration.tests>
+      </properties>
+      <build>
+        <finalName>petclinic</finalName>
+        <defaultGoal>clean install</defaultGoal>
+      </build>
+    </profile>
+
+    <profile>
+      <id>uml</id>
+      <properties>
+        <skip.unit.tests>true</skip.unit.tests>
+        <skip.integration.tests>true</skip.integration.tests>
+      </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.funthomas424242</groupId>
+            <artifactId>plantuml-maven-plugin</artifactId>
+            <version>${version.plantuml-maven-plugin}</version>
+            <type>maven-plugin</type>
+            <exclusions>
+              <exclusion>
+                <groupId>javax.enterprise</groupId>
+                <artifactId>cdi-api</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+          <dependency>
+            <groupId>net.sourceforge.plantuml</groupId>
+            <artifactId>plantuml</artifactId>
+            <version>${version.net.sourceforge.plantuml}</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>com.github.funthomas424242</groupId>
+          <artifactId>plantuml-maven-plugin</artifactId>
+          <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+          <groupId>net.sourceforge.plantuml</groupId>
+          <artifactId>plantuml</artifactId>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <defaultGoal>clean com.github.funthomas424242:plantuml-maven-plugin:generate</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>com.github.funthomas424242</groupId>
+            <artifactId>plantuml-maven-plugin</artifactId>
+            <version>${version.plantuml-maven-plugin}</version>
+            <configuration>
+              <truncatePattern>src/main/*</truncatePattern>
+              <sourceFiles>
+                <directory>${basedir}</directory>
+                <includes>
+                  <include>src/main/plantuml/**/*.puml</include>
+                </includes>
+              </sourceFiles>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>net.sourceforge.plantuml</groupId>
+                <artifactId>plantuml</artifactId>
+                <version>${version.net.sourceforge.plantuml}</version>
+                <scope>runtime</scope>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
 
 </project>

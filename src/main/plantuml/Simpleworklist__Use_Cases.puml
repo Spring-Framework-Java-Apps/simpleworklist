@@ -1,6 +1,6 @@
 @startuml
 
-title Petclinic Use Case Diagram
+title Simpleworklist Use Case Diagram
 
 left to right direction
 'top to bottom direction
@@ -38,7 +38,7 @@ package context {
         }
     }
 }
-package vet {
+package breadcrumb {
     (Navigation) -> (Vet.list)
     (Vet.list) --> (Vet.search)
     (Vet.list) --> (Vet.details)
@@ -46,7 +46,7 @@ package vet {
     (Vet.details) ---> (Vet.edit)
     (Vet.details) ---> (Vet.delete)
 }
-package specialty {
+package chat {
     (Navigation) -> (Specialty.list)
     (Specialty.list) --> (Specialty.search)
     (Specialty.list) --> (Specialty.details)
@@ -54,12 +54,34 @@ package specialty {
     (Specialty.details) ---> (Specialty.edit)
     (Specialty.details) ---> (Specialty.delete)
 }
-package pet-type {
+package language {
     (Navigation) -> (PetType.list)
     (PetType.list) --> (PetType.search)
     (PetType.list) --> (PetType.details)
     (PetType.list) --> (PetType.addNew)
     (PetType.details) ---> (PetType.edit)
     (PetType.details) ---> (PetType.delete)
+}
+package project {
+}
+package task {
+}
+package taskworkflow {
+}
+package user {
+  package access {
+  }
+  package account {
+  }
+  package accountpassword {
+  }
+  package accountselfservice {
+  }
+  package login {
+  }
+  package passwordrecovery {
+  }
+  package signup {
+  }
 }
 @enduml
