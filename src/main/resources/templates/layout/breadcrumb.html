@@ -7,7 +7,7 @@
     <div th:fragment="breadcrumb(breadcrumb)">
       <section class="container" sec:authorize="isAuthenticated()" th:if="${breadcrumb != null}">
 
-            <nav aria-label="breadcrumb" class="m-1 mb-1 p-2">
+            <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li th:each="bc,iterStat : ${breadcrumb.getBreadcrumb()}"
                         th:class="${iterStat == breadcrumb.size()-1 ? 'breadcrumb-item active' : 'breadcrumb-item'}">
