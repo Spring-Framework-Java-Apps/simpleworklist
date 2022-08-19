@@ -12,24 +12,25 @@ scale 1200 width
 package persistent {
 
   entity Context {
-       String nameDe
-       String nameEn
-       list()
-       search()
-       addNew()
-       edit()
-       delete()
+       - String nameDe
+       - String nameEn
+       Context[] list()
+       Context search()
+       Context addNew()
+       Context edit()
+       void delete()
   }
 
   entity Project {
-      String name
-      String description
+      - String name
+      - String description
       listVisitsOfPet()
       addNew()
   }
 
   entity Task {
-      String name
+      - String name
+      - String description
       list()
       search()
       addNew()
@@ -38,7 +39,8 @@ package persistent {
   }
 
   entity ChatMessage {
-      String xyz
+     - String messageText
+     - Boolean readByReceiver
       list()
       search()
       addNew()
@@ -47,7 +49,15 @@ package persistent {
   }
 
   entity UserAccount {
-      String name
+      - String userEmail
+      - String userPassword
+      - String userFullname
+      - Language defaultLanguage
+      - Date lastLoginTimestamp
+      - Boolean accountNonExpired
+      - Boolean accountNonLocked
+      - Boolean credentialsNonExpired
+      - Boolean enabled
       list()
       search()
       addNew()
@@ -56,9 +66,8 @@ package persistent {
   }
 
   entity UserAccountPassword {
-      String name
+      - String userPassword
       list()
-      listSpecialtiesOfVet()
       search()
       addNew()
       edit()
@@ -66,9 +75,10 @@ package persistent {
   }
 
   entity UserPasswordRecovery {
-      String name
+      - String email
+      - String token
+      - Integer numberOfRetries
       list()
-      listSpecialtiesOfVet()
       search()
       addNew()
       edit()
@@ -76,31 +86,26 @@ package persistent {
   }
 
   entity UserRegistration {
-      String name
+      - String email
+      - String token
+      - Integer numberOfRetries
       list()
-      listSpecialtiesOfVet()
       search()
       addNew()
       edit()
       delete()
   }
 
-  'Owner "one"  *--> "many"  Pet: pets
-  'Pet "one" *--> "many" Visit: visits
-  'Pet "many"  o-->  "one" PetType: petType
-  'Vet "many" o--> "many" Specialty: specialties
+  Context "many"  o-->  "one" UserAccount: userAccount
+  Project "many"  o-->  "one" Context: context
+  Task "many"  o-->  "one" Project: project
+  ChatMessage "many"  o-->  "one" UserAccount: sender
+  ChatMessage "many"  o-->  "one" UserAccount: receiver
+  UserAccount "one"  o-->  "one" Context: defaultContext
+  UserAccountPassword "one"  o-->  "one" UserAccount: userAccount
+  UserRegistration "one"  o-->  "one" UserAccount: userAccount
+  UserPasswordRecovery "many"  o-->  "one" UserAccount: userAccount
 
 }
 
-package transient {
-  class LoginForm {}
-  class UserAccountForm {}
-  class UserDetailsDto {}
-  class UserSessionBean {}
-  class UserChangeLanguageForm {}
-  class NewContextForm {}
-  class ChatMessageForm {}
-  class Breadcrumb {}
-  class BreadcrumbItem {}
-}
 @enduml
