@@ -1,0 +1,37 @@
+@startuml
+
+title Functional_Requirements - Simpleworklist Use Case Diagram
+
+left to right direction
+'top to bottom direction
+
+'https://plantuml.com/use-case-diagram
+
+scale 1200 width
+
+package Functional_Requirements {
+
+  package 001__Start {
+    SystemUser - (F001_Server_Starts)
+    User - (F002_Home_Page_rendered)
+    (F002_Home_Page_rendered) --> (F003_Registration)
+    (F002_Home_Page_rendered) --> (F004_Password_Recovery)
+    (F002_Home_Page_rendered) --> (F005_Login)
+    (F005_Login) ---> (F006_Page_after_first_successful_Login)
+    (F006_Page_after_first_successful_Login) -> (F007_Navigation)
+    (F007_Navigation) -> (F008_Logout)
+
+    User <|- SystemUser
+  }
+
+  package 006__Drag_and_Drop {
+
+    package 009__Move_Task_to_Change_Task_Order {
+      (F007_Navigation) --> (F131__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__TaskstateTab)
+      (F007_Navigation) --> (F132__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_Root)
+      (F007_Navigation) --> (F133__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_id)
+    }
+  }
+
+}
+@enduml

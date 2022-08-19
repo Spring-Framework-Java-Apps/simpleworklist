@@ -1,0 +1,45 @@
+@startuml
+
+title Functional_Requirements - Simpleworklist Use Case Diagram
+
+left to right direction
+'top to bottom direction
+
+'https://plantuml.com/use-case-diagram
+
+scale 1200 width
+
+package Functional_Requirements {
+
+  package 001__Start {
+    SystemUser - (F001_Server_Starts)
+    User - (F002_Home_Page_rendered)
+    (F002_Home_Page_rendered) --> (F003_Registration)
+    (F002_Home_Page_rendered) --> (F004_Password_Recovery)
+    (F002_Home_Page_rendered) --> (F005_Login)
+    (F005_Login) ---> (F006_Page_after_first_successful_Login)
+    (F006_Page_after_first_successful_Login) -> (F007_Navigation)
+    (F007_Navigation) -> (F008_Logout)
+
+    User <|- SystemUser
+  }
+
+  package 005__Project_id {
+    (F007_Navigation) --> (F080__Project_id__Add_Task)
+    (F007_Navigation) --> (F081__Project_id__Add_SubProject)
+    (F007_Navigation) --> (F082__Project_id__Task_Edit)
+    package F082__Project_id__Task_Edit {
+      (F082__Project_id__Task_Edit) ---> (F083__change_Taskstate_via_DropDown)
+      (F082__Project_id__Task_Edit) ---> (F084__change_Project_via_DropDown)
+      (F082__Project_id__Task_Edit) ---> (F085__transform_to_Project)
+    }
+    (F007_Navigation) --> (F086__Project_id__Task_setFocus)
+    (F007_Navigation) --> (F087__Project_id__Task_unSetFocus)
+    (F007_Navigation) --> (F088__Project_id__Task_complete)
+    (F007_Navigation) --> (F089__Project_id__Task_incomplete)
+    (F007_Navigation) --> (F090__Project_id__Task_delete)
+    (F007_Navigation) --> (F091__Project_id__Task_undelete)
+  }
+
+}
+@enduml
