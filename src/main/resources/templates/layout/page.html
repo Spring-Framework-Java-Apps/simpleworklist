@@ -33,12 +33,14 @@
 		</div>
 	</header>
 
+  <!-- Breadcrumb -->
+  <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
+  </div>
+
+  <!-- taskstates -->
 	<section th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})">
 	</section>
 
-	<!-- Breadcrumb -->
-	<section th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
-	</section>
 
 	<!-- Menu on Left Column and Document Window on the Right Column -->
 	<section id="tw-main-section">

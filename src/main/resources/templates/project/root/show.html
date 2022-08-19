@@ -13,21 +13,21 @@
 	<div id="tw-content-title">
 		<h1>
 			<i class="fas fa-folder-open"></i>
-			<span th:text="#{project.show.h1}">Project</span>
+			<span th:text="#{project.show.h1}" class="mx-1">Project</span>
 		</h1>
-		<div id="tw-content-title-actionbuttons" class="row">
-            <div class="col-md-3 mb-3">
-                <a class="btn btn-block btn-primary" role="button" th:href="@{/project/root/task/add}">
-                    <i class="fas fa-plus-square"></i>
-                    <span th:text="#{project.show.addTask}">Add a Task</span>
-                </a>
-            </div>
-            <div class="col-md-3 mb-3">
-                <a class="btn btn-block btn-secondary" role="button" th:href="@{/project/root/project/add}">
-                    <i class="fas fa-plus-square"></i>
-                    <span th:text="#{layout.page.addProject}">Add a Project</span>
-                </a>
-            </div>
+		<div id="tw-content-title-actionbuttons" class="d-grid col-2 mx-auto d-md-block">
+        <div class="col-md-3 mb-3">
+            <a class="btn btn-block btn-primary" role="button" th:href="@{/project/root/task/add}">
+                <i class="fas fa-plus-square"></i>
+                <span th:text="#{project.show.addTask}">Add a Task</span>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="btn btn-block btn-secondary" role="button" th:href="@{/project/root/project/add}">
+                <i class="fas fa-plus-square"></i>
+                <span th:text="#{layout.page.addProject}">Add a Project</span>
+            </a>
+        </div>
 		</div>
 	</div>
 </div>
