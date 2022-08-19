@@ -1,6 +1,6 @@
 @startuml
 
-title Simpleworklist Use Case Diagram
+title Functional_Requirements_0 - Simpleworklist Use Case Diagram
 
 left to right direction
 'top to bottom direction
@@ -9,79 +9,126 @@ left to right direction
 
 scale 1200 width
 
-User - (Login)
-package application {
-    (Login) -> (Navigation)
-    (Navigation) --> (Start)
-    (Navigation) --> (Info)
-    (Navigation) --> (Help)
-    (Navigation) --> (UserInfo)
-    (Navigation) --> (Logout)
-}
-package context {
-    (Navigation) --> (Owner.list)
-    (Owner.list) -> (Owner.search)
-    (Owner.list) --> (Owner.addNew)
-    (Owner.list) --> (Owner.details)
-    (Owner.details) --> (Owner.edit)
-    (Owner.details) --> (Owner.delete)
-    package owner.pet {
-        (Owner.details) --> (Owner.Pet.list)
-        (Owner.Pet.list) --> (Owner.Pet.addNew)
-        (Owner.Pet.list) --> (Owner.Pet.edit)
-        (Owner.Pet.list) --> (Owner.Pet.delete)
-         package owner.pet.visit {
-            (Owner.Pet.list) --> (Owner.Pet.Visit.list)
-            (Owner.Pet.Visit.list) --> (Owner.Pet.Visit.addNew)
-            (Owner.Pet.Visit.list) --> (Owner.Pet.Visit.edit)
-            (Owner.Pet.Visit.list) --> (Owner.Pet.Visit.delete)
-        }
+package Functional_Requirements {
+
+  package 001__Start {
+    User - (F001_Server_Starts)
+    User - (F002_Home_Page_rendered)
+    User - (F003_Registration)
+    User - (F004_Password_Recovery)
+    User - (F005_Login)
+    User - (F006_Page_after_first_successful_Login)
+    User - (F007_Logout)
+  }
+
+  package 002__Show_TaskstateTab {
+    (F005_Login) --> (F010__show_taskstate_inbox)
+    (F005_Login) --> (F011__show_taskstate_today)
+    (F005_Login) --> (F012__show_taskstate_next)
+    (F005_Login) --> (F013__show_taskstate_waiting)
+    (F005_Login) --> (F014__show_taskstate_scheduled)
+    (F005_Login) --> (F015__show_taskstate_someday)
+    (F005_Login) --> (F016__show_taskstate_focus)
+    (F005_Login) --> (F017__show_taskstate_completed)
+    (F005_Login) --> (F018__show_taskstate_trash)
+  }
+
+  package 003__TaskstateTab {
+    (F005_Login) --> (F040__Taskstate__Add_Task_to_Inbox)
+    (F005_Login) --> (F041__Taskstate__Add_Task_to_Inbox_again)
+    (F005_Login) --> (F042__Taskstate__Task_Edit)
+    package F042__Taskstate__Task_Edit {
+      (F042__Taskstate__Task_Edit) ---> (F043__change_Taskstate_via_DropDown)
+      (F042__Taskstate__Task_Edit) ---> (F044__change_Project_via_DropDown)
+      (F042__Taskstate__Task_Edit) ---> (F045__transform_to_Project)
     }
-}
-package breadcrumb {
-    (Navigation) -> (Vet.list)
-    (Vet.list) --> (Vet.search)
-    (Vet.list) --> (Vet.details)
-    (Vet.list) --> (Vet.addNew)
-    (Vet.details) ---> (Vet.edit)
-    (Vet.details) ---> (Vet.delete)
-}
-package chat {
-    (Navigation) -> (Specialty.list)
-    (Specialty.list) --> (Specialty.search)
-    (Specialty.list) --> (Specialty.details)
-    (Specialty.list) --> (Specialty.addNew)
-    (Specialty.details) ---> (Specialty.edit)
-    (Specialty.details) ---> (Specialty.delete)
-}
-package language {
-    (Navigation) -> (PetType.list)
-    (PetType.list) --> (PetType.search)
-    (PetType.list) --> (PetType.details)
-    (PetType.list) --> (PetType.addNew)
-    (PetType.details) ---> (PetType.edit)
-    (PetType.details) ---> (PetType.delete)
-}
-package project {
-}
-package task {
-}
-package taskworkflow {
-}
-package user {
-  package access {
+    (F005_Login) --> (F046__Taskstate__Task_setFocus)
+    (F005_Login) --> (F047__Taskstate__Task_unSetFocus)
+    (F005_Login) --> (F048__Taskstate__Task_complete)
+    (F005_Login) --> (F049__Taskstate__Task_incomplete)
+    (F005_Login) --> (F050__Taskstate__Task_delete)
+    (F005_Login) --> (F051__Taskstate__Task_undelete)
   }
-  package account {
+
+  package 004__Project_Root {
+    (F005_Login) --> (F060__Project_Root__Add_Task)
+    (F005_Login) --> (F061__Project_Root__Add_SubProject)
+    (F005_Login) --> (F062__Project_Root__Task_Edit)
+    package F062__Project_Root__Task_Edit {
+      (F062__Project_Root__Task_Edit) ---> (F062__change_Taskstate_via_DropDown)
+      (F062__Project_Root__Task_Edit) ---> (F062__change_Project_via_DropDown)
+      (F062__Project_Root__Task_Edit) ---> (F062__transform_to_Project)
+    }
+    (F005_Login) --> (F066__Project_Root__Task_setFocus)
+    (F005_Login) --> (F067__Project_Root__Task_unSetFocus)
+    (F005_Login) --> (F068__Project_Root__Task_complete)
+    (F005_Login) --> (F069__Project_Root__Task_incomplete)
+    (F005_Login) --> (F070__Project_Root__Task_delete)
+    (F005_Login) --> (F071__Project_Root__Task_undelete)
   }
-  package accountpassword {
+
+  package 005__Project_id {
+    (F005_Login) --> (F080__Project_id__Add_Task)
+    (F005_Login) --> (F081__Project_id__Add_SubProject)
+    (F005_Login) --> (F082__Project_id__Task_Edit)
+    package F082__Project_id__Task_Edit {
+      (F082__Project_id__Task_Edit) ---> (F083__change_Taskstate_via_DropDown)
+      (F082__Project_id__Task_Edit) ---> (F084__change_Project_via_DropDown)
+      (F082__Project_id__Task_Edit) ---> (F085__transform_to_Project)
+    }
+    (F005_Login) --> (F086__Project_id__Task_setFocus)
+    (F005_Login) --> (F087__Project_id__Task_unSetFocus)
+    (F005_Login) --> (F088__Project_id__Task_complete)
+    (F005_Login) --> (F089__Project_id__Task_incomplete)
+    (F005_Login) --> (F090__Project_id__Task_delete)
+    (F005_Login) --> (F091__Project_id__Task_undelete)
   }
-  package accountselfservice {
+
+  package 006__Drag_and_Drop {
+
+    package 006__Task_move_to_TaskstateTab {
+      (F005_Login) --> (F120__Drag_and_Drop__Task_move_to_taskstate_inbox)
+      (F005_Login) --> (F121__Drag_and_Drop__Task_move_to_taskstate_today)
+      (F005_Login) --> (F122__Drag_and_Drop__Task_move_to_taskstate_next)
+      (F005_Login) --> (F123__Drag_and_Drop__Task_move_to_taskstate_waiting)
+      (F005_Login) --> (F124__Drag_and_Drop__Task_move_to_taskstate_scheduled)
+      (F005_Login) --> (F125__Drag_and_Drop__Task_move_to_taskstate_someday)
+      (F005_Login) --> (F126__Drag_and_Drop__Task_move_to_taskstate_focus)
+      (F005_Login) --> (F127__Drag_and_Drop__Task_move_to_taskstate_completed)
+      (F005_Login) --> (F128__Drag_and_Drop__Task_move_to_taskstate_trash)
+    }
+
+    package 007__Move_to_Project {
+      (F005_Login) --> (F129__Drag_and_Drop__Task_move_to_Project)
+      (F005_Login) --> (F130__Drag_and_Drop__Project_move_to_Project)
+    }
+
+    package 008__Move_Task_to_Change_Task_Order {
+      (F005_Login) --> (F131__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__TaskstateTab)
+      (F005_Login) --> (F132__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_Root)
+      (F005_Login) --> (F133__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_id)
+    }
   }
-  package login {
+
+  package 009__Search {
+     (F005_Login) --> (F200_Search_Request)
   }
-  package passwordrecovery {
-  }
-  package signup {
+
+  package  Functional_Requirements_010__user {
+    package access {
+    }
+    package account {
+    }
+    package accountpassword {
+    }
+    package accountselfservice {
+    }
+    package login {
+    }
+    package passwordrecovery {
+    }
+    package signup {
+    }
   }
 }
 @enduml
