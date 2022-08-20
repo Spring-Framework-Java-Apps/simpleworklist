@@ -22,12 +22,13 @@
     <form id="formId" method="post" class="was-validated"
           th:action="@{/taskstate/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}">
       <div
-        th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
+        th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})">
+      </div>
       <div class="row">
         <div class="col">
           <a th:href="@{/taskstate/task/{id}/transform(id=${task.id})}" class="btn btn-secondary btn-block"
              role="button">
-            <i class="fas fa-project-diagram"></i>
+            <i class="fas fa-angle-double-left"></i>
             <span th:utext="#{task.show.button.close}">cancel and back</span>
           </a>
         </div>
