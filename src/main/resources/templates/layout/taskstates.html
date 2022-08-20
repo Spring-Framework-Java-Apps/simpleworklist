@@ -5,7 +5,7 @@
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 
     <section th:fragment="navigation-taskstates(rootProjects,thisProject)">
-        <div class="container" id="taskStateNavigationContainer" sec:authorize="isAuthenticated()">
+        <div class="container mb-3" id="taskStateNavigationContainer" sec:authorize="isAuthenticated()">
             <ul id="taskStateNavigation" class="nav nav-tabs">
                 <li class="nav-item" ondrop="drop2inbox(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_inbox" th:href="@{/taskstate/inbox}"

@@ -26,7 +26,7 @@
 	<header>
 		<div th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
 		</div>
-		<div class="jumbotron" id="tw-title-section">
+		<div class="jumbotron mt-3" id="tw-title-section">
 			<div class="container">
 				<th:block th:replace="${twtitle}" />
 			</div>
