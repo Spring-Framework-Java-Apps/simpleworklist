@@ -11,6 +11,10 @@ function composeDown() {
     ./mvnw docker-compose:down
 }
 
+function showSettings() {
+    echo $JAVA_HOME
+}
+
 function firstSetup() {
     export JAVA_OPTS=$JAVA_OPTS_RUN_DEFAULT
     showSettings
@@ -56,9 +60,9 @@ function boot_run() {
 
 function main() {
     # firstSetup
-    #setupTravis
+    setupTravis
     #buildJar
-    boot_run
+    #boot_run
 }
 
 main
