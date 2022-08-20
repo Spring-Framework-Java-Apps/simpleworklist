@@ -13,7 +13,7 @@
 	<div id="tw-content-title">
 		<h2>
 			<i class="fas fa-folder-open"></i>
-			<span th:text="#{project.show.h1}">Project</span>
+			<span th:text="#{project.show.h1}"class="me-3">Project</span>
 			<span th:if="${thisProject.id gt 0}">
         <a class="btn btn-block btn-outline-dark" data-bs-toggle="collapse"
            href="#collapseDescription" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -24,31 +24,31 @@
     <div class="collapse" id="collapseDescription">
       <div class="card card-body" th:text="${thisProject.description}"></div>
     </div>
-		<div id="tw-content-title-actionbuttons">
+		<div id="tw-content-title-actionbuttons" class="py-3">
       <div class="row">
-          <div class="col-md-3 mb-3">
+          <div class="col-md-3">
               <a class="btn btn-block btn-primary" role="button" href="#"
                  th:href="@{/project/{thisProjectId}/task/add(thisProjectId=${thisProject.id})}">
                   <i class="fas fa-plus-square"></i>
                   <span th:text="#{project.show.addTask}">Add a Task</span>
               </a>
           </div>
-          <div class="col-md-3 mb-3">
+          <div class="col-md-3">
               <a class="btn btn-block btn-secondary" role="button" href="#"
                  th:href="@{/project/{thisProjectId}/project/add(thisProjectId=${thisProject.id})}">
                   <i class="fas fa-plus-square"></i>
                   <span th:text="#{layout.page.addProject}">Add a Project</span>
               </a>
           </div>
-          <div class="col-md-3 mb-3">
-              <a class="btn btn-block btn-dark" role="button" href="#"
+          <div class="col-md-3">
+              <a class="btn btn-block btn-outline-dark" role="button" href="#"
                  th:href="@{/project/{thisProjectId}/edit(thisProjectId=${thisProject.id})}">
                   <i class="fas fa-edit"></i>
                   <span th:text="#{project.show.edit}">Edit Project</span>
               </a>
           </div>
-          <div class="col-md-3 mb-3">
-              <a class="btn btn-block btn-dark" role="button" href="#"
+          <div class="col-md-3">
+              <a class="btn btn-block btn-outline-dark" role="button" href="#"
                  th:href="@{/project/{thisProjectId}/delete(thisProjectId=${thisProject.id})}">
                   <i class="fas fa-trash-alt"></i>
                   <span th:text="#{project.show.delete}">Delete Project</span>
