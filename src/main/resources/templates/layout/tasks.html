@@ -118,12 +118,13 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_project'" class="task_col task_col_project"
                             th:if="${myTaskState ne 'PROJECT'}">
-                            <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}"
+                            <a th:href="@{/project/{id}(id=${task.project.id})}"
+                               th:if="${task.project ne null}"
                                th:id="'task_' + ${task.id} + '_col_project'"
                                draggable="true" ondragstart="dragTask(event)"
-                               class="task_col_content task_col_content_project twtooltip"
+                               class="btn btn-outline-dark btn-sm task_col_content task_col_content_project twtooltip"
                                th:alt-title="#{task.col.twtooltip.project}">
-                                <i class="fas fa-folder-open"></i>
+                                <i class="fa-solid fa-diagram-project"></i>
                                 <span th:text="${task.project.name}"></span>
                             </a>
                         </td>
