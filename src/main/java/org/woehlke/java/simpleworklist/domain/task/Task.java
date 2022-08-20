@@ -183,7 +183,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
 
     @Temporal(DATE)
     @Column(name = "due_date", nullable = true)
-    @DateTimeFormat(pattern="MM/dd/yyyy")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueDate;
 
     @Column(name = "order_id_project", nullable = false)

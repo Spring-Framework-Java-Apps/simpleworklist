@@ -167,7 +167,7 @@
     <div th:fragment="tw-tasks-modal(task,myUrlPath)">
       <span class="d-grid gap-2">
         <button type="button" data-bs-toggle="modal"
-                class="btn btn-primary btn-sm task_col_content task_col_content_task_details twtooltip"
+                class="btn btn-outline-primary btn-sm task_col_content task_col_content_task_details twtooltip"
                 th:attr="data-bs-target='#taskModalScrollable_'+${task.id}"
                 th:id="'task_' + ${task.id} + '_col_button_modal'"
                 draggable="true" ondragstart="dragTask(event)"
