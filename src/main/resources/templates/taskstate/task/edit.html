@@ -24,7 +24,7 @@
       <div
         th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})">
       </div>
-      <div class="row">
+      <div class="row my-3">
         <div class="col">
           <a th:href="@{/taskstate/task/{id}/transform(id=${task.id})}" class="btn btn-secondary btn-block"
              role="button">
@@ -39,7 +39,7 @@
           </button>
         </div>
         <div class="col">
-          <a th:href="@{/taskstate/task/{id}/transform(id=${task.id})}" class="btn btn-secondary btn-block"
+          <a th:href="@{/taskstate/task/{id}/transform(id=${task.id})}" class="btn btn-outline-secondary btn-block"
              role="button">
             <i class="fas fa-project-diagram"></i>
             <span th:utext="#{task.show.transform}">Transform into Project</span>
