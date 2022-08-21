@@ -44,11 +44,15 @@ public class TaskServiceImpl implements TaskService {
         @NotNull Context context,
         @NotNull Pageable request
     ) {
-        if(taskState == TaskState.FOCUS){
-            return taskRepository.findByFocusAndContext(true,context,request);
-        }else {
-            return taskRepository.findByTaskStateAndContext(taskState, context, request);
-        }
+      switch (taskState){
+        case FOCUS:
+          return taskRepository.findByFocusAndContext(true, context, request);
+        case TRASH:
+        case DELETED:
+          return taskRepository.findByTaskStateTrashAndContext(context, request);
+        default:
+          return taskRepository.findByTaskStateAndContext(taskState, context, request);
+      }
     }
 
     @Override
@@ -85,8 +89,8 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaTaskstate(@NotNull Task task) {
         log.info("updatedViaTaskstate");
-        long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-        task.setOrderIdTaskState(++maxOrderIdTaskState);
+        //long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+        //task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.outTaskstate());
         return task;
@@ -96,8 +100,8 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProject(@NotNull Task task) {
         log.info("updatedViaProject");
-        long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(), task.getContext());
-        task.setOrderIdProject(++maxOrderIdProject);
+        //long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(), task.getContext());
+        //task.setOrderIdProject(++maxOrderIdProject);
         task = taskRepository.saveAndFlush(task);
         log.info("persisted Task: " + task.outProject());
         return task;

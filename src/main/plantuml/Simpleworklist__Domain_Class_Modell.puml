@@ -1,0 +1,111 @@
+@startuml
+
+
+title Simpleworklist Domain Class Modell
+'https://plantuml.com/class-diagram
+
+left to right direction
+'top to bottom direction
+
+scale 1200 width
+
+package persistent {
+
+  entity Context {
+       - String nameDe
+       - String nameEn
+       Context[] list()
+       Context search()
+       Context addNew()
+       Context edit()
+       void delete()
+  }
+
+  entity Project {
+      - String name
+      - String description
+      listVisitsOfPet()
+      addNew()
+  }
+
+  entity Task {
+      - String name
+      - String description
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity ChatMessage {
+     - String messageText
+     - Boolean readByReceiver
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccount {
+      - String userEmail
+      - String userPassword
+      - String userFullname
+      - Language defaultLanguage
+      - Date lastLoginTimestamp
+      - Boolean accountNonExpired
+      - Boolean accountNonLocked
+      - Boolean credentialsNonExpired
+      - Boolean enabled
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccountPassword {
+      - String userPassword
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserPasswordRecovery {
+      - String email
+      - String token
+      - Integer numberOfRetries
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserRegistration {
+      - String email
+      - String token
+      - Integer numberOfRetries
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  Context "many"  o-->  "one" UserAccount: userAccount
+  Project "many"  o-->  "one" Context: context
+  Task "many"  o-->  "one" Project: project
+  ChatMessage "many"  o-->  "one" UserAccount: sender
+  ChatMessage "many"  o-->  "one" UserAccount: receiver
+  UserAccount "one"  o-->  "one" Context: defaultContext
+  UserAccountPassword "one"  o-->  "one" UserAccount: userAccount
+  UserRegistration "one"  o-->  "one" UserAccount: userAccount
+  UserPasswordRecovery "many"  o-->  "one" UserAccount: userAccount
+
+}
+
+@enduml

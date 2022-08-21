@@ -1,0 +1,137 @@
+@startuml
+
+title Functional_Requirements_0 - Simpleworklist Use Case Diagram
+
+left to right direction
+'top to bottom direction
+
+'https://plantuml.com/use-case-diagram
+
+scale 1200 width
+
+package Functional_Requirements {
+
+  package 001__Start {
+    SystemUser - (F001_Server_Starts)
+    User - (F002_Home_Page_rendered)
+    (F002_Home_Page_rendered) --> (F003_Registration)
+    (F002_Home_Page_rendered) --> (F004_Password_Recovery)
+    (F002_Home_Page_rendered) --> (F005_Login)
+    (F005_Login) ---> (F006_Page_after_first_successful_Login)
+    (F006_Page_after_first_successful_Login) -> (F007_Navigation)
+    (F007_Navigation) -> (F008_Logout)
+
+    User <|- SystemUser
+  }
+
+  package 002__Show_TaskstateTab {
+    (F007_Navigation) --> (F010__show_taskstate_inbox)
+    (F007_Navigation) --> (F011__show_taskstate_today)
+    (F007_Navigation) --> (F012__show_taskstate_next)
+    (F007_Navigation) --> (F013__show_taskstate_waiting)
+    (F007_Navigation) --> (F014__show_taskstate_scheduled)
+    (F007_Navigation) --> (F015__show_taskstate_someday)
+    (F007_Navigation) --> (F016__show_taskstate_focus)
+    (F007_Navigation) --> (F017__show_taskstate_completed)
+    (F007_Navigation) --> (F018__show_taskstate_trash)
+  }
+
+  package 003__TaskstateTab {
+    (F007_Navigation) --> (F040__Taskstate__Add_Task_to_Inbox)
+    (F007_Navigation) --> (F041__Taskstate__Add_Task_to_Inbox_again)
+    (F007_Navigation) --> (F042__Taskstate__Task_Edit)
+    package F042__Taskstate__Task_Edit {
+      (F042__Taskstate__Task_Edit) ---> (F043__change_Taskstate_via_DropDown)
+      (F042__Taskstate__Task_Edit) ---> (F044__change_Project_via_DropDown)
+      (F042__Taskstate__Task_Edit) ---> (F045__transform_to_Project)
+    }
+    (F007_Navigation) --> (F046__Taskstate__Task_setFocus)
+    (F007_Navigation) --> (F047__Taskstate__Task_unSetFocus)
+    (F007_Navigation) --> (F048__Taskstate__Task_complete)
+    (F007_Navigation) --> (F049__Taskstate__Task_incomplete)
+    (F007_Navigation) --> (F050__Taskstate__Task_delete)
+    (F007_Navigation) --> (F051__Taskstate__Task_undelete)
+  }
+
+  package 004__Project_Root {
+    (F007_Navigation) --> (F060__Project_Root__Add_Task)
+    (F007_Navigation) --> (F061__Project_Root__Add_SubProject)
+    (F007_Navigation) --> (F062__Project_Root__Task_Edit)
+    package F062__Project_Root__Task_Edit {
+      (F062__Project_Root__Task_Edit) ---> (F062__change_Taskstate_via_DropDown)
+      (F062__Project_Root__Task_Edit) ---> (F062__change_Project_via_DropDown)
+      (F062__Project_Root__Task_Edit) ---> (F062__transform_to_Project)
+    }
+    (F007_Navigation) --> (F066__Project_Root__Task_setFocus)
+    (F007_Navigation) --> (F067__Project_Root__Task_unSetFocus)
+    (F007_Navigation) --> (F068__Project_Root__Task_complete)
+    (F007_Navigation) --> (F069__Project_Root__Task_incomplete)
+    (F007_Navigation) --> (F070__Project_Root__Task_delete)
+    (F007_Navigation) --> (F071__Project_Root__Task_undelete)
+  }
+
+  package 005__Project_id {
+    (F007_Navigation) --> (F080__Project_id__Add_Task)
+    (F007_Navigation) --> (F081__Project_id__Add_SubProject)
+    (F007_Navigation) --> (F082__Project_id__Task_Edit)
+    package F082__Project_id__Task_Edit {
+      (F082__Project_id__Task_Edit) ---> (F083__change_Taskstate_via_DropDown)
+      (F082__Project_id__Task_Edit) ---> (F084__change_Project_via_DropDown)
+      (F082__Project_id__Task_Edit) ---> (F085__transform_to_Project)
+    }
+    (F007_Navigation) --> (F086__Project_id__Task_setFocus)
+    (F007_Navigation) --> (F087__Project_id__Task_unSetFocus)
+    (F007_Navigation) --> (F088__Project_id__Task_complete)
+    (F007_Navigation) --> (F089__Project_id__Task_incomplete)
+    (F007_Navigation) --> (F090__Project_id__Task_delete)
+    (F007_Navigation) --> (F091__Project_id__Task_undelete)
+  }
+
+  package 006__Drag_and_Drop {
+
+    package 006__Task_move_to_TaskstateTab {
+      (F007_Navigation) --> (F120__Drag_and_Drop__Task_move_to_taskstate_inbox)
+      (F007_Navigation) --> (F121__Drag_and_Drop__Task_move_to_taskstate_today)
+      (F007_Navigation) --> (F122__Drag_and_Drop__Task_move_to_taskstate_next)
+      (F007_Navigation) --> (F123__Drag_and_Drop__Task_move_to_taskstate_waiting)
+      (F007_Navigation) --> (F124__Drag_and_Drop__Task_move_to_taskstate_scheduled)
+      (F007_Navigation) --> (F125__Drag_and_Drop__Task_move_to_taskstate_someday)
+      (F007_Navigation) --> (F126__Drag_and_Drop__Task_move_to_taskstate_focus)
+      (F007_Navigation) --> (F127__Drag_and_Drop__Task_move_to_taskstate_completed)
+      (F007_Navigation) --> (F128__Drag_and_Drop__Task_move_to_taskstate_trash)
+    }
+
+    package 007__Move_to_Project {
+      (F007_Navigation) --> (F129__Drag_and_Drop__Task_move_to_Project)
+      (F007_Navigation) --> (F130__Drag_and_Drop__Project_move_to_Project)
+    }
+
+    package 008__Move_Task_to_Change_Task_Order {
+      (F007_Navigation) --> (F131__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__TaskstateTab)
+      (F007_Navigation) --> (F132__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_Root)
+      (F007_Navigation) --> (F133__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_id)
+    }
+  }
+
+  package 009__Search {
+     (F007_Navigation) --> (F200_Search_Request)
+  }
+
+  package  Functional_Requirements_010__user {
+    package access {
+    }
+    package account {
+    }
+    package accountpassword {
+    }
+    package accountselfservice {
+    }
+    package login {
+    }
+    package passwordrecovery {
+    }
+    package signup {
+    }
+  }
+}
+@enduml

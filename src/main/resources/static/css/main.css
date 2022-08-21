@@ -26,7 +26,7 @@ tt, th, code, kbd, samp, pre {
 }
 
 div#tw-content-title-actionbuttons {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 
 div#collapseDescription {
@@ -34,9 +34,11 @@ div#collapseDescription {
 }
 
 @media (min-width: 576px) {
-  .jumbotron {
+  /*
+ .jumbotron {
     padding: 2rem 1rem !important;
   }
+  */
 }
 
 .footer {
@@ -48,8 +50,10 @@ div#collapseDescription {
 }
 
 #taskStateNavigationContainer {
+  /*
   padding-top: 1rem;
   padding-bottom: 1rem;
+  */
 }
 
 .navbar-text-footer {
@@ -61,7 +65,7 @@ div#collapseDescription {
 }
 
 .nav-list {
-  padding-left: 10px;
+ /* padding-left: 10px; */
 }
 
 #rootCategory {
@@ -69,13 +73,17 @@ div#collapseDescription {
 }
 
 #tw-main-section {
+  /*
   padding-bottom: 1rem !important;
   margin-bottom: 1rem !important;
+  */
 }
 
 #user-login-form {
+/*
   margin-top: 1rem;
   margin-bottom: 1rem;
+*/
 }
 
 #user-login-form-more-information {
@@ -87,9 +95,14 @@ div#collapseDescription {
 }
 
 #tw-project-submenu-col {
-  padding-top: 0.75rem;
+/*
+padding-top: 0.75rem;
+ */
 }
 
 #tw-project-submenu-root {
-  margin-top: 0.75rem;
+/*
+margin-top: 0.75rem;
+ */
 }
+

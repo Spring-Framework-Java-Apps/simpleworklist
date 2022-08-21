@@ -22,7 +22,7 @@
 
     <div th:fragment="tw-tasks-page-table(taskPage,myTaskState,myUrlPath)">
         <div class="row">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover shadow-lg">
                     <thead>
                     <tr>
                         <th class="task_col task_col_info_icons" th:utext="#{tasks.col.info.icons}">&nbsp;</th>
@@ -118,30 +118,31 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_project'" class="task_col task_col_project"
                             th:if="${myTaskState ne 'PROJECT'}">
-                            <a th:href="@{/project/{id}(id=${task.project.id})}" th:if="${task.project ne null}"
+                            <a th:href="@{/project/{id}(id=${task.project.id})}"
+                               th:if="${task.project ne null}"
                                th:id="'task_' + ${task.id} + '_col_project'"
                                draggable="true" ondragstart="dragTask(event)"
-                               class="task_col_content task_col_content_project twtooltip"
+                               class="btn btn-outline-dark btn-sm task_col_content task_col_content_project twtooltip"
                                th:alt-title="#{task.col.twtooltip.project}">
-                                <i class="fas fa-folder-open"></i>
+                                <i class="fa-solid fa-diagram-project"></i>
                                 <span th:text="${task.project.name}"></span>
                             </a>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col task_col_energy_and_time">
-                                <span class="badge badge-pill badge-dark task_col_content task_col_content_taskenergy twtooltip"
-                                      th:if="${task.taskEnergy.value ne 'NONE'}"
-                                      th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
-                                      draggable="true" ondragstart="dragTask(event)"
-                                      th:alt-title="#{task.col.twtooltip.badge.taskEnergy}"
-                                      th:text="${#messages.msgOrNull(task.taskEnergy.code)}">
-                                </span>
-                            <span class="badge badge-pill badge-dark task_col_content task_col_content_tasktime twtooltip"
-                                  th:text="${#messages.msgOrNull(task.taskTime.code)}"
+                            <span class="badge bg-dark task_col_content task_col_content_taskenergy twtooltip"
+                                  th:if="${task.taskEnergy.value ne 'NONE'}"
                                   th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
                                   draggable="true" ondragstart="dragTask(event)"
-                                  th:alt-title="#{task.col.twtooltip.badge.taskTime}"
-                                  th:if="${task.taskTime.value ne 'NONE'}">
-                                </span>
+                                  th:text="${#messages.msgOrNull(task.taskEnergy.code)}"
+                                  th:alt-title="#{task.col.twtooltip.badge.taskEnergy}">
+                            </span>
+                            <span class="badge bg-dark task_col_content task_col_content_tasktime twtooltip"
+                                  th:if="${task.taskTime.value ne 'NONE'}"
+                                  th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
+                                  draggable="true" ondragstart="dragTask(event)"
+                                  th:text="${#messages.msgOrNull(task.taskTime.code)}"
+                                  th:alt-title="#{task.col.twtooltip.badge.taskTime}">
+                            </span>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_context'" class="task_col task_col_context"
                             th:if="${myTaskState eq 'ALL'}">
@@ -165,8 +166,9 @@
     </div>
 
     <div th:fragment="tw-tasks-modal(task,myUrlPath)">
+      <span class="d-grid gap-2">
         <button type="button" data-bs-toggle="modal"
-                class="btn btn-primary btn-sm task_col_content task_col_content_task_details twtooltip"
+                class="btn btn-outline-primary btn-sm task_col_content task_col_content_task_details twtooltip"
                 th:attr="data-bs-target='#taskModalScrollable_'+${task.id}"
                 th:id="'task_' + ${task.id} + '_col_button_modal'"
                 draggable="true" ondragstart="dragTask(event)"
@@ -272,6 +274,7 @@
                 </div>
             </div>
         </div>
+        </span>
     </div>
 
     <div th:fragment="tw-tasks-pagination(page)">
