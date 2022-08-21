@@ -12,8 +12,16 @@
           <li>
             <span id="tw-project-submenu-root">
                 <a th:href="@{/project/root}" id="project_0"
+                   th:if="${thisProject != null}"
                    ondrop="drop2project(event)" ondragover="allowDrop2Project(event)"
                    class="m-2 btn btn-outline-dark btn-sm">
+                    <i class="fas fa-folder-open"></i>
+                    <span th:text="#{right.nav.projects}">Projects</span>
+                </a>
+                <a th:href="@{/project/root}" id="project_0"
+                   th:if="${thisProject == null}"
+                 ondrop="drop2project(event)" ondragover="allowDrop2Project(event)"
+                 class="m-2 btn btn-dark btn-sm">
                     <i class="fas fa-folder-open"></i>
                     <span th:text="#{right.nav.projects}">Projects</span>
                 </a>
