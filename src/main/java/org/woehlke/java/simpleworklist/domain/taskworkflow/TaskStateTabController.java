@@ -131,6 +131,16 @@ public class TaskStateTabController extends AbstractController {
             context, pageable, userSession, locale, model);
     }
 
+    @RequestMapping(path = "/deleted", method = RequestMethod.GET)
+    public final String deleted(
+      @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
+      @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+      Locale locale,
+      Model model
+    ) {
+      return trash(pageable, userSession, locale, model);
+    }
+
     @RequestMapping(path = "/focus", method = RequestMethod.GET)
     public final String focus(
         @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,

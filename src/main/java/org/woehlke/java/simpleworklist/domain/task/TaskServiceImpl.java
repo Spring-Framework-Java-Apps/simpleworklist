@@ -44,11 +44,15 @@ public class TaskServiceImpl implements TaskService {
         @NotNull Context context,
         @NotNull Pageable request
     ) {
-        if(taskState == TaskState.FOCUS){
-            return taskRepository.findByFocusAndContext(true,context,request);
-        }else {
-            return taskRepository.findByTaskStateAndContext(taskState, context, request);
-        }
+      switch (taskState){
+        case FOCUS:
+          return taskRepository.findByFocusAndContext(true, context, request);
+        case TRASH:
+        case DELETED:
+          return taskRepository.findByTaskStateTrashAndContext(context, request);
+        default:
+          return taskRepository.findByTaskStateAndContext(taskState, context, request);
+      }
     }
 
     @Override

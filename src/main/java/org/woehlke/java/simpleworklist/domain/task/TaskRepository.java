@@ -30,6 +30,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTaskStateAndContext(TaskState taskState, Context context);
     Page<Task> findByTaskStateAndContext(TaskState taskState, Context context, Pageable request);
 
+    @Query(name="findByTaskStateTrashAndContext")
+    Page<Task> findByTaskStateTrashAndContext(@Param("context") Context context, Pageable request);
+
     List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
         TaskState taskState, Context context
     );

@@ -85,6 +85,14 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
             + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
             + " and t.project is null and t.context = :context ",
         lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateTrashAndContext",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState.TRASH " +
+        "or t.taskState = org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState.DELETED " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
     )
 })
 @Getter
