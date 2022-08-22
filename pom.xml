@@ -403,6 +403,7 @@
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
         <version>${jsoup.version}</version>
+        <scope>test</scope>
       </dependency>
 
       <!-- SCM -->
@@ -672,11 +673,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
+      <scope>provided</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
+      <scope>provided</scope>
       <optional>true</optional>
     </dependency>
     <!-- spring-boot-starter -->
@@ -735,10 +738,12 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-logging</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
     </dependency>
+    -->
     <!-- org.springframework -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -892,6 +897,7 @@
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <!-- scope test - without dependency-management in this pom.xml -->
@@ -974,7 +980,6 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-collections4</artifactId>
-      <version>4.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -1573,8 +1578,10 @@
               <goal>resolve</goal>
               <goal>resolve-plugins</goal>
               <goal>collect</goal>
+              <!--
               <goal>copy-dependencies</goal>
               <goal>unpack-dependencies</goal>
+              -->
             </goals>
             <configuration>
               <classifier>sources</classifier>
@@ -1583,8 +1590,10 @@
               </excludeGroupIds>
               <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api
               </excludeArtifactIds>
+              <!--
               <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
               <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
+              -->
             </configuration>
           </execution>
         </executions>
