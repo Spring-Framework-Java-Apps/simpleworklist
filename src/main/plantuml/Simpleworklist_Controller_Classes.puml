@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+left to right direction
+'top to bottom direction
+
+AbstractController <|-- UserSelfserviceController
+
+abstract class AbstractController {
+  List<Project> getAllCategories(UserSessionBean userSession)
+  List<Project> getRootCategories(UserSessionBean userSession)
+  int getNumberOfNewIncomingMessages()
+  List<TaskEnergy> getListTaskEnergy()
+  List<TaskTime> getListTaskTime()
+  List<Context> getContexts()
+  List<TaskState> getTaskStates()
+  String getCurrentContext(UserSessionBean userSession)
+  boolean refreshMessagePage()
+  UserAccount getUser()
+  Context getContext(UserSessionBean userSession)
+  UserSessionBean getNewUserSession()
+  UserSessionBean updateUserSession(UserSessionBean userSession)
+}
+
+class UserSelfserviceController {
+  String userProfileAndMenu(Pageable request, UserSessionBean userSession)
+  String userNameForm(UserSessionBean userSession)
+  String userNameStore(UserChangeNameForm username, UserSessionBean userSession)
+  String userPasswordForm(UserSessionBean userSession)
+  String userPasswordStore(UserChangePasswordForm userChangePasswordForm,UserSessionBean userSession)
+  String userContextsForm(UserSessionBean userSession)
+  String userContextsSave(UserChangeDefaultContextForm thisUser, UserSessionBean userSession)
+  String userNewContextGet(UserSessionBean userSession)
+  String userNewContextPost(newContext, UserSessionBean userSession)
+  String userContextEditGet(Context context,UserSessionBean userSession)
+  String userContextEditPost(NewContextForm editContext, UserSessionBean userSession)
+  String userDeleteContextGet(Context context, UserSessionBean userSession)
+  String userLanguageGet(UserSessionBean userSession)
+  String userLanguagePost(UserChangeLanguageForm userChangeLanguageForm, UserSessionBean userSession)
+}
+
+class UserLoginController {
+  String loginGet()
+  String loginPost(LoginForm loginForm)
+  String logoutPage(SessionStatus status, HttpServletRequest request, HttpServletResponse response)
+}
+
+class UserPasswordRecoveryController {
+  String passwordForgottenForm()
+  String passwordForgottenPost(UserRegistrationForm userRegistrationForm)
+  String enterNewPasswordFormular(String confirmId)
+  String enterNewPasswordPost(UserAccountForm userAccountForm, String confirmId)
+}
+
+class UserRegistrationController {
+  String registerGet()
+  String registerPost(UserRegistrationForm userRegistrationForm)
+  String registerConfirmGet(String confirmId)
+  String registerConfirmPost(String confirmId, UserAccountForm userAccountFor)
+}
+
+@enduml
