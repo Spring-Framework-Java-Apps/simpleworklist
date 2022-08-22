@@ -317,6 +317,11 @@
       <option name="url" value="http://localhost:8081/artifactory/all" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="atlassian-3rdparty" />
+      <option name="name" value="Atlassian 3rd-P Old Repository" />
+      <option name="url" value="https://packages.atlassian.com/3rdparty/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="springio-plugins-release" />
       <option name="name" value="Spring Plugins Repository" />
       <option name="url" value="https://repo.spring.io/plugins-release/" />
