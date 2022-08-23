@@ -40,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-            <div class="form-group">
+      <div class="form-group">
                 <label th:for="${#ids.next('context.id')}" class="control-label">
                     <span th:utext="#{project.edit.context}">context</span>
                 </label>
@@ -53,15 +53,16 @@
                     <div th:each="err : ${#fields.errors('context.id')}"
                          th:text="${err}" class="alert alert-danger"></div>
                 </div>
-            </div>
-            <div class="col">
+      </div>
+        <div class="row my-3">
+          <div class="col">
               <a th:href="@{/project/{projectId}(projectId=${thisProject.id})}"
                  class="btn btn-secondary btn-block" role="button">
                 <i class="fas fa-angle-double-left"></i>
                 <span th:utext="#{task.show.button.close}">cancel and back</span>
               </a>
             </div>
-      <div class="col">
+            <div class="col">
                 <input type="hidden" th:field="*{id}" />
                 <button id="saveEditedProject" type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i>
@@ -71,6 +72,7 @@
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
             </div>
+        </div>
 		</form>
 	</div>
 	<!-- Document Window End -->
