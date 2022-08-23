@@ -72,7 +72,7 @@
 
   <properties>
     <java.version>11</java.version>
-    <version.maven>3.6.2</version.maven>
+    <version.maven>3.6.3</version.maven>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <spring-boot.repackage.layout>JAR</spring-boot.repackage.layout>
