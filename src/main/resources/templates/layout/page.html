@@ -160,11 +160,17 @@
 			var srcId = ev.dataTransfer.getData("task").split("_")[1];
 			var targetProjectIdInfo = ev.target.id;
 			var targetProjectId = targetProjectIdInfo.split("_")[1];
+      //alert("srcType "+srcType);
+      //alert("srcId "+srcId);
+      //alert("targetProjectIdInfo "+targetProjectIdInfo);
+      //alert("targetProjectId "+targetProjectId);
 			if(srcType == 'task') {
 				var myUrl = '[(@{/taskstate/task/})]' + srcId + '/move/to/project/' + targetProjectId;
+        alert("myUrl "+myUrl);
 				window.location.replace(myUrl);
 			} else if(srcType == 'project') {
 				var myUrl = '[(@{/project/})]' + srcId + '/project/move/to/project/' + targetProjectId;
+        alert("myUrl "+myUrl);
 				window.location.replace(myUrl);
 			}
 		}
