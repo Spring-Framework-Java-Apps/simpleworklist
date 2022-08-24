@@ -160,31 +160,30 @@
 			var srcId = ev.dataTransfer.getData("task").split("_")[1];
 			var targetProjectIdInfo = ev.target.id;
 			var targetProjectId = targetProjectIdInfo.split("_")[1];
-      //alert("srcType "+srcType);
-      //alert("srcId "+srcId);
-      //alert("targetProjectIdInfo "+targetProjectIdInfo);
-      //alert("targetProjectId "+targetProjectId);
 			if(srcType == 'task') {
-				var myUrl = '[(@{/taskstate/task/})]' + srcId + '/move/to/project/' + targetProjectId;
-        alert("myUrl "+myUrl);
-				window.location.replace(myUrl);
+        if(targetProjectId == 0){
+          var myUrl = '[(@{/taskstate/task/})]' + srcId + '/move/to/project/root';
+          window.location.replace(myUrl);
+        } else {
+          var myUrl = '[(@{/taskstate/task/})]' + srcId + '/move/to/project/' + targetProjectId;
+          window.location.replace(myUrl);
+        }
 			} else if(srcType == 'project') {
-				var myUrl = '[(@{/project/})]' + srcId + '/project/move/to/project/' + targetProjectId;
-        alert("myUrl "+myUrl);
-				window.location.replace(myUrl);
+        var myUrl = '[(@{/project/})]' + srcId + '/project/move/to/project/' + targetProjectId;
+        window.location.replace(myUrl);
 			}
 		}
 
 		function dropTask2Task(ev) {
-			ev.preventDefault();
 			var myUrl = '';
 			var requestPath = '[(@{{url}(url=${#request.getRequestURI()})})]';
 			var requestPathFirst = requestPath.split("/")[1];
-            var requestPathSecond = requestPath.split("/")[2];
+      var requestPathSecond = requestPath.split("/")[2];
 			var srcType = ev.dataTransfer.getData("task").split("_")[0];
 			var sourceTaskId = ev.dataTransfer.getData("task").split("_")[1];
 			var destinationTaskIdInfo = ev.target.id;
 			var destinationTaskId = destinationTaskIdInfo.split("_")[1];
+      ev.preventDefault();
 			if(srcType === 'task') {
 				if(requestPathFirst === 'taskstate'){
 					myUrl = '[(@{/taskstate/task/})]' + sourceTaskId + '/changeorderto/' + destinationTaskId;
@@ -198,6 +197,7 @@
 
 		function allowDrop2Project(ev){
 			ev.preventDefault();
+      return true
 		}
 
 		function dragProject(ev) {
