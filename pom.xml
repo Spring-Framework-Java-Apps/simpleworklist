@@ -4,7 +4,7 @@
 
   <groupId>org.woehlke</groupId>
   <artifactId>simpleworklist</artifactId>
-  <version>2.3.56-SNAPSHOT</version>
+  <version>2.3.58-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -685,8 +685,14 @@
     <!-- spring-boot-starter -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jta-atomikos</artifactId>
     </dependency>
+    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -706,6 +712,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>nz.net.ultraq.thymeleaf</groupId>
+          <artifactId>thymeleaf-layout-dialect</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -850,7 +862,10 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
     </dependency>
 
     <dependency>
@@ -1341,7 +1356,7 @@
                   <files>
                     <file>${project.basedir}/README.md</file>
                     <file>${project.basedir}/LICENSE</file>
-                    <file>${project.basedir}/src/main/docker/docker-compose.yml</file>
+                    <file>${project.basedir}/etc/docker/docker-compose.yml</file>
                     <file>${project.basedir}/app.json</file>
                     <file>${project.basedir}/_config.yml</file>
                     <file>${project.basedir}/Procfile</file>
@@ -1357,11 +1372,11 @@
                     <file>${project.basedir}/src/site/site.xml</file>
                     <file>${project.basedir}/build.sh</file>
                     <file>${project.basedir}/etc/run.sh</file>
-                    <file>${project.basedir}/src/main/bash/psql.sh</file>
+                    <file>${project.basedir}/etc/bash/psql.sh</file>
                     <file>${project.basedir}/etc/docker-start.sh</file>
                     <file>${project.basedir}/etc/docker-stop.sh</file>
-                    <file>${project.basedir}/src/main/sql/db-createdb-and-user-linux.sql</file>
-                    <file>${project.basedir}/src/main/sql/db-createdb-and-user-win10.sql</file>
+                    <file>${project.basedir}/etc/sql/db-createdb-and-user-linux.sql</file>
+                    <file>${project.basedir}/etc/sql/db-createdb-and-user-win10.sql</file>
                   </files>
                 </requireFilesExist>
               </rules>

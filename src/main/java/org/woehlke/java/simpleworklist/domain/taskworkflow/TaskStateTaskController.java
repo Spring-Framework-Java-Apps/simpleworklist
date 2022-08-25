@@ -222,6 +222,18 @@ public class TaskStateTaskController extends AbstractController {
         return project.getUrl();
     }
 
+    @RequestMapping(path = "/{taskId}/move/to/project/root", method = RequestMethod.GET)
+    public final String moveTaskToRootProject(
+      @NotNull @PathVariable("taskId") Task task,
+      @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+      Model model
+    ) {
+      task = taskService.moveTaskToRootProject(task);
+      userSession.setLastProjectId(0L);
+      model.addAttribute("userSession",userSession);
+      return "redirect:/project/root";
+    }
+
     @RequestMapping(path = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
     public final String moveTaskToInbox(
         @NotNull @PathVariable("taskId") Task task,
