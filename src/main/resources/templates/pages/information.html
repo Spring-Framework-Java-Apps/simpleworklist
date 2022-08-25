@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:sd="http://www.thymeleaf.org/spring-data">
+<head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)">
+  <title th:text="'SimpleWorklist | ' + #{pages.information.h1}">Information</title>
+</head>
+<body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
+
+<div th:fragment="mytwtitle">
+  <div id="tw-content-title">
+    <div class="row">
+      <h1 class="col-md-12 mb-12">
+        <i class="fas fa-inbox"></i>
+        <span th:utext="#{pages.information.h1}">Information</span>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="mytwcontent">
+  <div>
+INFORMATION PAGE
+  </div>
+  <div id="user-login-form-more-information">
+    <div>
+      <span th:text="#{user.loginForm.moreInformation}">For More Information please visit:</span>
+      <ul>
+        <li><span th:utext="#{user.loginForm.github}">Github:</span> <a
+          href="https://github.com/Spring-Framework-Java-Apps/simpleworklist/" target="_blank">https://github.com/Spring-Framework-Java-Apps/simpleworklist/</a>
+        </li>
+        <li><span th:utext="#{user.loginForm.myBlog}">My Blog:</span> <a href="http://thomas-woehlke.blogspot.de/"
+                                                                         target="_blank">http://thomas-woehlke.blogspot.de/</a>
+        </li>
+        <li><span th:utext="#{user.loginForm.projectPage}">The Project Page:</span> <a
+          href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
+        <li>Getting Things Done&reg; @ Wikipedia:
+          <a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">https://de.wikipedia.org/wiki/Getting_Things_Done/</a>
+          <a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <small>
+					<span th:utext="#{user.loginForm.gtd.copyright}">GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
+					not affiliated with or endorsed by the David Allen Company.</span>
+      </small>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
