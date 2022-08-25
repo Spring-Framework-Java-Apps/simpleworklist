@@ -2,7 +2,6 @@ package org.woehlke.java.simpleworklist.domain.breadcrumb;
 
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.project.Project;
-import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
@@ -15,12 +14,6 @@ public interface BreadcrumbService {
     Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale, UserSessionBean userSession);
 
     Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale, UserSessionBean userSession);
-
-    Breadcrumb getBreadcrumbForTaskstateAll(Locale locale, UserSessionBean userSession);
-
-    Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale, UserSessionBean userSession);
-
-    Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale local, UserSessionBean userSession);
 
     Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale,UserSessionBean userSession);
 

@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.project;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.context.Context;
+import org.woehlke.java.simpleworklist.domain.project.Project;
+import org.woehlke.java.simpleworklist.domain.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.task.TaskService;

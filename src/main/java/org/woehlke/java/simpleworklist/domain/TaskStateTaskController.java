@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.taskworkflow;
+package org.woehlke.java.simpleworklist.domain;
 
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,9 @@ import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.task.TaskTime;
+import org.woehlke.java.simpleworklist.domain.taskworkflow.MoveTaskToTaskInTaskstateService;
+import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;

@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.taskworkflow;
+package org.woehlke.java.simpleworklist.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +14,9 @@ import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import lombok.extern.slf4j.Slf4j;
+import org.woehlke.java.simpleworklist.domain.taskworkflow.MoveTaskToTaskInTaskstateService;
+import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
+
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 

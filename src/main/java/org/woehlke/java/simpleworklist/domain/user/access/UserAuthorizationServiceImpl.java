@@ -31,7 +31,6 @@ public class UserAuthorizationServiceImpl implements UserAuthorizationService {
     ) {
         this.userAccountRepository = userAccountRepository;
         this.authenticationManager = authenticationManager;
-        //TODO:
         int strength = 10;
         this.encoder = new BCryptPasswordEncoder(strength);
     }

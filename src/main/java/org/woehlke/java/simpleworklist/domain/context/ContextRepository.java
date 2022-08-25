@@ -15,7 +15,6 @@ import java.util.List;
 public interface ContextRepository extends JpaRepository<Context, Long> {
 
     List<Context> findByUserAccount(UserAccount user);
-    Page<Context> findByUserAccount(UserAccount user, Pageable pageRequest);
 
     Context findByIdAndUserAccount(long newContextId, UserAccount userAccount);
 

@@ -33,17 +33,8 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             boolean readByReceiver
     );
 
-    Page<ChatMessage> findByReceiverAndReadByReceiver(
-        UserAccount receiver,
-        boolean readByReceiver,
-        Pageable request
-    );
-
     List<ChatMessage> findBySenderAndReceiverAndReadByReceiver(
             UserAccount sender, UserAccount receiver, boolean readByReceiver
     );
 
-    Page<ChatMessage> findBySenderAndReceiverAndReadByReceiver(
-        UserAccount sender, UserAccount receiver, boolean readByReceiver, Pageable request
-    );
 }

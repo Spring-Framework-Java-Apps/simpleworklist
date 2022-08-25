@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.chat;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.Breadcrumb;
+import org.woehlke.java.simpleworklist.domain.chat.ChatMessage;
+import org.woehlke.java.simpleworklist.domain.chat.ChatMessageForm;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;

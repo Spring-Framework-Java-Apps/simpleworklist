@@ -16,7 +16,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
-//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
@@ -80,13 +79,11 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
-    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name", nullable = false)
     private String name;
 
-    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.RELAXED)
     @Length(min = 0, max = 65535)
     @Column(name = "description", nullable = true, length = 65535, columnDefinition = "text")
     private String description;
@@ -147,7 +144,6 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     public static Project newProjectFactoryForParentProject(Project parent) {
         Project thisProject = new Project();
         thisProject.setUuid(UUID.randomUUID());
-        //thisProject.setName("name");
         thisProject.setParent(parent);
         thisProject.setContext(parent.getContext());
         return thisProject;

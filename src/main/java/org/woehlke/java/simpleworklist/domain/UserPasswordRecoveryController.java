@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.user.passwordrecovery;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountForm;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationForm;
 
 import org.springframework.beans.factory.annotation.Autowired;

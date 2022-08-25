@@ -21,7 +21,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Page<Task> findByProjectIsNullAndContext(Context context, Pageable request);
 
     List<Task> findByContext(Context context);
-    Page<Task> findByContext(Context context, Pageable pageable);
 
     Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context);
     Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context);
@@ -36,14 +35,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
         TaskState taskState, Context context
     );
-    Page<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
-        TaskState taskState, Context context, Pageable request
-    );
 
-    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    //@Query("select t from Task t"
-    //        + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
-    //        + " and t.taskState = :taskState and t.context = :context")
     @Query(name="queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask")
     List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdTaskState") long lowerOrderIdTaskState,
@@ -52,17 +44,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("context") Context context
     );
 
-    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    @Query(name="queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask")
-    Page<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
-        @Param("lowerOrderIdTaskState") long lowerOrderIdTaskState,
-        @Param("higherOrderIdTaskState") long higherOrderIdTaskState,
-        @Param("taskState") TaskState taskState,
-        @Param("context") Context context,
-        Pageable request
-    );
-
-    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
     @Query(name="queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask")
     List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdProject") long lowerOrderIdProject,
@@ -70,22 +51,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("project") Project project
     );
 
-    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    //@Query("select t from Task t"
-    //    + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-    //    + " and t.project = :project")
-    @Query(name="queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask")
-    Page<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
-        @Param("lowerOrderIdProject") long lowerOrderIdProject,
-        @Param("higherOrderIdProject") long higherOrderIdProject,
-        @Param("project") Project project,
-        Pageable request
-    );
-
-    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    //@Query("select t from Task t"
-    //    + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-    //    + " and t.project is null and t.context = :context ")
     @Query(name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask")
     List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
         @Param("lowerOrderIdProject") long lowerOrderIdProject,
@@ -93,16 +58,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Param("context") Context context
     );
 
-    //TODO: #249 move the JQL Query-String to Entity as Prepared Statement
-    //@Query("select t from Task t"
-    //    + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-    //    + " and t.project is null and t.context = :context ")
-    @Query(name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask")
-    Page<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
-        @Param("lowerOrderIdProject") long lowerOrderIdProject,
-        @Param("higherOrderIdProject") long higherOrderIdProject,
-        @Param("context") Context context,
-        Pageable request
-    );
 
 }
