@@ -1356,7 +1356,7 @@
                   <files>
                     <file>${project.basedir}/README.md</file>
                     <file>${project.basedir}/LICENSE</file>
-                    <file>${project.basedir}/src/main/docker/docker-compose.yml</file>
+                    <file>${project.basedir}/etc/docker/docker-compose.yml</file>
                     <file>${project.basedir}/app.json</file>
                     <file>${project.basedir}/_config.yml</file>
                     <file>${project.basedir}/Procfile</file>
@@ -1372,11 +1372,11 @@
                     <file>${project.basedir}/src/site/site.xml</file>
                     <file>${project.basedir}/build.sh</file>
                     <file>${project.basedir}/etc/run.sh</file>
-                    <file>${project.basedir}/src/main/bash/psql.sh</file>
+                    <file>${project.basedir}/etc/bash/psql.sh</file>
                     <file>${project.basedir}/etc/docker-start.sh</file>
                     <file>${project.basedir}/etc/docker-stop.sh</file>
-                    <file>${project.basedir}/src/main/sql/db-createdb-and-user-linux.sql</file>
-                    <file>${project.basedir}/src/main/sql/db-createdb-and-user-win10.sql</file>
+                    <file>${project.basedir}/etc/sql/db-createdb-and-user-linux.sql</file>
+                    <file>${project.basedir}/etc/sql/db-createdb-and-user-win10.sql</file>
                   </files>
                 </requireFilesExist>
               </rules>
