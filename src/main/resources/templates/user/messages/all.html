@@ -17,7 +17,6 @@
     </div>
 
     <div th:fragment="mytwcontent">
-        <!-- Document Window -->
 
         <div th:each="m : ${user2UserMessagePage}">
             <div class="row">
@@ -35,6 +34,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row" id="newUser2UserMessageForm">
             <div class="col">
                 <div class="card card-body">
@@ -67,14 +67,5 @@
             </div>
         </div>
     </div>
-
-    <script th:src="@{/webjars/ckeditor/18.0.0/inline/ckeditor.js}"></script>
-    <script th:inline="javascript">
-        InlineEditor
-            .create( document.querySelector( '#textEditor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
 </body>
 </html>
