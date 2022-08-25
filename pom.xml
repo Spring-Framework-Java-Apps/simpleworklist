@@ -1322,6 +1322,11 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${maven-failsafe-plugin.version}</version>
         </plugin>
+        <plugin>
+          <groupId>com.heroku.sdk</groupId>
+          <artifactId>heroku-maven-plugin</artifactId>
+          <version>3.0.3</version>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -1457,6 +1462,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
+          <!--
           <execution>
             <id>unpack-dependency-classes-install</id>
             <phase>pre-site</phase>
@@ -1564,6 +1570,7 @@
               <goal>tree</goal>
             </goals>
           </execution>
+          -->
           <execution>
             <id>report</id>
             <phase>site</phase>
@@ -1609,6 +1616,14 @@
               <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
               <outputDirectory>${project.build.directory}/dependency-sources/</outputDirectory>
               -->
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals><goal>copy-dependencies</goal></goals>
+            <configuration>
+              <includeScope>compile</includeScope>
             </configuration>
           </execution>
         </executions>
@@ -1715,6 +1730,10 @@
             <skipIntegrationTests>${skipTests}</skipIntegrationTests>
           </systemPropertyVariables>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.asciidoctor</groupId>
