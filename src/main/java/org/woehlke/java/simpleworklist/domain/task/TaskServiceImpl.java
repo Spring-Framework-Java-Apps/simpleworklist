@@ -89,8 +89,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaTaskstate(@NotNull Task task) {
         log.info("updatedViaTaskstate");
-        //long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-        //task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.outTaskstate());
         return task;
@@ -100,8 +98,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProject(@NotNull Task task) {
         log.info("updatedViaProject");
-        //long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(), task.getContext());
-        //task.setOrderIdProject(++maxOrderIdProject);
         task = taskRepository.saveAndFlush(task);
         log.info("persisted Task: " + task.outProject());
         return task;
@@ -111,8 +107,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProjectRoot(@NotNull Task task) {
         log.info("updatedViaProject");
-        //long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
-        //task.setOrderIdProject(++maxOrderIdProject);
         task = taskRepository.saveAndFlush(task);
         log.info("persisted Task: " + task.outProject());
         return task;
@@ -332,14 +326,11 @@ public class TaskServiceImpl implements TaskService {
         Context context = sourceTask.getContext();
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
-        //TODO: #244 change List<Task> to Page<Task>
-        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
             context
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveUpByProject();
@@ -366,14 +357,11 @@ public class TaskServiceImpl implements TaskService {
         Context context = sourceTask.getContext();
         final long lowerOrderIdProject = sourceTask.getOrderIdProject();
         final long higherOrderIdProject = destinationTask.getOrderIdProject();
-        //TODO: #244 change List<Task> to Page<Task>
-        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
             context
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveDownByProject();
@@ -401,14 +389,11 @@ public class TaskServiceImpl implements TaskService {
         log.info("-------------------------------------------------------------------------------");
         long lowerOrderIdProject = destinationTask.getOrderIdProject();
         long higherOrderIdProject = sourceTask.getOrderIdProject();
-        //TODO: #244 change List<Task> to Page<Task>
-        //noinspection deprecation
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
             project
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveUpByProject();
@@ -437,13 +422,11 @@ public class TaskServiceImpl implements TaskService {
         log.info("-------------------------------------------------------------------------------");
         final long lowerOrderIdProject = sourceTask.getOrderIdProject();
         final long higherOrderIdProject = destinationTask.getOrderIdProject();
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
             lowerOrderIdProject,
             higherOrderIdProject,
             project
         );
-        //TODO: #244 change List<Task> to Page<Task>
         List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
         for(Task task:tasks){
             task.moveDownByProject();

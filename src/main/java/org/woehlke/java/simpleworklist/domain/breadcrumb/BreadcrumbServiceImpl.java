@@ -86,37 +86,6 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForTaskInTaskstate(String taskstate, Task task, Locale locale, UserSessionBean userSession) {
-        log.info("getBreadcrumbForTaskInTaskstate");
-        Optional<Context> context = contextService.getContextFor(userSession);
-        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
-        breadcrumb.addTaskstate(taskstate);
-        breadcrumb.addTask(task);
-        return breadcrumb;
-    }
-
-    @Override
-    public Breadcrumb getBreadcrumbForTaskstateAll(Locale locale, UserSessionBean userSession) {
-        log.info("getBreadcrumbForTaskstateAll");
-        Optional<Context> context = contextService.getContextFor(userSession);
-        Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
-        String code="layout.page.all";
-        String name= messageSource.getMessage(code,null,locale);
-        String url="/taskstate/all";
-        breadcrumb.addPage(name,url);
-        return breadcrumb;
-    }
-
-    @Override
-    public Breadcrumb getBreadcrumbForTaskInProject(Project thisProject, Task task, Locale locale, UserSessionBean userSession) {
-        log.info("getBreadcrumbForTaskInProject");
-        Breadcrumb breadcrumb = new Breadcrumb(locale,thisProject.getContext());
-        breadcrumb.addProject(thisProject);
-        breadcrumb.addTask(task);
-        return breadcrumb;
-    }
-
-    @Override
     public Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale, UserSessionBean userSession) {
         log.info("getBreadcrumbForUserProfileAndMenu");
         Optional<Context> context = contextService.getContextFor(userSession);

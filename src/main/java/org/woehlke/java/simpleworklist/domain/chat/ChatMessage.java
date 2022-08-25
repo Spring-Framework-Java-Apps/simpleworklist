@@ -47,7 +47,6 @@ public class ChatMessage extends AuditModel implements Serializable {
     )
     private Long id;
 
-    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.SIMPLE_TEXT)
     @NotBlank
     @Length(min=1,max=65535)
     @Column(name="message_text", nullable = false, length = 65535, columnDefinition="text")

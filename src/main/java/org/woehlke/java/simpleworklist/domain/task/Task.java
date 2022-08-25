@@ -10,10 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-//import org.hibernate.annotations.*;
-//import org.hibernate.annotations.CascadeType;
-//import org.hibernate.annotations.NamedQueries;
-//import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -27,8 +23,6 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-//import org.hibernate.validator.constraints.SafeHtml;
-//import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
@@ -48,15 +42,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         @UniqueConstraint(
             name="ux_task",
             columnNames = {"uuid", "context_id" }
-        )/*,
-        @UniqueConstraint(
-            name="ux_task_order_id_project",
-            columnNames = {"order_id_project", "project_id", "context_id", "user_account_id"}
-        ),
-        @UniqueConstraint(
-            name="ux_task_order_id_task_state",
-            columnNames = {"order_id_task_state", "task_state", "context_id", "user_account_id"}
-        )*/
+        )
     },
     indexes = {
         @Index(name = "ix_task_uuid", columnList = "uuid"),
@@ -153,7 +139,6 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     private Context context;
 
 
-    //@SafeHtml(whitelistType= SafeHtml.WhiteListType.NONE)
     @NotBlank
     @Length(min=1,max=255)
     @Column(name = "title", nullable = false)

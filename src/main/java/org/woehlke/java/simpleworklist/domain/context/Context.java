@@ -4,7 +4,6 @@ import lombok.*;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.validator.constraints.Length;
 
-//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
@@ -62,14 +61,10 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     @LazyToOne(PROXY)
     private UserAccount userAccount;
 
-    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-    //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_de", nullable = false)
     private String nameDe;
 
-    //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-    //@NotBlank
     @Length(min = 1, max = 255)
     @Column(name = "name_en", nullable = false)
     private String nameEn;
