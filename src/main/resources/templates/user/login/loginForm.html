@@ -47,16 +47,20 @@
             </button>
           </div>
           <div class="col align-middle m-2 p-1">
-            <i class="fas fa-user"></i>
-            <a id="registerButton" th:href="@{/user/register/}" class="align-middle">
-              <span th:utext="#{user.loginForm.register}" class="align-middle">register as new user</span>
-            </a>
+            <div class="btn btn-outline-secondary btn-block">
+              <i class="fas fa-user"></i>
+              <a id="registerButton" th:href="@{/user/register/}">
+                <s11 th:utext="#{user.loginForm.register}" class="align-middle">register as new user</s11>
+              </a>
+            </div>
           </div>
           <div class="col align-middle m-2 p-1">
-            <i class="fas fa-question-circle"></i>
-            <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="align-middle">
-              <span th:utext="#{user.loginForm.passwordReset}" class="align-middle">Password forgotten?</span>
-            </a>
+            <div class="btn btn-outline-secondary btn-block">
+              <i class="fas fa-question-circle"></i>
+              <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="align-middle">
+                <span th:utext="#{user.loginForm.passwordReset}">Password forgotten?</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
