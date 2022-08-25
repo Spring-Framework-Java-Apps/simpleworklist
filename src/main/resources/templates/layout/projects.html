@@ -44,21 +44,22 @@
           ondrop="drop2project(event)"
           ondragover="allowDrop2Project(event)"
           draggable="true" ondragstart="dragProject(event)"
-          class="btn btn-dark btn-sm">
+          class="m-2 btn btn-dark btn-sm">
         <i class="fa-solid fa-diagram-project" th:id="'project_' + ${project.id} + '_i'"></i>
         <strong th:text="${project.name}" th:id="'project_' + ${project.id} + '_strong'"></strong>
     </span>
-    <span th:id="'project_' + ${project.id}"
-          th:if="${project != thisProject}"
-          ondrop="drop2project(event)"
-          ondragover="allowDrop2Project(event)"
-          draggable="true" ondragstart="dragProject(event)"
-          class="m-2 btn btn-outline-dark btn-sm">
-      <a th:href="@{/project/{id}(id=${project.id})}" th:id="'project_' + ${project.id} + '_a'">
-        <i class="fa-solid fa-diagram-project" th:id="'project_' + ${project.id} + '_a_i'"></i>
-        <span th:text="${project.name}" th:id="'project_' + ${project.id} + '_a_span'"></span>
-      </a>
-    </span>
+
+    <a th:href="@{/project/{id}(id=${project.id})}"
+       th:if="${project != thisProject}"
+       th:id="'project_' + ${project.id} + '_a'"
+       ondrop="drop2project(event)"
+       ondragover="allowDrop2Project(event)"
+       draggable="true" ondragstart="dragProject(event)"
+       class="m-2 btn btn-outline-dark btn-sm">
+      <i class="fa-solid fa-diagram-project" th:id="'project_' + ${project.id} + '_a_i'"></i>
+      <span th:text="${project.name}" th:id="'project_' + ${project.id} + '_a_span'"></span>
+    </a>
+
     <span th:if="${project.children.size() gt 0}">
       <ul th:include="this :: tw-project-submenu(projectList=${project.children},thisProject=${thisProject})"
           style="list-style: none;">
