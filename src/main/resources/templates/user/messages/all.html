@@ -5,76 +5,73 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=true)">
-    <title th:text="'SimpleWorklist | ' + #{pages.chatMessages.h1}">Title</title>
+  <title th:text="'SimpleWorklist | ' + #{pages.chatMessages.h1}">Title</title>
 </head>
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
-    <div th:fragment="mytwtitle">
-        <h1>
-            <span th:utext="#{pages.chatMessages.h1}">Your Dialog with</span>
-            <small th:text="${otherUser.userFullname}">otherUser.userFullname</small>
-        </h1>
-    </div>
+<div th:fragment="mytwtitle">
+  <h1>
+    <span th:utext="#{pages.chatMessages.h1}">Your Dialog with</span>
+    <small th:text="${otherUser.userFullname}">otherUser.userFullname</small>
+  </h1>
+</div>
 
-    <div th:fragment="mytwcontent">
+<div th:fragment="mytwcontent">
 
-      <div class="row">
-        <div class="col">
-          <div th:each="m : ${user2UserMessagePage}">
-              <div class="alert alert-primary" role="alert"
-                   th:if="${m.sender.id != otherUser.id}" style="width: 66%; float:left">
-                  <span th:text="${m.messageText}" ></span>
-                  <span style="float:right">
-                      <small>
-                          <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
-                          <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
-                      </small>
-                  </span>
-              </div>
-            <div class="alert alert-warning" role="alert"
-                 th:if="${m.sender.id == otherUser.id}" style="width: 66%; float:right">
-              <span th:text="${m.messageText}" ></span>
-              <span style="float:right">
-                      <small>
-                          <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
-                          <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
-                      </small>
-                  </span>
+  <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}"
+        th:object="${newUser2UserMessage}" method="post">
+    <div class="row">
+      <div class="col">
+        <div class="card card-body" id="newUser2UserMessageForm">
+          <div class="form-group col-12">
+            <label for="messageTextEditor" class="control-label my-2" th:utext="#{pages.chatMessages.newMessage}">New Message:</label>
+            <textarea id="messageTextEditor" rows="3" cols="50"
+                      th:field="*{messageText}" class="form-control form-control-lg"/>
+            <div>
+              <div th:each="err : ${#fields.errors('messageText')}"
+                   th:text="${err}" class="invalid-feedback"/>
             </div>
-
-
+          </div>
+          <div class="my-3">
+            <button id="newUserMessageButton" type="submit" class="btn btn-primary">
+              <i class="fas fa-envelope"></i>
+              <span th:utext="#{pages.chatMessages.newUserMessageButton}">Send Message</span>
+            </button>
           </div>
         </div>
       </div>
+    </div>
+  </form>
 
-        <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}"
-              th:object="${newUser2UserMessage}" method="post">
-          <div class="row">
-            <div class="col">
-            <div class="card card-body" id="newUser2UserMessageForm">
-                <div class="form-group col-12">
-                    <label for="messageTextEditor" class="control-label">
-                        <span th:utext="#{pages.chatMessages.newMessage}">New Message:</span>
-                    </label>
-                    <textarea id="messageTextEditor" rows="3" cols="50"
-                              th:field="*{messageText}" class="form-control form-control-lg" />
-                    <div>
-                        <div th:each="err : ${#fields.errors('messageText')}"
-                             th:text="${err}" class="invalid-feedback" />
-                    </div>
-                </div>
-                <div class="my-3">
-                    <button id="newUserMessageButton" type="submit" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i>
-                        <span th:utext="#{pages.chatMessages.newUserMessageButton}">Send Message</span>
-                    </button>
-                </div>
-            </div>
-            </div>
-          </div>
-        </form>
-        <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage})">
+  <div class="row">
+    <div class="col">
+      <div th:each="m : ${user2UserMessagePage}">
+        <div class="alert alert-primary" role="alert"
+             th:if="${m.sender.id != otherUser.id}" style="width: 66%; float:left">
+          <span th:text="${m.messageText}"></span>
+          <span style="float:right">
+              <small>
+                  <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
+                  <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
+              </small>
+          </span>
+        </div>
+        <div class="alert alert-warning" role="alert"
+             th:if="${m.sender.id == otherUser.id}" style="width: 66%; float:right">
+          <span th:text="${m.messageText}"></span>
+          <span style="float:right">
+              <small>
+                  <span th:text="${#dates.format(m.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
+                  <i th:if="${m.readByReceiver}" class="fas fa-check"></i>
+              </small>
+          </span>
+        </div>
+      </div>
     </div>
-    </div>
+  </div>
+
+  <div th:replace="layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage})">
+  </div>
+</div>
 </body>
 </html>
