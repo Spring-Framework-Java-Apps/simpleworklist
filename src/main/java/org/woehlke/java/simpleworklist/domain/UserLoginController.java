@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.user.login;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.java.simpleworklist.domain.user.access.UserAuthorizationService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
+import org.woehlke.java.simpleworklist.domain.user.login.LoginForm;
+import org.woehlke.java.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
 
 @Slf4j
 @Controller

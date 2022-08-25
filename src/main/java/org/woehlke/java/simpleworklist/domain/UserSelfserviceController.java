@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.user.accountselfservice;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,9 @@ import org.woehlke.java.simpleworklist.domain.context.NewContextForm;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.user.accountselfservice.UserChangeDefaultContextForm;
+import org.woehlke.java.simpleworklist.domain.user.accountselfservice.UserChangeNameForm;
+import org.woehlke.java.simpleworklist.domain.user.accountselfservice.UserChangePasswordForm;
 
 import javax.validation.Valid;
 import java.util.List;

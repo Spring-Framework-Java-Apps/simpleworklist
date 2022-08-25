@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.application.pages;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

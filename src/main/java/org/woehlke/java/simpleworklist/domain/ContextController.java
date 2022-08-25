@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.context;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.application.framework.AbstractController;
+import org.woehlke.java.simpleworklist.domain.context.Context;
+import org.woehlke.java.simpleworklist.domain.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
