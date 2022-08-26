@@ -1863,7 +1863,7 @@
   <profiles>
 
       <profile>
-      <id>war</id>
+      <id>jar</id>
       <properties>
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
