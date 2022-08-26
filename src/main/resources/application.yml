@@ -1,5 +1,5 @@
 server:
-  port: ${SIMPLEWORKLIST_PORT}
+  # port: ${SIMPLEWORKLIST_PORT}
   error:
     path: /fehler
   compression:
@@ -197,7 +197,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port: 9010
+  # port: 9010
   compression:
     enabled: true
 logging:
