@@ -65,4 +65,6 @@ function main() {
     #boot_run
 }
 
+# JAVA_OPTS=-XX:+UseContainerSupport -Xmx300m -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8
+
 main
