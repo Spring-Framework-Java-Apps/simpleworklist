@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.application.config;
+package org.woehlke.java.simpleworklist.config;
 
 public interface Requirements {
 

@@ -1,10 +1,9 @@
-package org.woehlke.java.simpleworklist.application.config;
+package org.woehlke.java.simpleworklist.config;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.context.NewContextForm;

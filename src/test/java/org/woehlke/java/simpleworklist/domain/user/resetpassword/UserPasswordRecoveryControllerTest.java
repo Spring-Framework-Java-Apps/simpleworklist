@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.user.resetpassword;
 
-import org.woehlke.java.simpleworklist.application.config.AbstractTest;
+import org.woehlke.java.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
