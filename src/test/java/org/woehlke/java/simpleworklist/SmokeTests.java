@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.test;
+package org.woehlke.java.simpleworklist;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
