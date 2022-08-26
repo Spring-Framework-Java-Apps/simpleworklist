@@ -23,24 +23,23 @@
 <body th:fragment="tw-page-body(twcontent,twtitle,scripts)">
 
 	<!-- Navbar on Top -->
-	<header>
-		<div th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})" >
-		</div>
-		<div class="jumbotron mt-3" id="tw-title-section">
-			<div class="container">
-				<th:block th:replace="${twtitle}" />
-			</div>
-		</div>
-	</header>
-
-  <!-- Breadcrumb -->
-  <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
-  </div>
-
-  <!-- taskstates -->
-	<section th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})">
-	</section>
-
+	<header style="background-image: url('/img/jumbotron/2012-06-07_20.58.02.png')" >
+    <div style="background-color:  rgba(255, 255, 255, 0.3)">
+		  <div th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})">
+      </div>
+      <div class="jumbotron pt-3" id="tw-title-section" >
+        <div class="container">
+          <th:block th:replace="${twtitle}" />
+        </div>
+      </div>
+      <!-- Breadcrumb -->
+      <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
+      </div>
+      <!-- taskstates -->
+      <div th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})" class="link-dark">
+      </div>
+    </div>
+  </header>
 
 	<!-- Menu on Left Column and Document Window on the Right Column -->
 	<section id="tw-main-section">
@@ -143,7 +142,7 @@
 		function drop2completed(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
-			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/completed';
+			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/completed';
 			window.location.replace(myUrl);
 		}
 
