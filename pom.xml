@@ -4,7 +4,7 @@
 
   <groupId>org.woehlke</groupId>
   <artifactId>simpleworklist</artifactId>
-  <version>2.3.62-SNAPSHOT</version>
+  <version>2.3.63-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -86,7 +86,6 @@
     <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
     <webjars.bootstrap.version>5.2.0</webjars.bootstrap.version>
     <webjars.font-awesome.version>6.1.2</webjars.font-awesome.version>
-    <webjars.ckeditor.version>31.0.0</webjars.ckeditor.version>
     <opencsv.version>5.3</opencsv.version>
 
     <!-- Unit and Integration Testing -->
@@ -353,11 +352,6 @@
         <groupId>org.webjars</groupId>
         <artifactId>font-awesome</artifactId>
         <version>${webjars.font-awesome.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>ckeditor</artifactId>
-        <version>${webjars.ckeditor.version}</version>
       </dependency>
 
       <!-- Thymeleaf -->
@@ -806,10 +800,12 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-remoting</artifactId>
     </dependency>
+    -->
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
@@ -853,10 +849,6 @@
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>font-awesome</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>ckeditor</artifactId>
     </dependency>
 
     <dependency>
@@ -1565,8 +1557,8 @@
               <includeScope>compile</includeScope>
               <excludeTypes>maven-plugin</excludeTypes>
               <excludeScope>test,provided</excludeScope>
-              <excludeGroupIds>antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby,com.vladsch.flexmark,org.apache.maven.doxia,org.codehaus.plexus,org.apache.maven.scm,io.netty,org.apache.groovy,org.eclipse.jetty,org.mockito,org.asciidoctor,com.github.jnr,org.apache.maven.surefire,net.sourceforge.saxon,net.sf.saxon,com.github.spotbugs,org.eclipse.jgit</excludeGroupIds>
-              <excludeArtifactIds>weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api,lombok,jcommander</excludeArtifactIds>
+              <excludeGroupIds>org.eclipse.aether,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby,com.vladsch.flexmark,org.apache.maven.doxia,org.codehaus.plexus,org.apache.maven.scm,io.netty,org.apache.groovy,org.eclipse.jetty,org.mockito,org.asciidoctor,com.github.jnr,org.apache.maven.surefire,org.apache.maven,net.sourceforge.saxon,net.sf.saxon,com.github.spotbugs,org.eclipse.jgit,org.apache.ant,org.apache.velocity,org.junit.jupiter,org.junit.platform,junit,org.mockito,net.sourceforge.pmd,org.eclipse.sisu,org.ow2.asm</excludeGroupIds>
+              <excludeArtifactIds>spring-boot-configuration-processor,spring-boot-devtools,ganymed-ssh2,maven-toolchain,weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api,lombok,jcommander,checkstyle,plexus-build-api</excludeArtifactIds>
             </configuration>
           </execution>
         </executions>
