@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static java.util.Locale.GERMAN;
+import static org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState.*;
 
 /**
  * Created by tw on 14.02.16.
@@ -107,8 +108,18 @@ public abstract class AbstractController {
 
     @ModelAttribute("listTaskState")
     public final List<TaskState> getTaskStates(){
-        List<TaskState> listTaskState = new ArrayList<>(TaskState.values().length);
-        for(TaskState taskState:TaskState.values()){
+      TaskState[] listTaskStateArray = {
+        INBOX,
+        TODAY,
+        NEXT,
+        WAITING,
+        SCHEDULED,
+        SOMEDAY,
+        FOCUS,
+        COMPLETED
+      };
+      List<TaskState> listTaskState = new ArrayList<>(listTaskStateArray.length);
+      for(TaskState taskState:listTaskStateArray){
             listTaskState.add(taskState);
         }
         return listTaskState;
