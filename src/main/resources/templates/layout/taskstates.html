@@ -133,8 +133,22 @@
                       <span th:text="#{layout.page.trash}" class="link-light">Trash</span>
                     </a>
                 </li>
+                <li class="nav-item" ondrop="drop2trash(event)" ondragover="allowDropOfTask(event)">
+                  <a id="taskstate_projects" class="nav-link active link-dark"
+                     th:href="@{/project/root}"
+                     th:if="${taskstateType == 'projects'}">
+                    <i class="fas fa-trash-alt link-dark"></i>
+                    <span th:text="#{layout.page.projects}" class="link-dark">Projects</span>
+                  </a>
+                  <a id="taskstate_projects" class="nav-link link-light"
+                     th:href="@{/project/root}"
+                     th:if="${taskstateType != 'projects'}">
+                    <i class="fas fa-trash-alt link-light"></i>
+                    <span th:text="#{layout.page.projects}" class="link-light">Projects</span>
+                  </a>
+                </li>
             </ul>
-      </div>
+        </div>
     </section>
 
 </html>
