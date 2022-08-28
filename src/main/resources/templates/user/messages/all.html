@@ -10,10 +10,12 @@
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
 <div th:fragment="mytwtitle">
+  <div class="row my-3 py-3 col">
   <h1>
-    <span th:utext="#{pages.chatMessages.h1}">Your Dialog with</span>
+    <strong th:utext="#{pages.chatMessages.h1}">Your Dialog with</strong>
     <small th:text="${otherUser.userFullname}">otherUser.userFullname</small>
   </h1>
+  </div>
 </div>
 
 <div th:fragment="mytwcontent">
