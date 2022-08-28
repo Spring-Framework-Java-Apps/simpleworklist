@@ -10,6 +10,7 @@
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
     <div th:fragment="mytwtitle">
+      <div class="row my-3 py-3 col">
         <h1>
             <i class="fas fa-edit"></i>
             <span th:utext="#{user.selfservice.profile.changeContexts}">Change Areas</span>
@@ -21,7 +22,8 @@
                         <span sec:authentication="name"></span>
                     </strong>
               </small>
-        </2>
+        </h2>
+      </div>
     </div>
 
     <div th:fragment="mytwcontent">
