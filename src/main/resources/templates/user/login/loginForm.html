@@ -10,56 +10,68 @@
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
 <div th:fragment="mytwtitle">
-  <h1><span th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</span></h1>
-  <h2><span th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</span></h2>
+  <div class="row my-5 py-5">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <h1><span th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</span></h1>
+      <h2><span th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</span></h2>
+    </div>
+    <div class="col-3"></div>
+  </div>
 </div>
 
 <div th:fragment="mytwcontent">
-  <form id="user-login-form" th:action="@{/j_spring_security_check}" method="post">
-    <div class="card">
-      <div class="card-header">
-        <span th:utext="#{user.loginForm.login}" class="m-1 p-1">Please login</span>
-      </div>
-      <div class="card-body">
-        <div class="invalid-feedback" role="alert" th:if="${param.login_error != null}">
-          <span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span>
-        </div>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <label for="j_username" th:text="#{user.loginForm.email.label}" class="form-label">Email</label>
-        <div class="m-2 pe-3 input-group">
-            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-            <input id="j_username" type="email" class="form-control" name="j_username"
-                   th:placeholder="#{user.loginForm.email.placeholder}"/>
-        </div>
-        <label for="j_password" th:text="#{user.loginForm.password.label}" class="form-label">Password</label>
-        <div class="m-2 pe-3 input-group">
-            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-            <input id="j_password" type="password" class="form-control" name="j_password"
-                     th:placeholder="#{user.loginForm.password.placeholder}"/>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="row">
-          <div class="col m-2 p-1 ps-3">
-            <button id="loginButton" type="submit" class="btn btn-block btn-primary">
-              <i class="fas fa-sign-in-alt"></i>
-              <span th:utext="#{user.loginForm.loginButton}"></span>
-            </button>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <form id="user-login-form" th:action="@{/j_spring_security_check}" method="post">
+        <div class="card my-5">
+          <div class="card-header">
+            <span th:utext="#{user.loginForm.login}" class="m-1 p-1">Please login</span>
           </div>
-          <div class="col align-middle m-2 p-1">
-              <a id="registerButton" th:href="@{/user/register/}" class="btn btn-outline-secondary btn-block">
-                <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
-              </a>
+          <div class="card-body">
+            <div class="invalid-feedback" role="alert" th:if="${param.login_error != null}">
+              <span th:text="#{user.loginForm.loginError}">Your login attempt was not successful, try again.</span>
+            </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <label for="j_username" th:text="#{user.loginForm.email.label}" class="form-label">Email</label>
+            <div class="m-2 pe-3 input-group">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <input id="j_username" type="email" class="form-control" name="j_username"
+                       th:placeholder="#{user.loginForm.email.placeholder}"/>
+            </div>
+            <label for="j_password" th:text="#{user.loginForm.password.label}" class="form-label">Password</label>
+            <div class="m-2 pe-3 input-group">
+                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                <input id="j_password" type="password" class="form-control" name="j_password"
+                         th:placeholder="#{user.loginForm.password.placeholder}"/>
+            </div>
           </div>
-          <div class="col align-middle m-2 p-1">
-              <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="btn btn-outline-secondary btn-block">
-                <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
-              </a>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col text-left m-2 p-1 ps-3">
+                <button id="loginButton" type="submit" class="btn btn-block btn-primary">
+                  <i class="fas fa-sign-in-alt"></i>
+                  <span th:utext="#{user.loginForm.loginButton}"></span>
+                </button>
+              </div>
+              <div class="col text-center m-2 p-1">
+                  <a id="registerButton" th:href="@{/user/register/}" class="btn btn-outline-secondary btn-block">
+                    <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
+                  </a>
+              </div>
+              <div class="col text-right m-2 p-1">
+                  <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="btn btn-outline-secondary btn-block">
+                    <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
+                  </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </form>
+      </form>
+  </div>
+  <div class="col-3"></div>
+</div>
 </div>
 
 </body>
