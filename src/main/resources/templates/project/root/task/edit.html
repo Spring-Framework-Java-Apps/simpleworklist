@@ -10,7 +10,6 @@
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{::script})">
 
 <div th:fragment="mytwtitle">
-	<!-- Document Window -->
 	<h1 class="tw-title">
 		<i class="fas fa-edit"></i>&nbsp;
 		<span th:utext="#{task.show.h1}">Edit Task</span>
@@ -47,9 +46,5 @@
 	</div>
 </div>
 
-	<script th:src="@{/webjars/ckeditor/4.14.0/full/ckeditor.js}"></script>
-	<script th:inline="javascript">
-		CKEDITOR.replace( 'textEditor' );
-	</script>
 </body>
 </html>
