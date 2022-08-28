@@ -65,12 +65,13 @@
 
 	<!-- Footer -->
 	<footer class="footer">
-		<nav class="navbar fixed-bottom navbar-dark bg-dark">
+		<nav class="navbar fixed-bottom navbar-dark bg-dark navbar-text">
 			<div class="container">
-				<span class="navbar-text">© 2022 Thomas Wöhlke</span>
-			</div>
+        <div class="col nav-link"><a th:href="@{/information}" class="nav-link">© 2022 Thomas Wöhlke</a></div>
+      </div>
 		</nav>
 	</footer>
+
 	<script th:src="@{/js/google-analytics.js}"></script>
     <script th:src="@{/webjars/jquery/3.6.0/jquery.js}"></script>
     <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
