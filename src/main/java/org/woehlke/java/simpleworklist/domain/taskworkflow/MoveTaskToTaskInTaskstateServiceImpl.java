@@ -51,7 +51,7 @@ public class MoveTaskToTaskInTaskstateServiceImpl implements MoveTaskToTaskInTas
         model.addAttribute("taskPage", taskPage);
         model.addAttribute("taskstateType", taskState.getType() );
         model.addAttribute("userSession", userSession);
-      model.addAttribute("dataPage", true);
+        model.addAttribute("dataPage", true);
         return taskState.getTemplate();
     }
 

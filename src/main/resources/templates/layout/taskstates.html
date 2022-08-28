@@ -137,13 +137,13 @@
                   <a id="taskstate_projects" class="nav-link active link-dark"
                      th:href="@{/project/root}"
                      th:if="${taskstateType == 'projects'}">
-                    <i class="fas fa-trash-alt link-dark"></i>
+                    <i class="fa-solid fa-diagram-project link-dark"></i>
                     <span th:text="#{layout.page.projects}" class="link-dark">Projects</span>
                   </a>
                   <a id="taskstate_projects" class="nav-link link-light"
                      th:href="@{/project/root}"
                      th:if="${taskstateType != 'projects'}">
-                    <i class="fas fa-trash-alt link-light"></i>
+                    <i class="fa-solid fa-diagram-project link-light"></i>
                     <span th:text="#{layout.page.projects}" class="link-light">Projects</span>
                   </a>
                 </li>
