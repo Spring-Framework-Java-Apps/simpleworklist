@@ -48,6 +48,7 @@ public class TransformTaskIntoProjektServiceImpl implements TransformTaskIntoPro
         task = taskService.updatedViaTaskstate(task);
         log.info("tried to transform Task " + task.getId() + " to new Project " + thisProject.getId());
         model.addAttribute("userSession", userSession);
+         model.addAttribute("dataPage", true);
         return thisProject.getUrl();
     }
 }

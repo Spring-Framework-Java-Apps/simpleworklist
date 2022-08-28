@@ -71,6 +71,7 @@ public class ProjectRootController extends AbstractController {
             model.addAttribute("myTaskState","PROJECT");
         }
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return "project/root/show";
     }
 
@@ -83,6 +84,7 @@ public class ProjectRootController extends AbstractController {
         Context context = super.getContext(userSession);
         projectControllerService.addNewProjectToProjectRootForm(userSession, context, locale, model);
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return "project/root/project/add";
     }
 
@@ -144,6 +146,7 @@ public class ProjectRootController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return "project/root/task/add";
     }
 
@@ -157,6 +160,7 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("/project/root/task/add (POST)");
         Context context = super.getContext(userSession);
+      model.addAttribute("dataPage", true);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 log.info(e.toString());
@@ -203,6 +207,7 @@ public class ProjectRootController extends AbstractController {
         model.addAttribute("task", task);
         model.addAttribute("contexts", contexts);
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return "project/root/task/edit";
     }
 
@@ -216,6 +221,7 @@ public class ProjectRootController extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
+      model.addAttribute("dataPage", true);
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -283,6 +289,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(sourceTask.getTaskState());
         userSession.setLastTaskId(sourceTask.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -297,6 +304,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -312,6 +320,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return targetProject.getUrl();
     }
 
@@ -328,6 +337,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -344,6 +354,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -360,6 +371,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -376,6 +388,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -392,6 +405,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -408,6 +422,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -424,6 +439,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -440,6 +456,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -453,6 +470,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(Project.rootProjectId);
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -466,6 +484,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(Project.rootProjectId);
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -484,6 +503,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -500,6 +520,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -513,6 +534,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
+      model.addAttribute("dataPage", true);
         return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
@@ -530,6 +552,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -547,6 +570,7 @@ public class ProjectRootController extends AbstractController {
        userSession.setLastTaskState(task.getTaskState());
        userSession.setLastTaskId(task.getId());
        model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
        return rootProjectUrl;
     }
 
@@ -562,6 +586,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
@@ -577,6 +602,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 }

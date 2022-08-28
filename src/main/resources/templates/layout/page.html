@@ -32,7 +32,7 @@
           <th:block th:replace="${twtitle}" />
         </div>
       </div>
-      <div th:if="${taskstateType != null}">
+      <div th:if="${dataPage != null}">
         <!-- Breadcrumb -->
         <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})" th:if="${taskstateType == ''}">
         </div>
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div class="container" sec:authorize="isAuthenticated()">
-      <div class="row" th:if="${taskstateType != null}">
+      <div class="row" th:if="${dataPage != null}">
 				<div class="col-8">
 					<th:block th:replace="${twcontent}" />
 				</div>
@@ -61,7 +61,7 @@
 					<div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
 				</div>
       </div>
-      <div class="row" th:if="${taskstateType == null}">
+      <div class="row" th:if="${dataPage == null}">
         <div class="col">
           <th:block th:replace="${twcontent}" />
         </div>
