@@ -19,7 +19,8 @@ public enum TaskState implements Serializable {
     FOCUS("fas fa-star"),
     COMPLETED("fas fa-check-square"),
     TRASH("fas fa-trash-alt"),
-    DELETED("fas fa-trash-alt");
+    DELETED("fas fa-trash-alt"),
+    PROJECTS("fas fa-diagram-project");
 
     private String icon;
 

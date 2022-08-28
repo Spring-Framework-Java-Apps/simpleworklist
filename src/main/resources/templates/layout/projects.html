@@ -6,33 +6,33 @@
 
 <section th:fragment="navigation-projects(rootProjects,thisProject)">
   <div class="border-top shadow-lg" id="projectNavigationWell" sec:authorize="isAuthenticated()">
-    <div class="row col" id="tw-project-submenu-col">
-      <nav>
-        <ul id="rootProject" style="list-style: none;">
-          <li id="tw-project-submenu-root">
-            <span id="project_0"
-                  ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
-                <a th:href="@{/project/root}"
-                   th:if="${thisProject != null or taskstateType != null}"
-                   class="m-2 btn btn-outline-dark btn-sm" id="project_0_a">
-                    <i class="fas fa-folder-open" id="project_0_a_i"></i>
-                    <span th:text="#{right.nav.projects}" id="project_0_a_span">Projects</span>
-                </a>
-                <a th:if="${thisProject == null and taskstateType == null}"
-                  th:href="@{/project/root}" class="m-2 btn btn-dark btn-sm" id="project_0_aa">
-                    <i class="fas fa-folder-open" id="project_0_aa_i"></i>
-                    <span th:text="#{right.nav.projects}" id="project_0_aa_span">Projects</span>
-                </a>
-            </span>
-            <span th:if="${rootProjects != null and rootProjects.size() gt 0}">
-              <ul
-                th:include="this :: tw-project-submenu(projectList=${rootProjects},thisProject=${thisProject})"
-                style="list-style: none;">
-              </ul>
-            </span>
-          </li>
-        </ul>
-      </nav>
+      <div class="row col" id="tw-project-submenu-col">
+        <nav>
+          <ul id="rootProject" style="list-style: none;">
+            <li id="tw-project-submenu-root">
+              <span id="project_0"
+                    ondrop="drop2project(event)" ondragover="allowDrop2Project(event)">
+                  <a th:href="@{/project/root}"
+                     th:if="${thisProject != null or taskstateType != 'projects'}"
+                     class="m-2 btn btn-outline-dark btn-sm" id="project_0_a">
+                      <i class="fas fa-folder-open" id="project_0_a_i"></i>
+                      <span th:text="#{right.nav.projects}" id="project_0_a_span">Projects</span>
+                  </a>
+                  <a th:if="${thisProject == null and taskstateType == 'projects'}"
+                    th:href="@{/project/root}" class="m-2 btn btn-dark btn-sm" id="project_0_aa">
+                      <i class="fas fa-folder-open" id="project_0_aa_i"></i>
+                      <span th:text="#{right.nav.projects}" id="project_0_aa_span">Projects</span>
+                  </a>
+              </span>
+              <span th:if="${rootProjects != null and rootProjects.size() gt 0}">
+                <ul
+                  th:include="this :: tw-project-submenu(projectList=${rootProjects},thisProject=${thisProject})"
+                  style="list-style: none;">
+                </ul>
+              </span>
+            </li>
+          </ul>
+        </nav>
     </div>
   </div>
 </section>

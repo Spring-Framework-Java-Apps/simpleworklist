@@ -27,16 +27,18 @@
     <div style="background-color:  rgba(255, 255, 255, 0.3)">
 		  <div th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})">
       </div>
-      <div class="jumbotron pt-3" id="tw-title-section" >
+      <div class="jumbotron pt-3" id="tw-title-section">
         <div class="container">
           <th:block th:replace="${twtitle}" />
         </div>
       </div>
-      <!-- Breadcrumb -->
-      <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})">
-      </div>
-      <!-- taskstates -->
-      <div th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})" class="link-dark">
+      <div th:if="${dataPage != null}">
+        <!-- Breadcrumb -->
+        <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})" th:if="${taskstateType == ''}">
+        </div>
+        <!-- taskstates -->
+        <div th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})" class="link-dark">
+        </div>
       </div>
     </div>
   </header>
@@ -51,26 +53,30 @@
 			</div>
 		</div>
 		<div class="container" sec:authorize="isAuthenticated()">
-			<div class="row">
-				<div class="col-md-8">
+      <div class="row" th:if="${dataPage != null}">
+				<div class="col-8">
 					<th:block th:replace="${twcontent}" />
 				</div>
-				<div class="col-md-4">
-					<div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})">
-					</div>
+				<div class="col-4">
+					<div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
 				</div>
-			</div>
+      </div>
+      <div class="row" th:if="${dataPage == null}">
+        <div class="col">
+          <th:block th:replace="${twcontent}" />
+        </div>
 		</div>
 	</section>
 
 	<!-- Footer -->
 	<footer class="footer">
-		<nav class="navbar fixed-bottom navbar-dark bg-dark">
+		<nav class="navbar fixed-bottom navbar-dark bg-dark navbar-text">
 			<div class="container">
-				<span class="navbar-text">© 2022 Thomas Wöhlke</span>
-			</div>
+        <div class="col nav-link"><a th:href="@{/information}" class="nav-link">© 2022 Thomas Wöhlke</a></div>
+      </div>
 		</nav>
 	</footer>
+
 	<script th:src="@{/js/google-analytics.js}"></script>
     <script th:src="@{/webjars/jquery/3.6.0/jquery.js}"></script>
     <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
@@ -85,8 +91,9 @@
                 console.error( error );
             } );
     </script>
-	<!--/* Per-page placeholder for additional links */-->
+	<!--/* Per-page placeholder for additional links
 	<th:block th:replace="${scripts}" />
+  */-->
 
 	<script th:inline="javascript">
 		function allowDropOfTask(ev) {

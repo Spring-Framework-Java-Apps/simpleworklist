@@ -19,6 +19,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
+import static org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState.PROJECTS;
+
 @Slf4j
 @Service
 public class ProjectControllerServiceImpl implements ProjectControllerService {
@@ -133,6 +135,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
         model.addAttribute("userSession", userSession);
+        model.addAttribute("myTaskState",PROJECTS.getType());
         return project.getUrl();
     }
 

@@ -77,6 +77,7 @@ public class TaskStateTaskController extends AbstractController {
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("task", task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return "taskstate/task/add";
     }
 
@@ -90,6 +91,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("addNewTaskToInboxPost");
         Context context = super.getContext(userSession);
+        model.addAttribute("dataPage", true);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 log.info(e.toString());
@@ -134,6 +136,7 @@ public class TaskStateTaskController extends AbstractController {
         model.addAttribute("task", task);
         model.addAttribute("contexts", contexts);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return "taskstate/task/edit";
     }
 
@@ -147,6 +150,7 @@ public class TaskStateTaskController extends AbstractController {
         Model model
     ) {
         log.info("editTaskPost");
+        model.addAttribute("dataPage", true);
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -209,6 +213,7 @@ public class TaskStateTaskController extends AbstractController {
         moveTaskToTaskInTaskstateService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
         userSession.setLastTaskState(sourceTask.getTaskState());
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return sourceTask.getTaskState().getUrl();
     }
 
@@ -222,6 +227,7 @@ public class TaskStateTaskController extends AbstractController {
         task = taskService.moveTaskToAnotherProject(task,project);
         userSession.setLastProjectId(project.getId());
         model.addAttribute("userSession",userSession);
+        model.addAttribute("dataPage", true);
         return project.getUrl();
     }
 
@@ -234,6 +240,7 @@ public class TaskStateTaskController extends AbstractController {
       task = taskService.moveTaskToRootProject(task);
       userSession.setLastProjectId(0L);
       model.addAttribute("userSession",userSession);
+      model.addAttribute("dataPage", true);
       return "redirect:/project/root";
     }
 
@@ -246,6 +253,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to inbox");
         task = taskService.moveTaskToInbox(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -258,6 +266,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to today");
         task = taskService.moveTaskToToday(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -270,6 +279,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to next");
         task = taskService.moveTaskToNext(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -282,6 +292,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to waiting");
         task = taskService.moveTaskToWaiting(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -294,6 +305,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to someday");
         task = taskService.moveTaskToSomeday(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -306,6 +318,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to focus");
         task = taskService.moveTaskToFocus(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -318,6 +331,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to completed");
         task = taskService.moveTaskToCompleted(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -330,6 +344,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task = taskService.moveTaskToTrash(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getTaskState().getUrl();
     }
 
@@ -341,6 +356,7 @@ public class TaskStateTaskController extends AbstractController {
         Context context = super.getContext(userSession);
         taskService.moveAllCompletedToTrash(context);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return "redirect:/taskstate/trash";
     }
 
@@ -352,6 +368,7 @@ public class TaskStateTaskController extends AbstractController {
         Context context = super.getContext(userSession);
         taskService.emptyTrash(context);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return "redirect:/taskstate/trash";
     }
 
@@ -366,6 +383,7 @@ public class TaskStateTaskController extends AbstractController {
         task.delete();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return "redirect:/taskstate/trash";
     }
 
@@ -379,6 +397,7 @@ public class TaskStateTaskController extends AbstractController {
         task.undelete();
         taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return "redirect:/taskstate/completed";
     }
 
@@ -389,6 +408,7 @@ public class TaskStateTaskController extends AbstractController {
         Model model
     ) {
         log.info("transformTaskIntoProjectGet");
+      model.addAttribute("dataPage", true);
         return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
@@ -403,6 +423,7 @@ public class TaskStateTaskController extends AbstractController {
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getUrl();
     }
 
@@ -417,6 +438,7 @@ public class TaskStateTaskController extends AbstractController {
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getUrl();
     }
 
@@ -429,6 +451,7 @@ public class TaskStateTaskController extends AbstractController {
         task.setFocus();
         task = taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
         return task.getUrl();
     }
 
@@ -440,7 +463,8 @@ public class TaskStateTaskController extends AbstractController {
     ){
       task.unsetFocus();
       task = taskService.updatedViaTaskstate(task);
-        model.addAttribute("userSession", userSession);
+      model.addAttribute("userSession", userSession);
+      model.addAttribute("dataPage", true);
       return task.getUrl();
     }
 }
