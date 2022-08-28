@@ -48,24 +48,28 @@
             </div>
           </div>
           <div class="card-footer">
-            <div class="row">
-              <div class="col text-left m-2 p-1 ps-3">
-                <button id="loginButton" type="submit" class="btn btn-block btn-primary">
-                  <i class="fas fa-sign-in-alt"></i>
-                  <span th:utext="#{user.loginForm.loginButton}"></span>
-                </button>
-              </div>
-              <div class="col text-center m-2 p-1">
-                  <a id="registerButton" th:href="@{/user/register/}" class="btn btn-outline-secondary btn-block">
-                    <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
-                  </a>
-              </div>
-              <div class="col text-right m-2 p-1">
-                  <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="btn btn-outline-secondary btn-block">
-                    <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
-                  </a>
-              </div>
+            <div class="m-2 pe-3">
+            <button id="loginButton" type="submit" class="btn btn-block btn-primary">
+              <i class="fas fa-sign-in-alt"></i>
+              <span th:utext="#{user.loginForm.loginButton}"></span>
+            </button>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2 text-left m-2 p-1">
+          </div>
+          <div class="col-4 text-left m-2 p-1">
+            <a id="registerButton" th:href="@{/user/register/}" class="link-ssecondary">
+              <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
+            </a>
+          </div>
+          <div class="col-4 text-right m-2 p-1">
+            <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="link-secondary">
+              <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
+            </a>
+          </div>
+          <div class="col-2 text-left m-2 p-1">
           </div>
         </div>
       </form>
