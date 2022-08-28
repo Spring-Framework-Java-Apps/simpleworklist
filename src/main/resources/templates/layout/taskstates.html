@@ -14,11 +14,11 @@
                         <i class="fas fa-inbox link-dark"></i>
                         <span th:text="#{layout.page.inbox}" class="link-dark">Inbox</span>
                     </a>
-                    <a id="taskstate_inbox" class="nav-link link-light"
+                    <a id="taskstate_inbox" class="nav-link link-dark"
                        th:href="@{/taskstate/inbox}"
                        th:if="${taskstateType != 'inbox'}">
-                      <i class="fas fa-inbox link-light"></i>
-                      <span th:text="#{layout.page.inbox}" class="link-light">Inbox</span>
+                      <i class="fas fa-inbox link-dark"></i>
+                      <span th:text="#{layout.page.inbox}" class="link-dark">Inbox</span>
                     </a>
                 </li>
                 <li class="nav-item" ondrop="drop2today(event)" ondragover="allowDropOfTask(event)">
@@ -28,24 +28,24 @@
                         <i class="fas fa-clock link-dark"></i>
                         <span th:text="#{layout.page.today}" class="link-dark">Today</span>
                     </a>
-                    <a id="taskstate_today" class="nav-link link-light"
+                    <a id="taskstate_today" class="nav-link link-dark"
                        th:href="@{/taskstate/today}"
                        th:if="${taskstateType != 'today'}">
-                      <i class="fas fa-clock link-light"></i>
-                      <span th:text="#{layout.page.today}" class="link-light">Today</span>
+                      <i class="fas fa-clock link-dark"></i>
+                      <span th:text="#{layout.page.today}" class="link-dark">Today</span>
                     </a>
                 </li>
                 <li class="nav-item" ondrop="drop2next(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_next" class="nav-link active link-dark"
                        th:href="@{/taskstate/next}"
                        th:if="${taskstateType == 'next'}">
-                        <i class="fas fa-cogs"></i>
+                        <i class="fas fa-cogs link-dark"></i>
                         <span th:text="#{layout.page.next}">Next</span>
                     </a>
-                    <a id="taskstate_next"  class="nav-link link-light"
+                    <a id="taskstate_next"  class="nav-link link-dark"
                        th:href="@{/taskstate/next}"
                        th:if="${taskstateType != 'next'}">
-                      <i class="fas fa-cogs"></i>
+                      <i class="fas fa-cogs link-dark"></i>
                       <span th:text="#{layout.page.next}">Next</span>
                     </a>
                 </li>
@@ -53,13 +53,13 @@
                     <a id="taskstate_waiting" class="nav-link active link-dark"
                        th:href="@{/taskstate/waiting}"
                        th:if="${taskstateType == 'waiting'}">
-                        <i class="fas fa-hourglass-half"></i>
+                        <i class="fas fa-hourglass-half link-dark"></i>
                         <span th:text="#{layout.page.waiting}">Waiting</span>
                     </a>
-                    <a id="taskstate_waiting"  class="nav-link link-light"
+                    <a id="taskstate_waiting"  class="nav-link link-dark"
                        th:href="@{/taskstate/waiting}"
                        th:if="${taskstateType != 'waiting'}">
-                      <i class="fas fa-hourglass-half"></i>
+                      <i class="fas fa-hourglass-half link-dark"></i>
                       <span th:text="#{layout.page.waiting}">Waiting</span>
                     </a>
                 </li>
@@ -70,7 +70,7 @@
                         <i class="fas fa-calendar-alt"></i>
                         <span th:text="#{layout.page.scheduled}">Scheduled</span>
                     </a>
-                    <a id="taskstate_scheduled" class="nav-link link-light"
+                    <a id="taskstate_scheduled" class="nav-link link-dark"
                        th:href="@{/taskstate/scheduled}"
                        th:if="${taskstateType != 'scheduled'}">
                       <i class="fas fa-calendar-alt"></i>
@@ -84,7 +84,7 @@
                         <i class="fas fa-road"></i>
                         <span th:text="#{layout.page.someday}">Someday</span>
                     </a>
-                    <a id="taskstate_someday" class="nav-link link-light"
+                    <a id="taskstate_someday" class="nav-link link-dark"
                        th:href="@{/taskstate/someday}"
                        th:if="${taskstateType != 'someday'}">
                       <i class="fas fa-road"></i>
@@ -98,7 +98,7 @@
                         <i class="fas fa-star"></i>
                         <span th:text="#{layout.page.focus}">Focus</span>
                     </a>
-                    <a id="taskstate_focus" class="nav-link link-light"
+                    <a id="taskstate_focus" class="nav-link link-dark"
                        th:href="@{/taskstate/focus}"
                        th:if="${taskstateType != 'focus'}">
                       <i class="fas fa-star"></i>
@@ -112,7 +112,7 @@
                         <i class="fas fa-check-square"></i>
                         <span th:text="#{layout.page.completed}">Completed Tasks</span>
                     </a>
-                    <a id="taskstate_completed" class="nav-link link-light"
+                    <a id="taskstate_completed" class="nav-link link-dark"
                        th:href="@{/taskstate/completed}"
                        th:if="${taskstateType != 'completed'}">
                       <i class="fas fa-check-square"></i>
@@ -126,11 +126,11 @@
                         <i class="fas fa-trash-alt link-dark"></i>
                         <span th:text="#{layout.page.trash}" class="link-dark">Trash</span>
                     </a>
-                    <a id="taskstate_trash" class="nav-link link-light"
+                    <a id="taskstate_trash" class="nav-link link-dark"
                        th:href="@{/taskstate/trash}"
                        th:if="${taskstateType != 'trash'}">
-                      <i class="fas fa-trash-alt link-light"></i>
-                      <span th:text="#{layout.page.trash}" class="link-light">Trash</span>
+                      <i class="fas fa-trash-alt link-dark"></i>
+                      <span th:text="#{layout.page.trash}" class="link-dark">Trash</span>
                     </a>
                 </li>
                 <li class="nav-item" ondrop="drop2trash(event)" ondragover="allowDropOfTask(event)">
@@ -140,11 +140,11 @@
                     <i class="fa-solid fa-diagram-project link-dark"></i>
                     <span th:text="#{layout.page.projects}" class="link-dark">Projects</span>
                   </a>
-                  <a id="taskstate_projects" class="nav-link link-light"
+                  <a id="taskstate_projects" class="nav-link link-dark"
                      th:href="@{/project/root}"
                      th:if="${taskstateType != 'projects'}">
-                    <i class="fa-solid fa-diagram-project link-light"></i>
-                    <span th:text="#{layout.page.projects}" class="link-light">Projects</span>
+                    <i class="fa-solid fa-diagram-project link-dark"></i>
+                    <span th:text="#{layout.page.projects}" class="link-dark">Projects</span>
                   </a>
                 </li>
             </ul>
