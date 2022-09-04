@@ -163,10 +163,10 @@ public class TaskStateTaskController extends AbstractController {
                 log.warn(e.toString());
             }
             //Task persistentTask = taskService.findOne(taskId);
-            task = addProject(task);
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             Project thisProject = addProjectFromTaskToModel( task, model );
+            // task = addProject(task);
             Context thisContext = task.getContext();
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);

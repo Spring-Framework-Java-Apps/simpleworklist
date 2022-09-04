@@ -207,31 +207,19 @@ public abstract class AbstractController {
 
     protected Task addProject(Task task){
       Task persistentTask = taskService.findOne(task.getId());
-      if(
-        task.getProject() != null
-        && task.getProject().getId() != null
-        && task.getProject().getId() != 0L
-      ){
-        Long pid_task = task.getProject().getId();
-        if (
-          persistentTask.getProject() != null
-          && persistentTask.getProject().getId() != null
-          && persistentTask.getProject().getId() != 0L
-        ) {
-          Long pid_persistent_task = persistentTask.getProject().getId();
-          if(pid_task != null && pid_task != 0L) {
-            Project newProject = projectService.findByProjectId(pid_task);
-            persistentTask.setProject(newProject);
-            if (pid_persistent_task != null && pid_persistent_task != 0L) {
-              if (!newProject.equals(persistentTask.getProject())) {
-                persistentTask.setLastProject(persistentTask.getProject());
-              }
-            } else {
-              persistentTask.setLastProject(null);
-            }
-          } else {
-            persistentTask.setProject(null);
-          }
+      if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
+        persistentTask.setProject(null);
+        if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {
+          persistentTask.setLastProject(null);
+        } else {
+          persistentTask.setLastProject(persistentTask.getProject());
+        }
+      } else {
+        persistentTask.setProject(task.getProject());
+        if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {
+          persistentTask.setLastProject(null);
+        } else {
+          persistentTask.setLastProject(persistentTask.getProject());
         }
       }
       persistentTask.merge(task);
