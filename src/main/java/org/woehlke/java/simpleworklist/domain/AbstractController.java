@@ -185,45 +185,52 @@ public abstract class AbstractController {
         return userSession;
     }
 
-    /**
-     * @param task
-     * @param model
-     * @return Project thisProject
-     */
     protected Project addProjectFromTaskToModel(Task task, Model model){
-      Project lastProject;
       Project thisProject;
-      if (task.getProject() == null) {
+      if (task.getProject() == null || task.getProject().getId() == 0L ) {
         thisProject = new Project();
         thisProject.setId(0L);
       } else {
         thisProject = task.getProject();
       }
-      if (task.getProject() == null) {
+      model.addAttribute("thisProject", thisProject);
+      Project lastProject;
+      if (task.getLastProject() == null || task.getLastProject().getId() == 0L) {
         lastProject = new Project();
         lastProject.setId(0L);
       } else {
         lastProject = task.getLastProject();
       }
-      model.addAttribute("thisProject", thisProject);
       model.addAttribute("lastProject", lastProject);
       return thisProject;
     }
 
     protected Task addProject(Task task){
       Task persistentTask = taskService.findOne(task.getId());
-      if(task.getProject() != null){
-        Long pidt = task.getProject().getId();
-        if (persistentTask.getProject() != null) {
-          Long pidp = persistentTask.getProject().getId();
-          if(pidt != null && pidt != 0L) {
-            Project newProject = projectService.findByProjectId(pidt);
+      if(
+        task.getProject() != null
+        && task.getProject().getId() != null
+        && task.getProject().getId() != 0L
+      ){
+        Long pid_task = task.getProject().getId();
+        if (
+          persistentTask.getProject() != null
+          && persistentTask.getProject().getId() != null
+          && persistentTask.getProject().getId() != 0L
+        ) {
+          Long pid_persistent_task = persistentTask.getProject().getId();
+          if(pid_task != null && pid_task != 0L) {
+            Project newProject = projectService.findByProjectId(pid_task);
             persistentTask.setProject(newProject);
-            if (pidp != null && pidp != 0L) {
+            if (pid_persistent_task != null && pid_persistent_task != 0L) {
               if (!newProject.equals(persistentTask.getProject())) {
                 persistentTask.setLastProject(persistentTask.getProject());
               }
+            } else {
+              persistentTask.setLastProject(null);
             }
+          } else {
+            persistentTask.setProject(null);
           }
         }
       }
