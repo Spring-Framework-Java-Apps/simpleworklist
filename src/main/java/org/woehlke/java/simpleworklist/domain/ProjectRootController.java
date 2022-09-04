@@ -198,14 +198,8 @@ public class ProjectRootController extends AbstractController {
         log.info("editTaskGet");
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Project thisProject;
-        if (task.getContext() == null) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-        } else {
-            thisProject = task.getProject();
-        }
         Context thisContext = task.getContext();
+        Project thisProject = addProjectFromTaskToModel( task, model );
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject); //TODO: remove?
@@ -253,8 +247,8 @@ public class ProjectRootController extends AbstractController {
             persistentTask.merge(task);
             task = persistentTask;
             Context thisContext = task.getContext();
-            Project thisProject = new Project();
-            thisProject.setId(0L);
+            Project thisProject = addProjectFromTaskToModel( task, model );
+            //thisProject.setId(0L);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject); //TODO: remove?

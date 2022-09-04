@@ -9,6 +9,7 @@ import org.woehlke.java.simpleworklist.domain.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.project.Project;
+import org.woehlke.java.simpleworklist.domain.task.Task;
 import org.woehlke.java.simpleworklist.domain.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
@@ -182,6 +183,52 @@ public abstract class AbstractController {
             userSession.update(userAccountid,contextId);
         }
         return userSession;
+    }
+
+    /**
+     * @param task
+     * @param model
+     * @return Project thisProject
+     */
+    protected Project addProjectFromTaskToModel(Task task, Model model){
+      Project lastProject;
+      Project thisProject;
+      if (task.getProject() == null) {
+        thisProject = new Project();
+        thisProject.setId(0L);
+      } else {
+        thisProject = task.getProject();
+      }
+      if (task.getProject() == null) {
+        lastProject = new Project();
+        lastProject.setId(0L);
+      } else {
+        lastProject = task.getLastProject();
+      }
+      model.addAttribute("thisProject", thisProject);
+      model.addAttribute("lastProject", lastProject);
+      return thisProject;
+    }
+
+    protected Task addProject(Task task){
+      Task persistentTask = taskService.findOne(task.getId());
+      if(task.getProject() != null){
+        Long pidt = task.getProject().getId();
+        if (persistentTask.getProject() != null) {
+          Long pidp = persistentTask.getProject().getId();
+          if(pidt != null && pidt != 0L) {
+            Project newProject = projectService.findByProjectId(pidt);
+            persistentTask.setProject(newProject);
+            if (pidp != null && pidp != 0L) {
+              if (!newProject.equals(persistentTask.getProject())) {
+                persistentTask.setLastProject(persistentTask.getProject());
+              }
+            }
+          }
+        }
+      }
+      persistentTask.merge(task);
+      return persistentTask;
     }
 
     /*

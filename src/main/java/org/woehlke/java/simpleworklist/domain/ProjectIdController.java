@@ -427,6 +427,7 @@ public class ProjectIdController extends AbstractController {
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", true);
         return "project/id/task/edit";
     }
 
@@ -443,6 +444,7 @@ public class ProjectIdController extends AbstractController {
         log.info("editTaskPost");
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", true);
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -460,9 +462,7 @@ public class ProjectIdController extends AbstractController {
             }
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
-            Task persistentTask = taskService.findOne(taskId);
-            persistentTask.merge(task);
-            task = persistentTask;
+            task = addProject(task);
             Context thisContext = task.getContext();
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
@@ -477,8 +477,8 @@ public class ProjectIdController extends AbstractController {
             model.addAttribute("userSession", userSession);
             return "project/id/task/edit";
         } else {
-            task.setProject(thisProject);
-            Task persistentTask = taskService.findOne(task.getId());
+            task.setLastProject(thisProject);
+            Task persistentTask = addProject(task);
             persistentTask.merge(task);
             task = taskService.updatedViaProject(persistentTask);
             userSession.setLastProjectId(Project.rootProjectId);

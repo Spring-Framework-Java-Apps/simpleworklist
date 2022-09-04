@@ -114,31 +114,6 @@ public class TaskStateTaskController extends AbstractController {
         }
     }
 
-  /**
-   * @param task
-   * @param model
-   * @return Project thisProject
-   */
-    private Project addProjectFromTaskToModel(Task task, Model model){
-      Project lastProject;
-      Project thisProject;
-      if (task.getProject() == null) {
-        thisProject = new Project();
-        thisProject.setId(0L);
-      } else {
-        thisProject = task.getProject();
-      }
-      if (task.getProject() == null) {
-        lastProject = new Project();
-        lastProject.setId(0L);
-      } else {
-        lastProject = task.getLastProject();
-      }
-      model.addAttribute("thisProject", thisProject);
-      model.addAttribute("lastProject", lastProject);
-      return thisProject;
-    }
-
     @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
     public final String editTaskGet(
         @NotNull @PathVariable("taskId") Task task,
@@ -188,9 +163,8 @@ public class TaskStateTaskController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 log.warn(e.toString());
             }
-            Task persistentTask = taskService.findOne(taskId);
-            persistentTask.merge(task);
-            task = persistentTask;
+            //Task persistentTask = taskService.findOne(taskId);
+            task = addProject(task);
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             Project thisProject = addProjectFromTaskToModel( task, model );
@@ -204,23 +178,7 @@ public class TaskStateTaskController extends AbstractController {
             return "taskstate/task/edit";
         } else {
             task.unsetFocus();
-            Task persistentTask = taskService.findOne(task.getId());
-            if(task.getProject() != null){
-              Long pidt = task.getProject().getId();
-              if (persistentTask.getProject() != null) {
-                Long pidp = persistentTask.getProject().getId();
-                if(pidt != null && pidt != 0L) {
-                  Project newProject = projectService.findByProjectId(pidt);
-                  persistentTask.setProject(newProject);
-                  if (pidp != null && pidp != 0L) {
-                    if (!newProject.equals(persistentTask.getProject())) {
-                      persistentTask.setLastProject(persistentTask.getProject());
-                    }
-                  }
-                }
-              }
-            }
-            persistentTask.merge(task);
+            Task persistentTask = addProject(task);
             task = taskService.updatedViaTaskstate(persistentTask);
             model.addAttribute("userSession", userSession);
             return task.getTaskState().getUrl();
