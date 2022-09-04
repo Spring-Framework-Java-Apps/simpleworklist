@@ -242,11 +242,7 @@ public class ProjectRootController extends AbstractController {
             }
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
-
-            Task persistentTask = taskService.findOne(taskId);
-
-            persistentTask.merge(task);
-            task = persistentTask;
+            task = addProject(task);
             Context thisContext = task.getContext();
             Project thisProject = addProjectFromTaskToModel( task, model );
             //thisProject.setId(0L);
@@ -264,9 +260,8 @@ public class ProjectRootController extends AbstractController {
             return "project/root/task/edit";
         } else {
             //task.unsetFocus();
-            task.setRootProject();
-            Task persistentTask = taskService.findOne(task.getId());
-            persistentTask.merge(task);
+            task.setLastProject(null);
+            Task persistentTask  = addProject(task);
             task = taskService.updatedViaProjectRoot(persistentTask);
             userSession.setLastProjectId(Project.rootProjectId);
             userSession.setLastTaskState(task.getTaskState());
