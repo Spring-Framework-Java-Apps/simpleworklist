@@ -93,6 +93,7 @@ public class TaskStateTaskController extends AbstractController {
         log.info("addNewTaskToInboxPost");
         Context context = super.getContext(userSession);
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", false);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 log.info(e.toString());
@@ -113,6 +114,31 @@ public class TaskStateTaskController extends AbstractController {
         }
     }
 
+  /**
+   * @param task
+   * @param model
+   * @return Project thisProject
+   */
+    private Project addProjectFromTaskToModel(Task task, Model model){
+      Project lastProject;
+      Project thisProject;
+      if (task.getProject() == null) {
+        thisProject = new Project();
+        thisProject.setId(0L);
+      } else {
+        thisProject = task.getProject();
+      }
+      if (task.getProject() == null) {
+        lastProject = new Project();
+        lastProject.setId(0L);
+      } else {
+        lastProject = task.getLastProject();
+      }
+      model.addAttribute("thisProject", thisProject);
+      model.addAttribute("lastProject", lastProject);
+      return thisProject;
+    }
+
     @RequestMapping(path = "/{taskId}/edit", method = RequestMethod.GET)
     public final String editTaskGet(
         @NotNull @PathVariable("taskId") Task task,
@@ -120,19 +146,12 @@ public class TaskStateTaskController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
+        addProjectFromTaskToModel( task, model );
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Project thisProject;
-        if (task.getProject() == null) {
-            thisProject = new Project();
-            thisProject.setId(0L);
-        } else {
-            thisProject = task.getProject();
-        }
         Context thisContext = task.getContext();
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(), locale,userSession);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(), locale, userSession);
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("thisProject", thisProject);
         model.addAttribute("thisContext", thisContext);
         model.addAttribute("task", task);
         model.addAttribute("contexts", contexts);
@@ -153,6 +172,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("editTaskPost");
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", true);
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
@@ -173,27 +193,33 @@ public class TaskStateTaskController extends AbstractController {
             task = persistentTask;
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
-            Project thisProject;
-            if (task.getContext() == null) {
-                thisProject = new Project();
-                thisProject.setId(0L);
-            } else {
-                thisProject = task.getProject();
-            }
+            Project thisProject = addProjectFromTaskToModel( task, model );
             Context thisContext = task.getContext();
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
-            model.addAttribute("thisProject", thisProject);
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
             model.addAttribute("contexts", contexts);
             model.addAttribute("userSession", userSession);
-            model.addAttribute("addProjectToTask", true);
             return "taskstate/task/edit";
         } else {
             task.unsetFocus();
-            task.setRootProject();
             Task persistentTask = taskService.findOne(task.getId());
+            if(task.getProject() != null){
+              Long pidt = task.getProject().getId();
+              if (persistentTask.getProject() != null) {
+                Long pidp = persistentTask.getProject().getId();
+                if(pidt != null && pidt != 0L) {
+                  Project newProject = projectService.findByProjectId(pidt);
+                  persistentTask.setProject(newProject);
+                  if (pidp != null && pidp != 0L) {
+                    if (!newProject.equals(persistentTask.getProject())) {
+                      persistentTask.setLastProject(persistentTask.getProject());
+                    }
+                  }
+                }
+              }
+            }
             persistentTask.merge(task);
             task = taskService.updatedViaTaskstate(persistentTask);
             model.addAttribute("userSession", userSession);

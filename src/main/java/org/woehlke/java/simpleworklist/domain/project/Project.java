@@ -3,6 +3,7 @@ package org.woehlke.java.simpleworklist.domain.project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.*;
@@ -36,7 +37,6 @@ import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 )
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true, exclude = {"children","parent"})
 @ToString(callSuper = true, exclude = {"children","parent","description"})
 public class Project extends AuditModel implements Serializable, ComparableById<Project> {
 
@@ -166,5 +166,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     public String out(){
         return "Project: "+name+" ("+id+")";
     }
+
+
 }
 
