@@ -23,7 +23,6 @@ import org.woehlke.java.simpleworklist.domain.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
 
 import javax.validation.Valid;
@@ -243,7 +242,9 @@ public class ProjectRootController extends AbstractController {
             }
             UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
+
             Task persistentTask = taskService.findOne(taskId);
+
             persistentTask.merge(task);
             task = persistentTask;
             Context thisContext = task.getContext();

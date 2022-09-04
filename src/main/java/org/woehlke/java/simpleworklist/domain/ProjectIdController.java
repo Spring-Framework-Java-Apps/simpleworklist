@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.java.simpleworklist.application.framework.AbstractController;
 import org.woehlke.java.simpleworklist.domain.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.project.Project;

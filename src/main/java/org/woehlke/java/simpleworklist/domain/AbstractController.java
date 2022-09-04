@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.application.framework;
+package org.woehlke.java.simpleworklist.domain;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
