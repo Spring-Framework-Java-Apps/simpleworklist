@@ -165,6 +165,7 @@ public class ProjectRootController extends AbstractController {
         log.info("/project/root/task/add (POST)");
         Context context = super.getContext(userSession);
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", false);
         model.addAttribute("taskstateType",PROJECTS.getType());
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
@@ -214,6 +215,7 @@ public class ProjectRootController extends AbstractController {
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", true);
         return "project/root/task/edit";
     }
 
@@ -229,6 +231,7 @@ public class ProjectRootController extends AbstractController {
         log.info("editTaskPost");
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", true);
         if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
             String objectName="task";
             String field="dueDate";

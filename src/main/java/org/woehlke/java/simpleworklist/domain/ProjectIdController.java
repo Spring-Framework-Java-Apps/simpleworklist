@@ -86,6 +86,7 @@ public class ProjectIdController extends AbstractController {
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", false);
         return "project/id/task/add";
     }
 
@@ -101,6 +102,7 @@ public class ProjectIdController extends AbstractController {
         UserAccount userAccount = context.getUserAccount();
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", false);
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 log.info(e.toString());

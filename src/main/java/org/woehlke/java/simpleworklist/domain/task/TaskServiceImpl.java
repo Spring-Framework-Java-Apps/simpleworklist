@@ -9,14 +9,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.context.Context;
 import org.woehlke.java.simpleworklist.domain.project.Project;
+import org.woehlke.java.simpleworklist.domain.project.ProjectRepository;
 import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -24,9 +22,12 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
 
+    private final ProjectRepository projectRepository;
+
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository ) {
+    public TaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
+      this.projectRepository = projectRepository;
     }
 
     @Override
@@ -89,6 +90,16 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaTaskstate(@NotNull Task task) {
         log.info("updatedViaTaskstate");
+        if(task.getProject() != null){
+          Long projectId = task.getProject().getId();
+          Project project = projectRepository.getReferenceById(projectId);
+          task.setProject(project);
+        }
+        if(task.getLastProject()!=null){
+          Long projectId = task.getLastProject().getId();
+          Project project = projectRepository.getReferenceById(projectId);
+          task.setLastProject(project);
+        }
         task = taskRepository.saveAndFlush(task);
         log.info("persisted: " + task.outTaskstate());
         return task;
@@ -120,6 +131,7 @@ public class TaskServiceImpl implements TaskService {
         task.setRootProject();
         task.unsetFocus();
         task.setTaskState(TaskState.INBOX);
+        task.setLastProject(null);
         long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
         task.setOrderIdProject(++maxOrderIdProject);
         long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());

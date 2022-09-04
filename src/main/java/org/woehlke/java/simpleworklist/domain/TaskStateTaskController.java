@@ -78,6 +78,7 @@ public class TaskStateTaskController extends AbstractController {
         model.addAttribute("task", task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", false);
         return "taskstate/task/add";
     }
 
@@ -122,7 +123,7 @@ public class TaskStateTaskController extends AbstractController {
         UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Project thisProject;
-        if (task.getContext() == null) {
+        if (task.getProject() == null) {
             thisProject = new Project();
             thisProject.setId(0L);
         } else {
@@ -137,6 +138,7 @@ public class TaskStateTaskController extends AbstractController {
         model.addAttribute("contexts", contexts);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
+        model.addAttribute("addProjectToTask", true);
         return "taskstate/task/edit";
     }
 
@@ -186,6 +188,7 @@ public class TaskStateTaskController extends AbstractController {
             model.addAttribute("task", task);
             model.addAttribute("contexts", contexts);
             model.addAttribute("userSession", userSession);
+            model.addAttribute("addProjectToTask", true);
             return "taskstate/task/edit";
         } else {
             task.unsetFocus();

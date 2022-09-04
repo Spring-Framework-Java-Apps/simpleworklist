@@ -106,7 +106,7 @@
         <div th:each="err : ${#fields.errors('taskEnergy')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
         </div>
-      </div>&nbsp;
+      </div>nbsp;
     </div>
 
     <div class="col-md">
@@ -129,9 +129,9 @@
         </div>
       </div>
     </div>
-
   </div>
-  <div class="row my-2">
+
+  <div class="row my-2" th:if="${addProjectToTask}">
     <div class="col-md">
       <label th:for="${#ids.next('project.id')}" class="control-label">
         <span th:utext="#{task.show.project}">Project</span>
@@ -141,7 +141,8 @@
             <i class="fa-solid fa-cloud"></i>
           </span>
           <select th:field="*{project.id}" class="form-control form-control-lg" aria-describedby="basic-addon7">
-            <option th:each="projectOption : ${rootProjects}"
+            <option value="0"></option>
+            <option th:each="projectOption : ${allProjects}"
                     th:value="${projectOption.id}"
                     th:text="${projectOption.name}">Project
             </option>
