@@ -52,9 +52,6 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     )
     private Long id;
 
-    @Version
-    private Long version;
-
     @ManyToOne(
         fetch = FetchType.LAZY,
         optional = true,
