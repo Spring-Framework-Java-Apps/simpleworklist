@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.persistence.*;
 import javax.persistence.Index;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -164,6 +163,18 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return "Project: "+name+" ("+id+")";
     }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Project)) return false;
+    if (!super.equals(o)) return false;
+    Project project = (Project) o;
+    return Objects.equals(getParent(), project.getParent()) && Objects.equals(getContext(), project.getContext()) && Objects.equals(getName(), project.getName()) && Objects.equals(getDescription(), project.getDescription());
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), getParent(), getContext(), getName(), getDescription());
+  }
 }
 
