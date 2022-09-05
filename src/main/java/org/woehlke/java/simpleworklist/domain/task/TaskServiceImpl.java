@@ -34,7 +34,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public boolean projectHasNoTasks(Project project) {
         log.info("projectHasNoTasks");
-        //TODO: #244 change List<Task> to Page<Task>
         return taskRepository.findByProject(project).isEmpty();
     }
 
