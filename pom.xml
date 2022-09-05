@@ -144,23 +144,6 @@
       <name>Sonatype Repository</name>
       <url>https://oss.sonatype.org/content/repositories/releases/</url>
     </repository>
-    <!--
-    <repository>
-        <id>springio-plugins-release</id>
-        <name>Spring Plugins Repository</name>
-        <url>https://repo.spring.io/plugins-release/</url>
-    </repository>
-    <repository>
-        <id>springio-libs-release</id>
-        <name>Spring Lib Release Repository</name>
-        <url>https://repo.spring.io/libs-release/</url>
-    </repository>
-    <repository>
-        <id>spring-libs-milestone</id>
-        <name>Spring Lib M Repository</name>
-        <url>https://repo.spring.io/libs-milestone/</url>
-    </repository>
-    -->
     <repository>
       <id>apache-releases</id>
       <name>Apache Releases</name>
@@ -186,13 +169,6 @@
       <name>WSO2 Public Repository</name>
       <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
     </repository>
-    <!--
-    <repository>
-        <id>hortonworks-releases</id>
-        <name>Hortonworks Repository</name>
-        <url>https://repo.hortonworks.com/content/repositories/releases/</url>
-    </repository>
-    -->
     <repository>
       <id>adobe-public</id>
       <name>AdobePublic Repository</name>
@@ -220,31 +196,6 @@
       <name>Sonatype Repository</name>
       <url>https://oss.sonatype.org/content/repositories/releases/</url>
     </pluginRepository>
-    <!--
-    <pluginRepository>
-        <id>springio-plugins-release</id>
-        <name>Spring Plugins Repository</name>
-        <url>https://repo.spring.io/plugins-release/</url>
-    </pluginRepository>
-    <pluginRepository>
-        <id>springio-libs-release</id>
-        <name>Spring Lib Release Repository</name>
-        <url>https://repo.spring.io/libs-release/</url>
-    </pluginRepository>
-    <pluginRepository>
-        <id>spring-libs-milestone</id>
-        <name>Spring Lib M Repository</name>
-        <url>https://repo.spring.io/libs-milestone/</url>
-    </pluginRepository>
-    <pluginRepository>
-        <id>spring-snapshots</id>
-        <url>https://repo.spring.io/snapshot/</url>
-    </pluginRepository>
-    <pluginRepository>
-        <id>spring-milestones</id>
-        <url>https://repo.spring.io/milestone/</url>
-    </pluginRepository>
-    -->
     <pluginRepository>
       <id>apache-releases</id>
       <name>Apache Releases</name>
@@ -270,13 +221,6 @@
       <name>WSO2 Public Repository</name>
       <url>https://maven.wso2.org/nexus/content/repositories/public/</url>
     </pluginRepository>
-    <!--
-    <pluginRepository>
-        <id>hortonworks-releases</id>
-        <name>Hortonworks Repository</name>
-        <url>https://repo.hortonworks.com/content/repositories/releases/</url>
-    </pluginRepository>
-    -->
     <pluginRepository>
       <id>adobe-public</id>
       <name>AdobePublic Repository</name>
