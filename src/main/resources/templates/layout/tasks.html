@@ -95,11 +95,11 @@
                         <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date"
                             th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                                 <span th:if="${#locale.language eq 'de'}"
-                                      th:id="'task_' + ${task.id} + '_col_due_date'"
-                                      draggable="true" ondragstart="dragTask(event)"
-                                      th:alt-title="#{task.col.twtooltip.duedate}"
-                                      class="task_col_content task_col_content_duedate twtooltip"
-                                      th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
+                                    th:id="'task_' + ${task.id} + '_col_due_date'"
+                                    draggable="true" ondragstart="dragTask(event)"
+                                    th:alt-title="#{task.col.twtooltip.duedate}"
+                                    class="task_col_content task_col_content_duedate twtooltip"
+                                    th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
                                 </span>
                                 <span th:if="${#locale.language eq 'en'}"
                                   th:id="'task_' + ${task.id} + '_col_due_date'"
@@ -111,7 +111,8 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col task_col_taskstate"
                             th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
-                            <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}" class="twtooltip"
+                            <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}"
+                               class="btn btn-outline-secondary btn-sm twtooltip"
                                th:alt-title="#{task.col.twtooltip.taskstate}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
                                 <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
