@@ -101,7 +101,7 @@
                                       class="task_col_content task_col_content_duedate twtooltip"
                                       th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
                                 </span>
-                            <span th:if="${#locale.language eq 'en'}"
+                                <span th:if="${#locale.language eq 'en'}"
                                   th:id="'task_' + ${task.id} + '_col_due_date'"
                                   draggable="true" ondragstart="dragTask(event)"
                                   th:alt-title="#{task.col.twtooltip.duedate}"
@@ -147,12 +147,12 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_context'" class="task_col task_col_context"
                             th:if="${myTaskState eq 'ALL'}">
-                                <span th:if="${#locale.language eq 'de'}"
-                                      th:id="'task_' + ${task.id} + '_col_context_txt'"
-                                      draggable="true" ondragstart="dragTask(event)"
-                                      class="task_col_content task_col_content_context twtooltip"
-                                      th:alt-title="#{task.col.twtooltip.context}"
-                                      th:text="${task.context.nameDe}">task.context.nameDe</span>
+                            <span th:if="${#locale.language eq 'de'}"
+                                  th:id="'task_' + ${task.id} + '_col_context_txt'"
+                                  draggable="true" ondragstart="dragTask(event)"
+                                  class="task_col_content task_col_content_context twtooltip"
+                                  th:alt-title="#{task.col.twtooltip.context}"
+                                  th:text="${task.context.nameDe}">task.context.nameDe</span>
                             <span th:if="${#locale.language ne 'de'}"
                                   th:id="'task_' + ${task.id} + '_col_context_txt'"
                                   draggable="true" ondragstart="dragTask(event)"
@@ -223,7 +223,7 @@
                             <b th:text="#{tasks.inbox.project}" class="me-2">Project</b>
                             <span th:if="${task.project ne null}">
                               <a th:href="@{/project/{id}(id=${task.project.id})}">
-                                <i class="fas fa-folder-open"></i>
+                                <i class="fa-solid fa-diagram-project"></i>
                                 <span th:text="${task.project.name}">task.project.name</span></a>
                             </span>
                             <span th:if="${task.project eq null}">
