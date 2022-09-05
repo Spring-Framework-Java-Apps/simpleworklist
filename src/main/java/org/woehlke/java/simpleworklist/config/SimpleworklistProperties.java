@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Component
@@ -125,14 +124,6 @@ public class SimpleworklistProperties {
 
         @NotNull
         private Integer strengthBCryptPasswordEncoder;
-
-        /*
-        @NotNull
-        private Integer hashWidth;
-
-        @NotBlank
-        private String secret;
-        */
 
     }
 

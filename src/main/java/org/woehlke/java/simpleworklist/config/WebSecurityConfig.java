@@ -54,16 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         this.simpleworklistProperties = simpleworklistProperties;
     }
 
-    /*
-    @Override
-    public void init(WebSecurity builder) throws Exception {
-
-    }
-    @Override
-    public void configure(WebSecurity builder) throws Exception {
-    }
-    */
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -102,21 +92,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     }
 
     /**
-     * https://bcrypt-generator.com/
+     * @see <a href="https://bcrypt-generator.com/">bcrypt-generator.com</a>
      * @return PasswordEncoder encoder
      */
     @Bean
     public PasswordEncoder encoder(){
         int strength = simpleworklistProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
         return new BCryptPasswordEncoder(strength);
-        /*
-        CharSequence secret=this.simpleworklistProperties.getWebSecurity().getSecret();
-        int iterations=this.simpleworklistProperties.getWebSecurity().getIterations();
-        int hashWidth=this.simpleworklistProperties.getWebSecurity().getHashWidth();
-        Pbkdf2PasswordEncoder encoder = (new Pbkdf2PasswordEncoder(secret,iterations,hashWidth));
-        encoder.setEncodeHashAsBase64(true);
-        return encoder;
-        */
     }
 
     @Bean
