@@ -93,7 +93,7 @@
     <htmlunit.version>2.63.0</htmlunit.version>
     <groovy-all.version>2.4.21</groovy-all.version>
     <hamcrest.version>2.2</hamcrest.version>
-    <jsoup.version>1.14.2</jsoup.version>
+    <jsoup.version>1.15.3</jsoup.version>
     <pmdVersion>6.46.0</pmdVersion>
 
     <!-- SCM and Releasing -->
