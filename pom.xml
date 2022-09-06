@@ -127,11 +127,6 @@
 
   <repositories>
     <repository>
-      <id>jcenter</id>
-      <name>JCenter Repository</name>
-      <url>https://jcenter.bintray.com/</url>
-    </repository>
-    <repository>
       <id>central</id>
       <name>Central</name>
       <url>https://repo1.maven.org/maven2/</url>
@@ -178,11 +173,6 @@
     </repository>
   </repositories>
   <pluginRepositories>
-    <pluginRepository>
-      <id>jcenter</id>
-      <name>JCenter Repository</name>
-      <url>https://jcenter.bintray.com/</url>
-    </pluginRepository>
     <pluginRepository>
       <id>central</id>
       <name>Central</name>
