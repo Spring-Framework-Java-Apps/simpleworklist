@@ -24,7 +24,7 @@ import java.util.UUID;
     uniqueConstraints = {
         @UniqueConstraint(
             name = "ux_project",
-            columnNames = {"uuid", "parent_id", "context_id"}
+            columnNames = {"uuid", "parent_id", "data_context_id"}
         )
     }, indexes = {
         @Index(name = "ix_project_uuid", columnList = "uuid"),

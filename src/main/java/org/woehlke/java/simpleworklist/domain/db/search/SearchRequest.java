@@ -17,7 +17,7 @@ import java.io.Serializable;
     uniqueConstraints = {
         @UniqueConstraint(
             name = "ux_search_request",
-            columnNames = {"context_id", "searchterm"}
+            columnNames = {"data_context_id", "searchterm"}
         )
     },
     indexes = {

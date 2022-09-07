@@ -41,7 +41,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_task",
-            columnNames = {"uuid", "context_id" }
+            columnNames = {"uuid", "data_context_id" }
         )
     },
     indexes = {
