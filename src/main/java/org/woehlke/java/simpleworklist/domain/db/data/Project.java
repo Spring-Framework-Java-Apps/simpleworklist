@@ -68,7 +68,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
             CascadeType.REFRESH
         }
     )
-    @JoinColumn(name = "context_id")
+    @JoinColumn(name = "data_context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 

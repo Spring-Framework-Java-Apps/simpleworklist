@@ -109,7 +109,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
                     CascadeType.REFRESH
             }
     )
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "data_project_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project project;
 
@@ -121,7 +121,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
             CascadeType.REFRESH
         }
     )
-    @JoinColumn(name = "project_last_id")
+    @JoinColumn(name = "data_project_last_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project lastProject;
 
@@ -133,7 +133,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
                     CascadeType.REFRESH
             }
     )
-    @JoinColumn(name = "context_id")
+    @JoinColumn(name = "data_context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @LazyToOne(PROXY)
     private Context context;

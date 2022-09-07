@@ -56,7 +56,7 @@ public class SearchRequest extends AuditModel implements Serializable, Comparabl
             CascadeType.REFRESH
         }
     )
-    @JoinColumn(name = "context_id")
+    @JoinColumn(name = "data_context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Context context;
 
