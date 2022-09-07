@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(
-    name="user_chat_message",
+    name="user_account_chat_message",
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_user_message",
@@ -30,7 +30,7 @@ import java.io.Serializable;
 @NamedQueries({
   @NamedQuery(
     name = "queryFindAllMessagesBetweenCurrentAndOtherUser",
-    query = "select m from UserChatMessage m "
+    query = "select m from UserAccountChatMessage m "
       + "where (m.sender = :thisUser and m.receiver = :otherUser) "
       + "or (m.sender = :otherUser and m.receiver = :thisUser)",
     lockMode = LockModeType.READ
@@ -42,7 +42,7 @@ import java.io.Serializable;
 @ToString(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserChatMessage extends AuditModel implements Serializable {
+public class UserAccountChatMessage extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 4263078228257938175L;
 

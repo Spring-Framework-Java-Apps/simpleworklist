@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.java.simpleworklist.domain.meso.language.Language;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
@@ -117,7 +116,12 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
         return super.equalsByMyUuid(otherObject);
     }
 
-    public static UserAccount createUserAccount(final String userEmail, final String userFullname, final String userPassword, Context contexts[]){
+    public static UserAccount createUserAccount(
+      final String userEmail,
+      final String userFullname,
+      final String userPassword,
+      Context[] contexts
+    ){
         Date now = new Date();
         UserAccount u = new UserAccount();
         u.setUserEmail(userEmail);

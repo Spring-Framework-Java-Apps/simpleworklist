@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.woehlke.java.simpleworklist.domain.db.user.UserChatMessage;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +31,13 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public UserChatMessage sendNewUserMessage(
+    public UserAccountChatMessage sendNewUserMessage(
         UserAccount thisUser,
         UserAccount otherUser,
         ChatMessageForm chatMessageForm
     ) {
         log.info("sendNewUserMessage");
-        UserChatMessage m = new UserChatMessage();
+        UserAccountChatMessage m = new UserAccountChatMessage();
         m.setSender(thisUser);
         m.setReceiver(otherUser);
         m.setReadByReceiver(false);
@@ -53,24 +53,24 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         log.info("getNumberOfNewIncomingMessagesForUser");
         boolean readByReceiver = false;
         //TODO: #246 change List<Project> to Page<Project>
-        List<UserChatMessage> userChatMessageList =
+        List<UserAccountChatMessage> userAccountChatMessageList =
                 userMessageRepository.findByReceiverAndReadByReceiver(receiver, readByReceiver);
-        return userChatMessageList.size();
+        return userAccountChatMessageList.size();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Page<UserChatMessage> readAllMessagesBetweenCurrentAndOtherUser(
+    public Page<UserAccountChatMessage> readAllMessagesBetweenCurrentAndOtherUser(
         UserAccount receiver,
         UserAccount sender,
         Pageable request
     ) {
         log.info("readAllMessagesBetweenCurrentAndOtherUser");
-        Page<UserChatMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
-        for(UserChatMessage userChatMessage : user2UserMessagePage){
-            if((!userChatMessage.getReadByReceiver()) && (receiver.getId().longValue()== userChatMessage.getReceiver().getId().longValue())){
-                userChatMessage.setReadByReceiver(true);
-                userMessageRepository.saveAndFlush(userChatMessage);
+        Page<UserAccountChatMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
+        for(UserAccountChatMessage userAccountChatMessage : user2UserMessagePage){
+            if((!userAccountChatMessage.getReadByReceiver()) && (receiver.getId().longValue()== userAccountChatMessage.getReceiver().getId().longValue())){
+                userAccountChatMessage.setReadByReceiver(true);
+                userMessageRepository.saveAndFlush(userAccountChatMessage);
             }
         }
         return userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);

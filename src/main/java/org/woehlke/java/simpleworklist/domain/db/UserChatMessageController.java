@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.AbstractController;
-import org.woehlke.java.simpleworklist.domain.db.user.UserChatMessage;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageForm;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
@@ -46,7 +46,7 @@ public class UserChatMessageController extends AbstractController {
         UserAccount thisUser = context.getUserAccount();
         model.addAttribute("userSession",userSession);
         ChatMessageForm chatMessageForm = new ChatMessageForm();
-        Page<UserChatMessage> user2UserMessagePage = chatMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
+        Page<UserAccountChatMessage> user2UserMessagePage = chatMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
         model.addAttribute("newUser2UserMessage", chatMessageForm);
         model.addAttribute("otherUser", otherUser);
         model.addAttribute("user2UserMessagePage", user2UserMessagePage);
@@ -78,7 +78,7 @@ public class UserChatMessageController extends AbstractController {
             for(ObjectError objectError:result.getAllErrors()){
                 log.info("result.hasErrors: "+objectError.toString());
             }
-            Page<UserChatMessage> user2UserMessagePage = chatMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
+            Page<UserAccountChatMessage> user2UserMessagePage = chatMessageService.readAllMessagesBetweenCurrentAndOtherUser(thisUser,otherUser,request);
             model.addAttribute("otherUser", otherUser);
             model.addAttribute("user2UserMessagePage", user2UserMessagePage);
             model.addAttribute("userSession", userSession);

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
-import org.woehlke.java.simpleworklist.domain.db.user.UserChatMessage;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageRepository;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextRepository;
@@ -103,8 +103,8 @@ public class UserAccountServiceImpl implements UserAccountService {
             if(receiver.getId().longValue() == sender.getId().longValue()){
                 newIncomingMessagesForEachOtherUser.put(sender.getId(),0);
             } else {
-                List<UserChatMessage> userChatMessages = userMessageRepository.findBySenderAndReceiverAndReadByReceiver(sender,receiver,false);
-                newIncomingMessagesForEachOtherUser.put(sender.getId(), userChatMessages.size());
+                List<UserAccountChatMessage> userAccountChatMessages = userMessageRepository.findBySenderAndReceiverAndReadByReceiver(sender,receiver,false);
+                newIncomingMessagesForEachOtherUser.put(sender.getId(), userAccountChatMessages.size());
             }
         }
         return newIncomingMessagesForEachOtherUser;
