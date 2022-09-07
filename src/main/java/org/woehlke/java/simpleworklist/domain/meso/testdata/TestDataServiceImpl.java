@@ -5,15 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
-import org.woehlke.java.simpleworklist.domain.project.Project;
+import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectRepository;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextRepository;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskRepository;
-import org.woehlke.java.simpleworklist.domain.project.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;

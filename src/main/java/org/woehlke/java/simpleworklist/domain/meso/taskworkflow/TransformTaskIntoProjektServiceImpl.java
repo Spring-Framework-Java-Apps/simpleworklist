@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.woehlke.java.simpleworklist.domain.project.Project;
+import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
-import org.woehlke.java.simpleworklist.domain.project.ProjectService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
 import javax.validation.constraints.NotNull;
