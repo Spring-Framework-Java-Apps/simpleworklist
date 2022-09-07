@@ -37,7 +37,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 //TODO: test all three UniqueConstraints
 @Entity
 @Table(
-    name="task",
+    name="data_task",
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_task",

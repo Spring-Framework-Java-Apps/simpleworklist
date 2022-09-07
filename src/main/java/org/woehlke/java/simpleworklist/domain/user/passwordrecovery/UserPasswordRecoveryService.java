@@ -2,7 +2,7 @@ package org.woehlke.java.simpleworklist.domain.user.passwordrecovery;
 
 public interface UserPasswordRecoveryService {
 
-    UserPasswordRecovery findByToken(String confirmId);
+    UserAccountPasswordRecovery findByToken(String confirmId);
 
     boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email);
 
@@ -10,9 +10,9 @@ public interface UserPasswordRecoveryService {
 
     void passwordRecoverySendEmailTo(String email);
 
-    void passwordRecoverySentEmail(UserPasswordRecovery o);
+    void passwordRecoverySentEmail(UserAccountPasswordRecovery o);
 
-    void passwordRecoveryClickedInEmail(UserPasswordRecovery o);
+    void passwordRecoveryClickedInEmail(UserAccountPasswordRecovery o);
 
-    void passwordRecoveryDone(UserPasswordRecovery o);
+    void passwordRecoveryDone(UserAccountPasswordRecovery o);
 }

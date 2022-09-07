@@ -33,7 +33,7 @@ spring:
     generate-ddl: true
     database-platform: POSTGRESQL
     hibernate:
-      #ddl-auto: create-drop update
+        #ddl-auto: create-drop update
       ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
@@ -176,10 +176,7 @@ logging:
             application: DEBUG
             config: DEBUG
             measurements: DEBUG
-            user: DEBUG
             domain: DEBUG
-            services: DEBUG
-            common: INFO
 debug: false
 ---
 spring:

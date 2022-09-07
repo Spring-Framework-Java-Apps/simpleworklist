@@ -3,7 +3,7 @@ package org.woehlke.java.simpleworklist.domain.user.register;
 import org.springframework.beans.factory.annotation.Value;
 import org.woehlke.java.simpleworklist.config.AbstractTest;
 import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistration;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class UserRegistrationServiceImplTest extends AbstractTest {
             e.printStackTrace();
         }
         userPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);
-        UserPasswordRecovery o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
+        UserAccountPasswordRecovery o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
         assertNotNull(o);
         o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
         o.setNumberOfRetries(0);

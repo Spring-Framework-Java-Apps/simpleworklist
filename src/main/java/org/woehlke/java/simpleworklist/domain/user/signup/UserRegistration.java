@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(
-    name="user_registration",
+    name="user_account_registration",
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_user_registration_recovery",

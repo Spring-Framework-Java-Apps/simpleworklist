@@ -23,7 +23,7 @@ import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
 @Entity
 @Table(
-    name="project",
+    name="data_project",
     uniqueConstraints = {
         @UniqueConstraint(
             name = "ux_project",

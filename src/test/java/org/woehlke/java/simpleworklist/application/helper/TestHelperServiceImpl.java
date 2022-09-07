@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.project.Project;
 import org.woehlke.java.simpleworklist.domain.project.ProjectRepository;
 import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationRepository;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +89,7 @@ public class TestHelperServiceImpl implements TestHelperService {
     }
 
     @Override
-    public UserPasswordRecovery findPasswordRecoveryByEmail(@Email @NotBlank String email) {
+    public UserAccountPasswordRecovery findPasswordRecoveryByEmail(@Email @NotBlank String email) {
         return userPasswordRecoveryRepository.findByEmail(email);
     }
 }

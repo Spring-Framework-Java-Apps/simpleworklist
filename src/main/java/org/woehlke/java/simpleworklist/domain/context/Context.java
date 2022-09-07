@@ -20,7 +20,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
  */
 @Entity
 @Table(
-    name="context",
+    name="data_context",
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_context",

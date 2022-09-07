@@ -2,7 +2,7 @@
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-222.3739.54">
     <data-source name="simpleworklist@localhost" uuid="a4579979-885b-41d4-b0b0-f3b5b3d5c6f2">
-      <database-info product="PostgreSQL" version="14.5 (Ubuntu 14.5-1.pgdg22.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.4.0" dbms="POSTGRES" exact-version="14.5" exact-driver-version="42.4">
+      <database-info product="PostgreSQL" version="14.5 (Ubuntu 14.5-1.pgdg22.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.5.0" dbms="POSTGRES" exact-version="14.5" exact-driver-version="42.5">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />

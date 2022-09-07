@@ -4,9 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserPasswordRecoveryRepository extends JpaRepository<UserPasswordRecovery, Long> {
+public interface UserPasswordRecoveryRepository extends JpaRepository<UserAccountPasswordRecovery, Long> {
 
-    UserPasswordRecovery findByToken(String token);
+    UserAccountPasswordRecovery findByToken(String token);
 
-    UserPasswordRecovery findByEmail(String email);
+    UserAccountPasswordRecovery findByEmail(String email);
 }

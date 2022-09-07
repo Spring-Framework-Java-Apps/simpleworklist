@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountForm;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationForm;
 
@@ -98,12 +98,12 @@ public class UserPasswordRecoveryController {
         @PathVariable String confirmId,
         Model model
     ) {
-        UserPasswordRecovery oUserPasswordRecovery = userPasswordRecoveryService.findByToken(confirmId);
-        if (oUserPasswordRecovery != null) {
-            userPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserPasswordRecovery);
-            UserAccount ua = userAccountService.findByUserEmail(oUserPasswordRecovery.getEmail());
+        UserAccountPasswordRecovery oUserAccountPasswordRecovery = userPasswordRecoveryService.findByToken(confirmId);
+        if (oUserAccountPasswordRecovery != null) {
+            userPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserAccountPasswordRecovery);
+            UserAccount ua = userAccountService.findByUserEmail(oUserAccountPasswordRecovery.getEmail());
             UserAccountForm userAccountForm = new UserAccountForm();
-            userAccountForm.setUserEmail(oUserPasswordRecovery.getEmail());
+            userAccountForm.setUserEmail(oUserAccountPasswordRecovery.getEmail());
             userAccountForm.setUserFullname(ua.getUserFullname());
             model.addAttribute("userAccountForm", userAccountForm);
             return "user/resetPassword/resetPasswordConfirmed";
@@ -128,7 +128,7 @@ public class UserPasswordRecoveryController {
         @PathVariable String confirmId,
         Model model
     ) {
-        UserPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
+        UserAccountPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
         boolean passwordsMatch = userAccountForm.passwordsAreTheSame();
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
