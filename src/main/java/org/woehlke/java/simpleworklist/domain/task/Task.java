@@ -90,10 +90,10 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     private static final long serialVersionUID = 5247710652586269801L;
 
     @Id
-    @GeneratedValue(generator = "task_generator")
+    @GeneratedValue(generator = "data_task_generator")
     @SequenceGenerator(
-            name = "task_generator",
-            sequenceName = "task_sequence",
+            name = "data_task_generator",
+            sequenceName = "data_task_sequence",
             initialValue = 1000
     )
     private Long id;

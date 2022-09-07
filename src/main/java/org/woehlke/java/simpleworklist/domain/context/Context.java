@@ -42,10 +42,10 @@ public class Context extends AuditModel implements Serializable, ComparableById<
     private static final long serialVersionUID = -5035732370606951871L;
 
     @Id
-    @GeneratedValue(generator = "context_generator")
+    @GeneratedValue(generator = "data_context_generator")
     @SequenceGenerator(
-        name = "context_generator",
-        sequenceName = "context_sequence",
+        name = "data_context_generator",
+        sequenceName = "data_context_sequence",
         initialValue = 1000
     )
     private Long id;

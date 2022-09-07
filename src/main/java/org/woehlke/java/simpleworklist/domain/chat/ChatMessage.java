@@ -39,10 +39,10 @@ public class ChatMessage extends AuditModel implements Serializable {
     private static final long serialVersionUID = 4263078228257938175L;
 
     @Id
-    @GeneratedValue(generator = "user_message_generator")
+    @GeneratedValue(generator = "user_chat_message_generator")
     @SequenceGenerator(
-        name = "user_message_generator",
-        sequenceName = "user_message_sequence",
+        name = "user_chat_message_generator",
+        sequenceName = "user_chat_message_sequence",
         initialValue = 1000
     )
     private Long id;

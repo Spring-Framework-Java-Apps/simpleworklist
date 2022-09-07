@@ -42,10 +42,10 @@ public class SearchResult extends AuditModel implements Serializable, Comparable
     private static final long serialVersionUID = 1682809351146047764L;
 
     @Id
-    @GeneratedValue(generator = "search_request_generator")
+    @GeneratedValue(generator = "search_result_generator")
     @SequenceGenerator(
-        name = "search_request_generator",
-        sequenceName = "search_request_sequence",
+        name = "search_result_generator",
+        sequenceName = "search_result_sequence",
         initialValue = 1000
     )
     private Long id;

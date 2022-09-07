@@ -43,10 +43,10 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     public final static long rootProjectId = 0L;
 
     @Id
-    @GeneratedValue(generator = "project_generator")
+    @GeneratedValue(generator = "data_project_generator")
     @SequenceGenerator(
-        name = "project_generator",
-        sequenceName = "project_sequence",
+        name = "data_project_generator",
+        sequenceName = "data_project_sequence",
         initialValue = 1000
     )
     private Long id;
