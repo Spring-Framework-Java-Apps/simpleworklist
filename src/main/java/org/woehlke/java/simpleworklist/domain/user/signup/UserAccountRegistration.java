@@ -33,10 +33,10 @@ public class UserAccountRegistration extends AuditModel implements Serializable 
     private static final long serialVersionUID = -1955967514018161878L;
 
     @Id
-    @GeneratedValue(generator = "user_registration_generator")
+    @GeneratedValue(generator = "user_account_registration_generator")
     @SequenceGenerator(
-        name = "user_registration_generator",
-        sequenceName = "user_registration_sequence",
+        name = "user_account_registration_generator",
+        sequenceName = "user_account_registration_sequence",
         initialValue = 1000
     )
     private Long id;

@@ -32,10 +32,10 @@ public class UserAccountPasswordRecovery extends AuditModel implements Serializa
     private static final long serialVersionUID = 6860716425733119940L;
 
     @Id
-    @GeneratedValue(generator = "user_password_recovery_generator")
+    @GeneratedValue(generator = "user_account_password_recovery_generator")
     @SequenceGenerator(
-            name = "user_password_recovery_generator",
-            sequenceName = "user_password_recovery_sequence",
+            name = "user_account_password_recovery_generator",
+            sequenceName = "user_account_password_recovery_sequence",
             initialValue = 1000
     )
     private Long id;
