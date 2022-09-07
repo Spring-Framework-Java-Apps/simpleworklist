@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(
-    name="user_message",
+    name="user_chat_message",
     uniqueConstraints = {
         @UniqueConstraint(
             name="ux_user_message",
