@@ -3,9 +3,9 @@ package org.woehlke.java.simpleworklist.domain.user.register;
 import org.woehlke.java.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistration;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationStatus;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationService;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
+import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationStatus;
+import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

@@ -1,7 +1,7 @@
 package org.woehlke.java.simpleworklist.application.helper;
 
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistration;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
 
 public interface TestHelperService {
 

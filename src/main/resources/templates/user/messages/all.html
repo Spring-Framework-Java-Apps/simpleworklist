@@ -5,14 +5,14 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
 <head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=true)">
-  <title th:text="'SimpleWorklist | ' + #{pages.chatMessages.h1}">Title</title>
+  <title th:text="'SimpleWorklist | ' + #{pages.userChatMessages.h1}">Title</title>
 </head>
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
 <div th:fragment="mytwtitle">
   <div class="row my-3 py-3 col">
     <h1>
-      <strong th:utext="#{pages.chatMessages.h1}">Your Dialog with</strong>
+      <strong th:utext="#{pages.userChatMessages.h1}">Your Dialog with</strong>
     </h1>
     <h2>
       <small th:text="${otherUser.userFullname}">otherUser.userFullname</small>
@@ -28,7 +28,7 @@
       <div class="col">
         <div class="card card-body" id="newUser2UserMessageForm">
           <div class="form-group col-12">
-            <label for="messageTextEditor" class="control-label my-2" th:utext="#{pages.chatMessages.newMessage}">New Message:</label>
+            <label for="messageTextEditor" class="control-label my-2" th:utext="#{pages.userChatMessages.newMessage}">New Message:</label>
             <textarea id="messageTextEditor" rows="3" cols="50"
                       th:field="*{messageText}" class="form-control form-control-lg">
             </textarea>
@@ -40,7 +40,7 @@
           <div class="my-3">
             <button id="newUserMessageButton" type="submit" class="btn btn-primary">
               <i class="fas fa-envelope"></i>
-              <span th:utext="#{pages.chatMessages.newUserMessageButton}">Send Message</span>
+              <span th:utext="#{pages.userChatMessages.newUserMessageButton}">Send Message</span>
             </button>
           </div>
         </div>

@@ -4,25 +4,25 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.woehlke.java.simpleworklist.domain.session.UserSessionBean;
-import org.woehlke.java.simpleworklist.domain.breadcrumb.BreadcrumbService;
+import org.woehlke.java.simpleworklist.domain.db.data.Project;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
+import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
-import org.woehlke.java.simpleworklist.domain.context.Context;
-import org.woehlke.java.simpleworklist.domain.project.Project;
-import org.woehlke.java.simpleworklist.domain.task.Task;
-import org.woehlke.java.simpleworklist.domain.task.TaskService;
-import org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState;
-import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.domain.task.TaskEnergy;
-import org.woehlke.java.simpleworklist.domain.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.context.ContextService;
-import org.woehlke.java.simpleworklist.domain.project.ProjectService;
-import org.woehlke.java.simpleworklist.domain.chat.ChatMessageService;
-import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
+import org.woehlke.java.simpleworklist.domain.db.data.Context;
+import org.woehlke.java.simpleworklist.domain.db.data.Task;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
+import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
+import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
+import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageService;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.user.access.UserAuthorizationService;
-import org.woehlke.java.simpleworklist.domain.user.login.LoginSuccessService;
+import org.woehlke.java.simpleworklist.domain.security.access.UserAuthorizationService;
+import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static java.util.Locale.GERMAN;
-import static org.woehlke.java.simpleworklist.domain.taskworkflow.TaskState.*;
+import static org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState.*;
 
 /**
  * Created by tw on 14.02.16.

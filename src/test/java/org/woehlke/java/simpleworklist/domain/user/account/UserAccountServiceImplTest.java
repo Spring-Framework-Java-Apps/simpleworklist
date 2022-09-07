@@ -9,9 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.java.simpleworklist.config.AbstractTest;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryService;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationService;
-import org.woehlke.java.simpleworklist.domain.user.login.LoginForm;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
+import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
+import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
+import org.woehlke.java.simpleworklist.domain.security.login.LoginForm;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -3,9 +3,9 @@ package org.woehlke.java.simpleworklist.domain.user.resetpassword;
 import org.woehlke.java.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryStatus;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryService;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryStatus;
+import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

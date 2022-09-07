@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.woehlke.java.simpleworklist.domain.user.access.ApplicationUserDetailsService;
+import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
 
 
 @Configuration

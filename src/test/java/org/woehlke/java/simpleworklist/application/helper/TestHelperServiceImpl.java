@@ -5,14 +5,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.project.Project;
 import org.woehlke.java.simpleworklist.domain.project.ProjectRepository;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationRepository;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistration;
+import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationRepository;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.task.TaskRepository;
-import org.woehlke.java.simpleworklist.domain.user.account.UserAccountRepository;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryRepository;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskRepository;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountRepository;
+import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryRepository;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
