@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
+import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
-import org.woehlke.java.simpleworklist.domain.project.Project;
-import org.woehlke.java.simpleworklist.domain.project.ProjectRepository;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectRepository;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
 
 import javax.validation.Valid;
