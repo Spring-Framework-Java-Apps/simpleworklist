@@ -18,16 +18,16 @@ import java.util.UUID;
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryService {
+public class UserAccountPasswordRecoveryServiceImpl implements UserAccountPasswordRecoveryService {
 
-    private final UserPasswordRecoveryRepository userPasswordRecoveryRepository;
+    private final UserAccountPasswordRecoveryRepository userAccountPasswordRecoveryRepository;
     private final SimpleworklistProperties simpleworklistProperties;
     private final TokenGeneratorService tokenGeneratorService;
     private final JavaMailSender mailSender;
 
     @Autowired
-    public UserPasswordRecoveryServiceImpl(UserPasswordRecoveryRepository userPasswordRecoveryRepository, SimpleworklistProperties simpleworklistProperties, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
-        this.userPasswordRecoveryRepository = userPasswordRecoveryRepository;
+    public UserAccountPasswordRecoveryServiceImpl(UserAccountPasswordRecoveryRepository userAccountPasswordRecoveryRepository, SimpleworklistProperties simpleworklistProperties, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
+        this.userAccountPasswordRecoveryRepository = userAccountPasswordRecoveryRepository;
         this.simpleworklistProperties = simpleworklistProperties;
         this.tokenGeneratorService = tokenGeneratorService;
         this.mailSender = mailSender;
@@ -35,22 +35,22 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
 
     @Override
     public UserAccountPasswordRecovery findByToken(String token) {
-        return userPasswordRecoveryRepository.findByToken(token);
+        return userAccountPasswordRecoveryRepository.findByToken(token);
     }
 
     @Override
     public boolean passwordRecoveryIsRetryAndMaximumNumberOfRetries(String email) {
-        UserAccountPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
+        UserAccountPasswordRecovery earlierOptIn = userAccountPasswordRecoveryRepository.findByEmail(email);
         return earlierOptIn == null?false:earlierOptIn.getNumberOfRetries() >= simpleworklistProperties.getRegistration().getMaxRetries();
     }
 
     @Override
     public void passwordRecoveryCheckIfResponseIsInTime(String email) {
-        UserAccountPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
+        UserAccountPasswordRecovery earlierOptIn = userAccountPasswordRecoveryRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
             if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
-                userPasswordRecoveryRepository.delete(earlierOptIn);
+                userAccountPasswordRecoveryRepository.delete(earlierOptIn);
             }
         }
     }
@@ -59,7 +59,7 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySendEmailTo(String email) {
-        UserAccountPasswordRecovery earlierOptIn = userPasswordRecoveryRepository.findByEmail(email);
+        UserAccountPasswordRecovery earlierOptIn = userAccountPasswordRecoveryRepository.findByEmail(email);
         UserAccountPasswordRecovery o = new UserAccountPasswordRecovery();
         if (earlierOptIn != null) {
             o = earlierOptIn;
@@ -67,12 +67,12 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
         } else {
             o.setUuid(UUID.randomUUID());
         }
-        o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
+        o.setDoubleOptInStatus(UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL);
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
         log.info("To be saved: " + o.toString());
-        o = userPasswordRecoveryRepository.saveAndFlush(o);
+        o = userAccountPasswordRecoveryRepository.saveAndFlush(o);
         log.info("Saved: " + o.toString());
         this.sendEmailForPasswordReset(o);
     }
@@ -80,24 +80,24 @@ public class UserPasswordRecoveryServiceImpl implements UserPasswordRecoveryServ
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoverySentEmail(UserAccountPasswordRecovery o) {
-        o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL);
+        o.setDoubleOptInStatus(UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL);
         log.info("about to save: " + o.toString());
-        userPasswordRecoveryRepository.saveAndFlush(o);
+        userAccountPasswordRecoveryRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoveryClickedInEmail(UserAccountPasswordRecovery o) {
-        o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL);
-        userPasswordRecoveryRepository.saveAndFlush(o);
+        o.setDoubleOptInStatus(UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_CLICKED_IN_MAIL);
+        userAccountPasswordRecoveryRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void passwordRecoveryDone(UserAccountPasswordRecovery o) {
-        o.setDoubleOptInStatus(UserPasswordRecoveryStatus.PASSWORD_RECOVERY_STORED_CHANGED);
-        o = userPasswordRecoveryRepository.saveAndFlush(o);
-        userPasswordRecoveryRepository.delete(o);
+        o.setDoubleOptInStatus(UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_STORED_CHANGED);
+        o = userAccountPasswordRecoveryRepository.saveAndFlush(o);
+        userAccountPasswordRecoveryRepository.delete(o);
     }
 
     private void sendEmailForPasswordReset(UserAccountPasswordRecovery o) {

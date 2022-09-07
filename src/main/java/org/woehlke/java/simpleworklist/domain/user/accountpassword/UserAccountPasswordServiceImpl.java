@@ -18,14 +18,14 @@ import org.woehlke.java.simpleworklist.domain.user.account.UserAccountRepository
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserAccountSecurityPasswordServiceImpl implements UserAccountSecurityPasswordService {
+public class UserAccountPasswordServiceImpl implements UserAccountPasswordService {
 
     private final UserAccountRepository userAccountRepository;
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserAccountSecurityPasswordServiceImpl(UserAccountRepository userAccountRepository, AuthenticationManager authenticationManager) {
+    public UserAccountPasswordServiceImpl(UserAccountRepository userAccountRepository, AuthenticationManager authenticationManager) {
         this.userAccountRepository = userAccountRepository;
         int strength = 10;
         this.encoder = new BCryptPasswordEncoder(strength);

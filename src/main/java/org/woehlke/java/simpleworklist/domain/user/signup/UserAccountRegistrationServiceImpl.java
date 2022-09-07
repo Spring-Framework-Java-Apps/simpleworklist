@@ -19,35 +19,35 @@ import org.woehlke.java.simpleworklist.domain.user.token.TokenGeneratorService;
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserRegistrationServiceImpl implements UserRegistrationService {
+public class UserAccountRegistrationServiceImpl implements UserAccountRegistrationService {
 
     private final SimpleworklistProperties simpleworklistProperties;
-    private final UserRegistrationRepository userRegistrationRepository;
+    private final UserAccountRegistrationRepository userAccountRegistrationRepository;
     private final TokenGeneratorService tokenGeneratorService;
     private final JavaMailSender mailSender;
 
     @Autowired
-    public UserRegistrationServiceImpl(SimpleworklistProperties simpleworklistProperties, UserRegistrationRepository userRegistrationRepository, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
+    public UserAccountRegistrationServiceImpl(SimpleworklistProperties simpleworklistProperties, UserAccountRegistrationRepository userAccountRegistrationRepository, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
         this.simpleworklistProperties = simpleworklistProperties;
-        this.userRegistrationRepository = userRegistrationRepository;
+        this.userAccountRegistrationRepository = userAccountRegistrationRepository;
         this.tokenGeneratorService = tokenGeneratorService;
         this.mailSender = mailSender;
     }
 
     @Override
     public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {
-        UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
+        UserAccountRegistration earlierOptIn = userAccountRegistrationRepository.findByEmail(email);
         return earlierOptIn == null?false:(earlierOptIn.getNumberOfRetries() >= simpleworklistProperties.getRegistration().getMaxRetries());
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void registrationCheckIfResponseIsInTime(String email) {
-        UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
+        UserAccountRegistration earlierOptIn = userAccountRegistrationRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
             if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
-                userRegistrationRepository.delete(earlierOptIn);
+                userAccountRegistrationRepository.delete(earlierOptIn);
             }
         }
     }
@@ -56,52 +56,52 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void registrationSendEmailTo(String email) {
-        UserRegistration earlierOptIn = userRegistrationRepository.findByEmail(email);
-        UserRegistration o = new UserRegistration();
+        UserAccountRegistration earlierOptIn = userAccountRegistrationRepository.findByEmail(email);
+        UserAccountRegistration o = new UserAccountRegistration();
         o.setUuid(UUID.randomUUID());
         if (earlierOptIn != null) {
             o = earlierOptIn;
             o.increaseNumberOfRetries();
         }
-        o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_SAVED_EMAIL);
+        o.setDoubleOptInStatus(UserAccountRegistrationStatus.REGISTRATION_SAVED_EMAIL);
         o.setEmail(email);
         String token = tokenGeneratorService.getToken();
         o.setToken(token);
         log.info("To be saved: " + o.toString());
-        o = userRegistrationRepository.saveAndFlush(o);
+        o = userAccountRegistrationRepository.saveAndFlush(o);
         log.info("Saved: " + o.toString());
         this.sendEmailToRegisterNewUser(o);
     }
 
     @Override
-    public UserRegistration findByToken(String confirmId) {
-        return userRegistrationRepository.findByToken(confirmId);
+    public UserAccountRegistration findByToken(String confirmId) {
+        return userAccountRegistrationRepository.findByToken(confirmId);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registrationSentEmail(UserRegistration o) {
-        o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_SENT_MAIL);
+    public void registrationSentEmail(UserAccountRegistration o) {
+        o.setDoubleOptInStatus(UserAccountRegistrationStatus.REGISTRATION_SENT_MAIL);
         log.info("about to save: " + o.toString());
-        userRegistrationRepository.saveAndFlush(o);
+        userAccountRegistrationRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registrationClickedInEmail(UserRegistration o) {
-        o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_CLICKED_IN_MAIL);
-        userRegistrationRepository.saveAndFlush(o);
+    public void registrationClickedInEmail(UserAccountRegistration o) {
+        o.setDoubleOptInStatus(UserAccountRegistrationStatus.REGISTRATION_CLICKED_IN_MAIL);
+        userAccountRegistrationRepository.saveAndFlush(o);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void registrationUserCreated(UserRegistration o) {
-        o.setDoubleOptInStatus(UserRegistrationStatus.REGISTRATION_ACCOUNT_CREATED);
-        o = userRegistrationRepository.saveAndFlush(o);
-        userRegistrationRepository.delete(o);
+    public void registrationUserCreated(UserAccountRegistration o) {
+        o.setDoubleOptInStatus(UserAccountRegistrationStatus.REGISTRATION_ACCOUNT_CREATED);
+        o = userAccountRegistrationRepository.saveAndFlush(o);
+        userAccountRegistrationRepository.delete(o);
     }
 
-    private void sendEmailToRegisterNewUser(UserRegistration o) {
+    private void sendEmailToRegisterNewUser(UserAccountRegistration o) {
         String urlHost = simpleworklistProperties.getRegistration().getUrlHost();
         String mailFrom= simpleworklistProperties.getRegistration().getMailFrom();
         boolean success = true;

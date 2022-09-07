@@ -17,12 +17,12 @@ import java.util.Date;
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class UserAccountLoginSuccessServiceImpl implements UserAccountLoginSuccessService {
+public class LoginSuccessServiceImpl implements LoginSuccessService {
 
     private final UserAccountRepository userAccountRepository;
 
     @Autowired
-    public UserAccountLoginSuccessServiceImpl(UserAccountRepository userAccountRepository) {
+    public LoginSuccessServiceImpl(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 

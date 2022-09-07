@@ -3,7 +3,7 @@ package org.woehlke.java.simpleworklist.domain.user.signup;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
 
-public enum UserRegistrationStatus implements Serializable {
+public enum UserAccountRegistrationStatus implements Serializable {
 
     @Enumerated
     REGISTRATION_SAVED_EMAIL,

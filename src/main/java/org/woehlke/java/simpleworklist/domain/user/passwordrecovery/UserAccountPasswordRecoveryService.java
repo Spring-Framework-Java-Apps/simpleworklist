@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.user.passwordrecovery;
 
-public interface UserPasswordRecoveryService {
+public interface UserAccountPasswordRecoveryService {
 
     UserAccountPasswordRecovery findByToken(String confirmId);
 

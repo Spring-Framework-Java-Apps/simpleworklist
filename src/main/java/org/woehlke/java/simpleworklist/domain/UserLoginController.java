@@ -19,22 +19,22 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.woehlke.java.simpleworklist.domain.user.access.UserAuthorizationService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.user.login.LoginForm;
-import org.woehlke.java.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
+import org.woehlke.java.simpleworklist.domain.user.login.LoginSuccessService;
 
 @Slf4j
 @Controller
 @RequestMapping(path = "/user")
 public class UserLoginController {
 
-    private final UserAccountLoginSuccessService userAccountLoginSuccessService;
+    private final LoginSuccessService loginSuccessService;
     private final UserAuthorizationService userAuthorizationService;
 
     @Autowired
     public UserLoginController(
-        UserAccountLoginSuccessService userAccountLoginSuccessService,
+        LoginSuccessService loginSuccessService,
         UserAuthorizationService userAuthorizationService
     ) {
-        this.userAccountLoginSuccessService = userAccountLoginSuccessService;
+        this.loginSuccessService = loginSuccessService;
         this.userAuthorizationService = userAuthorizationService;
     }
 
@@ -70,8 +70,8 @@ public class UserLoginController {
         log.info("loginPerform");
         boolean authorized = userAuthorizationService.authorize(loginForm);
         if (!result.hasErrors() && authorized) {
-            UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-            userAccountLoginSuccessService.updateLastLoginTimestamp(user);
+            UserAccount user = loginSuccessService.retrieveCurrentUser();
+            loginSuccessService.updateLastLoginTimestamp(user);
             log.info("logged in");
             return "redirect:/home";
         } else {

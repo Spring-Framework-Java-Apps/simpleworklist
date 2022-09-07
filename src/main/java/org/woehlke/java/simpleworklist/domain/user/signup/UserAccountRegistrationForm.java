@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class UserRegistrationForm implements Serializable {
+public class UserAccountRegistrationForm implements Serializable {
 
     private static final long serialVersionUID = 6864871862706880939L;
 

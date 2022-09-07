@@ -52,7 +52,7 @@ public class UserAccountPasswordRecovery extends AuditModel implements Serializa
     @NotNull
     @Column(name = "double_optin_status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserPasswordRecoveryStatus doubleOptInStatus;
+    private UserAccountPasswordRecoveryStatus doubleOptInStatus;
 
     @NotNull
     @Column(name = "number_of_retries", nullable = false)
@@ -87,11 +87,11 @@ public class UserAccountPasswordRecovery extends AuditModel implements Serializa
         this.token = token;
     }
 
-    public UserPasswordRecoveryStatus getDoubleOptInStatus() {
+    public UserAccountPasswordRecoveryStatus getDoubleOptInStatus() {
         return doubleOptInStatus;
     }
 
-    public void setDoubleOptInStatus(UserPasswordRecoveryStatus doubleOptInStatus) {
+    public void setDoubleOptInStatus(UserAccountPasswordRecoveryStatus doubleOptInStatus) {
         this.doubleOptInStatus = doubleOptInStatus;
     }
 

@@ -8,7 +8,7 @@ import org.woehlke.java.simpleworklist.domain.testdata.TestDataService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
+import org.woehlke.java.simpleworklist.domain.user.login.LoginSuccessService;
 
 @Slf4j
 @Controller
@@ -16,20 +16,20 @@ import org.woehlke.java.simpleworklist.domain.user.login.UserAccountLoginSuccess
 public class TestDataController {
 
     private final TestDataService testDataService;
-    private final UserAccountLoginSuccessService userAccountLoginSuccessService;
+    private final LoginSuccessService loginSuccessService;
 
     @Autowired
     public TestDataController(
         TestDataService testDataService,
-        UserAccountLoginSuccessService userAccountLoginSuccessService
+        LoginSuccessService loginSuccessService
     ) {
         this.testDataService = testDataService;
-        this.userAccountLoginSuccessService = userAccountLoginSuccessService;
+        this.loginSuccessService = loginSuccessService;
     }
 
     @RequestMapping(path = "/createTree", method = RequestMethod.GET)
     public String createTestCategoryTree() {
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount user = loginSuccessService.retrieveCurrentUser();
         testDataService.createTestData(user);
         return "redirect:/home";
     }

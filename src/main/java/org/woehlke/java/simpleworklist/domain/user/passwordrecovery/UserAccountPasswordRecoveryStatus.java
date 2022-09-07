@@ -3,7 +3,7 @@ package org.woehlke.java.simpleworklist.domain.user.passwordrecovery;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
 
-public enum UserPasswordRecoveryStatus implements Serializable {
+public enum UserAccountPasswordRecoveryStatus implements Serializable {
 
     @Enumerated
     PASSWORD_RECOVERY_SAVED_EMAIL,

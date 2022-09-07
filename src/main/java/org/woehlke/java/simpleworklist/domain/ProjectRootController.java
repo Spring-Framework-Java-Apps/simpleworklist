@@ -195,7 +195,7 @@ public class ProjectRootController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = task.getContext();
         Project thisProject = addProjectFromTaskToModel( task, model );
@@ -240,7 +240,7 @@ public class ProjectRootController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 log.warn(e.toString());
             }
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             task = addProject(task);
             Context thisContext = task.getContext();

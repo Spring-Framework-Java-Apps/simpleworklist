@@ -12,8 +12,8 @@ import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountForm;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationForm;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryService;
+import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,12 +25,12 @@ import javax.validation.Valid;
 public class UserPasswordRecoveryController {
 
     private final UserAccountService userAccountService;
-    private final UserPasswordRecoveryService userPasswordRecoveryService;
+    private final UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
     @Autowired
-    public UserPasswordRecoveryController(UserAccountService userAccountService, UserPasswordRecoveryService userPasswordRecoveryService) {
+    public UserPasswordRecoveryController(UserAccountService userAccountService, UserAccountPasswordRecoveryService userAccountPasswordRecoveryService) {
         this.userAccountService = userAccountService;
-        this.userPasswordRecoveryService = userPasswordRecoveryService;
+        this.userAccountPasswordRecoveryService = userAccountPasswordRecoveryService;
     }
 
     /**
@@ -42,37 +42,37 @@ public class UserPasswordRecoveryController {
      */
     @RequestMapping(path="/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
-        UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-        model.addAttribute("userRegistrationForm", userRegistrationForm);
+        UserAccountRegistrationForm userAccountRegistrationForm = new UserAccountRegistrationForm();
+        model.addAttribute("userRegistrationForm", userAccountRegistrationForm);
         return "user/resetPassword/resetPasswordForm";
     }
 
     /**
      * If email-address exists, send email with Link for password-Reset.
      *
-     * @param userRegistrationForm
+     * @param userAccountRegistrationForm
      * @param result
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
     @RequestMapping(path="/resetPassword", method = RequestMethod.POST)
     public final String passwordForgottenPost(
-        @Valid UserRegistrationForm userRegistrationForm,
+        @Valid UserAccountRegistrationForm userAccountRegistrationForm,
         BindingResult result,
         Model model
     ) {
         if (result.hasErrors()) {
             log.info("----------------------");
-            log.info(userRegistrationForm.toString());
+            log.info(userAccountRegistrationForm.toString());
             log.info(result.toString());
             log.info(model.toString());
             log.info("----------------------");
             return "user/resetPassword/resetPasswordForm";
         } else {
-            log.info(userRegistrationForm.toString());
+            log.info(userAccountRegistrationForm.toString());
             log.info(result.toString());
             log.info(model.toString());
-            if (userAccountService.findByUserEmail(userRegistrationForm.getEmail()) == null) {
+            if (userAccountService.findByUserEmail(userAccountRegistrationForm.getEmail()) == null) {
                 String objectName = "userRegistrationForm";
                 String field = "email";
                 String defaultMessage = "This Email is not registered.";
@@ -80,7 +80,7 @@ public class UserPasswordRecoveryController {
                 result.addError(e);
                 return "user/resetPassword/resetPasswordForm";
             } else {
-                userPasswordRecoveryService.passwordRecoverySendEmailTo(userRegistrationForm.getEmail());
+                userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(userAccountRegistrationForm.getEmail());
                 return "user/resetPassword/resetPasswordSentMail";
             }
         }
@@ -98,9 +98,9 @@ public class UserPasswordRecoveryController {
         @PathVariable String confirmId,
         Model model
     ) {
-        UserAccountPasswordRecovery oUserAccountPasswordRecovery = userPasswordRecoveryService.findByToken(confirmId);
+        UserAccountPasswordRecovery oUserAccountPasswordRecovery = userAccountPasswordRecoveryService.findByToken(confirmId);
         if (oUserAccountPasswordRecovery != null) {
-            userPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserAccountPasswordRecovery);
+            userAccountPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserAccountPasswordRecovery);
             UserAccount ua = userAccountService.findByUserEmail(oUserAccountPasswordRecovery.getEmail());
             UserAccountForm userAccountForm = new UserAccountForm();
             userAccountForm.setUserEmail(oUserAccountPasswordRecovery.getEmail());
@@ -128,12 +128,12 @@ public class UserPasswordRecoveryController {
         @PathVariable String confirmId,
         Model model
     ) {
-        UserAccountPasswordRecovery o = userPasswordRecoveryService.findByToken(confirmId);
+        UserAccountPasswordRecovery o = userAccountPasswordRecoveryService.findByToken(confirmId);
         boolean passwordsMatch = userAccountForm.passwordsAreTheSame();
         if (o != null) {
             if (!result.hasErrors() && passwordsMatch) {
                 userAccountService.changeUsersPassword(userAccountForm);
-                userPasswordRecoveryService.passwordRecoveryDone(o);
+                userAccountPasswordRecoveryService.passwordRecoveryDone(o);
                 return "user/resetPassword/resetPasswordDone";
             } else {
                 if (!passwordsMatch) {

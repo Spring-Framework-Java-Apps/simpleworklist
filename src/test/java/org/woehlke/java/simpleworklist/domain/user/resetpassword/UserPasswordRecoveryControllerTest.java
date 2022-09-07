@@ -4,8 +4,8 @@ import org.woehlke.java.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecovery;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryStatus;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryStatus;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserPasswordRecoveryControllerTest extends AbstractTest {
 
     @Autowired
-    private UserPasswordRecoveryService userPasswordRecoveryService;
+    private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
     //@Test
     public void testResetPassword() throws Exception {
@@ -36,7 +36,7 @@ public class UserPasswordRecoveryControllerTest extends AbstractTest {
 
     //@Test
     public void testEnterNewPasswordFormularWithToken() throws Exception {
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -44,15 +44,15 @@ public class UserPasswordRecoveryControllerTest extends AbstractTest {
         }
         UserAccountPasswordRecovery o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
         assertNotNull(o);
-        boolean result = o.getDoubleOptInStatus()== UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL
-                || o.getDoubleOptInStatus()== UserPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL;
+        boolean result = o.getDoubleOptInStatus()== UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL
+                || o.getDoubleOptInStatus()== UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL;
         assertTrue(result);
         String url = "/user/resetPassword/confirm/"+o.getToken();
         this.mockMvc.perform(
                 get(url)).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordConfirmed")))
                 .andExpect(model().attributeExists("userAccountFormBean"));
-        userPasswordRecoveryService.passwordRecoveryDone(o);
+        userAccountPasswordRecoveryService.passwordRecoveryDone(o);
     }
 
     //@Test

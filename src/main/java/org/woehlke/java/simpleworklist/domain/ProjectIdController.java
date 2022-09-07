@@ -61,7 +61,7 @@ public class ProjectIdController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
         task.setTaskEnergy(TaskEnergy.NONE);
@@ -414,7 +414,7 @@ public class ProjectIdController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = task.getContext();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
@@ -459,7 +459,7 @@ public class ProjectIdController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 log.warn(e.toString());
             }
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             task = addProject(task);
             Context thisContext = task.getContext();

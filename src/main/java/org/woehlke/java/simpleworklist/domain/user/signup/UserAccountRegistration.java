@@ -28,7 +28,7 @@ import java.util.Objects;
         @Index(name = "ix_user_registration_row_created_at", columnList = "row_created_at")
     }
 )
-public class UserRegistration extends AuditModel implements Serializable {
+public class UserAccountRegistration extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = -1955967514018161878L;
 
@@ -53,7 +53,7 @@ public class UserRegistration extends AuditModel implements Serializable {
     @NotNull
     @Column(name = "double_optin_status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserRegistrationStatus doubleOptInStatus;
+    private UserAccountRegistrationStatus doubleOptInStatus;
 
     @NotNull
     @Column(name = "number_of_retries")
@@ -88,11 +88,11 @@ public class UserRegistration extends AuditModel implements Serializable {
         this.token = token;
     }
 
-    public UserRegistrationStatus getDoubleOptInStatus() {
+    public UserAccountRegistrationStatus getDoubleOptInStatus() {
         return doubleOptInStatus;
     }
 
-    public void setDoubleOptInStatus(UserRegistrationStatus doubleOptInStatus) {
+    public void setDoubleOptInStatus(UserAccountRegistrationStatus doubleOptInStatus) {
         this.doubleOptInStatus = doubleOptInStatus;
     }
 
@@ -107,9 +107,9 @@ public class UserRegistration extends AuditModel implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserRegistration)) return false;
+        if (!(o instanceof UserAccountRegistration)) return false;
         if (!super.equals(o)) return false;
-        UserRegistration that = (UserRegistration) o;
+        UserAccountRegistration that = (UserAccountRegistration) o;
         return Objects.equals(getId(), that.getId()) &&
                 getEmail().equals(that.getEmail()) &&
                 getToken().equals(that.getToken()) &&

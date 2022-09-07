@@ -6,7 +6,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
-import org.woehlke.java.simpleworklist.domain.language.Language;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +24,16 @@ import java.util.Locale;
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
     implements AuthenticationSuccessHandler {
 
-    private final UserAccountLoginSuccessService userAccountLoginSuccessService;
+    private final LoginSuccessService loginSuccessService;
     private final LocaleResolver localeResolver;
 
     @Autowired
     public LoginSuccessHandler(
-        UserAccountLoginSuccessService userAccountLoginSuccessService,
+        LoginSuccessService loginSuccessService,
         LocaleResolver localeResolver
     ) {
         super();
-        this.userAccountLoginSuccessService = userAccountLoginSuccessService;
+        this.loginSuccessService = loginSuccessService;
         this.localeResolver = localeResolver;
     }
 
@@ -46,8 +45,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     ) throws ServletException, IOException {
         log.info("onAuthenticationSuccess");
         super.onAuthenticationSuccess(request, response, authentication);
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
-        userAccountLoginSuccessService.updateLastLoginTimestamp(user);
+        UserAccount user = loginSuccessService.retrieveCurrentUser();
+        loginSuccessService.updateLastLoginTimestamp(user);
         Locale locale;
         switch(user.getDefaultLanguage()){
             case DE: locale = Locale.GERMAN; break;

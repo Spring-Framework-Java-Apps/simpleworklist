@@ -56,7 +56,7 @@ public class TaskStateTaskController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("addNewTaskToInboxGet");
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
         task.setTaskEnergy(TaskEnergy.NONE);
@@ -121,7 +121,7 @@ public class TaskStateTaskController extends AbstractController {
     ) {
         log.info("editTaskGet");
         addProjectFromTaskToModel( task, model );
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = task.getContext();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(), locale, userSession);
@@ -163,7 +163,7 @@ public class TaskStateTaskController extends AbstractController {
                 log.warn(e.toString());
             }
             //Task persistentTask = taskService.findOne(taskId);
-            UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+            UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
             Project thisProject = addProjectFromTaskToModel( task, model );
             // task = addProject(task);

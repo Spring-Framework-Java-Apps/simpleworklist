@@ -22,7 +22,7 @@ import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.domain.user.access.UserAuthorizationService;
-import org.woehlke.java.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
+import org.woehlke.java.simpleworklist.domain.user.login.LoginSuccessService;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public abstract class AbstractController {
     protected ChatMessageService chatMessageService;
 
     @Autowired
-    protected UserAccountLoginSuccessService userAccountLoginSuccessService;
+    protected LoginSuccessService loginSuccessService;
 
     @Autowired
     protected ContextService contextService;
@@ -150,7 +150,7 @@ public abstract class AbstractController {
     }
 
     protected UserAccount getUser() {
-        return this.userAccountLoginSuccessService.retrieveCurrentUser();
+        return this.loginSuccessService.retrieveCurrentUser();
     }
 
     protected Context getContext(@NotNull final UserSessionBean userSession){

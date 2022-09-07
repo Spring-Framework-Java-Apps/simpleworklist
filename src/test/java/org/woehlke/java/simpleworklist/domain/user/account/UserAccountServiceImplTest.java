@@ -9,8 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.java.simpleworklist.config.AbstractTest;
-import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserPasswordRecoveryService;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationService;
+import org.woehlke.java.simpleworklist.domain.user.passwordrecovery.UserAccountPasswordRecoveryService;
+import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationService;
 import org.woehlke.java.simpleworklist.domain.user.login.LoginForm;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserAccountServiceImplTest extends AbstractTest {
 
     @Autowired
-    private UserRegistrationService registrationService;
+    private UserAccountRegistrationService registrationService;
 
     @Autowired
-    private UserPasswordRecoveryService userPasswordRecoveryService;
+    private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
     //@Test
     public void testStartSecondOptIn() throws Exception {
@@ -61,19 +61,19 @@ public class UserAccountServiceImplTest extends AbstractTest {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         assertNotNull(emails[0]);
         assertFalse(userAccountService.isEmailAvailable(emails[0]));
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        assertFalse(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         assertFalse(userAccountService.isEmailAvailable(emails[0]));
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        assertFalse(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        userPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
-        assertTrue(userPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        assertFalse(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        assertFalse(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        assertFalse(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        assertFalse(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
+        userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
+        assertTrue(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         int sixSeconds = 6000;
         Thread.sleep(sixSeconds);
         deleteAll();
@@ -155,14 +155,14 @@ public class UserAccountServiceImplTest extends AbstractTest {
 
     //@Test
     public void testRetrieveUsernameLoggedOut(){
-        String userName = userAccountLoginSuccessService.retrieveUsername();
+        String userName = loginSuccessService.retrieveUsername();
         assertTrue(userName.compareTo(" ")==0);
     }
 
     //@Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
-        String userName = userAccountLoginSuccessService.retrieveUsername();
+        String userName = loginSuccessService.retrieveUsername();
         assertNotNull(userName);
         assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
@@ -171,13 +171,13 @@ public class UserAccountServiceImplTest extends AbstractTest {
     //@Test
     ////@Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
-        userAccountLoginSuccessService.retrieveCurrentUser();
+        loginSuccessService.retrieveCurrentUser();
     }
 
     //@Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
-        UserAccount userAccount = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         assertNotNull(userAccount);
         assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
         SecurityContextHolder.clearContext();

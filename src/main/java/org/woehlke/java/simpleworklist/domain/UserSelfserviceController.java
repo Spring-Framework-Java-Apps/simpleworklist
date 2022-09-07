@@ -387,7 +387,7 @@ public class UserSelfserviceController extends AbstractController {
         Model model
     ){
         log.info("userLanguageGet");
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount user = loginSuccessService.retrieveCurrentUser();
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
         model.addAttribute("userChangeLanguageForm",new UserChangeLanguageForm(user.getDefaultLanguage()));
@@ -406,7 +406,7 @@ public class UserSelfserviceController extends AbstractController {
         Model model
     ){
         log.info("userLanguagePost");
-        UserAccount user = userAccountLoginSuccessService.retrieveCurrentUser();
+        UserAccount user = loginSuccessService.retrieveCurrentUser();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){

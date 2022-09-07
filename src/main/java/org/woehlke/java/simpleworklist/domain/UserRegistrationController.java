@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.user.account.UserAccountForm;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistration;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationForm;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationService;
+import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistration;
+import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationForm;
+import org.woehlke.java.simpleworklist.domain.user.signup.UserAccountRegistrationService;
 
 import javax.validation.Valid;
 
@@ -23,12 +23,12 @@ import javax.validation.Valid;
 public class UserRegistrationController {
 
     private final UserAccountService userAccountService;
-    private final UserRegistrationService userRegistrationService;
+    private final UserAccountRegistrationService userAccountRegistrationService;
 
     @Autowired
-    public UserRegistrationController(UserAccountService userAccountService, UserRegistrationService userRegistrationService) {
+    public UserRegistrationController(UserAccountService userAccountService, UserAccountRegistrationService userAccountRegistrationService) {
         this.userAccountService = userAccountService;
-        this.userRegistrationService = userRegistrationService;
+        this.userAccountRegistrationService = userAccountRegistrationService;
     }
 
     /**
@@ -41,22 +41,22 @@ public class UserRegistrationController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public final String registerGet(Model model) {
         log.info("registerGet");
-        UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-        model.addAttribute("userRegistrationForm", userRegistrationForm);
+        UserAccountRegistrationForm userAccountRegistrationForm = new UserAccountRegistrationForm();
+        model.addAttribute("userRegistrationForm", userAccountRegistrationForm);
         return "user/register/registerForm";
     }
 
     /**
      * Register new User: Store the Request and send Email for Verification.
      *
-     * @param userRegistrationForm UserRegistrationForm
+     * @param userAccountRegistrationForm UserRegistrationForm
      * @param result BindingResult
      * @param model Model
      * @return info page at success or return to form with error messages.
      */
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public final String registerPost(
-            @Valid UserRegistrationForm userRegistrationForm,
+            @Valid UserAccountRegistrationForm userAccountRegistrationForm,
             BindingResult result,
             Model model
     ) {
@@ -64,9 +64,9 @@ public class UserRegistrationController {
         if (result.hasErrors()) {
             return "user/register/registerForm";
         } else {
-            userRegistrationService.registrationCheckIfResponseIsInTime(userRegistrationForm.getEmail());
-            if (userAccountService.isEmailAvailable(userRegistrationForm.getEmail())) {
-                if (userRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(userRegistrationForm.getEmail())) {
+            userAccountRegistrationService.registrationCheckIfResponseIsInTime(userAccountRegistrationForm.getEmail());
+            if (userAccountService.isEmailAvailable(userAccountRegistrationForm.getEmail())) {
+                if (userAccountRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(userAccountRegistrationForm.getEmail())) {
                     String objectName = "userRegistrationForm";
                     String field = "email";
                     String defaultMessage = "Maximum Number of Retries reached.";
@@ -74,7 +74,7 @@ public class UserRegistrationController {
                     result.addError(e);
                     return "user/register/registerForm";
                 } else {
-                    userRegistrationService.registrationSendEmailTo(userRegistrationForm.getEmail());
+                    userAccountRegistrationService.registrationSendEmailTo(userAccountRegistrationForm.getEmail());
                     return "user/register/registerConfirmSentMail";
                 }
             } else {
@@ -102,9 +102,9 @@ public class UserRegistrationController {
     ) {
         log.info("registerConfirmGet");
         log.info("GET /confirm/" + confirmId);
-        UserRegistration o = userRegistrationService.findByToken(confirmId);
+        UserAccountRegistration o = userAccountRegistrationService.findByToken(confirmId);
         if (o != null) {
-            userRegistrationService.registrationClickedInEmail(o);
+            userAccountRegistrationService.registrationClickedInEmail(o);
             UserAccountForm userAccountForm = new UserAccountForm();
             userAccountForm.setUserEmail(o.getEmail());
             model.addAttribute("userAccountForm", userAccountForm);
@@ -132,13 +132,13 @@ public class UserRegistrationController {
     ) {
         log.info("registerConfirmPost");
         log.info("POST /confirm/" + confirmId + " : " + userAccountForm.toString());
-        userRegistrationService.registrationCheckIfResponseIsInTime(userAccountForm.getUserEmail());
-        UserRegistration oUserRegistration = userRegistrationService.findByToken(confirmId);
-        if (oUserRegistration != null) {
+        userAccountRegistrationService.registrationCheckIfResponseIsInTime(userAccountForm.getUserEmail());
+        UserAccountRegistration oUserAccountRegistration = userAccountRegistrationService.findByToken(confirmId);
+        if (oUserAccountRegistration != null) {
             boolean passwordsMatch = userAccountForm.passwordsAreTheSame();
             if (!result.hasErrors() && passwordsMatch) {
                 userAccountService.createUser(userAccountForm);
-                userRegistrationService.registrationUserCreated(oUserRegistration);
+                userAccountRegistrationService.registrationUserCreated(oUserAccountRegistration);
                 return "user/register/registerConfirmFinished";
             } else {
                 if (!passwordsMatch) {

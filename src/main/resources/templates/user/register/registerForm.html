@@ -18,7 +18,7 @@
 	</div>
 
 	<div th:fragment="mytwcontent">
-        <form id="formId" th:action="@{/user/register/}" th:object="${userRegistrationForm}" method="post">
+        <form id="formId" th:action="@{/user/register/}" th:object="${userAccountRegistrationForm}" method="post">
             <div class="card">
                 <div class="card-header">
                     <span th:utext="#{user.loginForm.register}">register as new user</span>
