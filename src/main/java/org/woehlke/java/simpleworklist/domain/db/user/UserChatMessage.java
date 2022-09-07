@@ -27,6 +27,15 @@ import java.io.Serializable;
         @Index(name = "ix_user_message_row_created_at", columnList = "row_created_at")
     }
 )
+@NamedQueries({
+  @NamedQuery(
+    name = "queryFindAllMessagesBetweenCurrentAndOtherUser",
+    query = "select m from UserChatMessage m "
+      + "where (m.sender = :thisUser and m.receiver = :otherUser) "
+      + "or (m.sender = :otherUser and m.receiver = :thisUser)",
+    lockMode = LockModeType.READ
+  )
+})
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
