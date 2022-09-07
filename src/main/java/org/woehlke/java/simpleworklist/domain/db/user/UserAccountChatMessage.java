@@ -3,7 +3,6 @@ package org.woehlke.java.simpleworklist.domain.db.user;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
-//import org.hibernate.validator.constraints.SafeHtml;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 
 import javax.persistence.*;
@@ -30,9 +29,9 @@ import java.io.Serializable;
 @NamedQueries({
   @NamedQuery(
     name = "queryFindAllMessagesBetweenCurrentAndOtherUser",
-    query = "select m from UserAccountChatMessage m "
-      + "where (m.sender = :thisUser and m.receiver = :otherUser) "
-      + "or (m.sender = :otherUser and m.receiver = :thisUser)",
+    query = "select m from org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage m " +
+      "where (m.sender = :thisUser and m.receiver = :otherUser) " +
+      "or (m.sender = :otherUser and m.receiver = :thisUser)",
     lockMode = LockModeType.READ
   )
 })
