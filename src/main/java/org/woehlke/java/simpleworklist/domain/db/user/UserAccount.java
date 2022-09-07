@@ -74,7 +74,7 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
                 CascadeType.REFRESH
             }
     )
-    @JoinColumn(name = "default_context_id", nullable=true)
+    @JoinColumn(name = "default_data_context_id", nullable=true)
     private Context defaultContext;
 
     //@NotNull

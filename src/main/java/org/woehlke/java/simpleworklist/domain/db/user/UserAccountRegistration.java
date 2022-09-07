@@ -16,17 +16,17 @@ import java.util.Objects;
     name="user_account_registration",
     uniqueConstraints = {
         @UniqueConstraint(
-            name="ux_user_registration_recovery",
+            name="ux_user_account_registration",
             columnNames = { "email" }
         ),
         @UniqueConstraint(
-            name="ux_user_registration_recovery_token",
+            name="ux_user_account_registration_token",
             columnNames = { "token" }
         )
     },
     indexes = {
-        @Index(name = "ix_user_registration_uuid", columnList = "uuid"),
-        @Index(name = "ix_user_registration_row_created_at", columnList = "row_created_at")
+        @Index(name = "ix_user_account_registration_uuid", columnList = "uuid"),
+        @Index(name = "ix_user_account_registration_row_created_at", columnList = "row_created_at")
     }
 )
 public class UserAccountRegistration extends AuditModel implements Serializable {

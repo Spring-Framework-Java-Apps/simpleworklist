@@ -15,17 +15,17 @@ import java.util.Objects;
     name="user_account_password_recovery",
     uniqueConstraints = {
         @UniqueConstraint(
-            name="ux_user_password_recovery",
+            name="ux_user_account_password_recovery",
             columnNames = { "email" }
         ),
         @UniqueConstraint(
-            name="ux_user_password_recovery_token",
+            name="ux_user_account_password_recovery_token",
             columnNames = { "token" }
         )
     },
     indexes = {
-        @Index(name = "ix_user_password_recovery_uuid", columnList = "uuid"),
-        @Index(name = "ix_user_password_recovery_row_created_at", columnList = "row_created_at")
+        @Index(name = "ix_user_account_password_recovery_uuid", columnList = "uuid"),
+        @Index(name = "ix_user_account_password_recovery_row_created_at", columnList = "row_created_at")
     }
 )
 public class UserAccountPasswordRecovery extends AuditModel implements Serializable {

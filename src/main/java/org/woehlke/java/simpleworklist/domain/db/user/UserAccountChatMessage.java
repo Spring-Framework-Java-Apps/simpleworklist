@@ -17,13 +17,13 @@ import java.io.Serializable;
     name="user_account_chat_message",
     uniqueConstraints = {
         @UniqueConstraint(
-            name="ux_user_message",
+            name="ux_user_account_chat_message",
             columnNames = {"row_created_at", "user_account_id_sender", "user_account_id_receiver"}
         )
     },
     indexes = {
-        @Index(name = "ix_user_message_uuid", columnList = "uuid"),
-        @Index(name = "ix_user_message_row_created_at", columnList = "row_created_at")
+        @Index(name = "ix_user_account_chat_message_uuid", columnList = "uuid"),
+        @Index(name = "ix_user_account_chat_message_row_created_at", columnList = "row_created_at")
     }
 )
 @NamedQueries({
