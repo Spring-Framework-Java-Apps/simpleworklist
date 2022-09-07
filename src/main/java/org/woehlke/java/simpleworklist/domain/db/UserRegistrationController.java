@@ -42,7 +42,7 @@ public class UserRegistrationController {
     public final String registerGet(Model model) {
         log.info("registerGet");
         UserAccountRegistrationForm userAccountRegistrationForm = new UserAccountRegistrationForm();
-        model.addAttribute("userRegistrationForm", userAccountRegistrationForm);
+        model.addAttribute("userAccountRegistrationForm", userAccountRegistrationForm);
         return "user/register/registerForm";
     }
 
@@ -67,7 +67,7 @@ public class UserRegistrationController {
             userAccountRegistrationService.registrationCheckIfResponseIsInTime(userAccountRegistrationForm.getEmail());
             if (userAccountService.isEmailAvailable(userAccountRegistrationForm.getEmail())) {
                 if (userAccountRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(userAccountRegistrationForm.getEmail())) {
-                    String objectName = "userRegistrationForm";
+                    String objectName = "userAccountRegistrationForm";
                     String field = "email";
                     String defaultMessage = "Maximum Number of Retries reached.";
                     FieldError e = new FieldError(objectName, field, defaultMessage);
@@ -78,7 +78,7 @@ public class UserRegistrationController {
                     return "user/register/registerConfirmSentMail";
                 }
             } else {
-                String objectName = "userRegistrationForm";
+                String objectName = "userAccountRegistrationForm";
                 String field = "email";
                 String defaultMessage = "Email is already in use.";
                 FieldError e = new FieldError(objectName, field, defaultMessage);
@@ -142,7 +142,7 @@ public class UserRegistrationController {
                 return "user/register/registerConfirmFinished";
             } else {
                 if (!passwordsMatch) {
-                    String objectName = "userAccountForm";
+                    String objectName = "userAccountRegistrationForm";
                     String field = "userPassword";
                     String defaultMessage = "Passwords aren't the same.";
                     FieldError e = new FieldError(objectName, field, defaultMessage);
