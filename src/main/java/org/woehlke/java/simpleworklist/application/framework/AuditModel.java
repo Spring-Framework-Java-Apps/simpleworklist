@@ -19,10 +19,8 @@ import java.util.UUID;
     value = {"rowCreatedAt", "rowUpdatedAt"},
     allowGetters = true
 )
-//@ToString
 @Getter
 @Setter
-//@EqualsAndHashCode(callSuper=false)
 public class AuditModel extends Object implements Serializable {
 
     private static final long serialVersionUID = 4399373914714726911L;
