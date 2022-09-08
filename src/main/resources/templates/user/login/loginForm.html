@@ -10,22 +10,24 @@
 <body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
 
 <div th:fragment="mytwtitle">
-  <div class="row my-5 py-5">
-    <div class="col-3"></div>
-    <div class="col-6">
-      <h1><span th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</span></h1>
-      <h2><span th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</span></h2>
+  <div class="container-md">
+  <div class="row my-md-4 py-md-5">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h1><strong th:utext="#{user.loginForm.h1}">Welcome to SimpleWorklist</strong></h1>
+      <h2><small th:utext="#{user.loginForm.h2}">Your Todo-List for Getting Things Done&reg;</small></h2>
     </div>
-    <div class="col-3"></div>
+    <div class="col-md-3"></div>
+  </div>
   </div>
 </div>
 
 <div th:fragment="mytwcontent">
   <div class="row">
-    <div class="col-3"></div>
-    <div class="col-6">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
       <form id="user-login-form" th:action="@{/j_spring_security_check}" method="post">
-        <div class="card my-5">
+        <div class="card my-md-5 my-3">
           <div class="card-header">
             <span th:utext="#{user.loginForm.login}" class="m-1 p-1">Please login</span>
           </div>
@@ -48,7 +50,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <div class="m-2 pe-3">
+            <div class="m-md-2 pe-md-3 m-2 pe-2">
             <button id="loginButton" type="submit" class="btn btn-block btn-primary">
               <i class="fas fa-sign-in-alt"></i>
               <span th:utext="#{user.loginForm.loginButton}"></span>
@@ -57,20 +59,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-1 text-left m-2 p-1">
-          </div>
-          <div class="col-5 text-left m-2 p-1">
-            <a id="registerButton" th:href="@{/user/register/}" class="link-ssecondary">
+           <span class="col-md-4 col-4 text-left">
+            <a id="registerButton" th:href="@{/user/register/}"
+               class="link-secondary text-left  ms-md-1 my-md-1   ms-1 my-1  ps-md-4 py-md-2  ps-4 py-2">
               <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
             </a>
-          </div>
-          <div class="col-5 text-right m-2 p-1">
-            <a id="passwordResetButton" th:href="@{/user/resetPassword}" class="link-secondary">
+          </span>
+          <span class="col-md-8 col-8 text-right">
+            <a id="passwordResetButton" th:href="@{/user/resetPassword}"
+               class="link-secondary text-right  me-md-1 my-md-1  me-1 my-1   pe-md-4 py-md-2  pe-4 py-2">
               <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
             </a>
-          </div>
-          <div class="col-1 text-right m-2 p-1">
-          </div>
+          </span>
         </div>
       </form>
   </div>

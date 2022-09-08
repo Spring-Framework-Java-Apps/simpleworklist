@@ -33,7 +33,7 @@ spring:
     generate-ddl: true
     database-platform: POSTGRESQL
     hibernate:
-      #ddl-auto: create-drop update
+        #ddl-auto: create-drop update
       ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
@@ -76,7 +76,8 @@ org:
         registration:
           maxRetries: 5
           ttlEmailVerificationRequest: 86400000
-          urlHost: ${SIMPLEWORKLIST_URL_APP_HOST}
+          urlHost: localhost:8080
+          # ${SIMPLEWORKLIST_URL_APP_HOST}
           mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
         webMvc:
           controllerPageSize: 10
@@ -176,10 +177,7 @@ logging:
             application: DEBUG
             config: DEBUG
             measurements: DEBUG
-            user: DEBUG
             domain: DEBUG
-            services: DEBUG
-            common: INFO
 debug: false
 ---
 spring:

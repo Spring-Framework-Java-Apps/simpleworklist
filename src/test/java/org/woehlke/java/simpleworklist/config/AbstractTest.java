@@ -8,12 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
-import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
-import org.woehlke.java.simpleworklist.domain.user.account.UserAccount;
-import org.woehlke.java.simpleworklist.domain.user.account.UserAccountService;
-import org.woehlke.java.simpleworklist.domain.user.access.UserAuthorizationService;
-import org.woehlke.java.simpleworklist.domain.user.access.ApplicationUserDetailsService;
-import org.woehlke.java.simpleworklist.domain.user.login.UserAccountLoginSuccessService;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
+import org.woehlke.java.simpleworklist.domain.security.access.UserAuthorizationService;
+import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
+import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
 
 
 import java.net.URL;
@@ -105,6 +104,6 @@ public abstract class AbstractTest {
     protected UserAuthorizationService userAuthorizationService;
 
     @Autowired
-    protected UserAccountLoginSuccessService userAccountLoginSuccessService;
+    protected LoginSuccessService loginSuccessService;
 
 }

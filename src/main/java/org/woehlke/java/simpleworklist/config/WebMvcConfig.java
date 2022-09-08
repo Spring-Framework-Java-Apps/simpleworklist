@@ -19,6 +19,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
 
+import javax.validation.constraints.NotNull;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -102,16 +103,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new MethodValidationPostProcessor();
     }
 
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@NotNull InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
-    public void addViewControllers(ViewControllerRegistry registry) {
+    public void addViewControllers(@NotNull ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:/taskstate/inbox");
         registry.addViewController("/home").setViewName("redirect:/taskstate/inbox");
     }
 
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(@NotNull ResourceHandlerRegistry registry) {
         for(String h : simpleworklistProperties.getWebMvc().getStaticResourceHandler()){
             String location = "classpath:/static"+h+"/";
             registry.addResourceHandler(h+"/*").addResourceLocations(location);

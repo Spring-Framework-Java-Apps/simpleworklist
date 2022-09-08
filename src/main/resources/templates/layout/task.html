@@ -11,16 +11,14 @@
   <input type="hidden" th:field="*{rowCreatedAt.time}"/>
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
   <div class="row">
-    <div class="col">
+    <div class="col-md">
       <label th:for="${#ids.next('title')}" class="control-label">
         <span th:utext="#{task.show.title}">Title</span>
       </label>
       <div class="form-group input-group is-invalid">
-
         <span class="input-group-text is-invalid" id="basic-addon1">
           <i class="fa-solid fa-at"></i>
         </span>
-
         <input type="text" th:field="*{title}" class="form-control form-control-lg is-invalid" aria-describedby="basic-addon1" required/>
         <div th:each="err : ${#fields.errors('title')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
@@ -30,16 +28,14 @@
   </div>
 
   <div class="row my-2">
-    <div class="col">
+    <div class="col-md">
       <label th:for="${#ids.next('listTaskState')}" class="control-label">
         <span th:utext="#{tasks.col.taskState}">taskState</span>
       </label>
       <div class="form-group input-group is-invalid">
-
         <span class="input-group-text is-invalid" id="basic-addon2">
           <i class="fa-solid fa-person-digging"></i>
         </span>
-
         <select th:field="*{taskState}" class="form-control form-control-lg is-invalid" aria-describedby="basic-addon2" required>
           <option th:each="taskStateItem : ${listTaskState}"
                   th:value="${taskStateItem.value}"
@@ -47,23 +43,20 @@
             taskStateItem
           </option>
         </select>
-
         <div th:each="err : ${#fields.errors('taskState')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
         </div>
       </div>
     </div>
 
-    <div class="col">
+    <div class="col-md">
       <label for="taskDueDate" class="control-label">
         <span th:utext="#{task.show.dueDate}">dueDate</span>
       </label>
       <div class="form-group input-group is-invalid">
-
         <span class="input-group-text is-invalid" id="basic-addon3">
           <i class="fa-solid fa-calendar-days"></i>
         </span>
-
         <input id="taskDueDate" type="date" th:field="*{dueDate}"
                class="form-control form-control-lg is-invalid" aria-describedby="basic-addon3"/>
         <div th:each="err : ${#fields.errors('dueDate')}">
@@ -74,16 +67,14 @@
   </div>
 
   <div class="row my-2">
-    <div class="col">
+    <div class="col-md">
       <label th:for="${#ids.next('taskEnergy')}" class="control-label">
         <span th:utext="#{task.show.taskEnergy}">taskEnergy</span>
       </label>
       <div class="form-group input-group is-invalid">
-
         <span class="input-group-text is-invalid" id="basic-addon4">
           <i class="fa-solid fa-bolt"></i>
         </span>
-
         <select th:field="*{taskEnergy}" class="form-control form-control-lg is-invalid" aria-describedby="basic-addon4">
           <option th:each="taskEnergyItem : ${listTaskEnergy}"
                   th:value="${taskEnergyItem.value}"
@@ -91,23 +82,20 @@
             taskEnergyItem
           </option>
         </select>
-
         <div th:each="err : ${#fields.errors('taskEnergy')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
         </div>
       </div>
     </div>
 
-    <div class="col">
+    <div class="col-md">
       <label th:for="${#ids.next('taskTime')}" class="control-label">
         <span th:utext="#{task.show.taskTime}">Time</span>
       </label>
       <div class="form-group input-group is-invalid">
-
         <span class="input-group-text is-invalid" id="basic-addon5">
           <i class="fa-solid fa-clock"></i>
         </span>
-
         <select th:field="*{taskTime}" class="form-control form-control-lg is-invalid" aria-describedby="basic-addon5">
           <option th:each="taskTimeItem : ${listTaskTime}"
                   th:value="${taskTimeItem.value}"
@@ -115,23 +103,20 @@
             taskTimeItem
           </option>
         </select>
-
         <div th:each="err : ${#fields.errors('taskEnergy')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
         </div>
-
-      </div>&nbsp;
+      </div>nbsp;
     </div>
-    <div class="col">
+
+    <div class="col-md">
       <label th:for="${#ids.next('context.id')}" class="control-label">
         <span th:utext="#{task.show.context}">Context</span>
       </label>
       <div class="form-group input-group is-invalid">
-
         <span class="input-group-text is-invalid" id="basic-addon6">
           <i class="fa-solid fa-cloud"></i>
         </span>
-
         <select th:field="*{context.id}" class="form-control form-control-lg" aria-describedby="basic-addon6">
           <option th:each="contextOption : ${contexts}"
                   th:value="${contextOption.id}"
@@ -139,7 +124,6 @@
             contextOption
           </option>
         </select>
-
         <div th:each="err : ${#fields.errors('context.id')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
         </div>
@@ -147,27 +131,46 @@
     </div>
   </div>
 
-  <div class="row my-2">
-    <div class="col">
-      <div class="form-group is-invalid">
+  <div class="row my-2" th:if="${addProjectToTask}">
+    <div class="col-md">
+      <label th:for="${#ids.next('project.id')}" class="control-label">
+        <span th:utext="#{task.show.project}">Project</span>
+      </label>
+      <div class="form-group input-group is-invalid">
+          <span class="input-group-text is-invalid" id="basic-addon7">
+            <i class="fa-solid fa-diagram-project"></i>
+          </span>
+          <select th:field="*{project.id}" class="form-control form-control-lg" aria-describedby="basic-addon7">
+            <option value="0"></option>
+            <option th:each="projectOption : ${allProjects}"
+                    th:value="${projectOption.id}"
+                    th:text="${projectOption.name}">Project
+            </option>
+          </select>
+          <div th:each="err : ${#fields.errors('project.id')}">
+            <div class="invalid-feedback" th:text="${err}">err</div>
+          </div>
+        </div>
+      </div>
+  </div>
 
+  <div class="row my-2">
+    <div class="col-md">
+      <div class="form-group is-invalid">
         <label th:for="textEditor" class="control-label">
           <span th:utext="#{task.show.text}">Text</span>
         </label>
-
         <textarea id="textEditor" name="textEditor" rows="10" cols="50"
                   class="form-control form-control-lg is-invalid"
                   th:field="*{text}">Text
         </textarea>
-
         <div th:each="err : ${#fields.errors('text')}">
           <div class="invalid-feedback" th:text="${err}">err</div>
         </div>
-
       </div>
     </div>
   </div>
-</div>
+
 </div>
 
 </html>

@@ -22,6 +22,7 @@
 
     <div th:fragment="tw-tasks-page-table(taskPage,myTaskState,myUrlPath)">
         <div class="row">
+          <div class="table-responsive">
                 <table class="table table-striped table-hover shadow-lg">
                     <thead>
                     <tr>
@@ -94,13 +95,13 @@
                         <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date"
                             th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
                                 <span th:if="${#locale.language eq 'de'}"
-                                      th:id="'task_' + ${task.id} + '_col_due_date'"
-                                      draggable="true" ondragstart="dragTask(event)"
-                                      th:alt-title="#{task.col.twtooltip.duedate}"
-                                      class="task_col_content task_col_content_duedate twtooltip"
-                                      th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
+                                    th:id="'task_' + ${task.id} + '_col_due_date'"
+                                    draggable="true" ondragstart="dragTask(event)"
+                                    th:alt-title="#{task.col.twtooltip.duedate}"
+                                    class="task_col_content task_col_content_duedate twtooltip"
+                                    th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
                                 </span>
-                            <span th:if="${#locale.language eq 'en'}"
+                                <span th:if="${#locale.language eq 'en'}"
                                   th:id="'task_' + ${task.id} + '_col_due_date'"
                                   draggable="true" ondragstart="dragTask(event)"
                                   th:alt-title="#{task.col.twtooltip.duedate}"
@@ -110,7 +111,8 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col task_col_taskstate"
                             th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
-                            <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}" class="twtooltip"
+                            <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}"
+                               class="btn btn-outline-secondary btn-sm twtooltip"
                                th:alt-title="#{task.col.twtooltip.taskstate}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
                                 <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
@@ -146,12 +148,12 @@
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_context'" class="task_col task_col_context"
                             th:if="${myTaskState eq 'ALL'}">
-                                <span th:if="${#locale.language eq 'de'}"
-                                      th:id="'task_' + ${task.id} + '_col_context_txt'"
-                                      draggable="true" ondragstart="dragTask(event)"
-                                      class="task_col_content task_col_content_context twtooltip"
-                                      th:alt-title="#{task.col.twtooltip.context}"
-                                      th:text="${task.context.nameDe}">task.context.nameDe</span>
+                            <span th:if="${#locale.language eq 'de'}"
+                                  th:id="'task_' + ${task.id} + '_col_context_txt'"
+                                  draggable="true" ondragstart="dragTask(event)"
+                                  class="task_col_content task_col_content_context twtooltip"
+                                  th:alt-title="#{task.col.twtooltip.context}"
+                                  th:text="${task.context.nameDe}">task.context.nameDe</span>
                             <span th:if="${#locale.language ne 'de'}"
                                   th:id="'task_' + ${task.id} + '_col_context_txt'"
                                   draggable="true" ondragstart="dragTask(event)"
@@ -162,6 +164,7 @@
                     </tr>
                     </tbody>
                 </table>
+          </div>
         </div>
     </div>
 
@@ -221,7 +224,7 @@
                             <b th:text="#{tasks.inbox.project}" class="me-2">Project</b>
                             <span th:if="${task.project ne null}">
                               <a th:href="@{/project/{id}(id=${task.project.id})}">
-                                <i class="fas fa-folder-open"></i>
+                                <i class="fa-solid fa-diagram-project"></i>
                                 <span th:text="${task.project.name}">task.project.name</span></a>
                             </span>
                             <span th:if="${task.project eq null}">

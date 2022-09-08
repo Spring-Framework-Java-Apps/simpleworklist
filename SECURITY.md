@@ -4,10 +4,10 @@
 
 These versions of the project are currently being supported with security updates.
 
-| Version  | Supported          |
-| -------- | ------------------ |
-| 2.3.x    | :white_check_mark: |
-| < 2.3.25 | :x:                |
+| Version | Supported |
+|---------|-----------|
+| 2.3.70  | #361      |
+| 2.3.70  | #362      |
 
 ## Reporting a Vulnerability
 
