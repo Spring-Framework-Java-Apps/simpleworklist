@@ -47,9 +47,9 @@ public class UserChatMessageControllerServiceImpl implements UserChatMessageCont
 
   @Override
   public Page<UserAccountChatMessage> readAllMessagesBetweenCurrentAndOtherUser(
-     UserAccount receiver,
-      UserAccount sender,
-      Pageable request
+    UserAccount receiver,
+    UserAccount sender,
+    Pageable request
   ) {
     log.info("readAllMessagesBetweenCurrentAndOtherUser");
     log.info("-----------------------------------------------------------------------------------------------");
@@ -59,23 +59,17 @@ public class UserChatMessageControllerServiceImpl implements UserChatMessageCont
     log.info(receiver.toString());
     log.info(request.toString());
     log.info("Page<UserAccountChatMessage> user2UserMessagePage");
-    Page<UserAccountChatMessage> user2UserMessagePage = chatMessageService.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
-    log.info("Page<UserAccountChatMessage> user2UserMessagePage size: "+user2UserMessagePage.stream().count());
+    Page<UserAccountChatMessage> user2UserMessagePage = chatMessageService.findAllMessagesBetweenCurrentAndOtherUser(sender, receiver, request);
+    log.info("Page<UserAccountChatMessage> user2UserMessagePage size: " + user2UserMessagePage.stream().count());
     log.info("-----------------------------------------------------------------------------------------------");
-    for(UserAccountChatMessage userAccountChatMessage : user2UserMessagePage){
+    for (UserAccountChatMessage userAccountChatMessage : user2UserMessagePage) {
       userAccountChatMessage.setReadByReceiver(true);
       user2UserMessageList.add(userAccountChatMessage);
-          /*
-            if((!userAccountChatMessage.getReadByReceiver()) && (receiver.getId().longValue()== userAccountChatMessage.getReceiver().getId().longValue())){
-                userAccountChatMessage.setReadByReceiver(true);
-                userMessageRepository.saveAndFlush(userAccountChatMessage);
-            }
-           */
     }
     log.info("-----------------------------------------------------------------------------------------------");
     log.info("userMessageRepository.saveAll(user2UserMessageList)");
     chatMessageService.saveAll(user2UserMessageList);
     log.info("-----------------------------------------------------------------------------------------------");
-    return chatMessageService.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
+    return chatMessageService.findAllMessagesBetweenCurrentAndOtherUser(sender, receiver, request);
   }
 }
