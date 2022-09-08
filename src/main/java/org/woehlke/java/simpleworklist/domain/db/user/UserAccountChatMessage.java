@@ -31,8 +31,7 @@ import java.io.Serializable;
     name = "queryFindAllMessagesBetweenCurrentAndOtherUser",
     query = "select m from org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage m " +
       "where (m.sender = :thisUser and m.receiver = :otherUser) " +
-      "or (m.sender = :otherUser and m.receiver = :thisUser)",
-    lockMode = LockModeType.READ
+      "or (m.sender = :otherUser and m.receiver = :thisUser) order by m.rowCreatedAt desc"
   )
 })
 @Getter

@@ -24,6 +24,12 @@ public interface ChatMessageRepository extends JpaRepository<UserAccountChatMess
             Pageable request
     );
 
+    @Query(name="queryFindAllMessagesBetweenCurrentAndOtherUser")
+    List<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(
+      @Param("thisUser") UserAccount thisUser,
+      @Param("otherUser") UserAccount otherUser
+    );
+
     List<UserAccountChatMessage> findByReceiverAndReadByReceiver(
             UserAccount receiver,
             boolean readByReceiver

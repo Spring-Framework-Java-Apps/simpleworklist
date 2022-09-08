@@ -11,6 +11,8 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +21,6 @@ import java.util.UUID;
  */
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ChatMessageServiceImpl implements ChatMessageService {
 
     private final ChatMessageRepository userMessageRepository;
@@ -29,50 +30,43 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         this.userMessageRepository = userMessageRepository;
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public UserAccountChatMessage sendNewUserMessage(
-        UserAccount thisUser,
-        UserAccount otherUser,
-        ChatMessageForm chatMessageForm
-    ) {
-        log.info("sendNewUserMessage");
-        UserAccountChatMessage m = new UserAccountChatMessage();
-        m.setSender(thisUser);
-        m.setReceiver(otherUser);
-        m.setReadByReceiver(false);
-        m.setUuid(UUID.randomUUID());
-        m.setMessageText(chatMessageForm.getMessageText());
-        return userMessageRepository.saveAndFlush(m);
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+  public int getNumberOfNewIncomingMessagesForUser(
+    UserAccount receiver
+  ) {
+    log.info("getNumberOfNewIncomingMessagesForUser");
+    boolean readByReceiver = false;
+    //TODO: #246 change List<Project> to Page<Project>
+    List<UserAccountChatMessage> userAccountChatMessageList =
+      userMessageRepository.findByReceiverAndReadByReceiver(receiver, readByReceiver);
+    return userAccountChatMessageList.size();
+  }
 
-    @Override
-    public int getNumberOfNewIncomingMessagesForUser(
-        UserAccount receiver
-    ) {
-        log.info("getNumberOfNewIncomingMessagesForUser");
-        boolean readByReceiver = false;
-        //TODO: #246 change List<Project> to Page<Project>
-        List<UserAccountChatMessage> userAccountChatMessageList =
-                userMessageRepository.findByReceiverAndReadByReceiver(receiver, readByReceiver);
-        return userAccountChatMessageList.size();
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  public Page<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(
+    UserAccount sender, UserAccount receiver, Pageable request
+  ) {
+    return userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender, receiver, request);
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Page<UserAccountChatMessage> readAllMessagesBetweenCurrentAndOtherUser(
-        UserAccount receiver,
-        UserAccount sender,
-        Pageable request
-    ) {
-        log.info("readAllMessagesBetweenCurrentAndOtherUser");
-        Page<UserAccountChatMessage> user2UserMessagePage = userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
-        for(UserAccountChatMessage userAccountChatMessage : user2UserMessagePage){
-            if((!userAccountChatMessage.getReadByReceiver()) && (receiver.getId().longValue()== userAccountChatMessage.getReceiver().getId().longValue())){
-                userAccountChatMessage.setReadByReceiver(true);
-                userMessageRepository.saveAndFlush(userAccountChatMessage);
-            }
-        }
-        return userMessageRepository.findAllMessagesBetweenCurrentAndOtherUser(sender,receiver,request);
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  public void saveAll(List<UserAccountChatMessage> user2UserMessageList) {
+    userMessageRepository.saveAll(user2UserMessageList);
+  }
+
+  @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  public UserAccountChatMessage saveAndFlush(UserAccountChatMessage m) {
+    return userMessageRepository.saveAndFlush(m);
+  }
+
+  @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  public List<UserAccountChatMessage> findByReceiverAndReadByReceiver(UserAccount receiver, boolean readByReceiver) {
+    return userMessageRepository.findByReceiverAndReadByReceiver(receiver, readByReceiver);
+  }
+
 }
