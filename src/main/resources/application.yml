@@ -76,7 +76,7 @@ org:
         registration:
           maxRetries: 5
           ttlEmailVerificationRequest: 86400000
-          urlHost: 8080
+          urlHost: localhost:8080
           # ${SIMPLEWORKLIST_URL_APP_HOST}
           mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
         webMvc:
