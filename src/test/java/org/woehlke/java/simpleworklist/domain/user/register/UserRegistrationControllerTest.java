@@ -3,9 +3,9 @@ package org.woehlke.java.simpleworklist.domain.user.register;
 import org.woehlke.java.simpleworklist.config.AbstractTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistration;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationStatus;
-import org.woehlke.java.simpleworklist.domain.user.signup.UserRegistrationService;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
+import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationStatus;
+import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserRegistrationControllerTest extends AbstractTest {
 
     @Autowired
-    private UserRegistrationService userRegistrationService;
+    private UserAccountRegistrationService userAccountRegistrationService;
 
     //@Test
     public void testSignInFormularEmail() throws Exception {
@@ -37,23 +37,23 @@ public class UserRegistrationControllerTest extends AbstractTest {
 
     //@Test
     public void testRegisterNewUserCheckResponseAndRegistrationForm() throws Exception{
-        userRegistrationService.registrationSendEmailTo(emails[0]);
+        userAccountRegistrationService.registrationSendEmailTo(emails[0]);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        UserRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
+        UserAccountRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
         assertNotNull(o);
-        boolean result = o.getDoubleOptInStatus()== UserRegistrationStatus.REGISTRATION_SAVED_EMAIL
-                || o.getDoubleOptInStatus()== UserRegistrationStatus.REGISTRATION_SENT_MAIL;
+        boolean result = o.getDoubleOptInStatus()== UserAccountRegistrationStatus.REGISTRATION_SAVED_EMAIL
+                || o.getDoubleOptInStatus()== UserAccountRegistrationStatus.REGISTRATION_SENT_MAIL;
         assertTrue(result);
         String url = "/user/register/confirm/"+o.getToken();
         this.mockMvc.perform(
                 get(url)).andDo(print())
                 .andExpect(view().name(containsString("user/register/registerConfirmed")))
                 .andExpect(model().attributeExists("userAccountFormBean"));
-        userRegistrationService.registrationUserCreated(o);
+        userAccountRegistrationService.registrationUserCreated(o);
     }
 
     //@Test
