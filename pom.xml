@@ -81,20 +81,20 @@
     <version.thymeleaf-spring-data-dialect>3.5.0</version.thymeleaf-spring-data-dialect>
 
     <!-- Webjars -->
-    <webjars.jquery.version>3.6.0</webjars.jquery.version>
+    <webjars.jquery.version>3.6.1</webjars.jquery.version>
     <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
     <webjars.bootstrap.version>5.2.0</webjars.bootstrap.version>
     <webjars.font-awesome.version>6.1.2</webjars.font-awesome.version>
-    <opencsv.version>5.3</opencsv.version>
+    <opencsv.version>5.7.0</opencsv.version>
 
     <!-- Unit and Integration Testing -->
     <skipTests>true</skipTests>
     <xmlunit.version>2.9.0</xmlunit.version>
-    <htmlunit.version>2.63.0</htmlunit.version>
+    <htmlunit.version>2.64.0</htmlunit.version>
     <groovy-all.version>2.4.21</groovy-all.version>
     <hamcrest.version>2.2</hamcrest.version>
     <jsoup.version>1.15.3</jsoup.version>
-    <pmdVersion>6.46.0</pmdVersion>
+    <pmdVersion>6.49.0</pmdVersion>
 
     <!-- SCM and Releasing -->
     <version.org.apache.maven.scm>1.13.0</version.org.apache.maven.scm>
@@ -250,6 +250,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!--
       <dependency>
         <groupId>org.springframework.integration</groupId>
         <artifactId>spring-integration-bom</artifactId>
@@ -262,6 +263,7 @@
         <artifactId>spring-integration-ws</artifactId>
         <version>${spring-integration.version}</version>
       </dependency>
+      -->
 
       <!-- webjars -->
       <dependency>
@@ -305,6 +307,8 @@
         <version>${lombok.version}</version>
         <optional>false</optional>
       </dependency>
+
+      <!--
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest</artifactId>
@@ -323,12 +327,18 @@
         <version>${hamcrest.version}</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
         <version>${jsoup.version}</version>
         <scope>test</scope>
+      </dependency>
+      -->
+
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.4.1</version>
       </dependency>
 
       <!-- SCM -->
@@ -559,14 +569,13 @@
         <type>maven-plugin</type>
         <scope>provided</scope>
       </dependency>
-
+      <!--
       <dependency>
         <groupId>org.apache.maven.doxia</groupId>
         <artifactId>doxia-module-markdown</artifactId>
         <version>${version.doxia-module-markdown}</version>
         <scope>provided</scope>
       </dependency>
-
       <dependency>
         <groupId>org.xmlunit</groupId>
         <artifactId>xmlunit-legacy</artifactId>
@@ -585,6 +594,7 @@
         <version>${groovy-all.version}</version>
         <scope>test</scope>
       </dependency>
+      -->
     </dependencies>
   </dependencyManagement>
 
@@ -607,7 +617,6 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
-    <!-- spring-boot-starter -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -681,7 +690,7 @@
       <artifactId>spring-boot-starter-cache</artifactId>
     </dependency>
     -->
-    <!-- org.springframework -->
+    <!--
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -731,12 +740,11 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
     </dependency>
-    <!--
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-remoting</artifactId>
     </dependency>
-    -->
+
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
@@ -757,6 +765,7 @@
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-commons</artifactId>
     </dependency>
+    -->
 
     <dependency>
       <groupId>org.springframework.security</groupId>
@@ -764,7 +773,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Frontend Webjars -->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
@@ -781,16 +789,6 @@
       <groupId>org.webjars</groupId>
       <artifactId>font-awesome</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
@@ -824,19 +822,28 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-testing</artifactId>
-      <scope>provided</scope>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
     </dependency>
 
+    <!--
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
       <scope>test</scope>
     </dependency>
+    -->
 
     <!-- scope test - without dependency-management in this pom.xml -->
     <dependency>
@@ -850,6 +857,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!--
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
@@ -875,6 +883,7 @@
       <artifactId>htmlunit</artifactId>
       <scope>test</scope>
     </dependency>
+    -->
 
     <!-- scm -->
     <dependency>
@@ -908,7 +917,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- maven plugins -->
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-enforcer-plugin</artifactId>
@@ -1040,6 +1048,7 @@
       <type>maven-plugin</type>
       <scope>provided</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
       <artifactId>doxia-module-markdown</artifactId>
@@ -1050,6 +1059,7 @@
       <artifactId>groovy-all</artifactId>
       <scope>test</scope>
     </dependency>
+    -->
   </dependencies>
 
   <build>
