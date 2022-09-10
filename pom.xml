@@ -1073,7 +1073,7 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <defaultGoal>clean install spring-boot:run</defaultGoal>
+    <defaultGoal>clean package spring-boot:run</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -1334,7 +1334,7 @@
         <executions>
           <execution>
             <id>unpack-dependency-classes-install</id>
-            <phase>install</phase>
+            <phase>package</phase>
             <goals>
               <goal>repackage</goal>
             </goals>
