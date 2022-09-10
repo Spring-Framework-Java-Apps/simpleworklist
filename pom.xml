@@ -1334,7 +1334,7 @@
         <executions>
           <execution>
             <id>unpack-dependency-classes-install</id>
-            <phase>package</phase>
+            <phase>install</phase>
             <goals>
               <goal>repackage</goal>
             </goals>
@@ -1680,6 +1680,18 @@
       <build>
         <finalName>${project.artifactId}</finalName>
         <defaultGoal>clean install</defaultGoal>
+      </build>
+    </profile>
+
+    <profile>
+      <id>cloud</id>
+      <properties>
+        <skip.unit.tests>true</skip.unit.tests>
+        <skip.integration.tests>true</skip.integration.tests>
+      </properties>
+      <build>
+        <finalName>${project.artifactId}</finalName>
+        <defaultGoal>clean dependency:list install</defaultGoal>
       </build>
     </profile>
 
