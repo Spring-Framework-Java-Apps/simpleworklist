@@ -92,12 +92,12 @@ public class TaskServiceImpl implements TaskService {
     public Task updatedViaTaskstate(Task task) {
         log.info("updatedViaTaskstate");
         if(task.getProject() != null){
-          Long projectId = task.getProject().getId();
+          long projectId = task.getProject().getId();
           Project project = projectRepository.getReferenceById(projectId);
           task.setProject(project);
         }
         if(task.getLastProject()!=null){
-          Long projectId = task.getLastProject().getId();
+          long projectId = task.getLastProject().getId();
           Project project = projectRepository.getReferenceById(projectId);
           task.setLastProject(project);
         }
@@ -108,8 +108,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task updatedViaProject( @Valid Task task) {
+    public Task updatedViaProject(Task task) {
         log.info("updatedViaProject");
+        if(task.getProject() != null){
+          long projectId = task.getProject().getId();
+          Project project = projectRepository.getReferenceById(projectId);
+          task.setProject(project);
+        }
+        if(task.getLastProject()!=null){
+          long projectId = task.getLastProject().getId();
+          Project project = projectRepository.getReferenceById(projectId);
+          task.setLastProject(project);
+        }
         task = taskRepository.saveAndFlush(task);
         log.info("persisted Task: " + task.outProject());
         return task;
@@ -119,12 +129,22 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task updatedViaProjectRoot( @Valid Task task) {
         log.info("updatedViaProject");
+        if(task.getProject() != null){
+          long projectId = task.getProject().getId();
+          Project project = projectRepository.getReferenceById(projectId);
+          task.setProject(project);
+        }
+        if(task.getLastProject()!=null){
+          long projectId = task.getLastProject().getId();
+          Project project = projectRepository.getReferenceById(projectId);
+          task.setLastProject(project);
+        }
         task = taskRepository.saveAndFlush(task);
         log.info("persisted Task: " + task.outProject());
         return task;
     }
 
-    @Override
+  @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Task addToInbox( @Valid Task task) {
         log.info("addToInbox");
@@ -174,70 +194,7 @@ public class TaskServiceImpl implements TaskService {
         return task;
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToRootProject( @Valid Task task) {
-        task.moveTaskToRootProject();
-        long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
-        task.setOrderIdProject(++maxOrderIdProject);
-        return taskRepository.saveAndFlush(task);
-    }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToAnotherProject( @Valid Task task,@Valid Project project) {
-        boolean okContext = task.hasSameContextAs(project);
-        if(okContext) {
-            task.moveTaskToAnotherProject(project);
-            long maxOrderIdProject = this.getMaxOrderIdProject(
-                task.getProject(),
-                task.getContext()
-            );
-            task.setOrderIdProject(++maxOrderIdProject);
-            taskRepository.saveAndFlush(task);
-        }
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveAllCompletedToTrash( Context context) {
-        long maxOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.TRASH,
-            context
-        );
-        long newOrderIdTaskState = maxOrderIdTaskState;
-        List<Task> taskListCompleted = taskRepository.findByTaskStateAndContextOrderByOrderIdTaskStateAsc(
-            TaskState.COMPLETED,
-            context
-        );
-        for (Task task : taskListCompleted) {
-            newOrderIdTaskState++;
-            task.setOrderIdTaskState(newOrderIdTaskState);
-            task.moveToTrash();
-        }
-        taskRepository.saveAll(taskListCompleted);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void emptyTrash( Context context) {
-        List<Task> taskList = taskRepository.findByTaskStateAndContext(
-            TaskState.TRASH,
-            context
-        );
-        List<Task> taskListChanged = new ArrayList<>(taskList.size());
-        for(Task task: taskList){
-            task.emptyTrash();
-            taskListChanged.add(task);
-        }
-        taskRepository.saveAll(taskListChanged);
-        List<Task> taskListDeleted = taskRepository.findByTaskStateAndContext(
-          TaskState.DELETED,
-          context
-        );
-        taskRepository.deleteAll(taskListDeleted);
-    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -457,116 +414,29 @@ public class TaskServiceImpl implements TaskService {
         log.info("-------------------------------------------------------------------------------");
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToInbox(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.INBOX,
-            task.getContext()
-        );
-        task.moveToInbox();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to inbox: " + task.outTaskstate());
-        return task;
-    }
+  @Override
+  public Task saveAndFlush(Task task) {
+    return taskRepository.saveAndFlush(task);
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToToday(Task task) {
-        Date now = new Date();
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.TODAY,
-            task.getContext()
-        );
-        task.moveToToday();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to today: " + task.outTaskstate());
-        return task;
-    }
+  @Override
+  public void deleteAll(List<Task> taskListDeleted) {
+    taskRepository.deleteAll(taskListDeleted);
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToNext(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.NEXT,
-            task.getContext()
-        );
-        task.moveToNext();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to next: " + task.outTaskstate());
-        return task;
-    }
+  @Override
+  public void saveAll(List<Task> taskListChanged) {
+    taskRepository.saveAll(taskListChanged);
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToWaiting(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.WAITING,
-            task.getContext()
-        );
-        task.moveToWaiting();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to next: " + task.outTaskstate());
-        return task;
-    }
+  @Override
+  public List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState completed, Context context) {
+    return taskRepository.findByTaskStateAndContextOrderByOrderIdTaskStateAsc(completed, context);
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToSomeday(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.SOMEDAY,
-            task.getContext()
-        );
-        task.moveToSomeday();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to someday: " + task.outTaskstate());
-        return task;
-    }
+  @Override
+  public List<Task> findByTaskStateAndContext(TaskState trash, Context context) {
+    return taskRepository.findByTaskStateAndContext(trash,context);
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToFocus(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.FOCUS,
-            task.getContext()
-        );
-        task.moveToFocus();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to focus: " + task.outTaskstate());
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToCompleted(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.COMPLETED,
-            task.getContext()
-        );
-        task.moveToCompletedTasks();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to completed: " + task.outTaskstate());
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task moveTaskToTrash(Task task) {
-        long newOrderIdTaskState = this.getMaxOrderIdTaskState(
-            TaskState.TRASH,
-            task.getContext()
-        );
-        task.moveToTrash();
-        task.setOrderIdTaskState(++newOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("moved to trash: " + task.outTaskstate());
-        return task;
-    }
 }

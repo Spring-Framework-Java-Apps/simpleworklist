@@ -7,22 +7,15 @@ import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
 
+import java.util.List;
+
 public interface TaskService {
 
-    Task moveTaskToInbox(Task task);
-    Task moveTaskToToday(Task task);
-    Task moveTaskToNext(Task task);
-    Task moveTaskToWaiting(Task task);
-    Task moveTaskToSomeday(Task task);
-    Task moveTaskToFocus(Task task);
-    Task moveTaskToCompleted(Task task);
-    Task moveTaskToTrash(Task task);
+//    void moveAllCompletedToTrash(Context context);
+//    void emptyTrash(Context context);
 
-    void moveAllCompletedToTrash(Context context);
-    void emptyTrash(Context context);
-
-    Task moveTaskToRootProject(Task task);
-    Task moveTaskToAnotherProject(Task task, Project project);
+//    Task moveTaskToRootProject(Task task);
+//    Task moveTaskToAnotherProject(Task task, Project project);
 
     Task addToInbox(Task task);
     Task addToProject(Task task);
@@ -68,4 +61,15 @@ public interface TaskService {
 
     void moveTasksUpByProject(Task sourceTask, Task destinationTask);
     void moveTasksDownByProject(Task sourceTask, Task destinationTask);
+
+    Task saveAndFlush(Task task);
+
+    void deleteAll(List<Task> taskListDeleted);
+
+    void saveAll(List<Task> taskListChanged);
+
+    List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState completed, Context context);
+
+    List<Task> findByTaskStateAndContext(TaskState trash, Context context);
+
 }
