@@ -38,7 +38,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> findRootProjectsByContext(@NotNull Context context) {
         log.info("findRootProjectsByContext");
-        //TODO: #245 change List<Project> to Page<Project>
         return projectRepository.findByParentIsNullAndContext(context);
     }
 
@@ -51,7 +50,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> findAllProjectsByContext(@NotNull Context context) {
         log.info("findAllProjectsByContext");
-        //TODO: #245 change List<Project> to Page<Project>
         return projectRepository.findByContext(context);
     }
 
