@@ -12,7 +12,7 @@ import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static java.util.Locale.GERMAN;
-import static org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState.*;
+import static org.woehlke.java.simpleworklist.domain.db.data.TaskState.*;
 
 /**
  * Created by tw on 14.02.16.

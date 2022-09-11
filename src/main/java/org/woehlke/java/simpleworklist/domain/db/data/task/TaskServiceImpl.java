@@ -11,7 +11,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectRepository;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;

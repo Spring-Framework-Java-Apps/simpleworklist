@@ -20,7 +20,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
 
-import static org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState.PROJECTS;
+import static org.woehlke.java.simpleworklist.domain.db.data.TaskState.PROJECTS;
 
 @Slf4j
 @Service

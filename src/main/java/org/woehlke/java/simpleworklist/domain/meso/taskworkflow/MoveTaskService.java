@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.move;
+package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
 
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;

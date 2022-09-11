@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
+package org.woehlke.java.simpleworklist.domain.db.data;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -8,7 +8,6 @@ import java.util.List;
  * Created by tw on 21.02.16.
  */
 public enum TaskState implements Serializable {
-
 
     INBOX("fas fa-inbox"),
     TODAY("fas fa-clock"),

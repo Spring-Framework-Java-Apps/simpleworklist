@@ -26,7 +26,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
@@ -75,8 +74,8 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
     @NamedQuery(
       name = "findByTaskStateTrashAndContext",
       query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState.TRASH " +
-        "or t.taskState = org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState.DELETED " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.TaskState.TRASH " +
+        "or t.taskState = org.woehlke.java.simpleworklist.domain.db.data.TaskState.DELETED " +
         "and t.context = :context",
       lockMode = LockModeType.READ
     )

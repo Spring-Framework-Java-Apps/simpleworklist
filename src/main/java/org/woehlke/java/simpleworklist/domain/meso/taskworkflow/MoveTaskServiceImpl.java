@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.move;
+package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class MoveTaskServiceImpl implements MoveTaskService {
 
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-  public Task moveTaskToAnotherProject( @Valid Task task,@Valid Project project) {
+  public Task moveTaskToAnotherProject( @Valid Task task, @Valid Project project) {
     boolean okContext = task.hasSameContextAs(project);
     if(okContext) {
       task.moveTaskToAnotherProject(project);
