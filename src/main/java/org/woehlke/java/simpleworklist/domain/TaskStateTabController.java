@@ -154,7 +154,7 @@ public class TaskStateTabController extends AbstractController {
     ) {
         Context context = super.getContext(userSession);
         return taskStateTabControllerService.getTaskStatePageFocus(
-            true, context, pageable, userSession, locale, model
+            context, pageable, userSession, locale, model
         );
     }
 

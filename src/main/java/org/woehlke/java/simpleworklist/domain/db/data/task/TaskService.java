@@ -19,7 +19,7 @@ public interface TaskService {
     List<Task> findByTaskStateWaiting(Context context);
     List<Task> findByTaskStateScheduled(Context context);
     List<Task> findByTaskStateSomeday(Context context);
-    List<Task> findByFocus(boolean focus, Context context);
+    List<Task> findByFocus(Context context);
     List<Task> findByTaskStateCompleted(Context context);
     List<Task> findByTaskStateTrash(Context context);
     List<Task> findByTaskStateDeleted(Context context);
@@ -31,7 +31,7 @@ public interface TaskService {
     Page<Task> findByTaskStateWaiting(Context context, Pageable request);
     Page<Task> findByTaskStateScheduled(Context context, Pageable request);
     Page<Task> findByTaskStateSomeday(Context context, Pageable request);
-    Page<Task> findByFocus(boolean focus, Context context, Pageable request);
+    Page<Task> findByFocus(Context context, Pageable request);
     Page<Task> findByTaskStateCompleted(Context context, Pageable request);
     Page<Task> findByTaskStateTrash(Context context, Pageable request);
     Page<Task> findByTaskStateDeleted(Context context, Pageable request);

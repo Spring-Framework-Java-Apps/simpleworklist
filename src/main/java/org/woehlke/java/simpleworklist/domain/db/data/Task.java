@@ -118,14 +118,14 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
     @NamedQuery(
       name = "findByTaskStateCompleted",
       query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.FOCUS " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.COMPLETED " +
         "and t.context = :context",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateDeleted",
       query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.COMPLETED " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED " +
         "and t.context = :context",
       lockMode = LockModeType.READ
     ),

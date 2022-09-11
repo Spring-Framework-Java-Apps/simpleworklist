@@ -305,8 +305,8 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public List<Task> findByFocus(boolean focus, Context context) {
-    return taskRepository.findByFocus(focus, context);
+  public List<Task> findByFocus(Context context) {
+    return taskRepository.findByFocusIsTrue(context);
   }
 
   @Override
@@ -360,8 +360,8 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public Page<Task> findByFocus(boolean focus, Context context, Pageable request) {
-    return taskRepository.findByFocus(focus, context, request);
+  public Page<Task> findByFocus(Context context, Pageable request) {
+    return taskRepository.findByFocusIsTrue(context, request);
   }
 
   @Override

@@ -139,11 +139,11 @@ public class TaskStateTabControllerServiceImpl implements TaskStateTabController
   }
 
   @Override
-  public String getTaskStatePageFocus(boolean focus, Context context, Pageable pageRequest, UserSessionBean userSession, Locale locale, Model model) {
+  public String getTaskStatePageFocus( Context context, Pageable pageRequest, UserSessionBean userSession, Locale locale, Model model) {
     log.info("getTaskStatePage");
     TaskState taskState = TaskState.FOCUS;
     userSession.setLastTaskState(taskState);
-    Page<Task> taskPage = taskService.findByFocus(focus, context, pageRequest);
+    Page<Task> taskPage = taskService.findByFocus( context, pageRequest);
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
     model.addAttribute("breadcrumb", breadcrumb);
     model.addAttribute("taskPage", taskPage);

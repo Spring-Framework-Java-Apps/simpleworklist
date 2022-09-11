@@ -47,8 +47,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(name="findByTaskStateSomeday")
     List<Task> findByTaskStateSomeday(@Param("context") Context context);
 
-    Page<Task> findByFocus(boolean focus, Context context, Pageable request);
-    List<Task> findByFocus(boolean focus, Context context);
+    Page<Task> findByFocusIsTrue(Context context, Pageable request);
+    List<Task> findByFocusIsTrue(Context context);
 
     @Query(name="findByTaskStateCompleted")
     Page<Task> findByTaskStateCompleted(@Param("context") Context context, Pageable request);

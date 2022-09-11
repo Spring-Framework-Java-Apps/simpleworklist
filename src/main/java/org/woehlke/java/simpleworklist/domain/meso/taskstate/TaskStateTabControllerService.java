@@ -52,7 +52,6 @@ public interface TaskStateTabControllerService {
   );
 
   String getTaskStatePageFocus(
-    boolean focus,
     Context context,
     Pageable pageRequest,
     UserSessionBean userSession,
