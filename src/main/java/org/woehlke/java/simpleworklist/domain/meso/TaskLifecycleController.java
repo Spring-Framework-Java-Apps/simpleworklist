@@ -15,7 +15,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskStateTaskControllerService;
+import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskLifecycleService;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
@@ -37,16 +37,14 @@ import java.util.Locale;
 @RequestMapping(path = "/taskstate/task")
 public class TaskLifecycleController extends AbstractController {
 
-    private final TransformTaskIntoProjektService transformTaskIntoProjektService;
-    private final TaskStateTaskControllerService taskStateTaskControllerService;
+    private final TaskLifecycleService taskLifecycleService;
 
     @Autowired
     public TaskLifecycleController(
       TransformTaskIntoProjektService transformTaskIntoProjektService,
-      TaskStateTaskControllerService taskStateTaskControllerService
+      TaskLifecycleService taskLifecycleService
     ) {
-      this.transformTaskIntoProjektService = transformTaskIntoProjektService;
-      this.taskStateTaskControllerService = taskStateTaskControllerService;
+      this.taskLifecycleService = taskLifecycleService;
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
@@ -105,7 +103,7 @@ public class TaskLifecycleController extends AbstractController {
             model.addAttribute("userSession", userSession);
             return "taskstate/task/add";
         } else {
-            task = taskStateTaskControllerService.addToInbox(task);
+            task = taskLifecycleService.addToInbox(task);
             log.info(task.toString());
             model.addAttribute("userSession", userSession);
             return "redirect:/taskstate/" + task.getTaskState().name().toLowerCase();
@@ -177,7 +175,7 @@ public class TaskLifecycleController extends AbstractController {
         } else {
             task.unsetFocus();
             Task persistentTask = addProject(task);
-            task = taskStateTaskControllerService.updatedViaTaskstate(persistentTask);
+            task = taskLifecycleService.updatedViaTaskstate(persistentTask);
             model.addAttribute("userSession", userSession);
             return task.getTaskState().getUrl();
         }
@@ -191,7 +189,7 @@ public class TaskLifecycleController extends AbstractController {
     ) {
         log.info("deleteTaskGet");
         task.delete();
-        taskStateTaskControllerService.updatedViaTaskstate(task);
+        taskLifecycleService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
         return "redirect:/taskstate/trash";
@@ -205,7 +203,7 @@ public class TaskLifecycleController extends AbstractController {
     ) {
         log.info("undeleteTaskGet");
         task.undelete();
-        taskStateTaskControllerService.updatedViaTaskstate(task);
+        taskLifecycleService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
         return "redirect:/taskstate/completed";
@@ -219,7 +217,7 @@ public class TaskLifecycleController extends AbstractController {
     ) {
         log.info("transformTaskIntoProjectGet");
         model.addAttribute("dataPage", true);
-        return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
+        return taskLifecycleService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
@@ -229,11 +227,11 @@ public class TaskLifecycleController extends AbstractController {
         Model model
     ) {
         task.complete();
-        long maxOrderIdTaskState = taskStateTaskControllerService.getMaxOrderIdTaskState(
+        long maxOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
           TaskState.COMPLETED, task.getContext()
         );
         task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskStateTaskControllerService.updatedViaTaskstate(task);
+        task = taskLifecycleService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
         return task.getUrl();
@@ -246,7 +244,7 @@ public class TaskLifecycleController extends AbstractController {
         Model model
     ) {
         task.incomplete();
-        long maxOrderIdTaskState = taskStateTaskControllerService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+        long maxOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
         task = taskService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
@@ -261,7 +259,7 @@ public class TaskLifecycleController extends AbstractController {
         Model model
     ){
         task.setFocus();
-        task = taskStateTaskControllerService.updatedViaTaskstate(task);
+        task = taskLifecycleService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
         return task.getUrl();
@@ -274,7 +272,7 @@ public class TaskLifecycleController extends AbstractController {
         Model model
     ){
       task.unsetFocus();
-      task = taskStateTaskControllerService.updatedViaTaskstate(task);
+      task = taskLifecycleService.updatedViaTaskstate(task);
       model.addAttribute("userSession", userSession);
       model.addAttribute("dataPage", true);
       return task.getUrl();

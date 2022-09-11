@@ -123,7 +123,12 @@ public class ProjectServiceImpl implements ProjectService {
         return thisProject;
     }
 
-    //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
+  @Override
+  public Project getReferenceById(long projectId) {
+    return projectRepository.getReferenceById(projectId);
+  }
+
+  //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
     @Deprecated
     private List<Project> getAllChildrenOfProject(@NotNull Project thisProject) {
         log.info("getAllChildrenOfProject");

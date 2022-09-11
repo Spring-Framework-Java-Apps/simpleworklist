@@ -27,4 +27,6 @@ public interface ProjectService {
 
     Project moveProjectToAnotherContext(Project thisProject, Context newContext);
 
+    Project getReferenceById(long projectId);
+
 }

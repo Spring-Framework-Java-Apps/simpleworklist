@@ -13,7 +13,6 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectRepository;
 import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -85,144 +84,6 @@ public class TaskServiceImpl implements TaskService {
         } else {
             return null;
         }
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task updatedViaTaskstate(Task task) {
-        log.info("updatedViaTaskstate");
-        if(task.getProject() != null){
-          long projectId = task.getProject().getId();
-          Project project = projectRepository.getReferenceById(projectId);
-          task.setProject(project);
-        }
-        if(task.getLastProject()!=null){
-          long projectId = task.getLastProject().getId();
-          Project project = projectRepository.getReferenceById(projectId);
-          task.setLastProject(project);
-        }
-        task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outTaskstate());
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task updatedViaProject(Task task) {
-        log.info("updatedViaProject");
-        if(task.getProject() != null){
-          long projectId = task.getProject().getId();
-          Project project = projectRepository.getReferenceById(projectId);
-          task.setProject(project);
-        }
-        if(task.getLastProject()!=null){
-          long projectId = task.getLastProject().getId();
-          Project project = projectRepository.getReferenceById(projectId);
-          task.setLastProject(project);
-        }
-        task = taskRepository.saveAndFlush(task);
-        log.info("persisted Task: " + task.outProject());
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task updatedViaProjectRoot( @Valid Task task) {
-        log.info("updatedViaProject");
-        if(task.getProject() != null){
-          long projectId = task.getProject().getId();
-          Project project = projectRepository.getReferenceById(projectId);
-          task.setProject(project);
-        }
-        if(task.getLastProject()!=null){
-          long projectId = task.getLastProject().getId();
-          Project project = projectRepository.getReferenceById(projectId);
-          task.setLastProject(project);
-        }
-        task = taskRepository.saveAndFlush(task);
-        log.info("persisted Task: " + task.outProject());
-        return task;
-    }
-
-  @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task addToInbox( @Valid Task task) {
-        log.info("addToInbox");
-        task.setUuid(UUID.randomUUID());
-        task.setRootProject();
-        task.unsetFocus();
-        task.setTaskState(TaskState.INBOX);
-        task.setLastProject(null);
-        long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
-        task.setOrderIdProject(++maxOrderIdProject);
-        long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-        task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outTaskstate());
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task addToProject( @Valid Task task) {
-        log.info("addToProject");
-        task.setUuid(UUID.randomUUID());
-        task.unsetFocus();
-        long maxOrderIdProject = this.getMaxOrderIdProject(task.getProject(),task.getContext());
-        task.setOrderIdProject(++maxOrderIdProject);
-        long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-        task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outProject());
-        return task;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Task addToRootProject( @Valid Task task) {
-        log.info("addToRootProject");
-        task.setUuid(UUID.randomUUID());
-        task.setRootProject();
-        task.unsetFocus();
-        task.moveToInbox();
-        long maxOrderIdProject = this.getMaxOrderIdProjectRoot(task.getContext());
-        task.setOrderIdProject(++maxOrderIdProject);
-        long maxOrderIdTaskState = this.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
-        task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskRepository.saveAndFlush(task);
-        log.info("persisted: " + task.outProject());
-        return task;
-    }
-
-
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long getMaxOrderIdTaskState( TaskState taskState,Context context) {
-        Task task = taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
-            taskState,
-            context
-        );
-        return (task==null) ? 0 : task.getOrderIdTaskState();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long getMaxOrderIdProject( Project project,Context context) {
-        Task task = taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(
-            project,
-            context
-        );
-        return (task==null) ? 0 : task.getOrderIdProject();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public long getMaxOrderIdProjectRoot( Context context) {
-        Task task = taskRepository.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(
-            context
-        );
-        return (task==null) ? 0 : task.getOrderIdProject();
     }
 
     @Override
@@ -437,6 +298,21 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public List<Task> findByTaskStateAndContext(TaskState trash, Context context) {
     return taskRepository.findByTaskStateAndContext(trash,context);
+  }
+
+  @Override
+  public Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context) {
+    return taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(taskState,context);
+  }
+
+  @Override
+  public Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context) {
+    return taskRepository.findTopByProjectAndContextOrderByOrderIdProjectDesc(project,context);
+  }
+
+  @Override
+  public Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context) {
+    return taskRepository.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(context);
   }
 
 }

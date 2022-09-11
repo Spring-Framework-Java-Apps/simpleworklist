@@ -11,20 +11,6 @@ import java.util.List;
 
 public interface TaskService {
 
-//    void moveAllCompletedToTrash(Context context);
-//    void emptyTrash(Context context);
-
-//    Task moveTaskToRootProject(Task task);
-//    Task moveTaskToAnotherProject(Task task, Project project);
-
-    Task addToInbox(Task task);
-    Task addToProject(Task task);
-    Task addToRootProject(Task task);
-
-    Task updatedViaTaskstate(Task task);
-    Task updatedViaProject(Task task);
-    Task updatedViaProjectRoot(Task task);
-
     //TODO: rename to findById
     Task findOne(long taskId);
     Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
@@ -33,10 +19,6 @@ public interface TaskService {
     Page<Task> findByRootProject(Context context, Pageable request);
 
     boolean projectHasNoTasks(Project project);
-
-    long getMaxOrderIdTaskState(TaskState taskState, Context context);
-    long getMaxOrderIdProject(Project project, Context context);
-    long getMaxOrderIdProjectRoot(Context context);
 
     /**
      * Before: sourceTask is dragged from above down to destinationTask, so sourceTask is above destinationTask.
@@ -63,13 +45,15 @@ public interface TaskService {
     void moveTasksDownByProject(Task sourceTask, Task destinationTask);
 
     Task saveAndFlush(Task task);
-
+    void saveAll(List<Task> taskListChanged);
     void deleteAll(List<Task> taskListDeleted);
 
-    void saveAll(List<Task> taskListChanged);
 
-    List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState completed, Context context);
+    List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context);
+    List<Task> findByTaskStateAndContext(TaskState taskState, Context context);
 
-    List<Task> findByTaskStateAndContext(TaskState trash, Context context);
+    Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context);
+    Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context);
+    Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context);
 
 }
