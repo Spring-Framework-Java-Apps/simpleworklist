@@ -19,12 +19,12 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class MoveTaskServiceImpl implements MoveTaskService {
+public class TaskMoveServiceImpl implements TaskMoveService {
 
   private final TaskService taskService;
 
   @Autowired
-  public MoveTaskServiceImpl(TaskService taskService) {
+  public TaskMoveServiceImpl(TaskService taskService) {
     this.taskService = taskService;
   }
 

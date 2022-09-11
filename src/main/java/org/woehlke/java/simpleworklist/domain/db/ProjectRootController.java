@@ -21,7 +21,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.MoveTaskService;
+import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMoveService;
 import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
@@ -42,14 +42,14 @@ public class ProjectRootController extends AbstractController {
     public final static String rootProjectUrl = "redirect:/project/root";
 
     private final ProjectControllerService projectControllerService;
-    private final MoveTaskService moveTaskService;
+    private final TaskMoveService taskMoveService;
     private final TaskService taskService;
     private final TransformTaskIntoProjektService transformTaskIntoProjektService;
 
     @Autowired
-    public ProjectRootController(ProjectControllerService projectControllerService, MoveTaskService moveTaskService, TaskService taskService, TransformTaskIntoProjektService transformTaskIntoProjektService) {
+    public ProjectRootController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService, TaskService taskService, TransformTaskIntoProjektService transformTaskIntoProjektService) {
         this.projectControllerService = projectControllerService;
-        this.moveTaskService = moveTaskService;
+        this.taskMoveService = taskMoveService;
         this.taskService = taskService;
         this.transformTaskIntoProjektService = transformTaskIntoProjektService;
     }
@@ -304,7 +304,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        task = moveTaskService.moveTaskToRootProject(task);
+        task = taskMoveService.moveTaskToRootProject(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -321,7 +321,7 @@ public class ProjectRootController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        task = moveTaskService.moveTaskToAnotherProject(task,targetProject);
+        task = taskMoveService.moveTaskToAnotherProject(task,targetProject);
         userSession.setLastProjectId(targetProject.getId());
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
@@ -481,7 +481,7 @@ public class ProjectRootController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        moveTaskService.moveAllCompletedToTrash(context);
+        taskMoveService.moveAllCompletedToTrash(context);
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(Project.rootProjectId);
         model.addAttribute("userSession", userSession);
@@ -496,7 +496,7 @@ public class ProjectRootController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        moveTaskService.emptyTrash(context);
+        taskMoveService.emptyTrash(context);
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(Project.rootProjectId);
         model.addAttribute("userSession", userSession);

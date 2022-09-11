@@ -13,7 +13,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.MoveTaskService;
+import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMoveService;
 
 import javax.validation.constraints.NotNull;
 
@@ -22,11 +22,11 @@ import javax.validation.constraints.NotNull;
 @RequestMapping(path = "/taskstate/task")
 public class TaskMoveController extends AbstractController {
 
-  private final MoveTaskService moveTaskService;
+  private final TaskMoveService taskMoveService;
 
   @Autowired
-  public TaskMoveController(MoveTaskService moveTaskService) {
-    this.moveTaskService = moveTaskService;
+  public TaskMoveController(TaskMoveService taskMoveService) {
+    this.taskMoveService = taskMoveService;
   }
 
   @RequestMapping(path = "/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
@@ -36,7 +36,7 @@ public class TaskMoveController extends AbstractController {
     @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
     Model model
   ) {
-    task = moveTaskService.moveTaskToAnotherProject(task,project);
+    task = taskMoveService.moveTaskToAnotherProject(task,project);
     userSession.setLastProjectId(project.getId());
     model.addAttribute("userSession",userSession);
     model.addAttribute("dataPage", true);
@@ -49,7 +49,7 @@ public class TaskMoveController extends AbstractController {
     @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
     Model model
   ) {
-    task = moveTaskService.moveTaskToRootProject(task);
+    task = taskMoveService.moveTaskToRootProject(task);
     userSession.setLastProjectId(0L);
     model.addAttribute("userSession",userSession);
     model.addAttribute("dataPage", true);
@@ -63,7 +63,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to inbox");
-    task = moveTaskService.moveTaskToInbox(task);
+    task = taskMoveService.moveTaskToInbox(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -76,7 +76,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to today");
-    task = moveTaskService.moveTaskToToday(task);
+    task = taskMoveService.moveTaskToToday(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -89,7 +89,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to next");
-    task = moveTaskService.moveTaskToNext(task);
+    task = taskMoveService.moveTaskToNext(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -102,7 +102,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to waiting");
-    task = moveTaskService.moveTaskToWaiting(task);
+    task = taskMoveService.moveTaskToWaiting(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -115,7 +115,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to someday");
-    task = moveTaskService.moveTaskToSomeday(task);
+    task = taskMoveService.moveTaskToSomeday(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -128,7 +128,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to focus");
-    task = moveTaskService.moveTaskToFocus(task);
+    task = taskMoveService.moveTaskToFocus(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -141,7 +141,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to completed");
-    task = moveTaskService.moveTaskToCompleted(task);
+    task = taskMoveService.moveTaskToCompleted(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -154,7 +154,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     log.info("dragged and dropped "+task.getId()+" to trash");
-    task = moveTaskService.moveTaskToTrash(task);
+    task = taskMoveService.moveTaskToTrash(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return task.getTaskState().getUrl();
@@ -166,7 +166,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     Context context = super.getContext(userSession);
-    moveTaskService.moveAllCompletedToTrash(context);
+    taskMoveService.moveAllCompletedToTrash(context);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return "redirect:/taskstate/trash";
@@ -178,7 +178,7 @@ public class TaskMoveController extends AbstractController {
     Model model
   ) {
     Context context = super.getContext(userSession);
-    moveTaskService.emptyTrash(context);
+    taskMoveService.emptyTrash(context);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return "redirect:/taskstate/trash";

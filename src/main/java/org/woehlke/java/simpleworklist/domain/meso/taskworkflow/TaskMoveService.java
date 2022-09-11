@@ -4,7 +4,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 
-public interface MoveTaskService {
+public interface TaskMoveService {
 
   Task moveTaskToAnotherProject(Task task, Project project);
 

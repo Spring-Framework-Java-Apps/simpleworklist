@@ -20,7 +20,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.MoveTaskService;
+import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMoveService;
 import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
@@ -43,18 +43,18 @@ import static org.woehlke.java.simpleworklist.domain.db.data.TaskState.PROJECTS;
 public class ProjectIdController extends AbstractController {
 
     private final ProjectControllerService projectControllerService;
-    private final MoveTaskService moveTaskService;
+    private final TaskMoveService taskMoveService;
     private final TaskService taskService;
     private final TransformTaskIntoProjektService transformTaskIntoProjektService;
 
     @Autowired
     public ProjectIdController(
       ProjectControllerService projectControllerService,
-      MoveTaskService moveTaskService, TaskService taskService,
+      TaskMoveService taskMoveService, TaskService taskService,
       TransformTaskIntoProjektService transformTaskIntoProjektService
     ) {
         this.projectControllerService = projectControllerService;
-        this.moveTaskService = moveTaskService;
+        this.taskMoveService = taskMoveService;
         this.taskService = taskService;
         this.transformTaskIntoProjektService = transformTaskIntoProjektService;
     }
@@ -387,7 +387,7 @@ public class ProjectIdController extends AbstractController {
     ) {
         userSession.setLastProjectId(thisProject.getId());
         Context context = super.getContext(userSession);
-      moveTaskService.moveAllCompletedToTrash(context);
+      taskMoveService.moveAllCompletedToTrash(context);
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
@@ -402,7 +402,7 @@ public class ProjectIdController extends AbstractController {
     ) {
         userSession.setLastProjectId(thisProject.getId());
         Context context = super.getContext(userSession);
-      moveTaskService.emptyTrash(context);
+      taskMoveService.emptyTrash(context);
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
@@ -567,7 +567,7 @@ public class ProjectIdController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        task = moveTaskService.moveTaskToRootProject(task);
+        task = taskMoveService.moveTaskToRootProject(task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
@@ -582,7 +582,7 @@ public class ProjectIdController extends AbstractController {
         @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
     ) {
-        task = moveTaskService.moveTaskToAnotherProject(task,otherProject);
+        task = taskMoveService.moveTaskToAnotherProject(task,otherProject);
         model.addAttribute("userSession", userSession);
         model.addAttribute("taskstateType",PROJECTS.getType());
         model.addAttribute("dataPage", true);
