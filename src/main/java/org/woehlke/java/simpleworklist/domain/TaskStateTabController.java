@@ -9,12 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.java.simpleworklist.domain.AbstractController;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
 import lombok.extern.slf4j.Slf4j;
-import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskstate.TaskStateTabControllerService;
 
 import javax.validation.constraints.NotNull;
@@ -40,8 +38,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.INBOX, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageInbox(
+           context, pageable, userSession, locale, model
         );
     }
 
@@ -53,8 +51,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.TODAY, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageToday(
+          context, pageable, userSession, locale, model
         );
     }
 
@@ -66,8 +64,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.NEXT, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageNext(
+           context, pageable, userSession, locale, model
         );
     }
 
@@ -79,8 +77,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.WAITING, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageWaiting(
+           context, pageable, userSession, locale, model
         );
     }
 
@@ -92,8 +90,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-          TaskState.SCHEDULED, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageScheduled(
+          context, pageable, userSession, locale, model
         );
     }
 
@@ -105,8 +103,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.SOMEDAY, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageSomeday(
+           context, pageable, userSession, locale, model
         );
     }
 
@@ -118,8 +116,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.COMPLETED, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageCompleted(
+          context, pageable, userSession, locale, model
         );
     }
 
@@ -131,8 +129,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.TRASH, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageTrash(
+           context, pageable, userSession, locale, model
         );
     }
 
@@ -155,8 +153,8 @@ public class TaskStateTabController extends AbstractController {
         Model model
     ) {
         Context context = super.getContext(userSession);
-        return taskStateTabControllerService.getTaskStatePage(
-            TaskState.FOCUS, context, pageable, userSession, locale, model
+        return taskStateTabControllerService.getTaskStatePageFocus(
+            true, context, pageable, userSession, locale, model
         );
     }
 
