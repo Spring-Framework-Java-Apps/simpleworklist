@@ -12,7 +12,31 @@ public interface TaskService {
 
     //TODO: rename to findById
     Task findOne(long taskId);
-    Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
+
+    List<Task> findByTaskStateInbox(Context context);
+    List<Task> findByTaskStateToday(Context context);
+    List<Task> findByTaskStateNext(Context context);
+    List<Task> findByTaskStateWaiting(Context context);
+    List<Task> findByTaskStateScheduled(Context context);
+    List<Task> findByTaskStateSomeday(Context context);
+    List<Task> findByFocus(boolean focus, Context context);
+    List<Task> findByTaskStateCompleted(Context context);
+    List<Task> findByTaskStateTrash(Context context);
+    List<Task> findByTaskStateDeleted(Context context);
+    List<Task> findByTaskStateProjects(Context context);
+
+    Page<Task> findByTaskStateInbox(Context context, Pageable request);
+    Page<Task> findByTaskStateToday(Context context, Pageable request);
+    Page<Task> findByTaskStateNext(Context context, Pageable request);
+    Page<Task> findByTaskStateWaiting(Context context, Pageable request);
+    Page<Task> findByTaskStateScheduled(Context context, Pageable request);
+    Page<Task> findByTaskStateSomeday(Context context, Pageable request);
+    Page<Task> findByFocus(boolean focus, Context context, Pageable request);
+    Page<Task> findByTaskStateCompleted(Context context, Pageable request);
+    Page<Task> findByTaskStateTrash(Context context, Pageable request);
+    Page<Task> findByTaskStateDeleted(Context context, Pageable request);
+    Page<Task> findByTaskStateProjects(Context context, Pageable request);
+
     Page<Task> findByProject(Project thisProject, Pageable request);
     //TODO: rename to findByProjectRoot
     Page<Task> findByRootProject(Context context, Pageable request);
@@ -49,7 +73,6 @@ public interface TaskService {
 
 
     List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context);
-    List<Task> findByTaskStateAndContext(TaskState taskState, Context context);
 
     Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context);
     Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context);

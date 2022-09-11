@@ -18,16 +18,14 @@ import java.util.*;
 
 @Slf4j
 @Service
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
 
-    private final ProjectRepository projectRepository;
-
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-      this.projectRepository = projectRepository;
     }
 
     @Override
@@ -35,24 +33,6 @@ public class TaskServiceImpl implements TaskService {
     public boolean projectHasNoTasks(Project project) {
         log.info("projectHasNoTasks");
         return taskRepository.findByProject(project).isEmpty();
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> findbyTaskstate(
-        @NotNull TaskState taskState,
-        @NotNull Context context,
-        @NotNull Pageable request
-    ) {
-      switch (taskState){
-        case FOCUS:
-          return taskRepository.findByFocusAndContext(true, context, request);
-        case TRASH:
-        case DELETED:
-          return taskRepository.findByTaskStateTrashAndContext(context, request);
-        default:
-          return taskRepository.findByTaskStateAndContext(taskState, context, request);
-      }
     }
 
     @Override
@@ -86,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask ) {
         TaskState taskState = sourceTask.getTaskState();
         Context context = sourceTask.getContext();
@@ -115,7 +95,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask ) {
         log.info("-------------------------------------------------------------------------------");
         log.info(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
@@ -148,7 +128,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask ) {
         log.info("-------------------------------------------------------------------------------");
         log.info(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
@@ -178,7 +158,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask) {
         log.info("-------------------------------------------------------------------------------");
         log.info(" START moveTasks UP By Project Root");
@@ -210,7 +190,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksUpByProject(Task sourceTask, Task destinationTask ) {
         Project project = sourceTask.getProject();
         log.info("-------------------------------------------------------------------------------");
@@ -243,7 +223,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTasksDownByProject(Task sourceTask, Task destinationTask) {
         Project project = sourceTask.getProject();
         log.info("-------------------------------------------------------------------------------");
@@ -295,8 +275,113 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public List<Task> findByTaskStateAndContext(TaskState trash, Context context) {
-    return taskRepository.findByTaskStateAndContext(trash,context);
+  public List<Task> findByTaskStateInbox(Context context) {
+    return taskRepository.findByTaskStateInbox(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateToday(Context context) {
+    return taskRepository.findByTaskStateToday(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateNext(Context context) {
+    return taskRepository.findByTaskStateNext(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateWaiting(Context context) {
+    return taskRepository.findByTaskStateWaiting(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateScheduled(Context context) {
+    return taskRepository.findByTaskStateScheduled(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateSomeday(Context context) {
+    return taskRepository.findByTaskStateSomeday(context);
+  }
+
+  @Override
+  public List<Task> findByFocus(boolean focus, Context context) {
+    return taskRepository.findByFocus(focus, context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateCompleted(Context context) {
+    return taskRepository.findByTaskStateCompleted(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateTrash(Context context) {
+    return taskRepository.findByTaskStateTrash(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateDeleted(Context context) {
+    return taskRepository.findByTaskStateDeleted(context);
+  }
+
+  @Override
+  public List<Task> findByTaskStateProjects(Context context) {
+    return taskRepository.findByTaskStateProjects(context);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateInbox(Context context, Pageable request) {
+    return taskRepository.findByTaskStateInbox(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateToday(Context context, Pageable request) {
+    return taskRepository.findByTaskStateToday(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateNext(Context context, Pageable request) {
+    return taskRepository.findByTaskStateNext(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateWaiting(Context context, Pageable request) {
+    return taskRepository.findByTaskStateWaiting(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateScheduled(Context context, Pageable request) {
+    return taskRepository.findByTaskStateScheduled(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateSomeday(Context context, Pageable request) {
+    return taskRepository.findByTaskStateSomeday(context, request);
+  }
+
+  @Override
+  public Page<Task> findByFocus(boolean focus, Context context, Pageable request) {
+    return taskRepository.findByFocus(focus, context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateCompleted(Context context, Pageable request) {
+    return taskRepository.findByTaskStateCompleted(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateTrash(Context context, Pageable request) {
+    return taskRepository.findByTaskStateTrash(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateDeleted(Context context, Pageable request) {
+    return taskRepository.findByTaskStateDeleted(context, request);
+  }
+
+  @Override
+  public Page<Task> findByTaskStateProjects(Context context, Pageable request) {
+    return taskRepository.findByTaskStateProjects(context, request);
   }
 
   @Override

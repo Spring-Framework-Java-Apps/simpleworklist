@@ -34,7 +34,7 @@ import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 import static javax.persistence.TemporalType.*;
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
-//TODO: test all three UniqueConstraints
+
 @Entity
 @Table(
     name="data_task",
@@ -45,6 +45,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         )
     },
     indexes = {
+        //TODO: test all three UniqueConstraints
         @Index(name = "ix_task_uuid", columnList = "uuid"),
         @Index(name = "ix_task_row_created_at", columnList = "row_created_at"),
         @Index(name = "ix_task_title", columnList = "title")
@@ -73,10 +74,73 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
-      name = "findByTaskStateTrashAndContext",
+      name = "findByTaskStateInbox",
       query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.TaskState.TRASH " +
-        "or t.taskState = org.woehlke.java.simpleworklist.domain.db.data.TaskState.DELETED " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.INBOX " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateToday",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TODAY " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateNext",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.NEXT " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateWaiting",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.WAITING " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateScheduled",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SCHEDULED " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateSomeday",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SOMEDAY " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateCompleted",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.FOCUS " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateDeleted",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.COMPLETED " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateTrash",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TRASH " +
+        "or t.taskState =  org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED " +
+        "and t.context = :context",
+      lockMode = LockModeType.READ
+    ),
+    @NamedQuery(
+      name = "findByTaskStateProjects",
+      query = "select t from Task t " +
+        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJECTS " +
         "and t.context = :context",
       lockMode = LockModeType.READ
     )
