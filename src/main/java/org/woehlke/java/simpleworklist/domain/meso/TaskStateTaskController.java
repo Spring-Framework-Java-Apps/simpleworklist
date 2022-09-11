@@ -14,7 +14,6 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.MoveTaskToTaskInTaskstateService;
 import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskStateTaskControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
@@ -38,17 +37,14 @@ import java.util.Locale;
 @RequestMapping(path = "/taskstate/task")
 public class TaskStateTaskController extends AbstractController {
 
-    private final MoveTaskToTaskInTaskstateService moveTaskToTaskInTaskstateService;
     private final TransformTaskIntoProjektService transformTaskIntoProjektService;
     private final TaskStateTaskControllerService taskStateTaskControllerService;
 
     @Autowired
     public TaskStateTaskController(
-      MoveTaskToTaskInTaskstateService moveTaskToTaskInTaskstateService,
       TransformTaskIntoProjektService transformTaskIntoProjektService,
       TaskStateTaskControllerService taskStateTaskControllerService
     ) {
-      this.moveTaskToTaskInTaskstateService = moveTaskToTaskInTaskstateService;
       this.transformTaskIntoProjektService = transformTaskIntoProjektService;
       this.taskStateTaskControllerService = taskStateTaskControllerService;
     }
@@ -187,25 +183,6 @@ public class TaskStateTaskController extends AbstractController {
         }
     }
 
-    @RequestMapping(path = "/{taskId}/changeorderto/{destinationTaskId}", method = RequestMethod.GET)
-    public String changeTaskOrderId(
-        @NotNull @PathVariable("taskId") Task sourceTask,
-        @NotNull @PathVariable("destinationTaskId") Task destinationTask,
-        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
-        Model model
-    ){
-        log.info("------------- changeTaskOrderId -------------");
-        log.info("source Task:      "+sourceTask.toString());
-        log.info("---------------------------------------------");
-        log.info("destination Task: "+destinationTask.toString());
-        log.info("---------------------------------------------");
-        moveTaskToTaskInTaskstateService.moveTaskToTaskAndChangeTaskOrderInTaskstate(sourceTask, destinationTask);
-        userSession.setLastTaskState(sourceTask.getTaskState());
-        model.addAttribute("userSession", userSession);
-        model.addAttribute("dataPage", true);
-        return sourceTask.getTaskState().getUrl();
-    }
-
     @RequestMapping(path = "/{taskId}/delete", method = RequestMethod.GET)
     public final String deleteTaskGet(
         @NotNull @PathVariable("taskId") Task task,
@@ -246,7 +223,7 @@ public class TaskStateTaskController extends AbstractController {
     }
 
     @RequestMapping(path = "/{taskId}/complete", method = RequestMethod.GET)
-    public final String setDoneTaskGet(
+    public final String setCompletedTaskGet(
         @NotNull @PathVariable("taskId") Task task,
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
@@ -263,7 +240,7 @@ public class TaskStateTaskController extends AbstractController {
     }
 
     @RequestMapping(path = "/{taskId}/incomplete", method = RequestMethod.GET)
-    public final String unsetDoneTaskGet(
+    public final String unsetCompletedTaskGet(
         @NotNull @PathVariable("taskId") Task task,
         @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
         Model model
