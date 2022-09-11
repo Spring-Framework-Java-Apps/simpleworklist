@@ -14,7 +14,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskLifecycleService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;

@@ -22,7 +22,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMoveService;
-import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import static org.woehlke.java.simpleworklist.domain.db.data.TaskState.PROJECTS;
+import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJECTS;
 
 @Slf4j
 @Controller

@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
-import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 
 @Repository

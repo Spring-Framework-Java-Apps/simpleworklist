@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.db.data;
+package org.woehlke.java.simpleworklist.domain.db.data.task;
 
 import java.io.Serializable;
 import java.util.Arrays;

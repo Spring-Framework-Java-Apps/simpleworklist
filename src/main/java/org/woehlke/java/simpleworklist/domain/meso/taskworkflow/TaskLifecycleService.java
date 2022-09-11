@@ -4,7 +4,7 @@ import org.springframework.ui.Model;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
-import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
 public interface TaskLifecycleService {

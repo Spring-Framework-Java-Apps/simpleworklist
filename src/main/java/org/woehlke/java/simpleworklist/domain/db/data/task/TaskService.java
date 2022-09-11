@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
-import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 
 import java.util.List;
 
