@@ -32,7 +32,7 @@
                     <select th:field="*{taskState}" class="form-control form-control-lg is-invalid" required>
                         <option th:each="taskStateItem : ${listTaskState}"
                                 th:value="${taskStateItem.value}"
-                                th:text="${#messages.msgOrNull(taskStateItem.code)}">
+                                th:text="${#messages.msgOrNull(taskStateItem.getMsgCode())}">
                             taskStateItem
                         </option>
                     </select>

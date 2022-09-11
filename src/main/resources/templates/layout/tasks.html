@@ -115,7 +115,7 @@
                                class="btn btn-outline-secondary btn-sm twtooltip"
                                th:alt-title="#{task.col.twtooltip.taskstate}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
-                                <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
+                                <span th:utext="${#messages.msgOrNull(task.taskState.getMsgCode())}">Inbox</span>
                             </a>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_project'" class="task_col task_col_project"
@@ -238,7 +238,7 @@
                             <b th:utext="#{tasks.focus.taskState}" class="me-2">Task State</b>
                             <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
-                                <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
+                                <span th:utext="${#messages.msgOrNull(task.taskState.getMsgCode())}">Inbox</span>
                             </a>
                         </div>
                         <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
