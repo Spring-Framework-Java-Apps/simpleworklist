@@ -35,13 +35,13 @@ import java.util.Locale;
 @Slf4j
 @Controller
 @RequestMapping(path = "/taskstate/task")
-public class TaskStateTaskController extends AbstractController {
+public class TaskLifecycleController extends AbstractController {
 
     private final TransformTaskIntoProjektService transformTaskIntoProjektService;
     private final TaskStateTaskControllerService taskStateTaskControllerService;
 
     @Autowired
-    public TaskStateTaskController(
+    public TaskLifecycleController(
       TransformTaskIntoProjektService transformTaskIntoProjektService,
       TaskStateTaskControllerService taskStateTaskControllerService
     ) {
