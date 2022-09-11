@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.woehlke.java.simpleworklist.domain.AbstractController;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
@@ -20,6 +19,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
+import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.task.TaskLifecycleService;
 import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
@@ -44,15 +44,18 @@ public class ProjectRootController extends AbstractController {
     private final TaskLifecycleService taskLifecycleService;
     private final TaskMoveService taskMoveService;
 
+    private final BreadcrumbService breadcrumbService;
+
     @Autowired
     public ProjectRootController(
       ProjectControllerService projectControllerService,
       TaskMoveService taskMoveService,
-      TaskLifecycleService taskLifecycleService
-    ) {
+      TaskLifecycleService taskLifecycleService,
+      BreadcrumbService breadcrumbService) {
       this.projectControllerService = projectControllerService;
       this.taskMoveService = taskMoveService;
       this.taskLifecycleService = taskLifecycleService;
+      this.breadcrumbService = breadcrumbService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -203,7 +206,7 @@ public class ProjectRootController extends AbstractController {
         UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
         Context thisContext = thisTask.getContext();
-        Project thisProject = addProjectFromTaskToModel( thisTask, model );
+        Project thisProject = taskLifecycleService.addProjectFromTaskToModel( thisTask, model );
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(thisTask.getTaskState(),locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject); //TODO: remove?
@@ -247,9 +250,9 @@ public class ProjectRootController extends AbstractController {
             }
             UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
-            thisTask = addProject(thisTask);
+            thisTask = taskLifecycleService.addProject(thisTask);
             Context thisContext = thisTask.getContext();
-            Project thisProject = addProjectFromTaskToModel( thisTask, model );
+            Project thisProject = taskLifecycleService.addProjectFromTaskToModel( thisTask, model );
             //thisProject.setId(0L);
             Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject, locale, userSession);
             model.addAttribute("breadcrumb", breadcrumb);
@@ -266,7 +269,7 @@ public class ProjectRootController extends AbstractController {
         } else {
             //task.unsetFocus();
             thisTask.setLastProject(null);
-            Task persistentTask  = addProject(thisTask);
+            Task persistentTask  = taskLifecycleService.addProject(thisTask);
             thisTask = taskLifecycleService.updatedViaProjectRoot(persistentTask);
             userSession.setLastProjectId(Project.rootProjectId);
             userSession.setLastTaskState(thisTask.getTaskState());

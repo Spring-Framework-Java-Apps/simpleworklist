@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.java.simpleworklist.domain.AbstractController;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
+import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.language.Language;
 import org.woehlke.java.simpleworklist.domain.meso.language.UserChangeLanguageForm;
 import org.woehlke.java.simpleworklist.domain.security.access.UserAuthorizationService;
@@ -43,9 +44,15 @@ public class UserSelfserviceController extends AbstractController {
 
     private final UserAuthorizationService userAuthorizationService;
 
+    private final BreadcrumbService breadcrumbService;
+
+    private final UserAccountService userAccountService;
+
     @Autowired
-    public UserSelfserviceController(UserAuthorizationService userAuthorizationService) {
+    public UserSelfserviceController(UserAuthorizationService userAuthorizationService, BreadcrumbService breadcrumbService, UserAccountService userAccountService) {
         this.userAuthorizationService = userAuthorizationService;
+        this.breadcrumbService = breadcrumbService;
+        this.userAccountService = userAccountService;
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)

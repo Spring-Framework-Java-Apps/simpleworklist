@@ -185,4 +185,48 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
     log.info("persisted Task: " + task.outProject());
     return task;
   }
+
+
+    public Project addProjectFromTaskToModel(Task task, Model model){
+      Project thisProject;
+      if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
+        thisProject = new Project();
+        thisProject.setId(0L);
+      } else {
+        thisProject = task.getProject();
+      }
+      model.addAttribute("thisProject", thisProject);
+      Project lastProject;
+      if (task.getLastProject() == null || task.getLastProject().getId() == null || task.getLastProject().getId() == 0L) {
+        lastProject = new Project();
+        lastProject.setId(0L);
+      } else {
+        lastProject = task.getLastProject();
+      }
+      model.addAttribute("lastProject", lastProject);
+      return thisProject;
+    }
+
+
+  public Task addProject(Task task){
+      Task persistentTask = taskService.findOne(task.getId());
+      if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
+        persistentTask.setProject(null);
+        if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {
+          persistentTask.setLastProject(null);
+        } else {
+          persistentTask.setLastProject(persistentTask.getProject());
+        }
+      } else {
+        persistentTask.setProject(task.getProject());
+        if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {
+          persistentTask.setLastProject(null);
+        } else {
+          persistentTask.setLastProject(persistentTask.getProject());
+        }
+      }
+      persistentTask.merge(task);
+      return persistentTask;
+    }
+
 }

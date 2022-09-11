@@ -38,20 +38,28 @@ import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.*;
 @SessionAttributes({"userSession","locale"})
 public abstract class AbstractController {
 
-    @Autowired
-    protected SimpleworklistProperties simpleworklistProperties;
+  /*
+   @Autowired
+   protected SimpleworklistProperties simpleworklistProperties;
+  */
 
     @Autowired
-    protected ProjectService projectService;
+    protected ContextService contextService;
 
     @Autowired
     protected TaskService taskService;
 
     @Autowired
-    protected UserAccountService userAccountService;
+    protected ProjectService projectService;
 
+  /*
+    @Autowired
+    protected UserAccountService userAccountService;
+  */
+  /*
     @Autowired
     protected UserAuthorizationService userAuthorizationService;
+  */
 
     @Autowired
     protected ChatMessageService chatMessageService;
@@ -59,17 +67,16 @@ public abstract class AbstractController {
     @Autowired
     protected LoginSuccessService loginSuccessService;
 
-    @Autowired
-    protected ContextService contextService;
-
+  /*
     @Autowired
     protected BreadcrumbService breadcrumbService;
+  */
 
     @ModelAttribute("allProjects")
     public final List<Project> getAllCategories(
-        @ModelAttribute("userSession") UserSessionBean userSession,
-        BindingResult result, //TODO: remove
-        Model model  //TODO: remove
+        @ModelAttribute("userSession") UserSessionBean userSession //,
+      //  BindingResult result, //TODO: remove
+      //  Model model  //TODO: remove
     ) {
         userSession = updateUserSession(userSession);
         Context context = this.getContext(userSession);
@@ -91,24 +98,26 @@ public abstract class AbstractController {
         return chatMessageService.getNumberOfNewIncomingMessagesForUser(user);
     }
 
-    @ModelAttribute("listTaskEnergy")
-    public final List<TaskEnergy> getListTaskEnergy(){
-        return TaskEnergy.list();
-    }
-
-    @ModelAttribute("listTaskTime")
-    public final List<TaskTime> getListTaskTime(){
-        return TaskTime.list();
-    }
-
     @ModelAttribute("contexts")
     public final List<Context> getContexts(){
         UserAccount user = this.getUser();
         return contextService.getAllForUser(user);
     }
 
-    @ModelAttribute("listTaskState")
+  @ModelAttribute("listTaskEnergy")
+  public final List<TaskEnergy> getListTaskEnergy(){
+    return TaskEnergy.list();
+  }
+
+  @ModelAttribute("listTaskTime")
+  public final List<TaskTime> getListTaskTime(){
+    return TaskTime.list();
+  }
+
+/*
+  @ModelAttribute("listTaskState")
     public final List<TaskState> getTaskStates(){
+
       TaskState[] listTaskStateArray = {
         INBOX,
         TODAY,
@@ -119,12 +128,15 @@ public abstract class AbstractController {
         FOCUS,
         COMPLETED
       };
+
       List<TaskState> listTaskState = new ArrayList<>(listTaskStateArray.length);
+
       for(TaskState taskState:listTaskStateArray){
             listTaskState.add(taskState);
         }
         return listTaskState;
     }
+ */
 
     @ModelAttribute("context")
     public final String getCurrentContext(
@@ -165,6 +177,7 @@ public abstract class AbstractController {
         return context;
     }
 
+    @Deprecated
     protected UserSessionBean getNewUserSession(){
         UserAccount thisUser = this.getUser();
         long userAccountid = thisUser.getId();
@@ -185,46 +198,6 @@ public abstract class AbstractController {
         return userSession;
     }
 
-    protected Project addProjectFromTaskToModel(Task task, Model model){
-      Project thisProject;
-      if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
-        thisProject = new Project();
-        thisProject.setId(0L);
-      } else {
-        thisProject = task.getProject();
-      }
-      model.addAttribute("thisProject", thisProject);
-      Project lastProject;
-      if (task.getLastProject() == null || task.getLastProject().getId() == null || task.getLastProject().getId() == 0L) {
-        lastProject = new Project();
-        lastProject.setId(0L);
-      } else {
-        lastProject = task.getLastProject();
-      }
-      model.addAttribute("lastProject", lastProject);
-      return thisProject;
-    }
-
-    protected Task addProject(Task task){
-      Task persistentTask = taskService.findOne(task.getId());
-      if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
-        persistentTask.setProject(null);
-        if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {
-          persistentTask.setLastProject(null);
-        } else {
-          persistentTask.setLastProject(persistentTask.getProject());
-        }
-      } else {
-        persistentTask.setProject(task.getProject());
-        if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {
-          persistentTask.setLastProject(null);
-        } else {
-          persistentTask.setLastProject(persistentTask.getProject());
-        }
-      }
-      persistentTask.merge(task);
-      return persistentTask;
-    }
 
     /*
     protected Context getContext(UserSessionBean userSession){

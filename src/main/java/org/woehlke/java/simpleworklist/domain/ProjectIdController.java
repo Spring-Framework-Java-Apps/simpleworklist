@@ -16,6 +16,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
+import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 
@@ -38,10 +39,13 @@ public class ProjectIdController extends AbstractController {
   private final ProjectControllerService projectControllerService;
   private final TaskMoveService taskMoveService;
 
+  private final BreadcrumbService breadcrumbService;
+
   @Autowired
-  public ProjectIdController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService ) {
+  public ProjectIdController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService, BreadcrumbService breadcrumbService) {
     this.projectControllerService = projectControllerService;
     this.taskMoveService = taskMoveService;
+    this.breadcrumbService = breadcrumbService;
   }
 
   @RequestMapping(path = "", method = RequestMethod.GET)

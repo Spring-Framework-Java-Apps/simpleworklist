@@ -23,4 +23,8 @@ public interface TaskLifecycleService {
   long getMaxOrderIdProjectRoot(Context context);
 
   String transformTaskIntoProjectGet(Task task, UserSessionBean userSession, Model model);
+
+  Project addProjectFromTaskToModel(Task task, Model model);
+  Task addProject(Task task);
+
 }

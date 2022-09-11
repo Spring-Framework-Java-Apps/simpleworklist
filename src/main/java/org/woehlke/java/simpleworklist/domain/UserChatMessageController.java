@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.woehlke.java.simpleworklist.domain.AbstractController;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageForm;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.chat.UserChatMessageControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
@@ -38,9 +38,12 @@ public class UserChatMessageController extends AbstractController {
 
   private final UserChatMessageControllerService userChatMessageControllerService;
 
+  private final BreadcrumbService breadcrumbService;
+
   @Autowired
-  public UserChatMessageController(UserChatMessageControllerService userChatMessageControllerService) {
+  public UserChatMessageController(UserChatMessageControllerService userChatMessageControllerService, BreadcrumbService breadcrumbService) {
     this.userChatMessageControllerService = userChatMessageControllerService;
+    this.breadcrumbService = breadcrumbService;
   }
 
   @RequestMapping(path = "/{userId}/messages/", method = RequestMethod.GET)
