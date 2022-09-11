@@ -16,7 +16,6 @@ import java.util.Locale;
 @RequestMapping(path = "/")
 public class PagesController {
 
-
   @RequestMapping(path = "/information", method = RequestMethod.GET)
   public final String renderPageInformation(
     @NotNull @ModelAttribute("userSession") UserSessionBean userSession,

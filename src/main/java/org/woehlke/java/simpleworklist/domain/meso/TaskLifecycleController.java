@@ -16,7 +16,6 @@ import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.data.TaskState;
 import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskLifecycleService;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
@@ -40,10 +39,7 @@ public class TaskLifecycleController extends AbstractController {
     private final TaskLifecycleService taskLifecycleService;
 
     @Autowired
-    public TaskLifecycleController(
-      TransformTaskIntoProjektService transformTaskIntoProjektService,
-      TaskLifecycleService taskLifecycleService
-    ) {
+    public TaskLifecycleController(TaskLifecycleService taskLifecycleService) {
       this.taskLifecycleService = taskLifecycleService;
     }
 
@@ -246,7 +242,7 @@ public class TaskLifecycleController extends AbstractController {
         task.incomplete();
         long maxOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
         task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskService.updatedViaTaskstate(task);
+        task = taskLifecycleService.updatedViaTaskstate(task);
         model.addAttribute("userSession", userSession);
         model.addAttribute("dataPage", true);
         return task.getUrl();
