@@ -1,6 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.data.task;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,6 +62,20 @@ public enum TaskState implements Serializable {
 
     public static List<TaskState> list() {
         return Arrays.asList(values());
+    }
+
+    public static List<TaskState> getLlist4Ui(){
+      TaskState[] listTaskStateArray = {
+        INBOX,
+        TODAY,
+        NEXT,
+        WAITING,
+        SCHEDULED,
+        SOMEDAY,
+        FOCUS,
+        COMPLETED
+      };
+      return Arrays.asList(listTaskStateArray);
     }
 
     private static final long serialVersionUID = 0L;

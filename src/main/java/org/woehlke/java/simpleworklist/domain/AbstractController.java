@@ -114,29 +114,10 @@ public abstract class AbstractController {
     return TaskTime.list();
   }
 
-/*
-  @ModelAttribute("listTaskState")
-    public final List<TaskState> getTaskStates(){
-
-      TaskState[] listTaskStateArray = {
-        INBOX,
-        TODAY,
-        NEXT,
-        WAITING,
-        SCHEDULED,
-        SOMEDAY,
-        FOCUS,
-        COMPLETED
-      };
-
-      List<TaskState> listTaskState = new ArrayList<>(listTaskStateArray.length);
-
-      for(TaskState taskState:listTaskStateArray){
-            listTaskState.add(taskState);
-        }
-        return listTaskState;
-    }
- */
+      @ModelAttribute("listTaskState")
+      public final List<TaskState> getTaskStates(){
+        return TaskState.getLlist4Ui();
+      }
 
     @ModelAttribute("context")
     public final String getCurrentContext(
