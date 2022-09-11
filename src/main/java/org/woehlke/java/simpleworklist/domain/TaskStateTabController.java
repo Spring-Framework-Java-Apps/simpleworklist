@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso;
+package org.woehlke.java.simpleworklist.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

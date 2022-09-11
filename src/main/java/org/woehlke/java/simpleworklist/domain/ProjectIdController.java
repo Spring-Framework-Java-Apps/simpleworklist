@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.db;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.security;
+package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
