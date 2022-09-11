@@ -52,7 +52,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         userSession.setLastProjectId(projectId);
         Project thisProject = projectService.findByProjectId(projectId);
         Project project = Project.newProjectFactoryForParentProject(thisProject);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("project", project);
@@ -73,7 +73,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         model.addAttribute("userSession",userSession);
         if(result.hasErrors()){
             Project thisProject = projectService.findByProjectId(projectId);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject);
             model.addAttribute("project", project);
@@ -113,7 +113,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         project = new Project();
         project.setId(Project.rootProjectId);
         project.setContext(context);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale,userSession);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowProjectRoot(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("project", project);
         model.addAttribute("thisProjectId", project.getId());
@@ -136,7 +136,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         project = projectService.add(project);
         userSession.setLastProjectId(project.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("myTaskState",PROJECTS.getType());
+        model.addAttribute("myTaskState",PROJECTS.getSlug());
         return project.getUrl();
     }
 

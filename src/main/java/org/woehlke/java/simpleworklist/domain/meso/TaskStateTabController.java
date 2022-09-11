@@ -15,7 +15,7 @@ import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
 import lombok.extern.slf4j.Slf4j;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskStateTabControllerService;
+import org.woehlke.java.simpleworklist.domain.meso.taskstate.TaskStateTabControllerService;
 
 import javax.validation.constraints.NotNull;
 import java.util.Locale;

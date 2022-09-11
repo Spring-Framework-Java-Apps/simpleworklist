@@ -15,7 +15,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskLifecycleService;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskLifecycleService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
@@ -161,7 +161,7 @@ public class TaskLifecycleController extends AbstractController {
             Project thisProject = addProjectFromTaskToModel( task, model );
             // task = addProject(task);
             Context thisContext = task.getContext();
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject,locale,userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisContext", thisContext);
             model.addAttribute("task", task);
@@ -173,7 +173,7 @@ public class TaskLifecycleController extends AbstractController {
             Task persistentTask = addProject(task);
             task = taskLifecycleService.updatedViaTaskstate(persistentTask);
             model.addAttribute("userSession", userSession);
-            return task.getTaskState().getUrl();
+            return task.getTaskState().getUrlPathRedirect();
         }
     }
 

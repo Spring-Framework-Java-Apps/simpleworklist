@@ -27,10 +27,6 @@ public enum TaskState implements Serializable {
         this.icon=icon;
     }
 
-    public String getIcon(){
-        return icon;
-    }
-
     public int getId(){
         return this.ordinal();
     }
@@ -39,11 +35,15 @@ public enum TaskState implements Serializable {
         return this.name();
     }
 
-    public String getType(){
+    public String getIcon(){
+    return icon;
+  }
+
+    public String getSlug(){
         return this.name().toLowerCase();
     }
 
-    public String getCode(){
+    public String getMsgCode(){
         return "layout.page."+this.name().toLowerCase();
     }
 
@@ -51,7 +51,7 @@ public enum TaskState implements Serializable {
         return "/taskstate/"+this.name().toLowerCase();
     }
 
-    public String getUrl(){
+    public String getUrlPathRedirect(){
         return "redirect:/taskstate/"+this.name().toLowerCase();
     }
 

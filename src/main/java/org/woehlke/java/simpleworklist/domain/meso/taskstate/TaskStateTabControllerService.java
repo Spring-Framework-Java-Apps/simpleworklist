@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
+package org.woehlke.java.simpleworklist.domain.meso.taskstate;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;

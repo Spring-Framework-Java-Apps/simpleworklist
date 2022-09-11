@@ -393,7 +393,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
 
     @Transient
     public String getUrl(){
-        return this.taskState.getUrl();
+        return this.taskState.getUrlPathRedirect();
     }
 
     @Transient

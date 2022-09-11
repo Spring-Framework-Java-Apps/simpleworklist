@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface ProjectService {
 
+    Project add(Project project);
+    Project update(Project project);
+    Project delete(Project project);
+
     List<Project> findRootProjectsByContext(Context context);
     Page<Project> findRootProjectsByContext(Context context, Pageable pageRequest);
 
@@ -16,17 +20,8 @@ public interface ProjectService {
     Page<Project> findAllProjectsByContext(Context context, Pageable pageRequest);
 
     Project moveProjectToAnotherProject(Project thisProject, Project targetProject);
-
-    Project findByProjectId(long projectId);
-
-    Project add(Project project);
-
-    Project update(Project project);
-
-    Project delete(Project project);
-
     Project moveProjectToAnotherContext(Project thisProject, Context newContext);
 
     Project getReferenceById(long projectId);
-
+    Project findByProjectId(long projectId);
 }

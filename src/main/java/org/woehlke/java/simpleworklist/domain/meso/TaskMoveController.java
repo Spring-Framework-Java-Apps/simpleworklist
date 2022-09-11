@@ -13,7 +13,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMoveService;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 
 import javax.validation.constraints.NotNull;
 
@@ -40,7 +40,7 @@ public class TaskMoveController extends AbstractController {
     userSession.setLastProjectId(project.getId());
     model.addAttribute("userSession",userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/project/root", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class TaskMoveController extends AbstractController {
     userSession.setLastProjectId(0L);
     model.addAttribute("userSession",userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/inbox", method = RequestMethod.GET)
@@ -66,7 +66,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToInbox(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/today", method = RequestMethod.GET)
@@ -79,7 +79,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToToday(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/next", method = RequestMethod.GET)
@@ -92,7 +92,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToNext(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/waiting", method = RequestMethod.GET)
@@ -105,7 +105,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToWaiting(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/someday", method = RequestMethod.GET)
@@ -118,7 +118,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToSomeday(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/focus", method = RequestMethod.GET)
@@ -131,7 +131,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToFocus(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/completed", method = RequestMethod.GET)
@@ -144,7 +144,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToCompleted(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/{taskId}/move/to/taskstate/trash", method = RequestMethod.GET)
@@ -157,7 +157,7 @@ public class TaskMoveController extends AbstractController {
     task = taskMoveService.moveTaskToTrash(task);
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return task.getTaskState().getUrl();
+    return task.getTaskState().getUrlPathRedirect();
   }
 
   @RequestMapping(path = "/completed/move/to/trash", method = RequestMethod.GET)

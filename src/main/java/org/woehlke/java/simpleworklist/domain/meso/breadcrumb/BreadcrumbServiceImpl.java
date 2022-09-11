@@ -31,7 +31,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowRootProject(Locale locale, UserSessionBean userSession) {
+    public Breadcrumb getBreadcrumbForShowProjectRoot(Locale locale, UserSessionBean userSession) {
         log.info("getBreadcrumbForShowRootProject");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
@@ -40,7 +40,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale, UserSessionBean userSession) {
+    public Breadcrumb getBreadcrumbForShoProjectId(Project thisProject, Locale locale, UserSessionBean userSession) {
         log.info("getBreadcrumbForShowOneProject");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
@@ -78,7 +78,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
             context = contextResult.get();
         }
         Breadcrumb breadcrumb = new Breadcrumb(locale, context);
-        String code = taskstate.getCode();
+        String code = taskstate.getMsgCode();
         String name = messageSource.getMessage(code,null,locale);
         breadcrumb.addTaskstate(name, taskstate.getUrlPath());
         return breadcrumb;

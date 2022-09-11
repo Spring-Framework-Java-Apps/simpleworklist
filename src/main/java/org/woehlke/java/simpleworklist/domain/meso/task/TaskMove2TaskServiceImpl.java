@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
+package org.woehlke.java.simpleworklist.domain.meso.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskMove2TaskService;
 
 import javax.validation.constraints.NotNull;
 

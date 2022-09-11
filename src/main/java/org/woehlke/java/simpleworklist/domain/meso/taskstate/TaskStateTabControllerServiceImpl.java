@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
+package org.woehlke.java.simpleworklist.domain.meso.taskstate;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
+import org.woehlke.java.simpleworklist.domain.meso.taskstate.TaskStateTabControllerService;
 
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
@@ -48,7 +49,7 @@ public class TaskStateTabControllerServiceImpl implements TaskStateTabController
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
     model.addAttribute("breadcrumb", breadcrumb);
     model.addAttribute("taskPage", taskPage);
-    model.addAttribute("taskstateType", taskState.getType() );
+    model.addAttribute("taskstateType", taskState.getSlug() );
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
     return taskState.getTemplate();

@@ -84,10 +84,15 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = {CascadeType.ALL})
     private List<Project> children = new ArrayList<>();
 
+  @Transient
+  public String getUrlRoot() {
+    return "redirect:/project/root";
+  }
+
     @Transient
     public String getUrl() {
         if (this.getId() == null || this.getId() == 0L) {
-            return "redirect:/project/root";
+            return getUrlRoot();
         } else {
             return "redirect:/project/" + this.getId();
         }

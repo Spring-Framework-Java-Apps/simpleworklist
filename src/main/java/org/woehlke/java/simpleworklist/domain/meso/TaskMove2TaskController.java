@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.AbstractController;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMove2TaskService;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskMove2TaskService;
 
 import javax.validation.constraints.NotNull;
 
@@ -43,7 +43,7 @@ public class TaskMove2TaskController extends AbstractController {
     userSession.setLastTaskState(sourceTask.getTaskState());
     model.addAttribute("userSession", userSession);
     model.addAttribute("dataPage", true);
-    return sourceTask.getTaskState().getUrl();
+    return sourceTask.getTaskState().getUrlPathRedirect();
   }
 
 }

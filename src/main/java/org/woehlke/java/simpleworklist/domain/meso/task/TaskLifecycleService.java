@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.taskworkflow;
+package org.woehlke.java.simpleworklist.domain.meso.task;
 
 import org.springframework.ui.Model;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
@@ -21,7 +21,6 @@ public interface TaskLifecycleService {
   long getMaxOrderIdTaskState(TaskState completed, Context context);
   long getMaxOrderIdProject(Project project, Context context);
   long getMaxOrderIdProjectRoot(Context context);
-
 
   String transformTaskIntoProjectGet(Task task, UserSessionBean userSession, Model model);
 }

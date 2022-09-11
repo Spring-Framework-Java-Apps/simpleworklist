@@ -19,11 +19,10 @@ import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
-import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskMoveService;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskLifecycleService;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TransformTaskIntoProjektService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
@@ -42,16 +41,18 @@ public class ProjectRootController extends AbstractController {
     public final static String rootProjectUrl = "redirect:/project/root";
 
     private final ProjectControllerService projectControllerService;
+    private final TaskLifecycleService taskLifecycleService;
     private final TaskMoveService taskMoveService;
-    private final TaskService taskService;
-    private final TransformTaskIntoProjektService transformTaskIntoProjektService;
 
     @Autowired
-    public ProjectRootController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService, TaskService taskService, TransformTaskIntoProjektService transformTaskIntoProjektService) {
-        this.projectControllerService = projectControllerService;
-        this.taskMoveService = taskMoveService;
-        this.taskService = taskService;
-        this.transformTaskIntoProjektService = transformTaskIntoProjektService;
+    public ProjectRootController(
+      ProjectControllerService projectControllerService,
+      TaskMoveService taskMoveService,
+      TaskLifecycleService taskLifecycleService
+    ) {
+      this.projectControllerService = projectControllerService;
+      this.taskMoveService = taskMoveService;
+      this.taskLifecycleService = taskLifecycleService;
     }
 
     @RequestMapping(path="", method = RequestMethod.GET)
@@ -67,7 +68,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastProjectId(0L);
         model.addAttribute("userSession",userSession);
         Page<Task> taskPage = taskService.findByRootProject(context,pageable);
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowRootProject(locale,userSession);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowProjectRoot(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
         if(message != null){
@@ -75,7 +76,7 @@ public class ProjectRootController extends AbstractController {
             model.addAttribute("isDeleted",isDeleted);
         }
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return "project/root/show";
     }
@@ -89,7 +90,7 @@ public class ProjectRootController extends AbstractController {
         Context context = super.getContext(userSession);
         projectControllerService.addNewProjectToProjectRootForm(userSession, context, locale, model);
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return "project/root/project/add";
     }
@@ -127,32 +128,32 @@ public class ProjectRootController extends AbstractController {
         log.info("/project/root/add/task (GET)");
         Context context = super.getContext(userSession);
         UserAccount userAccount = context.getUserAccount();
-        Task task = new Task();
-        task.setTaskState(TaskState.INBOX);
-        task.setTaskEnergy(TaskEnergy.NONE);
-        task.setTaskTime(TaskTime.NONE);
-        task.unsetFocus();
+        Task thisTask = new Task();
+        thisTask.setTaskState(TaskState.INBOX);
+        thisTask.setTaskEnergy(TaskEnergy.NONE);
+        thisTask.setTaskTime(TaskTime.NONE);
+        thisTask.unsetFocus();
         Project thisProject;
         Boolean mustChooseContext = false;
         thisProject = new Project();
         thisProject.setId(0L);
         if(userSession.getLastContextId() == 0L){
             mustChooseContext = true;
-            task.setContext(userAccount.getDefaultContext());
+            thisTask.setContext(userAccount.getDefaultContext());
             thisProject.setContext(userAccount.getDefaultContext());
         } else {
-            task.setContext(context);
+            thisTask.setContext(context);
             thisProject.setContext(context);
         }
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject,locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("mustChooseArea", mustChooseContext); //TODO: rename mustChooseArea -> mustChooseContext
+        model.addAttribute("mustChooseContext", mustChooseContext); //TODO: rename mustChooseArea -> mustChooseContext
         model.addAttribute("thisProject", thisProject);
         model.addAttribute("thisProjectId", thisProject.getId());
         model.addAttribute("breadcrumb", breadcrumb);
-        model.addAttribute("task", task);
+        model.addAttribute("task", thisTask);
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return "project/root/task/add";
     }
@@ -169,7 +170,7 @@ public class ProjectRootController extends AbstractController {
         Context context = super.getContext(userSession);
         model.addAttribute("dataPage", true);
         model.addAttribute("addProjectToTask", false);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         if (result.hasErrors()) {
             for (ObjectError e : result.getAllErrors()) {
                 log.info(e.toString());
@@ -184,7 +185,7 @@ public class ProjectRootController extends AbstractController {
             return "project/root/task/add";
         } else {
             task.setContext(context);
-            task = taskService.addToRootProject(task);
+            task = taskLifecycleService.addToRootProject(task);
             log.info(task.toString());
             model.addAttribute("userSession", userSession);
             return rootProjectUrl;
@@ -194,23 +195,23 @@ public class ProjectRootController extends AbstractController {
 
     @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.GET)
     public final String editTaskGet(
-        @PathVariable("taskId") Task task,
+        @PathVariable("taskId") Task thisTask,
         @ModelAttribute("userSession") UserSessionBean userSession,
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
         UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
         List<Context> contexts = contextService.getAllForUser(userAccount);
-        Context thisContext = task.getContext();
-        Project thisProject = addProjectFromTaskToModel( task, model );
-        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(),locale,userSession);
+        Context thisContext = thisTask.getContext();
+        Project thisProject = addProjectFromTaskToModel( thisTask, model );
+        Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(thisTask.getTaskState(),locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("thisProject", thisProject); //TODO: remove?
         model.addAttribute("thisContext", thisContext);
-        model.addAttribute("task", task);
+        model.addAttribute("task", thisTask);
         model.addAttribute("contexts", contexts);
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         model.addAttribute("addProjectToTask", true);
         return "project/root/task/edit";
@@ -219,17 +220,17 @@ public class ProjectRootController extends AbstractController {
     @RequestMapping(path = "/task/{taskId}/edit", method = RequestMethod.POST)
     public final String editTaskPost(
         @PathVariable long taskId,
-        @Valid Task task,
+        @Valid Task thisTask,
         @ModelAttribute("userSession") UserSessionBean userSession,
         BindingResult result,
         Locale locale,
         Model model
     ) {
         log.info("editTaskPost");
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         model.addAttribute("addProjectToTask", true);
-        if(task.getTaskState()==TaskState.SCHEDULED && task.getDueDate()==null){
+        if(thisTask.getTaskState()==TaskState.SCHEDULED && thisTask.getDueDate()==null){
             String objectName="task";
             String field="dueDate";
             String defaultMessage="you need a due Date to schedule the Task";
@@ -246,32 +247,32 @@ public class ProjectRootController extends AbstractController {
             }
             UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
             List<Context> contexts = contextService.getAllForUser(userAccount);
-            task = addProject(task);
-            Context thisContext = task.getContext();
-            Project thisProject = addProjectFromTaskToModel( task, model );
+            thisTask = addProject(thisTask);
+            Context thisContext = thisTask.getContext();
+            Project thisProject = addProjectFromTaskToModel( thisTask, model );
             //thisProject.setId(0L);
-            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowOneProject(thisProject,locale,userSession);
+            Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject, locale, userSession);
             model.addAttribute("breadcrumb", breadcrumb);
             model.addAttribute("thisProject", thisProject); //TODO: remove?
             model.addAttribute("thisContext", thisContext);
-            model.addAttribute("task", task);
+            model.addAttribute("task", thisTask);
             model.addAttribute("contexts", contexts);
             userSession.setLastProjectId(thisProject.getId());
-            userSession.setLastTaskState(task.getTaskState());
-            userSession.setLastTaskId(task.getId());
+            userSession.setLastTaskState(thisTask.getTaskState());
+            userSession.setLastTaskId(thisTask.getId());
             userSession.setLastContextId(thisContext.getId());
             model.addAttribute("userSession", userSession);
             return "project/root/task/edit";
         } else {
             //task.unsetFocus();
-            task.setLastProject(null);
-            Task persistentTask  = addProject(task);
-            task = taskService.updatedViaProjectRoot(persistentTask);
+            thisTask.setLastProject(null);
+            Task persistentTask  = addProject(thisTask);
+            thisTask = taskLifecycleService.updatedViaProjectRoot(persistentTask);
             userSession.setLastProjectId(Project.rootProjectId);
-            userSession.setLastTaskState(task.getTaskState());
-            userSession.setLastTaskId(task.getId());
+            userSession.setLastTaskState(thisTask.getTaskState());
+            userSession.setLastTaskId(thisTask.getId());
             model.addAttribute("userSession", userSession);
-            return task.getTaskState().getUrl();
+            return thisTask.getTaskState().getUrlPathRedirect();
         }
     }
 
@@ -293,7 +294,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(sourceTask.getTaskState());
         userSession.setLastTaskId(sourceTask.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -309,13 +310,13 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
 
     @RequestMapping(path = "/task/{taskId}/move/to/project/{projectId}", method = RequestMethod.GET)
-    public final String moveTaskToProject(
+    public final String moveTaskToProjectId(
         @PathVariable("taskId") Task task,
         @PathVariable("projectId") Project targetProject,
         @ModelAttribute("userSession") UserSessionBean userSession,
@@ -326,7 +327,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return targetProject.getUrl();
     }
@@ -339,12 +340,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to inbox");
         task.moveToInbox();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -357,12 +358,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to today");
         task.moveToToday();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -375,12 +376,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to next");
         task.moveToNext();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -393,12 +394,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to waiting");
         task.moveToWaiting();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -411,12 +412,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to someday");
         task.moveToSomeday();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -429,12 +430,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to focus");
         task.moveToFocus();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -447,12 +448,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to completed");
         task.moveToCompletedTasks();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -465,12 +466,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("dragged and dropped "+task.getId()+" to trash");
         task.moveToTrash();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -485,7 +486,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(Project.rootProjectId);
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -500,7 +501,7 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastContextId(context.getId());
         userSession.setLastProjectId(Project.rootProjectId);
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -514,13 +515,13 @@ public class ProjectRootController extends AbstractController {
         log.info("deleteTaskGet");
         if(task!= null){
             task.delete();
-            taskService.updatedViaProjectRoot(task);
+            taskLifecycleService.updatedViaProjectRoot(task);
         }
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -533,12 +534,12 @@ public class ProjectRootController extends AbstractController {
     ) {
         log.info("undeleteTaskGet");
         task.undelete();
-        taskService.updatedViaProjectRoot(task);
+        taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -553,9 +554,9 @@ public class ProjectRootController extends AbstractController {
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
-        return transformTaskIntoProjektService.transformTaskIntoProjectGet(task, userSession, model);
+        return taskLifecycleService.transformTaskIntoProjectGet(task, userSession, model);
     }
 
     @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
@@ -565,14 +566,14 @@ public class ProjectRootController extends AbstractController {
         Model model
     ) {
         task.complete();
-        //long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
+        //long maxOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext());
         //task.setOrderIdTaskState(++maxOrderIdTaskState);
-        task = taskService.updatedViaProjectRoot(task);
+        task = taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -584,14 +585,14 @@ public class ProjectRootController extends AbstractController {
         Model model
     ) {
        task.incomplete();
-       //long maxOrderIdTaskState = taskService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
+       //long maxOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(task.getTaskState(),task.getContext());
        //task.setOrderIdTaskState(++maxOrderIdTaskState);
-       task = taskService.updatedViaProjectRoot(task);
+       task = taskLifecycleService.updatedViaProjectRoot(task);
        userSession.setLastProjectId(Project.rootProjectId);
        userSession.setLastTaskState(task.getTaskState());
        userSession.setLastTaskId(task.getId());
        model.addAttribute("userSession", userSession);
-       model.addAttribute("taskstateType",PROJECTS.getType());
+       model.addAttribute("taskstateType",PROJECTS.getSlug());
        model.addAttribute("dataPage", true);
        return rootProjectUrl;
     }
@@ -603,12 +604,12 @@ public class ProjectRootController extends AbstractController {
         Model model
     ){
         task.setFocus();
-        task = taskService.updatedViaProjectRoot(task);
+        task = taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
@@ -620,12 +621,12 @@ public class ProjectRootController extends AbstractController {
         Model model
     ){
         task.unsetFocus();
-        task = taskService.updatedViaProjectRoot(task);
+        task = taskLifecycleService.updatedViaProjectRoot(task);
         userSession.setLastProjectId(Project.rootProjectId);
         userSession.setLastTaskState(task.getTaskState());
         userSession.setLastTaskId(task.getId());
         model.addAttribute("userSession", userSession);
-        model.addAttribute("taskstateType",PROJECTS.getType());
+        model.addAttribute("taskstateType",PROJECTS.getSlug());
         model.addAttribute("dataPage", true);
         return rootProjectUrl;
     }
