@@ -48,7 +48,9 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         //TODO: test all three UniqueConstraints
         @Index(name = "ix_task_uuid", columnList = "uuid"),
         @Index(name = "ix_task_row_created_at", columnList = "row_created_at"),
-        @Index(name = "ix_task_title", columnList = "title")
+        @Index(name = "ix_task_title", columnList = "title"),
+        @Index(name = "ix_task_order_id_task_state", columnList = "order_id_task_state"),
+        @Index(name = "ix_task_order_id_project", columnList = "order_id_project,data_project_id")
     }
 )
 @NamedQueries({
@@ -56,77 +58,77 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
         name = "queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask",
         query = "select t from Task t"
             + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
-            + " and t.taskState = :taskState and t.context = :context",
+            + " and t.taskState = :taskState and t.context = :context order by t.orderIdTaskState ",
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
         name = "queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask",
         query = "select t from Task t"
             + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-            + " and t.project = :project",
+            + " and t.project = :project order by t.orderIdProject DESC ",
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
         name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask",
         query = "select t from Task t"
             + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-            + " and t.project is null and t.context = :context ",
+            + " and t.project is null and t.context = :context  order by t.orderIdProject DESC ",
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateInbox",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.INBOX " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateToday",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TODAY " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateNext",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.NEXT " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateWaiting",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.WAITING " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateScheduled",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SCHEDULED " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateSomeday",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SOMEDAY " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateCompleted",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.COMPLETED " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateDeleted",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
@@ -134,14 +136,14 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TRASH " +
         "or t.taskState =  org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateProjects",
       query = "select t from Task t " +
         "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJECTS " +
-        "and t.context = :context",
+        "and t.context = :context order by t.orderIdTaskState DESC ",
       lockMode = LockModeType.READ
     )
 })
