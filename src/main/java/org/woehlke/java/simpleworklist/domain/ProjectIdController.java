@@ -11,9 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
+import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
@@ -37,14 +40,19 @@ import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJ
 public class ProjectIdController extends AbstractController {
 
   private final ProjectControllerService projectControllerService;
+  private final ProjectService projectService;
   private final TaskMoveService taskMoveService;
-
+  private final TaskService taskService;
+  private final ContextService contextService;
   private final BreadcrumbService breadcrumbService;
 
   @Autowired
-  public ProjectIdController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService, BreadcrumbService breadcrumbService) {
+  public ProjectIdController(ProjectControllerService projectControllerService, ProjectService projectService, TaskMoveService taskMoveService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
     this.projectControllerService = projectControllerService;
+    this.projectService = projectService;
     this.taskMoveService = taskMoveService;
+    this.taskService = taskService;
+    this.contextService = contextService;
     this.breadcrumbService = breadcrumbService;
   }
 
@@ -64,8 +72,8 @@ public class ProjectIdController extends AbstractController {
     Project thisProject = null;
     Page<Task> taskPage = null;
     if (projectId != 0) {
-      thisProject = projectService.findByProjectId(projectId);
-      taskPage = taskService.findByProject(thisProject, pageable);
+      thisProject = projectControllerService.findByProjectId(projectId);
+      taskPage = projectControllerService.findByProject(thisProject, pageable);
     } else {
       thisProject = new Project();
       thisProject.setId(0L);

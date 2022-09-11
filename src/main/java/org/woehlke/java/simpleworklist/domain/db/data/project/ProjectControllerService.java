@@ -1,5 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.data.project;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
@@ -54,4 +56,9 @@ public interface ProjectControllerService {
 
     void moveTaskToTaskAndChangeTaskOrderInProject(Task sourceTask, Task destinationTask);
     void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask);
+
+    Project findByProjectId(long projectId);
+
+    Page<Task> findByProject(Project thisProject, Pageable pageable);
+
 }

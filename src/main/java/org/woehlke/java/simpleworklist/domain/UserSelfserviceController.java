@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.language.Language;
@@ -43,16 +44,16 @@ import java.util.Map;
 public class UserSelfserviceController extends AbstractController {
 
     private final UserAuthorizationService userAuthorizationService;
-
     private final BreadcrumbService breadcrumbService;
-
     private final UserAccountService userAccountService;
+    private final ContextService contextService;
 
     @Autowired
-    public UserSelfserviceController(UserAuthorizationService userAuthorizationService, BreadcrumbService breadcrumbService, UserAccountService userAccountService) {
+    public UserSelfserviceController(UserAuthorizationService userAuthorizationService, BreadcrumbService breadcrumbService, UserAccountService userAccountService, ContextService contextService) {
         this.userAuthorizationService = userAuthorizationService;
         this.breadcrumbService = breadcrumbService;
         this.userAccountService = userAccountService;
+      this.contextService = contextService;
     }
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
@@ -216,7 +217,7 @@ public class UserSelfserviceController extends AbstractController {
         bean.setId(user.getId());
         bean.setDefaultContext(user.getDefaultContext());
         model.addAttribute("thisUser", bean);
-        List<Context> contexts = contextService.getAllForUser(user);
+        List<Context> contexts = super.getContexts();
         model.addAttribute("contexts", contexts);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
@@ -235,7 +236,7 @@ public class UserSelfserviceController extends AbstractController {
         log.info("userContextsSave");
         Context context = super.getContext(userSession);
         UserAccount user = context.getUserAccount();
-        List<Context> contexts = contextService.getAllForUser(user);
+      List<Context> contexts = super.getContexts();
         model.addAttribute("contexts", contexts);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserContexts(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
@@ -395,7 +396,7 @@ public class UserSelfserviceController extends AbstractController {
         Model model
     ){
         log.info("userLanguageGet");
-        UserAccount user = loginSuccessService.retrieveCurrentUser();
+        UserAccount user = super.getUser();
         model.addAttribute("thisUser", user);
         model.addAttribute("languages", Language.list());
         model.addAttribute("userChangeLanguageForm",new UserChangeLanguageForm(user.getDefaultLanguage()));
@@ -414,7 +415,7 @@ public class UserSelfserviceController extends AbstractController {
         Model model
     ){
         log.info("userLanguagePost");
-        UserAccount user = loginSuccessService.retrieveCurrentUser();
+        UserAccount user =  super.getUser();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForUserChangeLanguage(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         if(result.hasErrors()){

@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
+import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
@@ -37,13 +38,14 @@ import java.util.Locale;
 public class TaskLifecycleController extends AbstractController {
 
     private final TaskLifecycleService taskLifecycleService;
-
     private final BreadcrumbService breadcrumbService;
+    private final ContextService contextService;
 
     @Autowired
-    public TaskLifecycleController(TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService) {
+    public TaskLifecycleController(TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService, ContextService contextService) {
       this.taskLifecycleService = taskLifecycleService;
       this.breadcrumbService = breadcrumbService;
+      this.contextService = contextService;
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.GET)
@@ -52,7 +54,7 @@ public class TaskLifecycleController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("addNewTaskToInboxGet");
-        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
+        UserAccount userAccount = super.getUser();
         Task task = new Task();
         task.setTaskState(TaskState.INBOX);
         task.setTaskEnergy(TaskEnergy.NONE);
@@ -117,8 +119,7 @@ public class TaskLifecycleController extends AbstractController {
     ) {
         log.info("editTaskGet");
         taskLifecycleService.addProjectFromTaskToModel( task, model );
-        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
-        List<Context> contexts = contextService.getAllForUser(userAccount);
+        List<Context> contexts = super.getContexts();
         Context thisContext = task.getContext();
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(task.getTaskState(), locale, userSession);
         model.addAttribute("breadcrumb", breadcrumb);
@@ -159,8 +160,8 @@ public class TaskLifecycleController extends AbstractController {
                 log.warn(e.toString());
             }
             //Task persistentTask = taskService.findOne(taskId);
-            UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
-            List<Context> contexts = contextService.getAllForUser(userAccount);
+            // UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
+            List<Context> contexts = super.getContexts();
             Project thisProject = taskLifecycleService.addProjectFromTaskToModel( task, model );
             // task = addProject(task);
             Context thisContext = task.getContext();

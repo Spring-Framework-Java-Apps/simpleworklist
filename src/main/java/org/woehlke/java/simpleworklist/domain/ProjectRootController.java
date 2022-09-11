@@ -14,6 +14,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectControllerService;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
@@ -43,7 +44,7 @@ public class ProjectRootController extends AbstractController {
     private final ProjectControllerService projectControllerService;
     private final TaskLifecycleService taskLifecycleService;
     private final TaskMoveService taskMoveService;
-
+    private final TaskService taskService;
     private final BreadcrumbService breadcrumbService;
 
     @Autowired
@@ -51,10 +52,11 @@ public class ProjectRootController extends AbstractController {
       ProjectControllerService projectControllerService,
       TaskMoveService taskMoveService,
       TaskLifecycleService taskLifecycleService,
-      BreadcrumbService breadcrumbService) {
+      TaskService taskService, BreadcrumbService breadcrumbService) {
       this.projectControllerService = projectControllerService;
       this.taskMoveService = taskMoveService;
       this.taskLifecycleService = taskLifecycleService;
+      this.taskService = taskService;
       this.breadcrumbService = breadcrumbService;
     }
 
@@ -203,8 +205,7 @@ public class ProjectRootController extends AbstractController {
         Locale locale, Model model
     ) {
         log.info("editTaskGet");
-        UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
-        List<Context> contexts = contextService.getAllForUser(userAccount);
+        List<Context> contexts = super.getContexts();
         Context thisContext = thisTask.getContext();
         Project thisProject = taskLifecycleService.addProjectFromTaskToModel( thisTask, model );
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(thisTask.getTaskState(),locale,userSession);
@@ -248,8 +249,7 @@ public class ProjectRootController extends AbstractController {
             for (ObjectError e : result.getAllErrors()) {
                 log.warn(e.toString());
             }
-            UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
-            List<Context> contexts = contextService.getAllForUser(userAccount);
+            List<Context> contexts = super.getContexts();
             thisTask = taskLifecycleService.addProject(thisTask);
             Context thisContext = thisTask.getContext();
             Project thisProject = taskLifecycleService.addProjectFromTaskToModel( thisTask, model );

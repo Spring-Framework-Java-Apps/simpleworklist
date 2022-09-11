@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
+import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectControllerService;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
@@ -33,15 +35,18 @@ import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJ
 public class ProjectIdTaskController extends AbstractController {
 
   private final ProjectControllerService projectControllerService;
+  private final ProjectService projectService;
   private final TaskLifecycleService taskLifecycleService;
-
   private final BreadcrumbService breadcrumbService;
+  private final ContextService contextService;
 
   @Autowired
-  public ProjectIdTaskController(ProjectControllerService projectControllerService, TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService) {
+  public ProjectIdTaskController(ProjectControllerService projectControllerService, ProjectService projectService, TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService, ContextService contextService) {
     this.projectControllerService = projectControllerService;
+    this.projectService = projectService;
     this.taskLifecycleService = taskLifecycleService;
     this.breadcrumbService = breadcrumbService;
+    this.contextService = contextService;
   }
 
   @RequestMapping(path = "/add", method = RequestMethod.GET)
@@ -50,7 +55,7 @@ public class ProjectIdTaskController extends AbstractController {
     @ModelAttribute("userSession") UserSessionBean userSession,
     Locale locale, Model model
   ) {
-    UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
+    UserAccount userAccount = super.getUser();
     Task task = new Task();
     task.setTaskState(TaskState.INBOX);
     task.setTaskEnergy(TaskEnergy.NONE);
@@ -136,8 +141,7 @@ public class ProjectIdTaskController extends AbstractController {
     Locale locale, Model model
   ) {
     log.info("editTaskGet");
-    UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
-    List<Context> contexts = contextService.getAllForUser(userAccount);
+    List<Context> contexts =  super.getContexts();
     Context thisContext = task.getContext();
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject, locale, userSession);
     model.addAttribute("breadcrumb", breadcrumb);
@@ -181,8 +185,8 @@ public class ProjectIdTaskController extends AbstractController {
       for (ObjectError e : result.getAllErrors()) {
         log.warn(e.toString());
       }
-      UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
-      List<Context> contexts = contextService.getAllForUser(userAccount);
+      UserAccount userAccount = super.getUser();
+      List<Context> contexts = super.getContexts();
       task = taskLifecycleService.addProject(task);
       Context thisContext = task.getContext();
       Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject, locale, userSession);

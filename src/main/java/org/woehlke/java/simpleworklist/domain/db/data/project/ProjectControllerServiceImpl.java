@@ -2,6 +2,8 @@ package org.woehlke.java.simpleworklist.domain.db.data.project;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,7 +94,19 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         }
     }
 
-    public Project getProject(
+    @Override
+    public Project findByProjectId(@Min(1L) long projectId) {
+      log.info("findByProjectId");
+      return projectService.findByProjectId(projectId);
+    }
+
+  @Override
+  public Page<Task> findByProject(Project thisProject, Pageable pageable) {
+    return taskService.findByProject(thisProject,pageable
+    );
+  }
+
+  public Project getProject(
         @Min(1L) long projectId,
         @NotNull UserAccount userAccount,
         @NotNull UserSessionBean userSession
