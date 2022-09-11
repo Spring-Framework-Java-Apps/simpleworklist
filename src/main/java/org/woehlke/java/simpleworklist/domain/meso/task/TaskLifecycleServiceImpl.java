@@ -85,29 +85,21 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
   public long getMaxOrderIdTaskState(TaskState taskState, Context context) {
-    Task task = taskService.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(
-      taskState,
-      context
-    );
+    Task task = taskService.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(taskState, context);
     return (task==null) ? 0 : task.getOrderIdTaskState();
   }
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-  public long getMaxOrderIdProject( Project project,Context context) {
-    Task task = taskService.findTopByProjectAndContextOrderByOrderIdProjectDesc(
-      project,
-      context
-    );
+  public long getMaxOrderIdProject(Project project,Context context) {
+    Task task = taskService.findTopByProjectAndContextOrderByOrderIdProjectDesc(project,context);
     return (task==null) ? 0 : task.getOrderIdProject();
   }
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-  public long getMaxOrderIdProjectRoot( Context context) {
-    Task task = taskService.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(
-      context
-    );
+  public long getMaxOrderIdProjectRoot(Context context) {
+    Task task = taskService.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(context);
     return (task==null) ? 0 : task.getOrderIdProject();
   }
 

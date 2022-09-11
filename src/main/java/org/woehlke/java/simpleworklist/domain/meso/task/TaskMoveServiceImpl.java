@@ -45,10 +45,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     boolean okContext = task.hasSameContextAs(project);
     if(okContext) {
       task.moveTaskToAnotherProject(project);
-      long maxOrderIdProject = taskLifecycleService.getMaxOrderIdProject(
-        task.getProject(),
-        task.getContext()
-      );
+      long maxOrderIdProject = taskLifecycleService.getMaxOrderIdProject(task.getProject(),task.getContext());
       task.setOrderIdProject(++maxOrderIdProject);
       taskService.saveAndFlush(task);
     }
@@ -59,9 +56,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToInbox(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.INBOX,
-      task.getContext()
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.INBOX, task.getContext()
     );
     task.moveToInbox();
     task.setOrderIdTaskState(++newOrderIdTaskState);
@@ -74,10 +69,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToToday(Task task) {
     Date now = new Date();
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.TODAY,
-      task.getContext()
-    );
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.TODAY,task.getContext());
     task.moveToToday();
     task.setOrderIdTaskState(++newOrderIdTaskState);
     task = taskService.saveAndFlush(task);
@@ -88,10 +80,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToNext(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.NEXT,
-      task.getContext()
-    );
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.NEXT,task.getContext());
     task.moveToNext();
     task.setOrderIdTaskState(++newOrderIdTaskState);
     task = taskService.saveAndFlush(task);
@@ -102,10 +91,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToWaiting(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.WAITING,
-      task.getContext()
-    );
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.WAITING,task.getContext());
     task.moveToWaiting();
     task.setOrderIdTaskState(++newOrderIdTaskState);
     task = taskService.saveAndFlush(task);
@@ -116,10 +102,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToSomeday(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.SOMEDAY,
-      task.getContext()
-    );
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext());
     task.moveToSomeday();
     task.setOrderIdTaskState(++newOrderIdTaskState);
     task = taskService.saveAndFlush(task);
@@ -130,9 +113,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToFocus(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.FOCUS,
-      task.getContext()
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.FOCUS,task.getContext()
     );
     task.moveToFocus();
     task.setOrderIdTaskState(++newOrderIdTaskState);
@@ -144,9 +125,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToCompleted(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.COMPLETED,
-      task.getContext()
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext()
     );
     task.moveToCompletedTasks();
     task.setOrderIdTaskState(++newOrderIdTaskState);
@@ -158,10 +137,7 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToTrash(Task task) {
-    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(
-      TaskState.TRASH,
-      task.getContext()
-    );
+    long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.TRASH, task.getContext());
     task.moveToTrash();
     task.setOrderIdTaskState(++newOrderIdTaskState);
     task = taskService.saveAndFlush(task);
@@ -189,14 +165,14 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void emptyTrash( Context context) {
-    List<Task> taskList = taskService.findByTaskStateAndContext(TaskState.TRASH, context);
+    List<Task> taskList = taskService.findByTaskStateTrash(context);
     List<Task> taskListChanged = new ArrayList<>(taskList.size());
     for(Task task: taskList){
       task.emptyTrash();
       taskListChanged.add(task);
     }
     taskService.saveAll(taskListChanged);
-    List<Task> taskListDeleted = taskService.findByTaskStateAndContext(TaskState.DELETED,context);
+    List<Task> taskListDeleted = taskService.findByTaskStateDeleted(context);
     taskService.deleteAll(taskListDeleted);
   }
 }
