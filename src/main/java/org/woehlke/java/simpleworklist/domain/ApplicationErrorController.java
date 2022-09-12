@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.application.error;
+package org.woehlke.java.simpleworklist.domain;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class ApplicationErrorController implements ErrorController {
 
     @ExceptionHandler
-    @RequestMapping(path="/", method={ GET, POST, PUT,  HEAD, PATCH, DELETE, OPTIONS, TRACE  })
+    @RequestMapping(path="", method={ GET, POST, PUT,  HEAD, PATCH, DELETE, OPTIONS, TRACE  })
     public String handleError(
         HttpServletRequest request
     ) {
@@ -48,42 +48,42 @@ public class ApplicationErrorController implements ErrorController {
                     log.warn("##################################################");
                     log.warn("           401 UNAUTHORIZED");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case METHOD_NOT_ALLOWED:
                     log.warn("##################################################");
                     log.warn("          405 METHOD_NOT_ALLOWED");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case FORBIDDEN:
                     log.warn("##################################################");
                     log.warn("          403 FORBIDDEN");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case REQUEST_TIMEOUT:
                     log.warn("##################################################");
                     log.warn("          408 REQUEST_TIMEOUT");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case CONFLICT:
                     log.warn("##################################################");
                     log.warn("          409 CONFLICT");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case PRECONDITION_FAILED:
                     log.warn("##################################################");
                     log.warn("          412 PRECONDITION_FAILED");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case URI_TOO_LONG:
                     log.warn("##################################################");
                     log.warn("          414 URI_TOO_LONG");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
                 case UNSUPPORTED_MEDIA_TYPE:
                     log.warn("##################################################");
                     log.warn("          415 UNSUPPORTED_MEDIA_TYPE");
                     log.warn("##################################################");
-                    return "redirect:/login?login_error=1";
+                    return "redirect:/user/login?login_error=1";
             }
         }
         Throwable exception = (Throwable) request.getAttribute(ERROR_EXCEPTION);
