@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.db.data.project;
+package org.woehlke.java.simpleworklist.domain.meso.project;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
+import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
-import org.woehlke.java.simpleworklist.domain.meso.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
@@ -65,6 +65,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         model.addAttribute("userSession", userSession);
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public String addNewProjectToProjectIdPersist(
         @Min(1L) long projectId,
         @NotNull UserSessionBean userSession,
@@ -120,6 +121,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void addNewProjectToProjectRootForm(
         @NotNull UserSessionBean userSession,
         @NotNull Context context,
@@ -141,6 +143,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public String addNewProjectToProjectRootPersist(
         @NotNull UserSessionBean userSession,
         @NotNull Project project,

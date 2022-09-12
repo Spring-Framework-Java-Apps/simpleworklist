@@ -27,7 +27,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTaskToTaskAndChangeTaskOrderInTaskstate(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
@@ -56,7 +55,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
 
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
@@ -86,7 +84,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START moveTasks UP By Project Root");
@@ -118,7 +115,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByProject(Task sourceTask, Task destinationTask ) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
@@ -151,7 +147,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByProject(Task sourceTask, Task destinationTask) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
@@ -183,7 +178,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask ) {
     TaskState taskState = sourceTask.getTaskState();
     Context context = sourceTask.getContext();

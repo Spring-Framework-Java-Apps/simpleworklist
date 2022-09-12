@@ -58,7 +58,6 @@ public interface ProjectControllerService {
     void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask);
 
     Project findByProjectId(long projectId);
-
     Page<Task> findByProject(Project thisProject, Pageable pageable);
 
 }
