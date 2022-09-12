@@ -36,7 +36,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> findByProject(
+    public Page<Task> findByProjectId(
         @NotNull Project thisProject,Pageable request
     ) {
         log.info("findByProject: ");
@@ -48,14 +48,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Page<Task> findByRootProject( Context context,Pageable request) {
+    public Page<Task> findByProjectRoot(Context context, Pageable request) {
         log.info("findByRootProject: ");
         return taskRepository.findByProjectIsNullAndContext(context, request);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Task findOne(@Min(1L) long taskId) {
+    public Task findById(@Min(1L) long taskId) {
         log.info("findOne: ");
         if(taskRepository.existsById(taskId)) {
             return taskRepository.getReferenceById(taskId);

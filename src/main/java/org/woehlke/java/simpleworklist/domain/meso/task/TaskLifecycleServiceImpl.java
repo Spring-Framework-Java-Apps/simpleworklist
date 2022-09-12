@@ -13,7 +13,6 @@ import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
-import org.woehlke.java.simpleworklist.domain.meso.task.TaskLifecycleService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -209,7 +208,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
 
 
   public Task addProject(Task task){
-      Task persistentTask = taskService.findOne(task.getId());
+      Task persistentTask = taskService.findById(task.getId());
       if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
         persistentTask.setProject(null);
         if (persistentTask.getProject() == null || persistentTask.getProject().getId() == null || persistentTask.getProject().getId() == 0L) {

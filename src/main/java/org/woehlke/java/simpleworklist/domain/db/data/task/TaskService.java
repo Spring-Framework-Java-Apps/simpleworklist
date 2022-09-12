@@ -10,8 +10,7 @@ import java.util.List;
 
 public interface TaskService {
 
-    //TODO: rename to findById
-    Task findOne(long taskId);
+    Task findById(long taskId);
 
     List<Task> findByTaskStateInbox(Context context);
     List<Task> findByTaskStateToday(Context context);
@@ -37,9 +36,8 @@ public interface TaskService {
     Page<Task> findByTaskStateDeleted(Context context, Pageable request);
     Page<Task> findByTaskStateProjects(Context context, Pageable request);
 
-    Page<Task> findByProject(Project thisProject, Pageable request);
-    //TODO: rename to findByProjectRoot
-    Page<Task> findByRootProject(Context context, Pageable request);
+    Page<Task> findByProjectId(Project thisProject, Pageable request);
+    Page<Task> findByProjectRoot(Context context, Pageable request);
 
     boolean projectHasNoTasks(Project project);
 

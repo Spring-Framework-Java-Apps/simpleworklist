@@ -27,7 +27,7 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  public void moveTaskToTaskAndChangeTaskOrderInTaskstate(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+  public void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
     log.info("        "+sourceTask.getTaskState().name());
@@ -206,7 +206,7 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
 
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());

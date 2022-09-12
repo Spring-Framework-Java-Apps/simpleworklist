@@ -78,7 +78,7 @@ public class ProjectIdController extends AbstractController {
       thisProject = new Project();
       thisProject.setId(0L);
       thisProject.setContext(context);
-      taskPage = taskService.findByRootProject(context, pageable);
+      taskPage = taskService.findByProjectRoot(context, pageable);
     }
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject, locale, userSession);
     model.addAttribute("breadcrumb", breadcrumb);
@@ -238,7 +238,7 @@ public class ProjectIdController extends AbstractController {
         s.append("Project has child categories.");
       }
       Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(project, locale, userSession);
-      Page<Task> taskPage = taskService.findByProject(project, request);
+      Page<Task> taskPage = taskService.findByProjectId(project, request);
       model.addAttribute("message", s.toString());
       model.addAttribute("isDeleted", false);
       model.addAttribute("taskPage", taskPage);

@@ -107,7 +107,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
 
   @Override
   public Page<Task> findByProject(Project thisProject, Pageable pageable) {
-    return taskService.findByProject(thisProject,pageable
+    return taskService.findByProjectId(thisProject,pageable
     );
   }
 

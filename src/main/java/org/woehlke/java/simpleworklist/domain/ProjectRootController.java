@@ -72,7 +72,7 @@ public class ProjectRootController extends AbstractController {
         Context context = super.getContext(userSession);
         userSession.setLastProjectId(0L);
         model.addAttribute("userSession",userSession);
-        Page<Task> taskPage = taskService.findByRootProject(context,pageable);
+        Page<Task> taskPage = taskService.findByProjectRoot(context,pageable);
         Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShowProjectRoot(locale,userSession);
         model.addAttribute("breadcrumb", breadcrumb);
         model.addAttribute("taskPage", taskPage);
