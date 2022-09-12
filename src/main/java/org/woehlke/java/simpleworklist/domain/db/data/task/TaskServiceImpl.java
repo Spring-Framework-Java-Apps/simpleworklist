@@ -213,20 +213,20 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
   public List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState, long higherOrderIdTaskState, TaskState taskState, Context context) {
     return taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask( lowerOrderIdTaskState, higherOrderIdTaskState, taskState, context);
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
   public List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Context context) {
     return taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(lowerOrderIdProject,higherOrderIdProject,context);
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-  public List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project) {
+  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+  public List<Task> getTasksByOrderIdProjectIdBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project) {
     return taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(lowerOrderIdProject, higherOrderIdProject, project);
   }
 

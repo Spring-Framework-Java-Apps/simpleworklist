@@ -285,7 +285,7 @@ public class ProjectIdController extends AbstractController {
     log.info("-------------------------------------------------");
     log.info("  destination Task: " + destinationTask.toString());
     log.info("-------------------------------------------------");
-    projectControllerService.moveTaskToTaskAndChangeTaskOrderInProject(sourceTask, destinationTask);
+    projectControllerService.moveTaskToTaskAndChangeTaskOrderInProjectId(sourceTask, destinationTask);
     log.info("  DONE: taskMoveService.moveOrderIdProject");
     log.info("-------------------------------------------------");
     model.addAttribute("userSession", userSession);

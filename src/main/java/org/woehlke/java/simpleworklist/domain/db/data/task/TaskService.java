@@ -53,6 +53,6 @@ public interface TaskService {
 
     List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState, long higherOrderIdTaskState, TaskState taskState, Context context);
     List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Context context);
-    List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project);
+    List<Task> getTasksByOrderIdProjectIdBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project);
 
 }

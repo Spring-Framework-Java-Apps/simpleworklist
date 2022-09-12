@@ -9,8 +9,8 @@ public interface TaskMove2TaskService {
   void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask);
   void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask);
 
-  void moveTasksUpByProject(Task sourceTask, Task destinationTask);
-  void moveTasksDownByProject(Task sourceTask, Task destinationTask);
+  void moveTasksUpByProjectId(Task sourceTask, Task destinationTask);
+  void moveTasksDownByProjectId(Task sourceTask, Task destinationTask);
 
   /**
    * Before: sourceTask is dragged from above down to destinationTask, so sourceTask is above destinationTask.

@@ -3,8 +3,6 @@ package org.woehlke.java.simpleworklist.domain.meso.task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
@@ -26,10 +24,10 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
-    log.info(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+    log.info(" moveTasks UP By ProjectRoot: "+sourceTask.toString() +" -> "+ destinationTask.toString());
     log.info("-------------------------------------------------------------------------------");
     Context context = sourceTask.getContext();
     long lowerOrderIdProject = destinationTask.getOrderIdProject();
@@ -51,12 +49,12 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
     tasksMoved.add(destinationTask);
     taskService.saveAll(tasksMoved);
     log.info("-------------------------------------------------------------------------------");
-    log.info(" DONE: moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
+    log.info(" DONE: moveTasks UP By ProjectRoot: "+sourceTask.toString() +" -> "+ destinationTask.toString());
     log.info("-------------------------------------------------------------------------------");
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START moveTasks UP By Project Root");
@@ -88,16 +86,16 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-  public void moveTasksUpByProject(Task sourceTask, Task destinationTask ) {
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  public void moveTasksUpByProjectId(Task sourceTask, Task destinationTask ) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
-    log.info(" START moveTasks UP By Project("+project.out()+"):");
+    log.info(" START moveTasks UP By ProjectId("+project.out()+"):");
     log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
     log.info("-------------------------------------------------------------------------------");
     long lowerOrderIdProject = destinationTask.getOrderIdProject();
     long higherOrderIdProject = sourceTask.getOrderIdProject();
-    List<Task> tasks = taskService.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
+    List<Task> tasks = taskService.getTasksByOrderIdProjectIdBetweenLowerTaskAndHigherTask(
       lowerOrderIdProject,
       higherOrderIdProject,
       project
@@ -121,16 +119,16 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-  public void moveTasksDownByProject(Task sourceTask, Task destinationTask) {
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  public void moveTasksDownByProjectId(Task sourceTask, Task destinationTask) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
-    log.info(" START moveTasks DOWN By Project("+project.out()+"):");
+    log.info(" START moveTasks DOWN By ProjectId("+project.out()+"):");
     log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
     log.info("-------------------------------------------------------------------------------");
     final long lowerOrderIdProject = sourceTask.getOrderIdProject();
     final long higherOrderIdProject = destinationTask.getOrderIdProject();
-    List<Task> tasks = taskService.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
+    List<Task> tasks = taskService.getTasksByOrderIdProjectIdBetweenLowerTaskAndHigherTask(
       lowerOrderIdProject,
       higherOrderIdProject,
       project
@@ -153,7 +151,7 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
@@ -181,12 +179,12 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask ) {
-    log.info("-------------------------------------------------------------------------------");
-    log.info(" moveTasks UP By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-    log.info("-------------------------------------------------------------------------------");
     TaskState taskState = sourceTask.getTaskState();
+    log.info("-------------------------------------------------------------------------------");
+    log.info(" moveTasks UP By TaskState("+taskState.name()+"): "+sourceTask.getId() +" -> "+ destinationTask.getId());
+    log.info("-------------------------------------------------------------------------------");
     Context context = sourceTask.getContext();
     final long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
     final long higherOrderIdTaskState = sourceTask.getOrderIdTaskState();
@@ -216,12 +214,12 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
 
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask ) {
-    log.info("-------------------------------------------------------------------------------");
-    log.info(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-    log.info("-------------------------------------------------------------------------------");
     TaskState taskState = sourceTask.getTaskState();
+    log.info("-------------------------------------------------------------------------------");
+    log.info(" moveTasks DOWN By TaskState("+taskState.name()+"): "+sourceTask.getId() +" -> "+ destinationTask.getId());
+    log.info("-------------------------------------------------------------------------------");
     Context context = sourceTask.getContext();
     long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
     long higherOrderIdTaskState = destinationTask.getOrderIdTaskState();

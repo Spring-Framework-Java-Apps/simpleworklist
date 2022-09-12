@@ -162,8 +162,8 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTaskToTaskAndChangeTaskOrderInProject(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    public void moveTaskToTaskAndChangeTaskOrderInProjectId(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         Project project = sourceTask.getProject();
         log.info("-------------------------------------------------------------------------------");
         log.info(" START: moveTaskToTaskAndChangeTaskOrderInProject ");
@@ -179,9 +179,9 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
             log.info("-------------------------------------------------------------------------------");
             if (srcIsBelowDestinationTask) {
-                this.taskMove2TaskService.moveTasksDownByProject(sourceTask, destinationTask);
+                this.taskMove2TaskService.moveTasksDownByProjectId(sourceTask, destinationTask);
             } else {
-                this.taskMove2TaskService.moveTasksUpByProject(sourceTask, destinationTask);
+                this.taskMove2TaskService.moveTasksUpByProjectId(sourceTask, destinationTask);
             }
         }
         log.info("-------------------------------------------------------------------------------");
@@ -192,7 +192,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void moveTaskToTaskAndChangeTaskOrderInProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask ) {
         log.info("-------------------------------------------------------------------------------");
         log.info(" START: moveTaskToTaskAndChangeTaskOrderIn Project Root");
