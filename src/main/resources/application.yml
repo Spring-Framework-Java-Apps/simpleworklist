@@ -1,5 +1,5 @@
 server:
-  # port: ${SIMPLEWORKLIST_PORT}
+  port: ${PORT}
   error:
     path: /fehler
   compression:
@@ -26,7 +26,7 @@ spring:
   jta:
     atomikos:
       connectionfactory:
-        xa-connection-factory-class-name: org.postgresql.xa.PGXADataSource
+        xa-connection-factory-class-name: org.postgresql.xa.PGXAConnection
   jpa:
     open-in-view: true
     show-sql: true
@@ -148,7 +148,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port: 8080
+  port: ${PORT}
   compression:
     enabled: true
 logging:
