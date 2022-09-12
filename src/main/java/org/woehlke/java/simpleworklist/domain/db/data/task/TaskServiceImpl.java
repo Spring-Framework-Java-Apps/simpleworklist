@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
-import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectRepository;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -64,68 +63,6 @@ public class TaskServiceImpl implements TaskService {
             return null;
         }
     }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask ) {
-        TaskState taskState = sourceTask.getTaskState();
-        Context context = sourceTask.getContext();
-        final long lowerOrderIdTaskState = destinationTask.getOrderIdTaskState();
-        final long higherOrderIdTaskState = sourceTask.getOrderIdTaskState();
-        List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
-            lowerOrderIdTaskState,
-            higherOrderIdTaskState,
-            taskState,
-            context
-        );
-        List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
-        for(Task task:tasks){
-            task.moveUpByTaskState();
-            log.info(task.outTaskstate());
-            tasksMoved.add(task);
-        }
-        destinationTask.moveUpByTaskState();
-        log.info(destinationTask.outTaskstate());
-        tasksMoved.add(destinationTask);
-        sourceTask.setOrderIdTaskState( lowerOrderIdTaskState );
-        log.info(sourceTask.outTaskstate());
-        tasksMoved.add(sourceTask);
-        taskRepository.saveAll(tasksMoved);
-    }
-
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask ) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" moveTasks DOWN By TaskState: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
-        TaskState taskState = sourceTask.getTaskState();
-        Context context = sourceTask.getContext();
-        long lowerOrderIdTaskState = sourceTask.getOrderIdTaskState();
-        long higherOrderIdTaskState = destinationTask.getOrderIdTaskState();
-        List<Task> tasks = taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(
-            lowerOrderIdTaskState,
-            higherOrderIdTaskState,
-            taskState,
-            context
-        );
-        List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
-        for(Task task:tasks){
-            task.moveDownByTaskState();
-            log.info(task.outProject());
-            tasksMoved.add(task);
-        }
-        sourceTask.setOrderIdTaskState(higherOrderIdTaskState);
-        destinationTask.moveDownByTaskState();
-        tasksMoved.add(sourceTask);
-        tasksMoved.add(destinationTask);
-        taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE: moveTasks DOWN By TaskState("+taskState.name()+"): "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
-    }
-
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
@@ -397,6 +334,21 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context) {
     return taskRepository.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(context);
+  }
+
+  @Override
+  public List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState, long higherOrderIdTaskState, TaskState taskState, Context context) {
+    return taskRepository.getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask( lowerOrderIdTaskState, higherOrderIdTaskState, taskState, context);
+  }
+
+  @Override
+  public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask) {
+
+  }
+
+  @Override
+  public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask) {
+
   }
 
 }
