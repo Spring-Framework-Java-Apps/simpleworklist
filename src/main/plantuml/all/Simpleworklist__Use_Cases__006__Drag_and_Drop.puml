@@ -1,6 +1,6 @@
 @startuml
 
-title Functional_Requirements_0 - Simpleworklist Use Case Diagram
+title Functional Requirements 006 - Drag and Drop. Task move to TaskstateTab
 
 left to right direction
 'top to bottom direction
@@ -26,7 +26,7 @@ package Functional_Requirements {
 
   package 006__Drag_and_Drop {
 
-    package 007__Task_move_to_TaskstateTab {
+    package 006__Task_move_to_TaskstateTab {
       (F007_Navigation) --> (F120__Drag_and_Drop__Task_move_to_taskstate_inbox)
       (F007_Navigation) --> (F121__Drag_and_Drop__Task_move_to_taskstate_today)
       (F007_Navigation) --> (F122__Drag_and_Drop__Task_move_to_taskstate_next)
@@ -36,6 +36,17 @@ package Functional_Requirements {
       (F007_Navigation) --> (F126__Drag_and_Drop__Task_move_to_taskstate_focus)
       (F007_Navigation) --> (F127__Drag_and_Drop__Task_move_to_taskstate_completed)
       (F007_Navigation) --> (F128__Drag_and_Drop__Task_move_to_taskstate_trash)
+    }
+
+    package 007__Move_to_Project {
+      (F007_Navigation) --> (F129__Drag_and_Drop__Task_move_to_Project)
+      (F007_Navigation) --> (F130__Drag_and_Drop__Project_move_to_Project)
+    }
+
+    package 008__Move_Task_to_Change_Task_Order {
+      (F007_Navigation) --> (F131__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__TaskstateTab)
+      (F007_Navigation) --> (F132__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_Root)
+      (F007_Navigation) --> (F133__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_id)
     }
 
   }

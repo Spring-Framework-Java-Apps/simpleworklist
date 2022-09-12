@@ -1,6 +1,6 @@
 @startuml
 
-title Functional_Requirements - Simpleworklist Use Case Diagram
+title Functional Requirements 009 - Search
 
 left to right direction
 'top to bottom direction
@@ -24,13 +24,8 @@ package Functional_Requirements {
     User <|- SystemUser
   }
 
-  package 006__Drag_and_Drop {
-
-    package 009__Move_Task_to_Change_Task_Order {
-      (F007_Navigation) --> (F131__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__TaskstateTab)
-      (F007_Navigation) --> (F132__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_Root)
-      (F007_Navigation) --> (F133__Drag_and_Drop__Move_Task_to_Change_TaskOrder_in__Project_id)
-    }
+  package 010__Search {
+     (F007_Navigation) --> (F200_Search_Request)
   }
 
 }

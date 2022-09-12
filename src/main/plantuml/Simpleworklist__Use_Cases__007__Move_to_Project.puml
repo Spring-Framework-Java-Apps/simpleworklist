@@ -1,6 +1,6 @@
 @startuml
 
-title Functional_Requirements - Simpleworklist Use Case Diagram
+title Functional Requirements 007 - Drag and Drop Move to Project
 
 left to right direction
 'top to bottom direction
@@ -24,8 +24,13 @@ package Functional_Requirements {
     User <|- SystemUser
   }
 
-  package 010__Search {
-     (F007_Navigation) --> (F200_Search_Request)
+  package 006__Drag_and_Drop {
+
+    package 008__Move_to_Project {
+      (F007_Navigation) --> (F129__Drag_and_Drop__Task_move_to_Project)
+      (F007_Navigation) --> (F130__Drag_and_Drop__Project_move_to_Project)
+    }
+
   }
 
 }
