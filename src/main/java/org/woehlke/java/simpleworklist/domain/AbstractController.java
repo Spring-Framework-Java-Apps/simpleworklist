@@ -1,21 +1,19 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;
-import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
-import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
 
 import javax.validation.constraints.NotNull;
@@ -33,11 +31,6 @@ public abstract class AbstractController {
   @Autowired
   private ContextService contextService;
 
-  /*
-  @Autowired
-  private TaskService taskService;
-  */
-
   @Autowired
   private ProjectService projectService;
 
@@ -50,9 +43,7 @@ public abstract class AbstractController {
 
   @ModelAttribute("allProjects")
   public final List<Project> getAllProjects(
-    @ModelAttribute("userSession") UserSessionBean userSession //,
-    //  BindingResult result, //TODO: remove
-    //  Model model  //TODO: remove
+    @ModelAttribute("userSession") UserSessionBean userSession
   ) {
     userSession = updateUserSession(userSession);
     Context context = this.getContext(userSession);
