@@ -120,64 +120,18 @@ org:
 logging:
   level:
     root: INFO
-    javax: INFO
-    jakartaee: INFO
-    com:
-      atomikos: INFO
     org:
-      thymeleaf:
-        dialect:
-          springdata: INFO
-      apache:
-        commons:
-          logging: WARN
-      h2: INFO
-      springframework:
-        data:
-          jdbc: INFO
-          jpa: INFO
-          relational: INFO
-        security:
-          web: INFO
-          context: INFO
-        boot: INFO
-        beans: INFO
-        jdbc: INFO
-        orm: INFO
-        session: WARN
-        test: INFO
-        mock: WARN
-        transaction: INFO
-        jca: INFO
-        web: INFO
-        remoting: INFO
-        http: INFO
-        expression: INFO
-        util: INFO
-        lang: INFO
-        core: INFO
-        cglib: WARN
+      springframework: INFO
       hibernate:
-        sql: INFO
-        query: INFO
-        mapping: INFO
-        jpa: INFO
-        id: INFO
-        graph: INFO
-        cfg: INFO
-        service: INFO
-        result: INFO
+        SQL: INFO
         engine:
           internal: WARN
       ch:
         qos: WARN
+      postgresql: WARN
       woehlke:
         java:
-          simpleworklist:
-            application: DEBUG
-            config: DEBUG
-            measurements: DEBUG
-            domain: DEBUG
+          simpleworklist: INFO
 debug: false
 ---
 spring:
@@ -195,7 +149,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  # port: 9010
+  port: 8080
   compression:
     enabled: true
 logging:
@@ -212,12 +166,5 @@ logging:
       postgresql: WARN
       woehlke:
         java:
-          simpleworklist:
-            application: INFO
-            config: INFO
-            measurements: INFO
-            user: INFO
-            domain: INFO
-            services: INFO
-            common: INFO
+          simpleworklist: INFO
 debug: false
