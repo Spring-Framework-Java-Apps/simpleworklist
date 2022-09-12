@@ -27,12 +27,14 @@ public class ApplicationErrorController implements ErrorController {
         String errorMessage = (String) request.getAttribute(ERROR_MESSAGE);
         if(errorMessage!=null){
             errorMessage = errorMessage.strip();
-            log.warn("handleError - errorMessage: "+errorMessage);
+            if(!errorMessage.isEmpty()) {
+              log.warn("handleError - errorMessage: " + errorMessage);
+            }
         }
         Integer statusCode = (Integer) request.getAttribute(ERROR_STATUS_CODE);
         if(statusCode != null){
             HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
-            log.warn(httpStatus.value()+" "+httpStatus.getReasonPhrase());
+            log.warn("handleError - HTTP Code: " +httpStatus.value()+" "+httpStatus.getReasonPhrase());
             String redirectLoginPageWithError = "redirect:/user/login?login_error=1";
             switch (httpStatus){
                 case NOT_FOUND:
