@@ -69,12 +69,6 @@ public class Breadcrumb implements Serializable {
         breadcrumb.add(breadcrumbItemTask);
     }
 
-    public void addTaskstate(String taskStateView){
-        String urlTaskstate = "/taskstate/" + taskStateView;
-        BreadcrumbItem breadcrumbItemTaskstate = new BreadcrumbItem(taskStateView,urlTaskstate);
-        breadcrumb.add(breadcrumbItemTaskstate);
-    }
-
     public void addTaskstate(String taskStateView, String urlTaskstate){
         BreadcrumbItem breadcrumbItemTaskstate = new BreadcrumbItem(taskStateView,urlTaskstate);
         breadcrumb.add(breadcrumbItemTaskstate);

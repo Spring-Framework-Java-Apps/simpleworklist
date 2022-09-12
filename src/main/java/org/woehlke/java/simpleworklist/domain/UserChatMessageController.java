@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
-import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageForm;
+import org.woehlke.java.simpleworklist.domain.meso.chat.ChatMessageForm;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
