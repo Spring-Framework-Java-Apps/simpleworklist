@@ -12,7 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
-import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectControllerService;
+import org.woehlke.java.simpleworklist.domain.meso.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectService;

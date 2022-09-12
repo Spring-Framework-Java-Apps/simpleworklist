@@ -13,7 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
-import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectControllerService;
+import org.woehlke.java.simpleworklist.domain.meso.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;

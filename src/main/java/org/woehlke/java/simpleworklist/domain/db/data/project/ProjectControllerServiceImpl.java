@@ -13,10 +13,12 @@ import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
+import org.woehlke.java.simpleworklist.domain.meso.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.meso.task.TaskMove2TaskService;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -31,15 +33,17 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     private final ProjectService projectService;
     private final BreadcrumbService breadcrumbService;
     private final TaskService taskService;
+    private final TaskMove2TaskService taskMove2TaskService;
 
     @Autowired
     public ProjectControllerServiceImpl(
-        ProjectService projectService,
-        BreadcrumbService breadcrumbService,
-        TaskService taskService) {
+      ProjectService projectService,
+      BreadcrumbService breadcrumbService,
+      TaskService taskService, TaskMove2TaskService taskMove2TaskService) {
         this.projectService = projectService;
         this.breadcrumbService = breadcrumbService;
         this.taskService = taskService;
+      this.taskMove2TaskService = taskMove2TaskService;
     }
 
     public void addNewProjectToProjectIdForm(
@@ -172,9 +176,9 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
             log.info("-------------------------------------------------------------------------------");
             if (srcIsBelowDestinationTask) {
-                this.taskService.moveTasksDownByProject(sourceTask, destinationTask);
+                this.taskMove2TaskService.moveTasksDownByProject(sourceTask, destinationTask);
             } else {
-                this.taskService.moveTasksUpByProject(sourceTask, destinationTask);
+                this.taskMove2TaskService.moveTasksUpByProject(sourceTask, destinationTask);
             }
         }
         log.info("-------------------------------------------------------------------------------");
@@ -201,9 +205,9 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
             log.info(" srcIsBelowDestinationTask: "+srcIsBelowDestinationTask);
             log.info("-------------------------------------------------------------------------------");
             if (srcIsBelowDestinationTask) {
-                this.taskService.moveTasksDownByProjectRoot(sourceTask, destinationTask);
+                this.taskMove2TaskService.moveTasksDownByProjectRoot(sourceTask, destinationTask);
             } else {
-                this.taskService.moveTasksUpByProjectRoot(sourceTask, destinationTask);
+                this.taskMove2TaskService.moveTasksUpByProjectRoot(sourceTask, destinationTask);
             }
         }
         log.info("-------------------------------------------------------------------------------");

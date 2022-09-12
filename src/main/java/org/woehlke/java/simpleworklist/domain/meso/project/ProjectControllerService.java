@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.db.data.project;
+package org.woehlke.java.simpleworklist.domain.meso.project;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

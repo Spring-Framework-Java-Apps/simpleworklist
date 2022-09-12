@@ -64,133 +64,6 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask ) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
-        Context context = sourceTask.getContext();
-        long lowerOrderIdProject = destinationTask.getOrderIdProject();
-        long higherOrderIdProject = sourceTask.getOrderIdProject();
-        List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
-            lowerOrderIdProject,
-            higherOrderIdProject,
-            context
-        );
-        List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
-        for(Task task:tasks){
-            task.moveUpByProject();
-            log.info(task.outProject());
-            tasksMoved.add(task);
-        }
-        sourceTask.setOrderIdProject(lowerOrderIdProject);
-        destinationTask.moveUpByProject();
-        tasksMoved.add(sourceTask);
-        tasksMoved.add(destinationTask);
-        taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE: moveTasks UP By ProjectRoot: "+sourceTask.getId() +" -> "+ destinationTask.getId());
-        log.info("-------------------------------------------------------------------------------");
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask) {
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START moveTasks UP By Project Root");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
-        Context context = sourceTask.getContext();
-        final long lowerOrderIdProject = sourceTask.getOrderIdProject();
-        final long higherOrderIdProject = destinationTask.getOrderIdProject();
-        List<Task> tasks = taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(
-            lowerOrderIdProject,
-            higherOrderIdProject,
-            context
-        );
-        List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
-        for(Task task:tasks){
-            task.moveDownByProject();
-            log.info(task.outProject());
-            tasksMoved.add(task);
-        }
-        sourceTask.setOrderIdProject(higherOrderIdProject);
-        destinationTask.moveDownByProject();
-        tasksMoved.add(sourceTask);
-        tasksMoved.add(destinationTask);
-        taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE moveTasks UP By Project Root");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTasksUpByProject(Task sourceTask, Task destinationTask ) {
-        Project project = sourceTask.getProject();
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START moveTasks UP By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
-        long lowerOrderIdProject = destinationTask.getOrderIdProject();
-        long higherOrderIdProject = sourceTask.getOrderIdProject();
-        List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
-            lowerOrderIdProject,
-            higherOrderIdProject,
-            project
-        );
-        List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
-        for(Task task:tasks){
-            task.moveUpByProject();
-            log.info(task.outProject());
-            tasksMoved.add(task);
-        }
-        sourceTask.setOrderIdProject(lowerOrderIdProject);
-        destinationTask.moveUpByProject();
-        tasksMoved.add(sourceTask);
-        tasksMoved.add(destinationTask);
-        taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE moveTasks UP By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
-
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public void moveTasksDownByProject(Task sourceTask, Task destinationTask) {
-        Project project = sourceTask.getProject();
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" START moveTasks DOWN By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
-        final long lowerOrderIdProject = sourceTask.getOrderIdProject();
-        final long higherOrderIdProject = destinationTask.getOrderIdProject();
-        List<Task> tasks = taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(
-            lowerOrderIdProject,
-            higherOrderIdProject,
-            project
-        );
-        List<Task> tasksMoved = new ArrayList<>(tasks.size()+2);
-        for(Task task:tasks){
-            task.moveDownByProject();
-            log.info(task.outProject());
-            tasksMoved.add(task);
-        }
-        sourceTask.setOrderIdProject(higherOrderIdProject);
-        destinationTask.moveDownByProject();
-        tasksMoved.add(sourceTask);
-        tasksMoved.add(destinationTask);
-        taskRepository.saveAll(tasksMoved);
-        log.info("-------------------------------------------------------------------------------");
-        log.info(" DONE smoveTasks DOWN By Project("+project.out()+"):");
-        log.info(" "+sourceTask.outProject() +" -> "+ destinationTask.outProject());
-        log.info("-------------------------------------------------------------------------------");
-    }
-
   @Override
   public Task saveAndFlush(Task task) {
     return taskRepository.saveAndFlush(task);
@@ -342,13 +215,13 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask) {
-
+  public List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Context context) {
+    return taskRepository.getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(lowerOrderIdProject,higherOrderIdProject,context);
   }
 
   @Override
-  public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask) {
-
+  public List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project) {
+    return taskRepository.getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(lowerOrderIdProject, higherOrderIdProject, project);
   }
 
 }

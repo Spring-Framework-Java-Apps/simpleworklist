@@ -43,16 +43,9 @@ public interface TaskService {
 
     boolean projectHasNoTasks(Project project);
 
-    void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask);
-    void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask);
-
-    void moveTasksUpByProject(Task sourceTask, Task destinationTask);
-    void moveTasksDownByProject(Task sourceTask, Task destinationTask);
-
     Task saveAndFlush(Task task);
     void saveAll(List<Task> taskListChanged);
     void deleteAll(List<Task> taskListDeleted);
-
 
     List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context);
 
@@ -61,9 +54,7 @@ public interface TaskService {
     Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context);
 
     List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState, long higherOrderIdTaskState, TaskState taskState, Context context);
-
-  void moveTasksUpByTaskState(Task sourceTask, Task destinationTask);
-
-  void moveTasksDownByTaskState(Task sourceTask, Task destinationTask);
+    List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Context context);
+    List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project);
 
 }
