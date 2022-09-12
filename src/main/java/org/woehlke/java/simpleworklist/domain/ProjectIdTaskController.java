@@ -214,6 +214,22 @@ public class ProjectIdTaskController extends AbstractController {
     }
   }
 
+  @RequestMapping(path = "/transform", method = RequestMethod.GET)
+  public final String transformTaskIntoProjectGet(
+    @PathVariable("projectId") Project thisProject,
+    @PathVariable("taskId") Task task,
+    @ModelAttribute("userSession") UserSessionBean userSession,
+    Model model
+  ) {
+    log.info("transformTaskIntoProjectGet");
+    userSession.setLastProjectId(thisProject.getId());
+    userSession.setLastTaskState(task.getTaskState());
+    userSession.setLastTaskId(task.getId());
+    model.addAttribute("taskstateType", PROJECTS.getSlug());
+    model.addAttribute("dataPage", true);
+    return taskLifecycleService.transformTaskIntoProjectGet(task, userSession, model);
+  }
+
   @RequestMapping(path = "/task/{taskId}/complete", method = RequestMethod.GET)
   public final String setDoneTaskGet(
     @PathVariable("projectId") Project thisProject,

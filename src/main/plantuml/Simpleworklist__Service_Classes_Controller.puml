@@ -41,7 +41,6 @@ abstract class AbstractController {
     - UserSessionBean getNewUserSession()
     - UserSessionBean updateUserSession(UserSessionBean userSession)
 }
-
 class ApplicationErrorController {
   String handleError( HttpServletRequest request )
   String getErrorPath()
@@ -53,25 +52,28 @@ class PagesController {
   String renderPageInformation(UserSessionBean userSession)
 }
 class ProjectIdController {
-  String projectTaskAddGet(Project thisProject, UserSessionBean userSession)
-  String projectTaskAddPost(long projectId, UserSessionBean userSession, Task task)
   String project(long projectId, Pageable pageable, String message, boolean isDeleted, UserSessionBean userSession)
   String projectAddProjectGet(long projectId, UserSessionBean userSession)
   String projectAddProjectPost(long projectId, UserSessionBean userSession, Project project)
-  String projectMoveToProjectGet(Project thisProject, long targetProjectId, UserSessionBean userSession)
   String projectEditGet(Project thisProject, UserSessionBean userSession)
   String projectEditPost(long projectId, Project project, UserSessionBean userSession)
   String projectDeleteGet( Project project, Pageable request, UserSessionBean userSession)
+  String projectMoveToProjectGet(Project thisProject, long targetProjectId, UserSessionBean userSession)
   String moveTaskToTaskAndChangeTaskOrderInProject(Project thisProject, Task sourceTask, Task destinationTask,UserSessionBean userSession)
   String moveAllCompletedToTrash(Project thisProject, UserSessionBean userSession)
   String emptyTrash(Project thisProject, UserSessionBean userSession)
-
+}
+class ProjectIdTaskController {
+  String projectTaskAddGet(Project thisProject, UserSessionBean userSession)
+  String projectTaskAddPost(long projectId, UserSessionBean userSession, Task task)
   String editTaskGet( Project thisProject, Task task, UserSessionBean userSession)
   String editTaskPost(Project thisProject, long taskId, Task task, UserSessionBean userSession)
   String setDoneTaskGet(Project thisProject, UserSessionBean userSession, Task task)
   String unsetDoneTaskGet( Project thisProject, UserSessionBean userSession, Task task)
   String setFocusGet(Project thisProject, UserSessionBean userSession, Task task,  String back)
   String unsetFocusGet(Project thisProject, UserSessionBean userSession, Task task, String back)
+}
+class ProjectIdTaskMoveController {
   String moveTaskToAnotherProject( Project thisProject,  Task task, UserSessionBean userSession)
   String moveTaskToAnotherProject(Project thisProject, Task task, Project otherProject, UserSessionBean userSession)
   String moveTaskToInbox(Project thisProject, UserSessionBean userSession, Task task)
@@ -84,40 +86,17 @@ class ProjectIdController {
   String moveTaskToTrash(Project thisProject, UserSessionBean userSession, Task task)
   String transformTaskIntoProjectGet(Project thisProject, Task task, UserSessionBean userSession)
 }
-class ProjectIdTaskController {}
-class ProjectIdTaskMoveController {
-  String moveTaskToInbox(Task task, UserSessionBean userSession)
-  String moveTaskToToday(Task task, UserSessionBean userSession)
-  String moveTaskToNext(Task task, UserSessionBean userSession)
-  String moveTaskToWaiting(Task task, UserSessionBean userSession)
-  String moveTaskToSomeday(Task task, UserSessionBean userSession)
-  String moveTaskToFocus(Task task, UserSessionBean userSession)
-  String moveTaskToCompleted(Task task, UserSessionBean userSession)
-  String moveTaskToTrash(Task task, UserSessionBean userSession)
-  String moveAllCompletedToTrash(Task task, UserSessionBean userSession)
-  String emptyTrash(Task task, UserSessionBean userSession)
-}
 class ProjectRootController {
   String projectRoot(Pageable pageable, String message, boolean isDeleted, UserSessionBean userSession)
   String projectRootAddProjectGet(UserSessionBean userSession)
   String projectRootAddProjectPost(Project project, UserSessionBean userSession)
+}
+class ProjectRootTaskController {
   String projectRootTaskAddGet(UserSessionBean userSession)
   String projectRootTaskAddPost(UserSessionBean userSession, Task task)
   String editTaskGet(Task task, UserSessionBean userSession)
   String editTaskPost(long taskId,Task task, UserSessionBean userSession)
   String changeTaskOrderId(Task sourceTask, Task destinationTask, UserSessionBean userSession)
-  String moveTaskToProjectRoot(Task task, UserSessionBean userSession)
-  String moveTaskToProjectId(Task task, Project targetProject, UserSessionBean userSession)
-
-  String moveTaskToInbox(Task task, UserSessionBean userSession)
-  String moveTaskToToday(Task task, UserSessionBean userSession)
-  String moveTaskToNext(Task task, UserSessionBean userSession)
-  String moveTaskToWaiting(Task task, UserSessionBean userSession)
-  String moveTaskToSomeday(Task task, UserSessionBean userSession)
-  String moveTaskToFocus(Task task, UserSessionBean userSession)
-  String moveTaskToCompleted(Task task, UserSessionBean userSession)
-  String moveTaskToTrash(Task task, UserSessionBean userSession)
-
   String deleteTaskGet(Task task, UserSessionBean userSession)
   String undeleteTaskGet(Task task, UserSessionBean userSession)
   String transformTaskIntoProjectGet(Task task, UserSessionBean userSession)
@@ -126,7 +105,21 @@ class ProjectRootController {
   String setFocusGet(Task task, UserSessionBean userSession)
   String unsetFocusGet(Task task, UserSessionBean userSession)
 }
-class SearchController {}
+class ProjectRootTaskMoveController {
+  String moveTaskToProjectRoot(Task task, UserSessionBean userSession)
+  String moveTaskToProjectId(Task task, Project targetProject, UserSessionBean userSession)
+  String moveTaskToInbox(Task task, UserSessionBean userSession)
+  String moveTaskToToday(Task task, UserSessionBean userSession)
+  String moveTaskToNext(Task task, UserSessionBean userSession)
+  String moveTaskToWaiting(Task task, UserSessionBean userSession)
+  String moveTaskToSomeday(Task task, UserSessionBean userSession)
+  String moveTaskToFocus(Task task, UserSessionBean userSession)
+  String moveTaskToCompleted(Task task, UserSessionBean userSession)
+  String moveTaskToTrash(Task task, UserSessionBean userSession)
+}
+class SearchController {
+  String searchGet(String searchterm,UserSessionBean userSession)
+}
 class TaskLifecycleController {
   String addNewTaskToInboxGet(UserSessionBean userSession)
   String addNewTaskToInboxPost(UserSessionBean userSession, Task task)
