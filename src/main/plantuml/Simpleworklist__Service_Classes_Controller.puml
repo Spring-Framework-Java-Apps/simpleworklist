@@ -12,6 +12,8 @@ AbstractController <|-- ProjectIdController
 AbstractController <|-- ProjectIdTaskController
 AbstractController <|-- ProjectIdTaskMoveController
 AbstractController <|-- ProjectRootController
+AbstractController <|-- ProjectRootTaskController
+AbstractController <|-- ProjectRootTaskMoveController
 AbstractController <|-- SearchController
 AbstractController <|-- TaskLifecycleController
 AbstractController <|-- TaskMove2TaskController
@@ -68,6 +70,7 @@ class ProjectIdTaskController {
   String projectTaskAddPost(long projectId, UserSessionBean userSession, Task task)
   String editTaskGet( Project thisProject, Task task, UserSessionBean userSession)
   String editTaskPost(Project thisProject, long taskId, Task task, UserSessionBean userSession)
+  String transformTaskIntoProjectGet(Project thisProject, Task task, UserSessionBean userSession)
   String setDoneTaskGet(Project thisProject, UserSessionBean userSession, Task task)
   String unsetDoneTaskGet( Project thisProject, UserSessionBean userSession, Task task)
   String setFocusGet(Project thisProject, UserSessionBean userSession, Task task,  String back)
@@ -84,7 +87,6 @@ class ProjectIdTaskMoveController {
   String moveTaskToFocus(Project thisProject, UserSessionBean userSession, Task task)
   String moveTaskToCompleted(Project thisProject, UserSessionBean userSession, Task task)
   String moveTaskToTrash(Project thisProject, UserSessionBean userSession, Task task)
-  String transformTaskIntoProjectGet(Project thisProject, Task task, UserSessionBean userSession)
 }
 class ProjectRootController {
   String projectRoot(Pageable pageable, String message, boolean isDeleted, UserSessionBean userSession)
