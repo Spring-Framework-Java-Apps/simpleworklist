@@ -103,7 +103,10 @@ org:
           loginPage: "/user/login"
           antPatternsPublic:
             - "/favicon.ico"
+            - "/favicon.ico*"
             - "/information"
+            - "/information*"
+            - "/pages/**"
             - "/webjars/**"
             - "/css/**"
             - "/img/**"
