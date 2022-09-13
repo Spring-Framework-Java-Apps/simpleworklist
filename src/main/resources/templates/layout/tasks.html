@@ -88,14 +88,14 @@
                             <div th:replace="this :: tw-tasks-modal(task=${task},myUrlPath=${myUrlPath})"></div>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col task_col_energy_and_time">
-                            <span class="badge bg-dark task_col_content task_col_content_taskenergy twtooltip"
+                            <span class="badge bg-secondary task_col_content task_col_content_taskenergy twtooltip"
                               th:if="${task.taskEnergy.value ne 'NONE'}"
                               th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
                               draggable="true" ondragstart="dragTask(event)"
                               th:text="${#messages.msgOrNull(task.taskEnergy.code)}"
                               th:alt-title="#{task.col.twtooltip.badge.taskEnergy}">
                             </span>
-                            <span class="badge bg-dark task_col_content task_col_content_tasktime twtooltip"
+                            <span class="badge bg-secondary task_col_content task_col_content_tasktime twtooltip"
                               th:if="${task.taskTime.value ne 'NONE'}"
                               th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
                               draggable="true" ondragstart="dragTask(event)"
