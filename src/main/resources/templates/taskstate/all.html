@@ -34,11 +34,11 @@
   </div>
   <div th:if="${taskPage.getTotalElements() gt 0}" id="mytwcontent-taskpage">
     <div
-      th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage}, myTaskState='INBOX', myUrlPath=@{/taskstate})">
+      th:replace="layout/tasks :: tw-tasks-table(taskPage=${taskPage}, myTaskState='ALL', myUrlPath=@{/taskstate})">
     </div>
   </div>
   <div th:if="${taskPage.getTotalElements() eq 0}" id="mytwcontent-no-taskpage">
-    <div th:text="#{tasks.inbox.noTasks}">You have no Tasks in Your Inbox</div>
+    <div th:text="#{tasks.all.noTasks}">You have no Tasks in Your Inbox</div>
   </div>
 </div>
 
