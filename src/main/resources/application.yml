@@ -104,8 +104,6 @@ org:
           antPatternsPublic:
             - "/favicon.ico"
             - "/favicon.ico*"
-            - "/information"
-            - "/information*"
             - "/pages/**"
             - "/webjars/**"
             - "/css/**"

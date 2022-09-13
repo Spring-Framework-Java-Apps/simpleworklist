@@ -13,7 +13,7 @@ import java.util.Locale;
 
 @Slf4j
 @Controller
-@RequestMapping(path = "/")
+@RequestMapping(path = "/pages")
 public class PagesController extends AbstractController {
 
   @RequestMapping(path = "/information", method = RequestMethod.GET)
