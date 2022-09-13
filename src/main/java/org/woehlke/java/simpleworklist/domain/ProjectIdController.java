@@ -40,16 +40,14 @@ import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJ
 public class ProjectIdController extends AbstractController {
 
   private final ProjectControllerService projectControllerService;
-  private final ProjectService projectService;
   private final TaskMoveService taskMoveService;
   private final TaskService taskService;
   private final ContextService contextService;
   private final BreadcrumbService breadcrumbService;
 
   @Autowired
-  public ProjectIdController(ProjectControllerService projectControllerService, ProjectService projectService, TaskMoveService taskMoveService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
+  public ProjectIdController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
     this.projectControllerService = projectControllerService;
-    this.projectService = projectService;
     this.taskMoveService = taskMoveService;
     this.taskService = taskService;
     this.contextService = contextService;
@@ -171,13 +169,13 @@ public class ProjectIdController extends AbstractController {
       for (ObjectError e : result.getAllErrors()) {
         log.info(e.toString());
       }
-      thisProject = projectService.findByProjectId(projectId);
+      thisProject = projectControllerService.findByProjectId(projectId);
       Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject, locale, userSession);
       model.addAttribute("breadcrumb", breadcrumb);
       model.addAttribute("userSession", userSession);
       return "project/id/edit";
     } else {
-      thisProject = projectService.findByProjectId(project.getId());
+      thisProject = projectControllerService.findByProjectId(project.getId());
       thisProject.setName(project.getName());
       thisProject.setDescription(project.getDescription());
       Context newContext = project.getContext();
@@ -185,10 +183,10 @@ public class ProjectIdController extends AbstractController {
       if (contextChanged) {
         long newContextId = newContext.getId();
         newContext = contextService.findByIdAndUserAccount(newContextId, thisUser);
-        thisProject = projectService.moveProjectToAnotherContext(thisProject, newContext);
+        thisProject = projectControllerService.moveProjectToAnotherContext(thisProject, newContext);
         userSession.setLastContextId(newContextId);
       } else {
-        thisProject = projectService.update(thisProject);
+        thisProject = projectControllerService.update(thisProject);
       }
       userSession.setLastProjectId(thisProject.getId());
       model.addAttribute("userSession", userSession);
@@ -210,7 +208,7 @@ public class ProjectIdController extends AbstractController {
     boolean hasNoChildren = project.hasNoChildren();
     boolean delete = hasNoData && hasNoChildren;
     if (delete) {
-      Project parent = projectService.delete(project);
+      Project parent = projectControllerService.delete(project);
       //TODO: message to message_properties
       String message = "Project is deleted. You see its parent project now.";
       //TODO: message to UserSessionBean userSession
@@ -260,8 +258,8 @@ public class ProjectIdController extends AbstractController {
   ) {
     userSession.setLastProjectId(thisProject.getId());
     model.addAttribute("userSession", userSession);
-    Project targetProject = projectService.findByProjectId(targetProjectId);
-    thisProject = projectService.moveProjectToAnotherProject(thisProject, targetProject);
+    Project targetProject = projectControllerService.findByProjectId(targetProjectId);
+    thisProject = projectControllerService.moveProjectToAnotherProject(thisProject, targetProject);
     model.addAttribute("userSession", userSession);
     model.addAttribute("taskstateType", PROJECTS.getSlug());
     model.addAttribute("dataPage", true);

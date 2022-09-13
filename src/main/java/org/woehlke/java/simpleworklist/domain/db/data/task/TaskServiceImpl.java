@@ -143,6 +143,11 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
+  public List<Task> findByProjectId(Project thisProject) {
+    return taskRepository.findByProject(thisProject);
+  }
+
+  @Override
   public Page<Task> findByTaskStateInbox(Context context, Pageable request) {
     return taskRepository.findByTaskStateInbox(context, request);
   }

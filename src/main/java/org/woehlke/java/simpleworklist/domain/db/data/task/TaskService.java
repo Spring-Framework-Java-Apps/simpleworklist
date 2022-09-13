@@ -23,6 +23,7 @@ public interface TaskService {
     List<Task> findByTaskStateTrash(Context context);
     List<Task> findByTaskStateDeleted(Context context);
     List<Task> findByTaskStateProjects(Context context);
+    List<Task> findByProjectId(Project thisProject);
 
     Page<Task> findByTaskStateInbox(Context context, Pageable request);
     Page<Task> findByTaskStateToday(Context context, Pageable request);
