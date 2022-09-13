@@ -94,11 +94,20 @@
                 </div>
               </li>
 
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/taskstate/all}">
-                  <i class="fa-solid fa-database"></i>
-                  <span th:text="#{layout.page.all}">ALL Tasks</span>
+              <li class="nav-item dropdown" th:if="${allProjects != null}">
+                <a class="nav-link dropdown-toggle" id="taskstateProjects" role="button"
+                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="fa-solid fa-diagram-project"></i>
+                  <span th:text="#{layout.menu.projects}">"Projects</span>
+                  <span class="caret"></span>
                 </a>
+                <div class="dropdown-menu" aria-labelledby="taskstateProjects">
+                  <a class="dropdown-item" th:each="menuProject : ${allProjects}"
+                     th:href="@{/project/{pid}(pid=${menuProject.id})}">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span th:text="${menuProject.name}">menuProject.name</span>
+                  </a>
+                </div>
               </li>
 
               <li class="nav-item">
