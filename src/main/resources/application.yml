@@ -115,7 +115,7 @@ org:
             - "/user/resetPassword/**"
             - "/user/resetPassword/confirm/**"
             - "/error*"
-            - "/information*"
+            - "/information"
 logging:
   level:
     root: INFO
