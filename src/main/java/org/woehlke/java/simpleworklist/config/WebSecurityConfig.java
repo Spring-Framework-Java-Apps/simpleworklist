@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -60,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
             .headers()
             .disable()
             .authorizeRequests()
-            .antMatchers(simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
+            .antMatchers(HttpMethod.GET,simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
             .permitAll()
             .anyRequest()
             .fullyAuthenticated()

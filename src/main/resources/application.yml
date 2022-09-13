@@ -81,6 +81,7 @@ org:
         webMvc:
           controllerPageSize: 10
           staticResourceHandler:
+            - "/favicon.ico"
             - "/css"
             - "/img"
             - "/js"
@@ -104,7 +105,9 @@ org:
           antPatternsPublic:
             - "/favicon.ico"
             - "/favicon.ico*"
-            - "/pages/**"
+            - "/pages/information"
+            - "/pages/information*"
+            - "/pages/information/**"
             - "/webjars/**"
             - "/css/**"
             - "/img/**"
