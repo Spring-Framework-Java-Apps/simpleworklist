@@ -16,7 +16,6 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
-import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
@@ -25,7 +24,6 @@ import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.project.ProjectControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.meso.task.TaskLifecycleService;
-import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -42,16 +40,12 @@ public class ProjectRootTaskController extends AbstractController {
 
   private final ProjectControllerService projectControllerService;
   private final TaskLifecycleService taskLifecycleService;
-  private final TaskMoveService taskMoveService;
-  private final TaskService taskService;
   private final BreadcrumbService breadcrumbService;
 
   @Autowired
-  public ProjectRootTaskController(ProjectControllerService projectControllerService, TaskLifecycleService taskLifecycleService, TaskMoveService taskMoveService, TaskService taskService, BreadcrumbService breadcrumbService) {
+  public ProjectRootTaskController(ProjectControllerService projectControllerService, TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService) {
     this.projectControllerService = projectControllerService;
     this.taskLifecycleService = taskLifecycleService;
-    this.taskMoveService = taskMoveService;
-    this.taskService = taskService;
     this.breadcrumbService = breadcrumbService;
   }
 

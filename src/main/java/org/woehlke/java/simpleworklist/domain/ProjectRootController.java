@@ -39,23 +39,15 @@ import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJ
 @RequestMapping(path = "/project/root")
 public class ProjectRootController extends AbstractController {
 
-    public final static String rootProjectUrl = "redirect:/project/root";
-
     private final ProjectControllerService projectControllerService;
-    private final TaskLifecycleService taskLifecycleService;
-    private final TaskMoveService taskMoveService;
     private final TaskService taskService;
     private final BreadcrumbService breadcrumbService;
 
     @Autowired
     public ProjectRootController(
       ProjectControllerService projectControllerService,
-      TaskMoveService taskMoveService,
-      TaskLifecycleService taskLifecycleService,
       TaskService taskService, BreadcrumbService breadcrumbService) {
       this.projectControllerService = projectControllerService;
-      this.taskMoveService = taskMoveService;
-      this.taskLifecycleService = taskLifecycleService;
       this.taskService = taskService;
       this.breadcrumbService = breadcrumbService;
     }
