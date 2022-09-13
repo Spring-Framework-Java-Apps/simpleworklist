@@ -97,16 +97,17 @@ org:
             - "JSESSIONID"
           invalidateHttpSession: true
           defaultSuccessUrl: "/"
-          failureForwardUrl: "/user/login?login_error=1"
+          failureForwardUrl: "/user/logout"
           usernameParameter: "j_username"
           passwordParameter: "j_password"
           loginPage: "/user/login"
           antPatternsPublic:
+            - "/favicon.ico"
+            - "/information"
             - "/webjars/**"
             - "/css/**"
             - "/img/**"
             - "/js/**"
-            - "/favicon.ico"
             - "/user/login*"
             - "/user/register*"
             - "/user/register/**"
@@ -115,7 +116,7 @@ org:
             - "/user/resetPassword/**"
             - "/user/resetPassword/confirm/**"
             - "/error*"
-            - "/information"
+
 logging:
   level:
     root: INFO
