@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
@@ -18,7 +18,7 @@ import java.util.Stack;
 
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+//@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     private final MessageSource messageSource;

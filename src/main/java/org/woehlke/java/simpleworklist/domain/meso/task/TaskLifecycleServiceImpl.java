@@ -3,8 +3,8 @@ package org.woehlke.java.simpleworklist.domain.meso.task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
@@ -32,7 +32,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task addToInbox(@Valid Task task) {
     log.info("addToInbox");
     task.setUuid(UUID.randomUUID());
@@ -50,7 +50,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task addToProject( @Valid Task task) {
     log.info("addToProject");
     task.setUuid(UUID.randomUUID());
@@ -65,7 +65,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task addToRootProject( @Valid Task task) {
     log.info("addToRootProject");
     task.setUuid(UUID.randomUUID());
@@ -82,21 +82,21 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+  //@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
   public long getMaxOrderIdTaskState(TaskState taskState, Context context) {
     Task task = taskService.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(taskState, context);
     return (task==null) ? 0 : task.getOrderIdTaskState();
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+  //@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
   public long getMaxOrderIdProject(Project project,Context context) {
     Task task = taskService.findTopByProjectAndContextOrderByOrderIdProjectDesc(project,context);
     return (task==null) ? 0 : task.getOrderIdProject();
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+  //@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
   public long getMaxOrderIdProjectRoot(Context context) {
     Task task = taskService.findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(context);
     return (task==null) ? 0 : task.getOrderIdProject();
@@ -129,7 +129,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task updatedViaTaskstate(Task task) {
     log.info("updatedViaTaskstate");
     if(task.getProject() != null){
@@ -148,7 +148,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task updatedViaProjectRoot( @Valid Task task) {
     log.info("updatedViaProject");
     if(task.getProject() != null){
@@ -167,7 +167,7 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task updatedViaProject(Task task) {
     log.info("updatedViaProject");
     if(task.getProject() != null){

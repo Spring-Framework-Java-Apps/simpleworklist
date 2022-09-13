@@ -2,8 +2,9 @@ package org.woehlke.java.simpleworklist.domain.meso.testdata;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
@@ -34,7 +35,7 @@ public class TestDataServiceImpl implements TestDataService {
         this.contextRepository = contextRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createTestData(UserAccount userAccount) {
         log.info("----------------------------------------------");
         log.info("createTestCategoryTreeForUserAccount");
