@@ -76,6 +76,7 @@
 
 wontfix #251, wontfix #224, wontfix #245, wontfix #246 
 
-## snapshot
-* 
-* Pixel-Layout: Add Task - Action Buttons #374
+## Next
+* Feature: Search and Find
+* Feature: Search and Find 
+
