@@ -65,7 +65,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
         model.addAttribute("userSession", userSession);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public String addNewProjectToProjectIdPersist(
         @Min(1L) long projectId,
         @NotNull UserSessionBean userSession,
@@ -121,7 +121,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void addNewProjectToProjectRootForm(
         @NotNull UserSessionBean userSession,
         @NotNull Context context,
@@ -143,7 +143,7 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public String addNewProjectToProjectRootPersist(
         @NotNull UserSessionBean userSession,
         @NotNull Project project,
