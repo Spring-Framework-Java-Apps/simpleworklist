@@ -79,7 +79,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
         }
         Breadcrumb breadcrumb = new Breadcrumb(locale, context);
         String code = taskstate.getMsgCode();
-        String name = messageSource.getMessage(code,null,locale);
+        String name = messageSource.getMessage(code,null, locale);
         breadcrumb.addTaskstate(name, taskstate.getUrlPath());
         return breadcrumb;
     }

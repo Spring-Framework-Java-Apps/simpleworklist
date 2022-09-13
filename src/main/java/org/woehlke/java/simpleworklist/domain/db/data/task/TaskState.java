@@ -20,6 +20,7 @@ public enum TaskState implements Serializable {
     COMPLETED("fas fa-check-square"),
     TRASH("fas fa-trash-alt"),
     DELETED("fas fa-trash-alt"),
+    ALL("fas fa-diagram-project"), //TODO Icon for ALL
     PROJECTS("fas fa-diagram-project");
 
     private String icon;

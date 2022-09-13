@@ -203,6 +203,11 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
+  public Page<Task> findByTaskStateAll(Context context, Pageable pageRequest) {
+    return taskRepository.findByContext(context, pageRequest);
+  }
+
+  @Override
   public Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context) {
     return taskRepository.findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(taskState,context);
   }

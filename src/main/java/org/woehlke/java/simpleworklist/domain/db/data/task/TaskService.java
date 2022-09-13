@@ -36,6 +36,7 @@ public interface TaskService {
     Page<Task> findByTaskStateTrash(Context context, Pageable request);
     Page<Task> findByTaskStateDeleted(Context context, Pageable request);
     Page<Task> findByTaskStateProjects(Context context, Pageable request);
+    Page<Task> findByTaskStateAll(Context context, Pageable pageRequest);
 
     Page<Task> findByProjectId(Project thisProject, Pageable request);
     Page<Task> findByProjectRoot(Context context, Pageable request);

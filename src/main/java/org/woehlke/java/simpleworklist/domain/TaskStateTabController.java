@@ -158,4 +158,17 @@ public class TaskStateTabController extends AbstractController {
         );
     }
 
+
+  @RequestMapping(path = "/all", method = RequestMethod.GET)
+  public final String all(
+    @PageableDefault(sort = "orderIdTaskState", direction = Sort.Direction.DESC) Pageable pageable,
+    @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+    Locale locale,
+    Model model
+  ) {
+    Context context = super.getContext(userSession);
+    return taskStateTabControllerService.getTaskStatePageAll(
+      context, pageable, userSession, locale, model
+    );
+  }
 }

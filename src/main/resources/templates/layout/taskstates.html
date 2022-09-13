@@ -134,6 +134,20 @@
                     </a>
                 </li>
                 <li class="nav-item" ondrop="drop2trash(event)" ondragover="allowDropOfTask(event)">
+                  <a id="taskstate_all" class="nav-link active link-dark"
+                     th:href="@{/taskstate/all}"
+                     th:if="${taskstateType == 'all'}">
+                    <i class="fa-solid fa-database"></i>
+                    <span th:text="#{layout.page.all}" class="link-dark">All</span>
+                  </a>
+                  <a id="taskstate_all" class="nav-link link-dark"
+                     th:href="@{/taskstate/all}"
+                     th:if="${taskstateType != 'all'}">
+                    <i class="fa-solid fa-database"></i>
+                    <span th:text="#{layout.page.all}" class="link-dark">All</span>
+                  </a>
+                </li>
+                <li class="nav-item" ondrop="drop2trash(event)" ondragover="allowDropOfTask(event)">
                   <a id="taskstate_projects" class="nav-link active link-dark"
                      th:href="@{/project/root}"
                      th:if="${taskstateType == 'projects'}">

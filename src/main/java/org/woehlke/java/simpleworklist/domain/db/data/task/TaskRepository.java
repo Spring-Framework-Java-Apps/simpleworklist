@@ -15,6 +15,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
+    Page<Task> findByContext(Context context, Pageable request);
     List<Task> findByContext(Context context);
 
     @Query(name="findByTaskStateInbox")

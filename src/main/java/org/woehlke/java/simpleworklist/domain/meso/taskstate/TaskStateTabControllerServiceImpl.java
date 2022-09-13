@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Propagation;
 //import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.ui.Model;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
@@ -250,6 +249,27 @@ public class TaskStateTabControllerServiceImpl implements TaskStateTabController
     TaskState taskState = TaskState.PROJECTS;
     userSession.setLastTaskState(taskState);
     Page<Task> taskPage = taskService.findByTaskStateProjects(context, pageRequest);
+    Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
+    model.addAttribute("breadcrumb", breadcrumb);
+    model.addAttribute("taskPage", taskPage);
+    model.addAttribute("taskstateType", taskState.getSlug() );
+    model.addAttribute("userSession", userSession);
+    model.addAttribute("dataPage", true);
+    return taskState.getTemplate();
+  }
+
+  @Override
+  public String getTaskStatePageAll(
+    @NotNull Context context,
+    @NotNull Pageable pageRequest,
+    @NotNull UserSessionBean userSession,
+    @NotNull Locale locale,
+    @NotNull Model model
+  ){
+    log.info("getTaskStatePageAll");
+    TaskState taskState = TaskState.ALL;
+    userSession.setLastTaskState(taskState);
+    Page<Task> taskPage = taskService.findByTaskStateAll(context, pageRequest);
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(taskState,locale,userSession);
     model.addAttribute("breadcrumb", breadcrumb);
     model.addAttribute("taskPage", taskPage);

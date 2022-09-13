@@ -99,4 +99,11 @@ public interface TaskStateTabControllerService {
     Model model
   );
 
+  String getTaskStatePageAll(
+    Context context,
+    Pageable pageable,
+    UserSessionBean userSession,
+    Locale locale,
+    Model model
+  );
 }
