@@ -88,7 +88,7 @@
 * #392 refactor integration tests: add Unit Tests for Beans and Entities
 
 ## 2.4.10-SNAPSHOT
-* #389 apply Database changes for: 386 make Project Navigation collapsible
+* #389 apply Database Schema Evolutiion for: 386 make Project Navigation collapsible
 
 ## 2.4.11-SNAPSHOT
 * #386 make Project Navigation collapsible
