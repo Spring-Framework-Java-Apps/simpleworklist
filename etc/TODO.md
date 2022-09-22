@@ -101,6 +101,8 @@
 * #380 add User Use Cases to UML Documentation
 * #381 Transient_Class_Modell - Update UML Documentation after Refactorings due to Bugfixes
 * #382 Controller_Classes - Update UML Documentation after Refactorings due to Bugfixes
+* #393 UML Documentation: Service Classes DB ( TODO )
+* #394 UML Documentation: Service Classes Meso ( TODO )
 
 ## 2.4.14-SNAPSHOT
 * #378 Add Search Index and search functionality
