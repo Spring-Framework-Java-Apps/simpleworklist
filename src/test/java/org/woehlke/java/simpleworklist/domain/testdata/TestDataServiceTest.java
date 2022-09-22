@@ -16,6 +16,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
 import java.net.URL;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @Slf4j
@@ -43,18 +44,33 @@ public class TestDataServiceTest {
     private UserAccountTestDataService userAccountTestDataService;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         log.info(" @BeforeEach setUp()");
-        this.base = new URL("http://localhost:" + port + "/");
-        this.mockMvc = webAppContextSetup(wac).build();
+        try {
+            this.base = new URL("http://localhost:" + port + "/");
+            this.mockMvc = webAppContextSetup(wac).build();
+        } catch (Exception ex) {
+            log.warn("Exception: " + ex.getLocalizedMessage());
+            for (StackTraceElement e : ex.getStackTrace()) {
+                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+            }
+        }
     }
 
     @Test
-    public void createTestCategoryTreeForUserAccountTest(){
+    public void createTestCategoryTreeForUserAccountTest() {
         log.info("createTestCategoryTreeForUserAccountTest");
-        userAccountTestDataService.setUp();
-        UserAccount userAccount = userAccountTestDataService.getFirstUserAccount();
-        //TODO: #128
-        testDataService.createTestData(userAccount);
+        try {
+            userAccountTestDataService.setUp();
+            UserAccount userAccount = userAccountTestDataService.getFirstUserAccount();
+            //TODO: #128
+            assertNotNull(userAccount);
+            testDataService.createTestData(userAccount);
+        } catch (Exception ex) {
+            log.warn("Exception: " + ex.getLocalizedMessage());
+            for (StackTraceElement e : ex.getStackTrace()) {
+                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+            }
+        }
     }
 }

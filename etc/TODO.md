@@ -86,7 +86,7 @@
 * #386 make Project Navigation collapsible
 
 ## 2.4.10-SNAPSHOT
-* #375 reenable integration tests
+* fixed #375 reenable integration tests
 
 ## 2.4.11-SNAPSHOT
 * #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
