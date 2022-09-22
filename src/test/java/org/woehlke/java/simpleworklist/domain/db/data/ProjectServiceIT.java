@@ -1,4 +1,4 @@
 package org.woehlke.java.simpleworklist.domain.db.data;
 
-public class ProjectServiceTest {
+public class ProjectServiceIT {
 }

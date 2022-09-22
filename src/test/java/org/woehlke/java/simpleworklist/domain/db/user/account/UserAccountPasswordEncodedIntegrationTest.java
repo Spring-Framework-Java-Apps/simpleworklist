@@ -2,16 +2,15 @@ package org.woehlke.java.simpleworklist.domain.db.user.account;
 
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.woehlke.java.simpleworklist.config.AbstractTest;
+import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class UserAccountPasswordEncodedTest extends AbstractTest {
+public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private PasswordEncoder encoder;

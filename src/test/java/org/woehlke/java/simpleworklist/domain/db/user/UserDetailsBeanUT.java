@@ -3,7 +3,6 @@ package org.woehlke.java.simpleworklist.domain.db.user;
 
 
 import org.springframework.security.core.GrantedAuthority;
-import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.security.access.UserDetailsDto;
 
 import java.util.Collection;
@@ -11,7 +10,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class UserDetailsBeanTest {
+public class UserDetailsBeanUT {
 
     //@Test
     public void testGetAuthorities(){

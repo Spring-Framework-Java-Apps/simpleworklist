@@ -1,7 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user.resetpassword.resetpassword;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.woehlke.java.simpleworklist.config.AbstractTest;
+import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryStatus;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-public class UserPasswordRecoveryControllerTest extends AbstractTest {
+public class UserAccountPasswordRecoveryServiceIT extends AbstractIntegrationTest {
 
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;

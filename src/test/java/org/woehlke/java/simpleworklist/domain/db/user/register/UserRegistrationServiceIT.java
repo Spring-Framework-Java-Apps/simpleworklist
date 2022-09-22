@@ -1,7 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user.register;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.woehlke.java.simpleworklist.config.AbstractTest;
+import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
@@ -13,7 +13,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserRegistrationServiceImplTest extends AbstractTest {
+public class UserRegistrationServiceIT extends AbstractIntegrationTest {
 
     @Value("${worklist.registration.max.retries}")
     private int maxRetries;

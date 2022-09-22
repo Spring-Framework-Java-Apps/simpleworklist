@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import org.woehlke.java.simpleworklist.config.AbstractTest;
+import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-public class UserRegistrationControllerIT extends AbstractTest {
+public class UserRegistrationControllerIT extends AbstractIntegrationTest {
 
     @Autowired
     private UserAccountRegistrationService userAccountRegistrationService;

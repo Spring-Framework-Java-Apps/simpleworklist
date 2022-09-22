@@ -16,11 +16,12 @@ import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService
 
 
 import java.net.URL;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
-public abstract class AbstractTest {
+public abstract class AbstractIntegrationTest {
 
     //@LocalServerPort
     protected int port;
@@ -72,6 +73,7 @@ public abstract class AbstractTest {
     static {
         for (int i = 0; i < testUser.length; i++) {
             testUser[i] = new UserAccount();
+            testUser[i].setUuid(UUID.randomUUID());
             testUser[i].setUserEmail(emails[i]);
             testUser[i].setUserPassword(passwords[i]);
             testUser[i].setUserFullname(fullnames[i]);

@@ -5,9 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.woehlke.java.simpleworklist.config.AbstractTest;
+import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 
-public class UserLoginControllerIT extends AbstractTest {
+public class UserLoginControllerIT extends AbstractIntegrationTest {
 
     //@Test
     public void testLoginFormular() throws Exception {
