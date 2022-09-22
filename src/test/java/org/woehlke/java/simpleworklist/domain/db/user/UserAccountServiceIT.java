@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.db.user.account;
+package org.woehlke.java.simpleworklist.domain.db.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginForm;

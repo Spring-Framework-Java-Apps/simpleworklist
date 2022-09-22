@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.db.user.resetpassword.resetpassword;
+package org.woehlke.java.simpleworklist.domain.db.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;

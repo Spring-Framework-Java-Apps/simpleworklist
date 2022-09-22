@@ -1,10 +1,11 @@
-package org.woehlke.java.simpleworklist.domain.db.user.account;
+package org.woehlke.java.simpleworklist.domain.db.user;
 
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
