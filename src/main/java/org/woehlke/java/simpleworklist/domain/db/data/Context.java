@@ -37,7 +37,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, exclude = "userAccount")
 @ToString(callSuper = true, exclude = "userAccount")
-public class Context extends AuditModel implements Serializable, ComparableById<Context> {
+public class Context extends AuditModel implements Serializable, ComparableById<Context>,Comparable<Context> {
 
     private static final long serialVersionUID = -5035732370606951871L;
 
@@ -102,4 +102,8 @@ public class Context extends AuditModel implements Serializable, ComparableById<
         return super.equalsByMyUuid(otherObject);
     }
 
+    @Override
+    public int compareTo(Context o) {
+      return this.nameDe.compareTo(o.nameDe);
+    }
 }

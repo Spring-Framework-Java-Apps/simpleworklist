@@ -40,7 +40,7 @@ import java.io.Serializable;
 @ToString(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountChatMessage extends AuditModel implements Serializable {
+public class UserAccountChatMessage extends AuditModel implements Serializable, Comparable<UserAccountChatMessage> {
 
     private static final long serialVersionUID = 4263078228257938175L;
 
@@ -72,4 +72,8 @@ public class UserAccountChatMessage extends AuditModel implements Serializable {
     @JoinColumn(name = "user_account_id_receiver", nullable = false)
     private UserAccount receiver;
 
+    @Override
+    public int compareTo(UserAccountChatMessage o) {
+      return this.rowCreatedAt.compareTo(o.rowCreatedAt);
+    }
 }

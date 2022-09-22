@@ -151,7 +151,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude="text")
-public class Task extends AuditModel implements Serializable, ComparableById<Task> {
+public class Task extends AuditModel implements Serializable, ComparableById<Task>, Comparable<Task> {
 
     private static final long serialVersionUID = 5247710652586269801L;
 
@@ -496,4 +496,9 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     public void moveTaskToAnotherProject(Project project) {
         pushProject(project);
     }
+
+  @Override
+  public int compareTo(Task o) {
+    return this.rowCreatedAt.compareTo(o.rowCreatedAt);
+  }
 }

@@ -25,7 +25,7 @@ import java.io.Serializable;
 )
 @Getter
 @Setter
-public class UserAccountPassword extends AuditModel implements Serializable, ComparableById<UserAccountPassword> {
+public class UserAccountPassword extends AuditModel implements Serializable, ComparableById<UserAccountPassword>, Comparable<UserAccountPassword> {
 
     private static final long serialVersionUID = 7860692526488291439L;
 
@@ -67,4 +67,9 @@ public class UserAccountPassword extends AuditModel implements Serializable, Com
     public boolean equalsByUuid(UserAccountPassword otherObject) {
         return this.getUuid().compareTo(otherObject.getUuid())==0;
     }
+
+  @Override
+  public int compareTo(UserAccountPassword o) {
+    return this.rowCreatedAt.compareTo(o.rowCreatedAt);
+  }
 }
