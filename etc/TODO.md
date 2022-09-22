@@ -76,7 +76,7 @@
 * wontfix #251, wontfix #224, wontfix #245, wontfix #246 
 
 
-## 2.4.7-SNAPSHOT
+## 2.4.7
 * fixed #383 F006 Page after first successful Login: change from inbox to today
 
 ## 2.4.8-SNAPSHOT
