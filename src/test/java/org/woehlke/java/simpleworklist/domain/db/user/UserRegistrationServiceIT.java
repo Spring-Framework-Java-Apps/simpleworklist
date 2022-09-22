@@ -1,9 +1,9 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
-import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
-import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class UserRegistrationServiceIT extends AbstractIntegrationTest {
 
     @Value("${worklist.registration.max.retries}")

@@ -1,6 +1,8 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 
@@ -11,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
+@Slf4j
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired

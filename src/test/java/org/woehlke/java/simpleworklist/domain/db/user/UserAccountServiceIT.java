@@ -1,8 +1,10 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,8 @@ import org.woehlke.java.simpleworklist.domain.security.login.LoginForm;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+@Slf4j
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class UserAccountServiceIT extends AbstractIntegrationTest {
 
     @Autowired
