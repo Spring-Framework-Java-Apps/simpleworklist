@@ -85,8 +85,8 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = {CascadeType.ALL})
     private List<Project> children = new ArrayList<>();
 
-    //@NotNull
-    @Column(name = "collapsed", nullable = true)
+    @NotNull
+    @Column(name = "collapsed", nullable = false)
     private Boolean collapsed;
 
     @Transient
