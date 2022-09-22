@@ -88,7 +88,7 @@
     <opencsv.version>5.7.0</opencsv.version>
 
     <!-- Unit and Integration Testing -->
-    <skipTests>true</skipTests>
+    <skipTests>false</skipTests>
     <xmlunit.version>2.9.0</xmlunit.version>
     <htmlunit.version>2.64.0</htmlunit.version>
     <version.groovy-all>3.0.12</version.groovy-all>
