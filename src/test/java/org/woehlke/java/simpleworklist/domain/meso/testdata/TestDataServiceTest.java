@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.testdata;
+package org.woehlke.java.simpleworklist.domain.meso.testdata;
 
 import lombok.extern.slf4j.Slf4j;
 
