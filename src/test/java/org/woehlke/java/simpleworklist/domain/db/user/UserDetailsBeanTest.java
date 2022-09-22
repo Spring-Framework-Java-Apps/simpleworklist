@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.user;
+package org.woehlke.java.simpleworklist.domain.db.user;
 
 
 
