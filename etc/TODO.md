@@ -81,6 +81,9 @@
 
 ## 2.4.8-SNAPSHOT
 * fixed #375 reenable integration tests
+* #390 refactor integration tests: One Test class for each Controller Class
+* #391 refactor integration tests: One Test class for each Service Class in package meso
+* #392 refactor integration tests: add Unit Tests for Beans and Entities
 
 ## 2.4.9-SNAPSHOT
 * #389 apply Database changes for: 386 make Project Navigation collapsible
