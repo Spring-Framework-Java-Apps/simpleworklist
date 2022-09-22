@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-public class UserRegistrationControllerTest extends AbstractTest {
+public class UserRegistrationControllerIT extends AbstractTest {
 
     @Autowired
     private UserAccountRegistrationService userAccountRegistrationService;

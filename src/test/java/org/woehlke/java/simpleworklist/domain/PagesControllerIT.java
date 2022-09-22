@@ -1,4 +1,4 @@
 package org.woehlke.java.simpleworklist.domain;
 
-public class TestDataControllerTest {
+public class PagesControllerIT {
 }

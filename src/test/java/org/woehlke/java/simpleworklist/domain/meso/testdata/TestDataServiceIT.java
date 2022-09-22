@@ -11,7 +11,6 @@ import org.springframework.boot.web.servlet.context.ServletWebServerApplicationC
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.java.simpleworklist.config.UserAccountTestDataService;
-import org.woehlke.java.simpleworklist.domain.meso.testdata.TestDataService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
 import java.net.URL;
@@ -21,7 +20,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class TestDataServiceTest {
+public class TestDataServiceIT {
 
     @Autowired
     ServletWebServerApplicationContext server;

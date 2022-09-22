@@ -1,4 +1,4 @@
 package org.woehlke.java.simpleworklist.domain;
 
-public class ProjectIdControllerTest {
+public class User2UserMessageControllerIT {
 }

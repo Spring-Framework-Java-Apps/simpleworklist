@@ -1,4 +1,4 @@
 package org.woehlke.java.simpleworklist.domain;
 
-public class TaskLifecycleControllerTest {
+public class TaskMove2TaskControllerIT {
 }
