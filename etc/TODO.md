@@ -76,25 +76,29 @@
 * wontfix #251, wontfix #224, wontfix #245, wontfix #246 
 
 
-## work in Progress
+## 2.4.7-SNAPSHOT
+* fixed #383 F006 Page after first successful Login: change from inbox to today
+
+## 2.4.8-SNAPSHOT
+* #389 apply Database changes for: 386 make Project Navigation collapsible
+
+## 2.4.9-SNAPSHOT
 * #386 make Project Navigation collapsible
 
-## fixed
-* #383 F006 Page after first successful Login: change from inbox to today
-* #381 Transient_Class_Modell - Update UML Documentation after Refactorings due to Bugfixes
-* #382 Controller_Classes - Update UML Documentation after Refactorings due to Bugfixes
+## 2.4.10-SNAPSHOT
+* #375 reenable integration tests
 
-## 2.4.7-SNAPSHOT
-* #383 F006 Page after first successful Login: change from inbox to today
+## 2.4.11-SNAPSHOT
+* #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
+
+## 2.4.12-SNAPSHOT
 * #377 add List of URL (Patterns) to Documentation
 * #380 add User Use Cases to UML Documentation
 * #381 Transient_Class_Modell - Update UML Documentation after Refactorings due to Bugfixes
 * #382 Controller_Classes - Update UML Documentation after Refactorings due to Bugfixes
 
-## 2.4.8-SNAPSHOT
-* #375 reenable integration tests
-
-## 2.4.9-SNAPSHOT
-* #386 make Project Navigation collapsible
-* #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
+## 2.4.13-SNAPSHOT
 * #378 Add Search Index and search functionality
+
+## 2.4.14-SNAPSHOT
+* 
