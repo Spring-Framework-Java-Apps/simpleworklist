@@ -80,13 +80,13 @@
 * fixed #383 F006 Page after first successful Login: change from inbox to today
 
 ## 2.4.8-SNAPSHOT
-* #389 apply Database changes for: 386 make Project Navigation collapsible
+* fixed #375 reenable integration tests
 
 ## 2.4.9-SNAPSHOT
-* #386 make Project Navigation collapsible
+* #389 apply Database changes for: 386 make Project Navigation collapsible
 
 ## 2.4.10-SNAPSHOT
-* fixed #375 reenable integration tests
+* #386 make Project Navigation collapsible
 
 ## 2.4.11-SNAPSHOT
 * #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
