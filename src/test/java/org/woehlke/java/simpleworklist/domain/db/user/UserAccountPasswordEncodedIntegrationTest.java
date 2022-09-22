@@ -2,6 +2,7 @@ package org.woehlke.java.simpleworklist.domain.db.user;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
@@ -20,7 +21,7 @@ public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrati
     @Autowired
     private PasswordEncoder encoder;
 
-    //@Test
+    @Test
     public void testEncoderIsWired(){
         assertTrue(encoder != null);
     }
@@ -28,7 +29,7 @@ public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrati
     /**
      * This Test is obsolete now due to changed encoder from MD5 to BCrypt (20.02.2016).
      */
-    //@Test
+    @Test
     public void testGetUserPasswordEncoded(){
         UserAccountForm u = new UserAccountForm();
         u.setUserEmail("test01//@Test.de");
@@ -39,7 +40,7 @@ public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrati
         assertTrue(encodedPassword.compareTo(encoder.encode(u.getUserPassword()))==0);
     }
 
-    //@Test
+    @Test
     public void testPasswordsAreTheSame(){
         UserAccountForm u = new UserAccountForm();
         u.setUserEmail("test01//@Test.de");

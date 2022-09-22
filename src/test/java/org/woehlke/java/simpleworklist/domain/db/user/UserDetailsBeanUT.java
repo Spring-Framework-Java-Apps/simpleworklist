@@ -2,6 +2,7 @@ package org.woehlke.java.simpleworklist.domain.db.user;
 
 
 
+import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.woehlke.java.simpleworklist.domain.security.access.UserDetailsDto;
 
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserDetailsBeanUT {
 
-    //@Test
+    @Test
     public void testGetAuthorities(){
         UserAccount account = new UserAccount();
         UserDetailsDto b = new UserDetailsDto(account);
@@ -23,7 +24,7 @@ public class UserDetailsBeanUT {
         }
     }
 
-    //@Test
+    @Test
     public void testDefaultBooleans(){
         UserAccount account = new UserAccount();
         UserDetailsDto b = new UserDetailsDto(account);
@@ -33,7 +34,7 @@ public class UserDetailsBeanUT {
         assertTrue(b.isEnabled());
     }
 
-    //@Test
+    @Test
     public void testHashCodeAndEquals(){
         UserAccount account1 = new UserAccount();
         UserAccount account2 = new UserAccount();

@@ -1,6 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -11,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
-import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
@@ -30,7 +30,7 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
-    //@Test
+    @Test
     public void testStartSecondOptIn() throws Exception {
         int zeroNumberOfAllRegistrations = 0;
         deleteAll();
@@ -57,7 +57,7 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
-    //@Test
+    @Test
     public void testPasswordResetSendEmail() throws Exception {
         deleteAll();
         for(UserAccount userAccount:testUser){
@@ -86,7 +86,7 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
-    //@Test
+    @Test
     public void testSaveAndFlush(){
         deleteAll();
         for(UserAccount userAccount:testUser){
@@ -106,7 +106,7 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         }
     }
 
-    //@Test
+    @Test
     public void testLoadUserByUsername(){
         for(String email:emails){
             UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(email);
@@ -120,7 +120,7 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         }
     }
 
-    //@Test
+    @Test
     public void testAuthorize(){
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
@@ -132,13 +132,13 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         assertFalse(userAuthorizationService.authorize(loginForm));
     }
 
-    //@Test
+    @Test
     public void testIsEmailAvailable() {
         assertFalse(userAccountService.isEmailAvailable(emails[0]));
         assertTrue(userAccountService.isEmailAvailable(username_email));
     }
 
-    //@Test
+    @Test
     public void testCreateUser() {
         UserAccountForm userAccount = new UserAccountForm();
         userAccount.setUserEmail(username_email);
@@ -149,7 +149,7 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
-    //@Test
+    @Test
     public void testChangeUsersPassword(){
         UserAccountForm userAccount = new UserAccountForm();
         userAccount.setUserEmail(emails[0]);
@@ -159,13 +159,13 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         userAccountService.changeUsersPassword(userAccount);
     }
 
-    //@Test
+    @Test
     public void testRetrieveUsernameLoggedOut(){
         String userName = loginSuccessService.retrieveUsername();
         assertTrue(userName.compareTo(" ")==0);
     }
 
-    //@Test
+    @Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
         String userName = loginSuccessService.retrieveUsername();
@@ -174,13 +174,13 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         SecurityContextHolder.clearContext();
     }
 
-    //@Test
-    ////@Test(expected = UsernameNotFoundException.class)
+    @Test
+    //@Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
         loginSuccessService.retrieveCurrentUser();
     }
 
-    //@Test
+    @Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
         UserAccount userAccount = loginSuccessService.retrieveCurrentUser();

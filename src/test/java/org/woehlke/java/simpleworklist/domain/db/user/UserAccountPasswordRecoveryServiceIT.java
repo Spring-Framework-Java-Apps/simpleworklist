@@ -1,10 +1,10 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
-import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryStatus;
 
@@ -23,21 +23,21 @@ public class UserAccountPasswordRecoveryServiceIT extends AbstractIntegrationTes
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
-    //@Test
+    @Test
     public void testResetPassword() throws Exception {
         this.mockMvc.perform(
                 get("/user/resetPassword")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordForm")));
     }
 
-    //@Test
+    @Test
     public void testEnterNewPasswordFormular() throws Exception {
         this.mockMvc.perform(
                 get("/user/resetPassword/confirm/ASDF")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordNotConfirmed")));
     }
 
-    //@Test
+    @Test
     public void testEnterNewPasswordFormularWithToken() throws Exception {
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         try {
@@ -58,7 +58,7 @@ public class UserAccountPasswordRecoveryServiceIT extends AbstractIntegrationTes
         userAccountPasswordRecoveryService.passwordRecoveryDone(o);
     }
 
-    //@Test
+    @Test
     public void finish(){
         super.deleteAll();
     }

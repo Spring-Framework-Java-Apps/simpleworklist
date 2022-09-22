@@ -1,6 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
@@ -29,7 +30,7 @@ public class UserRegistrationServiceIT extends AbstractIntegrationTest {
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
-    //@Test
+    @Test
     public void testIsRetryAndMaximumNumberOfRetries(){
         deleteAll();
         boolean result = userAccountRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(username_email);
@@ -49,7 +50,7 @@ public class UserRegistrationServiceIT extends AbstractIntegrationTest {
     }
 
 
-    //@Test
+    @Test
     public void testCheckIfResponseIsInTimeNewUser(){
         userAccountRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
         UserAccountRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
@@ -62,7 +63,7 @@ public class UserRegistrationServiceIT extends AbstractIntegrationTest {
         assertNull(o);
     }
 
-    //@Test
+    @Test
     public void testCheckIfResponseIsInTime(){
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         try {
