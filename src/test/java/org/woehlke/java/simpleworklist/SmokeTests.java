@@ -1,12 +1,15 @@
 package org.woehlke.java.simpleworklist;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.config.UserAccountTestDataService;
 
 import java.net.URL;
@@ -32,6 +36,9 @@ import static org.woehlke.java.simpleworklist.config.Requirements.*;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(SimpleworklistApplication.class)
+@EnableConfigurationProperties({
+  SimpleworklistProperties.class
+})
 public class SmokeTests {
 
     @Autowired
@@ -46,7 +53,6 @@ public class SmokeTests {
 
     @Autowired
     private UserAccountTestDataService userAccountTestDataService;
-
 
     private final String eyecatcherH1 = "##################################################################";
     private final String eyecatcherH2 = "------------------------------------------------------------------";
@@ -170,6 +176,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F008)
     @Order(8)
@@ -179,6 +186,7 @@ public class SmokeTests {
         log.info("testF008AddAnotherNewTaskToInbox");
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F009)
@@ -190,6 +198,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F010)
     @Order(10)
@@ -199,6 +208,7 @@ public class SmokeTests {
         log.info("testF010AddSubProjectToProjectRoot");
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F011)
@@ -210,6 +220,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F012)
     @Order(12)
@@ -219,6 +230,7 @@ public class SmokeTests {
         log.info("testF012UnSetFocusOfTask");
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F013)
@@ -233,7 +245,7 @@ public class SmokeTests {
         assertNotNull(this.mockMvc);
         try {
             this.mockMvc.perform(get(base.toString()))
-                //.andDo(print())
+                .andDo(print())
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (UsernameNotFoundException e) {
@@ -247,6 +259,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F014)
     @Order(14)
@@ -259,11 +272,12 @@ public class SmokeTests {
         log.info("Server URL: "+ base.toString());
         assertNotNull(this.mockMvc);
         this.mockMvc.perform(get(base.toString()))
-            //.andDo(print())
+            .andDo(print())
             .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F015)
@@ -287,6 +301,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F016)
     @Order(16)
@@ -304,6 +319,7 @@ public class SmokeTests {
         //.andExpect(content().string(containsString("SimpleWorklist")));
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F017)
@@ -323,6 +339,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F018)
     @Order(18)
@@ -340,6 +357,7 @@ public class SmokeTests {
         //.andExpect(content().string(containsString("SimpleWorklist")));
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F019)
@@ -359,6 +377,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F020)
     @Order(20)
@@ -376,6 +395,7 @@ public class SmokeTests {
         //.andExpect(content().string(containsString("SimpleWorklist")));
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F021)
@@ -395,6 +415,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F022)
     @Order(22)
@@ -404,6 +425,7 @@ public class SmokeTests {
         log.info("testF022TaskEdit");
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F023)
@@ -415,6 +437,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F024)
     @Order(24)
@@ -424,6 +447,7 @@ public class SmokeTests {
         log.info("testF024TaskComplete");
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F025)
@@ -435,6 +459,7 @@ public class SmokeTests {
         log.info(eyecatcherH2);
     }
 
+
     @WithMockUser(username="test01@test.de")
     @DisplayName(F026)
     @Order(26)
@@ -444,6 +469,7 @@ public class SmokeTests {
         log.info("testF026TaskDelete");
         log.info(eyecatcherH2);
     }
+
 
     @WithMockUser(username="test01@test.de")
     @DisplayName(F027)

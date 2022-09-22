@@ -14,6 +14,7 @@ import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by tw on 13.03.16.
@@ -43,6 +44,9 @@ public class ContextServiceImpl implements ContextService {
     @Override
     public Context findByIdAndUserAccount(long newContextId, UserAccount userAccount) {
         log.info("findByIdAndUserAccount");
+        if(userAccount.getUuid()==null){
+          userAccount.setUuid(UUID.randomUUID());
+        }
         if(newContextId == 0){
             newContextId =  userAccount.getDefaultContext().getId();
         }
@@ -53,7 +57,11 @@ public class ContextServiceImpl implements ContextService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Context createNewContext(NewContextForm newContext, UserAccount user) {
         log.info("createNewContext");
+        if(user.getUuid()==null){
+          user.setUuid(UUID.randomUUID());
+        }
         Context context = new Context();
+        context.setUuid(UUID.randomUUID());
         context.setNameEn(newContext.getNameEn());
         context.setNameDe(newContext.getNameDe());
         context.setUserAccount(user);
@@ -63,14 +71,20 @@ public class ContextServiceImpl implements ContextService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public Context updateContext(Context context) {
-        log.info("updateContext");
-        return contextRepository.saveAndFlush(context);
+      log.info("updateContext");
+      if(context.getUuid()==null){
+        context.setUuid(UUID.randomUUID());
+      }
+      return contextRepository.saveAndFlush(context);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public boolean delete(Context context) {
         log.info("delete");
+        if(context.getUuid()==null){
+          context.setUuid(UUID.randomUUID());
+        }
         long contextId = context.getId();
         contextRepository.delete(context);
         return (!contextRepository.existsById(contextId));
