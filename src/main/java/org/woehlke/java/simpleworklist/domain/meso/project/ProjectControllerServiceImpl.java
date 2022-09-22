@@ -5,10 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Propagation;
-//import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
@@ -68,7 +64,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     model.addAttribute("userSession", userSession);
   }
 
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public String addNewProjectToProjectIdPersist(
     @Min(1L) long projectId,
     @NotNull UserSessionBean userSession,
@@ -119,7 +114,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Project moveProjectToAnotherProject(
     @NotNull Project thisProject,
     @NotNull Project targetProject
@@ -154,7 +148,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Project delete(@NotNull Project thisProject) {
     log.info("delete");
     Project oldParent = thisProject.getParent();
@@ -167,7 +160,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void addNewProjectToProjectRootForm(
     @NotNull UserSessionBean userSession,
     @NotNull Context context,
@@ -189,7 +181,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public String addNewProjectToProjectRootPersist(
     @NotNull UserSessionBean userSession,
     @NotNull Project project,
@@ -208,7 +199,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTaskToTaskAndChangeTaskOrderInProjectId(@NotNull Task sourceTask, @NotNull Task destinationTask) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
@@ -238,7 +228,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTaskToTaskAndChangeTaskOrderInProjectRoot(@NotNull Task sourceTask, @NotNull Task destinationTask) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START: moveTaskToTaskAndChangeTaskOrderIn Project Root");
@@ -266,7 +255,6 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Project moveProjectToAnotherContext(@NotNull Project thisProject, @NotNull Context newContext) {
     log.info("----------------------------------------------------");
     log.info("moveProjectToAnotherContext: Project: " + thisProject.toString());

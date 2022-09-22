@@ -4,8 +4,6 @@ package org.woehlke.java.simpleworklist.domain.meso.task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Propagation;
-//import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
@@ -31,7 +29,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToRootProject(@Valid Task task) {
     task.moveTaskToRootProject();
     long maxOrderIdProject = taskLifecycleService.getMaxOrderIdProjectRoot(task.getContext());
@@ -40,7 +37,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToAnotherProject( @Valid Task task, @Valid Project project) {
     boolean okContext = task.hasSameContextAs(project);
     if(okContext) {
@@ -53,7 +49,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToInbox(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.INBOX, task.getContext()
     );
@@ -65,7 +60,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToToday(Task task) {
     Date now = new Date();
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.TODAY,task.getContext());
@@ -77,7 +71,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToNext(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.NEXT,task.getContext());
     task.moveToNext();
@@ -88,7 +81,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToWaiting(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.WAITING,task.getContext());
     task.moveToWaiting();
@@ -99,7 +91,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToSomeday(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext());
     task.moveToSomeday();
@@ -110,7 +101,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToFocus(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.FOCUS,task.getContext()
     );
@@ -122,7 +112,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToCompleted(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.COMPLETED,task.getContext()
     );
@@ -134,7 +123,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public Task moveTaskToTrash(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.TRASH, task.getContext());
     task.moveToTrash();
@@ -145,7 +133,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveAllCompletedToTrash( Context context) {
     long maxOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.TRASH,context);
     long newOrderIdTaskState = maxOrderIdTaskState;
@@ -162,7 +149,6 @@ public class TaskMoveServiceImpl implements TaskMoveService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void emptyTrash( Context context) {
     List<Task> taskList = taskService.findByTaskStateTrash(context);
     List<Task> taskListChanged = new ArrayList<>(taskList.size());

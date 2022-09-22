@@ -24,7 +24,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" moveTasks UP By ProjectRoot: "+sourceTask.toString() +" -> "+ destinationTask.toString());
@@ -54,7 +53,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START moveTasks UP By Project Root");
@@ -86,7 +84,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByProjectId(Task sourceTask, Task destinationTask ) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
@@ -119,7 +116,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByProjectId(Task sourceTask, Task destinationTask) {
     Project project = sourceTask.getProject();
     log.info("-------------------------------------------------------------------------------");
@@ -151,7 +147,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask ) {
     log.info("-------------------------------------------------------------------------------");
     log.info(" START: moveTaskToTask AndChangeTaskOrder In Taskstate ");
@@ -179,7 +174,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
   }
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksUpByTaskState(Task sourceTask, Task destinationTask ) {
     TaskState taskState = sourceTask.getTaskState();
     log.info("-------------------------------------------------------------------------------");
@@ -214,7 +208,6 @@ public class TaskMove2TaskServiceImpl implements TaskMove2TaskService {
 
 
   @Override
-  //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
   public void moveTasksDownByTaskState(Task sourceTask, Task destinationTask ) {
     TaskState taskState = sourceTask.getTaskState();
     log.info("-------------------------------------------------------------------------------");
