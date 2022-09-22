@@ -5,9 +5,6 @@
 [![Travis CI Build Status](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist.svg?branch=master)](https://travis-ci.com/Spring-Framework-Java-Apps/simpleworklist)
 [![Maven Project Reports](src/site/resources/img/maven-feather.png)](https://bloodmoneyapp.github.io/bloodmoney/)
 
-
-
-
 Your Todo List for Getting Things Done
 
 ## Getting Things Done
