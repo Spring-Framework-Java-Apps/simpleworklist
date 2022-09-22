@@ -56,7 +56,6 @@ public class ProjectControllerIT {
         log.info(eyecatcherH1);
         log.info(" @BeforeEach setUp()");
         log.info(eyecatcherH2);
-
         //userAccountTestDataService.setUp();
         log.info(eyecatcherH1);
     }
