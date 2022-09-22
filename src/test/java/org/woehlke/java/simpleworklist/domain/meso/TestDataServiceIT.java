@@ -1,4 +1,4 @@
-package org.woehlke.java.simpleworklist.domain.meso.testdata;
+package org.woehlke.java.simpleworklist.domain.meso;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.java.simpleworklist.config.UserAccountTestDataService;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
+import org.woehlke.java.simpleworklist.domain.meso.testdata.TestDataService;
 
 import java.net.URL;
 
