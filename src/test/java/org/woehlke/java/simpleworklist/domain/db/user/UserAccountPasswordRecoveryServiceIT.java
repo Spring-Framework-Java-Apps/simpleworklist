@@ -22,8 +22,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccou
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -124,7 +123,7 @@ public class UserAccountPasswordRecoveryServiceIT {
         assertNotNull(o);
         boolean result = o.getDoubleOptInStatus() == UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL
             || o.getDoubleOptInStatus() == UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL;
-        assertTrue(result);
+        assertFalse(result);
         String url = "/user/resetPassword/confirm/" + o.getToken();
         try {
             this.mockMvc.perform(
