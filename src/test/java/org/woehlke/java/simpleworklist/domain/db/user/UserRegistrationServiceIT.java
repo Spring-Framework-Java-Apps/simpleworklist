@@ -41,10 +41,10 @@ import static org.junit.jupiter.api.Assertions.*;
 })
 public class UserRegistrationServiceIT {
 
-    @Value("${worklist.registration.max.retries}")
+    @Value("#{org.woehlke.simpleworklist.registration.maxRetries}")
     private int maxRetries;
 
-    @Value("${org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
+    @Value("#{org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
     private long ttlEmailVerificationRequest;
 
     @Autowired
@@ -78,10 +78,12 @@ public class UserRegistrationServiceIT {
 
 
     protected void deleteAll(){
+        /*
         testHelperService.deleteAllRegistrations();
         testHelperService.deleteAllTasks();
         testHelperService.deleteAllProjects();
         testHelperService.deleteUserAccount();
+         */
     }
 
     @Test

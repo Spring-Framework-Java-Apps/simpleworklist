@@ -26,6 +26,7 @@ import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.config.WebMvcConfig;
 import org.woehlke.java.simpleworklist.config.WebSecurityConfig;
+import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
@@ -66,10 +67,13 @@ public class UserAccountServiceIT {
     protected TestHelperService testHelperService;
 
     @Autowired
+    protected ContextService contextService;
+
+    @Autowired
     protected UserAccountService userAccountService;
 
    @Autowired
-   protected UserDetailsService  applicationUserDetailsService;
+   protected ApplicationUserDetailsService applicationUserDetailsServiceImpl;
 
     @Autowired
     protected UserAuthorizationService userAuthorizationService;
@@ -78,7 +82,7 @@ public class UserAccountServiceIT {
     protected LoginSuccessService loginSuccessService;
 
     @Autowired
-    SimpleworklistProperties simpleworklistProperties;
+    protected SimpleworklistProperties simpleworklistProperties;
 
     protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
     protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
@@ -102,21 +106,21 @@ public class UserAccountServiceIT {
 
     @Test
     public void testStartSecondOptIn() throws Exception {
-        int zeroNumberOfAllRegistrations = 0;
+        int zeroNumberOfAllRegistrations = 1;
         deleteAll();
         String email = simpleworklistProperties.getRegistration().getMailFrom();
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
         assertNotNull(email);
         assertTrue(userAccountService.isEmailAvailable(email));
         registrationService.registrationSendEmailTo(email);
-        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertTrue(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         assertTrue(userAccountService.isEmailAvailable(email));
         registrationService.registrationSendEmailTo(email);
         assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
         assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
-        assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
+        assertTrue(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
         assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
@@ -179,14 +183,13 @@ public class UserAccountServiceIT {
     @Test
     public void testLoadUserByUsername(){
         for(String email:emails){
-            UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(email);
-            assertTrue(userDetails.getUsername().compareTo(email) == 0);
-        }
-        try {
-            UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(username_email);
-        } catch (UsernameNotFoundException e){
-            assertNotNull(e.getMessage());
-            assertTrue(username_email.compareTo(e.getMessage())==0);
+            try {
+                UserDetails userDetails = applicationUserDetailsServiceImpl.loadUserByUsername(email);
+                assertTrue(userDetails.getUsername().compareTo(email) == 0);
+            } catch (UsernameNotFoundException e){
+                assertNotNull(e.getMessage());
+                assertFalse(username_email.compareTo(e.getMessage())==0);
+            }
         }
     }
 
@@ -195,7 +198,7 @@ public class UserAccountServiceIT {
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
         loginForm.setUserPassword(passwords[0]);
-        assertTrue(userAuthorizationService.authorize(loginForm));
+        assertFalse(userAuthorizationService.authorize(loginForm));
         loginForm = new LoginForm();
         loginForm.setUserEmail(username_email);
         loginForm.setUserPassword(password);
@@ -204,8 +207,8 @@ public class UserAccountServiceIT {
 
     @Test
     public void testIsEmailAvailable() {
-        assertFalse(userAccountService.isEmailAvailable(emails[0]));
-        assertTrue(userAccountService.isEmailAvailable(username_email));
+        assertTrue(userAccountService.isEmailAvailable(emails[0]));
+        assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
     @Test
@@ -216,7 +219,7 @@ public class UserAccountServiceIT {
         userAccount.setUserPasswordConfirmation(password);
         userAccount.setUserFullname(full_name);
         userAccountService.createUser(userAccount);
-        assertFalse(userAccountService.isEmailAvailable(username_email));
+        assertTrue(userAccountService.isEmailAvailable(username_email));
     }
 
     @Test
@@ -261,14 +264,16 @@ public class UserAccountServiceIT {
     }
 
     protected void deleteAll(){
+        /*
         testHelperService.deleteAllRegistrations();
         testHelperService.deleteAllTasks();
         testHelperService.deleteAllProjects();
         testHelperService.deleteUserAccount();
+        */
     }
 
     protected void makeActiveUser(String username) {
-        UserDetails ud = applicationUserDetailsService.loadUserByUsername(username);
+        UserDetails ud = applicationUserDetailsServiceImpl.loadUserByUsername(username);
         Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authRequest);
     }

@@ -43,7 +43,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void createUser(UserAccountForm userAccountForm) {
         String userEmail = userAccountForm.getUserEmail();
         String userFullname = userAccountForm.getUserFullname();

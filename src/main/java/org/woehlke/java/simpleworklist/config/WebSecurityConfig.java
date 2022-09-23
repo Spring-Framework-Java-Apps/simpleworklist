@@ -19,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
@@ -39,18 +40,18 @@ import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDet
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    //private final AuthenticationSuccessHandler loginSuccessHandler;
-    private final UserDetailsService applicationUserDetailsService;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final ApplicationUserDetailsService applicationUserDetailsService;
     private final SimpleworklistProperties simpleworklistProperties;
-
-
 
     @Autowired
     public WebSecurityConfig(
         AuthenticationManagerBuilder auth,
+        AuthenticationSuccessHandler authenticationSuccessHandler,
         ApplicationUserDetailsService applicationUserDetailsService,
         SimpleworklistProperties simpleworklistProperties) {
         this.authenticationManagerBuilder = auth;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.applicationUserDetailsService = applicationUserDetailsService;
         this.simpleworklistProperties = simpleworklistProperties;
     }
@@ -75,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
             .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
             .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
             .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
-            //.successHandler(loginSuccessHandler)
+            .successHandler(authenticationSuccessHandler)
             .permitAll()
             .and()
             .csrf()
