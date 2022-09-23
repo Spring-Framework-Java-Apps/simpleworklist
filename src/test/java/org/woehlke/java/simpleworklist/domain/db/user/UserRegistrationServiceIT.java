@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.*;
 })
 public class UserRegistrationServiceIT {
 
-    @Value("#{org.woehlke.simpleworklist.registration.maxRetries}")
+    @Value("#{registration.maxRetries}")
     private int maxRetries;
 
     @Value("#{org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")

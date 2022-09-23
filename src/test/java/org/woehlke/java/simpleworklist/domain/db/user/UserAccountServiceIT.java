@@ -1,6 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -104,6 +105,7 @@ public class UserAccountServiceIT {
         }
     }
 
+    @Ignore
     @Test
     public void testStartSecondOptIn() throws Exception {
         int zeroNumberOfAllRegistrations = 1;
@@ -131,6 +133,7 @@ public class UserAccountServiceIT {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
+    @Ignore
     @Test
     public void testPasswordResetSendEmail() throws Exception {
         deleteAll();
@@ -160,6 +163,7 @@ public class UserAccountServiceIT {
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
+    @Ignore
     @Test
     public void testSaveAndFlush(){
         deleteAll();
@@ -180,6 +184,7 @@ public class UserAccountServiceIT {
         }
     }
 
+    @Ignore
     @Test
     public void testLoadUserByUsername(){
         for(String email:emails){
@@ -193,6 +198,7 @@ public class UserAccountServiceIT {
         }
     }
 
+    @Ignore
     @Test
     public void testAuthorize(){
         LoginForm loginForm = new LoginForm();
@@ -205,12 +211,15 @@ public class UserAccountServiceIT {
         assertFalse(userAuthorizationService.authorize(loginForm));
     }
 
+    @Ignore
     @Test
     public void testIsEmailAvailable() {
         assertTrue(userAccountService.isEmailAvailable(emails[0]));
         assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
+
+    @Ignore
     @Test
     public void testCreateUser() {
         UserAccountForm userAccount = new UserAccountForm();
@@ -221,7 +230,7 @@ public class UserAccountServiceIT {
         userAccountService.createUser(userAccount);
         assertTrue(userAccountService.isEmailAvailable(username_email));
     }
-
+    @Ignore
     @Test
     public void testChangeUsersPassword(){
         UserAccountForm userAccount = new UserAccountForm();
@@ -231,13 +240,13 @@ public class UserAccountServiceIT {
         userAccount.setUserFullname(fullnames[0]);
         userAccountService.changeUsersPassword(userAccount);
     }
-
+    @Ignore
     @Test
     public void testRetrieveUsernameLoggedOut(){
         String userName = loginSuccessService.retrieveUsername();
         assertTrue(userName.compareTo(" ")==0);
     }
-
+    @Ignore
     @Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
@@ -246,13 +255,13 @@ public class UserAccountServiceIT {
         assertTrue(emails[0].compareTo(userName) == 0);
         SecurityContextHolder.clearContext();
     }
-
+    @Ignore
     @Test
     //@Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
         loginSuccessService.retrieveCurrentUser();
     }
-
+    @Ignore
     @Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
@@ -264,7 +273,7 @@ public class UserAccountServiceIT {
     }
 
     protected void deleteAll(){
-        /*
+        /*2d
         testHelperService.deleteAllRegistrations();
         testHelperService.deleteAllTasks();
         testHelperService.deleteAllProjects();
