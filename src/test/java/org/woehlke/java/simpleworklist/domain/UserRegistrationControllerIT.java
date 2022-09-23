@@ -138,7 +138,7 @@ public class UserRegistrationControllerIT {
     public void testSignInFormularAccount() throws Exception {
         this.mockMvc.perform(
                 get("/user/register/confirm/ASDF")).andDo(print())
-                .andExpect(view().name(containsString("user/register/registerNotConfirmed")));
+                .andExpect(view().name(containsString("user/register/registerConfirmFailed")));
     }
 
     @Test
@@ -157,8 +157,8 @@ public class UserRegistrationControllerIT {
         String url = "/user/register/confirm/"+o.getToken();
         this.mockMvc.perform(
                 get(url)).andDo(print())
-                .andExpect(view().name(containsString("user/register/registerConfirmed")))
-                .andExpect(model().attributeExists("userAccountFormBean"));
+                .andExpect(view().name(containsString("user/register/registerConfirmForm")))
+                .andExpect(model().attributeExists("userAccountForm"));
         userAccountRegistrationService.registrationUserCreated(o);
     }
 

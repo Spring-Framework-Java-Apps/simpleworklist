@@ -41,7 +41,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Import(SimpleworklistApplication.class)
+@ImportAutoConfiguration({
+    WebMvcConfig.class,
+    WebSecurityConfig.class
+})
+@EnableConfigurationProperties({
+    SimpleworklistProperties.class
+})
 public class UserAccountServiceIT {
 
     @Autowired
