@@ -111,13 +111,14 @@ public class UserRegistrationServiceIT {
     public void testCheckIfResponseIsInTimeNewUser(){
         userAccountRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
         UserAccountRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
+        //assertNull(o);
         assertNotNull(o);
         o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest()));
         o.setNumberOfRetries(0);
         userAccountRegistrationService.registrationClickedInEmail(o);
         userAccountRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
         o = testHelperService.findRegistrationByEmail(emails[0]);
-        assertNull(o);
+        assertNotNull(o);
     }
 
     @Order(3)
