@@ -11,6 +11,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +21,7 @@ import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.config.UserAccountTestDataService;
 import org.woehlke.java.simpleworklist.config.WebMvcConfig;
 import org.woehlke.java.simpleworklist.config.WebSecurityConfig;
+import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
 
 import java.net.URL;
 

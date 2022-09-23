@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.woehlke.java.simpleworklist.SimpleworklistApplication;
@@ -61,6 +62,7 @@ public class UserChatMessageControllerServiceIT {
     @Autowired
     private UserAccountTestDataService userAccountTestDataService;
 
+    @WithMockUser("test@test01.de")
     @BeforeEach
     public void setUp() {
         log.info(" @BeforeEach setUp()");

@@ -11,7 +11,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountRepository;
 
 @Slf4j
-@Service
+@Service//("userDetailsService")
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ApplicationUserDetailsServiceImpl implements ApplicationUserDetailsService {
 

@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.woehlke.java.simpleworklist.SimpleworklistApplication;
 import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
@@ -67,8 +68,8 @@ public class UserAccountServiceIT {
     @Autowired
     protected UserAccountService userAccountService;
 
-    @Autowired
-    protected ApplicationUserDetailsService applicationUserDetailsService;
+   @Autowired
+   protected UserDetailsService  applicationUserDetailsService;
 
     @Autowired
     protected UserAuthorizationService userAuthorizationService;

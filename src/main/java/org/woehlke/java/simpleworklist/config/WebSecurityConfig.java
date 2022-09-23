@@ -40,17 +40,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     //private final AuthenticationSuccessHandler loginSuccessHandler;
-    private final ApplicationUserDetailsService applicationUserDetailsService;
+    private final UserDetailsService applicationUserDetailsService;
     private final SimpleworklistProperties simpleworklistProperties;
+
+
 
     @Autowired
     public WebSecurityConfig(
         AuthenticationManagerBuilder auth,
-        //LoginSuccessHandler loginSuccessHandler,
         ApplicationUserDetailsService applicationUserDetailsService,
         SimpleworklistProperties simpleworklistProperties) {
         this.authenticationManagerBuilder = auth;
-        //this.loginSuccessHandler = loginSuccessHandler;
         this.applicationUserDetailsService = applicationUserDetailsService;
         this.simpleworklistProperties = simpleworklistProperties;
     }
