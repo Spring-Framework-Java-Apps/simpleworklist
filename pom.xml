@@ -1428,7 +1428,7 @@
       </properties>
       <build>
         <finalName>${project.artifactId}</finalName>
-          <defaultGoal>clean install spring-boot:repackage</defaultGoal>
+          <defaultGoal>clean dependency:purge-local-repository install spring-boot:repackage</defaultGoal>
       </build>
     </profile>
 
@@ -1445,7 +1445,7 @@
     </profile>
 
       <profile>
-          <id>testing</id>
+          <id>test</id>
           <properties>
               <skipTests>false</skipTests>
               <skip.unit.tests>false</skip.unit.tests>
@@ -1453,7 +1453,7 @@
           </properties>
           <build>
               <finalName>${project.artifactId}</finalName>
-              <defaultGoal>clean dependency:list install spring-boot:repackage</defaultGoal>
+              <defaultGoal>clean dependency:purge-local-repository dependency:list install spring-boot:repackage</defaultGoal>
           </build>
       </profile>
 
