@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.woehlke.java.simpleworklist.SimpleworklistApplication;
+import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.java.simpleworklist.config.*;
 
 import java.net.URL;
@@ -35,7 +36,7 @@ import java.net.URL;
 @EnableConfigurationProperties({
     SimpleworklistProperties.class
 })
-public class UserLoginControllerIT extends AbstractIntegrationTest {
+public class UserLoginControllerIT {
 
 
     @Autowired
@@ -50,6 +51,9 @@ public class UserLoginControllerIT extends AbstractIntegrationTest {
 
     @Autowired
     private UserAccountTestDataService userAccountTestDataService;
+
+    @Autowired
+    protected TestHelperService testHelperService;
 
     private final String eyecatcherH1 = "##################################################################";
     private final String eyecatcherH2 = "------------------------------------------------------------------";
@@ -92,15 +96,24 @@ public class UserLoginControllerIT extends AbstractIntegrationTest {
     }
 
 
-    //@Test
+    @Test
     public void testLoginFormular() throws Exception {
         this.mockMvc.perform(
                 get("/user/login")).andDo(print())
                 .andExpect(view().name(containsString("user/login/loginForm")));
     }
 
-    //@Test
+    @Test
     public void testFinish() {
         deleteAll();
     }
+
+
+    protected void deleteAll(){
+        testHelperService.deleteAllRegistrations();
+        testHelperService.deleteAllTasks();
+        testHelperService.deleteAllProjects();
+        testHelperService.deleteUserAccount();
+    }
+
 }

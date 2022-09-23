@@ -12,14 +12,17 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.woehlke.java.simpleworklist.SimpleworklistApplication;
+import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.java.simpleworklist.config.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryStatus;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 
 import java.net.URL;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -42,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableConfigurationProperties({
     SimpleworklistProperties.class
 })
-public class UserPasswordRecoveryControllerIT extends AbstractIntegrationTest {
+public class UserPasswordRecoveryControllerIT {
 
     @Autowired
     private ServletWebServerApplicationContext server;
@@ -57,9 +60,32 @@ public class UserPasswordRecoveryControllerIT extends AbstractIntegrationTest {
     @Autowired
     private UserAccountTestDataService userAccountTestDataService;
 
+    @Autowired
+    protected TestHelperService testHelperService;
+
     private final String eyecatcherH1 = "##################################################################";
     private final String eyecatcherH2 = "------------------------------------------------------------------";
     private final String eyecatcherH3 = "******************************************************************";
+
+    protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
+    protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
+    protected static String[] fullnames = {"test01 Name", "test02 Name", "test03 Name"};
+
+    protected static String username_email = "undefined//@Test.de";
+    protected static String password = "ASDFG";
+    protected static String full_name = "UNDEFINED_NAME";
+
+    protected static UserAccount[] testUser = new UserAccount[emails.length];
+
+    static {
+        for (int i = 0; i < testUser.length; i++) {
+            testUser[i] = new UserAccount();
+            testUser[i].setUuid(UUID.randomUUID());
+            testUser[i].setUserEmail(emails[i]);
+            testUser[i].setUserPassword(passwords[i]);
+            testUser[i].setUserFullname(fullnames[i]);
+        }
+    }
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -101,21 +127,21 @@ public class UserPasswordRecoveryControllerIT extends AbstractIntegrationTest {
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
-    //@Test
+    @Test
     public void testResetPassword() throws Exception {
         this.mockMvc.perform(
                 get("/user/resetPassword")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordForm")));
     }
 
-    //@Test
+    @Test
     public void testEnterNewPasswordFormular() throws Exception {
         this.mockMvc.perform(
                 get("/user/resetPassword/confirm/ASDF")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordNotConfirmed")));
     }
 
-    //@Test
+    @Test
     public void testEnterNewPasswordFormularWithToken() throws Exception {
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         try {
@@ -136,8 +162,15 @@ public class UserPasswordRecoveryControllerIT extends AbstractIntegrationTest {
         userAccountPasswordRecoveryService.passwordRecoveryDone(o);
     }
 
-    //@Test
+    @Test
     public void finish(){
-        super.deleteAll();
+        deleteAll();
+    }
+
+    protected void deleteAll(){
+        testHelperService.deleteAllRegistrations();
+        testHelperService.deleteAllTasks();
+        testHelperService.deleteAllProjects();
+        testHelperService.deleteUserAccount();
     }
 }

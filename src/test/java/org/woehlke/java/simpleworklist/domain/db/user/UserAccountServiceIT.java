@@ -1,34 +1,92 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
+import org.woehlke.java.simpleworklist.SimpleworklistApplication;
+import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
+import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
+import org.woehlke.java.simpleworklist.config.WebMvcConfig;
+import org.woehlke.java.simpleworklist.config.WebSecurityConfig;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
+import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
+import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
+import org.woehlke.java.simpleworklist.domain.security.access.UserAuthorizationService;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginForm;
+import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
+
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class UserAccountServiceIT extends AbstractIntegrationTest {
+public class UserAccountServiceIT {
 
     @Autowired
     private UserAccountRegistrationService registrationService;
 
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
+
+    @Autowired
+    protected TestHelperService testHelperService;
+
+    @Autowired
+    protected UserAccountService userAccountService;
+
+    @Autowired
+    protected ApplicationUserDetailsService applicationUserDetailsService;
+
+    @Autowired
+    protected UserAuthorizationService userAuthorizationService;
+
+    @Autowired
+    protected LoginSuccessService loginSuccessService;
+
+    @Autowired
+    SimpleworklistProperties simpleworklistProperties;
+
+    protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
+    protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
+    protected static String[] fullnames = {"test01 Name", "test02 Name", "test03 Name"};
+
+    protected static String username_email = "undefined//@Test.de";
+    protected static String password = "ASDFG";
+    protected static String full_name = "UNDEFINED_NAME";
+
+    protected static UserAccount[] testUser = new UserAccount[emails.length];
+
+    static {
+        for (int i = 0; i < testUser.length; i++) {
+            testUser[i] = new UserAccount();
+            testUser[i].setUuid(UUID.randomUUID());
+            testUser[i].setUserEmail(emails[i]);
+            testUser[i].setUserPassword(passwords[i]);
+            testUser[i].setUserFullname(fullnames[i]);
+        }
+    }
 
     @Test
     public void testStartSecondOptIn() throws Exception {
@@ -188,5 +246,18 @@ public class UserAccountServiceIT extends AbstractIntegrationTest {
         assertTrue(emails[0].compareTo(userAccount.getUserEmail()) == 0);
         SecurityContextHolder.clearContext();
         deleteAll();
+    }
+
+    protected void deleteAll(){
+        testHelperService.deleteAllRegistrations();
+        testHelperService.deleteAllTasks();
+        testHelperService.deleteAllProjects();
+        testHelperService.deleteUserAccount();
+    }
+
+    protected void makeActiveUser(String username) {
+        UserDetails ud = applicationUserDetailsService.loadUserByUsername(username);
+        Authentication authRequest = new UsernamePasswordAuthenticationToken(ud.getUsername(), ud.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authRequest);
     }
 }

@@ -4,19 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
+import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
 
 import java.util.Date;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class UserRegistrationServiceIT extends AbstractIntegrationTest {
+public class UserRegistrationServiceIT {
 
     @Value("${worklist.registration.max.retries}")
     private int maxRetries;
@@ -29,6 +30,37 @@ public class UserRegistrationServiceIT extends AbstractIntegrationTest {
 
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
+
+    @Autowired
+    protected TestHelperService testHelperService;
+
+    protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
+    protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
+    protected static String[] fullnames = {"test01 Name", "test02 Name", "test03 Name"};
+
+    protected static String username_email = "undefined//@Test.de";
+    protected static String password = "ASDFG";
+    protected static String full_name = "UNDEFINED_NAME";
+
+    protected static UserAccount[] testUser = new UserAccount[emails.length];
+
+    static {
+        for (int i = 0; i < testUser.length; i++) {
+            testUser[i] = new UserAccount();
+            testUser[i].setUuid(UUID.randomUUID());
+            testUser[i].setUserEmail(emails[i]);
+            testUser[i].setUserPassword(passwords[i]);
+            testUser[i].setUserFullname(fullnames[i]);
+        }
+    }
+
+
+    protected void deleteAll(){
+        testHelperService.deleteAllRegistrations();
+        testHelperService.deleteAllTasks();
+        testHelperService.deleteAllProjects();
+        testHelperService.deleteUserAccount();
+    }
 
     @Test
     public void testIsRetryAndMaximumNumberOfRetries(){
