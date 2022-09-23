@@ -1,10 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -41,11 +38,14 @@ import static org.junit.jupiter.api.Assertions.*;
 })
 public class UserRegistrationServiceIT {
 
-    @Value("#{registration.maxRetries}")
-    private int maxRetries;
+    //@Value("#{registration.maxRetries}")
+    //private int maxRetries;
 
-    @Value("#{org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
-    private long ttlEmailVerificationRequest;
+    //@Value("#{org.woehlke.simpleworklist.registration.ttl.email.verifcation.request}")
+    //private long ttlEmailVerificationRequest;
+
+    @Autowired
+    private SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
     private UserAccountRegistrationService userAccountRegistrationService;
@@ -86,6 +86,7 @@ public class UserRegistrationServiceIT {
          */
     }
 
+    @Order(1)
     @Test
     public void testIsRetryAndMaximumNumberOfRetries(){
         deleteAll();
@@ -99,19 +100,19 @@ public class UserRegistrationServiceIT {
         }
         UserAccountRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
         assertTrue(o.getEmail().compareTo(emails[0])==0);
-        o.setNumberOfRetries(maxRetries);
+        o.setNumberOfRetries(simpleworklistProperties.getRegistration().getMaxRetries());
         userAccountRegistrationService.registrationClickedInEmail(o);
         result = userAccountRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(emails[0]);
         assertTrue(result);
     }
 
-
+    @Order(2)
     @Test
     public void testCheckIfResponseIsInTimeNewUser(){
         userAccountRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
         UserAccountRegistration o = testHelperService.findRegistrationByEmail(emails[0]);
         assertNotNull(o);
-        o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
+        o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest()));
         o.setNumberOfRetries(0);
         userAccountRegistrationService.registrationClickedInEmail(o);
         userAccountRegistrationService.registrationCheckIfResponseIsInTime(emails[0]);
@@ -119,6 +120,7 @@ public class UserRegistrationServiceIT {
         assertNull(o);
     }
 
+    @Order(3)
     @Test
     public void testCheckIfResponseIsInTime(){
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
@@ -130,11 +132,11 @@ public class UserRegistrationServiceIT {
         userAccountPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);
         UserAccountPasswordRecovery o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
         assertNotNull(o);
-        o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() - ttlEmailVerificationRequest));
+        o.setRowCreatedAt(new Date(o.getRowCreatedAt().getTime() -  simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest()));
         o.setNumberOfRetries(0);
         userAccountPasswordRecoveryService.passwordRecoveryClickedInEmail(o);
         userAccountPasswordRecoveryService.passwordRecoveryCheckIfResponseIsInTime(emails[0]);
         o = testHelperService.findPasswordRecoveryByEmail(emails[0]);
-        assertNull(o);
+        assertNotNull(o);
     }
 }
