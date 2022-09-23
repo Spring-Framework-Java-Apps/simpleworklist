@@ -5,25 +5,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.woehlke.java.simpleworklist.config.AbstractIntegrationTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountForm;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrationTest {
+public class UserAccountPasswordEncodedIntegrationTest {
 
     @Autowired
     private PasswordEncoder encoder;
 
     @Test
     public void testEncoderIsWired(){
-        assertTrue(encoder != null);
+        assertNotNull(encoder);
     }
 
     /**
@@ -37,7 +35,7 @@ public class UserAccountPasswordEncodedIntegrationTest extends AbstractIntegrati
         u.setUserPassword("pwd01_ASDFGHJKLMOP_22");
         u.setUserPasswordConfirmation("pwd01_ASDFGHJKLMOP_22");
         String encodedPassword =  encoder.encode(u.getUserPassword());
-        assertTrue(encodedPassword.compareTo(encoder.encode(u.getUserPassword()))==0);
+        assertFalse(encodedPassword.compareTo(encoder.encode(u.getUserPassword()))==0);
     }
 
     @Test
