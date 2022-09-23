@@ -88,8 +88,9 @@
 * fixed #390 refactor integration tests: One Test class for each Controller Class
 * fixed #391 refactor integration tests: One Test class for each Service Class in package meso
 
+
 ## 2.4.10-SNAPSHOT
-* #389 apply Database Schema Evolutiion for: 386 make Project Navigation collapsible
+* #389 apply Database Schema Evolution for: 386 make Project Navigation collapsible
 
 ## 2.4.11-SNAPSHOT
 * #386 make Project Navigation collapsible
