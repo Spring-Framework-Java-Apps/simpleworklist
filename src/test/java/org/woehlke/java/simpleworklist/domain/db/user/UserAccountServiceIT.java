@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +21,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.test.web.servlet.MockMvc;
 import org.woehlke.java.simpleworklist.SimpleworklistApplication;
 import org.woehlke.java.simpleworklist.application.helper.TestHelperService;
 import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
+import org.woehlke.java.simpleworklist.config.UserAccountTestDataService;
 import org.woehlke.java.simpleworklist.config.WebMvcConfig;
 import org.woehlke.java.simpleworklist.config.WebSecurityConfig;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
@@ -34,6 +38,7 @@ import org.woehlke.java.simpleworklist.domain.security.access.UserAuthorizationS
 import org.woehlke.java.simpleworklist.domain.security.login.LoginForm;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
 
+import java.net.URL;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,6 +59,76 @@ import static org.junit.jupiter.api.Assertions.*;
     SimpleworklistProperties.class
 })
 public class UserAccountServiceIT {
+
+    @Autowired
+    private ServletWebServerApplicationContext server;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @SuppressWarnings("deprecation")
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private UserAccountTestDataService userAccountTestDataService;
+
+    private final String eyecatcherH1 = "##################################################################";
+    private final String eyecatcherH2 = "------------------------------------------------------------------";
+    private final String eyecatcherH3 = "******************************************************************";
+
+    @BeforeEach
+    public void setUp() {
+        log.info(eyecatcherH1);
+        log.info(" @BeforeEach setUp()");
+        log.info(eyecatcherH2);
+
+        //userAccountTestDataService.setUp();
+        log.info(eyecatcherH1);
+    }
+
+    @BeforeAll
+    public void runBeforeTestClass() {
+        log.info(eyecatcherH1);
+        log.info(" @BeforeTestClass runBeforeTestClass");
+        log.info(eyecatcherH2);
+        try {
+            URL base = new URL("http://localhost:" + port + "/");
+            log.info(" Server URL: " + base.toString());
+            log.info(eyecatcherH2);
+            userAccountTestDataService.setUp();
+        } catch (Exception ex) {
+            log.warn("Exception: " + ex.getLocalizedMessage());
+            for (StackTraceElement e : ex.getStackTrace()) {
+                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+            }
+        }
+        log.info(eyecatcherH2);
+        log.info(" @BeforeTestClass runBeforeTestClass");
+        log.info(eyecatcherH1);
+    }
+
+    @AfterAll
+    public void runAfterTestClass() {
+        log.info(eyecatcherH1);
+        log.info(" @AfterTestClass clearContext");
+        log.info(eyecatcherH2);
+        try {
+            URL base = new URL("http://localhost:" + port + "/");
+            log.info(" Server URL: " + base.toString());
+        } catch (Exception ex) {
+            log.warn("Exception: " + ex.getLocalizedMessage());
+            for (StackTraceElement e : ex.getStackTrace()) {
+                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+            }
+        }
+        log.info(eyecatcherH2);
+        SecurityContextHolder.clearContext();
+        log.info(eyecatcherH1);
+    }
+
+
+
 
     @Autowired
     private UserAccountRegistrationService registrationService;
@@ -82,11 +157,11 @@ public class UserAccountServiceIT {
     @Autowired
     protected SimpleworklistProperties simpleworklistProperties;
 
-    protected static String[] emails = {"test01//@Test.de", "test02//@Test.de", "test03//@Test.de"};
+    protected static String[] emails = {"test01////@Test.de", "test02////@Test.de", "test03////@Test.de"};
     protected static String[] passwords = {"test01pwd", "test02pwd", "test03pwd"};
     protected static String[] fullnames = {"test01 Name", "test02 Name", "test03 Name"};
 
-    protected static String username_email = "undefined//@Test.de";
+    protected static String username_email = "undefined////@Test.de";
     protected static String password = "ASDFG";
     protected static String full_name = "UNDEFINED_NAME";
 
@@ -102,10 +177,9 @@ public class UserAccountServiceIT {
         }
     }
 
-    @Ignore
     @Order(1)
-    @Test
-    public void testStartSecondOptIn() throws Exception {
+    ////@Test
+    public void testStartSecondOptIn() {
         int zeroNumberOfAllRegistrations = 1;
         deleteAll();
         String email = simpleworklistProperties.getRegistration().getMailFrom();
@@ -125,16 +199,19 @@ public class UserAccountServiceIT {
         assertFalse(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
         registrationService.registrationSendEmailTo(email);
         assertTrue(registrationService.registrationIsRetryAndMaximumNumberOfRetries(email));
-        int sixSeconds = 6000;
-        Thread.sleep(sixSeconds);
+        try {
+            int sixSeconds = 6000;
+            Thread.sleep(sixSeconds);
+        } catch (InterruptedException ie){
+            ie.printStackTrace();
+        }
         deleteAll();
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
-    @Ignore
     @Order(2)
-    @Test
-    public void testPasswordResetSendEmail() throws Exception {
+    //@Test
+    public void testPasswordResetSendEmail() {
         deleteAll();
         for(UserAccount userAccount:testUser){
             userAccountService.saveAndFlush(userAccount);
@@ -156,15 +233,18 @@ public class UserAccountServiceIT {
         assertFalse(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
         assertTrue(userAccountPasswordRecoveryService.passwordRecoveryIsRetryAndMaximumNumberOfRetries(emails[0]));
-        int sixSeconds = 6000;
-        Thread.sleep(sixSeconds);
+        try {
+            int sixSeconds = 6000;
+            Thread.sleep(sixSeconds);
+        } catch (InterruptedException ie){
+            ie.printStackTrace();
+        }
         deleteAll();
         assertEquals(zeroNumberOfAllRegistrations, testHelperService.getNumberOfAllRegistrations());
     }
 
-    @Ignore
     @Order(3)
-    @Test
+    //@Test
     public void testSaveAndFlush(){
         deleteAll();
         for(UserAccount userAccount:testUser){
@@ -184,9 +264,8 @@ public class UserAccountServiceIT {
         }
     }
 
-    @Ignore
     @Order(4)
-    @Test
+    //@Test
     public void testLoadUserByUsername(){
         for(String email:emails){
             try {
@@ -199,9 +278,8 @@ public class UserAccountServiceIT {
         }
     }
 
-    @Ignore
     @Order(5)
-    @Test
+    //@Test
     public void testAuthorize(){
         LoginForm loginForm = new LoginForm();
         loginForm.setUserEmail(emails[0]);
@@ -213,18 +291,15 @@ public class UserAccountServiceIT {
         assertFalse(userAuthorizationService.authorize(loginForm));
     }
 
-    @Ignore
     @Order(6)
-    @Test
+    //@Test
     public void testIsEmailAvailable() {
         assertTrue(userAccountService.isEmailAvailable(emails[0]));
         assertFalse(userAccountService.isEmailAvailable(username_email));
     }
 
-
-    @Ignore
     @Order(7)
-    @Test
+    //@Test
     public void testCreateUser() {
         UserAccountForm userAccount = new UserAccountForm();
         userAccount.setUserEmail(username_email);
@@ -235,9 +310,8 @@ public class UserAccountServiceIT {
         assertTrue(userAccountService.isEmailAvailable(username_email));
     }
 
-    @Ignore
     @Order(8)
-    @Test
+    //@Test
     public void testChangeUsersPassword(){
         UserAccountForm userAccount = new UserAccountForm();
         userAccount.setUserEmail(emails[0]);
@@ -247,17 +321,15 @@ public class UserAccountServiceIT {
         userAccountService.changeUsersPassword(userAccount);
     }
 
-    @Ignore
     @Order(9)
-    @Test
+    //@Test
     public void testRetrieveUsernameLoggedOut(){
         String userName = loginSuccessService.retrieveUsername();
         assertTrue(userName.compareTo(" ")==0);
     }
 
-    @Ignore
     @Order(10)
-    @Test
+    //@Test
     public void testRetrieveUsernameLoggedIn(){
         makeActiveUser(emails[0]);
         String userName = loginSuccessService.retrieveUsername();
@@ -266,17 +338,15 @@ public class UserAccountServiceIT {
         SecurityContextHolder.clearContext();
     }
 
-    @Ignore
     @Order(11)
-    @Test
-    //@Test(expected = UsernameNotFoundException.class)
+    //@Test
+    ////@Test(expected = UsernameNotFoundException.class)
     public void testRetrieveCurrentUserLoggedOut(){
         loginSuccessService.retrieveCurrentUser();
     }
 
-    @Ignore
     @Order(12)
-    @Test
+    //@Test
     public void testRetrieveCurrentUserLoggedIn(){
         makeActiveUser(emails[0]);
         UserAccount userAccount = loginSuccessService.retrieveCurrentUser();
@@ -287,7 +357,7 @@ public class UserAccountServiceIT {
     }
 
     protected void deleteAll(){
-        /*2d
+        /*
         testHelperService.deleteAllRegistrations();
         testHelperService.deleteAllTasks();
         testHelperService.deleteAllProjects();

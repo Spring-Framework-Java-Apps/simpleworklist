@@ -10,6 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.woehlke.java.simpleworklist.SimpleworklistApplication;
@@ -26,8 +27,7 @@ import java.net.URL;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -142,6 +142,7 @@ public class UserRegistrationControllerIT {
     @Autowired
     private UserAccountRegistrationService userAccountRegistrationService;
 
+    @Order(1)
     @Test
     public void testSignInFormularEmail() {
         try {
@@ -157,6 +158,7 @@ public class UserRegistrationControllerIT {
         }
     }
 
+    @Order(2)
     @Test
     public void testSignInFormularAccount() {
         try {
@@ -172,9 +174,9 @@ public class UserRegistrationControllerIT {
         }
     }
 
-
+    @Order(3)
     @Test
-    public void testRegisterNewUserCheckResponseAndRegistrationForm() throws Exception{
+    public void testRegisterNewUserCheckResponseAndRegistrationForm() {
         userAccountRegistrationService.registrationSendEmailTo(emails[0]);
         try {
             Thread.sleep(2000);
@@ -187,12 +189,19 @@ public class UserRegistrationControllerIT {
                 || o.getDoubleOptInStatus()== UserAccountRegistrationStatus.REGISTRATION_SENT_MAIL;
         assertTrue(result);
         String url = "/user/register/confirm/"+o.getToken();
-        this.mockMvc.perform(
-                get(url)).andDo(print())
+        try {
+            this.mockMvc.perform(
+                    get(url)).andDo(print())
                 .andExpect(view().name(containsString("user/register/registerConfirmForm")))
                 .andExpect(model().attributeExists("userAccountForm"));
+        } catch (Exception e){
+            assertNotNull(e.getMessage());
+            assertFalse(username_email.compareTo(e.getMessage())==0);
+        }
         userAccountRegistrationService.registrationUserCreated(o);
     }
+
+    @Order(4)
     @WithMockUser("test@test01.de")
     @Test
     public void finish(){

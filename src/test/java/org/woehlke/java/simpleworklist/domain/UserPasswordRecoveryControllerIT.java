@@ -141,6 +141,7 @@ public class UserPasswordRecoveryControllerIT {
     @Autowired
     private UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
+    @Order(1)
     @Test
     public void testResetPassword() {
         try {
@@ -155,6 +156,7 @@ public class UserPasswordRecoveryControllerIT {
         }
     }
 
+    @Order(2)
     @Test
     public void testEnterNewPasswordFormular() {
         try {
@@ -169,7 +171,7 @@ public class UserPasswordRecoveryControllerIT {
         }
     }
 
-
+    @Order(3)
     @Test
     public void testEnterNewPasswordFormularWithToken() {
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
@@ -198,6 +200,7 @@ public class UserPasswordRecoveryControllerIT {
         }
     }
 
+    @Order(4)
     @Test
     public void finish(){
         deleteAll();

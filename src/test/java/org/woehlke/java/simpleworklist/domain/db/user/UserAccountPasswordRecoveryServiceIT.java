@@ -1,10 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -84,6 +81,7 @@ public class UserAccountPasswordRecoveryServiceIT {
         }
     }
 
+    @Order(1)
     @Test
     public void testResetPassword() {
         try {
@@ -98,6 +96,7 @@ public class UserAccountPasswordRecoveryServiceIT {
         }
     }
 
+    @Order(2)
     @Test
     public void testEnterNewPasswordFormular() {
         try {
@@ -112,6 +111,7 @@ public class UserAccountPasswordRecoveryServiceIT {
         }
     }
 
+    @Order(3)
     @Test
     public void testEnterNewPasswordFormularWithToken() {
         userAccountPasswordRecoveryService.passwordRecoverySendEmailTo(emails[0]);
@@ -141,6 +141,7 @@ public class UserAccountPasswordRecoveryServiceIT {
         userAccountPasswordRecoveryService.passwordRecoveryDone(o);
     }
 
+    @Order(4)
     @Test
     public void finish() {
         //deleteAll();

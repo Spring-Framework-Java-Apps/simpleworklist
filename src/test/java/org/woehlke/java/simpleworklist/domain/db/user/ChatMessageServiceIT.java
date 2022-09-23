@@ -54,7 +54,7 @@ public class ChatMessageServiceIT {
     private final String eyecatcherH3 = "******************************************************************";
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         log.info(eyecatcherH1);
         log.info(" @BeforeEach setUp()");
         log.info(eyecatcherH2);
@@ -64,26 +64,40 @@ public class ChatMessageServiceIT {
     }
 
     @BeforeAll
-    public void runBeforeTestClass() throws Exception {
+    public void runBeforeTestClass() {
         log.info(eyecatcherH1);
         log.info(" @BeforeTestClass runBeforeTestClass");
         log.info(eyecatcherH2);
-        URL base = new URL("http://localhost:" + port + "/");
-        log.info(" Server URL: " + base.toString());
-        log.info(eyecatcherH2);
-        userAccountTestDataService.setUp();
+        try {
+            URL base = new URL("http://localhost:" + port + "/");
+            log.info(" Server URL: " + base.toString());
+            log.info(eyecatcherH2);
+            userAccountTestDataService.setUp();
+        } catch (Exception ex) {
+            log.warn("Exception: " + ex.getLocalizedMessage());
+            for (StackTraceElement e : ex.getStackTrace()) {
+                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+            }
+        }
         log.info(eyecatcherH2);
         log.info(" @BeforeTestClass runBeforeTestClass");
         log.info(eyecatcherH1);
     }
 
     @AfterAll
-    public void runAfterTestClass() throws Exception {
+    public void runAfterTestClass() {
         log.info(eyecatcherH1);
         log.info(" @AfterTestClass clearContext");
         log.info(eyecatcherH2);
-        URL base = new URL("http://localhost:" + port + "/");
-        log.info(" Server URL: " + base.toString());
+        try {
+            URL base = new URL("http://localhost:" + port + "/");
+            log.info(" Server URL: " + base.toString());
+        } catch (Exception ex) {
+            log.warn("Exception: " + ex.getLocalizedMessage());
+            for (StackTraceElement e : ex.getStackTrace()) {
+                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+            }
+        }
         log.info(eyecatcherH2);
         SecurityContextHolder.clearContext();
         log.info(eyecatcherH1);

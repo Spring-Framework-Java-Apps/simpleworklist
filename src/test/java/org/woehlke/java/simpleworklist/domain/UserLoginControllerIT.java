@@ -110,7 +110,7 @@ public class UserLoginControllerIT {
         }
     }
 
-
+    @Order(1)
     @Test
     public void testLoginFormular() {
         try {
@@ -125,6 +125,7 @@ public class UserLoginControllerIT {
         }
     }
 
+    @Order(2)
     @Test
     public void testFinish() {
         //deleteAll();
