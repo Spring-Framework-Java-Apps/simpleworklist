@@ -123,7 +123,7 @@ public class UserAccountPasswordRecoveryServiceIT {
         assertNotNull(o);
         boolean result = o.getDoubleOptInStatus() == UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SAVED_EMAIL
             || o.getDoubleOptInStatus() == UserAccountPasswordRecoveryStatus.PASSWORD_RECOVERY_SENT_EMAIL;
-        assertFalse(result);
+        assertTrue(result);
         String url = "/user/resetPassword/confirm/" + o.getToken();
         try {
             this.mockMvc.perform(
