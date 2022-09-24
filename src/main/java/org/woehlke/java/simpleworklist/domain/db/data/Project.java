@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static java.lang.Boolean.FALSE;
+
 @Entity
 @Table(
     name="data_project",
@@ -87,7 +89,7 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     @NotNull
     @Column(name = "collapsed", nullable = false)
-    private Boolean collapsed;
+    private Boolean collapsed = FALSE;
 
     @Transient
     public String getUrlRoot() {
