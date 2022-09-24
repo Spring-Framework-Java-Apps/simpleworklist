@@ -21,4 +21,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: ./mvnw -B -DskipTests clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree package spring-boot:repackage --file pom.xml
+      run: ./mvnw -B -V -DskipTests dependency:purge-local-repository clean dependency:resolve dependency:resolve-plugins dependency:sources dependency:tree package spring-boot:repackage site --file pom.xml
