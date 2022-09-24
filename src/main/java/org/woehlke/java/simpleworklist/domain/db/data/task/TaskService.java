@@ -5,71 +5,56 @@ import org.springframework.data.domain.Pageable;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
 
 import java.util.List;
 
 public interface TaskService {
 
-//    void moveAllCompletedToTrash(Context context);
-//    void emptyTrash(Context context);
+    Task findById(long taskId);
 
-//    Task moveTaskToRootProject(Task task);
-//    Task moveTaskToAnotherProject(Task task, Project project);
+    List<Task> findByTaskStateInbox(Context context);
+    List<Task> findByTaskStateToday(Context context);
+    List<Task> findByTaskStateNext(Context context);
+    List<Task> findByTaskStateWaiting(Context context);
+    List<Task> findByTaskStateScheduled(Context context);
+    List<Task> findByTaskStateSomeday(Context context);
+    List<Task> findByFocus(Context context);
+    List<Task> findByTaskStateCompleted(Context context);
+    List<Task> findByTaskStateTrash(Context context);
+    List<Task> findByTaskStateDeleted(Context context);
+    List<Task> findByTaskStateProjects(Context context);
+    List<Task> findByProjectId(Project thisProject);
 
-    Task addToInbox(Task task);
-    Task addToProject(Task task);
-    Task addToRootProject(Task task);
+    Page<Task> findByTaskStateInbox(Context context, Pageable request);
+    Page<Task> findByTaskStateToday(Context context, Pageable request);
+    Page<Task> findByTaskStateNext(Context context, Pageable request);
+    Page<Task> findByTaskStateWaiting(Context context, Pageable request);
+    Page<Task> findByTaskStateScheduled(Context context, Pageable request);
+    Page<Task> findByTaskStateSomeday(Context context, Pageable request);
+    Page<Task> findByFocus(Context context, Pageable request);
+    Page<Task> findByTaskStateCompleted(Context context, Pageable request);
+    Page<Task> findByTaskStateTrash(Context context, Pageable request);
+    Page<Task> findByTaskStateDeleted(Context context, Pageable request);
+    Page<Task> findByTaskStateProjects(Context context, Pageable request);
+    Page<Task> findByTaskStateAll(Context context, Pageable pageRequest);
 
-    Task updatedViaTaskstate(Task task);
-    Task updatedViaProject(Task task);
-    Task updatedViaProjectRoot(Task task);
-
-    //TODO: rename to findById
-    Task findOne(long taskId);
-    Page<Task> findbyTaskstate(TaskState taskState, Context context, Pageable request);
-    Page<Task> findByProject(Project thisProject, Pageable request);
-    //TODO: rename to findByProjectRoot
-    Page<Task> findByRootProject(Context context, Pageable request);
+    Page<Task> findByProjectId(Project thisProject, Pageable request);
+    Page<Task> findByProjectRoot(Context context, Pageable request);
 
     boolean projectHasNoTasks(Project project);
 
-    long getMaxOrderIdTaskState(TaskState taskState, Context context);
-    long getMaxOrderIdProject(Project project, Context context);
-    long getMaxOrderIdProjectRoot(Context context);
-
-    /**
-     * Before: sourceTask is dragged from above down to destinationTask, so sourceTask is above destinationTask.
-     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
-     * and destinationTask are moved one position up; destinationTask is the next Task above sourceTask.
-     * @param sourceTask Task
-     * @param destinationTask Task
-     */
-    void moveTasksUpByTaskState(Task sourceTask, Task destinationTask);
-
-    /**
-     * Before: sourceTask is dragged from below up to destinationTask, so sourceTask is below destinationTask.
-     * After: sourceTask is placed to the position of destinationTask, all tasks between old position of sourceTask
-     * are moved one position down; destinationTask is the next Task below sourceTask.
-     * @param sourceTask Task
-     * @param destinationTask Task
-     */
-    void moveTasksDownByTaskState(Task sourceTask, Task destinationTask);
-
-    void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask);
-    void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask);
-
-    void moveTasksUpByProject(Task sourceTask, Task destinationTask);
-    void moveTasksDownByProject(Task sourceTask, Task destinationTask);
-
     Task saveAndFlush(Task task);
-
+    void saveAll(List<Task> taskListChanged);
     void deleteAll(List<Task> taskListDeleted);
 
-    void saveAll(List<Task> taskListChanged);
+    List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context);
 
-    List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState completed, Context context);
+    Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context);
+    Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context);
+    Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context);
 
-    List<Task> findByTaskStateAndContext(TaskState trash, Context context);
+    List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState, long higherOrderIdTaskState, TaskState taskState, Context context);
+    List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Context context);
+    List<Task> getTasksByOrderIdProjectIdBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project);
 
 }

@@ -3,8 +3,8 @@ package org.woehlke.java.simpleworklist.domain.db.search.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Propagation;
+//import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.search.SearchRequest;
 import org.woehlke.java.simpleworklist.domain.db.search.SearchResult;
@@ -29,7 +29,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    //@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public SearchResult search(SearchRequest searchRequest) {
         log.info("search");
         searchRequest = searchRequestService.update(searchRequest);
@@ -39,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    //@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public SearchResult search(String searchterm, Context context) {
         log.info("search");
         SearchRequest searchRequest = new SearchRequest();
@@ -52,7 +52,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void resetSearchIndex() {
         log.info("resetSearchIndex");
         searchResultService.resetSearchIndex();

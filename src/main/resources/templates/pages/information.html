@@ -13,7 +13,7 @@
   <div id="tw-content-title">
     <div class="row my-5 py-5">
       <h1 class="col-md-12 mb-12">
-        <i class="fas fa-inbox"></i><span th:utext="#{pages.information.h1}">Information</span>
+        <span th:utext="#{pages.information.h1}">Information</span>
       </h1>
       <h2>© 2022 Thomas Wöhlke</h2>
     </div>
@@ -21,29 +21,38 @@
 </div>
 
 <div th:fragment="mytwcontent">
-  <div id="user-login-form-more-information">
-    <div>
-      <span th:text="#{user.loginForm.moreInformation}">For More Information please visit:</span>
+
+  <div class="card" id="user-login-form-more-information">
+    <div class="card-body">
+      <h5 class="card-title" th:text="#{user.loginForm.moreInformation}">For More Information please visit:</h5>
       <ul>
-        <li><span th:utext="#{user.loginForm.github}">Github:</span> <a
-          href="https://github.com/Spring-Framework-Java-Apps/simpleworklist/" target="_blank">https://github.com/Spring-Framework-Java-Apps/simpleworklist/</a>
+        <li>
+          <span th:utext="#{user.loginForm.github}">Github:</span>
+          <a href="https://github.com/Spring-Framework-Java-Apps/simpleworklist/" target="_blank">
+            https://github.com/Spring-Framework-Java-Apps/simpleworklist/
+          </a>
         </li>
-        <li><span th:utext="#{user.loginForm.myBlog}">My Blog:</span> <a href="http://thomas-woehlke.blogspot.de/"
-                                                                         target="_blank">http://thomas-woehlke.blogspot.de/</a>
+        <li>
+          <span th:utext="#{user.loginForm.myBlog}">My Blog:</span>
+          <a href="http://thomas-woehlke.blogspot.de/" target="_blank">http://thomas-woehlke.blogspot.de/</a>
         </li>
-        <li><span th:utext="#{user.loginForm.projectPage}">The Project Page:</span> <a
-          href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a></li>
+        <li>
+          <span th:utext="#{user.loginForm.projectPage}">The Project Page:</span>
+          <a href="http://woehlke.org/p/simpleworklist/" target="_blank">http://woehlke.org/p/simpleworklist/</a>
+        </li>
         <li>Getting Things Done&reg; @ Wikipedia:
-          <a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">https://de.wikipedia.org/wiki/Getting_Things_Done/</a>
-          <a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">https://en.wikipedia.org/wiki/Getting_Things_Done</a>
+          <a href="https://de.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale == 'de'}">
+            https://de.wikipedia.org/wiki/Getting_Things_Done
+          </a>
+          <a href="https://en.wikipedia.org/wiki/Getting_Things_Done" target="_blank" th:if="${locale != 'de'}">
+            https://en.wikipedia.org/wiki/Getting_Things_Done
+          </a>
         </li>
       </ul>
-    </div>
-    <div>
-      <small>
-					<span th:utext="#{user.loginForm.gtd.copyright}">GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company. SimpleWorklist is
-					not affiliated with or endorsed by the David Allen Company.</span>
-      </small>
+      <p class="card-text" th:utext="#{user.loginForm.gtd.copyright}">
+        GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company.
+        SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
+      </p>
     </div>
   </div>
 </div>

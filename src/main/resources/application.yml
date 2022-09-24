@@ -1,5 +1,5 @@
 server:
-  # port: ${SIMPLEWORKLIST_PORT}
+  port: ${PORT}
   error:
     path: /fehler
   compression:
@@ -26,7 +26,7 @@ spring:
   jta:
     atomikos:
       connectionfactory:
-        xa-connection-factory-class-name: org.postgresql.xa.PGXADataSource
+        xa-connection-factory-class-name: org.postgresql.xa.PGXAConnection
   jpa:
     open-in-view: true
     show-sql: true
@@ -76,12 +76,12 @@ org:
         registration:
           maxRetries: 5
           ttlEmailVerificationRequest: 86400000
-          urlHost: localhost:8080
-          # ${SIMPLEWORKLIST_URL_APP_HOST}
+          urlHost: ${SIMPLEWORKLIST_URL_APP_HOST}
           mailFrom: ${SIMPLEWORKLIST_MAIL_FROM}
         webMvc:
           controllerPageSize: 10
           staticResourceHandler:
+            - "/favicon.ico"
             - "/css"
             - "/img"
             - "/js"
@@ -98,16 +98,20 @@ org:
             - "JSESSIONID"
           invalidateHttpSession: true
           defaultSuccessUrl: "/"
-          failureForwardUrl: "/user/login?login_error=1"
+          failureForwardUrl: "/user/logout"
           usernameParameter: "j_username"
           passwordParameter: "j_password"
           loginPage: "/user/login"
           antPatternsPublic:
+            - "/favicon.ico"
+            - "/favicon.ico*"
             - "/webjars/**"
             - "/css/**"
             - "/img/**"
             - "/js/**"
-            - "/favicon.ico"
+            - "/pages/information"
+            - "/pages/information*"
+            - "/pages/information/**"
             - "/user/login*"
             - "/user/register*"
             - "/user/register/**"
@@ -116,68 +120,22 @@ org:
             - "/user/resetPassword/**"
             - "/user/resetPassword/confirm/**"
             - "/error*"
-            - "/information*"
+
 logging:
   level:
     root: INFO
-    javax: INFO
-    jakartaee: INFO
-    com:
-      atomikos: INFO
     org:
-      thymeleaf:
-        dialect:
-          springdata: INFO
-      apache:
-        commons:
-          logging: WARN
-      h2: INFO
-      springframework:
-        data:
-          jdbc: INFO
-          jpa: INFO
-          relational: INFO
-        security:
-          web: INFO
-          context: INFO
-        boot: INFO
-        beans: INFO
-        jdbc: INFO
-        orm: INFO
-        session: WARN
-        test: INFO
-        mock: WARN
-        transaction: INFO
-        jca: INFO
-        web: INFO
-        remoting: INFO
-        http: INFO
-        expression: INFO
-        util: INFO
-        lang: INFO
-        core: INFO
-        cglib: WARN
+      springframework: INFO
       hibernate:
-        sql: INFO
-        query: INFO
-        mapping: INFO
-        jpa: INFO
-        id: INFO
-        graph: INFO
-        cfg: INFO
-        service: INFO
-        result: INFO
+        SQL: INFO
         engine:
           internal: WARN
       ch:
         qos: WARN
+      postgresql: WARN
       woehlke:
         java:
-          simpleworklist:
-            application: DEBUG
-            config: DEBUG
-            measurements: DEBUG
-            domain: DEBUG
+          simpleworklist: INFO
 debug: false
 ---
 spring:
@@ -195,7 +153,7 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  # port: 9010
+  port: ${PORT}
   compression:
     enabled: true
 logging:
@@ -212,12 +170,5 @@ logging:
       postgresql: WARN
       woehlke:
         java:
-          simpleworklist:
-            application: INFO
-            config: INFO
-            measurements: INFO
-            user: INFO
-            domain: INFO
-            services: INFO
-            common: INFO
+          simpleworklist: INFO
 debug: false

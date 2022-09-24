@@ -17,8 +17,25 @@
 	<link th:href="@{/webjars/font-awesome/6.1.2/css/all.min.css}" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Lato|Varela+Round" rel="stylesheet">
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
-	<!--/* Per-page placeholder for additional links */-->
-	<th:block th:replace="${links}" />
+  <link rel="apple-touch-icon" sizes="57x57" th:href="@{/img/favicon/apple-icon-57x57.png}">
+  <link rel="apple-touch-icon" sizes="60x60" th:href="@{/img/favicon/apple-icon-60x60.png}">
+  <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/favicon/apple-icon-72x72.png}">
+  <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/favicon/apple-icon-76x76.png}">
+  <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/favicon/apple-icon-114x114.png}">
+  <link rel="apple-touch-icon" sizes="120x120" th:href="@{/img/favicon/apple-icon-120x120.png}">
+  <link rel="apple-touch-icon" sizes="144x144" th:href="@{/img/favicon/apple-icon-144x144.png}">
+  <link rel="apple-touch-icon" sizes="152x152" th:href="@{/img/favicon/apple-icon-152x152.png}">
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/favicon/apple-icon-180x180.png}">
+  <link rel="icon" type="image/png" sizes="192x192" th:href="@{/img/favicon/android-icon-192x192.png}">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon/favicon-32x32.png}">
+  <link rel="icon" type="image/png" sizes="96x96" th:href="@{/img/favicon/favicon-96x96.png}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon/favicon-16x16.png}">
+  <link rel="manifest" th:href="@{/img/favicon/manifest.json}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!--/* Per-page placeholder for additional links */-->
+  <th:block th:replace="${links}" />
 </head>
 <body th:fragment="tw-page-body(twcontent,twtitle,scripts)">
 
@@ -73,7 +90,17 @@
 	<footer class="footer">
 		<nav class="navbar fixed-bottom navbar-dark bg-dark navbar-text">
 			<div class="container">
-        <div class="col nav-link"><a th:href="@{/information}" class="nav-link">© 2022 Thomas Wöhlke</a></div>
+        <div class="col nav-link"><a th:href="@{/pages/information}" class="nav-link">© 2022 Thomas Wöhlke</a></div>
+        <div class="col nav-link">
+          <a href="https://twitter.com/GustaveSchiller" class="nav-link text-center">
+            <i class="fa-brands fa-twitter"></i> GustaveSchiller
+          </a>
+        </div>
+        <div class="col nav-link">
+          <a href="https://github.com/Spring-Framework-Java-Apps/simpleworklist" class="nav-link text-end">
+            <i class="fa-brands fa-github"></i> Spring-Framework-Java-Apps/simpleworklist
+          </a>
+        </div>
       </div>
 		</nav>
 	</footer>

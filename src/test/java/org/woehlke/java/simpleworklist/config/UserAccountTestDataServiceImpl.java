@@ -12,6 +12,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
 
 import java.util.Date;
+import java.util.UUID;
 
 
 @Slf4j
@@ -48,6 +49,7 @@ public class UserAccountTestDataServiceImpl implements UserAccountTestDataServic
         newContext = new NewContextForm[emails.length];
         for (int i = 0; i < testUser.length; i++) {
             testUser[i] = new UserAccount();
+            testUser[i].setUuid(UUID.randomUUID());
             testUser[i].setUserEmail(emails[i]);
             testUser[i].setUserPassword(passwords[i]);
             testUser[i].setUserFullname(fullnames[i]);

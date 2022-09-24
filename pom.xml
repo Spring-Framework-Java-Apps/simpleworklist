@@ -4,7 +4,7 @@
 
   <groupId>org.woehlke</groupId>
   <artifactId>simpleworklist</artifactId>
-  <version>2.3.71-SNAPSHOT</version>
+  <version>2.4.11-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -17,7 +17,7 @@
     <connection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</connection>
     <developerConnection>scm:git:git@github.com:Spring-Framework-Java-Apps/simpleworklist.git</developerConnection>
     <url>https://github.com/Spring-Framework-Java-Apps/simpleworklist/tree/${project.scm.tag}</url>
-    <tag>HEAD</tag>
+    <tag>v2.4.10</tag>
   </scm>
 
   <name>simpleworklist</name>
@@ -88,7 +88,9 @@
     <opencsv.version>5.7.0</opencsv.version>
 
     <!-- Unit and Integration Testing -->
-    <skipTests>true</skipTests>
+    <skipTests>false</skipTests>
+    <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+    <dockerCompose.skip>${skipTests}</dockerCompose.skip>
     <xmlunit.version>2.9.0</xmlunit.version>
     <htmlunit.version>2.64.0</htmlunit.version>
     <version.groovy-all>3.0.12</version.groovy-all>
@@ -96,7 +98,24 @@
     <jsoup.version>1.15.3</jsoup.version>
     <pmdVersion>6.49.0</pmdVersion>
 
+    <!-- Docker -->
+    <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
+    <docker-compose-maven-plugin.composeFile>${project.basedir}/src/main/resources/docker-compose.yml</docker-compose-maven-plugin.composeFile>
+    <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
+    <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
+    <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
+    <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
+    <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
+    <docker-compose-maven-plugin.projectName>simplgtd</docker-compose-maven-plugin.projectName>
+
+    <!-- SCM and Releasing -->
     <version.org.apache.maven.scm>1.13.0</version.org.apache.maven.scm>
+    <version.maven-release-plugin>3.0.0-M6</version.maven-release-plugin>
+
+    <!-- UML -->
+    <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
+    <version.net.sourceforge.plantuml>1.2022.6</version.net.sourceforge.plantuml>
+
     <version.maven-invoker-plugin>3.3.0</version.maven-invoker-plugin>
     <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
     <version.maven-dependency-plugin>3.3.0</version.maven-dependency-plugin>
@@ -107,7 +126,6 @@
     <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
     <version.maven-surefire-plugin>3.0.0-M7</version.maven-surefire-plugin>
     <version.maven-failsafe-plugin>3.0.0-M7</version.maven-failsafe-plugin>
-    <version.maven-release-plugin>3.0.0-M6</version.maven-release-plugin>
     <version.maven-site-plugin>3.12.0</version.maven-site-plugin>
     <version.maven-project-info-reports-plugin>3.3.0</version.maven-project-info-reports-plugin>
     <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
@@ -118,14 +136,6 @@
     <version.asciidoctor-maven-plugin>2.2.2</version.asciidoctor-maven-plugin>
     <version.doxia-module-markdown>1.11.1</version.doxia-module-markdown>
     <version.maven-enforcer-plugin>3.1.0</version.maven-enforcer-plugin>
-    <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
-    <version.net.sourceforge.plantuml>1.2022.6</version.net.sourceforge.plantuml>
-    <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
-    <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
-    <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
-    <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
-    <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
-    <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
   </properties>
 
   <repositories>
@@ -253,20 +263,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!--
-      <dependency>
-        <groupId>org.springframework.integration</groupId>
-        <artifactId>spring-integration-bom</artifactId>
-        <version>${spring-integration.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.integration</groupId>
-        <artifactId>spring-integration-ws</artifactId>
-        <version>${spring-integration.version}</version>
-      </dependency>
-      -->
 
       <!-- webjars -->
       <dependency>
@@ -311,37 +307,10 @@
         <optional>false</optional>
       </dependency>
 
-      <!--
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest</artifactId>
-        <version>${hamcrest.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-core</artifactId>
-        <version>${hamcrest.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-library</artifactId>
-        <version>${hamcrest.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>${jsoup.version}</version>
-        <scope>test</scope>
-      </dependency>
-      -->
-
       <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>42.4.1</version>
+        <version>42.5.0</version>
       </dependency>
 
       <!-- SCM -->
@@ -490,15 +459,6 @@
           </exclusion>
         </exclusions>
       </dependency>
-      <!--
-      <dependency>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>${version.spotbugs-maven-plugin}</version>
-        <type>maven-plugin</type>
-        <scope>provided</scope>
-      </dependency>
-      -->
       <dependency>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
@@ -574,32 +534,6 @@
         <type>maven-plugin</type>
         <scope>provided</scope>
       </dependency>
-      <!--
-      <dependency>
-        <groupId>org.apache.maven.doxia</groupId>
-        <artifactId>doxia-module-markdown</artifactId>
-        <version>${version.doxia-module-markdown}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.xmlunit</groupId>
-        <artifactId>xmlunit-legacy</artifactId>
-        <version>${xmlunit.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>net.sourceforge.htmlunit</groupId>
-        <artifactId>htmlunit</artifactId>
-        <version>${htmlunit.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy-all</artifactId>
-        <version>${version.groovy-all}</version>
-        <scope>test</scope>
-      </dependency>
-      -->
     </dependencies>
   </dependencyManagement>
 
@@ -610,14 +544,12 @@
       <scope>provided</scope>
       <optional>false</optional>
     </dependency>
-    <!--
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
-    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
@@ -628,16 +560,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jta-atomikos</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jdbc</artifactId>
-    </dependency>
-    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -691,88 +613,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-logging</artifactId>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-cache</artifactId>
-    </dependency>
-    -->
-    <!--
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-expression</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-remoting</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-data</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session-jdbc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-commons</artifactId>
-    </dependency>
-    -->
 
     <dependency>
       <groupId>org.springframework.security</groupId>
@@ -840,19 +680,6 @@
       <artifactId>HikariCP</artifactId>
     </dependency>
 
-    <!--
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <scope>test</scope>
-    </dependency>
-    -->
-
-    <!-- scope test - without dependency-management in this pom.xml -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
@@ -863,35 +690,6 @@
       <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
-
-    <!--
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-library</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xmlunit</groupId>
-      <artifactId>xmlunit-legacy</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.htmlunit</groupId>
-      <artifactId>htmlunit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    -->
-
     <!-- scm -->
     <dependency>
       <groupId>org.apache.maven.scm</groupId>
@@ -995,14 +793,6 @@
       <type>maven-plugin</type>
       <scope>provided</scope>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-maven-plugin</artifactId>
-      <type>maven-plugin</type>
-      <scope>provided</scope>
-    </dependency>
-    -->
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-pmd-plugin</artifactId>
@@ -1057,18 +847,6 @@
       <type>maven-plugin</type>
       <scope>provided</scope>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-module-markdown</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <scope>test</scope>
-    </dependency>
-    -->
   </dependencies>
 
   <build>
@@ -1090,6 +868,40 @@
           <groupId>com.dkanejs.maven.plugins</groupId>
           <artifactId>docker-compose-maven-plugin</artifactId>
           <version>${version.docker-compose-maven-plugin}</version>
+            <executions>
+                <execution>
+                    <id>maven-docker-up</id>
+                    <phase>test-compile</phase>
+                    <goals>
+                        <goal>up</goal>
+                    </goals>
+                    <configuration>
+                        <composeFile>${docker-compose-maven-plugin.composeFile}</composeFile>
+                        <verbose>${docker-compose-maven-plugin.verbose}</verbose>
+                        <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
+                        <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
+                        <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
+                        <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
+                        <projectName>${docker-compose-maven-plugin.projectName}</projectName>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>maven-docker-down</id>
+                    <phase>pre-site</phase>
+                    <goals>
+                        <goal>down</goal>
+                    </goals>
+                    <configuration>
+                        <composeFile>${docker-compose-maven-plugin.composeFile}</composeFile>
+                        <verbose>${docker-compose-maven-plugin.verbose}</verbose>
+                        <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
+                        <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
+                        <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
+                        <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
+                        <projectName>${docker-compose-maven-plugin.projectName}</projectName>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1246,7 +1058,6 @@
                   <files>
                     <file>${project.basedir}/README.md</file>
                     <file>${project.basedir}/LICENSE</file>
-                    <file>${project.basedir}/etc/docker/docker-compose.yml</file>
                     <file>${project.basedir}/app.json</file>
                     <file>${project.basedir}/_config.yml</file>
                     <file>${project.basedir}/Procfile</file>
@@ -1256,13 +1067,13 @@
                     <file>${project.basedir}/src/site/markdown/DEVELOPMENT.md</file>
                     <file>${project.basedir}/src/site/markdown/HOWTO.md</file>
                     <file>${project.basedir}/src/site/markdown/MAVEN_PLUGINS.md</file>
-                    <file>${project.basedir}/src/site/markdown/REQUIREMENTS_FUNCTIONAL.md</file>
                     <file>${project.basedir}/src/site/markdown/REQUIREMENTS_NONFUNCTIONAL.md</file>
                     <file>${project.basedir}/src/site/markdown/TODO.md</file>
                     <file>${project.basedir}/src/site/site.xml</file>
                     <file>${project.basedir}/build.sh</file>
                     <file>${project.basedir}/etc/run.sh</file>
                     <file>${project.basedir}/etc/bash/psql.sh</file>
+                    <file>${project.basedir}/src/main/resources/docker-compose.yml</file>
                     <file>${project.basedir}/etc/docker-start.sh</file>
                     <file>${project.basedir}/etc/docker-stop.sh</file>
                     <file>${project.basedir}/etc/sql/db-createdb-and-user-linux.sql</file>
@@ -1306,29 +1117,10 @@
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-configuration-processor</artifactId>
             </exclude>
-            <!--
             <exclude>
               <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-configuration-processor</artifactId>
+              <artifactId>spring-boot-devtools</artifactId>
             </exclude>
-            <excludeArtifactIds>
-            jboss-transaction-api_1.2_spec,
-            byte-buddy-agent,byte-buddy,
-            backport9,backport-util-concurrent,
-            spring-boot-configuration-processor,
-            spring-boot-devtools,
-            ganymed-ssh2,maven-toolchain,
-            weld-probe-core,antlr,
-            bsh,velocity-tools,
-            liquibase-core,
-            jruby-complete,
-            cdi-api,
-            lombok,
-            jcommander,
-            checkstyle,
-            plexus-build-api
-            </excludeArtifactIds>
-            -->
           </excludes>
         </configuration>
         <executions>
@@ -1359,14 +1151,6 @@
       <plugin>
         <groupId>com.dkanejs.maven.plugins</groupId>
         <artifactId>docker-compose-maven-plugin</artifactId>
-        <configuration>
-          <composeFile>${project.basedir}/src/main/docker/docker-compose.yml</composeFile>
-          <verbose>${docker-compose-maven-plugin.verbose}</verbose>
-          <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
-          <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
-          <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
-          <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -1375,7 +1159,7 @@
           <includeScope>compile</includeScope>
           <excludeTypes>maven-plugin</excludeTypes>
           <excludeScope>test,provided</excludeScope>
-          <excludeGroupIds>org.eclipse.aether,antlr,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby,com.vladsch.flexmark,org.apache.maven.doxia,org.codehaus.plexus,org.apache.maven.scm,io.netty,org.apache.groovy,org.eclipse.jetty,org.mockito,org.asciidoctor,com.github.jnr,org.apache.maven.surefire,org.apache.maven,net.sourceforge.saxon,net.sf.saxon,com.github.spotbugs,org.eclipse.jgit,org.apache.ant,org.apache.velocity,org.junit.jupiter,org.junit.platform,junit,org.mockito,net.sourceforge.pmd,org.eclipse.sisu,org.ow2.asmcom.fasterxml.jackson.module,  </excludeGroupIds>
+          <excludeGroupIds>org.eclipse.aether,org.beanshell,org.apache.maven.plugins,org.apache.maven.scm,org.jruby,com.vladsch.flexmark,org.apache.maven.doxia,org.codehaus.plexus,org.apache.maven.scm,io.netty,org.apache.groovy,org.eclipse.jetty,org.mockito,org.asciidoctor,com.github.jnr,org.apache.maven.surefire,org.apache.maven,net.sourceforge.saxon,net.sf.saxon,com.github.spotbugs,org.eclipse.jgit,org.apache.ant,org.apache.velocity,org.junit.jupiter,org.junit.platform,junit,org.mockito,net.sourceforge.pmd,org.eclipse.sisu,org.ow2.asmcom.fasterxml.jackson.module,  </excludeGroupIds>
           <excludeArtifactIds>jboss-transaction-api_1.2_spec,byte-buddy-agent,byte-buddy,backport9,backport-util-concurrent,spring-boot-configuration-processor,spring-boot-devtools,ganymed-ssh2,maven-toolchain,weld-probe-core,antlr,bsh,velocity-tools,liquibase-core,jruby-complete,cdi-api,lombok,jcommander,checkstyle,plexus-build-api</excludeArtifactIds>
         </configuration>
         <executions>
@@ -1534,14 +1318,6 @@
       <plugin>
         <groupId>com.dkanejs.maven.plugins</groupId>
         <artifactId>docker-compose-maven-plugin</artifactId>
-        <inherited>true</inherited>
-        <configuration>
-          <composeFile>${project.basedir}/docker-compose.yml</composeFile>
-          <verbose>${docker-compose-maven-plugin.verbose}</verbose>
-          <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
-          <removeVolumes>true</removeVolumes>
-          <ignorePullFailures>true</ignorePullFailures>
-          <detachedMode>true</detachedMode>  </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -1674,12 +1450,12 @@
     <profile>
       <id>jar</id>
       <properties>
-        <skip.unit.tests>false</skip.unit.tests>
+        <skip.unit.tests>true</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
       </properties>
       <build>
         <finalName>${project.artifactId}</finalName>
-        <defaultGoal>clean install</defaultGoal>
+          <defaultGoal>clean dependency:purge-local-repository install spring-boot:repackage</defaultGoal>
       </build>
     </profile>
 
@@ -1691,9 +1467,22 @@
       </properties>
       <build>
         <finalName>${project.artifactId}</finalName>
-        <defaultGoal>clean dependency:list install</defaultGoal>
+        <defaultGoal>clean dependency:list install spring-boot:repackage</defaultGoal>
       </build>
     </profile>
+
+      <profile>
+          <id>test</id>
+          <properties>
+              <skipTests>false</skipTests>
+              <skip.unit.tests>false</skip.unit.tests>
+              <skip.integration.tests>false</skip.integration.tests>
+          </properties>
+          <build>
+              <finalName>${project.artifactId}</finalName>
+              <defaultGoal>clean dependency:purge-local-repository dependency:list install spring-boot:repackage</defaultGoal>
+          </build>
+      </profile>
 
     <profile>
       <id>uml</id>

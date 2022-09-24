@@ -31,7 +31,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchRequest extends AuditModel implements Serializable, ComparableById<SearchRequest> {
+public class SearchRequest extends AuditModel implements Serializable, ComparableById<SearchRequest>,Comparable<SearchRequest> {
 
     private static final long serialVersionUID = 7860692526488291439L;
 
@@ -77,4 +77,9 @@ public class SearchRequest extends AuditModel implements Serializable, Comparabl
     public boolean equalsByUuid(SearchRequest otherObject) {
         return super.equalsByMyUuid(otherObject);
     }
+
+  @Override
+  public int compareTo(SearchRequest o) {
+    return this.rowCreatedAt.compareTo(o.rowCreatedAt);
+  }
 }

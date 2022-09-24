@@ -38,7 +38,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> findRootProjectsByContext(@NotNull Context context) {
         log.info("findRootProjectsByContext");
-        //TODO: #245 change List<Project> to Page<Project>
         return projectRepository.findByParentIsNullAndContext(context);
     }
 
@@ -51,7 +50,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> findAllProjectsByContext(@NotNull Context context) {
         log.info("findAllProjectsByContext");
-        //TODO: #245 change List<Project> to Page<Project>
         return projectRepository.findByContext(context);
     }
 
@@ -88,68 +86,33 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project delete(@NotNull Project thisProject) {
+    public void delete(@NotNull Project thisProject) {
         log.info("delete");
-        Project oldParent = thisProject.getParent();
-        if (oldParent != null) {
-            oldParent.getChildren().remove(thisProject);
-            projectRepository.saveAndFlush(oldParent);
-        }
         projectRepository.delete(thisProject);
-        return oldParent;
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project moveProjectToAnotherContext(@NotNull Project thisProject, @NotNull Context newContext) {
-        log.info("----------------------------------------------------");
-        log.info("moveProjectToAnotherContext: Project: "+ thisProject.toString());
-        log.info("----------------------------------------------------");
-        log.info("moveProjectToAnotherContext: newContext: "+ newContext.toString());
-        log.info("----------------------------------------------------");
-        thisProject.setParent(null);
-        thisProject = projectRepository.saveAndFlush(thisProject);
-        //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
-        List<Project> listProject = getAllChildrenOfProject(thisProject);
-        for(Project childProject : listProject){
-            List<Task> tasksOfChildProject = taskRepository.findByProject(childProject);
-            for(Task task:tasksOfChildProject){
-                task.setContext(newContext);
-            }
-            childProject.setContext(newContext);
-            taskRepository.saveAll(tasksOfChildProject);
-            projectRepository.saveAndFlush(childProject);
-        }
-        return thisProject;
-    }
+  @Override
+  public List<Task> findByProject(Project thisProject) {
+    return taskRepository.findByProject(thisProject);
+  }
 
-    //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
-    @Deprecated
-    private List<Project> getAllChildrenOfProject(@NotNull Project thisProject) {
+
+  @Override
+  public Project getReferenceById(long projectId) {
+    return projectRepository.getReferenceById(projectId);
+  }
+
+
+  @Override
+  public List<Project> getAllChildrenOfProject(@NotNull Project thisProject) {
         log.info("getAllChildrenOfProject");
         List<Project> childrenOfProject = new ArrayList<>();
         childrenOfProject.add(thisProject);
         for(Project p : thisProject.getChildren()){
-            //TODO: remove Recursion, remove unbounded Recursion and List instead of Page.
             List<Project> getNextGeneration = getAllChildrenOfProject(p);
             childrenOfProject.addAll(getNextGeneration);
         }
         return childrenOfProject;
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
-    public Project moveProjectToAnotherProject(
-        @NotNull Project thisProject,
-        @NotNull Project targetProject
-    ) {
-        log.info("moveProjectToAnotherProject");
-        Project oldParent = thisProject.getParent();
-        if (oldParent != null) {
-            oldParent.getChildren().remove(thisProject);
-            projectRepository.saveAndFlush(oldParent);
-        }
-        thisProject.setParent(targetProject);
-        return projectRepository.saveAndFlush(thisProject);
-    }
 }

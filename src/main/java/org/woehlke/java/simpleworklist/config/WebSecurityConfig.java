@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
@@ -38,18 +40,18 @@ import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDet
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    //private final AuthenticationSuccessHandler loginSuccessHandler;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final ApplicationUserDetailsService applicationUserDetailsService;
     private final SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
     public WebSecurityConfig(
         AuthenticationManagerBuilder auth,
-        //LoginSuccessHandler loginSuccessHandler,
+        AuthenticationSuccessHandler authenticationSuccessHandler,
         ApplicationUserDetailsService applicationUserDetailsService,
         SimpleworklistProperties simpleworklistProperties) {
         this.authenticationManagerBuilder = auth;
-        //this.loginSuccessHandler = loginSuccessHandler;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.applicationUserDetailsService = applicationUserDetailsService;
         this.simpleworklistProperties = simpleworklistProperties;
     }
@@ -60,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
             .headers()
             .disable()
             .authorizeRequests()
-            .antMatchers(simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
+            .antMatchers(HttpMethod.GET,simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
             .permitAll()
             .anyRequest()
             .fullyAuthenticated()
@@ -74,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
             .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
             .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
             .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
-            //.successHandler(loginSuccessHandler)
+            //.successHandler(authenticationSuccessHandler)
             .permitAll()
             .and()
             .csrf()

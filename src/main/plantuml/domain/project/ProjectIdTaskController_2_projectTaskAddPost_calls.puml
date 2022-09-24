@@ -1,0 +1,345 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "org.woehlke.java.simpleworklist.domain.ProjectIdTaskController#projectTaskAddPost(long,UserSessionBean,Task,BindingResult,Locale,Model)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "org.woehlke.java.simpleworklist.domain.ProjectIdTaskController",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+
+
+'nodes
+subgraph cluster_1513072491 {
+   	label=woehlke
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   subgraph cluster_1573988037 {
+   	label=java
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+
+   subgraph cluster_1240104080 {
+   	label=Breadcrumb
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   Breadcrumb1783083103XXXaddProject1355342585[
+	label="+ addProject()"
+	style=filled
+	fillcolor=white
+	tooltip="Breadcrumb
+
+null"
+	fontcolor=darkgreen
+];
+
+Breadcrumb1783083103XXXaddProjectRoot0[
+	label="+ addProjectRoot()"
+	style=filled
+	fillcolor=white
+	tooltip="Breadcrumb
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_1533270679 {
+   	label=TaskServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   TaskServiceImpl309352181XXXfindTopByProjectAndContextOrderByOrderIdProjectDesc1789074750[
+	label="+ findTopByProjectAndContextOrderByOrderIdProjectDesc()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskServiceImpl309352181XXXfindTopByTaskStateAndContextOrderByOrderIdTaskStateDesc411139375[
+	label="+ findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskServiceImpl309352181XXXsaveAndFlush2599333[
+	label="+ saveAndFlush()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_1602586997 {
+   	label=ContextServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   ContextServiceImpl1399873087XXXfindByIdAndUserAccount1382383826[
+	label="+ findByIdAndUserAccount()"
+	style=filled
+	fillcolor=white
+	tooltip="ContextServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+ContextServiceImpl1399873087XXXgetContextFor894666363[
+	label="+ getContextFor()"
+	style=filled
+	fillcolor=white
+	tooltip="ContextServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_1612583461 {
+   	label=TaskLifecycleServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   TaskLifecycleServiceImpl79094691XXXaddToProject2599333[
+	label="+ addToProject()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskLifecycleServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdProject1789074750[
+	label="+ getMaxOrderIdProject()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskLifecycleServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375[
+	label="+ getMaxOrderIdTaskState()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskLifecycleServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_1873744955 {
+   	label=BreadcrumbServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   BreadcrumbServiceImpl1783083103XXXgetBreadcrumbForShoProjectId349815424[
+	label="+ getBreadcrumbForShoProjectId()"
+	style=filled
+	fillcolor=white
+	tooltip="BreadcrumbServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_2046388601 {
+   	label=ProjectIdTaskController
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   ProjectIdTaskController720069294XXXprojectTaskAddPost391161629[
+	label="+ projectTaskAddPost()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectIdTaskController
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_308398869 {
+   	label=Task
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   Task177572226XXXoutProject0[
+	label="+ outProject()"
+	style=filled
+	fillcolor=white
+	tooltip="Task
+
+null"
+	fontcolor=darkgreen
+];
+
+Task177572226XXXunsetFocus0[
+	label="+ unsetFocus()"
+	style=filled
+	fillcolor=white
+	tooltip="Task
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_676770963 {
+   	label=ProjectControllerServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   ProjectControllerServiceImpl399081413XXXgetProject1716033547[
+	label="+ getProject()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectControllerServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_850699231 {
+   	label=ProjectServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   ProjectServiceImpl139031465XXXfindByProjectId3327612[
+	label="+ findByProjectId()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+}
+}
+
+'edges
+BreadcrumbServiceImpl1783083103XXXgetBreadcrumbForShoProjectId349815424 -> Breadcrumb1783083103XXXaddProject1355342585;
+BreadcrumbServiceImpl1783083103XXXgetBreadcrumbForShoProjectId349815424 -> Breadcrumb1783083103XXXaddProjectRoot0;
+BreadcrumbServiceImpl1783083103XXXgetBreadcrumbForShoProjectId349815424 -> ContextServiceImpl1399873087XXXgetContextFor894666363;
+ProjectControllerServiceImpl399081413XXXgetProject1716033547 -> ProjectServiceImpl139031465XXXfindByProjectId3327612;
+ProjectIdTaskController720069294XXXprojectTaskAddPost391161629 -> BreadcrumbServiceImpl1783083103XXXgetBreadcrumbForShoProjectId349815424;
+ProjectIdTaskController720069294XXXprojectTaskAddPost391161629 -> ContextServiceImpl1399873087XXXfindByIdAndUserAccount1382383826;
+ProjectIdTaskController720069294XXXprojectTaskAddPost391161629 -> ProjectControllerServiceImpl399081413XXXgetProject1716033547;
+ProjectIdTaskController720069294XXXprojectTaskAddPost391161629 -> TaskLifecycleServiceImpl79094691XXXaddToProject2599333;
+ProjectIdTaskController720069294XXXprojectTaskAddPost391161629 -> TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdProject1789074750;
+ProjectIdTaskController720069294XXXprojectTaskAddPost391161629 -> TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375;
+TaskLifecycleServiceImpl79094691XXXaddToProject2599333 -> Task177572226XXXoutProject0;
+TaskLifecycleServiceImpl79094691XXXaddToProject2599333 -> Task177572226XXXunsetFocus0;
+TaskLifecycleServiceImpl79094691XXXaddToProject2599333 -> TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdProject1789074750;
+TaskLifecycleServiceImpl79094691XXXaddToProject2599333 -> TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375;
+TaskLifecycleServiceImpl79094691XXXaddToProject2599333 -> TaskServiceImpl309352181XXXsaveAndFlush2599333;
+TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdProject1789074750 -> TaskServiceImpl309352181XXXfindTopByProjectAndContextOrderByOrderIdProjectDesc1789074750;
+TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375 -> TaskServiceImpl309352181XXXfindTopByTaskStateAndContextOrderByOrderIdTaskStateDesc411139375;
+
+}
+@enduml

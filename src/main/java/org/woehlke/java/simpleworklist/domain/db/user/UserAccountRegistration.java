@@ -29,7 +29,7 @@ import java.util.Objects;
         @Index(name = "ix_user_account_registration_row_created_at", columnList = "row_created_at")
     }
 )
-public class UserAccountRegistration extends AuditModel implements Serializable {
+public class UserAccountRegistration extends AuditModel implements Serializable,Comparable<UserAccountRegistration> {
 
     private static final long serialVersionUID = -1955967514018161878L;
 
@@ -136,4 +136,9 @@ public class UserAccountRegistration extends AuditModel implements Serializable 
                 ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
+
+  @Override
+  public int compareTo(UserAccountRegistration o) {
+    return this.rowCreatedAt.compareTo(o.rowCreatedAt);
+  }
 }

@@ -2,14 +2,12 @@ package org.woehlke.java.simpleworklist.domain.meso.testdata;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.project.ProjectRepository;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskTime;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextRepository;
@@ -25,16 +23,14 @@ public class TestDataServiceImpl implements TestDataService {
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
-    private final ContextRepository contextRepository;
 
     @Autowired
-    public TestDataServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ContextRepository contextRepository) {
+    public TestDataServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
-        this.contextRepository = contextRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Override
     public void createTestData(UserAccount userAccount) {
         log.info("----------------------------------------------");
         log.info("createTestCategoryTreeForUserAccount");

@@ -12,11 +12,14 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import static java.lang.Boolean.FALSE;
 
 @Entity
 @Table(
@@ -34,7 +37,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(callSuper = true, exclude = {"children","parent","description"})
-public class Project extends AuditModel implements Serializable, ComparableById<Project> {
+public class Project extends AuditModel implements Serializable, ComparableById<Project>, Comparable<Project> {
 
     private static final long serialVersionUID = 4566653175832872422L;
     public final static long rootProjectId = 0L;
@@ -84,10 +87,19 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = {CascadeType.ALL})
     private List<Project> children = new ArrayList<>();
 
+    @NotNull
+    @Column(name = "collapsed", nullable = false)
+    private Boolean collapsed = FALSE;
+
+    @Transient
+    public String getUrlRoot() {
+      return "redirect:/project/root";
+    }
+
     @Transient
     public String getUrl() {
         if (this.getId() == null || this.getId() == 0L) {
-            return "redirect:/project/root";
+            return getUrlRoot();
         } else {
             return "redirect:/project/" + this.getId();
         }
@@ -160,18 +172,24 @@ public class Project extends AuditModel implements Serializable, ComparableById<
         return "Project: "+name+" ("+id+")";
     }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Project)) return false;
-    if (!super.equals(o)) return false;
-    Project project = (Project) o;
-    return Objects.equals(getParent(), project.getParent()) && Objects.equals(getContext(), project.getContext()) && Objects.equals(getName(), project.getName()) && Objects.equals(getDescription(), project.getDescription());
-  }
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Project)) return false;
+      if (!super.equals(o)) return false;
+      Project project = (Project) o;
+      return Objects.equals(getParent(), project.getParent()) && Objects.equals(getContext(), project.getContext()) && Objects.equals(getName(), project.getName()) && Objects.equals(getDescription(), project.getDescription());
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), getParent(), getContext(), getName(), getDescription());
-  }
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), getParent(), getContext(), getName(), getDescription());
+    }
+
+    @Override
+    public int compareTo(Project o) {
+      return this.name.compareTo(o.name);
+    }
+
 }
 

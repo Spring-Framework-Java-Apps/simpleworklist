@@ -36,7 +36,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude = {"userPassword","defaultLanguage","defaultContext","lastLoginTimestamp"})
-public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount> {
+public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount>,Comparable<UserAccount> {
 
     private static final long serialVersionUID = 7860692526488291439L;
 
@@ -141,4 +141,8 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
         return u;
     }
 
+    @Override
+    public int compareTo(UserAccount o) {
+      return this.userEmail.compareTo(o.userEmail);
+    }
 }

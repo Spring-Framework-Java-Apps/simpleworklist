@@ -28,7 +28,7 @@ import java.util.Objects;
         @Index(name = "ix_user_account_password_recovery_row_created_at", columnList = "row_created_at")
     }
 )
-public class UserAccountPasswordRecovery extends AuditModel implements Serializable {
+public class UserAccountPasswordRecovery extends AuditModel implements Serializable,Comparable<UserAccountPasswordRecovery> {
 
     private static final long serialVersionUID = 6860716425733119940L;
 
@@ -135,4 +135,9 @@ public class UserAccountPasswordRecovery extends AuditModel implements Serializa
                 ", rowUpdatedAt=" + rowUpdatedAt +
                 '}';
     }
+
+  @Override
+  public int compareTo(UserAccountPasswordRecovery o) {
+    return this.rowCreatedAt.compareTo(o.rowCreatedAt);
+  }
 }

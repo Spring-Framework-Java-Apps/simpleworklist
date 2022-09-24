@@ -22,6 +22,7 @@
           <div id="mynavbar" class="collapse navbar-collapse">
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="contextMenu" role="button"
                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
@@ -37,15 +38,91 @@
                   </a>
                 </div>
               </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="taskstateMenu" role="button"
+                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="fa-solid fa-database"></i>
+                  <span th:text="#{layout.menu.taskstate}">"Tasks</span>
+                  <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="taskstateMenu">
+                  <a class="dropdown-item" th:href="@{/taskstate/inbox}">
+                    <i class="fas fa-inbox link-dark"></i>
+                    <span th:text="#{layout.page.inbox}">Inbox</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/today}">
+                    <i class="fas fa-clock link-dark"></i>
+                    <span th:text="#{layout.page.today}" class="link-dark">Today</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/next}">
+                    <i class="fas fa-cogs link-dark"></i>
+                    <span th:text="#{layout.page.next}">Next</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/waiting}">
+                    <i class="fas fa-hourglass-half link-dark"></i>
+                    <span th:text="#{layout.page.waiting}">Waiting</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/scheduled}">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span th:text="#{layout.page.scheduled}">Scheduled</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/someday}">
+                    <i class="fas fa-road"></i>
+                    <span th:text="#{layout.page.someday}">Someday</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/focus}">
+                    <i class="fas fa-star"></i>
+                    <span th:text="#{layout.page.focus}">Focus</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/completed}">
+                    <i class="fas fa-check-square"></i>
+                    <span th:text="#{layout.page.completed}">Completed Tasks</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/trash}">
+                    <i class="fas fa-trash-alt link-dark"></i>
+                    <span th:text="#{layout.page.trash}" class="link-dark">Trash</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/project/root}">
+                    <i class="fa-solid fa-diagram-project link-dark"></i>
+                    <span th:text="#{layout.page.projects}" class="link-dark">Projects</span>
+                  </a>
+                  <a class="dropdown-item" th:href="@{/taskstate/all}">
+                    <i class="fa-solid fa-database"></i>
+                    <span th:text="#{layout.page.all}" class="link-dark">All</span>
+                  </a>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown" th:if="${allProjects != null}">
+                <a class="nav-link dropdown-toggle" id="taskstateProjects" role="button"
+                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  <i class="fa-solid fa-diagram-project"></i>
+                  <span th:text="#{layout.menu.projects}">"Projects</span>
+                  <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="taskstateProjects">
+                  <a class="dropdown-item" th:each="menuProject : ${allProjects}"
+                     th:href="@{/project/{pid}(pid=${menuProject.id})}">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span th:text="${menuProject.name}">menuProject.name</span>
+                  </a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/pages/information}">
+                  <i class="fa-solid fa-circle-info"></i>
+                  <span th:text="#{pages.information.h1}">information</span>
+                </a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" th:href="@{/user/selfservice/profile}">
                   <i class="fas fa-user"></i>
                   <span th:text="#{layout.page.showUsers}">User</span>
                   <span class="badge badge-pill badge-light"
                         th:if="${numberOfNewIncomingMessages gt 0}"
-                        th:text="${numberOfNewIncomingMessages}">
-                                      numberOfNewIncomingMessages
-                                  </span>
+                        th:text="${numberOfNewIncomingMessages}">33
+                  </span>
                 </a>
               </li>
               <li class="nav-item">

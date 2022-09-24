@@ -21,7 +21,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.context.ContextRepository;
 
 @Slf4j
 @Service("userAccountService")
-@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+//@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
@@ -64,7 +64,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public UserAccount saveAndFlush(UserAccount u) {
         return userAccountRepository.saveAndFlush(u);
     }
@@ -80,7 +80,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void changeUsersPassword(UserAccountForm userAccount) {
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
         if(ua != null) {

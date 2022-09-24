@@ -1,0 +1,74 @@
+@startuml
+
+title Transient Class Modell
+'https://plantuml.com/class-diagram
+
+left to right direction
+'top to bottom direction
+
+scale 1200 width
+
+package transient {
+
+  package requestScope {
+
+    class Breadcrumb {
+      - BreadcrumbItem[] breadcrumb
+      - Locale locale
+      int size()
+      void addProjectRoot()
+      void addProject(Project thisProject)
+      void addTask(Task task)
+      void addTaskstate(String taskStateView, String urlTaskstate)
+      void addPage(String name, String url)
+    }
+    class BreadcrumbItem {
+      - String name
+      - String url
+    }
+    class ChatMessageForm {
+      - String messageText
+    }
+    class LoginForm {
+      - String userEmail
+      - String userPassword
+    }
+    class NewContextForm {
+      - String nameDe
+      - String nameEn
+    }
+    class UserAccountForm {
+      - String userEmail
+      - String userFullname
+      - String userPassword
+      - String userPasswordConfirmation
+      boolean passwordsAreTheSame()
+    }
+    class UserChangeLanguageForm {
+    - Language defaultLanguage
+    }
+    class UserDetailsDto {
+      - String username
+      - String password
+      - boolean accountNonExpired
+      - boolean accountNonLocked
+      - boolean credentialsNonExpired
+      - boolean enabled
+    }
+  }
+
+  package sessionScope {
+    class UserSessionBean {
+      - Long userAccountid
+      - Long lastContextId
+      - Long lastProjectId
+      - Long lastTaskId
+      - TaskState lastTaskState
+      - String lastSearchterm
+    }
+
+    Breadcrumb "one" o--> "many"  BreadcrumbItem
+  }
+}
+
+@enduml

@@ -108,8 +108,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     public void addViewControllers(@NotNull ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("redirect:/taskstate/inbox");
-        registry.addViewController("/home").setViewName("redirect:/taskstate/inbox");
+        registry.addViewController("/").setViewName("redirect:/taskstate/today");
+        registry.addViewController("/home").setViewName("redirect:/taskstate/today");
     }
 
     public void addResourceHandlers(@NotNull ResourceHandlerRegistry registry) {

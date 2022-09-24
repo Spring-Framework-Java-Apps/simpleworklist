@@ -1,0 +1,208 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+left to right direction
+'top to bottom direction
+
+scale 1200 width
+
+ErrorController    <|-- ApplicationErrorController
+AbstractController <|-- ContextController
+AbstractController <|-- ProjectIdController
+AbstractController <|-- ProjectIdTaskController
+AbstractController <|-- ProjectIdTaskMoveController
+AbstractController <|-- ProjectRootController
+AbstractController <|-- ProjectRootTaskController
+AbstractController <|-- ProjectRootTaskMoveController
+AbstractController <|-- SearchController
+AbstractController <|-- TaskLifecycleController
+AbstractController <|-- TaskMove2TaskController
+AbstractController <|-- TaskMoveController
+AbstractController <|-- TaskStateTabController
+AbstractController <|-- UserChatMessageController
+AbstractController <|-- UserSelfserviceController
+
+
+abstract class AbstractController {
+    - ContextService contextService
+    - ProjectService projectService
+    - ChatMessageService chatMessageService
+    - LoginSuccessService loginSuccessService
+
+    String getCurrentContext(UserSessionBean userSession)
+    List<Project> getAllProjects(UserSessionBean userSession)
+    List<Project> getRootCategories(UserSessionBean userSession)
+    int getNumberOfNewIncomingMessages()
+    List<Context> getContexts()
+    List<TaskEnergy> getListTaskEnergy()
+    List<TaskTime> getListTaskTime()
+    List<TaskState> getTaskStates()
+    boolean refreshMessagePage()
+    - UserAccount getUser()
+    - Context getContext(UserSessionBean userSession)
+    - UserSessionBean getNewUserSession()
+    - UserSessionBean updateUserSession(UserSessionBean userSession)
+}
+class ApplicationErrorController {
+  String handleError( HttpServletRequest request )
+  String getErrorPath()
+}
+class ContextController {
+  String switchContxt(Context newContext, UserSessionBean userSession)
+}
+class PagesController {
+  String renderPageInformation(UserSessionBean userSession)
+}
+class ProjectIdController {
+  String project(long projectId, Pageable pageable, String message, boolean isDeleted, UserSessionBean userSession)
+  String projectAddProjectGet(long projectId, UserSessionBean userSession)
+  String projectAddProjectPost(long projectId, UserSessionBean userSession, Project project)
+  String projectEditGet(Project thisProject, UserSessionBean userSession)
+  String projectEditPost(long projectId, Project project, UserSessionBean userSession)
+  String projectDeleteGet( Project project, Pageable request, UserSessionBean userSession)
+  String projectMoveToProjectGet(Project thisProject, long targetProjectId, UserSessionBean userSession)
+  String moveTaskToTaskAndChangeTaskOrderInProject(Project thisProject, Task sourceTask, Task destinationTask,UserSessionBean userSession)
+  String moveAllCompletedToTrash(Project thisProject, UserSessionBean userSession)
+  String emptyTrash(Project thisProject, UserSessionBean userSession)
+}
+class ProjectIdTaskController {
+  String projectTaskAddGet(Project thisProject, UserSessionBean userSession)
+  String projectTaskAddPost(long projectId, UserSessionBean userSession, Task task)
+  String editTaskGet( Project thisProject, Task task, UserSessionBean userSession)
+  String editTaskPost(Project thisProject, long taskId, Task task, UserSessionBean userSession)
+  String transformTaskIntoProjectGet(Project thisProject, Task task, UserSessionBean userSession)
+  String setDoneTaskGet(Project thisProject, UserSessionBean userSession, Task task)
+  String unsetDoneTaskGet( Project thisProject, UserSessionBean userSession, Task task)
+  String setFocusGet(Project thisProject, UserSessionBean userSession, Task task,  String back)
+  String unsetFocusGet(Project thisProject, UserSessionBean userSession, Task task, String back)
+}
+class ProjectIdTaskMoveController {
+  String moveTaskToAnotherProject( Project thisProject,  Task task, UserSessionBean userSession)
+  String moveTaskToAnotherProject(Project thisProject, Task task, Project otherProject, UserSessionBean userSession)
+  String moveTaskToInbox(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToToday(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToNext(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToWaiting(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToSomeday(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToFocus(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToCompleted(Project thisProject, UserSessionBean userSession, Task task)
+  String moveTaskToTrash(Project thisProject, UserSessionBean userSession, Task task)
+}
+class ProjectRootController {
+  String projectRoot(Pageable pageable, String message, boolean isDeleted, UserSessionBean userSession)
+  String projectRootAddProjectGet(UserSessionBean userSession)
+  String projectRootAddProjectPost(Project project, UserSessionBean userSession)
+}
+class ProjectRootTaskController {
+  String projectRootTaskAddGet(UserSessionBean userSession)
+  String projectRootTaskAddPost(UserSessionBean userSession, Task task)
+  String editTaskGet(Task task, UserSessionBean userSession)
+  String editTaskPost(long taskId,Task task, UserSessionBean userSession)
+  String changeTaskOrderId(Task sourceTask, Task destinationTask, UserSessionBean userSession)
+  String deleteTaskGet(Task task, UserSessionBean userSession)
+  String undeleteTaskGet(Task task, UserSessionBean userSession)
+  String transformTaskIntoProjectGet(Task task, UserSessionBean userSession)
+  String setDoneTaskGet(Task task, UserSessionBean userSession)
+  String unsetDoneTaskGet(Task task, UserSessionBean userSession)
+  String setFocusGet(Task task, UserSessionBean userSession)
+  String unsetFocusGet(Task task, UserSessionBean userSession)
+}
+class ProjectRootTaskMoveController {
+  String moveTaskToProjectRoot(Task task, UserSessionBean userSession)
+  String moveTaskToProjectId(Task task, Project targetProject, UserSessionBean userSession)
+  String moveTaskToInbox(Task task, UserSessionBean userSession)
+  String moveTaskToToday(Task task, UserSessionBean userSession)
+  String moveTaskToNext(Task task, UserSessionBean userSession)
+  String moveTaskToWaiting(Task task, UserSessionBean userSession)
+  String moveTaskToSomeday(Task task, UserSessionBean userSession)
+  String moveTaskToFocus(Task task, UserSessionBean userSession)
+  String moveTaskToCompleted(Task task, UserSessionBean userSession)
+  String moveTaskToTrash(Task task, UserSessionBean userSession)
+}
+class SearchController {
+  String searchGet(String searchterm,UserSessionBean userSession)
+}
+class TaskLifecycleController {
+  String addNewTaskToInboxGet(UserSessionBean userSession)
+  String addNewTaskToInboxPost(UserSessionBean userSession, Task task)
+  String editTaskGet(Task task, UserSessionBean userSession)
+  String editTaskPost(long taskId, Task task, UserSessionBean userSession)
+  String deleteTaskGet(Task task, UserSessionBean userSession)
+  String undeleteTaskGet(Task task, UserSessionBean userSession)
+  String transformTaskIntoProjectGet()
+  String setCompletedTaskGet(Task task, UserSessionBean userSession)
+  String unsetCompletedTaskGet(Task task, UserSessionBean userSession)
+  String setFocusGet(Task task, UserSessionBean userSession)
+  String unsetFocusGet(Task task, UserSessionBean userSession)
+}
+class TaskMove2TaskController {
+  String changeTaskOrderId( Task sourceTask, Task destinationTask, UserSessionBean userSession )
+}
+class TaskMoveController {
+  String moveTaskToAnotherProject(Task task, Project project,UserSessionBean userSession)
+  String moveTaskToRootProject(Task task, Project project,UserSessionBean userSession)
+  String moveTaskToInbox(Task task, UserSessionBean userSession)
+  String moveTaskToToday(Task task, UserSessionBean userSession)
+  String moveTaskToNext(Task task, UserSessionBean userSession)
+  String moveTaskToWaiting(Task task, UserSessionBean userSession)
+  String moveTaskToSomeday(Task task, UserSessionBean userSession)
+  String moveTaskToFocus(Task task, UserSessionBean userSession)
+  String moveTaskToCompleted(Task task, UserSessionBean userSession)
+  String moveTaskToTrash(Task task, UserSessionBean userSession)
+  String moveAllCompletedToTrash(Task task, UserSessionBean userSession)
+  String emptyTrash(UserSessionBean userSession)
+}
+class TaskStateTabController {
+ String inbox(Pageable pageable, UserSessionBean userSession)
+ String today(Pageable pageable, UserSessionBean userSession)
+ String next(Pageable pageable, UserSessionBean userSession)
+ String waiting(Pageable pageable, UserSessionBean userSession)
+ String scheduled(Pageable pageable, UserSessionBean userSession)
+ String someday(Pageable pageable, UserSessionBean userSession)
+ String completed(Pageable pageable, UserSessionBean userSession)
+ String trash(Pageable pageable, UserSessionBean userSession)
+ String deleted(Pageable pageable, UserSessionBean userSession)
+ String focus(Pageable pageable, UserSessionBean userSession)
+}
+class TestDataController {
+  String createTestCategoryTree()
+}
+class UserChatMessageController {
+  String getLastMessagesBetweenCurrentAndOtherUser( UserAccount otherUser,  Pageable request, UserSessionBean userSession)
+  String sendNewMessageToOtherUser(UserAccount otherUser, ChatMessageForm chatMessageForm, Pageable request, UserSessionBean userSession)
+}
+class UserLoginController {
+  String loginGet()
+  String loginPost(LoginForm loginForm)
+  String logoutPage(SessionStatus status, HttpServletRequest request, HttpServletResponse response)
+}
+class UserPasswordRecoveryController {
+  String passwordForgottenForm()
+  String passwordForgottenPost(UserRegistrationForm userRegistrationForm)
+  String enterNewPasswordFormular(String confirmId)
+  String enterNewPasswordPost(UserAccountForm userAccountForm, String confirmId)
+}
+class UserRegistrationController {
+  String registerGet()
+  String registerPost(UserRegistrationForm userRegistrationForm)
+  String registerConfirmGet(String confirmId)
+  String registerConfirmPost(String confirmId, UserAccountForm userAccountFor)
+}
+class UserSelfserviceController {
+  String userProfileAndMenu(Pageable request, UserSessionBean userSession)
+  String userNameForm(UserSessionBean userSession)
+  String userNameStore(UserChangeNameForm username, UserSessionBean userSession)
+  String userPasswordForm(UserSessionBean userSession)
+  String userPasswordStore(UserChangePasswordForm userChangePasswordForm,UserSessionBean userSession)
+  String userContextsForm(UserSessionBean userSession)
+  String userContextsSave(UserChangeDefaultContextForm thisUser, UserSessionBean userSession)
+  String userNewContextGet(UserSessionBean userSession)
+  String userNewContextPost(newContext, UserSessionBean userSession)
+  String userContextEditGet(Context context,UserSessionBean userSession)
+  String userContextEditPost(NewContextForm editContext, UserSessionBean userSession)
+  String userDeleteContextGet(Context context, UserSessionBean userSession)
+  String userLanguageGet(UserSessionBean userSession)
+  String userLanguagePost(UserChangeLanguageForm userChangeLanguageForm, UserSessionBean userSession)
+}
+
+@enduml

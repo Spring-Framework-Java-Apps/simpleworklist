@@ -4,11 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
@@ -18,7 +16,6 @@ import java.util.Stack;
 
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class BreadcrumbServiceImpl implements BreadcrumbService {
 
     private final MessageSource messageSource;
@@ -31,7 +28,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowRootProject(Locale locale, UserSessionBean userSession) {
+    public Breadcrumb getBreadcrumbForShowProjectRoot(Locale locale, UserSessionBean userSession) {
         log.info("getBreadcrumbForShowRootProject");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
@@ -40,7 +37,7 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
     }
 
     @Override
-    public Breadcrumb getBreadcrumbForShowOneProject(Project thisProject, Locale locale, UserSessionBean userSession) {
+    public Breadcrumb getBreadcrumbForShoProjectId(Project thisProject, Locale locale, UserSessionBean userSession) {
         log.info("getBreadcrumbForShowOneProject");
         Optional<Context> context = contextService.getContextFor(userSession);
         Breadcrumb breadcrumb = new Breadcrumb(locale, context.get());
@@ -78,8 +75,8 @@ public class BreadcrumbServiceImpl implements BreadcrumbService {
             context = contextResult.get();
         }
         Breadcrumb breadcrumb = new Breadcrumb(locale, context);
-        String code = taskstate.getCode();
-        String name = messageSource.getMessage(code,null,locale);
+        String code = taskstate.getMsgCode();
+        String name = messageSource.getMessage(code,null, locale);
         breadcrumb.addTaskstate(name, taskstate.getUrlPath());
         return breadcrumb;
     }

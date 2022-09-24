@@ -9,10 +9,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
-import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageForm;
 import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageService;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

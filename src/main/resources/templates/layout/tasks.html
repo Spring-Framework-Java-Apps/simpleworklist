@@ -31,24 +31,19 @@
                         <th class="task_col task_col_title" th:text="#{tasks.col.title}">
                             Title
                         </th>
-                        <th class="task_col task_col_due_date"
-                            th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}"
-                            th:text="#{tasks.col.dueDate}">
-                            Due Date
-                        </th>
+                        <th class="task_col task_col_energy_and_time" th:utext="#{tasks.col.energyandtime}">&nbsp;</th>
                         <th class="task_col task_col_taskstate"
                             th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}"
                             th:text="#{tasks.col.taskState}">
                             Task State
                         </th>
+                        <th class="task_col task_col_due_date"
+                            th:text="#{tasks.col.dueDate}">
+                          Due Date
+                        </th>
                         <th class="task_col task_col_project"
                             th:if="${myTaskState ne 'PROJECT'}" th:text="#{tasks.col.project}">
                             Project
-                        </th>
-                        <th class="task_col task_col_energy_and_time" th:utext="#{tasks.col.energyandtime}">&nbsp;</th>
-                        <th class="task_col task_col_context"
-                            th:if="${myTaskState eq 'ALL'}">
-                            <span th:text="#{tasks.col.context}">Context</span>
                         </th>
                     </tr>
                     </thead>
@@ -92,22 +87,21 @@
                         <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
                             <div th:replace="this :: tw-tasks-modal(task=${task},myUrlPath=${myUrlPath})"></div>
                         </td>
-                        <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date"
-                            th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
-                                <span th:if="${#locale.language eq 'de'}"
-                                    th:id="'task_' + ${task.id} + '_col_due_date'"
-                                    draggable="true" ondragstart="dragTask(event)"
-                                    th:alt-title="#{task.col.twtooltip.duedate}"
-                                    class="task_col_content task_col_content_duedate twtooltip"
-                                    th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
-                                </span>
-                                <span th:if="${#locale.language eq 'en'}"
-                                  th:id="'task_' + ${task.id} + '_col_due_date'"
-                                  draggable="true" ondragstart="dragTask(event)"
-                                  th:alt-title="#{task.col.twtooltip.duedate}"
-                                  class="task_col_content task_col_content_duedate twtooltip"
-                                  th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}">
-                                </span>
+                        <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col task_col_energy_and_time">
+                            <span class="badge bg-secondary task_col_content task_col_content_taskenergy twtooltip"
+                              th:if="${task.taskEnergy.value ne 'NONE'}"
+                              th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
+                              draggable="true" ondragstart="dragTask(event)"
+                              th:text="${#messages.msgOrNull(task.taskEnergy.code)}"
+                              th:alt-title="#{task.col.twtooltip.badge.taskEnergy}">
+                            </span>
+                            <span class="badge bg-secondary task_col_content task_col_content_tasktime twtooltip"
+                              th:if="${task.taskTime.value ne 'NONE'}"
+                              th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
+                              draggable="true" ondragstart="dragTask(event)"
+                              th:text="${#messages.msgOrNull(task.taskTime.code)}"
+                              th:alt-title="#{task.col.twtooltip.badge.taskTime}">
+                            </span>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_taskstate'" class="task_col task_col_taskstate"
                             th:if="${myTaskState eq 'FOCUS' or myTaskState eq 'ALL' or myTaskState eq 'PROJECT'}">
@@ -115,8 +109,24 @@
                                class="btn btn-outline-secondary btn-sm twtooltip"
                                th:alt-title="#{task.col.twtooltip.taskstate}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
-                                <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
+                                <span th:utext="${#messages.msgOrNull(task.taskState.getMsgCode())}">Inbox</span>
                             </a>
+                        </td>
+                        <td th:id="'task_' + ${task.id} + '_col_due_date'" class="task_col task_col_due_date">
+                          <span class="task_col_content task_col_content_duedate twtooltip"
+                                draggable="true" ondragstart="dragTask(event)"
+                                th:if="${#locale.language eq 'de'}"
+                                th:id="'task_' + ${task.id} + '_col_due_date'"
+                                th:alt-title="#{task.col.twtooltip.duedate}"
+                                th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">
+                          </span>
+                          <span class="task_col_content task_col_content_duedate twtooltip"
+                                draggable="true" ondragstart="dragTask(event)"
+                                th:if="${#locale.language eq 'en'}"
+                                th:id="'task_' + ${task.id} + '_col_due_date'"
+                                th:alt-title="#{task.col.twtooltip.duedate}"
+                                th:text="${#calendars.format(task.dueDate,'MM/dd/yyyy')}">
+                          </span>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_project'" class="task_col task_col_project"
                             th:if="${myTaskState ne 'PROJECT'}">
@@ -129,37 +139,6 @@
                                 <i class="fa-solid fa-diagram-project"></i>
                                 <span th:text="${task.project.name}"></span>
                             </a>
-                        </td>
-                        <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col task_col_energy_and_time">
-                            <span class="badge bg-dark task_col_content task_col_content_taskenergy twtooltip"
-                                  th:if="${task.taskEnergy.value ne 'NONE'}"
-                                  th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
-                                  draggable="true" ondragstart="dragTask(event)"
-                                  th:text="${#messages.msgOrNull(task.taskEnergy.code)}"
-                                  th:alt-title="#{task.col.twtooltip.badge.taskEnergy}">
-                            </span>
-                            <span class="badge bg-dark task_col_content task_col_content_tasktime twtooltip"
-                                  th:if="${task.taskTime.value ne 'NONE'}"
-                                  th:id="'task_' + ${task.id} + '_col_energy_and_time_badge'"
-                                  draggable="true" ondragstart="dragTask(event)"
-                                  th:text="${#messages.msgOrNull(task.taskTime.code)}"
-                                  th:alt-title="#{task.col.twtooltip.badge.taskTime}">
-                            </span>
-                        </td>
-                        <td th:id="'task_' + ${task.id} + '_col_context'" class="task_col task_col_context"
-                            th:if="${myTaskState eq 'ALL'}">
-                            <span th:if="${#locale.language eq 'de'}"
-                                  th:id="'task_' + ${task.id} + '_col_context_txt'"
-                                  draggable="true" ondragstart="dragTask(event)"
-                                  class="task_col_content task_col_content_context twtooltip"
-                                  th:alt-title="#{task.col.twtooltip.context}"
-                                  th:text="${task.context.nameDe}">task.context.nameDe</span>
-                            <span th:if="${#locale.language ne 'de'}"
-                                  th:id="'task_' + ${task.id} + '_col_context_txt'"
-                                  draggable="true" ondragstart="dragTask(event)"
-                                  class="task_col_content task_col_content_context twtooltip"
-                                  th:alt-title="#{task.col.twtooltip.context}"
-                                  th:text="${task.context.nameEn}">task.context.nameEn</span>
                         </td>
                     </tr>
                     </tbody>
@@ -238,10 +217,10 @@
                             <b th:utext="#{tasks.focus.taskState}" class="me-2">Task State</b>
                             <a th:href="@{{url}(url=${task.taskState.getUrlPath()})}">
                                 <i th:class="${task.taskState.getIcon()}"></i>
-                                <span th:utext="${#messages.msgOrNull(task.taskState.code)}">Inbox</span>
+                                <span th:utext="${#messages.msgOrNull(task.taskState.getMsgCode())}">Inbox</span>
                             </a>
                         </div>
-                        <div th:if="${myTaskState eq 'SCHEDULED' or myTaskState eq 'TODAY' or myTaskState eq 'PROJECT'}">
+                        <div>
                             <b th:utext="#{tasks.focus.dueDate}">Due Date</b>
                             <span th:if="${#locale.language eq 'de'}"
                                   th:text="${#calendars.format(task.dueDate,'dd.MM.yyyy')}">

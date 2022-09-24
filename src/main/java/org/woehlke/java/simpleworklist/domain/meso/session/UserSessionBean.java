@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.woehlke.java.simpleworklist.domain.meso.taskworkflow.TaskState;
+import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 
 import java.io.Serializable;
 
@@ -27,31 +27,31 @@ public class UserSessionBean implements Serializable {
     private String lastSearchterm; //TODO: Make SearchRequest to Entity
 
     public UserSessionBean(){
-        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
-        this.lastTaskState=TaskState.INBOX;
-        this.lastProjectId=0L;
-        this.lastContextId=0L;
-        this.lastTaskId=0L;
         this.userAccountid=0L;
+        this.lastContextId=0L;
+        this.lastProjectId=0L;
+        this.lastTaskId=0L;
+        this.lastTaskState=TaskState.INBOX;
+        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
     }
 
     public UserSessionBean(long userAccountid, long lastContextId){
-        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
-        this.lastTaskState=TaskState.INBOX;
-        this.lastProjectId=0L;
-        this.lastTaskId=0L;
         this.userAccountid=userAccountid;
         this.lastContextId=lastContextId;
+        this.lastProjectId=0L;
+        this.lastTaskId=0L;
+        this.lastTaskState=TaskState.INBOX;
+        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
     }
 
     @Deprecated
     public UserSessionBean(long contextId){
-        this.lastContextId = contextId;
-        lastSearchterm=""; //TODO: Make SearchRequest to Entity
-        lastTaskState=TaskState.INBOX;
-        lastProjectId=0L;
-        lastTaskId=0L;
-        userAccountid=0L;
+        this.userAccountid=0L;
+        this.lastContextId=contextId;
+        this.lastProjectId=0L;
+        this.lastTaskId=0L;
+        this.lastTaskState=TaskState.INBOX;
+        this.lastSearchterm=""; //TODO: Make SearchRequest to Entity
     }
 
     public void update(long userAccountid, long contextId) {
