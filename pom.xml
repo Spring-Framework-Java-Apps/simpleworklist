@@ -1151,14 +1151,6 @@
       <plugin>
         <groupId>com.dkanejs.maven.plugins</groupId>
         <artifactId>docker-compose-maven-plugin</artifactId>
-        <configuration>
-          <composeFile>${project.basedir}/src/main/docker/docker-compose.yml</composeFile>
-          <verbose>${docker-compose-maven-plugin.verbose}</verbose>
-          <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
-          <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
-          <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
-          <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
