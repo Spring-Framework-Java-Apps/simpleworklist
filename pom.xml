@@ -88,7 +88,9 @@
     <opencsv.version>5.7.0</opencsv.version>
 
     <!-- Unit and Integration Testing -->
-    <skipTests>true</skipTests>
+    <skipTests>false</skipTests>
+    <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+    <dockerCompose.skip>${skipTests}</dockerCompose.skip>
     <xmlunit.version>2.9.0</xmlunit.version>
     <htmlunit.version>2.64.0</htmlunit.version>
     <version.groovy-all>3.0.12</version.groovy-all>
@@ -96,7 +98,23 @@
     <jsoup.version>1.15.3</jsoup.version>
     <pmdVersion>6.49.0</pmdVersion>
 
+    <!-- Docker -->
+    <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
+    <docker-compose-maven-plugin.composeFile>${project.basedir}/src/main/resources/docker-compose.yml</docker-compose-maven-plugin.composeFile>
+    <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
+    <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
+    <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
+    <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
+    <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
+    <docker-compose-maven-plugin.projectName>simplgtd</docker-compose-maven-plugin.projectName>
+
+    <!-- SCM and Releasing -->
     <version.org.apache.maven.scm>1.13.0</version.org.apache.maven.scm>
+    <version.maven-release-plugin>3.0.0-M6</version.maven-release-plugin>
+
+    <!-- UML -->
+    <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
+    <version.net.sourceforge.plantuml>1.2022.6</version.net.sourceforge.plantuml>
 
     <version.maven-invoker-plugin>3.3.0</version.maven-invoker-plugin>
     <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
@@ -108,7 +126,6 @@
     <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
     <version.maven-surefire-plugin>3.0.0-M7</version.maven-surefire-plugin>
     <version.maven-failsafe-plugin>3.0.0-M7</version.maven-failsafe-plugin>
-    <version.maven-release-plugin>3.0.0-M6</version.maven-release-plugin>
     <version.maven-site-plugin>3.12.0</version.maven-site-plugin>
     <version.maven-project-info-reports-plugin>3.3.0</version.maven-project-info-reports-plugin>
     <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
@@ -119,14 +136,6 @@
     <version.asciidoctor-maven-plugin>2.2.2</version.asciidoctor-maven-plugin>
     <version.doxia-module-markdown>1.11.1</version.doxia-module-markdown>
     <version.maven-enforcer-plugin>3.1.0</version.maven-enforcer-plugin>
-    <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
-    <version.net.sourceforge.plantuml>1.2022.6</version.net.sourceforge.plantuml>
-    <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
-    <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
-    <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
-    <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
-    <docker-compose-maven-plugin.ignorePullFailures>true</docker-compose-maven-plugin.ignorePullFailures>
-    <docker-compose-maven-plugin.detachedMode>true</docker-compose-maven-plugin.detachedMode>
   </properties>
 
   <repositories>
@@ -859,6 +868,40 @@
           <groupId>com.dkanejs.maven.plugins</groupId>
           <artifactId>docker-compose-maven-plugin</artifactId>
           <version>${version.docker-compose-maven-plugin}</version>
+            <executions>
+                <execution>
+                    <id>maven-docker-up</id>
+                    <phase>test-compile</phase>
+                    <goals>
+                        <goal>up</goal>
+                    </goals>
+                    <configuration>
+                        <composeFile>${docker-compose-maven-plugin.composeFile}</composeFile>
+                        <verbose>${docker-compose-maven-plugin.verbose}</verbose>
+                        <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
+                        <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
+                        <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
+                        <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
+                        <projectName>${docker-compose-maven-plugin.projectName}</projectName>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>maven-docker-down</id>
+                    <phase>pre-site</phase>
+                    <goals>
+                        <goal>down</goal>
+                    </goals>
+                    <configuration>
+                        <composeFile>${docker-compose-maven-plugin.composeFile}</composeFile>
+                        <verbose>${docker-compose-maven-plugin.verbose}</verbose>
+                        <removeImages>${docker-compose-maven-plugin.removeImages}</removeImages>
+                        <removeVolumes>${docker-compose-maven-plugin.removeVolumes}</removeVolumes>
+                        <ignorePullFailures>${docker-compose-maven-plugin.ignorePullFailures}</ignorePullFailures>
+                        <detachedMode>${docker-compose-maven-plugin.detachedMode}</detachedMode>
+                        <projectName>${docker-compose-maven-plugin.projectName}</projectName>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
