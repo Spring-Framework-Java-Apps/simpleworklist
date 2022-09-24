@@ -76,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
             .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
             .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
             .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
-            .successHandler(authenticationSuccessHandler)
+            //.successHandler(authenticationSuccessHandler)
             .permitAll()
             .and()
             .csrf()
