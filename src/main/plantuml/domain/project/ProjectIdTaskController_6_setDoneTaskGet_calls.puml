@@ -1,0 +1,227 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "org.woehlke.java.simpleworklist.domain.ProjectIdTaskController#setDoneTaskGet(Project,UserSessionBean,Task,Model)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "org.woehlke.java.simpleworklist.domain.ProjectIdTaskController",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+
+
+'nodes
+subgraph cluster_1513072491 {
+   	label=woehlke
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   subgraph cluster_1573988037 {
+   	label=java
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+
+   subgraph cluster_1533270679 {
+   	label=TaskServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   TaskServiceImpl309352181XXXfindTopByTaskStateAndContextOrderByOrderIdTaskStateDesc411139375[
+	label="+ findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskServiceImpl309352181XXXsaveAndFlush2599333[
+	label="+ saveAndFlush()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_1612583461 {
+   	label=TaskLifecycleServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375[
+	label="+ getMaxOrderIdTaskState()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskLifecycleServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+
+TaskLifecycleServiceImpl79094691XXXupdatedViaTaskstate2599333[
+	label="+ updatedViaTaskstate()"
+	style=filled
+	fillcolor=white
+	tooltip="TaskLifecycleServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_2046388601 {
+   	label=ProjectIdTaskController
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   ProjectIdTaskController720069294XXXsetDoneTaskGet2141287186[
+	label="+ setDoneTaskGet()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectIdTaskController
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_308398869 {
+   	label=Task
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   Task177572226XXXcomplete0[
+	label="+ complete()"
+	style=filled
+	fillcolor=white
+	tooltip="Task
+
+null"
+	fontcolor=darkgreen
+];
+
+Task177572226XXXoutTaskstate0[
+	label="+ outTaskstate()"
+	style=filled
+	fillcolor=white
+	tooltip="Task
+
+null"
+	fontcolor=darkgreen
+];
+}
+
+subgraph cluster_850699231 {
+   	label=ProjectServiceImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+
+   ProjectServiceImpl139031465XXXgetReferenceById3327612[
+	label="+ getReferenceById()"
+	style=filled
+	fillcolor=white
+	tooltip="ProjectServiceImpl
+
+null"
+	fontcolor=darkgreen
+];
+}
+}
+}
+
+'edges
+ProjectIdTaskController720069294XXXsetDoneTaskGet2141287186 -> Task177572226XXXcomplete0;
+ProjectIdTaskController720069294XXXsetDoneTaskGet2141287186 -> TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375;
+ProjectIdTaskController720069294XXXsetDoneTaskGet2141287186 -> TaskLifecycleServiceImpl79094691XXXupdatedViaTaskstate2599333;
+TaskLifecycleServiceImpl79094691XXXgetMaxOrderIdTaskState411139375 -> TaskServiceImpl309352181XXXfindTopByTaskStateAndContextOrderByOrderIdTaskStateDesc411139375;
+TaskLifecycleServiceImpl79094691XXXupdatedViaTaskstate2599333 -> ProjectServiceImpl139031465XXXgetReferenceById3327612;
+TaskLifecycleServiceImpl79094691XXXupdatedViaTaskstate2599333 -> Task177572226XXXoutTaskstate0;
+TaskLifecycleServiceImpl79094691XXXupdatedViaTaskstate2599333 -> TaskServiceImpl309352181XXXsaveAndFlush2599333;
+
+}
+@enduml
