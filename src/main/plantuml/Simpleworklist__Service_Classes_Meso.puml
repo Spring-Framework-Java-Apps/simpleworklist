@@ -6,27 +6,99 @@ left to right direction
 
 scale 1200 width
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+package meso {
+    class BreadcrumbService {
+        Breadcrumb getBreadcrumbForShowProjectRoot(Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForShoProjectId(Project thisProject, Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForTaskstate(TaskState taskstate, Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserProfileAndMenu(Locale locale,UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserChangeName(Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserChangePassword(Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserContexts(Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserContextAdd(Locale locale,UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserContextEdit(Locale locale, Context context, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserContextDelete(Locale locale, Context context, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForUserChangeLanguage(Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForMessagesBetweenCurrentAndOtherUser(Locale locale, UserSessionBean userSession)
+        Breadcrumb getBreadcrumbForSearchResults(Locale locale, UserSessionBean userSession)
+    }
+    class UserChatMessageControllerService {
+      UserAccountChatMessage sendNewUserMessage(UserAccount thisUser, UserAccount otherUser,ChatMessageForm chatMessageForm)
+      Page<UserAccountChatMessage> readAllMessagesBetweenCurrentAndOtherUser(UserAccount receiver,UserAccount sender,Pageable request)
+    }
+    class ProjectControllerService {
+        void addNewProjectToProjectIdForm(long projectId,UserSessionBean userSession,Context context,Locale locale,Model model)
+        void addNewProjectToProjectRootForm(UserSessionBean userSession, Context context,Locale locale,Model model)
+        String addNewProjectToProjectIdPersist(long projectId,UserSessionBean userSession,Project project,Context context,BindingResult result,Locale locale, Model model )
+        String addNewProjectToProjectRootPersist(UserSessionBean userSession,Project project, Context context,BindingResult result,Locale locale, Model model )
+        Project getProject(long projectId,UserAccount userAccount, UserSessionBean userSession )
+        Project add(Project project)
+        Project update(Project project)
+        Project delete(Project project)
+        void moveTaskToTaskAndChangeTaskOrderInProjectId(Task sourceTask, Task destinationTask)
+        void moveTaskToTaskAndChangeTaskOrderInProjectRoot(Task sourceTask, Task destinationTask)
+        Project findByProjectId(long projectId)
+        Page<Task> findByProject(Project thisProject, Pageable pageable)
+        List<Task> findByProject(Project thisProject)
+        Project moveProjectToAnotherProject(Project thisProject, Project targetProject)
+        Project moveProjectToAnotherContext(Project thisProject, Context newContext)
+    }
+    class TaskLifecycleService {
+      Task addToInbox(Task task)
+      Task addToProject(Task task)
+      Task addToRootProject(Task task)
+      Task updatedViaTaskstate(Task task)
+      Task updatedViaProject(Task task)
+      Task updatedViaProjectRoot(Task task)
+      long getMaxOrderIdTaskState(TaskState completed, Context context)
+      long getMaxOrderIdProject(Project project, Context context)
+      long getMaxOrderIdProjectRoot(Context context)
+      String transformTaskIntoProjectGet(Task task, UserSessionBean userSession, Model model)
+      Project addProjectFromTaskToModel(Task task, Model model)
+      Task addProject(Task task)
+    }
+    class TaskMove2TaskService {
+      void moveTaskToTaskAndChangeTaskOrderInTaskstate(Task sourceTask, Task destinationTask)
+      void moveTasksUpByProjectRoot(Task sourceTask, Task destinationTask)
+      void moveTasksDownByProjectRoot(Task sourceTask, Task destinationTask)
+      void moveTasksUpByProjectId(Task sourceTask, Task destinationTask)
+      void moveTasksDownByProjectId(Task sourceTask, Task destinationTask)
+      void moveTasksUpByTaskState(Task sourceTask, Task destinationTask)
+      void moveTasksDownByTaskState(Task sourceTask, Task destinationTask)
+    }
+    class TaskMoveService {
+      Task moveTaskToAnotherProject(Task task, Project project)
+      Task moveTaskToRootProject(Task task)
+      Task moveTaskToInbox(Task task)
+      Task moveTaskToToday(Task task)
+      Task moveTaskToNext(Task task)
+      Task moveTaskToWaiting(Task task)
+      Task moveTaskToSomeday(Task task)
+      Task moveTaskToFocus(Task task)
+      Task moveTaskToCompleted(Task task)
+      Task moveTaskToTrash(Task task)
+      void moveAllCompletedToTrash(Context context)
+      void emptyTrash(Context context)
+    }
+    class TaskStateTabControllerService {
+      String getTaskStatePageInbox(Context context,Pageable pageRequest, UserSessionBean userSession,Locale locale, Model model)
+      String getTaskStatePageToday(Context context,Pageable pageRequest,UserSessionBean userSession,Locale locale, Model model)
+      String getTaskStatePageNext(Context context,Pageable pageRequest,UserSessionBean userSession,Locale locale,Model model)
+      String getTaskStatePageWaiting(Context context, Pageable pageRequest,UserSessionBean userSession,Locale locale,Model model)
+      String getTaskStatePageScheduled(Context context,Pageable pageRequest,UserSessionBean userSession,Locale locale,Model model)
+      String getTaskStatePageFocus(Context context,Pageable pageRequest,UserSessionBean userSession,Locale locale, Model model)
+      String getTaskStatePageSomeday(Context context, Pageable pageRequest, UserSessionBean userSession, Locale locale,Model model )
+      String getTaskStatePageCompleted(Context context, Pageable pageRequest, UserSessionBean userSession, Locale locale, Model model)
+      String getTaskStatePageTrash(Context context,Pageable pageRequest,UserSessionBean userSession,Locale locale,Model model)
+      String getTaskStatePageDeleted(Context context, Pageable pageRequest, UserSessionBean userSession, Locale locale, Model model)
+      String getTaskStatePageProjects(Context context,Pageable pageRequest, UserSessionBean userSession, Locale locale,Model model)
+      String getTaskStatePageAll(Context context,Pageable pageable,UserSessionBean userSession,Locale locale, Model model)
+    }
+    class TestDataService {
+        void createTestData(UserAccount userAccount)
+    }
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
 
 @enduml
