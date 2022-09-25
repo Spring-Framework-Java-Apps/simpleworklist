@@ -152,7 +152,9 @@ SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 ## Software Design
 ### Service Classes Controller
 ![Service_Classes_Controller](src/site/plantuml/Simpleworklist__Service_Classes_Controller.png)
-### Service Classes DB
-![Service_Classes_DB](src/site/plantuml/Simpleworklist__Service_Classes_DB.png)
+### Service Classes DB data
+![Service_Classes_DB](src/site/plantuml/Simpleworklist__Service_Classes_DB_data.png)
+### Service Classes DB user
+![Service_Classes_DB](src/site/plantuml/Simpleworklist__Service_Classes_DB_user.png)
 ### Service Classes Meso
 ![Service_Classes_Meso](src/site/plantuml/Simpleworklist__Service_Classes_Meso.png)
