@@ -8,6 +8,7 @@ scale 1200 width
 
 ErrorController    <|-- ApplicationErrorController
 AbstractController <|-- ContextController
+AbstractController <|-- PagesController
 AbstractController <|-- ProjectIdController
 AbstractController <|-- ProjectIdTaskController
 AbstractController <|-- ProjectIdTaskMoveController
@@ -19,7 +20,11 @@ AbstractController <|-- TaskLifecycleController
 AbstractController <|-- TaskMove2TaskController
 AbstractController <|-- TaskMoveController
 AbstractController <|-- TaskStateTabController
+Class <|-- TestDataController
 AbstractController <|-- UserChatMessageController
+Class <|-- UserLoginController
+Class <|-- UserPasswordRecoveryController
+Class <|-- UserRegistrationController
 AbstractController <|-- UserSelfserviceController
 
 
