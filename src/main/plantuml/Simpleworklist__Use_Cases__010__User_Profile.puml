@@ -1,0 +1,39 @@
+@startuml
+
+title Functional_Requirements - Simpleworklist Use Case Diagram
+
+left to right direction
+'top to bottom direction
+
+'https://plantuml.com/use-case-diagram
+
+scale 1200 width
+
+package Functional_Requirements {
+
+  package 001__Start {
+    SystemUser - (F001_Server_Starts)
+    User - (F002_Home_Page_rendered)
+    (F002_Home_Page_rendered) --> (F003_Registration)
+    (F002_Home_Page_rendered) --> (F004_Password_Recovery)
+    (F002_Home_Page_rendered) --> (F005_Login)
+    (F005_Login) ---> (F006_Page_after_first_successful_Login)
+    (F006_Page_after_first_successful_Login) -> (F007_Navigation)
+    (F007_Navigation) -> (F008_Logout)
+  }
+
+  package 010__User_Profile {
+    User - (F201 List of other Users and New Messages received from them)
+    (F201 List of other Users and New Messages received from them) --> (F202 Chat Messages shared with one other User)
+    (F201 List of other Users and New Messages received from them) --> (F203 Send New Chat Message to one other User)
+    User - (F220 Menu Selfservice)
+    (F220 Menu Selfservice) --> (F221 Menu Selfservice: Change Username)
+    (F220 Menu Selfservice) --> (F222 Menu Selfservice: Change Password)
+    (F220 Menu Selfservice) --> (F223 Menu Selfservice: Change Contexts)
+    (F220 Menu Selfservice) --> (F224 Menu Selfservice: Set Default Language)
+    (F220 Menu Selfservice) --> (F225 Menu Selfservice: Create Test Data)
+  }
+
+  User <|- SystemUser
+}
+@enduml

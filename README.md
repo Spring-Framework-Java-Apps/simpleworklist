@@ -118,16 +118,41 @@ SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 ![Functional Requirements 009 - Search](src/site/plantuml/Simpleworklist__Use_Cases__009__Search.png)
 #### F200 Search Request
 
+## Functional Requirements - User
+
+### Functional Requirements 001 - Start
+![Functional Requirements 001 - Start](src/site/plantuml/Simpleworklist__Use_Cases__001__Start.png)
+#### F003 Registration
+#### F004 Password Recovery
+#### F005 Login
+#### F007 Logout
+
+### Functional Requirements 010 - User Profile
+![Functional Requirements 010 - User Profile](src/site/plantuml/Simpleworklist__Use_Cases__010__User_Profile.png)
+#### F200 List of other Users and New Messages received from them
+#### F201 Chat Messages shared with one other User
+#### F202 Send New Chat Message to one other User
+#### F220 Menu Selfservice: Change Username
+#### F221 Menu Selfservice: Change Password
+#### F222 Menu Selfservice: Change Contexts
+#### F223 Menu Selfservice: Set Default Language
+#### F224 Menu Selfservice: Create Test Data
+
+### Functional Requirements 011 - On every Page behind Login
+![Functional Requirements 012 - User Profile](src/site/plantuml/Simpleworklist__Use_Cases__010__User_Profile.png)
+#### F250 Number of new incoming Messages from other Users
+
+
 ### Domain Class Modell
 #### Domain Class Modell - Persistent
 ![Domain_Class_Modell_Persistent](src/site/plantuml/Simpleworklist__Domain_Class_Modell_Persistent.png)
-#### Domain Class Modell - Transient ( TODO )
+#### Domain Class Modell - Transient
 ![Domain_Class_Modell_Persistent](src/site/plantuml/Simpleworklist__Domain_Class_Modell_Transient.png)
 
 ## Software Design
-### Service Classes Controller ( TODO )
+### Service Classes Controller
 ![Service_Classes_Controller](src/site/plantuml/Simpleworklist__Service_Classes_Controller.png)
-### Service Classes DB ( TODO )
+### Service Classes DB
 ![Service_Classes_DB](src/site/plantuml/Simpleworklist__Service_Classes_DB.png)
-### Service Classes Meso ( TODO )
+### Service Classes Meso
 ![Service_Classes_Meso](src/site/plantuml/Simpleworklist__Service_Classes_Meso.png)
