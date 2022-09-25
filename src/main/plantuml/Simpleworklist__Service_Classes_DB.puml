@@ -217,7 +217,7 @@ package data {
 package user {
 
 
-  entity ChatMessage {
+  entity UserAccountChatMessage {
      - String messageText
      - Boolean readByReceiver
       list()
@@ -253,7 +253,7 @@ package user {
       delete()
   }
 
-  entity UserPasswordRecovery {
+  entity UserAccountPasswordRecovery {
       - String email
       - String token
       - Integer numberOfRetries
@@ -264,7 +264,7 @@ package user {
       delete()
   }
 
-  entity UserRegistration {
+  entity UserAccountRegistration {
       - String email
       - String token
       - Integer numberOfRetries
@@ -323,12 +323,12 @@ package user {
         List<UserAccountChatMessage> findBySenderAndReceiverAndReadByReceiver(UserAccount sender, UserAccount receiver, boolean readByReceiver)
     }
     ChatMessageService o--> ChatMessageRepository: chatMessageRepository
-    ChatMessageRepository --> ChatMessage
+    ChatMessageRepository --> UserAccountChatMessage
 
     class UserAccountPasswordRecoveryService {}
     class UserAccountPasswordRecoveryRepository {}
     UserAccountPasswordRecoveryService o--> UserAccountPasswordRecoveryRepository: userAccountPasswordRecovery
-    UserAccountPasswordRecoveryRepository --> UserAccountPassword
+    UserAccountPasswordRecoveryRepository --> UserAccountPasswordRecovery
 
     class UserAccountRegistrationService {
         UserAccountRegistration findByToken(String confirmId)
