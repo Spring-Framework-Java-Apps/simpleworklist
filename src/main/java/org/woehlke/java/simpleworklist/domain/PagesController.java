@@ -21,7 +21,7 @@ public class PagesController extends AbstractController {
     @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
     Locale locale, Model model
   ) {
-    log.info("addNewTaskToInboxGet");
+    log.info("renderPageInformation");
     return "pages/information";
   }
 }

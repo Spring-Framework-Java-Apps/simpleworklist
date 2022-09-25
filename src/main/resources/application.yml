@@ -112,6 +112,7 @@ org:
             - "/pages/information"
             - "/pages/information*"
             - "/pages/information/**"
+            - "/pages/**"
             - "/user/login*"
             - "/user/register*"
             - "/user/register/**"

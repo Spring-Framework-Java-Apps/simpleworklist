@@ -62,7 +62,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
             .headers()
             .disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET,simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
+            .antMatchers(
+                simpleworklistProperties.getWebSecurity().getAntPatternsPublic()
+            )
             .permitAll()
             .anyRequest()
             .fullyAuthenticated()
