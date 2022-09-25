@@ -23,10 +23,11 @@ package Functional_Requirements {
   }
 
   package 010__User_Profile {
-    User - (F201 List of other Users and New Messages received from them)
-    (F201 List of other Users and New Messages received from them) --> (F202 Chat Messages shared with one other User)
-    (F201 List of other Users and New Messages received from them) --> (F203 Send New Chat Message to one other User)
-    User - (F220 Menu Selfservice)
+    (F007_Navigation) - (F201 Nr of Chat Messages got from each Other Users)
+    (F201 Nr of Chat Messages got from each Other Users) --> (F202 Chat Messages shared with one other User)
+    (F201 Nr of Chat Messages got from each Other Users) --> (F203 Send New Chat Message to one other User)
+    (F007_Navigation) - (F202 Nr of Chat Messages got from all Other Users)
+    (F007_Navigation) - (F220 Menu Selfservice)
     (F220 Menu Selfservice) --> (F221 Menu Selfservice: Change Username)
     (F220 Menu Selfservice) --> (F222 Menu Selfservice: Change Password)
     (F220 Menu Selfservice) --> (F223 Menu Selfservice: Change Contexts)
