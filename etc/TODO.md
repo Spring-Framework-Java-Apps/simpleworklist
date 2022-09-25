@@ -101,8 +101,8 @@
 ## 2.4.13-SNAPSHOT
 * #377 add List of URL (Patterns) to Documentation
 * #380 add User Use Cases to UML Documentation
-* fixed #393 UML Documentation: Service Classes DB ( TODO )
-* fixed #394 UML Documentation: Service Classes Meso ( TODO )
+* fixed #393 UML Documentation: Service Classes DB
+* fixed #394 UML Documentation: Service Classes Meso
 
 ## 2.4.14-SNAPSHOT
 * #392 refactor integration tests: add Unit Tests for Beans and Entities
