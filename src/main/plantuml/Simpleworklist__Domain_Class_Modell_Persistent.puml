@@ -11,6 +11,8 @@ scale 1200 width
 
 package persistent {
 
+package data {
+
   entity Context {
        - String nameDe
        - String nameEn
@@ -37,6 +39,49 @@ package persistent {
       edit()
       delete()
   }
+
+enum TaskTime {
+    MIN5
+    MIN10
+    MIN15
+    MIN30
+    MIN45
+    HOUR1
+    HOUR2
+    HOUR3
+    HOUR4
+    HOUR6
+    HOUR8
+    MORE
+    NONE
+}
+
+enum TaskEnergy {
+    LOW
+    MEDIUM
+    HIGH
+    NONE
+}
+
+enum TaskState {
+    INBOX
+    TODAY
+    NEXT
+    WAITING
+    SCHEDULED
+    SOMEDAY
+    FOCUS
+    COMPLETED
+    TRASH
+    DELETED
+    ALL
+    PROJECTS
+}
+Task --> TaskTime
+Task --> TaskEnergy
+Task --> TaskState
+}
+package user {
 
   entity ChatMessage {
      - String messageText

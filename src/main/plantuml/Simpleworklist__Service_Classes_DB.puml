@@ -6,27 +6,347 @@ left to right direction
 
 scale 1200 width
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+package data {
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+    entity Context {
+       - String nameDe
+       - String nameEn
+       Context[] list()
+       Context search()
+       Context addNew()
+       Context edit()
+       void delete()
+    }
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+    entity Project {
+      - String name
+      - String description
+      listVisitsOfPet()
+      addNew()
+    }
 
-class ArrayList {
-Object[] elementData
-size()
+    entity Task {
+      - String name
+      - String description
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+    }
+
+    enum TaskTime {
+        MIN5
+        MIN10
+        MIN15
+        MIN30
+        MIN45
+        HOUR1
+        HOUR2
+        HOUR3
+        HOUR4
+        HOUR6
+        HOUR8
+        MORE
+        NONE
+    }
+
+    enum TaskEnergy {
+        LOW
+        MEDIUM
+        HIGH
+        NONE
+    }
+
+    enum TaskState {
+        INBOX
+        TODAY
+        NEXT
+        WAITING
+        SCHEDULED
+        SOMEDAY
+        FOCUS
+        COMPLETED
+        TRASH
+        DELETED
+        ALL
+        PROJECTS
+    }
+
+    class TaskRepository {
+        Page<Task> findByContext(Context context, Pageable request)
+        List<Task> findByContext(Context context)
+        Page<Task> findByTaskStateInbox(Context context, Pageable request)
+        List<Task> findByTaskStateInbox(Context context)
+
+        Page<Task> findByTaskStateToday(Context context, Pageable request)
+        List<Task> findByTaskStateToday(Context context)
+        Page<Task> findByTaskStateNext(Context context, Pageable request)
+        List<Task> findByTaskStateNext(Context context)
+        Page<Task> findByTaskStateWaiting(Context context, Pageable request)
+        List<Task> findByTaskStateWaiting(Context context)
+        Page<Task> findByTaskStateScheduled(Context context, Pageable request)
+        List<Task> findByTaskStateScheduled(Context context)
+        Page<Task> findByTaskStateSomeday(Context context, Pageable request)
+        List<Task> findByTaskStateSomeday(Context context)
+        Page<Task> findByFocusIsTrueAndContext(Context context, Pageable request)
+        List<Task> findByFocusIsTrueAndContext(Context context)
+        Page<Task> findByTaskStateCompleted(Context context, Pageable request)
+        List<Task> findByTaskStateCompleted(Context context)
+        Page<Task> findByTaskStateTrash(Context context, Pageable request)
+        List<Task> findByTaskStateTrash(Context context)
+        Page<Task> findByTaskStateDeleted(Context context, Pageable request)
+        List<Task> findByTaskStateDeleted(Context context)
+        Page<Task> findByTaskStateProjects(Context context, Pageable request)
+        List<Task> findByTaskStateProjects(Context context)
+
+        List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context)
+        List<Task> findByProject(Project thisProject)
+        Page<Task> findByProject(Project thisProject, Pageable pageable)
+        Page<Task> findByProjectIsNullAndContext(Context context, Pageable request)
+
+        Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context)
+        Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context)
+        Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context)
+
+        List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState,long higherOrderIdTaskState,TaskState taskState,Context context)
+        List<Task> getTasksByOrderIdProjectBetweenLowerTaskAndHigherTask(long lowerOrderIdProject,long higherOrderIdProject,Project project)
+        List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject,long higherOrderIdProject,Context context)
+    }
+
+    class TaskService {
+        Task findById(long taskId)
+
+        List<Task> findByTaskStateInbox(Context context)
+        List<Task> findByTaskStateToday(Context context)
+        List<Task> findByTaskStateNext(Context context)
+        List<Task> findByTaskStateWaiting(Context context)
+        List<Task> findByTaskStateScheduled(Context context)
+        List<Task> findByTaskStateSomeday(Context context)
+        List<Task> findByFocus(Context context)
+        List<Task> findByTaskStateCompleted(Context context)
+        List<Task> findByTaskStateTrash(Context context)
+        List<Task> findByTaskStateDeleted(Context context)
+        List<Task> findByTaskStateProjects(Context context)
+        List<Task> findByProjectId(Project thisProject)
+
+        Page<Task> findByTaskStateInbox(Context context, Pageable request)
+        Page<Task> findByTaskStateToday(Context context, Pageable request)
+        Page<Task> findByTaskStateNext(Context context, Pageable request)
+        Page<Task> findByTaskStateWaiting(Context context, Pageable request)
+        Page<Task> findByTaskStateScheduled(Context context, Pageable request)
+        Page<Task> findByTaskStateSomeday(Context context, Pageable request)
+        Page<Task> findByFocus(Context context, Pageable request)
+        Page<Task> findByTaskStateCompleted(Context context, Pageable request)
+        Page<Task> findByTaskStateTrash(Context context, Pageable request)
+        Page<Task> findByTaskStateDeleted(Context context, Pageable request)
+        Page<Task> findByTaskStateProjects(Context context, Pageable request)
+        Page<Task> findByTaskStateAll(Context context, Pageable pageRequest)
+
+        Page<Task> findByProjectId(Project thisProject, Pageable request)
+        Page<Task> findByProjectRoot(Context context, Pageable request)
+
+        boolean projectHasNoTasks(Project project)
+
+        Task saveAndFlush(Task task)
+        void saveAll(List<Task> taskListChanged)
+        void deleteAll(List<Task> taskListDeleted)
+
+        List<Task> findByTaskStateAndContextOrderByOrderIdTaskStateAsc(TaskState taskState, Context context)
+
+        Task findTopByTaskStateAndContextOrderByOrderIdTaskStateDesc(TaskState taskState, Context context)
+        Task findTopByProjectAndContextOrderByOrderIdProjectDesc(Project project, Context context)
+        Task findTopByProjectIsNullAndContextOrderByOrderIdProjectDesc(Context context)
+
+        List<Task> getTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask(long lowerOrderIdTaskState, long higherOrderIdTaskState, TaskState taskState, Context context)
+        List<Task> getTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Context context)
+        List<Task> getTasksByOrderIdProjectIdBetweenLowerTaskAndHigherTask(long lowerOrderIdProject, long higherOrderIdProject, Project project)
+    }
+
+    class ProjectRepository {
+        List<Project> findByContext(Context context)
+        Page<Project> findByContext(Context context, Pageable pageRequest)
+        List<Project> findByParentIsNullAndContext(Context context)
+        Page<Project> findByParentIsNullAndContext(Context context, Pageable pageRequest)
+    }
+
+    class ProjectService {
+        Project add(Project project)
+        Project update(Project project)
+        void delete(Project project)
+
+        List<Task> findByProject(Project thisProject)
+        List<Project> findRootProjectsByContext(Context context)
+        Page<Project> findRootProjectsByContext(Context context, Pageable pageRequest)
+        List<Project> findAllProjectsByContext(Context context)
+        Page<Project> findAllProjectsByContext(Context context, Pageable pageRequest)
+
+        Project getReferenceById(long projectId)
+        Project findByProjectId(long projectId)
+        List<Project> getAllChildrenOfProject(Project thisProject)
+    }
+
+    class ContextRepository {
+        List<Context> findByUserAccount(UserAccount user)
+        Context findByIdAndUserAccount(long newContextId, UserAccount userAccount)
+    }
+
+    class ContextService {
+        List<Context> getAllForUser(UserAccount user)
+        Context findByIdAndUserAccount(long newContextId, UserAccount userAccount)
+        Context createNewContext(NewContextForm newContext, UserAccount user)
+        Context updateContext(Context context)
+        boolean delete(Context context)
+        boolean contextHasItems(Context context)
+        Optional<Context> getContextFor(UserSessionBean userSession)
+    }
+
+    ContextService o--> ContextRepository: contextRepository
+    ProjectService o-->  ProjectRepository: projectRepository
+    TaskService o--> TaskRepository: taskRepository
+
+    ContextRepository o--> Context
+    ProjectRepository o--> Project
+    TaskRepository o--> Task
+
+    Task --> TaskTime
+    Task --> TaskEnergy
+    Task --> TaskState
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+package user {
+
+
+  entity ChatMessage {
+     - String messageText
+     - Boolean readByReceiver
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccount {
+      - String userEmail
+      - String userPassword
+      - String userFullname
+      - Language defaultLanguage
+      - Date lastLoginTimestamp
+      - Boolean accountNonExpired
+      - Boolean accountNonLocked
+      - Boolean credentialsNonExpired
+      - Boolean enabled
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccountPassword {
+      - String userPassword
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserPasswordRecovery {
+      - String email
+      - String token
+      - Integer numberOfRetries
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserRegistration {
+      - String email
+      - String token
+      - Integer numberOfRetries
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  'Context "many"  o-->  "one" UserAccount: userAccount
+  'Project "many"  o-->  "one" Context: context
+  'Task "many"  o-->  "one" Project: project
+  'ChatMessage "many"  o-->  "one" UserAccount: sender
+  'ChatMessage "many"  o-->  "one" UserAccount: receiver
+  'UserAccount "one"  o-->  "one" Context: defaultContext
+  'UserAccountPassword "one"  o-->  "one" UserAccount: userAccount
+  'UserRegistration "one"  o-->  "one" UserAccount: userAccount
+  'UserPasswordRecovery "many"  o-->  "one" UserAccount: userAccount
+
+    class UserAccountRepository {
+        UserAccount findByUserEmailAndUserPassword(String userEmail, String userPassword)
+        UserAccount findByUserEmail(String userEmail)
+    }
+    class UserAccountService {
+        boolean isEmailAvailable(String email)
+        void createUser(UserAccountForm userAccount)
+        UserAccount saveAndFlush(UserAccount u)
+        UserAccount findByUserEmail(String userEmail)
+        Page<UserAccount> findAll(Pageable request)
+        void changeUsersPassword(UserAccountForm userAccount)
+        UserAccount findById(long userId)
+        Map<Long,Integer> getNewIncomingMessagesForEachOtherUser(UserAccount receiver)
+    }
+    UserAccountService o--> UserAccountRepository: userAccountRepository
+    UserAccountRepository --> UserAccount
+
+    class UserAccountPasswordService{
+    }
+    class UserAccountPasswordRepository{
+    }
+    UserAccountPasswordService o--> UserAccountPasswordRepository: userAccountPasswordRepository
+    UserAccountPasswordRepository --> UserAccountPassword
+
+    class ChatMessageService {
+      int getNumberOfNewIncomingMessagesForUser(UserAccount user)
+      Page<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(UserAccount sender,UserAccount receiver, Pageable request )
+      void saveAll(List<UserAccountChatMessage> user2UserMessageList)
+      UserAccountChatMessage saveAndFlush(UserAccountChatMessage m)
+      List<UserAccountChatMessage> findByReceiverAndReadByReceiver(UserAccount receiver, boolean readByReceiver)
+    }
+    class ChatMessageRepository {
+        Page<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser,UserAccount otherUser, Pageable request )
+        List<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser,UserAccount otherUser)
+        List<UserAccountChatMessage> findByReceiverAndReadByReceiver(UserAccount receiver, boolean readByReceiver)
+        List<UserAccountChatMessage> findBySenderAndReceiverAndReadByReceiver(UserAccount sender, UserAccount receiver, boolean readByReceiver)
+    }
+    ChatMessageService o--> ChatMessageRepository: chatMessageRepository
+    ChatMessageRepository --> ChatMessage
+
+    class UserAccountPasswordRecoveryService {}
+    class UserAccountPasswordRecoveryRepository {}
+    UserAccountPasswordRecoveryService o--> UserAccountPasswordRecoveryRepository: userAccountPasswordRecovery
+    UserAccountPasswordRecoveryRepository --> UserAccountPassword
+
+    class UserAccountRegistrationService {
+        UserAccountRegistration findByToken(String confirmId)
+        boolean registrationIsRetryAndMaximumNumberOfRetries(String email)
+        void registrationCheckIfResponseIsInTime(String email)
+        void registrationSendEmailTo(String email)
+        void registrationSentEmail(UserAccountRegistration o)
+        void registrationClickedInEmail(UserAccountRegistration o)
+        void registrationUserCreated(UserAccountRegistration o)
+    }
+    class UserAccountRegistrationRepository {
+        UserAccountRegistration findByToken(String token)
+        UserAccountRegistration findByEmail(String email)
+    }
+    UserAccountRegistrationService o--> UserAccountRegistrationRepository: userAccountRegistrationRepository
+    UserAccountRegistrationRepository --> UserAccountRegistration
+
+    class TokenGeneratorService {}
 }
 
 @enduml
