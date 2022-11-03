@@ -70,18 +70,18 @@
 			</div>
 		</div>
 		<div class="container" sec:authorize="isAuthenticated()">
-      <div class="row" th:if="${dataPage != null}">
-				<div class="col-md-8">
-					<th:block th:replace="${twcontent}" />
-				</div>
-				<div class="col-md-4">
-					<div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
-				</div>
-      </div>
-      <div class="row" th:if="${dataPage == null}">
-        <div class="col">
-          <th:block th:replace="${twcontent}" />
-        </div>
+            <div class="row" th:if="${dataPage != null}">
+                <div class="col-md-8">
+                    <th:block th:replace="${twcontent}" />
+                </div>
+                <div class="col-md-4">
+                    <div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
+                </div>
+            </div>
+            <div class="row" th:if="${dataPage == null}">
+            <div class="col">
+                <th:block th:replace="${twcontent}" />
+            </div>
 		</div>
     </div>
 	</section>
@@ -105,7 +105,7 @@
 		</nav>
 	</footer>
 
-	  <script th:src="@{/js/google-analytics.js}"></script>
+	<script th:src="@{/js/google-analytics.js}"></script>
     <script th:src="@{/webjars/jquery/3.6.0/jquery.js}"></script>
     <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js}"></script>

@@ -54,7 +54,9 @@ public class ProjectRootTaskController extends AbstractController {
     @ModelAttribute("userSession") UserSessionBean userSession,
     Locale locale, Model model
   ) {
+    log.info("------------------------------------------------------");
     log.info("/project/root/add/task (GET)");
+    log.info("------------------------------------------------------");
     Context context = super.getContext(userSession);
     UserAccount userAccount = context.getUserAccount();
     Task thisTask = new Task();
@@ -62,28 +64,29 @@ public class ProjectRootTaskController extends AbstractController {
     thisTask.setTaskEnergy(TaskEnergy.NONE);
     thisTask.setTaskTime(TaskTime.NONE);
     thisTask.unsetFocus();
-    Project thisProject;
     Boolean mustChooseContext = false;
-    thisProject = new Project();
-    thisProject.setId(0L);
+
+    Context projectsContext;
     if(userSession.getLastContextId() == 0L){
       mustChooseContext = true;
-      thisTask.setContext(userAccount.getDefaultContext());
-      thisProject.setContext(userAccount.getDefaultContext());
+      projectsContext = userAccount.getDefaultContext();
     } else {
-      thisTask.setContext(context);
-      thisProject.setContext(context);
+        projectsContext = context;
     }
+    Project thisProject = Project.getRootProject(projectsContext);
+    thisTask.setContext(projectsContext);
+    List<Project> rootProjects = projectControllerService.findRootProjectsByContext(context);
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject,locale,userSession);
     model.addAttribute("breadcrumb", breadcrumb);
     model.addAttribute("mustChooseContext", mustChooseContext); //TODO: rename mustChooseArea -> mustChooseContext
-    model.addAttribute("thisProject", thisProject);
+    model.addAttribute("thisProject", null);
     model.addAttribute("thisProjectId", thisProject.getId());
     model.addAttribute("breadcrumb", breadcrumb);
     model.addAttribute("task", thisTask);
     model.addAttribute("userSession", userSession);
     model.addAttribute("taskstateType",PROJECTS.getSlug());
     model.addAttribute("dataPage", true);
+    model.addAttribute("rootProjects",rootProjects);
     return "project/root/task/add";
   }
 
@@ -95,7 +98,9 @@ public class ProjectRootTaskController extends AbstractController {
     Locale locale,
     Model model
   ) {
+    log.info("------------------------------------------------------");
     log.info("/project/root/task/add (POST)");
+    log.info("------------------------------------------------------");
     Context context = super.getContext(userSession);
     model.addAttribute("dataPage", true);
     model.addAttribute("addProjectToTask", false);
@@ -107,10 +112,14 @@ public class ProjectRootTaskController extends AbstractController {
       Boolean mustChooseArea = false;
       task.setContext(context);
       Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(TaskState.INBOX,locale,userSession);
+      List<Project> rootProjects = projectControllerService.findRootProjectsByContext(context);
+      Project thisProject = null;
       model.addAttribute("mustChooseArea", mustChooseArea);
       model.addAttribute("breadcrumb", breadcrumb);
       model.addAttribute("task", task);
       model.addAttribute("userSession", userSession);
+      model.addAttribute("thisProject", thisProject);
+      model.addAttribute("rootProjects", rootProjects);
       return "project/root/task/add";
     } else {
       task.setContext(context);
@@ -127,13 +136,15 @@ public class ProjectRootTaskController extends AbstractController {
     @ModelAttribute("userSession") UserSessionBean userSession,
     Locale locale, Model model
   ) {
+    log.info("------------------------------------------------------");
     log.info("editTaskGet");
+    log.info("------------------------------------------------------");
     List<Context> contexts = super.getContexts();
     Context thisContext = thisTask.getContext();
     Project thisProject = taskLifecycleService.addProjectFromTaskToModel( thisTask, model );
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForTaskstate(thisTask.getTaskState(),locale,userSession);
     model.addAttribute("breadcrumb", breadcrumb);
-    model.addAttribute("thisProject", thisProject); //TODO: remove?
+    model.addAttribute("thisProject", thisProject);
     model.addAttribute("thisContext", thisContext);
     model.addAttribute("task", thisTask);
     model.addAttribute("contexts", contexts);
@@ -153,7 +164,9 @@ public class ProjectRootTaskController extends AbstractController {
     Locale locale,
     Model model
   ) {
+    log.info("------------------------------------------------------");
     log.info("editTaskPost");
+    log.info("------------------------------------------------------");
     model.addAttribute("taskstateType",PROJECTS.getSlug());
     model.addAttribute("dataPage", true);
     model.addAttribute("addProjectToTask", true);
@@ -168,7 +181,9 @@ public class ProjectRootTaskController extends AbstractController {
       result.addError(error);
     }
     if (result.hasErrors() ) {
+      log.info("------------------------------------------------------");
       log.warn("result.hasErrors");
+      log.info("------------------------------------------------------");
       for (ObjectError e : result.getAllErrors()) {
         log.warn(e.toString());
       }
@@ -231,7 +246,9 @@ public class ProjectRootTaskController extends AbstractController {
     @ModelAttribute("userSession") UserSessionBean userSession,
     Model model
   ) {
+    log.info("------------------------------------------------------");
     log.info("deleteTaskGet");
+    log.info("------------------------------------------------------");
     if(task!= null){
       task.delete();
       taskLifecycleService.updatedViaProjectRoot(task);
@@ -251,7 +268,9 @@ public class ProjectRootTaskController extends AbstractController {
     @ModelAttribute("userSession") UserSessionBean userSession,
     Model model
   ) {
+      log.info("------------------------------------------------------");
     log.info("undeleteTaskGet");
+      log.info("------------------------------------------------------");
     task.undelete();
     taskLifecycleService.updatedViaProjectRoot(task);
     userSession.setLastProjectId(Project.rootProjectId);

@@ -276,4 +276,14 @@ public class ProjectControllerServiceImpl implements ProjectControllerService {
     }
     return thisProject;
   }
+
+      @Override
+      public  List<Project> findAllProjectsByContext(Context context){
+        return projectService.findAllProjectsByContext(context);
+      }
+
+    @Override
+    public  List<Project> findRootProjectsByContext(Context context){
+        return projectService.findRootProjectsByContext(context);
+    }
 }
