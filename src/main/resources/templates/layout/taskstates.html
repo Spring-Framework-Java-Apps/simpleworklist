@@ -63,7 +63,7 @@
                       <span th:text="#{layout.page.waiting}">Waiting</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" ondrop="drop2scheduled(event)" ondragover="allowDropOfTask(event)">
                     <a id="taskstate_scheduled" class="nav-link active link-dark"
                        th:href="@{/taskstate/scheduled}"
                        th:if="${taskstateType == 'scheduled'}">
