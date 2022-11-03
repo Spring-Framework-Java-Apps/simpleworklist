@@ -107,6 +107,19 @@ public class TaskMoveController extends AbstractController {
     return task.getTaskState().getUrlPathRedirect();
   }
 
+    @RequestMapping(path = "/{taskId}/move/to/taskstate/scheduled", method = RequestMethod.GET)
+    public final String moveTaskToScheduled(
+        @NotNull @PathVariable("taskId") Task task,
+        @NotNull @ModelAttribute("userSession") UserSessionBean userSession,
+        Model model
+    ) {
+        log.info("dragged and dropped "+task.getId()+" to scheduled");
+        task = taskMoveService.moveTaskToScheduled(task);
+        model.addAttribute("userSession", userSession);
+        model.addAttribute("dataPage", true);
+        return task.getTaskState().getUrlPathRedirect();
+    }
+
   @RequestMapping(path = "/{taskId}/move/to/taskstate/someday", method = RequestMethod.GET)
   public final String moveTaskToSomeday(
     @NotNull @PathVariable("taskId") Task task,
