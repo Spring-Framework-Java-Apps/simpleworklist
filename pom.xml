@@ -83,7 +83,7 @@
     <!-- Webjars -->
     <webjars.jquery.version>3.6.1</webjars.jquery.version>
     <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
-    <webjars.bootstrap.version>5.2.0</webjars.bootstrap.version>
+    <webjars.bootstrap.version>5.2.2</webjars.bootstrap.version>
     <webjars.font-awesome.version>6.1.2</webjars.font-awesome.version>
     <opencsv.version>5.7.0</opencsv.version>
 
