@@ -32,9 +32,11 @@
 
     <developers>
         <developer>
-            <name>Thomas Wöhlke</name>
+            <id>thomaswoehlke</id>
+            <name>Thomas Woehlke</name>
             <email>thomas.woehlke@gmail.com</email>
-            <url>https://github.com/thomaswoehlke/</url>
+            <url>https://github.com/thomaswoehlke</url>
+            <timezone>Europe/Paris</timezone>
         </developer>
     </developers>
 

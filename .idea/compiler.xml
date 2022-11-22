@@ -19,7 +19,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="simpleworklist" target="11" />
+      <module name="simpleworklist" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
