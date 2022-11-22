@@ -53,7 +53,7 @@
 
     <distributionManagement>
         <site>
-            <id>org.woehlke.java.simpleworklist</id>
+            <id>simpleworklist.public_html</id>
             <url>file://${user.home}/public_html/java/simpleworklist</url>
         </site>
         <repository>
