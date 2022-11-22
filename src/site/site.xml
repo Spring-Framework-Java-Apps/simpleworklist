@@ -8,14 +8,14 @@
     <bannerLeft>
         <name>SimpleWorklist</name>
         <src>/img/phasenraum_logo.gif</src>
-        <href>https://woehlke.org/p/simpleworklist</href>
+        <href>https://java.woehlke.org/simpleworklist</href>
     </bannerLeft>
     <body>
         <breadcrumbs>
             <item name="Thomas Wöhlke (Github)" href="https://github.com/thomaswoehlke"/>
             <item name="Spring-Framework-Java-Apps (Github)" href="https://github.com/Spring-Framework-Java-Apps"/>
             <item name="Simpleworklist (Github)" href="https://github.com/Spring-Framework-Java-Apps/simpleworklist"/>
-            <item name="Simpleworklist" href="https://woehlke.org/p/simpleworklist"/>
+            <item name="Simpleworklist" href="https://java.woehlke.org/simpleworklist"/>
         </breadcrumbs>
         <menu name="Overview">
             <item name="Introduction" href="index.html"/>
