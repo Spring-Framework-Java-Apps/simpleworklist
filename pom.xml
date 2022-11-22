@@ -68,10 +68,11 @@
     </distributionManagement>
 
     <properties>
-        <java.version>11</java.version>
+        <version.java>11</version.java>
         <version.maven>3.6.3</version.maven>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${version.java}</maven.compiler.source>
+        <maven.compiler.target>${version.java}</maven.compiler.target>
+        <version.java>${java.version}</version.java>
         <spring-boot.repackage.layout>JAR</spring-boot.repackage.layout>
         <version.spring-boot-maven-plugin>${project.parent.version}</version.spring-boot-maven-plugin>
         <version.thymeleaf-testing>3.1.0.M2</version.thymeleaf-testing>
@@ -82,7 +83,7 @@
         <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
         <webjars.bootstrap.version>5.2.2</webjars.bootstrap.version>
         <webjars.font-awesome.version>6.2.0</webjars.font-awesome.version>
-        <opencsv.version>5.7.0</opencsv.version>
+        <opencsv.version>5.7.1</opencsv.version>
 
         <!-- Unit and Integration Testing -->
         <skipTests>false</skipTests>
@@ -112,7 +113,7 @@
 
         <!-- UML -->
         <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
-        <version.net.sourceforge.plantuml>1.2022.6</version.net.sourceforge.plantuml>
+        <version.plantuml-maven-plugin.plantuml>1.2022.6</version.plantuml-maven-plugin.plantuml>
 
         <version.maven-invoker-plugin>3.3.0</version.maven-invoker-plugin>
         <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
@@ -127,9 +128,12 @@
         <version.maven-site-plugin>3.12.0</version.maven-site-plugin>
         <version.maven-project-info-reports-plugin>3.3.0</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
+        <version.maven-checkstyle-plugin.checkstyle>10.4</version.maven-checkstyle-plugin.checkstyle>
         <version.maven-jxr-plugin>3.2.0</version.maven-jxr-plugin>
         <version.maven-pmd-plugin>3.17.0</version.maven-pmd-plugin>
-        <version.spotbugs-maven-plugin>4.7.0.0</version.spotbugs-maven-plugin>
+        <version.maven-pmd-plugin.pmd>6.51.0</version.maven-pmd-plugin.pmd>
+        <version.spotbugs-maven-plugin>4.7.3.0</version.spotbugs-maven-plugin>
+        <version.spotbugs-maven-plugin.spotbugs>4.7.0.0</version.spotbugs-maven-plugin.spotbugs>
         <version.maven-surefire-report-plugin>3.0.0-M7</version.maven-surefire-report-plugin>
         <version.asciidoctor-maven-plugin>2.2.2</version.asciidoctor-maven-plugin>
         <version.doxia-module-markdown>1.11.1</version.doxia-module-markdown>
@@ -469,6 +473,13 @@
                         <artifactId>jcommander</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.pmd</groupId>
+                <artifactId>pmd</artifactId>
+                <version>${version.maven-pmd-plugin.pmd}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -942,11 +953,21 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${version.maven-checkstyle-plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${version.maven-checkstyle-plugin.checkstyle}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${version.spotbugs-maven-plugin}</version>
+                    <dependencies>
+
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1052,12 +1073,12 @@
                                     <version>${version.maven}</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>${java.version}</version>
+                                    <version>${version.java}</version>
                                 </requireJavaVersion>
                                 <requireFilesExist>
                                     <files>
                                         <file>${project.basedir}/README.md</file>
-                                        <file>${project.basedir}/LICENSE</file>
+                                        <file>${project.basedir}/LICENSE.txt</file>
                                         <file>${project.basedir}/app.json</file>
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
@@ -1178,8 +1199,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <compilerArgs>
                         <arg>-Xlint:all,-options,-path</arg>
@@ -1211,7 +1232,7 @@
                 <configuration>
                     <linksource>true</linksource>
                     <maxmemory>1024m</maxmemory>
-                    <source>${java.version}</source>
+                    <source>${version.java}</source>
                 </configuration>
             </plugin>
             <plugin>
@@ -1288,10 +1309,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${version.maven-checkstyle-plugin.checkstyle}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
+                    <xmlOutputDirectory>target/site</xmlOutputDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1333,7 +1365,7 @@
                 <configuration>
                     <linksource>true</linksource>
                     <maxmemory>1024m</maxmemory>
-                    <source>${java.version}</source>
+                    <source>${version.java}</source>
                 </configuration>
             </plugin>
             <plugin>
@@ -1392,7 +1424,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <configuration>
                     <minimumTokens>100</minimumTokens>
-                    <targetJdk>${java.version}</targetJdk>
+                    <targetJdk>${version.java}</targetJdk>
                     <excludeRoots>
                         <excludeRoot>target</excludeRoot>
                     </excludeRoots>
@@ -1525,7 +1557,7 @@
                     <dependency>
                         <groupId>net.sourceforge.plantuml</groupId>
                         <artifactId>plantuml</artifactId>
-                        <version>${version.net.sourceforge.plantuml}</version>
+                        <version>${version.plantuml-maven-plugin.plantuml}</version>
                         <scope>runtime</scope>
                     </dependency>
                 </dependencies>
@@ -1562,7 +1594,7 @@
                             <dependency>
                                 <groupId>net.sourceforge.plantuml</groupId>
                                 <artifactId>plantuml</artifactId>
-                                <version>${version.net.sourceforge.plantuml}</version>
+                                <version>${version.plantuml-maven-plugin.plantuml}</version>
                                 <scope>runtime</scope>
                             </dependency>
                         </dependencies>
