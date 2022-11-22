@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.woehlke</groupId>
     <artifactId>simpleworklist</artifactId>
-    <version>2.4.14-SNAPSHOT</version>
+    <version>2.4.15-SNAPSHOTS</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -108,8 +107,8 @@
         <docker-compose-maven-plugin.projectName>simplgtd</docker-compose-maven-plugin.projectName>
 
         <!-- SCM and Releasing -->
-        <version.org.apache.maven.scm>1.13.0</version.org.apache.maven.scm>
-        <version.maven-release-plugin>3.0.0-M6</version.maven-release-plugin>
+        <version.maven-release-plugin>3.0.0-M7</version.maven-release-plugin>
+        <version.maven-release-plugin.scm>1.13.0</version.maven-release-plugin.scm>
 
         <!-- UML -->
         <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
@@ -316,43 +315,43 @@
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-providers-standard</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-provider-svnexe</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-provider-svn-commons</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-provider-gitexe</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-provider-git-commons</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-manager-plexus</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.scm</groupId>
                 <artifactId>maven-scm-client</artifactId>
-                <version>${version.org.apache.maven.scm}</version>
+                <version>${version.maven-release-plugin.scm}</version>
                 <scope>provided</scope>
             </dependency>
 
