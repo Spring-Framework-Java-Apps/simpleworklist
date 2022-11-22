@@ -1084,7 +1084,7 @@
                                         <file>${project.basedir}/Procfile</file>
                                         <file>${project.basedir}/src/site/markdown/ABOUT.md</file>
                                         <file>${project.basedir}/src/site/markdown/CHANGELOG.md</file>
-                                        <file>${project.basedir}/src/site/markdown/CLOUD_DEPLOYMENT.md</file>
+                                        <file>${project.basedir}/src/site/markdown/DEPLOYMENTS.md</file>
                                         <file>${project.basedir}/src/site/markdown/DEVELOPMENT.md</file>
                                         <file>${project.basedir}/src/site/markdown/HOWTO.md</file>
                                         <file>${project.basedir}/src/site/markdown/MAVEN_PLUGINS.md</file>
