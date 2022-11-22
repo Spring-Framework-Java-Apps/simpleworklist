@@ -48,4 +48,45 @@
 * Issue #234 Taskstate: Task Edit Form -> change Project via DropDown
 * Issue #235 Project/Root: Task Edit Form -> change Project via DropDown
 * Issue #236 Project/id: Task Edit Form -> change Project via DropDown
+* wontfix #251, wontfix #224, wontfix #245, wontfix #246
 
+
+## 2.4.7
+* fixed #381 Transient_Class_Modell - Update UML Documentation after Refactorings due to Bugfixes
+* fixed #382 Controller_Classes - Update UML Documentation after Refactorings due to Bugfixes
+* fixed #383 F006 Page after first successful Login: change from inbox to today
+
+## 2.4.8
+* fixed #375 reenable integration tests
+
+## 2.4.9
+* fixed #390 refactor integration tests: One Test class for each Controller Class
+* fixed #391 refactor integration tests: One Test class for each Service Class in package meso
+
+## 2.4.10-SNAPSHOT
+*
+
+## 2.4.11-SNAPSHOT
+* fixed #380 add User Use Cases to UML Documentation
+* fixed #393 UML Documentation: Service Classes DB
+* fixed #394 UML Documentation: Service Classes Meso
+
+## 2.4.12-SNAPSHOT
+* fixed #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
+*
+
+## 2.4.13-SNAPSHOT
+* #377 add List of URL (Patterns) to Documentation
+* #392 refactor integration tests: add Unit Tests for Beans and Entities
+*
+
+## 2.4.14-SNAPSHOT
+* #386 make Project Navigation collapsible
+* #389 apply Database Schema Evolution for: 386 make Project Navigation collapsible
+*
+
+## 2.4.15-SNAPSHOT
+* #378 Add Search Index and search functionality
+
+## 2.4.16-SNAPSHOT
+*

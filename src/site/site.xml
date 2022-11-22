@@ -18,19 +18,21 @@
             <item name="Simpleworklist" href="https://java.woehlke.org/simpleworklist"/>
         </breadcrumbs>
         <menu name="Overview">
+            <item name="About" href="ABOUT.html" />
             <item name="Introduction" href="index.html"/>
             <item name="JavaDocs" href="apidocs/index.html"/>
             <item name="Source Xref" href="xref/index.html"/>
         </menu>
         <menu name="Requirements">
-            <item name="Requirements" href="Requirements.html" />
-            <item name="Requirements Nonfunctional" href="Requirements_Nonfunctional.html" />
+            <item name="Requirements" href="CLOUD_DEPLOYMENT.html" />
+            <item name="Requirements" href="REQUIREMENTS_NONFUNCTIONAL.html" />
+            <item name="Requirements" href="TODO.html" />
         </menu>
         <menu name="Development">
-            <item name="Development" href="Development.html" />
-            <item name="Maven Plugins" href="Maven_Plugins.html" />
+            <item name="Requirements" href="CHANGELOG.html" />
+            <item name="Development" href="DEVELOPMENT.html" />
+            <item name="Maven Plugins" href="MAVEN_PLUGINS.html" />
             <item name="HOWTO" href="HOWTO.html" />
-            <item name="Primesfaces JSF" href="Primesfaces_JSF.html" />
         </menu>
         <menu ref="reports"/>
     </body>
