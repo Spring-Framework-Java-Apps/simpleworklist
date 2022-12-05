@@ -50,27 +50,27 @@
             </div>
           </div>
           <div class="card-footer">
-            <div class="m-md-2 pe-md-3 m-2 pe-2">
-            <button id="loginButton" type="submit" class="btn btn-block btn-primary">
-              <i class="fas fa-sign-in-alt"></i>
-              <span th:utext="#{user.loginForm.loginButton}"></span>
-            </button>
-            </div>
+            <span class="row">
+                <span class="col-md-3 col-3 m-2 pe-2 align-middle text-left">
+                    <button id="loginButton" type="submit" class="btn btn-block btn-primary align-middle text-left">
+                      <i class="fas fa-sign-in-alt"></i>
+                      <span th:utext="#{user.loginForm.loginButton}"></span>
+                    </button>
+                </span>
+                <span class="col-md-4 col-4 m-2 pe-2 align-middle text-right align-self-center">
+                    <a id="registerButton" th:href="@{/user/register/}"
+                       class="btn btn-outline-secondary btn-sm align-middle text-right">
+                      <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
+                    </a>
+                </span>
+                <span class="col-md-4 col-4 m-2 pe-2 align-middle text-right align-self-center">
+                    <a id="passwordResetButton" th:href="@{/user/resetPassword}"
+                       class="btn btn-outline-secondary btn-sm align-middle text-right align-self-center">
+                      <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
+                    </a>
+                </span>
+            </span>
           </div>
-        </div>
-        <div class="row">
-           <span class="col-md-4 col-4 text-left">
-            <a id="registerButton" th:href="@{/user/register/}"
-               class="link-secondary text-left  ms-md-1 my-md-1   ms-1 my-1  ps-md-4 py-md-2  ps-4 py-2">
-              <i class="fas fa-user"></i><span th:utext="#{user.loginForm.register}"></span>
-            </a>
-          </span>
-          <span class="col-md-8 col-8 text-right">
-            <a id="passwordResetButton" th:href="@{/user/resetPassword}"
-               class="link-secondary text-right  me-md-1 my-md-1  me-1 my-1   pe-md-4 py-md-2  pe-4 py-2">
-              <i class="fas fa-question-circle"></i><span th:utext="#{user.loginForm.passwordReset}"></span>
-            </a>
-          </span>
         </div>
       </form>
   </div>
