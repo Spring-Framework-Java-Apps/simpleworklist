@@ -43,7 +43,11 @@ public class ProjectRootTaskController extends AbstractController {
   private final BreadcrumbService breadcrumbService;
 
   @Autowired
-  public ProjectRootTaskController(ProjectControllerService projectControllerService, TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService) {
+  public ProjectRootTaskController(
+      ProjectControllerService projectControllerService,
+      TaskLifecycleService taskLifecycleService,
+      BreadcrumbService breadcrumbService
+  ) {
     this.projectControllerService = projectControllerService;
     this.taskLifecycleService = taskLifecycleService;
     this.breadcrumbService = breadcrumbService;
@@ -65,7 +69,6 @@ public class ProjectRootTaskController extends AbstractController {
     thisTask.setTaskTime(TaskTime.NONE);
     thisTask.unsetFocus();
     Boolean mustChooseContext = false;
-
     Context projectsContext;
     if(userSession.getLastContextId() == 0L){
       mustChooseContext = true;
@@ -78,7 +81,8 @@ public class ProjectRootTaskController extends AbstractController {
     List<Project> rootProjects = projectControllerService.findRootProjectsByContext(context);
     Breadcrumb breadcrumb = breadcrumbService.getBreadcrumbForShoProjectId(thisProject,locale,userSession);
     model.addAttribute("breadcrumb", breadcrumb);
-    model.addAttribute("mustChooseContext", mustChooseContext); //TODO: rename mustChooseArea -> mustChooseContext
+    //TODO: rename mustChooseArea -> mustChooseContext
+    model.addAttribute("mustChooseContext", mustChooseContext);
     model.addAttribute("thisProject", null);
     model.addAttribute("thisProjectId", thisProject.getId());
     model.addAttribute("breadcrumb", breadcrumb);

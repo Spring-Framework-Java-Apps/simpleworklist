@@ -27,7 +27,10 @@ public class UserRegistrationController {
     private final UserAccountRegistrationService userAccountRegistrationService;
 
     @Autowired
-    public UserRegistrationController(UserAccountService userAccountService, UserAccountRegistrationService userAccountRegistrationService) {
+    public UserRegistrationController(
+        UserAccountService userAccountService,
+        UserAccountRegistrationService userAccountRegistrationService
+    ) {
         this.userAccountService = userAccountService;
         this.userAccountRegistrationService = userAccountRegistrationService;
     }
@@ -69,7 +72,11 @@ public class UserRegistrationController {
         } else {
             userAccountRegistrationService.registrationCheckIfResponseIsInTime(userAccountRegistrationForm.getEmail());
             if (userAccountService.isEmailAvailable(userAccountRegistrationForm.getEmail())) {
-                if (userAccountRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(userAccountRegistrationForm.getEmail())) {
+                boolean registrationIsRetryAndMaximumNumberOfRetries =
+                    userAccountRegistrationService.registrationIsRetryAndMaximumNumberOfRetries(
+                        userAccountRegistrationForm.getEmail()
+                    );
+                if (registrationIsRetryAndMaximumNumberOfRetries) {
                     String objectName = "userAccountRegistrationForm";
                     String field = "email";
                     String defaultMessage = "Maximum Number of Retries reached.";

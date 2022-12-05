@@ -29,7 +29,10 @@ public class UserPasswordRecoveryController {
     private final UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
     @Autowired
-    public UserPasswordRecoveryController(UserAccountService userAccountService, UserAccountPasswordRecoveryService userAccountPasswordRecoveryService) {
+    public UserPasswordRecoveryController(
+        UserAccountService userAccountService,
+        UserAccountPasswordRecoveryService userAccountPasswordRecoveryService
+    ) {
         this.userAccountService = userAccountService;
         this.userAccountPasswordRecoveryService = userAccountPasswordRecoveryService;
     }
@@ -102,7 +105,8 @@ public class UserPasswordRecoveryController {
         @PathVariable String confirmId,
         Model model
     ) {
-        UserAccountPasswordRecovery oUserAccountPasswordRecovery = userAccountPasswordRecoveryService.findByToken(confirmId);
+        UserAccountPasswordRecovery oUserAccountPasswordRecovery =
+            userAccountPasswordRecoveryService.findByToken(confirmId);
         if (oUserAccountPasswordRecovery != null) {
             userAccountPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserAccountPasswordRecovery);
             UserAccount ua = userAccountService.findByUserEmail(oUserAccountPasswordRecovery.getEmail());
