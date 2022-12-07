@@ -113,6 +113,11 @@
         <version.maven-release-plugin>3.0.0-M7</version.maven-release-plugin>
         <version.maven-release-plugin.scm>1.13.0</version.maven-release-plugin.scm>
 
+        <!-- Database Evolution -->
+        <version.org.postgresql>42.5.1</version.org.postgresql>
+        <version.liquibase-maven-plugin>4.16.1</version.liquibase-maven-plugin>
+        <liquibase.propertyFile>${project.basedir}/liquibase.properties</liquibase.propertyFile>
+
         <!-- UML -->
         <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
         <version.plantuml-maven-plugin.plantuml>1.2022.6</version.plantuml-maven-plugin.plantuml>
@@ -1047,6 +1052,11 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${version.maven-failsafe-plugin}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>${version.liquibase-maven-plugin}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -1330,6 +1340,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <configuration>
+                    <propertyFile>liquibase.properties</propertyFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${version.org.postgresql}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
