@@ -879,7 +879,7 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <defaultGoal>clean package spring-boot:run</defaultGoal>
+        <defaultGoal>clean package liquibase:validate liquibase:update spring-boot:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
