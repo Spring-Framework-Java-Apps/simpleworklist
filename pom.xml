@@ -70,7 +70,7 @@
     </distributionManagement>
 
     <properties>
-        <version.java>11</version.java>
+        <version.java>17</version.java>
         <version.maven>3.6.3</version.maven>
         <maven.compiler.source>${version.java}</maven.compiler.source>
         <maven.compiler.target>${version.java}</maven.compiler.target>
@@ -112,6 +112,10 @@
         <!-- SCM and Releasing -->
         <version.maven-release-plugin>3.0.0-M7</version.maven-release-plugin>
         <version.maven-release-plugin.scm>1.13.0</version.maven-release-plugin.scm>
+
+        <!-- Database Evolution -->
+        <version.org.postgresql>42.5.1</version.org.postgresql>
+        <liquibase.propertyFile>${project.basedir}/liquibase.properties</liquibase.propertyFile>
 
         <!-- UML -->
         <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
@@ -314,7 +318,12 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.5.0</version>
+                <version>42.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.saxon</groupId>
+                <artifactId>saxon-dom</artifactId>
+                <version>8.7</version>
             </dependency>
 
             <!-- SCM -->
@@ -683,8 +692,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>saxon-dom</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -1096,11 +1113,12 @@
                                         <file>${project.basedir}/build.sh</file>
                                         <file>${project.basedir}/etc/run.sh</file>
                                         <file>${project.basedir}/etc/bash/psql.sh</file>
-                                        <file>${project.basedir}/src/main/resources/docker-compose.yml</file>
                                         <file>${project.basedir}/etc/docker-start.sh</file>
                                         <file>${project.basedir}/etc/docker-stop.sh</file>
+                                        <file>${project.basedir}/docker-compose.yml</file>
                                         <file>${project.basedir}/etc/sql/db-createdb-and-user-linux.sql</file>
                                         <file>${project.basedir}/etc/sql/db-createdb-and-user-win10.sql</file>
+                                        <file>${project.basedir}/liquibase.properties</file>
                                     </files>
                                 </requireFilesExist>
                             </rules>
@@ -1330,6 +1348,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <configuration>
+                    <propertyFile>liquibase.properties</propertyFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${version.org.postgresql}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
