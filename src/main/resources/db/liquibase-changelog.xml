@@ -13,7 +13,7 @@
     <runningAs username="simpleworklist" />
   </preConditions>
 
-    <!--
+  <!--
   <changeSet author="thomaswoehlke" failOnError="false" dbms="postgresql"  id="1">
       <comment>initial data structure</comment>
   </changeSet>
