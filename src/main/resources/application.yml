@@ -11,7 +11,7 @@ spring:
   config:
     name: simpleworklist
   liquibase:
-    enabled: false
+    enabled: true
   devtools:
     livereload:
       enabled: ${SIMPLEWORKLIST_DEV_TESTING}
