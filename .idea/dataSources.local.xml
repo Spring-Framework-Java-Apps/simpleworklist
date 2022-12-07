@@ -2,25 +2,26 @@
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-223.7571.182">
     <data-source name="simpleworklist@localhost" uuid="a4579979-885b-41d4-b0b0-f3b5b3d5c6f2">
-      <database-info product="PostgreSQL" version="14.5 (Debian 14.5-1.pgdg110+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.5.0" dbms="POSTGRES" exact-version="14.5" exact-driver-version="42.5">
+      <database-info product="PostgreSQL" version="14.6 (Ubuntu 14.6-1.pgdg22.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.5.0" dbms="POSTGRES" exact-version="14.6" exact-driver-version="42.5">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
+      <auth-provider>pgpass</auth-provider>
       <user-name>simpleworklist</user-name>
       <schema-mapping>
         <introspection-scope>
           <node negative="1">
-            <node kind="database" qname="@">
+            <node kind="database">
+              <name qname="@" />
+              <name qname="simpleworklist" />
               <node kind="schema" qname="@" />
             </node>
-            <node kind="database">
-              <name qname="simpleworklist" />
-              <name qname="simpleworklist_branch_master" />
-              <name qname="simpleworklist_default" />
-              <name qname="simpleworklist_heroku" />
-              <name qname="simpleworklist_qa" />
-              <name qname="simpleworklist_testing" />
+            <node kind="database" qname="simpleworklistref">
+              <node kind="schema">
+                <name qname="@" />
+                <name qname="public" />
+              </node>
             </node>
           </node>
         </introspection-scope>

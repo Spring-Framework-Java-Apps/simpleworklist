@@ -6,6 +6,9 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/simpleworklist</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="database.postgres.introspect.system.schemas" value="true" />
+      </jdbc-additional-properties>
     </data-source>
   </component>
 </project>
