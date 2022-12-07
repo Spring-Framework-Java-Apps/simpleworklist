@@ -115,7 +115,6 @@
 
         <!-- Database Evolution -->
         <version.org.postgresql>42.5.1</version.org.postgresql>
-        <version.liquibase-maven-plugin>4.17.2</version.liquibase-maven-plugin>
         <liquibase.propertyFile>${project.basedir}/liquibase.properties</liquibase.propertyFile>
 
         <!-- UML -->
@@ -1051,11 +1050,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${version.maven-failsafe-plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.liquibase</groupId>
-                    <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>${version.liquibase-maven-plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
