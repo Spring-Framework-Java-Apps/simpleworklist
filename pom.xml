@@ -70,7 +70,7 @@
     </distributionManagement>
 
     <properties>
-        <version.java>11</version.java>
+        <version.java>17</version.java>
         <version.maven>3.6.3</version.maven>
         <maven.compiler.source>${version.java}</maven.compiler.source>
         <maven.compiler.target>${version.java}</maven.compiler.target>
