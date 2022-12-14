@@ -1101,7 +1101,7 @@
                                         <file>${project.basedir}/app.json</file>
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
-                                        <file>${project.basedir}/src/site/markdown/ABOUT.md</file>
+                                        <file>${project.basedir}/src/site/markdown/index.md</file>
                                         <file>${project.basedir}/src/site/markdown/CHANGELOG.md</file>
                                         <file>${project.basedir}/src/site/markdown/DEPLOYMENTS.md</file>
                                         <file>${project.basedir}/src/site/markdown/DEVELOPMENT.md</file>
