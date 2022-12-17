@@ -1616,11 +1616,11 @@
                         <artifactId>plantuml-maven-plugin</artifactId>
                         <version>${version.plantuml-maven-plugin}</version>
                         <configuration>
-                            <truncatePattern>src/main/*</truncatePattern>
+                            <truncatePattern>src/*</truncatePattern>
                             <sourceFiles>
                                 <directory>${basedir}</directory>
                                 <includes>
-                                    <include>src/main/plantuml/**/*.puml</include>
+                                    <include>src/plantuml/**/*.puml</include>
                                 </includes>
                             </sourceFiles>
                         </configuration>
