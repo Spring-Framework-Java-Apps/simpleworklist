@@ -7,7 +7,7 @@
 <head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=true)">
   <title th:text="'SimpleWorklist | ' + #{user.loginForm.h2}">Title</title>
 </head>
-<body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
+<body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent}, twtitle=~{::mytwtitle},scripts=~{})">
 
 <div th:fragment="mytwtitle">
   <div class="container-md">
