@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.6</version>
+        <version>2.7.7</version>
     </parent>
 
     <scm>
@@ -1510,6 +1510,23 @@
 
 
     <profiles>
+
+        <profile>
+            <id>run</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>true</skip.integration.tests>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}</finalName>
+                <defaultGoal>
+                    clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources install spring-boot:run
+                </defaultGoal>
+            </build>
+        </profile>
 
         <profile>
             <id>jar</id>
