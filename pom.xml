@@ -1251,8 +1251,9 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <linksource>true</linksource>
-                    <maxmemory>1024m</maxmemory>
                     <source>${version.java}</source>
+                    <failOnError>false</failOnError>
+                    <failOnWarnings>false</failOnWarnings>
                 </configuration>
             </plugin>
             <plugin>
@@ -1398,8 +1399,9 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <linksource>true</linksource>
-                    <maxmemory>1024m</maxmemory>
                     <source>${version.java}</source>
+                    <failOnError>false</failOnError>
+                    <failOnWarnings>false</failOnWarnings>
                 </configuration>
             </plugin>
             <plugin>
