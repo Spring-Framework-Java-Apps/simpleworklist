@@ -1517,13 +1517,30 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <skipTests>true</skipTests>
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>true</skip.integration.tests>
             </properties>
             <build>
                 <finalName>${project.artifactId}</finalName>
+                <defaultGoal>clean install spring-boot:run</defaultGoal>
+            </build>
+        </profile>
+
+        <profile>
+            <id>site</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <skipTests>false</skipTests>
+                <skip.unit.tests>false</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}</finalName>
                 <defaultGoal>
-                    clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources install spring-boot:run
+                    clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources install spring-boot:repackage site site:deploy
                 </defaultGoal>
             </build>
         </profile>
@@ -1534,12 +1551,15 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
+                <skipTests>true</skipTests>
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>true</skip.integration.tests>
             </properties>
             <build>
                 <finalName>${project.artifactId}</finalName>
-                <defaultGoal>clean dependency:purge-local-repository install spring-boot:repackage</defaultGoal>
+                <defaultGoal>
+                    clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources install spring-boot:repackage
+                </defaultGoal>
             </build>
         </profile>
 
@@ -1603,6 +1623,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
+                <skipTests>true</skipTests>
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>true</skip.integration.tests>
             </properties>
