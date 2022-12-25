@@ -81,9 +81,9 @@
         <version.thymeleaf-spring-data-dialect>3.5.0</version.thymeleaf-spring-data-dialect>
 
         <!-- Webjars -->
-        <webjars.jquery.version>3.6.1</webjars.jquery.version>
+        <webjars.jquery.version>3.6.3</webjars.jquery.version>
         <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
-        <webjars.bootstrap.version>5.2.2</webjars.bootstrap.version>
+        <webjars.bootstrap.version>5.2.3</webjars.bootstrap.version>
         <webjars.font-awesome.version>6.2.0</webjars.font-awesome.version>
         <opencsv.version>5.7.1</opencsv.version>
 
@@ -123,7 +123,7 @@
 
         <version.maven-invoker-plugin>3.3.0</version.maven-invoker-plugin>
         <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
-        <version.maven-dependency-plugin>3.3.0</version.maven-dependency-plugin>
+        <version.maven-dependency-plugin>3.4.0</version.maven-dependency-plugin>
         <version.maven-compiler-plugin>3.10.1</version.maven-compiler-plugin>
         <version.maven-install-plugin>3.0.1</version.maven-install-plugin>
         <version.maven-deploy-plugin>3.0.0</version.maven-deploy-plugin>
@@ -272,9 +272,8 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- webjars -->
             <dependency>
-                <groupId>org.webjars</groupId>
+                <groupId>org.webjars.npm</groupId>
                 <artifactId>jquery</artifactId>
                 <version>${webjars.jquery.version}</version>
             </dependency>
@@ -284,7 +283,7 @@
                 <version>${webjars.popper.js.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars</groupId>
+                <groupId>org.webjars.npm</groupId>
                 <artifactId>bootstrap</artifactId>
                 <version>${webjars.bootstrap.version}</version>
             </dependency>
@@ -641,7 +640,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.webjars</groupId>
+            <groupId>org.webjars.npm</groupId>
             <artifactId>jquery</artifactId>
         </dependency>
         <dependency>
@@ -649,7 +648,7 @@
             <artifactId>popper.js</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
+            <groupId>org.webjars.npm</groupId>
             <artifactId>bootstrap</artifactId>
         </dependency>
         <dependency>
