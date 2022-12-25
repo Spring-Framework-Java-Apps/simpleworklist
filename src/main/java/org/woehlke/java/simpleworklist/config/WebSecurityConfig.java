@@ -3,41 +3,23 @@ package org.woehlke.java.simpleworklist.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.SpringFactoriesLoader;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.DefaultLoginPageConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
-import org.springframework.web.accept.ContentNegotiationStrategy;
-import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 @Configuration
 @EnableAsync
@@ -51,6 +33,7 @@ import java.util.Map;
     SimpleworklistProperties.class
 })
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig /* extends WebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> */ {
 
     //private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -255,8 +238,9 @@ public class WebSecurityConfig /* extends WebSecurityConfigurerAdapter implement
 
     }
     */
+
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider d = new DaoAuthenticationProvider();
         d.setPasswordEncoder(encoder());
         d.setUserDetailsService(userDetailsService());
@@ -289,7 +273,7 @@ public class WebSecurityConfig /* extends WebSecurityConfigurerAdapter implement
             )
             .csrf()
             .and()
-            .logout((logout)->  logout
+            .logout((logout) ->  logout
                 .logoutUrl(simpleworklistProperties.getWebSecurity().getLogoutUrl())
                 .deleteCookies(simpleworklistProperties.getWebSecurity().getCookieNamesToClear())
                 .invalidateHttpSession(simpleworklistProperties.getWebSecurity().getInvalidateHttpSession())
