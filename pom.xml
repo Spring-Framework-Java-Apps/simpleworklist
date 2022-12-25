@@ -131,10 +131,10 @@
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
         <version.maven-surefire-plugin>3.0.0-M7</version.maven-surefire-plugin>
         <version.maven-failsafe-plugin>3.0.0-M7</version.maven-failsafe-plugin>
-        <version.maven-site-plugin>3.12.0</version.maven-site-plugin>
-        <version.maven-project-info-reports-plugin>3.3.0</version.maven-project-info-reports-plugin>
-        <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
-        <version.maven-checkstyle-plugin.checkstyle>10.4</version.maven-checkstyle-plugin.checkstyle>
+        <version.maven-site-plugin>3.12.1</version.maven-site-plugin>
+        <version.maven-project-info-reports-plugin>3.4.1</version.maven-project-info-reports-plugin>
+        <version.maven-checkstyle-plugin>3.2.0</version.maven-checkstyle-plugin>
+        <version.maven-checkstyle-plugin.checkstyle>10.5.0</version.maven-checkstyle-plugin.checkstyle>
         <version.maven-jxr-plugin>3.2.0</version.maven-jxr-plugin>
         <version.maven-pmd-plugin>3.17.0</version.maven-pmd-plugin>
         <version.maven-pmd-plugin.pmd>6.51.0</version.maven-pmd-plugin.pmd>
@@ -513,6 +513,12 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>com.beust</groupId>
+                <artifactId>jcommander</artifactId>
+                <version>1.82</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${version.maven-release-plugin}</version>
@@ -553,6 +559,22 @@
                 <type>maven-plugin</type>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${project.parent.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>1.33</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -578,6 +600,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -842,6 +874,17 @@
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctor-maven-plugin</artifactId>
             <type>maven-plugin</type>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.beust</groupId>
+                    <artifactId>jcommander</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
