@@ -42,7 +42,11 @@ public class TaskLifecycleController extends AbstractController {
     private final ContextService contextService;
 
     @Autowired
-    public TaskLifecycleController(TaskLifecycleService taskLifecycleService, BreadcrumbService breadcrumbService, ContextService contextService) {
+    public TaskLifecycleController(
+        TaskLifecycleService taskLifecycleService,
+        BreadcrumbService breadcrumbService,
+        ContextService contextService
+    ) {
       this.taskLifecycleService = taskLifecycleService;
       this.breadcrumbService = breadcrumbService;
       this.contextService = contextService;

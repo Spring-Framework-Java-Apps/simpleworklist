@@ -1,6 +1,7 @@
 package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,10 @@ public class UserPasswordRecoveryController {
     private final UserAccountPasswordRecoveryService userAccountPasswordRecoveryService;
 
     @Autowired
-    public UserPasswordRecoveryController(UserAccountService userAccountService, UserAccountPasswordRecoveryService userAccountPasswordRecoveryService) {
+    public UserPasswordRecoveryController(
+        UserAccountService userAccountService,
+        UserAccountPasswordRecoveryService userAccountPasswordRecoveryService
+    ) {
         this.userAccountService = userAccountService;
         this.userAccountPasswordRecoveryService = userAccountPasswordRecoveryService;
     }
@@ -40,6 +44,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the email-adress.
      */
+    @PreAuthorize("isAnonymous()")
     @RequestMapping(path="/resetPassword", method = RequestMethod.GET)
     public final String passwordForgottenForm(Model model) {
         UserAccountRegistrationForm userAccountRegistrationForm = new UserAccountRegistrationForm();
@@ -55,6 +60,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return info page if without errors or formular again displaying error messages.
      */
+    @PreAuthorize("isAnonymous()")
     @RequestMapping(path="/resetPassword", method = RequestMethod.POST)
     public final String passwordForgottenPost(
         @Valid UserAccountRegistrationForm userAccountRegistrationForm,
@@ -93,12 +99,14 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return a Formular for entering the new Password.
      */
+    @PreAuthorize("isAnonymous()")
     @RequestMapping(path = "/resetPassword/confirm/{confirmId}", method = RequestMethod.GET)
     public final String enterNewPasswordFormular(
         @PathVariable String confirmId,
         Model model
     ) {
-        UserAccountPasswordRecovery oUserAccountPasswordRecovery = userAccountPasswordRecoveryService.findByToken(confirmId);
+        UserAccountPasswordRecovery oUserAccountPasswordRecovery =
+            userAccountPasswordRecoveryService.findByToken(confirmId);
         if (oUserAccountPasswordRecovery != null) {
             userAccountPasswordRecoveryService.passwordRecoveryClickedInEmail(oUserAccountPasswordRecovery);
             UserAccount ua = userAccountService.findByUserEmail(oUserAccountPasswordRecovery.getEmail());
@@ -121,6 +129,7 @@ public class UserPasswordRecoveryController {
      * @param model
      * @return Info Page for success or back to formular with error messages.
      */
+    @PreAuthorize("isAnonymous()")
     @RequestMapping(path =  "/resetPassword/confirm/{confirmId}", method = RequestMethod.POST)
     public final String enterNewPasswordPost(
         @Valid UserAccountForm userAccountForm,

@@ -8,22 +8,14 @@
 
 ### Documentation
 * [spring-boot](https://spring.io/projects/spring-boot)
-* [spring-data-jpa](https://spring.io/projects/spring-data-jpa)
-* [spring-framework](https://spring.io/projects/spring-framework)
+* [spring-data-jpa](https://docs.spring.io/spring-data/jpa/docs/2.7.6/reference/html/)
+* [spring-framework](https://docs.spring.io/spring-framework/docs/5.3.23/reference/html/)
 * [spring-framework Data Access](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/data-access.html)
 * [spring-framework WebMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html)
-* [spring-boot reference](https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/html/)
-* [spring-boot appendix-application-properties](https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/html/appendix-application-properties.html#common-application-properties)
-* [spring-boot api](https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/api/)
-* [spring-data-jpa](https://docs.spring.io/spring-data/jpa/docs/2.2.5.RELEASE/reference/html/#reference)
-
-### Gradle Plugins
-* [org.springframework.boot](https://plugins.gradle.org/plugin/org.springframework.boot)
-* [org.springframework.cloud.contract](https://plugins.gradle.org/plugin/org.springframework.cloud.contract)
-* [io.spring.dependency-management](https://plugins.gradle.org/plugin/io.spring.dependency-management)
-* [org.asciidoctor.jvm.convert](https://plugins.gradle.org/plugin/org.asciidoctor.jvm.convert)
-* [com.avast.gradle.docker-compose](https://plugins.gradle.org/plugin/com.avast.gradle.docker-compose)
-* [org.liquibase.gradle](https://plugins.gradle.org/plugin/org.liquibase.gradle)
+* [spring-boot reference](https://docs.spring.io/spring-boot/docs/2.7.5/reference/html/)
+* [spring-boot appendix-application-properties](https://docs.spring.io/spring-boot/docs/2.7.5/reference/html/application-properties.html#appendix.application-properties)
+* [spring-boot api](https://docs.spring.io/spring-boot/docs/2.7.5/api/)
+* [spring-data-jpa](https://docs.spring.io/spring-data/jpa/docs/2.7.5/reference/html/)
 
 ### Github Repos
 * [spring-cloud-contract](https://github.com/spring-cloud/spring-cloud-contract)
@@ -42,14 +34,13 @@
 ### UUID and Optimistic Locking
 * UUID: TODO
 
-### Database Schema Evolution with Spring Boot JPA
+### Database Schema Evolution with Spring Boot JPA - liquibase
 * TODO
 * org.flywaydb:flyway
-* org.liquibase:liquibase https://www.liquibase.org/documentation/maven/index.html
+* [org.liquibase:liquibase](https://www.liquibase.org/documentation/maven/index.html)
  
 
 ## Frontend with webjars
-
 ### updating webjar Versions:
-* change Version in build.gradle "ext" (Line 40)
+* change Version in pom.xml section properties (Line 82)
 * change Version in src/main/resources/templates/layout/page.html Section head.tw-head and div.tw-footer (Lines 16, 98) 

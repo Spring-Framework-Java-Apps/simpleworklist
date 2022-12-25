@@ -11,7 +11,7 @@ spring:
   config:
     name: simpleworklist
   liquibase:
-    enabled: false
+    enabled: true
   devtools:
     livereload:
       enabled: ${SIMPLEWORKLIST_DEV_TESTING}
@@ -33,7 +33,7 @@ spring:
     generate-ddl: true
     database-platform: POSTGRESQL
     hibernate:
-        #ddl-auto: create-drop update
+        #ddl-auto: create-drop update validate
       ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
@@ -112,6 +112,7 @@ org:
             - "/pages/information"
             - "/pages/information*"
             - "/pages/information/**"
+            - "/pages/**"
             - "/user/login*"
             - "/user/register*"
             - "/user/register/**"
@@ -151,7 +152,8 @@ spring:
     log-dir: transaction-logs/tx-logs-simpleworklist
   jpa:
     hibernate:
-      ddl-auto: update
+      #ddl-auto: create-drop update validate
+      ddl-auto: validate
 server:
   port: ${PORT}
   compression:

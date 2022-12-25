@@ -68,4 +68,7 @@ public interface ProjectControllerService {
 
     Project moveProjectToAnotherProject(Project thisProject, Project targetProject);
     Project moveProjectToAnotherContext(Project thisProject, Context newContext);
+
+    List<Project> findAllProjectsByContext(Context context);
+    List<Project> findRootProjectsByContext(Context context);
 }

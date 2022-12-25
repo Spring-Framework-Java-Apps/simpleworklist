@@ -18,6 +18,8 @@ public interface TaskMoveService {
 
   Task moveTaskToWaiting(Task task);
 
+  Task moveTaskToScheduled(Task task);
+
   Task moveTaskToSomeday(Task task);
 
   Task moveTaskToFocus(Task task);

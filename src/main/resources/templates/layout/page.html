@@ -13,29 +13,29 @@
 	<meta name="author" content="Thomas Woehlke">
 	<meta name="description" content="Your Todo-List for Getting Things Done.">
 	<title th:replace="${headtitle}">SimpleWorklist</title>
-	<link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet"/>
-	<link th:href="@{/webjars/font-awesome/6.1.2/css/all.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/webjars/font-awesome/6.2.0/css/all.min.css}" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Lato|Varela+Round" rel="stylesheet">
 	<link th:href="@{/css/main.css}" rel="stylesheet"/>
-  <link rel="apple-touch-icon" sizes="57x57" th:href="@{/img/favicon/apple-icon-57x57.png}">
-  <link rel="apple-touch-icon" sizes="60x60" th:href="@{/img/favicon/apple-icon-60x60.png}">
-  <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/favicon/apple-icon-72x72.png}">
-  <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/favicon/apple-icon-76x76.png}">
-  <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/favicon/apple-icon-114x114.png}">
-  <link rel="apple-touch-icon" sizes="120x120" th:href="@{/img/favicon/apple-icon-120x120.png}">
-  <link rel="apple-touch-icon" sizes="144x144" th:href="@{/img/favicon/apple-icon-144x144.png}">
-  <link rel="apple-touch-icon" sizes="152x152" th:href="@{/img/favicon/apple-icon-152x152.png}">
-  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/favicon/apple-icon-180x180.png}">
-  <link rel="icon" type="image/png" sizes="192x192" th:href="@{/img/favicon/android-icon-192x192.png}">
-  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon/favicon-32x32.png}">
-  <link rel="icon" type="image/png" sizes="96x96" th:href="@{/img/favicon/favicon-96x96.png}">
-  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon/favicon-16x16.png}">
-  <link rel="manifest" th:href="@{/img/favicon/manifest.json}">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  <!--/* Per-page placeholder for additional links */-->
-  <th:block th:replace="${links}" />
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/img/favicon/apple-icon-57x57.png}">
+    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/img/favicon/apple-icon-60x60.png}">
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/img/favicon/apple-icon-72x72.png}">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/favicon/apple-icon-76x76.png}">
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/img/favicon/apple-icon-114x114.png}">
+    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/img/favicon/apple-icon-120x120.png}">
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/img/favicon/apple-icon-144x144.png}">
+    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/img/favicon/apple-icon-152x152.png}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/favicon/apple-icon-180x180.png}">
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/img/favicon/android-icon-192x192.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/img/favicon/favicon-96x96.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon/favicon-16x16.png}">
+    <link rel="manifest" th:href="@{/img/favicon/manifest.json}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--/* Per-page placeholder for additional links */-->
+<th:block th:replace="${links}" />
 </head>
 <body th:fragment="tw-page-body(twcontent,twtitle,scripts)">
 
@@ -70,18 +70,18 @@
 			</div>
 		</div>
 		<div class="container" sec:authorize="isAuthenticated()">
-      <div class="row" th:if="${dataPage != null}">
-				<div class="col-md-8">
-					<th:block th:replace="${twcontent}" />
-				</div>
-				<div class="col-md-4">
-					<div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
-				</div>
-      </div>
-      <div class="row" th:if="${dataPage == null}">
-        <div class="col">
-          <th:block th:replace="${twcontent}" />
-        </div>
+            <div class="row" th:if="${dataPage != null}">
+                <div class="col-md-8">
+                    <th:block th:replace="${twcontent}" />
+                </div>
+                <div class="col-md-4">
+                    <div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
+                </div>
+            </div>
+            <div class="row" th:if="${dataPage == null}">
+            <div class="col">
+                <th:block th:replace="${twcontent}" />
+            </div>
 		</div>
     </div>
 	</section>
@@ -92,8 +92,8 @@
 			<div class="container">
         <div class="col nav-link"><a th:href="@{/pages/information}" class="nav-link">© 2022 Thomas Wöhlke</a></div>
         <div class="col nav-link">
-          <a href="https://twitter.com/GustaveSchiller" class="nav-link text-center">
-            <i class="fa-brands fa-twitter"></i> GustaveSchiller
+          <a href="https://twitter.com/ThomasWoehlke" class="nav-link text-center">
+            <i class="fa-brands fa-twitter"></i> ThomasWoehlke
           </a>
         </div>
         <div class="col nav-link">
@@ -105,11 +105,11 @@
 		</nav>
 	</footer>
 
-	  <script th:src="@{/js/google-analytics.js}"></script>
+	<script th:src="@{/js/google-analytics.js}"></script>
     <script th:src="@{/webjars/jquery/3.6.0/jquery.js}"></script>
     <script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/webjars/font-awesome/6.1.2/js/all.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.2.2/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/font-awesome/6.2.0/js/all.js}"></script>
     <script th:src="@{/js/application.js}"></script>
     <script th:inline="javascript">
         ClassicEditor
@@ -159,7 +159,14 @@
 			window.location.replace(myUrl);
 		}
 
-		function drop2someday(ev) {
+        function drop2scheduled(ev) {
+            ev.preventDefault();
+            var taskId = ev.dataTransfer.getData("task").split("_")[1];
+            var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/scheduled';
+            window.location.replace(myUrl);
+        }
+
+        function drop2someday(ev) {
 			ev.preventDefault();
 			var taskId = ev.dataTransfer.getData("task").split("_")[1];
 			var myUrl = '[(@{/taskstate/task/})]'+taskId+'/move/to/taskstate/someday';

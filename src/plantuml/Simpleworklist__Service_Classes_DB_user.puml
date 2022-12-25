@@ -1,0 +1,133 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+left to right direction
+'top to bottom direction
+
+scale 1200 width
+
+package user {
+
+  entity UserAccountChatMessage {
+     - String messageText
+     - Boolean readByReceiver
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccount {
+      - String userEmail
+      - String userPassword
+      - String userFullname
+      - Language defaultLanguage
+      - Date lastLoginTimestamp
+      - Boolean accountNonExpired
+      - Boolean accountNonLocked
+      - Boolean credentialsNonExpired
+      - Boolean enabled
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccountPassword {
+      - String userPassword
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccountPasswordRecovery {
+      - String email
+      - String token
+      - Integer numberOfRetries
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  entity UserAccountRegistration {
+      - String email
+      - String token
+      - Integer numberOfRetries
+      list()
+      search()
+      addNew()
+      edit()
+      delete()
+  }
+
+  class UserAccountRepository {
+        UserAccount findByUserEmailAndUserPassword(String userEmail, String userPassword)
+        UserAccount findByUserEmail(String userEmail)
+    }
+    class UserAccountService {
+        boolean isEmailAvailable(String email)
+        void createUser(UserAccountForm userAccount)
+        UserAccount saveAndFlush(UserAccount u)
+        UserAccount findByUserEmail(String userEmail)
+        Page<UserAccount> findAll(Pageable request)
+        void changeUsersPassword(UserAccountForm userAccount)
+        UserAccount findById(long userId)
+        Map<Long,Integer> getNewIncomingMessagesForEachOtherUser(UserAccount receiver)
+    }
+    UserAccountService o--> UserAccountRepository: userAccountRepository
+    UserAccountRepository --> UserAccount
+
+    class UserAccountPasswordService{
+    }
+    class UserAccountPasswordRepository{
+    }
+    UserAccountPasswordService o--> UserAccountPasswordRepository: userAccountPasswordRepository
+    UserAccountPasswordRepository --> UserAccountPassword
+
+    class ChatMessageService {
+      int getNumberOfNewIncomingMessagesForUser(UserAccount user)
+      Page<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(UserAccount sender,UserAccount receiver, Pageable request )
+      void saveAll(List<UserAccountChatMessage> user2UserMessageList)
+      UserAccountChatMessage saveAndFlush(UserAccountChatMessage m)
+      List<UserAccountChatMessage> findByReceiverAndReadByReceiver(UserAccount receiver, boolean readByReceiver)
+    }
+    class ChatMessageRepository {
+        Page<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser,UserAccount otherUser, Pageable request )
+        List<UserAccountChatMessage> findAllMessagesBetweenCurrentAndOtherUser(UserAccount thisUser,UserAccount otherUser)
+        List<UserAccountChatMessage> findByReceiverAndReadByReceiver(UserAccount receiver, boolean readByReceiver)
+        List<UserAccountChatMessage> findBySenderAndReceiverAndReadByReceiver(UserAccount sender, UserAccount receiver, boolean readByReceiver)
+    }
+    ChatMessageService o--> ChatMessageRepository: chatMessageRepository
+    ChatMessageRepository --> UserAccountChatMessage
+
+    class UserAccountPasswordRecoveryService {}
+    class UserAccountPasswordRecoveryRepository {}
+    UserAccountPasswordRecoveryService o--> UserAccountPasswordRecoveryRepository: userAccountPasswordRecovery
+    UserAccountPasswordRecoveryRepository --> UserAccountPasswordRecovery
+
+    class UserAccountRegistrationService {
+        UserAccountRegistration findByToken(String confirmId)
+        boolean registrationIsRetryAndMaximumNumberOfRetries(String email)
+        void registrationCheckIfResponseIsInTime(String email)
+        void registrationSendEmailTo(String email)
+        void registrationSentEmail(UserAccountRegistration o)
+        void registrationClickedInEmail(UserAccountRegistration o)
+        void registrationUserCreated(UserAccountRegistration o)
+    }
+    class UserAccountRegistrationRepository {
+        UserAccountRegistration findByToken(String token)
+        UserAccountRegistration findByEmail(String email)
+    }
+    UserAccountRegistrationService o--> UserAccountRegistrationRepository: userAccountRegistrationRepository
+    UserAccountRegistrationRepository --> UserAccountRegistration
+
+    class TokenGeneratorService {}
+}
+
+@enduml

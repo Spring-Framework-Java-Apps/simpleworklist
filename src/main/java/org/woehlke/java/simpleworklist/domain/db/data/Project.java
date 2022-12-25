@@ -1,5 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.data;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,10 +15,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static java.lang.Boolean.FALSE;
 
@@ -90,6 +88,22 @@ public class Project extends AuditModel implements Serializable, ComparableById<
     @NotNull
     @Column(name = "collapsed", nullable = false)
     private Boolean collapsed = FALSE;
+
+    public static Project getRootProject(Context projectsContext) {
+        List<Project> children = new ArrayList<>();
+        Date now = new Date();
+        Project thisProject = new Project();
+        thisProject.setId(0L);
+        thisProject.setContext(projectsContext);
+        thisProject.setName("");
+        thisProject.setDescription("");
+        thisProject.setCollapsed(FALSE);
+        thisProject.setChildren(children);
+        thisProject.setUuid(UUID.randomUUID());
+        thisProject.setRowCreatedAt(now);
+        thisProject.setRowUpdatedAt(now);
+        return thisProject;
+    }
 
     @Transient
     public String getUrlRoot() {

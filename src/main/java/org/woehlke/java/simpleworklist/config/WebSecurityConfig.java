@@ -5,87 +5,48 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
 
+import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
 
 @Configuration
 @EnableAsync
 @EnableJpaAuditing
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@EnableWebSecurity
 @ImportAutoConfiguration({
     WebMvcConfig.class
 })
 @EnableConfigurationProperties({
     SimpleworklistProperties.class
 })
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> {
+@EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true)
+public class WebSecurityConfig {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final ApplicationUserDetailsService applicationUserDetailsService;
     private final SimpleworklistProperties simpleworklistProperties;
 
     @Autowired
     public WebSecurityConfig(
-        AuthenticationManagerBuilder auth,
-        AuthenticationSuccessHandler authenticationSuccessHandler,
         ApplicationUserDetailsService applicationUserDetailsService,
-        SimpleworklistProperties simpleworklistProperties) {
-        this.authenticationManagerBuilder = auth;
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        SimpleworklistProperties simpleworklistProperties
+    ) {
         this.applicationUserDetailsService = applicationUserDetailsService;
         this.simpleworklistProperties = simpleworklistProperties;
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .headers()
-            .disable()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.GET,simpleworklistProperties.getWebSecurity().getAntPatternsPublic())
-            .permitAll()
-            .anyRequest()
-            .fullyAuthenticated()
-            .and()
-            .csrf()
-            .and()
-            .formLogin()
-            .loginPage(simpleworklistProperties.getWebSecurity().getLoginPage())
-            .usernameParameter(simpleworklistProperties.getWebSecurity().getUsernameParameter())
-            .passwordParameter(simpleworklistProperties.getWebSecurity().getPasswordParameter())
-            .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
-            .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
-            .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
-            //.successHandler(authenticationSuccessHandler)
-            .permitAll()
-            .and()
-            .csrf()
-            .and()
-            .logout()
-            .logoutUrl(simpleworklistProperties.getWebSecurity().getLogoutUrl())
-            .deleteCookies(simpleworklistProperties.getWebSecurity().getCookieNamesToClear())
-            .invalidateHttpSession(simpleworklistProperties.getWebSecurity().getInvalidateHttpSession())
-            .permitAll();
     }
 
     @Bean
@@ -104,17 +65,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     }
 
     @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authenticationManagerBuilder
-            .userDetailsService(userDetailsService())
-            .passwordEncoder(encoder()).and().build();
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider d = new DaoAuthenticationProvider();
+        d.setPasswordEncoder(encoder());
+        d.setUserDetailsService(userDetailsService());
+        return d;
     }
 
     @Bean
-    public UsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {
-        UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
-        filter.setAuthenticationManager(authenticationManager());
-        filter.setFilterProcessesUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl());
-        return filter;
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .headers((headers) -> headers.disable() )
+            .authorizeRequests((authorizeRequests) -> authorizeRequests
+                .antMatchers(
+                    simpleworklistProperties.getWebSecurity().getAntPatternsPublic()
+                )
+                .permitAll()
+                .anyRequest()
+                .fullyAuthenticated()
+            )
+            .csrf()
+            .and()
+            .formLogin((formLogin) -> formLogin
+                .loginPage(simpleworklistProperties.getWebSecurity().getLoginPage())
+                .usernameParameter(simpleworklistProperties.getWebSecurity().getUsernameParameter())
+                .passwordParameter(simpleworklistProperties.getWebSecurity().getPasswordParameter())
+                .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
+                .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
+                .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
+                //.successHandler(authenticationSuccessHandler)
+                .permitAll()
+            )
+            .csrf()
+            .and()
+            .logout((logout) ->  logout
+                .logoutUrl(simpleworklistProperties.getWebSecurity().getLogoutUrl())
+                .deleteCookies(simpleworklistProperties.getWebSecurity().getCookieNamesToClear())
+                .invalidateHttpSession(simpleworklistProperties.getWebSecurity().getInvalidateHttpSession())
+                .permitAll()
+            );
+        return http.build();
     }
+
 }

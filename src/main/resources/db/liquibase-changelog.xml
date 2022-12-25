@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <preConditions>
+    <dbms type="postgresql" />
+    <runningAs username="simpleworklist" />
+  </preConditions>
+
+    <changeSet author="thomaswoehlke" failOnError="false" dbms="postgresql"  id="1">
+        <createTable tableName="spring_session">
+            <column name="primary_id" type="CHAR(36)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="spring_session_pk"/>
+            </column>
+            <column name="session_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_access_time" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_inactive_interval" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_time" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="principal_name" type="VARCHAR(100)"/>
+        </createTable>
+        <createTable tableName="user_account_chat_message">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="user_account_chat_message_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message_text" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="read_by_receiver" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_account_id_receiver" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_account_id_sender" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+        </createTable>
+        <createTable tableName="data_context">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="data_context_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name_de" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name_en" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_account_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="data_project">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="data_project_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_context_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id" type="BIGINT"/>
+            <column name="collapsed" type="BOOLEAN"/>
+        </createTable>
+        <createTable tableName="data_task">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="data_task_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="date"/>
+            <column name="focus" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_task_state" type="VARCHAR(255)"/>
+            <column name="order_id_project" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id_task_state" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_energy" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_state" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_time" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="data_context_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_project_last_id" type="BIGINT"/>
+            <column name="data_project_id" type="BIGINT"/>
+        </createTable>
+        <createTable tableName="search_request">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="search_request_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="searchterm" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_context_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="search_result">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="search_result_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="search_request_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_account">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_account_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_non_expired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_non_locked" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_credentials_non_expired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="default_language" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login_timestamp" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_fullname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="default_data_context_id" type="BIGINT"/>
+        </createTable>
+        <createTable tableName="user_account_password">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_account_password_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_account_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_account_password_recovery">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="user_account_password_recovery_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="double_optin_status" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number_of_retries" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_account_registration">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="user_account_registration_pkey"/>
+            </column>
+            <column name="row_created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="row_updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="double_optin_status" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number_of_retries" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex indexName="spring_session_ix1" tableName="spring_session" unique="true">
+            <column name="session_id"/>
+        </createIndex>
+        <createIndex indexName="spring_session_ix2" tableName="spring_session">
+            <column name="expiry_time"/>
+        </createIndex>
+        <createIndex indexName="spring_session_ix3" tableName="spring_session">
+            <column name="principal_name"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_chat_message_uuid"
+                     tableName="user_account_chat_message">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_chat_message_row_created_at"
+                     tableName="user_account_chat_message">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="row_created_at, user_account_id_sender, user_account_id_receiver"
+                             constraintName="ux_user_account_chat_message"
+                             tableName="user_account_chat_message"/>
+        <createIndex indexName="ix_context_uuid" tableName="data_context">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_context_row_created_at" tableName="data_context">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="uuid, user_account_id, name_de, name_en"
+                             constraintName="ux_context"
+                             tableName="data_context"/>
+        <createIndex indexName="ix_project_uuid" tableName="data_project">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_project_row_created_at" tableName="data_project">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="uuid, parent_id, data_context_id" constraintName="ux_project"
+                             tableName="data_project"/>
+        <createIndex indexName="ix_task_uuid" tableName="data_task">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_task_row_created_at" tableName="data_task">
+            <column name="row_created_at"/>
+        </createIndex>
+        <createIndex indexName="ix_task_title" tableName="data_task">
+            <column name="title"/>
+        </createIndex>
+        <createIndex indexName="ix_task_order_id_task_state" tableName="data_task">
+            <column name="order_id_task_state"/>
+        </createIndex>
+        <createIndex indexName="ix_task_order_id_project" tableName="data_task">
+            <column name="order_id_project"/>
+            <column name="data_project_id"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="uuid, data_context_id" constraintName="ux_task"
+                             tableName="data_task"/>
+        <createIndex indexName="ix_search_request_uuid" tableName="search_request">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_search_request_row_created_at" tableName="search_request">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="data_context_id, searchterm" constraintName="ux_search_request"
+                             tableName="search_request"/>
+        <createIndex indexName="ix_search_result_uuid" tableName="search_result">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_search_result_row_created_at" tableName="search_result">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="search_request_id" constraintName="ux_search_result"
+                             tableName="search_result"/>
+        <createIndex indexName="ix_user_account_uuid" tableName="user_account">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_row_created_at" tableName="user_account">
+            <column name="row_created_at"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_user_fullname" tableName="user_account">
+            <column name="user_fullname"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_last_login_timestamp" tableName="user_account">
+            <column name="last_login_timestamp"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="user_email" constraintName="ux_user_account"
+                             tableName="user_account"/>
+        <createIndex indexName="ix_user_account_password_uuid" tableName="user_account_password">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_password_row_created_at"
+                     tableName="user_account_password">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="user_account_id" constraintName="uk_dt6bpdg55c49jhq9cfq7a34wy"
+                             tableName="user_account_password"/>
+        <addUniqueConstraint columnNames="user_account_id, user_password"
+                             constraintName="ux_user_account_password"
+                             tableName="user_account_password"/>
+        <createIndex indexName="ix_user_account_password_recovery_uuid"
+                     tableName="user_account_password_recovery">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_password_recovery_row_created_at"
+                     tableName="user_account_password_recovery">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="email" constraintName="ux_user_account_password_recovery"
+                             tableName="user_account_password_recovery"/>
+        <addUniqueConstraint columnNames="token" constraintName="ux_user_account_password_recovery_token"
+                             tableName="user_account_password_recovery"/>
+        <createIndex indexName="ix_user_account_registration_uuid"
+                     tableName="user_account_registration">
+            <column name="uuid"/>
+        </createIndex>
+        <createIndex indexName="ix_user_account_registration_row_created_at"
+                     tableName="user_account_registration">
+            <column name="row_created_at"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="email" constraintName="ux_user_account_registration"
+                             tableName="user_account_registration"/>
+        <addUniqueConstraint columnNames="token" constraintName="ux_user_account_registration_token"
+                             tableName="user_account_registration"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="data_context_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="data_project_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="data_task_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="search_request_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="search_result_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="user_account_chat_message_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="user_account_password_recovery_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="user_account_password_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="user_account_registration_sequence"
+                        startValue="1000"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50"
+                        maxValue="9223372036854775807"
+                        minValue="1"
+                        sequenceName="user_account_sequence"
+                        startValue="1000"/>
+        <createTable tableName="search_result2project">
+            <column name="searchresult_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resultlistproject_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="search_result_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="result_list_project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="search_result2task">
+            <column name="searchresult_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resultlisttasks_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="search_result_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="result_list_tasks_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="spring_session_attributes">
+            <column name="session_primary_id" type="CHAR(36)">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="spring_session_attributes_pk"/>
+            </column>
+            <column name="attribute_name" type="VARCHAR(200)">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="spring_session_attributes_pk"/>
+            </column>
+            <column name="attribute_bytes" type="BYTEA">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="resultlistproject_id" baseTableName="search_result2project"
+                                 constraintName="fk1pghk1r09kfk1grs3wmaecyqx"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_project"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="data_project_id" baseTableName="data_task"
+                                 constraintName="fk3dxuijxe9o09le469kmmdnkq9"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_project"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="result_list_tasks_id" baseTableName="search_result2task"
+                                 constraintName="fk5cgcskny2bppgkekjia66rub4"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_task"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="searchresult_id" baseTableName="search_result2task"
+                                 constraintName="fk6d685ytfudryde37x9gewxjwx"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="search_result"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="data_context_id" baseTableName="data_project"
+                                 constraintName="fk6dfcvpsflg918l9v04swtri3w"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_context"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="search_result_id" baseTableName="search_result2task"
+                                 constraintName="fk83y9emo5tubfac9w76n77w1vu"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="search_result"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="data_project"
+                                 constraintName="fk98lve3qk4605kan4qxft3ojat"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_project"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="search_result_id" baseTableName="search_result2project"
+                                 constraintName="fkaabvdl90fsql7nngynj417ih5"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="search_result"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="data_project_last_id" baseTableName="data_task"
+                                 constraintName="fkfneo56ta5l0lpjww4epnrb0vl"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_project"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="data_context_id" baseTableName="data_task"
+                                 constraintName="fkg3btoonnt4017fwthj6yiv2p"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_context"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="default_data_context_id" baseTableName="user_account"
+                                 constraintName="fkh65bimya9q5awi1wnmma0oq41"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_context"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="data_context_id" baseTableName="search_request"
+                                 constraintName="fkhyb6nky19v45w27nnonalum9c"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_context"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_account_id" baseTableName="user_account_password"
+                                 constraintName="fkjsymfqw8etucl8xvvydji8bo3"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_account_id" baseTableName="data_context"
+                                 constraintName="fkl84w6kypo39p4f6tiwpr2kbud"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="searchresult_id" baseTableName="search_result2project"
+                                 constraintName="fknbee86tddpa4dh25sxavueee8"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="search_result"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_account_id_receiver"
+                                 baseTableName="user_account_chat_message"
+                                 constraintName="fknmmqt08yp80tmx6qb1f0glg94"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_account_id_sender"
+                                 baseTableName="user_account_chat_message"
+                                 constraintName="fkorqlcfplplpqnrugidiygu6yx"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_account"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="resultlisttasks_id" baseTableName="search_result2task"
+                                 constraintName="fkqw59556q70tnp39ukwugfjpkv"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_task"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="result_list_project_id" baseTableName="search_result2project"
+                                 constraintName="fkrcpsnabxixmxvk1nbbykin03f"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_project"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="search_request_id" baseTableName="search_result"
+                                 constraintName="fkt6g19cci1c2qmwqahpkhsmxqu"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="search_request"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="session_primary_id" baseTableName="spring_session_attributes"
+                                 constraintName="spring_session_attributes_fk"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="CASCADE"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="primary_id"
+                                 referencedTableName="spring_session"
+                                 validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

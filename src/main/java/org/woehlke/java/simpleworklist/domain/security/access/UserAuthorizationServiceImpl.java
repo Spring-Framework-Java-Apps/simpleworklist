@@ -2,7 +2,8 @@ package org.woehlke.java.simpleworklist.domain.security.access;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,16 +22,18 @@ import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountReposit
 public class UserAuthorizationServiceImpl implements UserAuthorizationService {
 
     private final UserAccountRepository userAccountRepository;
-    private final AuthenticationManager authenticationManager;
+    //private final AuthenticationManager authenticationManager;
+    private final AuthenticationProvider authenticationProvider;
     private final PasswordEncoder encoder;
 
     @Autowired
     public UserAuthorizationServiceImpl(
         UserAccountRepository userAccountRepository,
-        AuthenticationManager authenticationManager
-    ) {
+        //AuthenticationManager authenticationManager
+        AuthenticationProvider authenticationProvider) {
         this.userAccountRepository = userAccountRepository;
-        this.authenticationManager = authenticationManager;
+        this.authenticationProvider = authenticationProvider;
+        //this.authenticationManager = authenticationManager;
         int strength = 10;
         this.encoder = new BCryptPasswordEncoder(strength);
     }
@@ -46,7 +49,7 @@ public class UserAuthorizationServiceImpl implements UserAuthorizationService {
             user.getUserEmail(),
             userAccountFormBean.getOldUserPassword()
         );
-        Authentication authenticationResult = authenticationManager.authenticate(token);
+        Authentication authenticationResult = authenticationProvider.authenticate(token);
         if(authenticationResult.isAuthenticated()){
             UserAccount ua = userAccountRepository.findByUserEmail(user.getUserEmail());
             String pwEncoded = this.encoder.encode(userAccountFormBean.getUserPassword());
@@ -64,7 +67,7 @@ public class UserAuthorizationServiceImpl implements UserAuthorizationService {
             userEmail,
             oldUserPassword
         );
-        Authentication authenticationResult = authenticationManager.authenticate(token);
+        Authentication authenticationResult = authenticationProvider.authenticate(token);
         String oldPwEncoded = this.encoder.encode(oldUserPassword);
         log.info(userEmail+", "+oldPwEncoded);
         return authenticationResult.isAuthenticated();

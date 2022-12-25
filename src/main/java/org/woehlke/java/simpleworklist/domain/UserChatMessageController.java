@@ -41,7 +41,10 @@ public class UserChatMessageController extends AbstractController {
   private final BreadcrumbService breadcrumbService;
 
   @Autowired
-  public UserChatMessageController(UserChatMessageControllerService userChatMessageControllerService, BreadcrumbService breadcrumbService) {
+  public UserChatMessageController(
+      UserChatMessageControllerService userChatMessageControllerService,
+      BreadcrumbService breadcrumbService
+  ) {
     this.userChatMessageControllerService = userChatMessageControllerService;
     this.breadcrumbService = breadcrumbService;
   }
@@ -69,9 +72,8 @@ public class UserChatMessageController extends AbstractController {
     log.info(chatMessageForm.toString());
     log.info("-----------------------------------------------------------------------------------------------");
     log.info("Page<UserAccountChatMessage> user2UserMessagePage");
-    Page<UserAccountChatMessage> user2UserMessagePage = userChatMessageControllerService.readAllMessagesBetweenCurrentAndOtherUser(
-      thisUser, otherUser, request
-    );
+    Page<UserAccountChatMessage> user2UserMessagePage =
+        userChatMessageControllerService.readAllMessagesBetweenCurrentAndOtherUser(thisUser, otherUser, request);
     for (UserAccountChatMessage o : user2UserMessagePage) {
       log.info(o.toString());
     }
@@ -112,7 +114,8 @@ public class UserChatMessageController extends AbstractController {
       for (ObjectError objectError : result.getAllErrors()) {
         log.info("result.hasErrors: " + objectError.toString());
       }
-      Page<UserAccountChatMessage> user2UserMessagePage = userChatMessageControllerService.readAllMessagesBetweenCurrentAndOtherUser(thisUser, otherUser, request);
+      Page<UserAccountChatMessage> user2UserMessagePage =
+          userChatMessageControllerService.readAllMessagesBetweenCurrentAndOtherUser(thisUser, otherUser, request);
       model.addAttribute("otherUser", otherUser);
       model.addAttribute("user2UserMessagePage", user2UserMessagePage);
       model.addAttribute("userSession", userSession);

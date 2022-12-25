@@ -305,33 +305,24 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
         this.project = newProject;
     }
 
-    //TODO: delete Due Date
     public void moveToInbox(){
         pushTaskstate(TaskState.INBOX);
     }
 
-    //TODO: Due Date = Date of Today
-    public void moveToToday(){
-        pushTaskstate(TaskState.TODAY);
-        this.dueDate = new Date();
-    }
+    public void moveToToday(){ pushTaskstate(TaskState.TODAY); }
 
-    //TODO: delete Due Date
     public void moveToNext(){
         pushTaskstate(TaskState.NEXT);
     }
 
-    //TODO: delete Due Date
     public void moveToWaiting(){
         pushTaskstate(TaskState.WAITING);
     }
 
-    //TODO: Due Date = Date of Tomorrow
     public void moveToScheduled(){
         pushTaskstate(TaskState.SCHEDULED);
     }
 
-    //TODO: delete Due Date
     public void moveToSomeday(){
         pushTaskstate(TaskState.SOMEDAY);
     }

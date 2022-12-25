@@ -88,25 +88,30 @@
 * fixed #390 refactor integration tests: One Test class for each Controller Class
 * fixed #391 refactor integration tests: One Test class for each Service Class in package meso
 
-
 ## 2.4.10-SNAPSHOT
-* #389 apply Database Schema Evolution for: 386 make Project Navigation collapsible
+*
 
 ## 2.4.11-SNAPSHOT
-* #386 make Project Navigation collapsible
+* fixed #380 add User Use Cases to UML Documentation
+* fixed #393 UML Documentation: Service Classes DB
+* fixed #394 UML Documentation: Service Classes Meso
 
 ## 2.4.12-SNAPSHOT
-* #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
+* fixed #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
+*
 
 ## 2.4.13-SNAPSHOT
 * #377 add List of URL (Patterns) to Documentation
-* #380 add User Use Cases to UML Documentation
-* #393 UML Documentation: Service Classes DB ( TODO )
-* #394 UML Documentation: Service Classes Meso ( TODO )
+* #392 refactor integration tests: add Unit Tests for Beans and Entities
+*
 
 ## 2.4.14-SNAPSHOT
-* #392 refactor integration tests: add Unit Tests for Beans and Entities
+* #386 make Project Navigation collapsible
+* #389 apply Database Schema Evolution for: 386 make Project Navigation collapsible
+*
 
 ## 2.4.15-SNAPSHOT
 * #378 Add Search Index and search functionality
-* 
+
+## 2.4.16-SNAPSHOT
+*

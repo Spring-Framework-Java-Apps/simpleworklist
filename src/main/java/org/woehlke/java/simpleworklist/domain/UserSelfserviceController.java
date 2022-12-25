@@ -49,7 +49,12 @@ public class UserSelfserviceController extends AbstractController {
     private final ContextService contextService;
 
     @Autowired
-    public UserSelfserviceController(UserAuthorizationService userAuthorizationService, BreadcrumbService breadcrumbService, UserAccountService userAccountService, ContextService contextService) {
+    public UserSelfserviceController(
+        UserAuthorizationService userAuthorizationService,
+        BreadcrumbService breadcrumbService,
+        UserAccountService userAccountService,
+        ContextService contextService
+    ) {
         this.userAuthorizationService = userAuthorizationService;
         this.breadcrumbService = breadcrumbService;
         this.userAccountService = userAccountService;
@@ -183,7 +188,8 @@ public class UserSelfserviceController extends AbstractController {
                 return "user/selfservice/password";
             }
             if(!userAuthorizationService.confirmUserByLoginAndPassword(
-                user.getUserEmail(), userChangePasswordForm.getOldUserPassword())
+                user.getUserEmail(),
+                userChangePasswordForm.getOldUserPassword())
             ){
                 log.info("old Password is wrong");
                 String objectName = "userChangePasswordForm";

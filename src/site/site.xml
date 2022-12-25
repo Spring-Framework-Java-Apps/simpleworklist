@@ -8,29 +8,30 @@
     <bannerLeft>
         <name>SimpleWorklist</name>
         <src>/img/phasenraum_logo.gif</src>
-        <href>https://woehlke.org/p/simpleworklist</href>
+        <href>https://java.woehlke.org/</href>
     </bannerLeft>
     <body>
         <breadcrumbs>
             <item name="Thomas Wöhlke (Github)" href="https://github.com/thomaswoehlke"/>
             <item name="Spring-Framework-Java-Apps (Github)" href="https://github.com/Spring-Framework-Java-Apps"/>
             <item name="Simpleworklist (Github)" href="https://github.com/Spring-Framework-Java-Apps/simpleworklist"/>
-            <item name="Simpleworklist" href="https://woehlke.org/p/simpleworklist"/>
+            <item name="Simpleworklist" href="index.html"/>
         </breadcrumbs>
         <menu name="Overview">
-            <item name="Introduction" href="index.html"/>
+            <item name="Home" href="index.html"/>
             <item name="JavaDocs" href="apidocs/index.html"/>
             <item name="Source Xref" href="xref/index.html"/>
         </menu>
         <menu name="Requirements">
-            <item name="Requirements" href="Requirements.html" />
-            <item name="Requirements Nonfunctional" href="Requirements_Nonfunctional.html" />
+            <item name="Cloud Deployments" href="CLOUD_DEPLOYMENT.html" />
+            <item name="Nonfunctional Requirements" href="REQUIREMENTS_NONFUNCTIONAL.html" />
+            <item name="Changelog" href="CHANGELOG.html" />
         </menu>
         <menu name="Development">
-            <item name="Development" href="Development.html" />
-            <item name="Maven Plugins" href="Maven_Plugins.html" />
+            <item name="Development" href="DEVELOPMENT.html" />
+            <item name="Maven Plugins" href="MAVEN_PLUGINS.html" />
             <item name="HOWTO" href="HOWTO.html" />
-            <item name="Primesfaces JSF" href="Primesfaces_JSF.html" />
+            <item name="TODO" href="TODO.html" />
         </menu>
         <menu ref="reports"/>
     </body>

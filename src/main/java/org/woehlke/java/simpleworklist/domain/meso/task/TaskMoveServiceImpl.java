@@ -90,6 +90,16 @@ public class TaskMoveServiceImpl implements TaskMoveService {
     return task;
   }
 
+    @Override
+    public Task moveTaskToScheduled(Task task) {
+        long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.SCHEDULED,task.getContext());
+        task.moveToScheduled();
+        task.setOrderIdTaskState(++newOrderIdTaskState);
+        task = taskService.saveAndFlush(task);
+        log.info("moved to scheduled: " + task.outTaskstate());
+        return task;
+    }
+
   @Override
   public Task moveTaskToSomeday(Task task) {
     long newOrderIdTaskState = taskLifecycleService.getMaxOrderIdTaskState(TaskState.SOMEDAY,task.getContext());

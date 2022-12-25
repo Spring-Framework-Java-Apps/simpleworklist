@@ -174,20 +174,18 @@ public class TaskLifecycleServiceImpl implements TaskLifecycleService {
     return task;
   }
 
-
     public Project addProjectFromTaskToModel(Task task, Model model){
+        log.info("addProjectFromTaskToModel");
       Project thisProject;
       if (task.getProject() == null || task.getProject().getId() == null || task.getProject().getId() == 0L) {
-        thisProject = new Project();
-        thisProject.setId(0L);
+        thisProject = Project.getRootProject(task.getContext());
       } else {
         thisProject = task.getProject();
       }
       model.addAttribute("thisProject", thisProject);
       Project lastProject;
       if (task.getLastProject() == null || task.getLastProject().getId() == null || task.getLastProject().getId() == 0L) {
-        lastProject = new Project();
-        lastProject.setId(0L);
+        lastProject = Project.getRootProject(task.getContext());
       } else {
         lastProject = task.getLastProject();
       }

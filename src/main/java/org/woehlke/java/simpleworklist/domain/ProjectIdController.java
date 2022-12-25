@@ -46,7 +46,13 @@ public class ProjectIdController extends AbstractController {
   private final BreadcrumbService breadcrumbService;
 
   @Autowired
-  public ProjectIdController(ProjectControllerService projectControllerService, TaskMoveService taskMoveService, TaskService taskService, ContextService contextService, BreadcrumbService breadcrumbService) {
+  public ProjectIdController(
+      ProjectControllerService projectControllerService,
+      TaskMoveService taskMoveService,
+      TaskService taskService,
+      ContextService contextService,
+      BreadcrumbService breadcrumbService
+  ) {
     this.projectControllerService = projectControllerService;
     this.taskMoveService = taskMoveService;
     this.taskService = taskService;
