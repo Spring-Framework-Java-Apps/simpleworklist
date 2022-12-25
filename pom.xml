@@ -97,6 +97,8 @@
         <hamcrest.version>2.2</hamcrest.version>
         <jsoup.version>1.15.3</jsoup.version>
         <pmdVersion>6.49.0</pmdVersion>
+        <version.jcommander>1.82</version.jcommander>
+        <version.com.jcraft.jsch>0.1.55</version.com.jcraft.jsch>
 
         <!-- Docker -->
         <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
@@ -515,7 +517,7 @@
             <dependency>
                 <groupId>com.beust</groupId>
                 <artifactId>jcommander</artifactId>
-                <version>1.82</version>
+                <version>${version.jcommander}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -534,7 +536,8 @@
             <dependency>
                 <groupId>com.jcraft</groupId>
                 <artifactId>jsch</artifactId>
-                <version>0.1.55</version>
+                <version>${version.com.jcraft.jsch}</version>
+                <version></version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -1093,6 +1096,12 @@
                             <groupId>net.sourceforge.pmd</groupId>
                             <artifactId>pmd-jsp</artifactId>
                             <version>${pmdVersion}</version>
+                            <scope>compile</scope>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.beust</groupId>
+                            <artifactId>jcommander</artifactId>
+                            <version>${version.jcommander}</version>
                             <scope>compile</scope>
                         </dependency>
                     </dependencies>
