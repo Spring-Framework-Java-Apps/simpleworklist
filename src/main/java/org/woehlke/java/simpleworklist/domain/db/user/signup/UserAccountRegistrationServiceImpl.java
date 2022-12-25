@@ -28,7 +28,12 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
     private final JavaMailSender mailSender;
 
     @Autowired
-    public UserAccountRegistrationServiceImpl(SimpleworklistProperties simpleworklistProperties, UserAccountRegistrationRepository userAccountRegistrationRepository, TokenGeneratorService tokenGeneratorService, JavaMailSender mailSender) {
+    public UserAccountRegistrationServiceImpl(
+        SimpleworklistProperties simpleworklistProperties,
+        UserAccountRegistrationRepository userAccountRegistrationRepository,
+        TokenGeneratorService tokenGeneratorService,
+        JavaMailSender mailSender
+    ) {
         this.simpleworklistProperties = simpleworklistProperties;
         this.userAccountRegistrationRepository = userAccountRegistrationRepository;
         this.tokenGeneratorService = tokenGeneratorService;
@@ -38,7 +43,8 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
     @Override
     public boolean registrationIsRetryAndMaximumNumberOfRetries(String email) {
         UserAccountRegistration earlierOptIn = userAccountRegistrationRepository.findByEmail(email);
-        return earlierOptIn == null?false:(earlierOptIn.getNumberOfRetries() >= simpleworklistProperties.getRegistration().getMaxRetries());
+        return earlierOptIn == null?false:(earlierOptIn.getNumberOfRetries()
+            >= simpleworklistProperties.getRegistration().getMaxRetries());
     }
 
     @Override
@@ -47,7 +53,8 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
         UserAccountRegistration earlierOptIn = userAccountRegistrationRepository.findByEmail(email);
         if (earlierOptIn != null) {
             Date now = new Date();
-            if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
+            if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest()
+                + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
                 userAccountRegistrationRepository.delete(earlierOptIn);
             }
         }
@@ -109,10 +116,12 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(o.getEmail());
         msg.setText(
-                "Dear new User, "
+                "Dear new User,\n\n"
                         + "thank you for registring at Simple Worklist. \n"
-                        + "Please validate your email and go to URL: \nhttp://" + urlHost + "/user/register/confirm/" + o.getToken()
-                        + "\n\nSincerely Yours, The Team");
+                        + "Please validate your email and go to URL: \n"
+                        + "http://" + urlHost + "/user/register/confirm/" + o.getToken()
+                        + "\n\nSincerely Yours, Simpleworklist Team"
+        );
         msg.setSubject("Your Registration at Simple Worklist");
         msg.setFrom(mailFrom);
         try {
