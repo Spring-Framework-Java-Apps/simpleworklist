@@ -59,12 +59,12 @@
         </site>
         <repository>
             <id>central</id>
-            <name>tw-thinkpad-releases</name>
+            <name>libs-release-local</name>
             <url>file://${user.home}/public_html/java/libs-release-local</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <name>tw-thinkpad-snapshots</name>
+            <name>libs-snapshot-local</name>
             <url>file://${user.home}/public_html/java/libs-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
@@ -74,7 +74,7 @@
         <version.maven>3.6.3</version.maven>
         <maven.compiler.source>${version.java}</maven.compiler.source>
         <maven.compiler.target>${version.java}</maven.compiler.target>
-        <version.java>${java.version}</version.java>
+        <java.version>${version.java}</java.version>
         <spring-boot.repackage.layout>JAR</spring-boot.repackage.layout>
         <version.spring-boot-maven-plugin>${project.parent.version}</version.spring-boot-maven-plugin>
         <version.thymeleaf-testing>3.1.0.M2</version.thymeleaf-testing>
@@ -119,7 +119,7 @@
 
         <!-- UML -->
         <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
-        <version.plantuml-maven-plugin.plantuml>1.2022.6</version.plantuml-maven-plugin.plantuml>
+        <version.plantuml-maven-plugin.plantuml>1.2022.14</version.plantuml-maven-plugin.plantuml>
 
         <version.maven-invoker-plugin>3.3.0</version.maven-invoker-plugin>
         <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
@@ -1530,7 +1530,7 @@
         </profile>
 
         <profile>
-            <id>site</id>
+            <id>build</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
