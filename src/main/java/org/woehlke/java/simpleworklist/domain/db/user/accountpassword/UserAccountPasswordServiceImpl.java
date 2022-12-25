@@ -2,7 +2,6 @@ package org.woehlke.java.simpleworklist.domain.db.user.accountpassword;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,25 +22,24 @@ public class UserAccountPasswordServiceImpl implements UserAccountPasswordServic
 
     private final UserAccountRepository userAccountRepository;
     private final PasswordEncoder encoder;
-    //private final AuthenticationManager authenticationManager;
     private final AuthenticationProvider authenticationProvider;
 
     @Autowired
     public UserAccountPasswordServiceImpl(
         UserAccountRepository userAccountRepository,
-        //AuthenticationManager authenticationManager,
         AuthenticationProvider authenticationProvider
     ) {
         this.userAccountRepository = userAccountRepository;
         this.authenticationProvider = authenticationProvider;
         int strength = 10;
         this.encoder = new BCryptPasswordEncoder(strength);
-        //this.authenticationManager = authenticationManager;
     }
 
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+            user.getUsername(), user.getPassword()
+        );
         Authentication authenticationResult = authenticationProvider.authenticate(token);
         if (authenticationResult.isAuthenticated()) {
             UserAccount ua = userAccountRepository.findByUserEmail(user.getUsername());

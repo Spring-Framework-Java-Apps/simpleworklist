@@ -20,8 +20,8 @@ import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageRepository
 import org.woehlke.java.simpleworklist.domain.db.data.context.ContextRepository;
 
 @Slf4j
-@Service("userAccountService")
-//@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+@Service
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
@@ -30,7 +30,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     private final PasswordEncoder encoder;
 
     @Autowired
-    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, ChatMessageRepository userMessageRepository, ContextRepository contextRepository) {
+    public UserAccountServiceImpl(
+        UserAccountRepository userAccountRepository,
+        ChatMessageRepository userMessageRepository,
+        ContextRepository contextRepository
+    ) {
         this.userAccountRepository = userAccountRepository;
         this.userMessageRepository = userMessageRepository;
         this.contextRepository = contextRepository;
@@ -64,7 +68,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public UserAccount saveAndFlush(UserAccount u) {
         return userAccountRepository.saveAndFlush(u);
     }
@@ -80,7 +84,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    //@Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void changeUsersPassword(UserAccountForm userAccount) {
         UserAccount ua = userAccountRepository.findByUserEmail(userAccount.getUserEmail());
         if(ua != null) {
@@ -103,7 +107,8 @@ public class UserAccountServiceImpl implements UserAccountService {
             if(receiver.getId().longValue() == sender.getId().longValue()){
                 newIncomingMessagesForEachOtherUser.put(sender.getId(),0);
             } else {
-                List<UserAccountChatMessage> userAccountChatMessages = userMessageRepository.findBySenderAndReceiverAndReadByReceiver(sender,receiver,false);
+                List<UserAccountChatMessage> userAccountChatMessages =
+                    userMessageRepository.findBySenderAndReceiverAndReadByReceiver(sender,receiver,false);
                 newIncomingMessagesForEachOtherUser.put(sender.getId(), userAccountChatMessages.size());
             }
         }
