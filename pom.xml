@@ -1530,6 +1530,9 @@
 
         <profile>
             <id>jar</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>true</skip.integration.tests>
@@ -1542,6 +1545,9 @@
 
         <profile>
             <id>docker</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <skipTests>false</skipTests>
                 <skip.unit.tests>false</skip.unit.tests>
@@ -1561,6 +1567,9 @@
 
         <profile>
             <id>cloud</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>true</skip.integration.tests>
@@ -1573,6 +1582,9 @@
 
         <profile>
             <id>test</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <skipTests>false</skipTests>
                 <skip.unit.tests>false</skip.unit.tests>
@@ -1587,6 +1599,9 @@
 
         <profile>
             <id>uml</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>true</skip.integration.tests>
