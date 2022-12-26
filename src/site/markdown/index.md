@@ -8,8 +8,8 @@
 Your Todo List for Getting Things Done
 
 ## Getting Things Done
-GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company.
-SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
+* GTD&reg; and Getting Things Done&reg; are registered trademarks of the David Allen Company.
+* SimpleWorklist is not affiliated with or endorsed by the David Allen Company.
 
 ## Development
 * [CHANGELOG](CHANGELOG.md)
