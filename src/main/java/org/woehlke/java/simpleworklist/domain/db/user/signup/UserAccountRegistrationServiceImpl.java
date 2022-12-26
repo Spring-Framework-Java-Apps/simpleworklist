@@ -118,10 +118,11 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
         msg.setText(
                 "Dear new User,\n\n"
                         + "thank you for registring at Simple Worklist. \n"
-                        + "Please validate your email and go to URL: \n"
-                        + "\n\nSincerely Yours, Simpleworklist Team"
+                        + "Please validate your email and open this URL: \n"
+                        + urlHost + "/user/register/confirm/" + o.getToken()
+                        + "\n\nSincerely Yours, \nThe Simpleworklist Team"
         );
-        msg.setSubject("Your Registration at Simple Worklist");
+        msg.setSubject("[SimpleWorklist] Your Registration");
         msg.setFrom(mailFrom);
         try {
             this.mailSender.send(msg);
