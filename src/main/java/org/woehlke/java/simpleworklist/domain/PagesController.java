@@ -1,6 +1,7 @@
 package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,9 +14,11 @@ import java.util.Locale;
 
 @Slf4j
 @Controller
+@PreAuthorize("permitAll()")
 @RequestMapping(path = "/pages")
-public class PagesController extends AbstractController {
+public class PagesController {
 
+  @PreAuthorize("permitAll()")
   @RequestMapping(path = "/information", method = RequestMethod.GET)
   public final String renderPageInformation(
     @NotNull @ModelAttribute("userSession") UserSessionBean userSession,

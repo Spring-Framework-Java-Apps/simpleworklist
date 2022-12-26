@@ -42,7 +42,7 @@ public class UserLoginController {
      * Login Formular. If User is not logged in, this page will be displayed for
      * all page-URLs which need login.
      *
-     * @param model
+     * @param model Model
      * @return Login Screen.
      */
     @RequestMapping(path = "/login", method = RequestMethod.GET)
@@ -56,9 +56,9 @@ public class UserLoginController {
     /**
      * Perform login.
      *
-     * @param loginForm
-     * @param result
-     * @param model
+     * @param loginForm LoginForm
+     * @param result BindingResult
+     * @param model Model
      * @return Shows Root Project after successful login or login form with error messages.
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)

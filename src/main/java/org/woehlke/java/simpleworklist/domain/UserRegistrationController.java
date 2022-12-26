@@ -2,7 +2,6 @@ package org.woehlke.java.simpleworklist.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,16 +22,16 @@ import javax.validation.Valid;
 @RequestMapping(path = "/user/register")
 public class UserRegistrationController {
 
-    private final UserAccountService userAccountService;
     private final UserAccountRegistrationService userAccountRegistrationService;
+    private final UserAccountService userAccountService;
 
     @Autowired
     public UserRegistrationController(
-        UserAccountService userAccountService,
-        UserAccountRegistrationService userAccountRegistrationService
+        UserAccountRegistrationService userAccountRegistrationService,
+        UserAccountService userAccountService
     ) {
-        this.userAccountService = userAccountService;
         this.userAccountRegistrationService = userAccountRegistrationService;
+        this.userAccountService = userAccountService;
     }
 
     /**
@@ -42,8 +41,7 @@ public class UserRegistrationController {
      * @param model Model
      * @return Formular for entering Email-Address for Registration
      */
-    @PreAuthorize("isAnonymous()")
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/form", method = RequestMethod.GET)
     public final String registerGet(Model model) {
         log.info("registerGet");
         UserAccountRegistrationForm userAccountRegistrationForm = new UserAccountRegistrationForm();
@@ -59,8 +57,7 @@ public class UserRegistrationController {
      * @param model Model
      * @return info page at success or return to form with error messages.
      */
-    @PreAuthorize("isAnonymous()")
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @RequestMapping(path = "/form", method = RequestMethod.POST)
     public final String registerPost(
             @Valid UserAccountRegistrationForm userAccountRegistrationForm,
             BindingResult result,
@@ -105,7 +102,6 @@ public class UserRegistrationController {
      * @param model Model
      * @return Formular for Entering Account Task or Error Messages.
      */
-    @PreAuthorize("isAnonymous()")
     @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.GET)
     public final String registerConfirmGet(
         @PathVariable String confirmId,
@@ -134,7 +130,6 @@ public class UserRegistrationController {
      * @param model Model
      * @return login page at success or page with error messages.
      */
-    @PreAuthorize("isAnonymous()")
     @RequestMapping(path = "/confirm/{confirmId}", method = RequestMethod.POST)
     public final String registerConfirmPost(
         @PathVariable String confirmId,

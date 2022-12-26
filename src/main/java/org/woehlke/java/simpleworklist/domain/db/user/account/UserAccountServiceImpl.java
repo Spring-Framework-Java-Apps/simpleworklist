@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,13 +32,15 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccountServiceImpl(
         UserAccountRepository userAccountRepository,
         ChatMessageRepository userMessageRepository,
-        ContextRepository contextRepository
+        ContextRepository contextRepository,
+        PasswordEncoder encoder
     ) {
         this.userAccountRepository = userAccountRepository;
         this.userMessageRepository = userMessageRepository;
         this.contextRepository = contextRepository;
-        int strength = 10;
-        this.encoder = new BCryptPasswordEncoder(strength);
+        //int strength = this.simpleworklistProperties.getWebSecurity().getStrengthBCryptPasswordEncoder();
+        //this.encoder = new BCryptPasswordEncoder(strength);
+        this.encoder = encoder;
     }
 
     public boolean isEmailAvailable(String email) {
