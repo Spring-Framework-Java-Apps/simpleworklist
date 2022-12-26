@@ -1162,20 +1162,24 @@
                                         <file>${project.basedir}/app.json</file>
                                         <file>${project.basedir}/_config.yml</file>
                                         <file>${project.basedir}/Procfile</file>
-                                        <file>${project.basedir}/src/site/markdown/index.md</file>
                                         <file>${project.basedir}/src/site/markdown/CHANGELOG.md</file>
                                         <file>${project.basedir}/src/site/markdown/DEPLOYMENTS.md</file>
                                         <file>${project.basedir}/src/site/markdown/DEVELOPMENT.md</file>
                                         <file>${project.basedir}/src/site/markdown/HOWTO.md</file>
+                                        <file>${project.basedir}/src/site/markdown/index.md</file>
+                                        <file>${project.basedir}/src/site/markdown/LICENSE.code.md</file>
+                                        <file>${project.basedir}/src/site/markdown/LICENSE.md</file>
+                                        <file>${project.basedir}/src/site/markdown/LICENSE.writing.md</file>
                                         <file>${project.basedir}/src/site/markdown/MAVEN_PLUGINS.md</file>
+                                        <file>${project.basedir}/src/site/markdown/REQUIREMENTS_FUNCTIONAL.md</file>
                                         <file>${project.basedir}/src/site/markdown/REQUIREMENTS_NONFUNCTIONAL.md</file>
+                                        <file>${project.basedir}/src/site/markdown/SECURITY.md</file>
                                         <file>${project.basedir}/src/site/markdown/TODO.md</file>
+                                        <file>${project.basedir}/src/site/resources/img/thomas_woehlke__geburt_einer_vision__logo.png</file>
                                         <file>${project.basedir}/src/site/site.xml</file>
-                                        <file>${project.basedir}/build.sh</file>
-                                        <file>${project.basedir}/etc/run.sh</file>
                                         <file>${project.basedir}/etc/bash/psql.sh</file>
-                                        <file>${project.basedir}/etc/docker-start.sh</file>
-                                        <file>${project.basedir}/etc/docker-stop.sh</file>
+                                        <file>${project.basedir}/docker-start.sh</file>
+                                        <file>${project.basedir}/docker-stop.sh</file>
                                         <file>${project.basedir}/docker-compose.yml</file>
                                         <file>${project.basedir}/etc/sql/db-createdb-and-user-linux.sql</file>
                                         <file>${project.basedir}/etc/sql/db-createdb-and-user-win10.sql</file>

@@ -34,6 +34,7 @@
         <menu name="Development">
             <item name="Changelog" href="CHANGELOG.html" />
             <item name="Development" href="DEVELOPMENT.html" />
+            <item name="Security" href="SECURITY.html" />
         </menu>
         <menu name="DevOps">
             <item name="TODO" href="TODO.html" />
