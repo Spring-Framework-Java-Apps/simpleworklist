@@ -272,6 +272,11 @@
       <option name="url" value="http://tw-vivo:8081/artifactory/libs-release" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="adobe-public" />
+      <option name="name" value="AdobePublic Repository" />
+      <option name="url" value="http://tw-thinkpad:8081/artifactory/libs-release" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="libs-release" />
       <option name="url" value="http://tw-thinkpad:8081/artifactory/all" />
@@ -280,11 +285,6 @@
       <option name="id" value="central" />
       <option name="name" value="libs-release" />
       <option name="url" value="http://tw-asus7:8081/artifactory/all" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="adobe-public" />
-      <option name="name" value="AdobePublic Repository" />
-      <option name="url" value="http://tw-thinkpad:8081/artifactory/libs-release" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss-ea" />
@@ -587,14 +587,14 @@
       <option name="url" value="http://tw-asus7:8081/artifactory/all" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="spring-milestones" />
-      <option name="name" value="spring-milestones" />
-      <option name="url" value="https://repo.spring.io/milestone" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="wso2-public" />
       <option name="name" value="WSO2 Public Repository" />
       <option name="url" value="http://tw-thinkpad:8081/artifactory/libs-release" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-milestones" />
+      <option name="name" value="spring-milestones" />
+      <option name="url" value="https://repo.spring.io/milestone" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="atlassian-public" />
