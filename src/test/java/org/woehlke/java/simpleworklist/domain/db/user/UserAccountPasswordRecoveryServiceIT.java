@@ -85,7 +85,7 @@ public class UserAccountPasswordRecoveryServiceIT {
     public void testResetPassword() {
         try {
             this.mockMvc.perform(
-                    get("/user/resetPassword")).andDo(print())
+                    get("/user/resetPassword/form")).andDo(print())
                 .andExpect(view().name(containsString("user/resetPassword/resetPasswordForm")));
         } catch (Exception ex) {
             log.warn("Exception: " + ex.getLocalizedMessage());

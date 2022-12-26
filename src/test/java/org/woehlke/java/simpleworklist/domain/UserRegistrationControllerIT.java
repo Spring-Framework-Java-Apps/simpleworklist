@@ -147,7 +147,7 @@ public class UserRegistrationControllerIT {
     public void testSignInFormularEmail() {
         try {
             this.mockMvc.perform(
-                get("/user/register/"))
+                get("/user/register/form"))
                 .andDo(print())
                 .andExpect(view().name(containsString("user/register/registerForm")));
         } catch (Exception ex) {
