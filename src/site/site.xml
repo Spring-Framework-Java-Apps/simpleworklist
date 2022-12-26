@@ -27,6 +27,7 @@
         </menu>
         <menu name="Requirements">
             <item name="Changelog" href="CHANGELOG.html" />
+            <item name="Functional Requirements" href="REQUIREMENTS_FUNCTIONAL.html" />
             <item name="Nonfunctional Requirements" href="REQUIREMENTS_NONFUNCTIONAL.html" />
         </menu>
         <menu name="Development">
