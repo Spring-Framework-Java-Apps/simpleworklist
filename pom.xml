@@ -1625,7 +1625,7 @@
             <build>
                 <finalName>${project.artifactId}</finalName>
                 <defaultGoal>
-                    clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources install spring-boot:repackage site site:deploy
+                    clean dependency:purge-local-repository dependency:resolve dependency:resolve-plugins dependency:sources install spring-boot:repackage site site:deploy site:jar source:test-jar source:jar javadoc:jar javadoc:test-jar
                 </defaultGoal>
             </build>
         </profile>
