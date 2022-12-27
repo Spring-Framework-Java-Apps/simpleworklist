@@ -32,9 +32,9 @@ Your Todo List for Getting Things Done
 #### F003 Registration
 #### F004 Password Recovery
 #### F005 Login
-![Functional Requirements F005 Login](src/site/resources/screenshots/screen001.png)
+![Functional Requirements F005 Login](src/site/resources/screenshots/screen01.png)
 #### F006 Page after first successful Login
-![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen002.png)
+![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen02.png)
 #### F007 Logout
 
 ### Functional Requirements 002 - Show TaskstateTab
@@ -42,9 +42,9 @@ Your Todo List for Getting Things Done
 #### F010 show /taskstate/inbox
 ![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen011.png)
 #### F011 show /taskstate/today
-![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen002.png)
+![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen02.png)
 #### F012 show /taskstate/next
-![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen003.png)
+![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen03.png)
 #### F013 show /taskstate/waiting
 #### F014 show /taskstate/scheduled
 ![Functional Requirements F006 Page after first successful Login](src/site/resources/screenshots/screen010.png)
