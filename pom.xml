@@ -22,7 +22,7 @@
 
     <name>simpleworklist</name>
     <description>Your Todo-List for Getting Things Done</description>
-    <url>https://java.woehlke.org/simpleworklist</url>
+    <url>https://java.woehlke.org/spring/simpleworklist</url>
     <inceptionYear>2012</inceptionYear>
 
     <organization>
@@ -55,7 +55,7 @@
     <distributionManagement>
         <site>
             <id>simpleworklist.public_html</id>
-            <url>file://${user.home}/public_html/java/simpleworklist</url>
+            <url>file://${user.home}/public_html/java/spring/simpleworklist</url>
         </site>
         <repository>
             <id>central</id>
