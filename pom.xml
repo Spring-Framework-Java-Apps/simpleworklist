@@ -140,7 +140,7 @@
         <version.maven-checkstyle-plugin.checkstyle>10.5.0</version.maven-checkstyle-plugin.checkstyle>
         <version.maven-jxr-plugin>3.2.0</version.maven-jxr-plugin>
         <version.maven-pmd-plugin>3.17.0</version.maven-pmd-plugin>
-        <version.maven-pmd-plugin.pmd>6.51.0</version.maven-pmd-plugin.pmd>
+        <version.maven-pmd-plugin.pmd>6.52.0</version.maven-pmd-plugin.pmd>
         <version.spotbugs-maven-plugin>4.7.3.0</version.spotbugs-maven-plugin>
         <version.spotbugs-maven-plugin.spotbugs>4.7.0.0</version.spotbugs-maven-plugin.spotbugs>
         <version.maven-surefire-report-plugin>3.0.0-M7</version.maven-surefire-report-plugin>
@@ -1046,9 +1046,17 @@
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${version.spotbugs-maven-plugin}</version>
-                    <dependencies>
-
-                    </dependencies>
+                    <configuration>
+                        <includeFilterFile>spotbugs-security-include.xml</includeFilterFile>
+                        <excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
+                        <plugins>
+                            <plugin>
+                                <groupId>com.h3xstream.findsecbugs</groupId>
+                                <artifactId>findsecbugs-plugin</artifactId>
+                                <version>1.12.0</version>
+                            </plugin>
+                        </plugins>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
