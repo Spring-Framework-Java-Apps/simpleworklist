@@ -16,15 +16,18 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
         </processorPath>
         <module name="simpleworklist" />
+        <module name="simpleworklist3" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="simpleworklist" target="17" />
+      <module name="simpleworklist3" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="simpleworklist" options="-parameters -Xlint:all,-options,-path" />
+      <module name="simpleworklist3" options="-parameters -Xlint:all,-options,-path" />
     </option>
   </component>
 </project>
