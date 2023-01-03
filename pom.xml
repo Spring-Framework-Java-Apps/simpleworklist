@@ -92,18 +92,17 @@
         <skipIntegrationTests>${skipTests}</skipIntegrationTests>
         <dockerCompose.skip>${skipTests}</dockerCompose.skip>
         <xmlunit.version>2.9.0</xmlunit.version>
-        <htmlunit.version>2.64.0</htmlunit.version>
-        <version.groovy-all>3.0.12</version.groovy-all>
+        <htmlunit.version>2.68.0</htmlunit.version>
+        <version.groovy-all>4.0.7</version.groovy-all>
         <hamcrest.version>2.2</hamcrest.version>
         <jsoup.version>1.15.3</jsoup.version>
-        <pmdVersion>6.52.0</pmdVersion>
+        <pmdVersion>6.53.0</pmdVersion>
         <version.jcommander>1.82</version.jcommander>
         <version.com.jcraft.jsch>0.1.55</version.com.jcraft.jsch>
 
         <!-- Docker -->
         <version.docker-compose-maven-plugin>4.0.0</version.docker-compose-maven-plugin>
-        <docker-compose-maven-plugin.composeFile>${project.basedir}/src/main/resources/docker-compose.yml
-        </docker-compose-maven-plugin.composeFile>
+        <docker-compose-maven-plugin.composeFile>${project.basedir}/docker-compose.yml</docker-compose-maven-plugin.composeFile>
         <docker-compose-maven-plugin.verbose>true</docker-compose-maven-plugin.verbose>
         <docker-compose-maven-plugin.removeImages>true</docker-compose-maven-plugin.removeImages>
         <docker-compose-maven-plugin.removeVolumes>true</docker-compose-maven-plugin.removeVolumes>
@@ -123,11 +122,11 @@
         <version.plantuml-maven-plugin>1.5.2</version.plantuml-maven-plugin>
         <version.plantuml-maven-plugin.plantuml>1.2022.14</version.plantuml-maven-plugin.plantuml>
 
-        <version.maven-invoker-plugin>3.3.0</version.maven-invoker-plugin>
+        <version.maven-invoker-plugin>3.4.0</version.maven-invoker-plugin>
         <version.maven-clean-plugin>3.2.0</version.maven-clean-plugin>
         <version.maven-dependency-plugin>3.4.0</version.maven-dependency-plugin>
         <version.maven-compiler-plugin>3.10.1</version.maven-compiler-plugin>
-        <version.maven-install-plugin>3.0.1</version.maven-install-plugin>
+        <version.maven-install-plugin>3.1.0</version.maven-install-plugin>
         <version.maven-deploy-plugin>3.0.0</version.maven-deploy-plugin>
         <version.maven-javadoc-plugin>3.4.1</version.maven-javadoc-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
@@ -136,12 +135,12 @@
         <version.maven-site-plugin>3.12.1</version.maven-site-plugin>
         <version.maven-project-info-reports-plugin>3.4.1</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>3.2.0</version.maven-checkstyle-plugin>
-        <version.maven-checkstyle-plugin.checkstyle>10.5.0</version.maven-checkstyle-plugin.checkstyle>
-        <version.maven-jxr-plugin>3.2.0</version.maven-jxr-plugin>
-        <version.maven-pmd-plugin>3.17.0</version.maven-pmd-plugin>
-        <version.maven-pmd-plugin.pmd>6.52.0</version.maven-pmd-plugin.pmd>
+        <version.maven-checkstyle-plugin.checkstyle>10.6.0</version.maven-checkstyle-plugin.checkstyle>
+        <version.maven-jxr-plugin>3.3.0</version.maven-jxr-plugin>
+        <version.maven-pmd-plugin>3.19.0</version.maven-pmd-plugin>
+        <version.maven-pmd-plugin.pmd>6.53.0</version.maven-pmd-plugin.pmd>
         <version.spotbugs-maven-plugin>4.7.3.0</version.spotbugs-maven-plugin>
-        <version.spotbugs-maven-plugin.spotbugs>4.7.0.0</version.spotbugs-maven-plugin.spotbugs>
+        <version.spotbugs-maven-plugin.spotbugs>4.7.3</version.spotbugs-maven-plugin.spotbugs>
         <version.maven-surefire-report-plugin>3.0.0-M7</version.maven-surefire-report-plugin>
         <version.asciidoctor-maven-plugin>2.2.2</version.asciidoctor-maven-plugin>
         <version.doxia-module-markdown>1.11.1</version.doxia-module-markdown>
@@ -856,7 +855,6 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jxr-plugin</artifactId>
-            <version>3.3.0</version>
             <type>maven-plugin</type>
             <scope>provided</scope>
         </dependency>
@@ -899,7 +897,6 @@
         <dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
-            <version>1.82</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
