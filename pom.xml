@@ -148,6 +148,7 @@
 
         <!-- TMP Migration to spring boot 3 -->
         <junit-jupiter.version>5.9.1</junit-jupiter.version>
+        <spring-session-bom.version>2021.2.0</spring-session-bom.version>
     </properties>
 
     <repositories>
@@ -324,24 +325,35 @@
                 <version>${version.thymeleaf-spring-data-dialect}</version>
             </dependency>
 
-            <!-- compile -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <optional>false</optional>
             </dependency>
-
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>42.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${javax-jaxb.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.saxon</groupId>
                 <artifactId>saxon-dom</artifactId>
                 <version>8.7</version>
             </dependency>
+            <!--
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>4.0.1</version>
+            </dependency>
+            -->
 
             <!-- SCM -->
             <dependency>
@@ -756,6 +768,7 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
+
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -764,6 +777,13 @@
             <groupId>net.sf.saxon</groupId>
             <artifactId>saxon-dom</artifactId>
         </dependency>
+
+        <!--
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+        -->
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
