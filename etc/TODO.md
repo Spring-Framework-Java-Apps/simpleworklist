@@ -104,10 +104,13 @@
 * fixed #401 Migrate spring-boot from 2 to 3
 
 ## 3.0.0.rc.2
+* fixed #404 Task List View: LocalDate and LocalDateTime HTML rendering for Locale and in desired format
+* fixed #405 User List View: LocalDate and LocalDateTime HTML rendering for Locale and in desired format
+
+## 3.0.0.rc.3
 * #403 Task pagination is broken due to dependencies
-* #404 Task List View: LocalDate and LocalDateTime HTML rendering for Locale and in desired format
-* #405 User List View: LocalDate and LocalDateTime HTML rendering for Locale and in desired format
 * #406 Liquibase Database Schema Evolution of changes by migrating spring-boot from 2 to 3 and Jakarta EE 10 JPA
+* #407 update Last Login Date is broken
 
 ## 3.0.x
 * #377 add List of URL (Patterns) to Documentation
