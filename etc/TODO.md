@@ -100,8 +100,13 @@
 * fixed #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
 
 
-## 3.0.0
+## 3.0.0.rc.1
 * fixed #401 Migrate spring-boot from 2 to 3
+
+## 3.0.0.rc.2
+* #403 Task pagination is broken due to dependencies
+* #404 Task List View: LocalDate and LocalDateTime HTML rendering for Locale and in desired format
+* #405 User List View: LocalDate and LocalDateTime HTML rendering for Locale and in desired format
 
 ## 3.0.x
 * #377 add List of URL (Patterns) to Documentation
