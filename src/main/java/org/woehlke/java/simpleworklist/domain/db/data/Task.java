@@ -31,7 +31,8 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
-import static javax.persistence.TemporalType.*;
+
+import static jakarta.persistence.TemporalType.DATE;
 import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
 

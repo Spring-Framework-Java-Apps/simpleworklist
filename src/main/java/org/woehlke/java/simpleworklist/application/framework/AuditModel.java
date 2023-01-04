@@ -23,7 +23,7 @@ import java.util.UUID;
 @Setter
 public class AuditModel extends Object implements Serializable {
 
-    private static final long serialVersionUID = 4399373914714726911L;
+    static final long serialVersionUID = 4399373914714726911L;
 
     @Column(name="uuid", nullable = false)
     protected UUID uuid;
