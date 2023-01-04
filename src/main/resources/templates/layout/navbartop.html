@@ -142,11 +142,11 @@
                   <i class="fas fa-globe"></i><b class="caret"></b>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="contextMenu">
-                  <a th:href="@{{url}(lang='de',url=${#request.getRequestURL()})}"
+                  <a th:href="@{/(lang='de')}"
                      class="dropdown-item lang-switcher-de">
                     <img class="lang-switcher-img" th:src="@{/img/de.png}"/>deutsch
                   </a>
-                  <a th:href="@{{url}(lang='en',url=${#request.getRequestURL()})}"
+                  <a th:href="@{/(lang='en')}"
                      class="dropdown-item lang-switcher-en">
                     <img class="lang-switcher-img" th:src="@{/img/gb.png}"/>english
                   </a>

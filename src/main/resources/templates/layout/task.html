@@ -8,7 +8,7 @@
   <input type="hidden" th:field="*{id}"/>
   <input type="hidden" th:field="*{uuid}"/>
   <input type="hidden" th:field="*{focus}"/>
-  <input type="hidden" th:field="*{rowCreatedAt.time}"/>
+  <input type="hidden" th:field="*{rowCreatedAt.toString()}"/>
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
   <div class="row">
     <div class="col-md">
