@@ -331,24 +331,11 @@
                 <artifactId>postgresql</artifactId>
                 <version>42.5.1</version>
             </dependency>
-            <!--
-                    <dependency>
-                        <groupId>javax.xml.bind</groupId>
-                        <artifactId>jaxb-api</artifactId>
-                        <version>${javax-jaxb.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>net.sf.saxon</groupId>
-                        <artifactId>saxon-dom</artifactId>
-                        <version>8.7</version>
-                    </dependency>
-             -->
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
                 <version>4.0.1</version>
             </dependency>
-
 
             <!-- SCM -->
             <dependency>
@@ -799,16 +786,6 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
-        <!--
-             <dependency>
-                 <groupId>javax.xml.bind</groupId>
-                 <artifactId>jaxb-api</artifactId>
-             </dependency>
-             <dependency>
-                 <groupId>net.sf.saxon</groupId>
-                 <artifactId>saxon-dom</artifactId>
-             </dependency>
-           -->
 
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
