@@ -4,10 +4,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:sd="http://www.thymeleaf.org/spring-data">
-<head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)">
+<head th:replace="~{layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)}">
     <title th:text="'SimpleWorklist | ' + #{user.selfservice.profile.name}">Title</title>
 </head>
-<body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})">
+<body th:replace="~{layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{})}">
 
     <div th:fragment="mytwtitle">
       <div class="row my-3 py-3 col">

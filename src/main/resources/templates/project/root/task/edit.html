@@ -4,10 +4,10 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  xmlns:sd="http://www.thymeleaf.org/spring-data">
-<head th:replace="layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)">
+<head th:replace="~{layout/page :: tw-page-head(headtitle=~{::title},links=~{},refreshMessages=false)}">
 	<title th:text="'SimpleWorklist | ' + #{task.show.h1}">Title</title>
 </head>
-<body th:replace="layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{::script})">
+<body th:replace="~{layout/page :: tw-page-body(twcontent=~{::mytwcontent},twtitle=~{::mytwtitle},scripts=~{::script})}">
 
 <div th:fragment="mytwtitle">
 	<h1 class="tw-title">
@@ -20,7 +20,7 @@
 	<div class="tw-content">
 		<form id="formId" method="post" class="was-validated"
               th:action="@{/project/root/task/{taskId}/edit(taskId=${task.id})}" th:object="${task}">
-      <div th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
+      <div th:replace="~{layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})}"></div>
       <div class="row my-3">
           <div class="col">
             <a th:href="@{/project/root/}" class="btn btn-secondary btn-block" role="button">

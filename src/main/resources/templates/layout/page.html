@@ -42,7 +42,7 @@
 	<!-- Navbar on Top -->
 	<header style="background-image: url('/img/jumbotron/berlin_skyline.png')" >
     <div style="background-color:  rgba(255, 255, 255, 0.3)">
-		  <div th:replace="layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})">
+		  <div th:replace="~{layout/navbartop :: navbartop(contexts=${contexts},locale=${locale},thisProject=${thisProject},numberOfNewIncomingMessages=${numberOfNewIncomingMessages},ctx=${ctx})}">
       </div>
       <div class="jumbotron pt-3" id="tw-title-section">
         <div class="container">
@@ -51,10 +51,10 @@
       </div>
       <div th:if="${dataPage != null}">
         <!-- Breadcrumb -->
-        <div th:replace="layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})" th:if="${taskstateType == ''}">
+        <div th:replace="~{layout/breadcrumb :: breadcrumb(breadcrumb=${breadcrumb})}" th:if="${taskstateType == ''}">
         </div>
         <!-- taskstates -->
-        <div th:replace="layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})" class="link-dark">
+        <div th:replace="~{layout/taskstates :: navigation-taskstates(rootProjects=${rootProjects},thisProject=${thisProject})}" class="link-dark">
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
                     <th:block th:replace="${twcontent}" />
                 </div>
                 <div class="col-md-4">
-                    <div th:replace="layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})"></div>
+                    <div th:replace="~{layout/projects :: navigation-projects(rootProjects=${rootProjects},thisProject=${thisProject})}"></div>
                 </div>
             </div>
             <div class="row" th:if="${dataPage == null}">
