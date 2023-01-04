@@ -26,7 +26,7 @@
               </span>
               <span th:if="${rootProjects != null and rootProjects.size() gt 0}">
                 <ul
-                  th:include="~{this :: tw-project-submenu(projectList=${rootProjects},thisProject=${thisProject})}"
+                  th:insert="~{this :: tw-project-submenu(projectList=${rootProjects},thisProject=${thisProject})}"
                   style="list-style: none;">
                 </ul>
               </span>
@@ -61,7 +61,7 @@
     </a>
 
     <span th:if="${project.children.size() gt 0}">
-      <ul th:include="~{this :: tw-project-submenu(projectList=${project.children},thisProject=${thisProject})}"
+      <ul th:insert="~{this :: tw-project-submenu(projectList=${project.children},thisProject=${thisProject})}"
           style="list-style: none;">
       </ul>
     </span>
