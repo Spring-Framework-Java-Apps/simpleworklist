@@ -610,11 +610,14 @@
                 <groupId>org.hibernate.orm</groupId>
                 <artifactId>hibernate-core</artifactId>
                 <version>${hibernate.version}</version>
-                <scope>compile</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>org.antlr</groupId>
                         <artifactId>antlr-runtime4</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-runtime</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -999,6 +1002,10 @@
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr-runtime4</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!--
@@ -1015,6 +1022,10 @@
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr-runtime4</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!--
@@ -1030,6 +1041,10 @@
                 <exclusion>
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr-runtime4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -1059,6 +1074,10 @@
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr-runtime4</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!--
@@ -1075,6 +1094,10 @@
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr-runtime4</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -1084,6 +1107,10 @@
                 <exclusion>
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr-runtime4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
