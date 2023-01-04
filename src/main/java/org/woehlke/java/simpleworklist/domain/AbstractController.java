@@ -16,7 +16,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.chat.ChatMessageService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Locale;
 

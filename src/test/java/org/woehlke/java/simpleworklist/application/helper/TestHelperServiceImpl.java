@@ -14,8 +14,8 @@ import org.woehlke.java.simpleworklist.domain.db.data.task.TaskRepository;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountRepository;
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryRepository;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @Service

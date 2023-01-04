@@ -15,7 +15,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationForm;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Slf4j
 @Controller

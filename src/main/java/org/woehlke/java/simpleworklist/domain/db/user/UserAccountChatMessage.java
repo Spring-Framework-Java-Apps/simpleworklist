@@ -2,11 +2,13 @@ package org.woehlke.java.simpleworklist.domain.db.user;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -29,9 +31,10 @@ import java.io.Serializable;
 @NamedQueries({
   @NamedQuery(
     name = "queryFindAllMessagesBetweenCurrentAndOtherUser",
-    query = "select m from org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage m " +
-      "where (m.sender = :thisUser and m.receiver = :otherUser) " +
-      "or (m.sender = :otherUser and m.receiver = :thisUser) order by m.rowCreatedAt desc"
+    query = "SELECT m FROM org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage m"
+        + " WHERE (m.sender = :thisUser AND m.receiver = :otherUser)"
+        + " OR (m.sender = :otherUser AND m.receiver = :thisUser)"
+        + " ORDER BY m.rowCreatedAt DESC"
   )
 })
 @Getter
@@ -42,6 +45,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserAccountChatMessage extends AuditModel implements Serializable, Comparable<UserAccountChatMessage> {
 
+    @Serial
     private static final long serialVersionUID = 4263078228257938175L;
 
     @Id

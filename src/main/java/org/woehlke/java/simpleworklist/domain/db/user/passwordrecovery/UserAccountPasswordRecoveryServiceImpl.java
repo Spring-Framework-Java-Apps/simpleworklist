@@ -13,6 +13,9 @@ import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecovery;
 import org.woehlke.java.simpleworklist.domain.db.user.token.TokenGeneratorService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.UUID;
 
@@ -49,8 +52,10 @@ public class UserAccountPasswordRecoveryServiceImpl implements UserAccountPasswo
     public void passwordRecoveryCheckIfResponseIsInTime(String email) {
         UserAccountPasswordRecovery earlierOptIn = userAccountPasswordRecoveryRepository.findByEmail(email);
         if (earlierOptIn != null) {
-            Date now = new Date();
-            if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
+            ZoneId zone = ZoneId.systemDefault();
+            ZoneOffset offset = ZoneOffset.UTC;
+            LocalDateTime now = LocalDateTime.now(zone);
+            if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest() + earlierOptIn.getRowCreatedAt().toEpochSecond(offset)) < now.toEpochSecond(offset)) {
                 userAccountPasswordRecoveryRepository.delete(earlierOptIn);
             }
         }

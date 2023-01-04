@@ -90,7 +90,7 @@
 	<footer class="footer">
 		<nav class="navbar fixed-bottom navbar-dark bg-dark navbar-text">
 			<div class="container">
-        <div class="col nav-link"><a th:href="@{/pages/information}" class="nav-link">© 2022 Thomas Wöhlke</a></div>
+        <div class="col nav-link"><a th:href="@{/pages/information}" class="nav-link">© 2023 Thomas Wöhlke</a></div>
         <div class="col nav-link">
           <a href="https://twitter.com/ThomasWoehlke" class="nav-link text-center">
             <i class="fa-brands fa-twitter"></i> ThomasWoehlke
@@ -216,9 +216,9 @@
 
 		function dropTask2Task(ev) {
 			var myUrl = '';
-			var requestPath = '[(@{{url}(url=${#request.getRequestURI()})})]';
+			var requestPath = window.location.href;
 			var requestPathFirst = requestPath.split("/")[1];
-      var requestPathSecond = requestPath.split("/")[2];
+            var requestPathSecond = requestPath.split("/")[2];
 			var srcType = ev.dataTransfer.getData("task").split("_")[0];
 			var sourceTaskId = ev.dataTransfer.getData("task").split("_")[1];
 			var destinationTaskIdInfo = ev.target.id;

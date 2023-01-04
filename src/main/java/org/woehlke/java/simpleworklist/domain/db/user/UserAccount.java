@@ -1,7 +1,8 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,13 +12,14 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.*;
-import javax.persistence.Index;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.persistence.Index;
+
 
 @Entity
 @Table(
@@ -36,8 +38,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude = {"userPassword","defaultLanguage","defaultContext","lastLoginTimestamp"})
-public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount>,Comparable<UserAccount> {
+public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount>, Comparable<UserAccount> {
 
+    @Serial
     private static final long serialVersionUID = 7860692526488291439L;
 
     @Id

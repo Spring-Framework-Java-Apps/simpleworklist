@@ -33,8 +33,10 @@ spring:
     generate-ddl: true
     database-platform: POSTGRESQL
     hibernate:
-        #ddl-auto: create-drop update validate
-      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
+      #ddl-auto: create-drop
+      ddl-auto: update
+      #ddl-auto: validate
+      #ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -152,8 +154,9 @@ spring:
     log-dir: transaction-logs/tx-logs-simpleworklist
   jpa:
     hibernate:
-      #ddl-auto: create-drop update validate
-      ddl-auto: validate
+      #ddl-auto: create-drop
+      ddl-auto: update
+      #ddl-auto: validate
 server:
   port: ${PORT}
   compression:

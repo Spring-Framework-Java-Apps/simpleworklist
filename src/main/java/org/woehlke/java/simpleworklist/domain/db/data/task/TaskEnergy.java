@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.data.task;
 
-import javax.persistence.Enumerated;
+import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;

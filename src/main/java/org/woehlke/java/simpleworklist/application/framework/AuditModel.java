@@ -7,9 +7,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,20 +23,20 @@ import java.util.UUID;
 @Setter
 public class AuditModel extends Object implements Serializable {
 
-    private static final long serialVersionUID = 4399373914714726911L;
+    static final long serialVersionUID = 4399373914714726911L;
 
     @Column(name="uuid", nullable = false)
     protected UUID uuid;
 
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "row_created_at", nullable = false, updatable = false)
-    protected Date rowCreatedAt;
+    protected LocalDateTime rowCreatedAt;
 
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "row_updated_at", nullable = false)
-    protected Date rowUpdatedAt;
+    protected LocalDateTime rowUpdatedAt;
 
     @Override
     public boolean equals(Object o) {

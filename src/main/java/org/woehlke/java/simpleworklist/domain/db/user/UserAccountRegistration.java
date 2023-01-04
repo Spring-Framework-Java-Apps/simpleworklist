@@ -1,12 +1,14 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
 
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationStatus;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -31,6 +33,7 @@ import java.util.Objects;
 )
 public class UserAccountRegistration extends AuditModel implements Serializable,Comparable<UserAccountRegistration> {
 
+    @Serial
     private static final long serialVersionUID = -1955967514018161878L;
 
     @Id

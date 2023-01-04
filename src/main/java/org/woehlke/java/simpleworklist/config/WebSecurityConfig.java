@@ -76,7 +76,7 @@ public class WebSecurityConfig {
         http
             .headers((headers) -> headers.disable() )
             .authorizeRequests((authorizeRequests) -> authorizeRequests
-                .antMatchers(
+                .requestMatchers(
                     simpleworklistProperties.getWebSecurity().getAntPatternsPublic()
                 )
                 .permitAll()

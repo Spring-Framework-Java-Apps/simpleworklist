@@ -1,11 +1,11 @@
 package org.woehlke.java.simpleworklist.domain.db.user.accountselfservice;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.*;
 //import org.hibernate.validator.constraints.SafeHtml;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

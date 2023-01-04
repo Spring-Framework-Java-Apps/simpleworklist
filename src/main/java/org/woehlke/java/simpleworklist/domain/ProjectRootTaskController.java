@@ -25,7 +25,7 @@ import org.woehlke.java.simpleworklist.domain.meso.project.ProjectControllerServ
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.meso.task.TaskLifecycleService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 

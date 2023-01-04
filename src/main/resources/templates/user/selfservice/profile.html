@@ -58,10 +58,10 @@
                             <span th:text="${user.userFullname}">user.userFullname</span>
                         </td>
                         <td>
-                            <span th:text="${#dates.format(user.lastLoginTimestamp,'dd.MM.yyyy HH:mm:ss')}"></span>
+                            <span th:text="${user.lastLoginTimestamp}"></span>
                         </td>
                         <td>
-                            <span th:text="${#dates.format(user.rowCreatedAt,'dd.MM.yyyy HH:mm:ss')}"></span>
+                            <span th:text="${user.rowCreatedAt}"></span>
                         </td>
                     </tr>
                 </tbody>

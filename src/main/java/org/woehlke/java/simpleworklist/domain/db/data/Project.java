@@ -11,10 +11,12 @@ import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import static java.lang.Boolean.FALSE;
@@ -91,7 +93,8 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     public static Project getRootProject(Context projectsContext) {
         List<Project> children = new ArrayList<>();
-        Date now = new Date();
+        ZoneId zone = ZoneId.of("Europe/Paris");
+        LocalDateTime now = LocalDateTime.now(zone);
         Project thisProject = new Project();
         thisProject.setId(0L);
         thisProject.setContext(projectsContext);

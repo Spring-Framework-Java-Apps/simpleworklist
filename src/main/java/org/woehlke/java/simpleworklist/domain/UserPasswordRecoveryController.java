@@ -17,7 +17,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccountPasswordRecover
 import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccountPasswordRecoveryService;
 import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistrationForm;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Slf4j
 @Controller

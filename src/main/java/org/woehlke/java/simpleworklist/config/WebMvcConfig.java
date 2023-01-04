@@ -17,9 +17,10 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.thymeleaf.dialect.springdata.SpringDataDialect;
+//import org.thymeleaf.dialect.springdata.SpringDataDialect;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Locale;
 import java.util.Properties;
 
@@ -92,12 +93,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         messageSource.setBasename("messages");
         return messageSource;
     }
-
+/*
     @Bean
     public SpringDataDialect springDataDialect() {
         return new SpringDataDialect();
     }
-
+*/
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
