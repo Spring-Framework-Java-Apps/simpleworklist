@@ -85,7 +85,7 @@
                             </a>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_title'" class="task_col task_col_title">
-                            <div th:replace="this :: tw-tasks-modal(task=${task},myUrlPath=${myUrlPath})"></div>
+                            <div th:replace="~{this :: tw-tasks-modal(task=${task},myUrlPath=${myUrlPath})}"></div>
                         </td>
                         <td th:id="'task_' + ${task.id} + '_col_energy_and_time'" class="task_col task_col_energy_and_time">
                             <span class="badge bg-secondary task_col_content task_col_content_taskenergy twtooltip"

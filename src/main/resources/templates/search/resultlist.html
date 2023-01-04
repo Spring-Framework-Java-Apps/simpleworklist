@@ -24,7 +24,7 @@
     <h2>
       <span th:utext="#{searchRequest.resultlist.h2.tasks}">Tasks</span>
     </h2>
-    <div th:replace="layout/tasks :: tw-tasks-table(dataList=${searchResult.taskList},myTaskState='ALL')">
+    <div th:replace="~{layout/tasks :: tw-tasks-table(dataList=${searchResult.taskList},myTaskState='ALL')}">
     </div>
   </div>
   <h2 th:if="${searchResult.projectList == null}">

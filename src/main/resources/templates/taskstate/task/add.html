@@ -20,7 +20,7 @@
 <div th:fragment="mytwcontent">
 	<form id="formId" class="was-validated"
           th:action="@{/taskstate/task/add}" th:object="${task}" method="post">
-    <div th:replace="layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})"></div>
+    <div th:replace="~{layout/task :: tw-task-form(task=${task},listTaskState=${listTaskState},listTaskEnergy=${listTaskEnergy},listTaskTime=${listTaskTime},contexts=${contexts})}"></div>
     <div class="row my-3">
       <div class="col">
           <a th:href="@{/taskstate/{workflowCode}(workflowCode=${userSession.lastTaskState.getSlug()})}"
