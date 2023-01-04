@@ -461,6 +461,12 @@
                 <version>${version.spring-boot-maven-plugin}</version>
                 <type>maven-plugin</type>
                 <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-runtime</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -494,6 +500,10 @@
                         <groupId>com.google.guava</groupId>
                         <artifactId>guava</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-runtime</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
@@ -506,6 +516,10 @@
                     <exclusion>
                         <groupId>com.beust</groupId>
                         <artifactId>jcommander</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-runtime</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -905,12 +919,32 @@
             <artifactId>maven-checkstyle-plugin</artifactId>
             <type>maven-plugin</type>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
             <type>maven-plugin</type>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.beust</groupId>
+                    <artifactId>jcommander</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.antlr</groupId>
+                    <artifactId>antlr4-runtime</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -1000,60 +1034,30 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.antlr</groupId>
-                    <artifactId>antlr-runtime4</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-envers</artifactId>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-hikaricp</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.antlr</groupId>
-                    <artifactId>antlr-runtime4</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jcache</artifactId>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.antlr</groupId>
-                    <artifactId>antlr-runtime4</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-proxool</artifactId>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-testing</artifactId>
@@ -1072,28 +1076,14 @@
                 </exclusion>
                 <exclusion>
                     <groupId>org.antlr</groupId>
-                    <artifactId>antlr-runtime4</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-vibur</artifactId>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <exclusions>
-                <exclusion>
-                    <groupId>org.antlr</groupId>
-                    <artifactId>antlr-runtime4</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
@@ -1106,10 +1096,6 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.antlr</groupId>
-                    <artifactId>antlr-runtime4</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.antlr</groupId>
                     <artifactId>antlr4-runtime</artifactId>
                 </exclusion>
             </exclusions>
@@ -1118,6 +1104,13 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr-runtime</artifactId>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
