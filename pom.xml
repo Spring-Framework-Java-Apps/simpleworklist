@@ -314,12 +314,13 @@
                 <version>${version.thymeleaf-testing}</version>
                 <scope>test</scope>
             </dependency>
+            <!--
             <dependency>
                 <groupId>io.github.jpenren</groupId>
                 <artifactId>thymeleaf-spring-data-dialect</artifactId>
                 <version>${version.thymeleaf-spring-data-dialect}</version>
             </dependency>
-
+            -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -780,10 +781,12 @@
             <groupId>com.github.mxab.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-data-attribute</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>io.github.jpenren</groupId>
             <artifactId>thymeleaf-spring-data-dialect</artifactId>
         </dependency>
+        -->
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-testing</artifactId>
