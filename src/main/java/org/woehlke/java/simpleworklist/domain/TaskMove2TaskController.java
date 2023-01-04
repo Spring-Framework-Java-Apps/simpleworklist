@@ -12,7 +12,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 import org.woehlke.java.simpleworklist.domain.meso.task.TaskMove2TaskService;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Slf4j
 @Controller

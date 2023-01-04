@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.user.signup;
 
-import javax.persistence.Enumerated;
+import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 
 public enum UserAccountRegistrationStatus implements Serializable {

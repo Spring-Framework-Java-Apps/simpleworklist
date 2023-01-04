@@ -3,7 +3,7 @@ package org.woehlke.java.simpleworklist.domain.db.user.accountselfservice;
 import lombok.*;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

@@ -10,7 +10,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskService;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskState;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.user;
 
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,9 +15,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.*;
-import javax.persistence.Index;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.persistence.Index;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(

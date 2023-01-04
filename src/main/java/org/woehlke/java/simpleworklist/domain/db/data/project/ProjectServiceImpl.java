@@ -12,8 +12,8 @@ import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskRepository;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

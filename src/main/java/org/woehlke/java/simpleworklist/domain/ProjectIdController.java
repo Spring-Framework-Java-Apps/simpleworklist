@@ -25,7 +25,7 @@ import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 

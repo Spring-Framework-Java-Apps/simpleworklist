@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.user.account;
 
-import javax.persistence.Enumerated;
+import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 
 public enum UserRole implements Serializable {

@@ -23,8 +23,8 @@ import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.chat.UserChatMessageControllerService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.Locale;
 
 /**

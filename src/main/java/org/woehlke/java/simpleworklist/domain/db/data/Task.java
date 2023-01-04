@@ -3,7 +3,7 @@ package org.woehlke.java.simpleworklist.domain.db.data;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 import lombok.EqualsAndHashCode;
@@ -16,12 +16,12 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskEnergy;

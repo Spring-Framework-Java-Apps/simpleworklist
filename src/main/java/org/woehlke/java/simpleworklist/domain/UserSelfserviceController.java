@@ -30,7 +30,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.accountselfservice.UserCha
 import org.woehlke.java.simpleworklist.domain.db.user.accountselfservice.UserChangeNameForm;
 import org.woehlke.java.simpleworklist.domain.db.user.accountselfservice.UserChangePasswordForm;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;

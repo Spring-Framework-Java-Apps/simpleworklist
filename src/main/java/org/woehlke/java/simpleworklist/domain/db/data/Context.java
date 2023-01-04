@@ -8,8 +8,8 @@ import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 
-import javax.persistence.*;
-import javax.persistence.Index;
+import jakarta.persistence.*;
+import jakarta.persistence.Index;
 import java.io.Serializable;
 import java.util.UUID;
 

@@ -14,7 +14,7 @@ import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.Breadcrumb;
 import org.woehlke.java.simpleworklist.domain.meso.breadcrumb.BreadcrumbService;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Locale;
 
 @Slf4j

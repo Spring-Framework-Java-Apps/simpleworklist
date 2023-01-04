@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountChatMessage;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 /**
