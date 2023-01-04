@@ -1,5 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -57,94 +58,107 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @NamedQueries({
     @NamedQuery(
         name = "queryGetTasksByOrderIdTaskStateBetweenLowerTaskAndHigherTask",
-        query = "select t from Task t"
-            + " where t.orderIdTaskState > :lowerOrderIdTaskState and t.orderIdTaskState < :higherOrderIdTaskState"
-            + " and t.taskState = :taskState and t.context = :context order by t.orderIdTaskState ",
+        query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+            + " WHERE t.orderIdTaskState > :lowerOrderIdTaskState AND t.orderIdTaskState < :higherOrderIdTaskState"
+            + " AND t.taskState = :taskState AND t.context = :context"
+            + " ORDER BY t.orderIdTaskState",
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
         name = "queryGetTasksByOrderIdProjectBetweenLowerTaskAndHigherTask",
-        query = "select t from Task t"
-            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-            + " and t.project = :project order by t.orderIdProject DESC ",
+        query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+            + " WHERE t.orderIdProject > :lowerOrderIdProject AND t.orderIdProject < :higherOrderIdProject"
+            + " AND t.project = :project"
+            + " ORDER BY t.orderIdProject DESC",
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
         name = "queryGetTasksByOrderIdProjectRootBetweenLowerTaskAndHigherTask",
-        query = "select t from Task t"
-            + " where t.orderIdProject > :lowerOrderIdProject and t.orderIdProject < :higherOrderIdProject"
-            + " and t.project is null and t.context = :context  order by t.orderIdProject DESC ",
+        query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+            + " WHERE t.orderIdProject > :lowerOrderIdProject AND t.orderIdProject < :higherOrderIdProject"
+            + " AND t.project IS NULL AND t.context = :context"
+            + " ORDER BY t.orderIdProject DESC",
         lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateInbox",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.INBOX " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.INBOX"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateToday",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TODAY " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t "
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TODAY"
+          + " AND t.context = :context "
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateNext",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.NEXT " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t "
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.NEXT"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateWaiting",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.WAITING " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.WAITING"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateScheduled",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SCHEDULED " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SCHEDULED"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateSomeday",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SOMEDAY " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.SOMEDAY"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateCompleted",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.COMPLETED " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.COMPLETED"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateDeleted",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateTrash",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TRASH " +
-        "or t.taskState =  org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.TRASH"
+          + " OR t.taskState =  org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.DELETED"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     ),
     @NamedQuery(
       name = "findByTaskStateProjects",
-      query = "select t from Task t " +
-        "where t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJECTS " +
-        "and t.context = :context order by t.orderIdTaskState DESC ",
+      query = "SELECT t FROM org.woehlke.java.simpleworklist.domain.db.data.Task t"
+          + " WHERE t.taskState = org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJECTS"
+          + " AND t.context = :context"
+          + " ORDER BY t.orderIdTaskState DESC",
       lockMode = LockModeType.READ
     )
 })
@@ -154,6 +168,7 @@ import static org.hibernate.annotations.LazyToOneOption.PROXY;
 @ToString(callSuper = true, exclude="text")
 public class Task extends AuditModel implements Serializable, ComparableById<Task>, Comparable<Task> {
 
+    @Serial
     private static final long serialVersionUID = 5247710652586269801L;
 
     @Id

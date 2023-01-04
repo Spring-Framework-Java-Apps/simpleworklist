@@ -12,6 +12,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.application.framework.AuditModel;
 import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -37,8 +38,9 @@ import jakarta.persistence.Index;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude = {"userPassword","defaultLanguage","defaultContext","lastLoginTimestamp"})
-public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount>,Comparable<UserAccount> {
+public class UserAccount extends AuditModel implements Serializable, ComparableById<UserAccount>, Comparable<UserAccount> {
 
+    @Serial
     private static final long serialVersionUID = 7860692526488291439L;
 
     @Id

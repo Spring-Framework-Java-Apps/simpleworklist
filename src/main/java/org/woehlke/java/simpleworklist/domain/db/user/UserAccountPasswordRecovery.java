@@ -7,6 +7,8 @@ import org.woehlke.java.simpleworklist.domain.db.user.passwordrecovery.UserAccou
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -30,6 +32,7 @@ import java.util.Objects;
 )
 public class UserAccountPasswordRecovery extends AuditModel implements Serializable,Comparable<UserAccountPasswordRecovery> {
 
+    @Serial
     private static final long serialVersionUID = 6860716425733119940L;
 
     @Id

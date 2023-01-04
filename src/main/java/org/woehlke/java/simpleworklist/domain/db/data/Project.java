@@ -15,6 +15,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import static java.lang.Boolean.FALSE;
@@ -91,7 +93,8 @@ public class Project extends AuditModel implements Serializable, ComparableById<
 
     public static Project getRootProject(Context projectsContext) {
         List<Project> children = new ArrayList<>();
-        Date now = new Date();
+        ZoneId zone = ZoneId.of("Europe/Paris");
+        LocalDateTime now = LocalDateTime.now(zone);
         Project thisProject = new Project();
         thisProject.setId(0L);
         thisProject.setContext(projectsContext);

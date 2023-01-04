@@ -7,6 +7,8 @@ import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -27,6 +29,7 @@ import java.io.Serializable;
 @Setter
 public class UserAccountPassword extends AuditModel implements Serializable, ComparableById<UserAccountPassword>, Comparable<UserAccountPassword> {
 
+    @Serial
     private static final long serialVersionUID = 7860692526488291439L;
 
     @Id
