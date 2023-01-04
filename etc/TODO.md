@@ -89,7 +89,7 @@
 * fixed #391 refactor integration tests: One Test class for each Service Class in package meso
 
 ## 2.4.10-SNAPSHOT
-*
+* minor changes
 
 ## 2.4.11-SNAPSHOT
 * fixed #380 add User Use Cases to UML Documentation
@@ -98,20 +98,14 @@
 
 ## 2.4.12-SNAPSHOT
 * fixed #388 make task.taskstate, task.duedate and taskstate workflow independent to each other
-*
 
-## 2.4.13-SNAPSHOT
+
+## 3.0.0
+* fixed #401 Migrate spring-boot from 2 to 3
+
+## 3.0.x
 * #377 add List of URL (Patterns) to Documentation
-* #392 refactor integration tests: add Unit Tests for Beans and Entities
-*
-
-## 2.4.14-SNAPSHOT
+* #378 Add Search Index and search functionality
 * #386 make Project Navigation collapsible
 * #389 apply Database Schema Evolution for: 386 make Project Navigation collapsible
-*
-
-## 2.4.15-SNAPSHOT
-* #378 Add Search Index and search functionality
-
-## 2.4.16-SNAPSHOT
-*
+* #392 refactor integration tests: add Unit Tests for Beans and Entities
