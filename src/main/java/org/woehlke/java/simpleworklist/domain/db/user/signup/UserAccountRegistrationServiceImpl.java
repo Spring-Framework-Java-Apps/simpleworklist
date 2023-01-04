@@ -1,5 +1,8 @@
 package org.woehlke.java.simpleworklist.domain.db.user.signup;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.UUID;
 
@@ -52,9 +55,11 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
     public void registrationCheckIfResponseIsInTime(String email) {
         UserAccountRegistration earlierOptIn = userAccountRegistrationRepository.findByEmail(email);
         if (earlierOptIn != null) {
-            Date now = new Date();
+            ZoneId zone = ZoneId.systemDefault();
+            ZoneOffset offset = ZoneOffset.UTC;
+            LocalDateTime now = LocalDateTime.now(zone);
             if ((simpleworklistProperties.getRegistration().getTtlEmailVerificationRequest()
-                + earlierOptIn.getRowCreatedAt().getTime()) < now.getTime()) {
+                + earlierOptIn.getRowCreatedAt().toEpochSecond(offset)) < now.toEpochSecond(offset)) {
                 userAccountRegistrationRepository.delete(earlierOptIn);
             }
         }
