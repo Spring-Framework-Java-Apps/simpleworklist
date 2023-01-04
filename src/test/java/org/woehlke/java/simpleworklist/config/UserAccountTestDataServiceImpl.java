@@ -11,6 +11,8 @@ import org.woehlke.java.simpleworklist.domain.meso.language.Language;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,7 +46,8 @@ public class UserAccountTestDataServiceImpl implements UserAccountTestDataServic
         this.userAccountService = userAccountService;
         this.contextService = contextService;
         this.simpleworklistProperties = simpleworklistProperties;
-        Date lastLoginTimestamp = new Date();
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDateTime lastLoginTimestamp = LocalDateTime.now(zone);
         testUser = new UserAccount[emails.length];
         newContext = new NewContextForm[emails.length];
         for (int i = 0; i < testUser.length; i++) {

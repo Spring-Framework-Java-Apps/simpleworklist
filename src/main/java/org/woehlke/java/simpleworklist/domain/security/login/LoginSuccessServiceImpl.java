@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.db.user.account.UserAccountRepository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Slf4j
@@ -52,7 +54,9 @@ public class LoginSuccessServiceImpl implements LoginSuccessService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
     public void updateLastLoginTimestamp(UserAccount user) {
         log.info("updateLastLoginTimestamp");
-        user.setLastLoginTimestamp(new Date());
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDateTime now = LocalDateTime.now(zone);
+        user.setLastLoginTimestamp(now);
         userAccountRepository.saveAndFlush(user);
     }
 

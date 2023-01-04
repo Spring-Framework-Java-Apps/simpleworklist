@@ -14,6 +14,8 @@ import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 
@@ -83,7 +85,7 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
     //@NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name="last_login_timestamp", nullable = false)
-    private Date lastLoginTimestamp;
+    private LocalDateTime lastLoginTimestamp;
 
     //@NotNull
     @Column(name="account_non_expired", nullable = false)
@@ -125,7 +127,8 @@ public class UserAccount extends AuditModel implements Serializable, ComparableB
       final String userPassword,
       Context[] contexts
     ){
-        Date now = new Date();
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDateTime now = LocalDateTime.now(zone);
         UserAccount u = new UserAccount();
         u.setUserEmail(userEmail);
         u.setUserFullname(userFullname);

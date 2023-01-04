@@ -58,10 +58,12 @@
                             <span th:text="${user.userFullname}">user.userFullname</span>
                         </td>
                         <td>
-                            <span th:text="${user.lastLoginTimestamp}"></span>
+                            <span th:text="${user.lastLoginTimestamp}" th:if="${#locale.language eq 'en'}"></span>
+                            <span th:text="${user.lastLoginTimestamp}" th:if="${#locale.language eq 'de'}"></span>
                         </td>
                         <td>
-                            <span th:text="${user.rowCreatedAt}"></span>
+                            <span th:text="${user.rowCreatedAt}" th:if="${#locale.language eq 'en'}"></span>
+                            <span th:text="${user.rowCreatedAt}" th:if="${#locale.language eq 'de'}"></span>
                         </td>
                     </tr>
                 </tbody>
