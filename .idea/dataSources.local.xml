@@ -12,10 +12,15 @@
       <schema-mapping>
         <introspection-scope>
           <node negative="1">
-            <node kind="database" qname="@">
+            <node kind="database" qname="simpleworklist">
+              <node kind="schema">
+                <name qname="@" />
+                <name qname="public" />
+              </node>
+            </node>
+            <node kind="database" qname="simpleworklistref">
               <node kind="schema" qname="@" />
             </node>
-            <node kind="database" qname="simpleworklistref" />
           </node>
         </introspection-scope>
       </schema-mapping>

@@ -1,5 +1,7 @@
 package org.woehlke.java.simpleworklist.domain.db.data.project;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +14,7 @@ import org.woehlke.java.simpleworklist.domain.db.data.Project;
 import org.woehlke.java.simpleworklist.domain.db.data.Task;
 import org.woehlke.java.simpleworklist.domain.db.data.task.TaskRepository;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
