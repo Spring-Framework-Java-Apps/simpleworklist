@@ -35,8 +35,8 @@ spring:
     hibernate:
       #ddl-auto: create-drop
       #ddl-auto: update
-      ddl-auto: validate
-      #ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
+      #ddl-auto: validate
+      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -144,8 +144,8 @@ debug: false
 spring:
   profiles:
     active: default
-  datasource:
-    url: jdbc:postgresql://localhost:5432/simpleworklist
+  #datasource:
+  #  url: jdbc:postgresql://localhost:5432/simpleworklist
   jta:
     atomikos:
       properties:
@@ -156,7 +156,8 @@ spring:
     hibernate:
       #ddl-auto: create-drop
       #ddl-auto: update
-      ddl-auto: validate
+      #ddl-auto: validate
+      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
 server:
   port: ${PORT}
   compression:
