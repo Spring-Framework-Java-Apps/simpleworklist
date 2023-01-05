@@ -36,7 +36,7 @@ spring:
       #ddl-auto: create-drop
       #ddl-auto: update
       #ddl-auto: validate
-      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
+      ddl-auto: ${SIMPLEWORKLIST_JPA_DLL_AUTO}
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -157,7 +157,7 @@ spring:
       #ddl-auto: create-drop
       #ddl-auto: update
       #ddl-auto: validate
-      ddl-auto: ${BLOODMONEY_HIBERNATE_DDL_AUTO}
+      ddl-auto: ${SIMPLEWORKLIST_JPA_DLL_AUTO}
 server:
   port: ${PORT}
   compression:
