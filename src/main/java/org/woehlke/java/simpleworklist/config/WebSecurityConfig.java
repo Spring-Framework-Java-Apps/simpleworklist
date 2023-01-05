@@ -20,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import org.woehlke.java.simpleworklist.domain.security.access.ApplicationUserDetailsService;
+import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessHandler;
 
 @Configuration
 @EnableAsync
@@ -38,14 +39,16 @@ public class WebSecurityConfig {
 
     private final ApplicationUserDetailsService applicationUserDetailsService;
     private final SimpleworklistProperties simpleworklistProperties;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     @Autowired
     public WebSecurityConfig(
         ApplicationUserDetailsService applicationUserDetailsService,
-        SimpleworklistProperties simpleworklistProperties
-    ) {
+        SimpleworklistProperties simpleworklistProperties,
+        LoginSuccessHandler loginSuccessHandler) {
         this.applicationUserDetailsService = applicationUserDetailsService;
         this.simpleworklistProperties = simpleworklistProperties;
+        this.loginSuccessHandler = loginSuccessHandler;
     }
 
     @Bean
@@ -92,7 +95,7 @@ public class WebSecurityConfig {
                 .loginProcessingUrl(simpleworklistProperties.getWebSecurity().getLoginProcessingUrl())
                 .failureForwardUrl(simpleworklistProperties.getWebSecurity().getFailureForwardUrl())
                 .defaultSuccessUrl(simpleworklistProperties.getWebSecurity().getDefaultSuccessUrl())
-                //.successHandler(authenticationSuccessHandler)
+                .successHandler(this.loginSuccessHandler)
                 .permitAll()
             )
             .csrf()
