@@ -112,7 +112,7 @@
 * fixed #407 update Last Login Date is broken
 
 ## 3.0.0.rc.4
-* #406 Liquibase Database Schema Evolution of changes by migrating spring-boot from 2 to 3 and Jakarta EE 10 JPA
+* fixed #406 Liquibase Database Schema Evolution of changes by migrating spring-boot from 2 to 3 and Jakarta EE 10 JPA
 
 ## 3.0.x
 * #377 add List of URL (Patterns) to Documentation

@@ -711,4 +711,13 @@
                                  validate="true"/>
     </changeSet>
 
+    <changeSet author="thomaswoehlke" failOnError="false" dbms="postgresql"  id="2">
+        <modifyDataType columnName="double_optin_status"
+                        newDataType="int"
+                        tableName="user_account_password_recovery"/>
+        <modifyDataType columnName="double_optin_status"
+                        newDataType="int"
+                        tableName="user_account_registration"/>
+    </changeSet>
+
 </databaseChangeLog>

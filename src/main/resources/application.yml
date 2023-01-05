@@ -155,8 +155,8 @@ spring:
   jpa:
     hibernate:
       #ddl-auto: create-drop
-      #ddl-auto: update
-      ddl-auto: validate
+      ddl-auto: update
+      #ddl-auto: validate
 server:
   port: ${PORT}
   compression:
