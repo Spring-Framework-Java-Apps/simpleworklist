@@ -114,6 +114,12 @@
 ## 3.0.0.rc.4
 * fixed #406 Liquibase Database Schema Evolution of changes by migrating spring-boot from 2 to 3 and Jakarta EE 10 JPA
 
+## 3.0.0
+* Release
+
+## 3.0.1
+* #408 heroku: slug size too big 
+
 ## 3.0.x
 * #377 add List of URL (Patterns) to Documentation
 * #378 Add Search Index and search functionality
