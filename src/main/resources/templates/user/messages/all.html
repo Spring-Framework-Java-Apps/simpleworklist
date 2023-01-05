@@ -22,8 +22,9 @@
 
 <div th:fragment="mytwcontent">
 
-  <form id="formId" th:action="@{/user2user/{userId}/messages/(userId=${otherUser.id})}"
-        th:object="${newUser2UserMessage}" method="post">
+<div th:with="myUrlPath=@{/user2user/{userId}/messages(userId=${otherUser.id})}">
+
+  <form id="formId" th:action="${myUrlPath}" th:object="${newUser2UserMessage}" method="post">
     <div class="row">
       <div class="col">
         <div class="card card-body" id="newUser2UserMessageForm">
@@ -75,8 +76,9 @@
     </div>
   </div>
 
-  <div th:replace="~{layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage})}">
-  </div>
+  <div th:replace="~{layout/tasks :: tw-tasks-pagination(page=${user2UserMessagePage}, myTaskState='', myUrlPath=${myUrlPath})}"></div>
+
+</div>
 </div>
 </body>
 </html>
