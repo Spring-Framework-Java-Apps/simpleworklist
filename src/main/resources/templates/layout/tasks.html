@@ -269,8 +269,13 @@
             <div class="col">
                 <nav aria-label="Task Pagination">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a th:href="@{{myUrlPath}/{myTaskState}?page={page}(myUrlPath=${myUrlPath},myTaskState=${#strings.toLowerCase(myTaskState)},page=${1})}" class="page-link" aria-label="Previous">
+                        <li class="page-item disabled" th:if="${page.isFirst}">
+                            <a href="#" class="page-link" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:unless="${page.isFirst}">
+                            <a th:href="@{{myUrlPath}/{myTaskState}?page={page}(myUrlPath=${myUrlPath},myTaskState=${#strings.toLowerCase(myTaskState)},page=${page.previousPageable.pageNumber})}" class="page-link" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -282,8 +287,13 @@
                                 <span th:text="${i+1}">1</span>
                             </a>
                         </li>
-                        <li class="page-item">
-                            <a th:href="@{{myUrlPath}/{myTaskState}?page={page}(myUrlPath=${myUrlPath},myTaskState=${#strings.toLowerCase(myTaskState)},page=${page.totalPages-1})}"  class="page-link" aria-label="Next">
+                        <li class="page-item" th:if="${page.hasNext}">
+                            <a th:href="@{{myUrlPath}/{myTaskState}?page={page}(myUrlPath=${myUrlPath},myTaskState=${#strings.toLowerCase(myTaskState)},page=${page.nextPageable.pageNumber})}"  class="page-link" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item disabled" th:unless="${page.hasNext}">
+                            <a href="#" class="page-link" aria-label="Previous">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
