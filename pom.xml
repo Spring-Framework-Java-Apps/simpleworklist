@@ -1601,6 +1601,26 @@
                             <groupId>commons-io</groupId>
                             <artifactId>commons-io</artifactId>
                         </exclude>
+                        <exclude>
+                            <groupId>commons-codec</groupId>
+                            <artifactId>commons-codec</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-collections</groupId>
+                            <artifactId>commons-collections</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apache.commons</groupId>
+                            <artifactId>commons-compress</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-logging</groupId>
+                            <artifactId>commons-logging</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apache.commons</groupId>
+                            <artifactId>commons-text</artifactId>
+                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
