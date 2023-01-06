@@ -82,10 +82,12 @@
         <version.thymeleaf-spring-data-dialect>3.5.0</version.thymeleaf-spring-data-dialect>
 
         <!-- Webjars -->
+        <!--
         <webjars.jquery.version>3.6.3</webjars.jquery.version>
         <webjars.popper.js.version>2.9.3</webjars.popper.js.version>
         <webjars.bootstrap.version>5.2.3</webjars.bootstrap.version>
         <webjars.font-awesome.version>6.2.0</webjars.font-awesome.version>
+        -->
         <opencsv.version>5.7.1</opencsv.version>
 
         <!-- Unit and Integration Testing -->
@@ -285,6 +287,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--
             <dependency>
                 <groupId>org.webjars.npm</groupId>
                 <artifactId>jquery</artifactId>
@@ -305,6 +308,7 @@
                 <artifactId>font-awesome</artifactId>
                 <version>${webjars.font-awesome.version}</version>
             </dependency>
+            -->
 
             <!-- Thymeleaf -->
             <dependency>
@@ -729,6 +733,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>jquery</artifactId>
@@ -745,6 +750,8 @@
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
         </dependency>
+        -->
+
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
