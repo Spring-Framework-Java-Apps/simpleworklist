@@ -1637,10 +1637,6 @@
                             <groupId>org.apache-extras.beanshell</groupId>
                             <artifactId>bsh</artifactId>
                         </exclude>
-                        <exclude>
-                            <groupId>org.unbescape</groupId>
-                            <artifactId>unbescape</artifactId>
-                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
