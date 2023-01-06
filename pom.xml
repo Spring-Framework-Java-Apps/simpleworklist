@@ -1469,6 +1469,66 @@
                             <groupId>ch.ethz.ganymed</groupId>
                             <artifactId>ganymed-ssh2</artifactId>
                         </exclude>
+                        <exclude>
+                            <groupId>org.hamcrest</groupId>
+                            <artifactId>hamcrest-core</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.hamcrest</groupId>
+                            <artifactId>hamcrest</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.sun.istack</groupId>
+                            <artifactId>istack-commons</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.netbeans.lib</groupId>
+                            <artifactId>cvsclient</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.jboss</groupId>
+                            <artifactId>jandex</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.googlecode.javaewah</groupId>
+                            <artifactId>JavaEWAH</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.jcraft</groupId>
+                            <artifactId>jsch</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.jsoup</groupId>
+                            <artifactId>jsoup</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>javax.annotation</groupId>
+                            <artifactId>jsr250-api</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.google.code.findbugs</groupId>
+                            <artifactId>jsr305</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.jcraft</groupId>
+                            <artifactId>jzlib</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.martiansoftware</groupId>
+                            <artifactId>nailgun-server</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>info.picocli</groupId>
+                            <artifactId>picocli</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.thoughtworks.qdox</groupId>
+                            <artifactId>qdox</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.tomlj</groupId>
+                            <artifactId>tomlj</artifactId>
+                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
