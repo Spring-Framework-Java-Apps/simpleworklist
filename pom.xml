@@ -1148,7 +1148,7 @@
                                     <fileset>
                                         <directory>target</directory>
                                         <excludes>
-                                            <exclude>*.jar</exclude>
+                                            <exclude>simpleworklist.jar</exclude>
                                         </excludes>
                                     </fileset>
                                 </filesets>
