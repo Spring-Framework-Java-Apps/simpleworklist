@@ -1146,10 +1146,10 @@
                                 <excludeDefaultDirectories>true</excludeDefaultDirectories>
                                 <filesets>
                                     <fileset>
-                                        <directory>target/dependency</directory>
-                                    </fileset>
-                                    <fileset>
-                                        <directory>target/it-repo</directory>
+                                        <directory>target</directory>
+                                        <excludes>
+                                            <exclude>*.jar</exclude>
+                                        </excludes>
                                     </fileset>
                                 </filesets>
                             </configuration>
@@ -1814,10 +1814,10 @@
                             <excludeDefaultDirectories>true</excludeDefaultDirectories>
                             <filesets>
                                 <fileset>
-                                    <directory>target/dependency</directory>
-                                </fileset>
-                                <fileset>
-                                    <directory>target/it-repo</directory>
+                                    <directory>target</directory>
+                                    <excludes>
+                                        <exclude>*.jar</exclude>
+                                    </excludes>
                                 </fileset>
                             </filesets>
                         </configuration>
