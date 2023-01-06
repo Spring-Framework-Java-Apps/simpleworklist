@@ -1549,6 +1549,58 @@
                             <groupId>org.sonatype.sisu</groupId>
                             <artifactId>sisu-guice</artifactId>
                         </exclude>
+                        <exclude>
+                            <groupId>com.google.code.gson</groupId>
+                            <artifactId>gson</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.sun.istack</groupId>
+                            <artifactId>istack-commons-runtime</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apiguardian</groupId>
+                            <artifactId>apiguardian-api</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.fasterxml.jackson.datatype</groupId>
+                            <artifactId>jackson-datatype-jsr310</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apache.commons</groupId>
+                            <artifactId>commons-collections4</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>aopalliance</groupId>
+                            <artifactId>aopalliance</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apache.commons</groupId>
+                            <artifactId>commons-lang3</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-lang</groupId>
+                            <artifactId>commons-lang</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-validator</groupId>
+                            <artifactId>commons-validator</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-beanutils</groupId>
+                            <artifactId>commons-beanutils</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-chain</groupId>
+                            <artifactId>commons-chain</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-digester</groupId>
+                            <artifactId>commons-digester</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>commons-io</groupId>
+                            <artifactId>commons-io</artifactId>
+                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
