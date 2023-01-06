@@ -1533,6 +1533,22 @@
                             <groupId>org.tomlj</groupId>
                             <artifactId>tomlj</artifactId>
                         </exclude>
+                        <exclude>
+                            <groupId>org.mozilla</groupId>
+                            <artifactId>rhino</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.sonatype.sisu</groupId>
+                            <artifactId>sisu-inject-plexus</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.sonatype.sisu</groupId>
+                            <artifactId>sisu-inject-bean</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.sonatype.sisu</groupId>
+                            <artifactId>sisu-guice</artifactId>
+                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
