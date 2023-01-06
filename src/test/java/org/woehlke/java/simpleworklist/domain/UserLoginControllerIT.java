@@ -5,7 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -23,7 +23,7 @@ import org.woehlke.java.simpleworklist.config.*;
 
 import java.net.URL;
 
-@Slf4j
+@Log
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
@@ -83,9 +83,9 @@ public class UserLoginControllerIT {
         log.info(" @BeforeTestClass runBeforeTestClass");
         log.info(eyecatcherH1);
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
     }
@@ -103,9 +103,9 @@ public class UserLoginControllerIT {
         SecurityContextHolder.clearContext();
         log.info(eyecatcherH1);
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
     }
@@ -118,9 +118,9 @@ public class UserLoginControllerIT {
                 get("/user/login")).andDo(print())
                 .andExpect(view().name(containsString("user/login/loginForm")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
     }

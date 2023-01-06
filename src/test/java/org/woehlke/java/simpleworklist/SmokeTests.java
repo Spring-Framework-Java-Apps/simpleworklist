@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.woehlke.java.simpleworklist.config.Requirements.*;
 
-@Slf4j
+@Log
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
@@ -255,16 +255,16 @@ public class SmokeTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("SimpleWorklist")));
         } catch (UsernameNotFoundException e) {
-            log.warn("UsernameNotFoundException: " + e.getLocalizedMessage());
+            log.info("UsernameNotFoundException: " + e.getLocalizedMessage());
         } catch (NullPointerException npe) {
-            log.warn("NullPointerException: " + npe.getLocalizedMessage());
+            log.info("NullPointerException: " + npe.getLocalizedMessage());
             for (StackTraceElement e : npe.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -287,9 +287,9 @@ public class SmokeTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -317,9 +317,9 @@ public class SmokeTests {
             o.andExpect(status().isOk())
                 .andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -343,9 +343,9 @@ public class SmokeTests {
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -369,9 +369,9 @@ public class SmokeTests {
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -395,9 +395,9 @@ public class SmokeTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -421,9 +421,9 @@ public class SmokeTests {
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -447,9 +447,9 @@ public class SmokeTests {
                 .andExpect(status().isOk());
             //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);
@@ -472,9 +472,9 @@ public class SmokeTests {
                 .andExpect(status().isOk());
                 //.andExpect(content().string(containsString("SimpleWorklist")));
         } catch (Exception ex) {
-            log.warn("Exception: " + ex.getLocalizedMessage());
+            log.info("Exception: " + ex.getLocalizedMessage());
             for (StackTraceElement e : ex.getStackTrace()) {
-                log.warn(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
+                log.info(e.getClassName() + "." + e.getMethodName() + "in: " + e.getFileName() + " line: " + e.getLineNumber());
             }
         }
         log.info(eyecatcherH2);

@@ -1,9 +1,9 @@
 package org.woehlke.java.simpleworklist.domain.db.search;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@Slf4j
+@Log
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class SearchResultServiceIT {
 }
