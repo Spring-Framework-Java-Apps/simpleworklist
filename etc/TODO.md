@@ -126,3 +126,7 @@
 * #386 make Project Navigation collapsible
 * #389 apply Database Schema Evolution for: 386 make Project Navigation collapsible
 * #392 refactor integration tests: add Unit Tests for Beans and Entities
+
+
+## cloud deployments:
+* digital ocean: https://gsswain.medium.com/springboot-digitalocean-droplets-410b8bbc6fe6
