@@ -1409,6 +1409,50 @@
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-devtools</artifactId>
                         </exclude>
+                        <exclude>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.jruby.jcodings</groupId>
+                            <artifactId>jcodings</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>backport-util-concurrent</groupId>
+                            <artifactId>backport-util-concurrent</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.headius</groupId>
+                            <artifactId>backport9</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>javax.enterprise</groupId>
+                            <artifactId>cdi-api</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>javax.xml.bind</groupId>
+                            <artifactId>jaxb-api</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>javax.inject</groupId>
+                            <artifactId>javax.inject</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.beust</groupId>
+                            <artifactId>jcommander</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>joda-time</groupId>
+                            <artifactId>joda-time</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>javax.annotation</groupId>
+                            <artifactId>javax.annotation-api</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>javax.activation</groupId>
+                            <artifactId>javax.activation-api</artifactId>
+                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
