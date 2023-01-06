@@ -1450,10 +1450,6 @@
                             <artifactId>spring-boot-maven-plugin</artifactId>
                         </exclude>
                         <exclude>
-                            <groupId>org.aspectj</groupId>
-                            <artifactId>aspectjweaver</artifactId>
-                        </exclude>
-                        <exclude>
                             <groupId>classworlds</groupId>
                             <artifactId>classworlds</artifactId>
                         </exclude>
