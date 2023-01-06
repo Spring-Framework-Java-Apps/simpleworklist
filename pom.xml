@@ -1645,11 +1645,12 @@
                             <groupId>com.zaxxer</groupId>
                             <artifactId>HikariCP</artifactId>
                         </exclude>
-                        -->
+
                         <exclude>
                             <groupId>org.iq80.snappy</groupId>
                             <artifactId>snappy</artifactId>
                         </exclude>
+                        -->
                     </excludes>
                 </configuration>
                 <executions>
