@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.meso.testdata;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.db.data.Project;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 public class TestDataServiceImpl implements TestDataService {
 

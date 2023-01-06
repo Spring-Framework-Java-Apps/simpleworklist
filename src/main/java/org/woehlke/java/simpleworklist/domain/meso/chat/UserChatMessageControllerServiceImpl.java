@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.meso.chat;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = false)
 public class UserChatMessageControllerServiceImpl implements UserChatMessageControllerService {

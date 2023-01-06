@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.search.service;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Propagation;
@@ -15,7 +15,7 @@ import org.woehlke.java.simpleworklist.domain.db.search.result.SearchResultServi
 /**
  * Created by tw on 14.02.16.
  */
-@Slf4j
+@Log
 @Service
 public class SearchServiceImpl implements SearchService {
 

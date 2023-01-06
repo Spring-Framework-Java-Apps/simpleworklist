@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.UserAccount;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginForm;
 import org.woehlke.java.simpleworklist.domain.security.login.LoginSuccessService;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user")
 public class UserLoginController {

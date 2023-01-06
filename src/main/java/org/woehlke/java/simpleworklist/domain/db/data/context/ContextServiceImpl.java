@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.db.data.context;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import java.util.UUID;
 /**
  * Created by tw on 13.03.16.
  */
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ContextServiceImpl implements ContextService {

@@ -1,9 +1,9 @@
 package org.woehlke.java.simpleworklist.domain.meso.task;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
-@Slf4j
+@Log
 @Service
 public class TaskControllerServiceImpl implements TaskControllerService {
 }

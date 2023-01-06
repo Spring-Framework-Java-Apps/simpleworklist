@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import org.woehlke.java.simpleworklist.domain.db.user.signup.UserAccountRegistra
 
 import jakarta.validation.Valid;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path= "/user/resetPassword")
 public class UserPasswordRecoveryController {

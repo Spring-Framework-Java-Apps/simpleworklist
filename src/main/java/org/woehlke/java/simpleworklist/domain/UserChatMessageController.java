@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +31,7 @@ import java.util.Locale;
  * Created by
  * on 16.02.2016.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/user2user")
 public class UserChatMessageController extends AbstractController {

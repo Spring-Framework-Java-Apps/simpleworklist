@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.meso.task;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
-@Slf4j
+@Log
 @Service
 public class TaskLifecycleServiceImpl implements TaskLifecycleService {
 

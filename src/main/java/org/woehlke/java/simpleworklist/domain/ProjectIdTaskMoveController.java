@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +15,7 @@ import org.woehlke.java.simpleworklist.domain.meso.task.TaskMoveService;
 
 import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJECTS;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/project/{projectId}/task/{taskId}")
 public class ProjectIdTaskMoveController extends AbstractController {

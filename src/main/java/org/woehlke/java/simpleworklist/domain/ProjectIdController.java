@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,7 +34,7 @@ import static org.woehlke.java.simpleworklist.domain.db.data.task.TaskState.PROJ
 /**
  * Created by tw on 14.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/project/{projectId}")
 public class ProjectIdController extends AbstractController {
@@ -233,7 +233,7 @@ public class ProjectIdController extends AbstractController {
       log.info("Deletion rejected for Project " + project.getId());
       if (!hasNoData) {
         //TODO: message to message_properties
-        log.warn("Project " + project.getId() + " has actionItem");
+        log.info("Project " + project.getId() + " has actionItem");
         s.append("Project has actionItems.");
       }
       if (!hasNoChildren) {

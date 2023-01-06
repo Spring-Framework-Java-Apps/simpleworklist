@@ -1,6 +1,6 @@
 package org.woehlke.java.simpleworklist.domain.meso.breadcrumb;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Stack;
 
-@Slf4j
+@Log
 @Service
 public class BreadcrumbServiceImpl implements BreadcrumbService {
 

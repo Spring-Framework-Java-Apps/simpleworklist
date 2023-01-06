@@ -22,7 +22,7 @@ import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +32,7 @@ import java.util.Locale;
 /**
  * Created by tw on 21.02.16.
  */
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/taskstate/task")
 public class TaskLifecycleController extends AbstractController {
@@ -159,9 +159,9 @@ public class TaskLifecycleController extends AbstractController {
             result.addError(error);
         }
         if (result.hasErrors() ) {
-            log.warn("result.hasErrors");
+            log.info("result.hasErrors");
             for (ObjectError e : result.getAllErrors()) {
-                log.warn(e.toString());
+                log.info(e.toString());
             }
             //Task persistentTask = taskService.findOne(taskId);
             // UserAccount userAccount = loginSuccessService.retrieveCurrentUser();

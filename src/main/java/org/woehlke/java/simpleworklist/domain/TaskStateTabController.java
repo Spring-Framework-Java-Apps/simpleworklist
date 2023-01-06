@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.woehlke.java.simpleworklist.domain.db.data.Context;
 import org.woehlke.java.simpleworklist.domain.meso.session.UserSessionBean;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.woehlke.java.simpleworklist.domain.meso.taskstate.TaskStateTabControllerService;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.Locale;
 
-@Slf4j
+@Log
 @Controller
 @RequestMapping(path = "/taskstate")
 public class TaskStateTabController extends AbstractController {

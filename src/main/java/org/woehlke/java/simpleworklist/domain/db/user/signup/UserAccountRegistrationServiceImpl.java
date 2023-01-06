@@ -6,7 +6,7 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.UUID;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.MailException;
@@ -20,7 +20,7 @@ import org.woehlke.java.simpleworklist.config.SimpleworklistProperties;
 import org.woehlke.java.simpleworklist.domain.db.user.UserAccountRegistration;
 import org.woehlke.java.simpleworklist.domain.db.user.token.TokenGeneratorService;
 
-@Slf4j
+@Log
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class UserAccountRegistrationServiceImpl implements UserAccountRegistrationService {
@@ -132,7 +132,7 @@ public class UserAccountRegistrationServiceImpl implements UserAccountRegistrati
         try {
             this.mailSender.send(msg);
         } catch (MailException ex) {
-            log.warn(ex.getMessage() + " for " + o.toString());
+            log.info(ex.getMessage() + " for " + o.toString());
             success = false;
         }
         if (success) {
