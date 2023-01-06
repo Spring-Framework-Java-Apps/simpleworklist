@@ -1673,6 +1673,18 @@
                             <artifactId>classmate</artifactId>
                         </exclude>
                         -->
+                        <exclude>
+                            <groupId>org.checkerframework</groupId>
+                            <artifactId>checker-qual</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.reflections</groupId>
+                            <artifactId>reflections</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apiguardian</groupId>
+                            <artifactId>apiguardian-api</artifactId>
+                        </exclude>
                     </excludes>
                 </configuration>
                 <executions>
