@@ -1,4 +1,3 @@
 *.puml
 src/plantuml
-src/site
 etc
