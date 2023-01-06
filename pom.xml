@@ -1558,10 +1558,12 @@
                             <groupId>com.sun.istack</groupId>
                             <artifactId>istack-commons-runtime</artifactId>
                         </exclude>
+                        <!--
                         <exclude>
                             <groupId>org.apiguardian</groupId>
                             <artifactId>apiguardian-api</artifactId>
                         </exclude>
+                        -->
                         <exclude>
                             <groupId>com.fasterxml.jackson.datatype</groupId>
                             <artifactId>jackson-datatype-jsr310</artifactId>
@@ -1637,6 +1639,16 @@
                         <exclude>
                             <groupId>org.apache-extras.beanshell</groupId>
                             <artifactId>bsh</artifactId>
+                        </exclude>
+                        <!--
+                        <exclude>
+                            <groupId>com.zaxxer</groupId>
+                            <artifactId>HikariCP</artifactId>
+                        </exclude>
+                        -->
+                        <exclude>
+                            <groupId>org.iq80.snappy</groupId>
+                            <artifactId>snappy</artifactId>
                         </exclude>
                     </excludes>
                 </configuration>
