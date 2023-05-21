@@ -11,7 +11,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
@@ -34,7 +33,6 @@ import org.woehlke.java.simpleworklist.application.framework.ComparableById;
 
 
 import static jakarta.persistence.TemporalType.DATE;
-import static org.hibernate.annotations.LazyToOneOption.PROXY;
 
 
 @Entity
@@ -217,7 +215,7 @@ public class Task extends AuditModel implements Serializable, ComparableById<Tas
     )
     @JoinColumn(name = "data_context_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @LazyToOne(PROXY)
+    //@LazyToOne(PROXY)
     private Context context;
 
 
