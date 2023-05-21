@@ -58,7 +58,7 @@ public class Context extends AuditModel implements Serializable, ComparableById<
             CascadeType.REFRESH
         })
     @JoinColumn(name = "user_account_id")
-    @LazyToOne(PROXY)
+    //@LazyToOne(PROXY)
     private UserAccount userAccount;
 
     @Length(min = 1, max = 255)
