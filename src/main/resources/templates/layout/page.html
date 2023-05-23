@@ -229,7 +229,7 @@
 			var sourceTaskId = ev.dataTransfer.getData("task").split("_")[1];
 			var destinationTaskIdInfo = ev.target.id;
 			var destinationTaskId = destinationTaskIdInfo.split("_")[1];
-      ev.preventDefault();
+            ev.preventDefault();
 			if(srcType === 'task') {
 				if(requestPathFirst === 'taskstate'){
 					myUrl = '[(@{/taskstate/task/})]' + sourceTaskId + '/changeorderto/' + destinationTaskId;
@@ -243,7 +243,7 @@
 
 		function allowDrop2Project(ev){
 			ev.preventDefault();
-      return true
+            return true
 		}
 
 		function dragProject(ev) {
