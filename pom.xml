@@ -119,7 +119,7 @@
         <version.maven-release-plugin.scm>1.13.0</version.maven-release-plugin.scm>
 
         <!-- Database Evolution -->
-        <version.org.postgresql>42.5.1</version.org.postgresql>
+        <version.org.postgresql>42.6.1</version.org.postgresql>
         <liquibase.propertyFile>${project.basedir}/liquibase.properties</liquibase.propertyFile>
 
         <!-- UML -->
@@ -333,7 +333,7 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.5.1</version>
+                <version>42.6.1</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
